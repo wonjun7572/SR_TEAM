@@ -26,13 +26,10 @@ HRESULT CMainApp::Ready_MainApp(void)
 
 _int CMainApp::Update_MainApp(const _float & fTimeDelta)
 {
+	Engine::SetUp_InputDev();
+
 	NULL_CHECK_RETURN(m_pManagementClass, -1);
 
-
-	// юс╫ц
-
-
-	
 	m_pManagementClass->Update_Scene(fTimeDelta);
 
 	return 0;
@@ -64,6 +61,8 @@ HRESULT CMainApp::SetUp_DefaultSetting(LPDIRECT3DDEVICE9 * ppGraphicDev)
 
 	(*ppGraphicDev) = m_pDeviceClass->Get_GraphicDev();
 	(*ppGraphicDev)->AddRef();
+
+	FAILED_CHECK_RETURN(Engine::Ready_InputDev(g_hInst, g_hWnd), E_FAIL);
 
 	return S_OK;
 }

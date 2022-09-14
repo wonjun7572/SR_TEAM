@@ -31,20 +31,32 @@
     <Filter Include="02. GameObject">
       <UniqueIdentifier>{92c612f7-c35f-43df-8932-e63aa606626c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\00. BackGround">
-      <UniqueIdentifier>{67ae8269-0e3e-4e1d-bb00-6cef0314eebe}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\01. TestPlayer">
-      <UniqueIdentifier>{45cc29ae-58d3-4a6b-92d4-677245185c83}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\02. TestMonster">
-      <UniqueIdentifier>{b604cd30-23f9-4741-8ce6-5615f06904d7}</UniqueIdentifier>
-    </Filter>
     <Filter Include="01. Scene\99. Loading">
       <UniqueIdentifier>{9a8454ca-ef75-40a4-b8b4-2356079cbdbf}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\03. Terrain">
+    <Filter Include="02. GameObject\00. For_Logo">
+      <UniqueIdentifier>{30025f09-0432-46d7-a330-4c3f8a541dc2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\00. For_Logo\00. BackGround">
+      <UniqueIdentifier>{67ae8269-0e3e-4e1d-bb00-6cef0314eebe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage">
+      <UniqueIdentifier>{2bfecef8-7bb9-4ef2-9936-4e2cc1d897db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\00. TestPlayer">
+      <UniqueIdentifier>{45cc29ae-58d3-4a6b-92d4-677245185c83}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\01. TestMonster">
+      <UniqueIdentifier>{b604cd30-23f9-4741-8ce6-5615f06904d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\02. Terrain">
       <UniqueIdentifier>{40f1ba94-ad87-43ef-9cff-3cb75eb5c6eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\02. For_Public">
+      <UniqueIdentifier>{98c8ba54-2e7c-4c81-ad80-68e242cf8c19}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\02. For_Public\00. DynamicCamera">
+      <UniqueIdentifier>{e514a172-e61f-44ca-a57b-b9e601538f45}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -67,13 +79,13 @@
       <Filter>01. Scene\00. Logo</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\BackGround.h">
-      <Filter>02. GameObject\00. BackGround</Filter>
+      <Filter>02. GameObject\00. For_Logo\00. BackGround</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\TestPlayer.h">
-      <Filter>02. GameObject\01. TestPlayer</Filter>
+      <Filter>02. GameObject\01. For_Stage\00. TestPlayer</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\TestMonster.h">
-      <Filter>02. GameObject\02. TestMonster</Filter>
+      <Filter>02. GameObject\01. For_Stage\01. TestMonster</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Stage.h">
       <Filter>01. Scene\01. Stage</Filter>
@@ -82,7 +94,10 @@
       <Filter>01. Scene\99. Loading</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Terrain.h">
-      <Filter>02. GameObject\03. Terrain</Filter>
+      <Filter>02. GameObject\01. For_Stage\02. Terrain</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\DynamicCamera.h">
+      <Filter>02. GameObject\02. For_Public\00. DynamicCamera</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -99,13 +114,13 @@
       <Filter>01. Scene\00. Logo</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\BackGround.cpp">
-      <Filter>02. GameObject\00. BackGround</Filter>
+      <Filter>02. GameObject\00. For_Logo\00. BackGround</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\TestPlayer.cpp">
-      <Filter>02. GameObject\01. TestPlayer</Filter>
+      <Filter>02. GameObject\01. For_Stage\00. TestPlayer</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\TestMonster.cpp">
-      <Filter>02. GameObject\02. TestMonster</Filter>
+      <Filter>02. GameObject\01. For_Stage\01. TestMonster</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Stage.cpp">
       <Filter>01. Scene\01. Stage</Filter>
@@ -114,7 +129,10 @@
       <Filter>01. Scene\99. Loading</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Terrain.cpp">
-      <Filter>02. GameObject\03. Terrain</Filter>
+      <Filter>02. GameObject\01. For_Stage\02. Terrain</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\DynamicCamera.cpp">
+      <Filter>02. GameObject\02. For_Public\00. DynamicCamera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

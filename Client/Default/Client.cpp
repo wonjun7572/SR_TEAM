@@ -8,10 +8,10 @@
 #define MAX_LOADSTRING 100
 
 // 전역 변수:
-HINSTANCE hInst;                                // 현재 인스턴스입니다.
 WCHAR szTitle[MAX_LOADSTRING];                  // 제목 표시줄 텍스트입니다.
 WCHAR szWindowClass[MAX_LOADSTRING];            // 기본 창 클래스 이름입니다.
-HWND	g_hWnd;
+HWND		g_hWnd;
+HINSTANCE	g_hInst;
 
 // 이 코드 모듈에 들어 있는 함수의 정방향 선언입니다.
 ATOM                MyRegisterClass(HINSTANCE hInstance);
@@ -49,7 +49,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     MSG msg;
 	msg.message = WM_NULL;
 
-
 	FAILED_CHECK_RETURN(Engine::Ready_Timer(L"Timer_Immediate"), FALSE);
 	FAILED_CHECK_RETURN(Engine::Ready_Timer(L"Timer_FPS60"), FALSE);
 
@@ -58,12 +57,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	CMainApp*		pMainApp = CMainApp::Create();
 	NULL_CHECK_RETURN(pMainApp, FALSE);
 
-
-	/*if (nullptr == pMainApp)
-		return FALSE;*/
-
-    // 기본 메시지 루프입니다.
-    while (true)
+	while (true)
     {
 		if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
 		{
@@ -93,12 +87,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		}        
     }
 
-/*
-	if (nullptr != pMainApp)
-	{
-		Safe_Release<CMainApp*>(pMainApp);
-	}*/
-
 	Engine::_ulong		dwRefCnt = 0;
 
 	if (dwRefCnt = Engine::Safe_Release(pMainApp))
@@ -106,7 +94,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		MSG_BOX("MainApp Release Failed");
 		return FALSE;
 	}
-
 
     return (int) msg.wParam;
 }
@@ -151,7 +138,7 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 //
 BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
-   hInst = hInstance; // 인스턴스 핸들을 전역 변수에 저장합니다.
+	g_hInst = hInstance; // 인스턴스 핸들을 전역 변수에 저장합니다.
 
    RECT rc{ 0, 0, WINCX, WINCY };
 
@@ -196,7 +183,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             switch (wmId)
             {
             case IDM_ABOUT:
-                DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
+                DialogBox(g_hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
                 break;
             case IDM_EXIT:
                 DestroyWindow(hWnd);

@@ -46,6 +46,7 @@
 #endif
 #endif
 
-extern HWND g_hWnd;
+extern HWND			g_hWnd;
+extern HINSTANCE	g_hInst;
 
 using namespace std;

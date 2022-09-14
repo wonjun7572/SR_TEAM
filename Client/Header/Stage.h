@@ -4,6 +4,7 @@
 #include "Scene.h"
 
 #include "Terrain.h"
+#include "DynamicCamera.h"
 
 class CStage : public Engine::CScene
 {

@@ -9,6 +9,8 @@
 #include "Transform.h"
 #include "Texture.h"
 
+#include "Camera.h"
+
 #include "ProtoMgr.h"
 #include "Management.h"
 #include "Renderer.h"

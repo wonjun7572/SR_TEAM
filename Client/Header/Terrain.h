@@ -24,7 +24,6 @@ public:
 
 private:
 	HRESULT				Add_Component(void);
-	void				Key_Input(const _float& fTimeDelta);
 
 private:
 	CTerrainTex*		m_pBufferCom = nullptr;

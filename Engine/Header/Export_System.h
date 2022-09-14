@@ -5,6 +5,8 @@
 #include "GraphicDev.h"
 #include "TimerMgr.h"
 #include "FrameMgr.h"
+#include "FontMgr.h"
+#include "InputDev.h"
 
 BEGIN(Engine)
 
@@ -22,6 +24,28 @@ inline void			Update_Timer(const _tchar* pTimerTag);
 // FrameMgr
 inline _bool		IsPermit_Call(const _tchar* pFrameTag, const _float& fTimeDelta);
 inline HRESULT		Ready_Frame(const _tchar* pFrameTag, const _float& fCallLimit);
+
+// InputDev
+
+inline _byte		Get_DIKeyState(_ubyte byKeyID);
+inline _byte		Get_DIMouseState(MOUSEKEYSTATE byMouseID);
+inline _long		Get_DIMouseMove(MOUSEMOVESTATE eMoveState);
+inline	HRESULT		Ready_InputDev(HINSTANCE hInst, HWND hWnd);
+inline void			SetUp_InputDev(void);
+
+// FontMgr
+
+inline HRESULT			Ready_Font(LPDIRECT3DDEVICE9 pGraphicDev,
+	const _tchar* pFontTag,	 // 키값
+	const _tchar* pFontType, // 서체
+	const _uint& iWidth,
+	const _uint& iHeight,
+	const _uint& iWeight);
+
+inline void	Render_Font(const _tchar* pFontTag,
+	const _tchar* pString,
+	const _vec2* pPos,
+	D3DXCOLOR Color);
 
 inline void			Release_System(void);
 
