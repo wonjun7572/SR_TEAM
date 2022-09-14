@@ -1,0 +1,14 @@
+﻿  stdafx.cpp
+  Client.cpp
+  TestPlayer.cpp
+  TestMonster.cpp
+  Terrain.cpp
+  Stage.cpp
+  MainApp.cpp
+  Logo.cpp
+  Loading.cpp
+  BackGround.cpp
+  코드를 생성하고 있습니다...
+     ../Bin\Client.lib 라이브러리 및 ../Bin\Client.exp 개체를 생성하고 있습니다.
+  Client.vcxproj -> C:\Users\sam51\Desktop\SR_TEAM\Client\Default\../Bin\Client.exe
+  Client.vcxproj -> ../Bin\Client.pdb (Full PDB)
