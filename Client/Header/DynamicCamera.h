@@ -22,6 +22,8 @@ public:
 
 private:
 	void		Key_Input(const _float& fTimeDelta);
+	void		Mouse_Move(void);
+	void		Mouse_Fix(void);
 
 public:
 	static CDynamicCamera*		Create(LPDIRECT3DDEVICE9 pGraphicDev,
@@ -32,6 +34,10 @@ public:
 		const _float& fAspect = (float)WINCX / WINCY,
 		const _float& fNear = 0.1f,
 		const _float& fFar = 1000.f);
+
+private:
+	_bool			m_bFix = false;
+	_bool			m_bCheck = true;
 
 private:
 	virtual void Free(void) override;

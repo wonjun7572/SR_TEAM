@@ -37,7 +37,7 @@ Engine::_int CLogo::Update_Scene(const _float& fTimeDelta)
 
 	if (m_pLoading->Get_Finish())
 	{
-		if (GetAsyncKeyState(VK_RETURN) & 0x8000)
+		if (Get_DIKeyState(DIK_RETURN) & 0x8000)
 		{
 			CScene*		pScene = CStage::Create(m_pGraphicDev);
 			NULL_CHECK_RETURN(pScene, E_FAIL);
@@ -59,6 +59,7 @@ void CLogo::LateUpdate_Scene(void)
 void CLogo::Render_Scene(void)
 {
 	// 개발자 모드 출력 함수
+	Render_Font(L"Font_Jinji", m_pLoading->Get_String(), &_vec2(50.f, 50.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
 }
 
 HRESULT CLogo::Ready_Layer_Environment(const _tchar * pLayerTag)

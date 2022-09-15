@@ -47,6 +47,12 @@ Engine::_int CDynamicCamera::Update_Object(const _float& fTimeDelta)
 void CDynamicCamera::LateUpdate_Object(void)
 {
 	CCamera::LateUpdate_Object();
+
+	if (false == m_bFix)
+	{
+		Mouse_Fix();
+		Mouse_Move();
+	}
 }
 
 void CDynamicCamera::Free(void)
@@ -114,4 +120,67 @@ void CDynamicCamera::Key_Input(const _float& fTimeDelta)
 		m_vEye -= vLength;
 		m_vAt -= vLength;
 	}
+
+	if (Get_DIKeyState(DIK_T) & 0x80)
+	{
+		if (m_bCheck)
+			return;
+
+		m_bCheck = true;
+
+		if (m_bFix)
+			m_bFix = false;
+		else
+			m_bFix = true;
+	}
+	else
+		m_bCheck = false;
+
+	if (false == m_bFix)
+		return;
+}
+
+void CDynamicCamera::Mouse_Move(void)
+{
+	_matrix		matCamWorld;
+	D3DXMatrixInverse(&matCamWorld, nullptr, &m_matView);
+
+	_long		dwMouseMove = 0;
+
+	if (dwMouseMove = Engine::Get_DIMouseMove(DIMS_X))
+	{
+		_vec3		vUp{ 0.f, 1.f, 0.f };
+
+		_vec3		vLook = m_vAt - m_vEye;
+
+		_matrix		matRot;
+		D3DXMatrixRotationAxis(&matRot, &vUp, D3DXToRadian(dwMouseMove / 10.f));
+		D3DXVec3TransformNormal(&vLook, &vLook, &matRot);
+
+		m_vAt = m_vEye + vLook;
+
+	}
+
+	if (dwMouseMove = Engine::Get_DIMouseMove(DIMS_Y))
+	{
+		_vec3		vRight;
+		memcpy(&vRight, &matCamWorld.m[0][0], sizeof(_vec3));
+
+		_vec3		vLook = m_vAt - m_vEye;
+
+		_matrix		matRot;
+		D3DXMatrixRotationAxis(&matRot, &vRight, D3DXToRadian(dwMouseMove / 10.f));
+		D3DXVec3TransformNormal(&vLook, &vLook, &matRot);
+
+		m_vAt = m_vEye + vLook;
+
+	}
+}
+
+void CDynamicCamera::Mouse_Fix(void)
+{
+	POINT	pt{ WINCX >> 1 , WINCY >> 1 };
+
+	ClientToScreen(g_hWnd, &pt);
+	SetCursorPos(pt.x, pt.y);
 }

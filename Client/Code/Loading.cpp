@@ -40,6 +40,8 @@ _uint CLoading::Loading_ForStage(void)
 	
 	m_bFinish = true;
 
+	lstrcpy(m_szLoading, L"Loading Complete!!!!!!!");
+
 	return _uint();
 }
 

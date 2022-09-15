@@ -58,6 +58,9 @@
     <Filter Include="02. GameObject\02. For_Public\00. DynamicCamera">
       <UniqueIdentifier>{e514a172-e61f-44ca-a57b-b9e601538f45}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\02. For_Public\01. StaticCamera">
+      <UniqueIdentifier>{16f0def3-4911-4ea3-8331-aff0318350a1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -99,6 +102,9 @@
     <ClInclude Include="..\Header\DynamicCamera.h">
       <Filter>02. GameObject\02. For_Public\00. DynamicCamera</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\StaticCamera.h">
+      <Filter>02. GameObject\02. For_Public\01. StaticCamera</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -133,6 +139,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\DynamicCamera.cpp">
       <Filter>02. GameObject\02. For_Public\00. DynamicCamera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\StaticCamera.cpp">
+      <Filter>02. GameObject\02. For_Public\01. StaticCamera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

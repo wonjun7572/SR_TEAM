@@ -75,39 +75,26 @@ HRESULT CTestPlayer::Add_Component(void)
 
 void CTestPlayer::Key_Input(const _float& fTimeDelta)
 {
-	m_pTransCom->Get_Info(INFO_UP, &m_vDirection);
+	m_pTransCom->Get_Info(INFO_LOOK, &m_vDirection);
 
 
-	if (GetAsyncKeyState(VK_UP) & 0x8000)
+	if (Get_DIKeyState(DIK_UP) & 0x8000)
 	{
 		D3DXVec3Normalize(&m_vDirection, &m_vDirection);
 		m_pTransCom->Move_Pos(&(m_vDirection * 10.f * fTimeDelta));
 	}
 
-	if (GetAsyncKeyState(VK_DOWN) & 0x8000)
+	if (Get_DIKeyState(DIK_DOWN) & 0x8000)
 	{
 		D3DXVec3Normalize(&m_vDirection, &m_vDirection);
-		m_pTransCom->Move_Pos(&(m_vDirection * -10.f * fTimeDelta));	
+		m_pTransCom->Move_Pos(&(m_vDirection * -10.f * fTimeDelta));
 	}
 
-
-	if (GetAsyncKeyState('Q') & 0x8000)
-		m_pTransCom->Rotation(ROT_X, D3DXToRadian(180.f * fTimeDelta));
-
-	if (GetAsyncKeyState('A') & 0x8000)
-		m_pTransCom->Rotation(ROT_X, D3DXToRadian(-180.f * fTimeDelta));
-
-	if (GetAsyncKeyState('W') & 0x8000)
+	if (Get_DIKeyState(DIK_RIGHT) & 0x8000)
 		m_pTransCom->Rotation(ROT_Y, D3DXToRadian(180.f * fTimeDelta));
 
-	if (GetAsyncKeyState('S') & 0x8000)
+	if (Get_DIKeyState(DIK_LEFT) & 0x8000)
 		m_pTransCom->Rotation(ROT_Y, D3DXToRadian(-180.f * fTimeDelta));
-
-	if (GetAsyncKeyState('E') & 0x8000)
-		m_pTransCom->Rotation(ROT_Z, D3DXToRadian(180.f * fTimeDelta));
-
-	if (GetAsyncKeyState('D') & 0x8000)
-		m_pTransCom->Rotation(ROT_Z, D3DXToRadian(-180.f * fTimeDelta));
 
 }
 
