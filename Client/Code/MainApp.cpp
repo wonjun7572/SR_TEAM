@@ -3,14 +3,11 @@
 
 #include "Logo.h"
 
-
-
 USING(Engine)
 CMainApp::CMainApp()	
 	: m_pGraphicDev(nullptr)
 {
 }
-
 
 CMainApp::~CMainApp()
 {
