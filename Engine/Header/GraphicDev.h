@@ -14,13 +14,13 @@ public:
 	virtual ~CGraphicDev();
 
 public:
+	LPDIRECT3D9				Get_D3D9() { return m_pSDK; }
 	LPDIRECT3DDEVICE9		Get_GraphicDev(void) { return m_pGraphicDev; }
 
 public:
 	HRESULT			Ready_GraphicDev(HWND hWnd, WINMODE eMode, const _uint& iSizeX, const _uint& iSizeY, CGraphicDev** ppGraphicDev);
 	void			Render_Begin(D3DXCOLOR Color);
 	void			Render_End(HWND hWnd = nullptr);
-private:
 
 
 private:

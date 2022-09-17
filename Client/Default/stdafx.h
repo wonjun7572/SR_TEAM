@@ -32,6 +32,10 @@
 #include <process.h>
 #include <fstream>
 
+#include "imgui.h"
+#include "imgui_impl_dx9.h"
+#include "imgui_impl_win32.h"
+
 #ifdef _DEBUG
 
 #define _CRTDBG_MAP_ALLOC
@@ -41,9 +45,10 @@
 #ifndef DBG_NEW 
 
 #define DBG_NEW new ( _NORMAL_BLOCK , __FILE__ , __LINE__ ) 
-#define new DBG_NEW 
+//#define new DBG_NEW 
 
 #endif
+
 #endif
 
 extern HWND			g_hWnd;

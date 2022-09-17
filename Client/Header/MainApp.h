@@ -27,6 +27,8 @@ public:
 private:
 	HRESULT			SetUp_DefaultSetting(LPDIRECT3DDEVICE9* ppGraphicDev);
 	HRESULT			Ready_Scene(LPDIRECT3DDEVICE9 pGraphicDev, Engine::CManagement** ppManagement);
+	
+	void			Render_ImgUI();
 
 private:
 	Engine::CGraphicDev*			m_pDeviceClass = nullptr;
@@ -34,6 +36,8 @@ private:
 	Engine::CTimerMgr*				m_pTimerMgr = nullptr;
 
 	LPDIRECT3DDEVICE9				m_pGraphicDev;
+
+	bool							m_bImgUI = false;
 
 public:			// 객체 생성 함수
 	static		CMainApp*		Create(void);

@@ -11,9 +11,11 @@
 BEGIN(Engine)
 
 // GraphicDev
-inline HRESULT		Ready_GraphicDev(HWND hWnd, WINMODE eMode, const _uint& iSizeX, const _uint& iSizeY, CGraphicDev** ppGraphicDev);
-inline void			Render_Begin(D3DXCOLOR Color);
-inline void			Render_End(HWND hWnd = nullptr);
+inline HRESULT			 Ready_GraphicDev(HWND hWnd, WINMODE eMode, const _uint& iSizeX, const _uint& iSizeY, CGraphicDev** ppGraphicDev);
+inline void				 Render_Begin(D3DXCOLOR Color);
+inline void				 Render_End(HWND hWnd = nullptr);
+inline LPDIRECT3D9		 Get_D3D() { return CGraphicDev::GetInstance()->Get_D3D9(); }
+inline LPDIRECT3DDEVICE9 Get_GraphicDev() { return CGraphicDev::GetInstance()->Get_GraphicDev(); }
 
 
 // TimerMgr
