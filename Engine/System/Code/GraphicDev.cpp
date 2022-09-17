@@ -63,6 +63,8 @@ HRESULT CGraphicDev::Ready_GraphicDev(HWND hWnd, WINMODE eMode,
 
 	*ppGraphicDev = this;
 
+
+
 	return S_OK;
 }
 

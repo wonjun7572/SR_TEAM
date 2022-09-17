@@ -52,6 +52,9 @@
     <Filter Include="01. GameObject\Camera">
       <UniqueIdentifier>{bb3ce793-6d96-4598-9446-3921f5dea4df}</UniqueIdentifier>
     </Filter>
+    <Filter Include="00. Component\00. VIBuffer\04. CubeTex">
+      <UniqueIdentifier>{33637eea-b268-4655-a730-f4ed7b3c4e56}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Header\TriCol.h">
@@ -102,6 +105,9 @@
     <ClInclude Include="..\..\Header\Camera.h">
       <Filter>01. GameObject\Camera</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Header\CubeTex.h">
+      <Filter>00. Component\00. VIBuffer\04. CubeTex</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\TriCol.cpp">
@@ -148,6 +154,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\Camera.cpp">
       <Filter>01. GameObject\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CubeTex.cpp">
+      <Filter>00. Component\00. VIBuffer\04. CubeTex</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

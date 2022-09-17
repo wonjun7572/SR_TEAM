@@ -5,6 +5,7 @@
 
 #include "Terrain.h"
 #include "TestPlayer.h"
+#include "SkyBox.h"
 #include "StaticCamera.h"
 #include "DynamicCamera.h"
 

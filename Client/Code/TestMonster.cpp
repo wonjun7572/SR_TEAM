@@ -47,7 +47,6 @@ void CTestMonster::LateUpdate_Object(void)
 void CTestMonster::Render_Obejct(void)
 {
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransCom->Get_WorldMatrixPointer());
-	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
 	m_pBufferCom->Render_Buffer();
 }

@@ -53,4 +53,5 @@ inline void			Release_System(void);
 #include "Export_System.inl"
 
 END
+
 #endif // Export_System_h__

@@ -35,8 +35,6 @@ private:
 
 	LPDIRECT3DDEVICE9				m_pGraphicDev;
 
-
-
 public:			// 객체 생성 함수
 	static		CMainApp*		Create(void);
 

@@ -6,6 +6,7 @@
 #include "RcCol.h"
 #include "RcTex.h"
 #include "TerrainTex.h"
+#include "CubeTex.h"
 #include "Transform.h"
 #include "Texture.h"
 

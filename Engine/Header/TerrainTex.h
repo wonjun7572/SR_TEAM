@@ -15,6 +15,13 @@ public:
 	HRESULT Ready_Buffer(const _ulong& dwCntX, const _ulong& dwCntZ, const _ulong& dwVtxItv);
 	virtual void Render_Buffer(void) override;
 
+	void	CreateTextureFile();
+
+private:
+	HANDLE				m_hFile;
+	BITMAPFILEHEADER	m_fH;
+	BITMAPINFOHEADER	m_iH;
+
 public:
 	static CTerrainTex*	Create(LPDIRECT3DDEVICE9 pGraphicDev, const _ulong& dwCntX, const _ulong& dwCntZ, const _ulong& dwVtxItv);
 	CComponent*	Clone(void);

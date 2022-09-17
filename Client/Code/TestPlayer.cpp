@@ -43,14 +43,9 @@ void CTestPlayer::LateUpdate_Object(void)
 void CTestPlayer::Render_Obejct(void)
 {
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransCom->Get_WorldMatrixPointer());
-	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-
-	//m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 
 	m_pTextureCom->Set_Texture(0);	// 텍스처 정보 세팅을 우선적으로 한다.
 	m_pBufferCom->Render_Buffer();
-	
-	//m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 }
 
 HRESULT CTestPlayer::Add_Component(void)
@@ -76,7 +71,6 @@ HRESULT CTestPlayer::Add_Component(void)
 void CTestPlayer::Key_Input(const _float& fTimeDelta)
 {
 	m_pTransCom->Get_Info(INFO_LOOK, &m_vDirection);
-
 
 	if (Get_DIKeyState(DIK_UP) & 0x8000)
 	{

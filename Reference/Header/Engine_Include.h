@@ -1,6 +1,8 @@
 #ifndef Engine_Include_h__
 #define Engine_Include_h__
 
+
+
 #include <d3d9.h>
 #include <d3dx9.h>
 
@@ -13,6 +15,9 @@
 #include <iostream>
 #include <process.h>
 #include <fstream>
+#include <cstdint>
+#include <thread>
+
 
 #define DIRECTINPUT_VERSION	0x0800
 #include <dinput.h>
