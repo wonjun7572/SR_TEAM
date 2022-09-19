@@ -144,6 +144,7 @@ void CMainApp::Render_ImgUI()
 			ImGui::DragFloat3("PlayerRotation X/Y/Z", pPlayerTransformCom->m_vAngle, 0.1f, -180.0f, 180.0f);
 			ImGui::DragFloat3("PlayerTranslation X/Y/Z", pPlayerTransformCom->m_vInfo[INFO_POS], 0.1f, -1000.0f, 1000.0f);
 		}
+
 		if (ImGui::CollapsingHeader("Terrain"))
 		{
 			CTransform*		pTerrainTransformCom = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Environment", L"Terrain", L"Proto_TransformCom", ID_DYNAMIC));
@@ -153,6 +154,7 @@ void CMainApp::Render_ImgUI()
 			ImGui::DragFloat3("TerrainRotation X/Y/Z", pTerrainTransformCom->m_vAngle, 0.1f, -180.0f, 180.0f);
 			ImGui::DragFloat3("TerrainTranslation X/Y/Z", pTerrainTransformCom->m_vInfo[INFO_POS], 0.1f, -1000.0f, 1000.0f);
 		}
+
 		if (ImGui::CollapsingHeader("SkyBox"))
 		{
 			CTransform*		pSkyBoxTransformCom = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Environment", L"SkyBox", L"Proto_TransformCom", ID_DYNAMIC));

@@ -4,7 +4,7 @@
 namespace Engine
 {
 	class CTransform;
-	class CRcTex;
+	class CCubeTex;
 	class CTexture;
 	class CCalculator;
 }
@@ -27,7 +27,7 @@ private:
 	void				Set_OnTerrain();
 
 private:
-	CRcTex*				m_pBufferCom = nullptr;
+	CCubeTex*				m_pBufferCom = nullptr;
 	CTransform*			m_pTransCom = nullptr;
 	CTexture*			m_pTextureCom = nullptr;
 	CCalculator*		m_pCalculatorCom = nullptr;

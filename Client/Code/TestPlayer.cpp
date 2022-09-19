@@ -9,7 +9,6 @@ CTestPlayer::CTestPlayer(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 }
 
-
 CTestPlayer::~CTestPlayer()
 {
 }
@@ -24,11 +23,8 @@ HRESULT CTestPlayer::Ready_Object(void)
 _int CTestPlayer::Update_Object(const _float & fTimeDelta)
 {
 	Key_Input(fTimeDelta);
-
 	Engine::CGameObject::Update_Object(fTimeDelta);
-
 	Add_RenderGroup(RENDER_NONALPHA, this);
-
 	return 0;
 }
 
@@ -41,8 +37,7 @@ void CTestPlayer::LateUpdate_Object(void)
 void CTestPlayer::Render_Object(void)
 {
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransCom->Get_WorldMatrixPointer());
-
-	m_pTextureCom->Set_Texture(0);	// 텍스처 정보 세팅을 우선적으로 한다.
+	m_pTextureCom->Set_Texture(0);	
 	m_pBufferCom->Render_Buffer();
 }
 
@@ -50,13 +45,13 @@ HRESULT CTestPlayer::Add_Component(void)
 {
 	CComponent* pComponent = nullptr;
 
-	pComponent = m_pBufferCom = dynamic_cast<CRcTex*>(Clone_Proto(L"Proto_RcTexCom"));
+	pComponent = m_pBufferCom = dynamic_cast<CCubeTex*>(Clone_Proto(L"Proto_CubeTexCom"));
 	NULL_CHECK_RETURN(m_pBufferCom, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Proto_RcTexCom", pComponent });
+	m_mapComponent[ID_STATIC].insert({ L"Proto_CubeTexCom", pComponent });
 
-	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Clone_Proto(L"Proto_LogoTexture"));
+	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Clone_Proto(L"Proto_CubePlayerTexture"));
 	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Proto_LogoTexture", pComponent });
+	m_mapComponent[ID_STATIC].insert({ L"Proto_CubePlayerTexture", pComponent });
 
 	pComponent = m_pTransCom = dynamic_cast<CTransform*>(Clone_Proto(L"Proto_TransformCom"));
 	NULL_CHECK_RETURN(m_pTransCom, E_FAIL);
@@ -99,7 +94,7 @@ void CTestPlayer::Set_OnTerrain(void)
 
 	_float fHeight = m_pCalculatorCom->HeightOnTerrain(&vPos, pTerrainTexCom->Get_VtxPos(), VTXCNTX, VTXCNTZ);
 
-	m_pTransCom->Set_Pos(vPos.x, fHeight, vPos.z);
+	m_pTransCom->Set_Pos(vPos.x, fHeight + m_pTransCom->m_vScale.y, vPos.z);
 }
 
 CTestPlayer * CTestPlayer::Create(LPDIRECT3DDEVICE9 pGraphicDev)
