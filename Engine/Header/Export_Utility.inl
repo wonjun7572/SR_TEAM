@@ -32,7 +32,6 @@ CComponent*				Get_Component(const _tchar* pLayerTag, const _tchar* pObjTag, con
 	return CManagement::GetInstance()->Get_Component(pLayerTag, pObjTag, pComponentTag, eID);
 }
 
-
 inline HRESULT			Ready_Proto(const _tchar* pProtoTag, CComponent* pComponent)
 {
 	return CProtoMgr::GetInstance()->Ready_Proto(pProtoTag, pComponent);
@@ -56,6 +55,10 @@ void		Clear_RenderGroup(void)
 	CRenderer::GetInstance()->Clear_RenderGroup();
 }
 
+list<CGameObject*>			Get_GameObjectGroup(RENDERID eId)
+{
+	CRenderer::GetInstance()->Get_GameObjectGroup(eId);
+}
 
 inline void			Release_Utility(void)
 {

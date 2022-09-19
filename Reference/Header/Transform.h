@@ -17,6 +17,13 @@ public:
 	void				Rotation(ROTATIONID eID, const _float& fAngle){	*(((_float*)&m_vAngle) + eID) += fAngle;	}
 	void				Get_Info(INFOID eID, _vec3* pInfo) {	memcpy(pInfo, &m_matWorld.m[eID][0], sizeof(_vec3));}
 	void				Set_Scale(_float fX, _float fY, _float fZ){	m_vScale = { fX, fY, fZ }; }
+	void				Set_Pos(const _float& fX, const _float& fY, const _float& fZ)
+	{
+		m_vInfo[INFO_POS].x = fX;
+		m_vInfo[INFO_POS].y = fY;
+		m_vInfo[INFO_POS].z = fZ;
+	}
+
 
 public:
 	void				Chase_Target(const _vec3* pTargetPos, const _float& fSpeed, const _float& fTimeDelta);

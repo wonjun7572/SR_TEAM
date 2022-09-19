@@ -23,7 +23,6 @@ HRESULT CTestPlayer::Ready_Object(void)
 
 _int CTestPlayer::Update_Object(const _float & fTimeDelta)
 {
-
 	Key_Input(fTimeDelta);
 
 	Engine::CGameObject::Update_Object(fTimeDelta);
@@ -35,12 +34,11 @@ _int CTestPlayer::Update_Object(const _float & fTimeDelta)
 
 void CTestPlayer::LateUpdate_Object(void)
 {
-	
-
 	/*Engine::CGameObject::LateUpdate_Object();*/
+	Set_OnTerrain();
 }
 
-void CTestPlayer::Render_Obejct(void)
+void CTestPlayer::Render_Object(void)
 {
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransCom->Get_WorldMatrixPointer());
 
@@ -63,7 +61,6 @@ HRESULT CTestPlayer::Add_Component(void)
 	pComponent = m_pTransCom = dynamic_cast<CTransform*>(Clone_Proto(L"Proto_TransformCom"));
 	NULL_CHECK_RETURN(m_pTransCom, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_TransformCom", pComponent });
-
 
 	return S_OK;
 }
@@ -90,6 +87,19 @@ void CTestPlayer::Key_Input(const _float& fTimeDelta)
 	if (Get_DIKeyState(DIK_LEFT) & 0x8000)
 		m_pTransCom->Rotation(ROT_Y, D3DXToRadian(-180.f * fTimeDelta));
 
+}
+
+void CTestPlayer::Set_OnTerrain(void)
+{
+	_vec3		vPos;
+	m_pTransCom->Get_Info(INFO_POS, &vPos);
+
+	Engine::CTerrainTex*	pTerrainTexCom = dynamic_cast<Engine::CTerrainTex*>(Engine::Get_Component(L"Layer_Environment", L"Terrain", L"Proto_TerrainTexCom", ID_STATIC));
+	NULL_CHECK(pTerrainTexCom);
+
+	_float fHeight = m_pCalculatorCom->HeightOnTerrain(&vPos, pTerrainTexCom->Get_VtxPos(), VTXCNTX, VTXCNTZ);
+
+	m_pTransCom->Set_Pos(vPos.x, fHeight, vPos.z);
 }
 
 CTestPlayer * CTestPlayer::Create(LPDIRECT3DDEVICE9 pGraphicDev)

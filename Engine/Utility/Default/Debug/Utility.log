@@ -1,20 +1,10 @@
-﻿  TerrainTex.cpp
-  코드를 생성하고 있습니다...
-  건너뛰고 있습니다... (관련된 변경 내용 없음)
-  VIBuffer.cpp
-  TriCol.cpp
-  Scene.cpp
-  Renderer.cpp
-  RcCol.cpp
-  ProtoMgr.cpp
-  Layer.cpp
-  GameObject.cpp
-  Component.cpp
+﻿  Calculator.cpp
      ../Bin\Utility.lib 라이브러리 및 ../Bin\Utility.exp 개체를 생성하고 있습니다.
   Utility.vcxproj -> C:\Users\sam51\Desktop\SR_TEAM\Engine\Utility\Default\../Bin\Utility.dll
   Utility.vcxproj -> ../Bin\Utility.pdb (Full PDB)
           1개 파일이 복사되었습니다.
           1개 파일이 복사되었습니다.
+  .\Engine\Header\Calculator.h
   .\Engine\Header\Camera.h
   .\Engine\Header\Component.h
   .\Engine\Header\CubeTex.h
@@ -50,4 +40,4 @@
   .\Engine\Header\Transform.h
   .\Engine\Header\TriCol.h
   .\Engine\Header\VIBuffer.h
-         35개 파일이 복사되었습니다.
+         36개 파일이 복사되었습니다.

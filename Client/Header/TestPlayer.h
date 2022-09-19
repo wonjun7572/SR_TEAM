@@ -6,10 +6,10 @@ namespace Engine
 	class CTransform;
 	class CRcTex;
 	class CTexture;
+	class CCalculator;
 }
 
-class CTestPlayer :
-	public CGameObject
+class CTestPlayer : public CGameObject
 {
 private:
 	explicit CTestPlayer(LPDIRECT3DDEVICE9 pGraphicDev);
@@ -19,16 +19,18 @@ public:
 	virtual HRESULT Ready_Object(void) override;
 	virtual _int	Update_Object(const _float& fTimeDelta) override;
 	virtual void	LateUpdate_Object(void) override;
-	virtual void	Render_Obejct(void) override;
+	virtual void	Render_Object(void) override;
 
 private:
 	HRESULT				Add_Component(void);
 	void				Key_Input(const _float& fTimeDelta);
+	void				Set_OnTerrain();
 
 private:
 	CRcTex*				m_pBufferCom = nullptr;
 	CTransform*			m_pTransCom = nullptr;
 	CTexture*			m_pTextureCom = nullptr;
+	CCalculator*		m_pCalculatorCom = nullptr;
 
 	_vec3				m_vDirection;
 

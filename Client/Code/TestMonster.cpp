@@ -44,7 +44,7 @@ void CTestMonster::LateUpdate_Object(void)
 	Engine::CGameObject::LateUpdate_Object();
 }
 
-void CTestMonster::Render_Obejct(void)
+void CTestMonster::Render_Object(void)
 {
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransCom->Get_WorldMatrixPointer());
 

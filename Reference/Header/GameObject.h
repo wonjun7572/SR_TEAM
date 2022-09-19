@@ -19,7 +19,7 @@ public:
 	virtual		HRESULT		Ready_Object(void);
 	virtual		_int		Update_Object(const _float& fTimeDelta);
 	virtual		void		LateUpdate_Object(void);
-	virtual		void		Render_Obejct(void);
+	virtual		void		Render_Object(void);
 
 private:
 	CComponent*		Find_Component(const _tchar* pComponentTag, COMPONENTID eID);
@@ -28,7 +28,7 @@ protected:
 	LPDIRECT3DDEVICE9					m_pGraphicDev;
 	map<const _tchar*, CComponent*>		m_mapComponent[ID_END];
 
-
+	CGameObject*			Get_GameObject() { return this; }
 public:
 	virtual void	Free(void);
 };

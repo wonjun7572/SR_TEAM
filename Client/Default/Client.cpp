@@ -65,21 +65,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	CMainApp*		pMainApp = CMainApp::Create();
 	NULL_CHECK_RETURN(pMainApp, FALSE);
 
-	// Setup Dear ImGui context
-	IMGUI_CHECKVERSION();
-	ImGui::CreateContext();
-	ImGuiIO& io = ImGui::GetIO(); (void)io;
-	//io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
-	//io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
-
-	// Setup Dear ImGui style
-	//ImGui::StyleColorsDark();
-	ImGui::StyleColorsLight();
-
-	// Setup Platform/Renderer backends
-	ImGui_ImplWin32_Init(g_hWnd);
-	ImGui_ImplDX9_Init(Get_GraphicDev());
-	
 	while (true)
     {
 		if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
@@ -109,10 +94,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 			}			
 		}
     }
-
-	ImGui_ImplDX9_Shutdown();
-	ImGui_ImplWin32_Shutdown();
-	ImGui::DestroyContext();
 
 	Engine::_ulong		dwRefCnt = 0;
 
@@ -199,8 +180,12 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 //  WM_DESTROY  - 종료 메시지를 게시하고 반환합니다.
 //
 //
+extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
+	if (ImGui_ImplWin32_WndProcHandler(hWnd, message, wParam, lParam))
+		return true;
+
     switch (message)
     {
     case WM_COMMAND:

@@ -15,14 +15,16 @@ CSkyBox::~CSkyBox()
 HRESULT CSkyBox::Ready_Object(void)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
-
 	m_pTransCom->Set_Scale(40.f, 40.f, 40.f);
-
 	return S_OK;
 }
 
 _int CSkyBox::Update_Object(const _float & fTimeDelta)
 {
+	_matrix		matView;
+	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
+	D3DXMatrixInverse(&matView, nullptr, &matView);
+	m_pTransCom->Set_Pos(matView._41, matView._42 + 3.f, matView._43);
 	CGameObject::Update_Object(fTimeDelta);
 	Add_RenderGroup(RENDER_PRIORITY, this);
 	return 0;
@@ -33,14 +35,16 @@ void CSkyBox::LateUpdate_Object(void)
 	CGameObject::LateUpdate_Object();
 }
 
-void CSkyBox::Render_Obejct(void)
+void CSkyBox::Render_Object(void)
 {
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransCom->Get_WorldMatrixPointer());
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
 
 	m_pTextureCom->Set_Texture(2);
 	m_pBufferCom->Render_Buffer();
 
+	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 }
 

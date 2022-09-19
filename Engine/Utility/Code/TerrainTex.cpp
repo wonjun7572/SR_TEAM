@@ -4,7 +4,7 @@
 USING(Engine)
 
 CTerrainTex::CTerrainTex(LPDIRECT3DDEVICE9 pGraphicDev)
-	: CVIBuffer(pGraphicDev) , m_hFile(nullptr)
+	: CVIBuffer(pGraphicDev) , m_hFile(nullptr), m_bClone(false), m_pPos(nullptr)
 {
 	ZeroMemory(&m_fH, sizeof(BITMAPFILEHEADER));
 	ZeroMemory(&m_iH, sizeof(BITMAPINFOHEADER));
@@ -12,7 +12,7 @@ CTerrainTex::CTerrainTex(LPDIRECT3DDEVICE9 pGraphicDev)
 
 
 Engine::CTerrainTex::CTerrainTex(const CTerrainTex& rhs)
-	: CVIBuffer(rhs) , m_hFile(rhs.m_hFile)
+	: CVIBuffer(rhs) , m_hFile(rhs.m_hFile) , m_bClone(true), m_pPos(rhs.m_pPos)
 {
 	memcpy(&m_fH, &rhs.m_fH, sizeof(BITMAPFILEHEADER));
 	memcpy(&m_iH, &rhs.m_iH, sizeof(BITMAPINFOHEADER));
@@ -26,6 +26,7 @@ CTerrainTex::~CTerrainTex()
 HRESULT CTerrainTex::Ready_Buffer(const _ulong& dwCntX, const _ulong& dwCntZ, const _ulong& dwVtxItv)
 {
 	m_dwVtxCnt = dwCntX * dwCntZ;
+	m_pPos = new _vec3[m_dwVtxCnt];
 	m_dwTriCnt = (dwCntX - 1) * (dwCntZ - 1) * 2;
 	m_dwVtxSize = sizeof(VTXTEX);
 	m_dwFVF = FVF_TEX;
@@ -61,6 +62,7 @@ HRESULT CTerrainTex::Ready_Buffer(const _ulong& dwCntX, const _ulong& dwCntZ, co
 			dwIndex = i * dwCntX + j;
 
 			pVertex[dwIndex].vPos = { _float(j) * dwVtxItv,  (pPixel[dwIndex] & 0x000000ff) / 20.f, _float(i) * dwVtxItv };
+			m_pPos[dwIndex] = pVertex[dwIndex].vPos;
 			pVertex[dwIndex].vTexUV = { _float(j) / (dwCntX - 1) * 20.f , _float(i) / (dwCntZ - 1) * 20.f };
 		}
 	}
@@ -151,4 +153,7 @@ CComponent * CTerrainTex::Clone(void)
 void CTerrainTex::Free(void)
 {
 	CVIBuffer::Free();
+
+	if (m_bClone == false)
+		Safe_Delete_Array(m_pPos);
 }

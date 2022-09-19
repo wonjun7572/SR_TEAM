@@ -15,6 +15,8 @@ protected:
 public:
 	CComponent*				Get_Component(const _tchar* pLayerTag, const _tchar* pObjTag, const _tchar* pComponentTag, COMPONENTID eID);
 
+	map<const _tchar*, CLayer*> Get_MapLayer() { return m_mapLayer; }
+
 public:
 	virtual		HRESULT		Ready_Scene(void);
 	virtual		_int Update_Scene(const _float& fTimeDelta);

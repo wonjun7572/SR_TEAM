@@ -19,6 +19,10 @@ public:
 	void		Render_GameObject(LPDIRECT3DDEVICE9& pGraphicDev);
 	void		Clear_RenderGroup(void);
 
+	list<CGameObject*>			Get_GameObjectGroup(RENDERID eId)
+	{
+		return m_RenderGroup[eId];
+	}
 
 private:
 	list<CGameObject*>			m_RenderGroup[RENDER_END];

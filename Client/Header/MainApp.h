@@ -36,7 +36,6 @@ private:
 	Engine::CTimerMgr*				m_pTimerMgr = nullptr;
 
 	LPDIRECT3DDEVICE9				m_pGraphicDev;
-
 	bool							m_bImgUI = false;
 
 public:			// 객체 생성 함수

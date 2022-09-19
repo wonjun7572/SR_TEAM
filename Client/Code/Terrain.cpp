@@ -34,7 +34,7 @@ void CTerrain::LateUpdate_Object(void)
 	Engine::CGameObject::LateUpdate_Object();
 }
 
-void CTerrain::Render_Obejct(void)
+void CTerrain::Render_Object(void)
 {
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransCom->Get_WorldMatrixPointer());
 
@@ -57,7 +57,6 @@ HRESULT CTerrain::Add_Component(void)
 	pComponent = m_pTransCom = dynamic_cast<CTransform*>(Clone_Proto(L"Proto_TransformCom"));
 	NULL_CHECK_RETURN(m_pTransCom, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_TransformCom", pComponent });
-
 
 	return S_OK;
 }
