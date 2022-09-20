@@ -29,6 +29,8 @@ private:
 
 	HRESULT			Ready_Proto(void);
 
+	HRESULT			Ready_Light(void);
+
 public:
 	static CStage*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
 

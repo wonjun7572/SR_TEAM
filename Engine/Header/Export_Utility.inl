@@ -60,8 +60,14 @@ list<CGameObject*>			Get_GameObjectGroup(RENDERID eId)
 	CRenderer::GetInstance()->Get_GameObjectGroup(eId);
 }
 
+HRESULT			Ready_Light(LPDIRECT3DDEVICE9 pGraphicDev, const D3DLIGHT9* tLightInfo, const _uint& iIndex)
+{
+	return CLightMgr::GetInstance()->Ready_Light(pGraphicDev, tLightInfo, iIndex);
+}
+
 inline void			Release_Utility(void)
 {
+	CLightMgr::GetInstance()->DestroyInstance();
 	CRenderer::GetInstance()->DestroyInstance();
 	CProtoMgr::GetInstance()->DestroyInstance();
 	CManagement::GetInstance()->DestroyInstance();

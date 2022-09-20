@@ -10,12 +10,14 @@
 #include "Calculator.h"
 #include "Transform.h"
 #include "Texture.h"
+#include "Light.h"
 
 #include "Camera.h"
 
 #include "ProtoMgr.h"
 #include "Management.h"
 #include "Renderer.h"
+#include "LightMgr.h"
 
 BEGIN(Engine)
 
@@ -42,7 +44,13 @@ inline void							Add_RenderGroup(RENDERID eID, CGameObject* pGameObject);
 inline void							Render_GameObject(LPDIRECT3DDEVICE9& pGraphicDev);
 inline void							Clear_RenderGroup(void);
 inline list<CGameObject*>			Get_GameObjectGroup(RENDERID eId);
+
+// LightMgr
+inline HRESULT			Ready_Light(LPDIRECT3DDEVICE9 pGraphicDev, const D3DLIGHT9* tLightInfo, const _uint& iIndex);
+
 inline void			Release_Utility(void);
+
+
 
 #include "Export_Utility.inl"
 

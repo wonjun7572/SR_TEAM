@@ -93,6 +93,8 @@ HRESULT CMainApp::SetUp_DefaultSetting(LPDIRECT3DDEVICE9 * ppGraphicDev)
 	ImGui_ImplWin32_Init(g_hWnd);
 	ImGui_ImplDX9_Init(Get_GraphicDev());
 
+	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
+
 	return S_OK;
 }
 

@@ -38,7 +38,7 @@ HRESULT CTerrainTex::Ready_Buffer(const _ulong& dwCntX, const _ulong& dwCntZ, co
 
 	_ulong	dwByte = 0;
 
-	m_hFile = CreateFile(L"../Bin/Resource/Texture/Terrain/Height1.bmp", GENERIC_READ, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NO_SCRUB_DATA, 0);
+	m_hFile = CreateFile(L"../Bin/Resource/Texture/Terrain/Height.bmp", GENERIC_READ, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NO_SCRUB_DATA, 0);
 
 	ReadFile(m_hFile, &m_fH, sizeof(BITMAPFILEHEADER), &dwByte, nullptr);
 	ReadFile(m_hFile, &m_iH, sizeof(BITMAPINFOHEADER), &dwByte, nullptr);
@@ -63,11 +63,11 @@ HRESULT CTerrainTex::Ready_Buffer(const _ulong& dwCntX, const _ulong& dwCntZ, co
 
 			pVertex[dwIndex].vPos = { _float(j) * dwVtxItv,  (pPixel[dwIndex] & 0x000000ff) / 20.f, _float(i) * dwVtxItv };
 			m_pPos[dwIndex] = pVertex[dwIndex].vPos;
+			pVertex[dwIndex].vNormal = { 0.f, 0.f, 0.f };
 			pVertex[dwIndex].vTexUV = { _float(j) / (dwCntX - 1) * 20.f , _float(i) / (dwCntZ - 1) * 20.f };
 		}
 	}
-	
-	m_pVB->Unlock();
+
 
 	Safe_Delete_Array(pPixel);
 
@@ -83,20 +83,44 @@ HRESULT CTerrainTex::Ready_Buffer(const _ulong& dwCntX, const _ulong& dwCntZ, co
 		for (_ulong j = 0; j < dwCntX - 1; ++j)
 		{
 			dwIndex = i * dwCntX + j;
+			_vec3	vLook, vRight, vNormal;
 
 			// 오른쪽 위
 			pIndex[dwTriCnt]._0 = dwIndex + dwCntX;
 			pIndex[dwTriCnt]._1 = dwIndex + dwCntX + 1;
 			pIndex[dwTriCnt]._2 = dwIndex + 1;
+
+			vLook = pVertex[pIndex[dwTriCnt]._1].vPos - pVertex[pIndex[dwTriCnt]._2].vPos;
+			vRight = pVertex[pIndex[dwTriCnt]._1].vPos - pVertex[pIndex[dwTriCnt]._0].vPos;
+			D3DXVec3Cross(&vNormal, &vLook, &vRight);
+
+			pVertex[pIndex[dwTriCnt]._0].vNormal += vNormal;
+			pVertex[pIndex[dwTriCnt]._1].vNormal += vNormal;
+			pVertex[pIndex[dwTriCnt]._2].vNormal += vNormal;
+
 			++dwTriCnt;
 
 			// 왼쪽 아래
 			pIndex[dwTriCnt]._0 = dwIndex + dwCntX;
 			pIndex[dwTriCnt]._1 = dwIndex + 1;
 			pIndex[dwTriCnt]._2 = dwIndex;
+
+			vLook = pVertex[pIndex[dwTriCnt]._0].vPos - pVertex[pIndex[dwTriCnt]._2].vPos;
+			vRight = pVertex[pIndex[dwTriCnt]._1].vPos - pVertex[pIndex[dwTriCnt]._2].vPos;
+			D3DXVec3Cross(&vNormal, &vLook, &vRight);
+
+			pVertex[pIndex[dwTriCnt]._0].vNormal += vNormal;
+			pVertex[pIndex[dwTriCnt]._1].vNormal += vNormal;
+			pVertex[pIndex[dwTriCnt]._2].vNormal += vNormal;
+
 			++dwTriCnt;
 		}
 	}
+
+	for (_uint i = 0; i < m_dwVtxCnt; ++i)
+		D3DXVec3Normalize(&pVertex[i].vNormal, &pVertex[i].vNormal);
+
+	m_pVB->Unlock();
 
 	m_pIB->Unlock();
 

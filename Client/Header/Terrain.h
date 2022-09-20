@@ -24,6 +24,7 @@ public:
 
 private:
 	HRESULT				Add_Component(void);
+	HRESULT				Set_Material(void);
 
 private:
 	CTerrainTex*		m_pBufferCom = nullptr;
@@ -31,6 +32,7 @@ private:
 	CTexture*			m_pTextureCom = nullptr;
 
 	_vec3				m_vDirection;
+
 public:
 	static CTerrain*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
 	virtual void	Free(void);

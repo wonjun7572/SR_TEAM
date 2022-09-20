@@ -38,8 +38,16 @@ void CTerrain::Render_Object(void)
 {
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransCom->Get_WorldMatrixPointer());
 
+	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
+
 	m_pTextureCom->Set_Texture(0);	// 텍스처 정보 세팅을 우선적으로 한다.
+
+	FAILED_CHECK_RETURN(Set_Material(), );
+//	==	FAILED_CHECK(Set_Material());
+
 	m_pBufferCom->Render_Buffer();
+
+	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
 }
 
 HRESULT CTerrain::Add_Component(void)
@@ -57,6 +65,22 @@ HRESULT CTerrain::Add_Component(void)
 	pComponent = m_pTransCom = dynamic_cast<CTransform*>(Clone_Proto(L"Proto_TransformCom"));
 	NULL_CHECK_RETURN(m_pTransCom, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_TransformCom", pComponent });
+
+	return S_OK;
+}
+
+HRESULT CTerrain::Set_Material(void)
+{
+	D3DMATERIAL9 Material;
+	ZeroMemory(&Material, sizeof(D3DMATERIAL9));
+
+	Material.Diffuse = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+	Material.Specular = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+	Material.Ambient = D3DXCOLOR(0.1f, 0.1f, 0.1f, 1.f);
+	Material.Emissive = D3DXCOLOR(0.f, 0.f, 0.f, 1.f);
+	Material.Power = 0.f;
+
+	m_pGraphicDev->SetMaterial(&Material);
 
 	return S_OK;
 }
