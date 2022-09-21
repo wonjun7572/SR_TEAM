@@ -3,6 +3,8 @@
 
 #include "Export_Function.h"
 
+float g_fPlaySound = 1.f;
+
 CTestPlayer::CTestPlayer(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CGameObject(pGraphicDev)
 	, m_vDirection(0.f, 0.f, 0.f)

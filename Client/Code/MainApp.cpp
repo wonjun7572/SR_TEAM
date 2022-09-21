@@ -109,7 +109,7 @@ HRESULT CMainApp::Ready_Scene(LPDIRECT3DDEVICE9 pGraphicDev, Engine::CManagement
 	(*ppManagement)->AddRef();
 
 	FAILED_CHECK_RETURN((*ppManagement)->Set_Scene(pScene), E_FAIL);
-
+	Initialize();
 	return S_OK;
 }
 

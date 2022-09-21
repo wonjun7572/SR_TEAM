@@ -21,6 +21,7 @@
 #include "Management.h"
 #include "Renderer.h"
 #include "LightMgr.h"
+#include "SoundMgr.h"
 
 BEGIN(Engine)
 
@@ -50,6 +51,16 @@ inline list<CGameObject*>			Get_GameObjectGroup(RENDERID eId);
 
 // LightMgr
 inline HRESULT			Ready_Light(LPDIRECT3DDEVICE9 pGraphicDev, const D3DLIGHT9* tLightInfo, const _uint& iIndex);
+
+// SoundMgr
+inline void Initialize();
+inline void Release();
+inline void PlaySoundW(TCHAR* pSoundKey, CHANNELID eID, float fVolume);
+inline void PlayBGM(TCHAR* pSoundKey, float fVolume);
+inline void StopSound(CHANNELID eID);
+inline void StopAll();
+inline void PlaySlow(TCHAR * pSoundKey, CHANNELID eID, float fVolume, float fRate);
+inline void SetChannelVolume(CHANNELID eID, float fVolume);
 
 inline void			Release_Utility(void);
 

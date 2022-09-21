@@ -65,8 +65,43 @@ HRESULT			Ready_Light(LPDIRECT3DDEVICE9 pGraphicDev, const D3DLIGHT9* tLightInfo
 	return CLightMgr::GetInstance()->Ready_Light(pGraphicDev, tLightInfo, iIndex);
 }
 
+void Initialize()
+{
+	CSoundMgr::GetInstance()->Initialize();
+}
+void Release()
+{
+	CSoundMgr::GetInstance()->Release();
+}
+void PlaySoundW(TCHAR* pSoundKey, CHANNELID eID, float fVolume)
+{
+	CSoundMgr::GetInstance()->PlaySoundW(pSoundKey, eID, fVolume);
+}
+void PlayBGM(TCHAR* pSoundKey, float fVolume)
+{
+	CSoundMgr::GetInstance()->PlayBGM(pSoundKey, fVolume);
+}
+void StopSound(CHANNELID eID)
+{
+	CSoundMgr::GetInstance()->StopSound(eID);
+}
+void StopAll()
+{
+	CSoundMgr::GetInstance()->StopAll();
+}
+void PlaySlow(TCHAR * pSoundKey, CHANNELID eID, float fVolume, float fRate)
+{
+	CSoundMgr::GetInstance()->PlaySlow(pSoundKey, eID, fVolume, fRate);
+}
+void SetChannelVolume(CHANNELID eID, float fVolume)
+{
+	CSoundMgr::GetInstance()->SetChannelVolume(eID, fVolume);
+}
+
+
 inline void			Release_Utility(void)
 {
+	CSoundMgr::GetInstance()->DestroyInstance();
 	CLightMgr::GetInstance()->DestroyInstance();
 	CRenderer::GetInstance()->DestroyInstance();
 	CProtoMgr::GetInstance()->DestroyInstance();
