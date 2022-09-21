@@ -12,6 +12,13 @@ public:
 	virtual ~CTransform();
 
 public:
+	///////////////////////	불러오기를 통해 Ready 단계에서 World값을 지정해주기 위함 ////////////////////
+	void				Set_WorldMatrix(_matrix* pWorld) { memcpy(m_matWorld, pWorld, sizeof(_matrix)); }
+	void				Set_Info(INFOID eID, _vec3* pInfo) { memcpy(m_vInfo[eID], pInfo, sizeof(_vec3)); }
+	void				Set_Angle(_vec3* pInfo) { memcpy(m_vAngle, pInfo, sizeof(_vec3)); }
+	void				Set_Scale(_vec3* pInfo) { memcpy(m_vScale, pInfo, sizeof(_vec3)); }
+	/////////////////////////////////////////////////////////////////////////////////////////////////////
+
 	const _matrix*		Get_WorldMatrixPointer()					 {	return &m_matWorld; }
 	void				Move_Pos(const _vec3* const pDir)			 {	m_vInfo[INFO_POS] += *pDir; }
 	void				Rotation(ROTATIONID eID, const _float& fAngle){	*(((_float*)&m_vAngle) + eID) += fAngle;	}
