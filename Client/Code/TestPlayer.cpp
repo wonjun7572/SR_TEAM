@@ -65,9 +65,9 @@ HRESULT CTestPlayer::Add_Component(void)
 void CTestPlayer::Key_Input(const _float& fTimeDelta)
 {
 	m_pTransCom->Get_Info(INFO_LOOK, &m_vDirection);
-
 	if (Get_DIKeyState(DIK_UP) & 0x8000)
 	{
+		PlaySoundW(L"explosion_rubble_stone_2.wav", SOUND_BGM, g_fPlaySound);
 		D3DXVec3Normalize(&m_vDirection, &m_vDirection);
 		m_pTransCom->Move_Pos(&(m_vDirection * 10.f * fTimeDelta));
 	}
