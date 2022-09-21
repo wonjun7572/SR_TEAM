@@ -14,3 +14,4 @@ del /f /q .\Client\Bin\Client.exe
 del /f /q .\Client\Bin\Client.ilk
 del /f /q .\Client\Bin\Client.pdb
 del /f /q Frame131C.VC.db
+del /f /q Frame131.sdf
