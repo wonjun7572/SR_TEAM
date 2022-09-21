@@ -2,11 +2,14 @@
 #define Export_Utility_h__
 
 #include "Engine_Include.h"
+
 #include "TriCol.h"
 #include "RcCol.h"
 #include "RcTex.h"
 #include "TerrainTex.h"
 #include "CubeTex.h"
+#include "SphereTex.h"
+
 #include "Calculator.h"
 #include "Transform.h"
 #include "Texture.h"

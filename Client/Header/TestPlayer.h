@@ -27,7 +27,7 @@ private:
 	void				Set_OnTerrain();
 
 private:
-	CCubeTex*				m_pBufferCom = nullptr;
+	CCubeTex*			m_pBufferCom = nullptr;
 	CTransform*			m_pTransCom = nullptr;
 	CTexture*			m_pTextureCom = nullptr;
 	CCalculator*		m_pCalculatorCom = nullptr;

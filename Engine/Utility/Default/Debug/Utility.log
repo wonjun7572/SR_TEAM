@@ -3,6 +3,7 @@
   Transform.cpp
   Texture.cpp
   TerrainTex.cpp
+  SphereTex.cpp
   Scene.cpp
   Renderer.cpp
   RcTex.cpp
@@ -19,7 +20,7 @@
   Calculator.cpp
   코드를 생성하고 있습니다...
      ../Bin\Utility.lib 라이브러리 및 ../Bin\Utility.exp 개체를 생성하고 있습니다.
-  Utility.vcxproj -> C:\Users\DecoyZ\Desktop\SR_TEAM\Engine\Utility\Default\../Bin\Utility.dll
+  Utility.vcxproj -> C:\Users\sam51\Desktop\SR_TEAM\Engine\Utility\Default\../Bin\Utility.dll
   Utility.vcxproj -> ../Bin\Utility.pdb (Full PDB)
           1개 파일이 복사되었습니다.
           1개 파일이 복사되었습니다.
@@ -54,6 +55,7 @@
   .\Engine\Header\RcTex.h
   .\Engine\Header\Renderer.h
   .\Engine\Header\Scene.h
+  .\Engine\Header\SphereTex.h
   .\Engine\Header\TerrainTex.h
   .\Engine\Header\Texture.h
   .\Engine\Header\Timer.h
@@ -61,4 +63,4 @@
   .\Engine\Header\Transform.h
   .\Engine\Header\TriCol.h
   .\Engine\Header\VIBuffer.h
-         38개 파일이 복사되었습니다.
+         39개 파일이 복사되었습니다.

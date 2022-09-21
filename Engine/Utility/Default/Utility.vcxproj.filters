@@ -64,6 +64,9 @@
     <Filter Include="04. Manager\03. Light\Manager">
       <UniqueIdentifier>{7ccae5e5-f0cd-4591-96dd-fce74168f2c5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="00. Component\00. VIBuffer\05. SphereTex">
+      <UniqueIdentifier>{99e74802-0e99-4b46-b63c-2f61523bfc87}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Header\TriCol.h">
@@ -126,6 +129,9 @@
     <ClInclude Include="..\..\Header\LightMgr.h">
       <Filter>04. Manager\03. Light\Manager</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Header\SphereTex.h">
+      <Filter>00. Component\00. VIBuffer\05. SphereTex</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\TriCol.cpp">
@@ -184,6 +190,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\LightMgr.cpp">
       <Filter>04. Manager\03. Light\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SphereTex.cpp">
+      <Filter>00. Component\00. VIBuffer\05. SphereTex</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
