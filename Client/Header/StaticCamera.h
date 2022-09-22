@@ -2,6 +2,7 @@
 
 #include "Camera.h"
 #include "Engine_Include.h"
+#include "Export_Function.h"
 
 class CStaticCamera : public Engine::CCamera
 {
@@ -23,6 +24,7 @@ public:
 private:
 	void		Key_Input(const _float& fTimeDelta);
 	void		Target_Renewal(void);
+	void		Mouse_Fix();
 
 private:
 	_float			m_fDistance = 10.f;
@@ -40,7 +42,9 @@ public:
 		const _float& fFar = 1000.f);
 
 private:
+	CTransform* m_pPlayerTransform = nullptr;
+
+private:
 	virtual void Free(void) override;
 
 };
-

@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "..\Header\StaticCamera.h"
 
-#include "Export_Function.h"
+
 
 CStaticCamera::CStaticCamera(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CCamera(pGraphicDev)
@@ -41,6 +41,8 @@ Engine::_int CStaticCamera::Update_Object(const _float& fTimeDelta)
 
 	Target_Renewal();
 
+	Mouse_Fix();
+
 	_int iExit = CCamera::Update_Object(fTimeDelta);
 
 	return iExit;
@@ -71,26 +73,43 @@ CStaticCamera* CStaticCamera::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3*
 
 void CStaticCamera::Key_Input(const _float& fTimeDelta)
 {
-	if (Get_DIKeyState(DIK_W) & 0x80)
-		m_fDistance -= fTimeDelta * m_fSpeed;
+	// 마우스 휠을 통한 줌인 줌 아웃
+	if (m_fDistance > 1)
+	{
+		if (Get_DIMouseMove(DIMS_Z) > 0)
+			m_fDistance -= fTimeDelta * m_fSpeed;
+	}
 
-	if (Get_DIKeyState(DIK_S) & 0x80)
-		m_fDistance += fTimeDelta * m_fSpeed;
+	if (m_fDistance < 20)
+	{
+		if (Get_DIMouseMove(DIMS_Z) < 0)
+			m_fDistance += fTimeDelta * m_fSpeed;
+	}
 
-	if (Get_DIKeyState(DIK_D) & 0x80)
-		m_fAngle -= D3DXToRadian(180.f) * fTimeDelta;
+	// 카메라 축 회전 방향 제한해야함
+	if (m_pPlayerTransform)
+	{
+		_vec3 vPlayerPos;
+		m_pPlayerTransform->Get_Info(INFO_POS, &vPlayerPos);
 
-	if (Get_DIKeyState(DIK_A) & 0x80)
-		m_fAngle += D3DXToRadian(180.f) * fTimeDelta;
+		if (Get_DIMouseMove(DIMS_Y) > 0)
+			m_fAngle -= D3DXToRadian(90.f) * fTimeDelta;
+
+		if (Get_DIMouseMove(DIMS_Y) < 0)
+			m_fAngle += D3DXToRadian(90.f) * fTimeDelta;
+	}
 }
 
 void CStaticCamera::Target_Renewal(void)
 {
-	CTransform*	pPlayerTransform = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_GameLogic", L"TestPlayer", L"Proto_TransformCom", ID_DYNAMIC));
-	NULL_CHECK(pPlayerTransform);
+	if (!m_pPlayerTransform)
+	{
+		m_pPlayerTransform = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Character", L"BODY", L"Proto_TransformCom", ID_DYNAMIC));
+		NULL_CHECK(m_pPlayerTransform);
+	}
 
 	_vec3	vLook;
-	pPlayerTransform->Get_Info(INFO_LOOK, &vLook);
+	m_pPlayerTransform->Get_Info(INFO_LOOK, &vLook);
 
 	m_vEye = vLook * -1.f;	// 방향 벡터
 	D3DXVec3Normalize(&m_vEye, &m_vEye);
@@ -99,12 +118,20 @@ void CStaticCamera::Target_Renewal(void)
 	m_vEye *= m_fDistance;	// 방향 벡터
 
 	_vec3		vRight;
-	memcpy(&vRight, &pPlayerTransform->m_matWorld.m[0][0], sizeof(_vec3));
+	memcpy(&vRight, &m_pPlayerTransform->m_matWorld.m[0][0], sizeof(_vec3));
 
 	_matrix		matRot;
 	D3DXMatrixRotationAxis(&matRot, &vRight, m_fAngle);
 	D3DXVec3TransformNormal(&m_vEye, &m_vEye, &matRot);
 
-	m_vEye += pPlayerTransform->m_vInfo[INFO_POS];
-	m_vAt = pPlayerTransform->m_vInfo[INFO_POS];
+	m_vEye += m_pPlayerTransform->m_vInfo[INFO_POS];
+	m_vAt = m_pPlayerTransform->m_vInfo[INFO_POS];
+}
+
+void CStaticCamera::Mouse_Fix(void)
+{
+	POINT	pt{ WINCX >> 1 , WINCY >> 1 };
+
+	ClientToScreen(g_hWnd, &pt);
+	SetCursorPos(pt.x, pt.y);
 }

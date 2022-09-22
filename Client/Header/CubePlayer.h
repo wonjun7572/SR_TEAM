@@ -4,6 +4,7 @@
 
 USING(Engine)
 
+
 class CCubePlayer : public CGameObject
 {
 private:
@@ -20,6 +21,7 @@ private:
 
 private:
 	void			Key_Input(const _float& fTimeDelta);
+	void			Set_OnTerrain(void);
 
 private:
 	HRESULT			Add_Component(void);
@@ -34,6 +36,8 @@ private:
 
 	CTransform*		m_pLeftLegWorld = nullptr;
 	CTransform*		m_pRightLegWorld = nullptr;
+
+	CCalculator*	m_pCalculatorCom = nullptr;
 
 private:
 	_float			m_fLookAngle = 0.f;

@@ -19,6 +19,8 @@ HRESULT CCubePlayer::Ready_Object(void)
 
 _int CCubePlayer::Update_Object(const _float & fTimeDelta)
 {
+	Key_Input(fTimeDelta);
+
 	CGameObject::Update_Object(fTimeDelta);
 
 	m_pHeadWorld = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Character", L"HEAD", L"Proto_TransformCom", ID_DYNAMIC));
@@ -41,12 +43,9 @@ _int CCubePlayer::Update_Object(const _float & fTimeDelta)
 	//	¸öÃ¼ Á¶¸³, ¹Ùµð ±âÁØ ÁÂÇ¥
 	_vec3 vBodyPos;
 	m_pBodyWorld->Get_Info(INFO_POS, &vBodyPos);
-
 	m_pHeadWorld->Set_Pos(vBodyPos.x, vBodyPos.y + 3.f, vBodyPos.z);
-
 	m_pLeftArmWorld->Set_Pos(vBodyPos.x - 1.5f, vBodyPos.y, vBodyPos.z);
 	m_pRightArmWorld->Set_Pos(vBodyPos.x + 1.5f, vBodyPos.y, vBodyPos.z);
-
 	m_pLeftLegWorld->Set_Pos(vBodyPos.x - 0.5f, vBodyPos.y - 4.f, vBodyPos.z);
 	m_pRightLegWorld->Set_Pos(vBodyPos.x + 0.5f, vBodyPos.y - 4.f, vBodyPos.z);
 
@@ -58,14 +57,27 @@ _int CCubePlayer::Update_Object(const _float & fTimeDelta)
 
 void CCubePlayer::LateUpdate_Object(void)
 {
-	Key_Input(0.01f);
-
 	CGameObject::LateUpdate_Object();
+
+	Set_OnTerrain();
 }
 
 void CCubePlayer::Render_Object(void)
 {
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
+}
+
+void CCubePlayer::Set_OnTerrain(void)
+{
+	_vec3		vPos;
+	m_pTransform->Get_Info(INFO_POS, &vPos);
+
+	Engine::CTerrainTex*	pTerrainTexCom = dynamic_cast<Engine::CTerrainTex*>(Engine::Get_Component(L"Layer_Environment", L"Terrain", L"Proto_TerrainTexCom", ID_STATIC));
+	NULL_CHECK(pTerrainTexCom);
+
+	_float fHeight = m_pCalculatorCom->HeightOnTerrain(&vPos, pTerrainTexCom->Get_VtxPos(), VTXCNTX, VTXCNTZ);
+
+	m_pTransform->Set_Pos(vPos.x, fHeight, vPos.z);
 }
 
 void CCubePlayer::Key_Input(const _float & fTimeDelta)
@@ -74,7 +86,7 @@ void CCubePlayer::Key_Input(const _float & fTimeDelta)
 
 #pragma region ÆÈ´Ù¸®È¸Àü
 
-	if (Get_DIKeyState(DIK_I) || Get_DIKeyState(DIK_K) || Get_DIKeyState(DIK_J) || Get_DIKeyState(DIK_L))
+	if (Get_DIKeyState(DIK_W) || Get_DIKeyState(DIK_A) || Get_DIKeyState(DIK_S) || Get_DIKeyState(DIK_D))
 	{
 		if (m_fAngle > 0.3f)
 			m_bWalkAngle = false;
@@ -131,7 +143,7 @@ void CCubePlayer::Key_Input(const _float & fTimeDelta)
 
 #pragma endregion ÆÈ´Ù¸®¿òÁ÷ÀÓ
 
-	if (Get_DIKeyState(DIK_I))
+	if (Get_DIKeyState(DIK_W))
 	{
 		m_pBodyWorld->Get_Info(INFO_LOOK, &vDir);
 
@@ -142,7 +154,7 @@ void CCubePlayer::Key_Input(const _float & fTimeDelta)
 		m_pLeftLegWorld->Move_Pos(&(vDir * 10.f * fTimeDelta));
 		m_pRightLegWorld->Move_Pos(&(vDir * 10.f * fTimeDelta));
 	}
-	if (Get_DIKeyState(DIK_K))
+	if (Get_DIKeyState(DIK_S))
 	{
 		m_pBodyWorld->Get_Info(INFO_LOOK, &vDir);
 
@@ -153,7 +165,7 @@ void CCubePlayer::Key_Input(const _float & fTimeDelta)
 		m_pLeftLegWorld->Move_Pos(&(vDir * -10.f * fTimeDelta));
 		m_pRightLegWorld->Move_Pos(&(vDir * -10.f * fTimeDelta));
 	}
-	if (Get_DIKeyState(DIK_J))
+	if (Get_DIKeyState(DIK_A))
 	{
 		m_pBodyWorld->Get_Info(INFO_RIGHT, &vDir);
 
@@ -175,7 +187,7 @@ void CCubePlayer::Key_Input(const _float & fTimeDelta)
 		//		m_pLeftLegWorld->Move_Pos(&(vDir * -10.f * fTimeDelta));
 		//		m_pRightLegWorld->Move_Pos(&(vDir * -10.f * fTimeDelta));
 	}
-	if (Get_DIKeyState(DIK_L))
+	if (Get_DIKeyState(DIK_D))
 	{
 		m_pBodyWorld->Get_Info(INFO_RIGHT, &vDir);
 
