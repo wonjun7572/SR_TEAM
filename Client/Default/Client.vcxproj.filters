@@ -85,6 +85,9 @@
     <Filter Include="02. GameObject\01. For_Stage\05. CubePlayer\Head">
       <UniqueIdentifier>{4c596655-6eef-4602-a3c1-423dfbe90103}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\06. Bullet">
+      <UniqueIdentifier>{e5424f61-e480-4334-a082-ad86a0d49d51}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -177,6 +180,9 @@
     <ClInclude Include="..\Header\CubeHead.h">
       <Filter>02. GameObject\01. For_Stage\05. CubePlayer\Head</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\Bullet.h">
+      <Filter>99. Default\헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -259,6 +265,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CubeHead.cpp">
       <Filter>02. GameObject\01. For_Stage\05. CubePlayer\Head</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Bullet.cpp">
+      <Filter>99. Default\소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

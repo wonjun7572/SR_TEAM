@@ -15,6 +15,14 @@ CManagement::~CManagement()
 }
 
 
+CGameObject * CManagement::Get_GameObject(const _tchar * pLayerTag, const _tchar * pObjTag)
+{
+	if (nullptr == m_pScene)
+		return nullptr;
+
+	return m_pScene->Get_GameObject(pLayerTag,pObjTag);
+}
+
 CComponent* Engine::CManagement::Get_Component(const _tchar* pLayerTag, const _tchar* pObjTag, const _tchar* pComponentTag, COMPONENTID eID)
 {
 	if (nullptr == m_pScene)

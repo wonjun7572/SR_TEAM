@@ -23,6 +23,7 @@
 #include "Renderer.h"
 #include "LightMgr.h"
 #include "SoundMgr.h"
+#include "PoolMgr.h"
 
 BEGIN(Engine)
 
@@ -38,6 +39,7 @@ inline 	CComponent*				Get_Component(const _tchar* pLayerTag,
 	const _tchar* pObjTag,
 	const _tchar* pComponentTag,
 	COMPONENTID eID);
+inline 	CGameObject*			Get_GameObject(const _tchar* pLayerTag, const _tchar* pObjTag);
 
 inline HRESULT			Add_GameObject(const _tchar* pLayerTag, CGameObject* pGameObject, const _tchar* pObjTag);
 

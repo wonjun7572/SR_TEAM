@@ -32,6 +32,11 @@ CComponent*				Get_Component(const _tchar* pLayerTag, const _tchar* pObjTag, con
 	return CManagement::GetInstance()->Get_Component(pLayerTag, pObjTag, pComponentTag, eID);
 }
 
+CGameObject*			Get_GameObject(const _tchar* pLayerTag, const _tchar* pObjTag)
+{
+	return CManagement::GetInstance()->Get_GameObject(pLayerTag, pObjTag);
+}
+
 HRESULT					Add_GameObject(const _tchar* pLayerTag, CGameObject* pGameObject, const _tchar* pObjTag)
 {
 	return CManagement::GetInstance()->Add_GameObject(pLayerTag, pGameObject, pObjTag);
