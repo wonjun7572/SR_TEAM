@@ -9,6 +9,7 @@
 #include "TerrainTex.h"
 #include "CubeTex.h"
 #include "SphereTex.h"
+#include "Hitbox.h"
 
 #include "Calculator.h"
 #include "Transform.h"
