@@ -89,20 +89,8 @@ void CTestPlayer::Key_Input(const _float& fTimeDelta)
 
 	if (Get_DIKeyState(DIK_SPACE) & 0x80)
 	{
-		// map은 하나의 키값만을 허용함 -> 키가 계속 눌러지는 동안 연속적으로 생산됨
-		_vec3		vPos;
-		m_pTransCom->Get_Info(INFO_POS, &vPos);
-
-		m_pWall = CWall::Create(m_pGraphicDev, test, &_vec3(_float(test), 0.f, 0.f));
-
-		TCHAR			szFinalName[256] = L"";
-		const _tchar*	szWallName = L"Wall_%d";
-
-		wsprintf(szFinalName, szWallName, test);
-
-		Engine::Add_GameObject(L"Layer_Wall", m_pWall, szFinalName);
-
-		++test;
+		Create_Bullet(m_iCnt);
+		m_iCnt++;
 	}
 }
 
@@ -117,6 +105,24 @@ void CTestPlayer::Set_OnTerrain(void)
 	_float fHeight = m_pCalculatorCom->HeightOnTerrain(&vPos, pTerrainTexCom->Get_VtxPos(), VTXCNTX, VTXCNTZ);
 
 	m_pTransCom->Set_Pos(vPos.x, fHeight + m_pTransCom->m_vScale.y, vPos.z);
+}
+
+void CTestPlayer::Create_Bullet(const _uint& iCnt)
+{
+	_vec3		vPos;
+	m_pTransCom->Get_Info(INFO_POS, &vPos);
+
+	CWall*	pWall = CWall::Create(m_pGraphicDev, iCnt, &vPos);
+	
+	TCHAR* szFinalName = new TCHAR[128];
+	wsprintf(szFinalName, L"");
+
+	const _tchar*	szWallName = L"Wall_%d";
+	wsprintf(szFinalName, szWallName, iCnt);
+
+	Engine::Add_GameObject(L"Layer_Wall", pWall, szFinalName);
+
+	m_liszFinalName.push_back(szFinalName);
 }
 
 CTestPlayer * CTestPlayer::Create(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -134,5 +140,10 @@ CTestPlayer * CTestPlayer::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 
 void CTestPlayer::Free(void)
 {
+	for (auto& iter : m_liszFinalName)
+		delete iter;
+
+	m_liszFinalName.clear();
+
 	CGameObject::Free();
 }

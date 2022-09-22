@@ -28,18 +28,21 @@ private:
 	void				Key_Input(const _float& fTimeDelta);
 	void				Set_OnTerrain();
 
+	void				Create_Bullet(const _uint& iCnt);
+
 private:
 	CCubeTex*			m_pBufferCom = nullptr;
 	CTransform*			m_pTransCom = nullptr;
 	CTexture*			m_pTextureCom = nullptr;
 	CCalculator*		m_pCalculatorCom = nullptr;
 
-	CWall*				m_pWall = nullptr;
 
 	_vec3				m_vDirection;
 
 private:
-	int test = 0;
+	_uint				m_iCnt = 0;
+
+	list<TCHAR*>		m_liszFinalName;
 
 public:
 	static CTestPlayer*		Create(LPDIRECT3DDEVICE9 pGraphicDev);

@@ -104,7 +104,7 @@ void CStaticCamera::Target_Renewal(void)
 {
 	if (!m_pPlayerTransform)
 	{
-		m_pPlayerTransform = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Character", L"BODY", L"Proto_TransformCom", ID_DYNAMIC));
+		m_pPlayerTransform = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_GameLogic", L"TestPlayer", L"Proto_TransformCom", ID_DYNAMIC));
 		NULL_CHECK(m_pPlayerTransform);
 	}
 
