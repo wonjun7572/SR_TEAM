@@ -39,7 +39,9 @@ Engine::_int CStaticCamera::Update_Object(const _float& fTimeDelta)
 {
 	Key_Input(fTimeDelta);
 
-	Target_Renewal();
+	//Target_Renewal();
+
+	Look_Taget();
 
 	Mouse_Fix();
 
@@ -87,24 +89,24 @@ void CStaticCamera::Key_Input(const _float& fTimeDelta)
 	}
 
 	// 카메라 축 회전 방향 제한해야함
-	if (m_pPlayerTransform)
-	{
-		_vec3 vPlayerPos;
-		m_pPlayerTransform->Get_Info(INFO_POS, &vPlayerPos);
+	//if (m_pPlayerTransform)
+	//{
+	//	_vec3 vPlayerPos;
+	//	m_pPlayerTransform->Get_Info(INFO_POS, &vPlayerPos);
 
-		if (Get_DIMouseMove(DIMS_Y) > 0)
-			m_fAngle -= D3DXToRadian(90.f) * fTimeDelta;
+	//	//if (Get_DIMouseMove(DIMS_Y) > 0)
+	//		m_fAngle += D3DXToRadian(180.f) * fTimeDelta;
 
-		if (Get_DIMouseMove(DIMS_Y) < 0)
-			m_fAngle += D3DXToRadian(90.f) * fTimeDelta;
-	}
+	//	/*if (Get_DIMouseMove(DIMS_Y) < 0)
+	//		m_fAngle += D3DXToRadian(180.f) * fTimeDelta;*/
+	//}
 }
 
 void CStaticCamera::Target_Renewal(void)
 {
 	if (!m_pPlayerTransform)
 	{
-		m_pPlayerTransform = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_GameLogic", L"TestPlayer", L"Proto_TransformCom", ID_DYNAMIC));
+		m_pPlayerTransform = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Character", L"BODY", L"Proto_TransformCom", ID_DYNAMIC));
 		NULL_CHECK(m_pPlayerTransform);
 	}
 
@@ -134,4 +136,31 @@ void CStaticCamera::Mouse_Fix(void)
 
 	ClientToScreen(g_hWnd, &pt);
 	SetCursorPos(pt.x, pt.y);
+}
+
+void CStaticCamera::Look_Taget(void)
+{
+	if (nullptr == m_pTransform_Target)
+	{
+		m_pTransform_Target = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Character", L"HEAD", L"Proto_TransformCom", ID_DYNAMIC));
+		NULL_CHECK(m_pTransform_Target);
+	}
+
+	_vec3 vLook;
+	m_pTransform_Target->Get_Info(INFO_LOOK, &vLook);
+
+	m_vEye = vLook * -1.f;
+	D3DXVec3Normalize(&m_vEye, &m_vEye);
+
+	//m_vEye.y = 1.f;
+	m_vEye *= m_fDistance;
+
+	_vec3 vPos;
+	m_pTransform_Target->Get_Info(INFO_POS, &vPos);
+
+	m_vEye += vPos;
+	m_vAt = vPos;
+
+	//m_vEye.x += 2.f;
+	//m_vAt.x += 2.f;
 }

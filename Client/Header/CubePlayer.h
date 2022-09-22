@@ -39,6 +39,8 @@ private:
 
 	CCalculator*	m_pCalculatorCom = nullptr;
 
+	CHitBox*		m_pHitBox = nullptr;
+
 private:
 	_float			m_fLookAngle = 0.f;
 

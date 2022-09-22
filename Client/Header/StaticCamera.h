@@ -26,7 +26,10 @@ private:
 	void		Target_Renewal(void);
 	void		Mouse_Fix();
 
+	void		Look_Taget(void);
+
 private:
+	CTransform*		m_pTransform_Target = nullptr;
 	_float			m_fDistance = 10.f;
 	_float			m_fSpeed = 10.f;
 	_float			m_fAngle = 0.f;

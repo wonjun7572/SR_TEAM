@@ -14,13 +14,15 @@ HRESULT CCubePlayer::Ready_Object(void)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
+	m_pTransform->Set_Scale(2.f, 5.f, 2.f);
+
+	ShowCursor(false);
+
 	return S_OK;
 }
 
 _int CCubePlayer::Update_Object(const _float & fTimeDelta)
 {
-	Key_Input(fTimeDelta);
-
 	CGameObject::Update_Object(fTimeDelta);
 
 	m_pHeadWorld = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Character", L"HEAD", L"Proto_TransformCom", ID_DYNAMIC));
@@ -40,9 +42,12 @@ _int CCubePlayer::Update_Object(const _float & fTimeDelta)
 	//m_pRightShoulderWorld = dynamic_cast<CTransform*>(Engine::Get_Component(L"Ready_Layer_Environment", L"R_SHOULDER", L"Proto_TransformCom", ID_DYNAMIC));
 	//NULL_CHECK_RETURN(m_pBodyWorld, E_FAIL);
 
+	//Set_OnTerrain();
+
 	//	¸öÃ¼ Á¶¸³, ¹Ùµð ±âÁØ ÁÂÇ¥
 	_vec3 vBodyPos;
 	m_pBodyWorld->Get_Info(INFO_POS, &vBodyPos);
+	m_pTransform->Set_Pos(vBodyPos.x, vBodyPos.y - 1.f, vBodyPos.z);
 	m_pHeadWorld->Set_Pos(vBodyPos.x, vBodyPos.y + 3.f, vBodyPos.z);
 	m_pLeftArmWorld->Set_Pos(vBodyPos.x - 1.5f, vBodyPos.y, vBodyPos.z);
 	m_pRightArmWorld->Set_Pos(vBodyPos.x + 1.5f, vBodyPos.y, vBodyPos.z);
@@ -52,32 +57,40 @@ _int CCubePlayer::Update_Object(const _float & fTimeDelta)
 	//m_pLeftArmWorld->Rotation_Axis_X(2.f, D3DXToRadian(0.f));
 	//m_pRightArmWorld->Rotation_Axis_X(2.f, D3DXToRadian(0.f));
 
+	Engine::Add_RenderGroup(RENDER_NONALPHA, this);
+
 	return 0;
 }
 
 void CCubePlayer::LateUpdate_Object(void)
 {
+	Key_Input(0.01f);
 	CGameObject::LateUpdate_Object();
-
-	Set_OnTerrain();
 }
 
 void CCubePlayer::Render_Object(void)
 {
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
+	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DPMISCCAPS_CULLNONE);
+	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+
+	m_pHitBox->Render_Buffer();
+
+	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DPMISCCAPS_CULLCCW);
+	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 }
 
 void CCubePlayer::Set_OnTerrain(void)
 {
 	_vec3		vPos;
-	m_pTransform->Get_Info(INFO_POS, &vPos);
+	m_pBodyWorld->Get_Info(INFO_POS, &vPos);
 
 	Engine::CTerrainTex*	pTerrainTexCom = dynamic_cast<Engine::CTerrainTex*>(Engine::Get_Component(L"Layer_Environment", L"Terrain", L"Proto_TerrainTexCom", ID_STATIC));
 	NULL_CHECK(pTerrainTexCom);
 
 	_float fHeight = m_pCalculatorCom->HeightOnTerrain(&vPos, pTerrainTexCom->Get_VtxPos(), VTXCNTX, VTXCNTZ);
 
-	m_pTransform->Set_Pos(vPos.x, fHeight, vPos.z);
+	m_pBodyWorld->Set_Pos(vPos.x, fHeight, vPos.z);
 }
 
 void CCubePlayer::Key_Input(const _float & fTimeDelta)
@@ -145,7 +158,7 @@ void CCubePlayer::Key_Input(const _float & fTimeDelta)
 
 	if (Get_DIKeyState(DIK_W))
 	{
-		m_pBodyWorld->Get_Info(INFO_LOOK, &vDir);
+		m_pTransform->Get_Info(INFO_LOOK, &vDir);
 
 		m_pBodyWorld->Move_Pos(&(vDir * 10.f * fTimeDelta));
 		m_pHeadWorld->Move_Pos(&(vDir * 10.f * fTimeDelta));
@@ -156,7 +169,7 @@ void CCubePlayer::Key_Input(const _float & fTimeDelta)
 	}
 	if (Get_DIKeyState(DIK_S))
 	{
-		m_pBodyWorld->Get_Info(INFO_LOOK, &vDir);
+		m_pTransform->Get_Info(INFO_LOOK, &vDir);
 
 		m_pBodyWorld->Move_Pos(&(vDir * -10.f * fTimeDelta));
 		m_pHeadWorld->Move_Pos(&(vDir * -10.f * fTimeDelta));
@@ -167,7 +180,7 @@ void CCubePlayer::Key_Input(const _float & fTimeDelta)
 	}
 	if (Get_DIKeyState(DIK_A))
 	{
-		m_pBodyWorld->Get_Info(INFO_RIGHT, &vDir);
+		m_pTransform->Get_Info(INFO_RIGHT, &vDir);
 
 		if (m_fLookAngle > -0.2f)
 		{
@@ -175,8 +188,8 @@ void CCubePlayer::Key_Input(const _float & fTimeDelta)
 			m_pBodyWorld->Rotation(ROT_Y, -(fTimeDelta * 5.f));
 		}
 
-		//		m_pBodyWorld->Move_Pos(&(vDir * -10.f * fTimeDelta));
-		//		m_pHeadWorld->Move_Pos(&(vDir * -10.f * fTimeDelta));
+				m_pBodyWorld->Move_Pos(&(vDir * -10.f * fTimeDelta));
+				m_pHeadWorld->Move_Pos(&(vDir * -10.f * fTimeDelta));
 
 		/*m_pLeftArmWorld->Move_Pos(&(vDir * -10.f * fTimeDelta));
 		m_pRightArmWorld->Move_Pos(&(vDir * -10.f * fTimeDelta));*/
@@ -184,12 +197,12 @@ void CCubePlayer::Key_Input(const _float & fTimeDelta)
 		m_pLeftArmWorld->Rotation_Axis_Y(-1.5f, m_fLookAngle);
 		m_pRightArmWorld->Rotation_Axis_Y(1.5f, m_fLookAngle);
 
-		//		m_pLeftLegWorld->Move_Pos(&(vDir * -10.f * fTimeDelta));
-		//		m_pRightLegWorld->Move_Pos(&(vDir * -10.f * fTimeDelta));
+				m_pLeftLegWorld->Move_Pos(&(vDir * -10.f * fTimeDelta));
+				m_pRightLegWorld->Move_Pos(&(vDir * -10.f * fTimeDelta));
 	}
 	if (Get_DIKeyState(DIK_D))
 	{
-		m_pBodyWorld->Get_Info(INFO_RIGHT, &vDir);
+		m_pTransform->Get_Info(INFO_RIGHT, &vDir);
 
 		if (m_fLookAngle < 0.2f)
 		{
@@ -200,12 +213,12 @@ void CCubePlayer::Key_Input(const _float & fTimeDelta)
 		m_pLeftArmWorld->Rotation_Axis_Y(-1.5f, m_fLookAngle);
 		m_pRightArmWorld->Rotation_Axis_Y(1.5f, m_fLookAngle);
 
-		/*m_pBodyWorld->Move_Pos(&(vDir * 10.f * fTimeDelta));
+		m_pBodyWorld->Move_Pos(&(vDir * 10.f * fTimeDelta));
 		m_pHeadWorld->Move_Pos(&(vDir * 10.f * fTimeDelta));
-		m_pLeftArmWorld->Move_Pos(&(vDir * 10.f * fTimeDelta));
-		m_pRightArmWorld->Move_Pos(&(vDir * 10.f * fTimeDelta));
+		//m_pLeftArmWorld->Move_Pos(&(vDir * 10.f * fTimeDelta));
+		//m_pRightArmWorld->Move_Pos(&(vDir * 10.f * fTimeDelta));
 		m_pLeftLegWorld->Move_Pos(&(vDir * 10.f * fTimeDelta));
-		m_pRightLegWorld->Move_Pos(&(vDir * 10.f * fTimeDelta));*/
+		m_pRightLegWorld->Move_Pos(&(vDir * 10.f * fTimeDelta));
 	}
 
 	if (Get_DIKeyState(DIK_SPACE))
@@ -240,6 +253,10 @@ HRESULT CCubePlayer::Add_Component(void)
 	pInstance = m_pTransform = dynamic_cast<CTransform*>(Engine::Clone_Proto(L"Proto_TransformCom"));
 	NULL_CHECK_RETURN(pInstance, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_TransformCom", pInstance });
+
+	pInstance = m_pHitBox = dynamic_cast<CHitBox*>(Engine::Clone_Proto(L"Proto_HitboxCom"));
+	NULL_CHECK_RETURN(pInstance, E_FAIL);
+	m_mapComponent[ID_STATIC].insert({ L"Proto_HitboxCom", pInstance });
 
 	return S_OK;
 }
