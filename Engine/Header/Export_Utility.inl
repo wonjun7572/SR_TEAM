@@ -32,6 +32,11 @@ CComponent*				Get_Component(const _tchar* pLayerTag, const _tchar* pObjTag, con
 	return CManagement::GetInstance()->Get_Component(pLayerTag, pObjTag, pComponentTag, eID);
 }
 
+HRESULT					Add_GameObject(const _tchar* pLayerTag, CGameObject* pGameObject, const _tchar* pObjTag)
+{
+	return CManagement::GetInstance()->Add_GameObject(pLayerTag, pGameObject, pObjTag);
+}
+
 inline HRESULT			Ready_Proto(const _tchar* pProtoTag, CComponent* pComponent)
 {
 	return CProtoMgr::GetInstance()->Ready_Proto(pProtoTag, pComponent);

@@ -23,6 +23,8 @@ public:
 		const _tchar* pComponentTag,
 		COMPONENTID eID);
 
+	HRESULT					Add_GameObject(const _tchar* pLayerTag, CGameObject* pGameObject, const _tchar* pObjTag);
+
 public:
 	HRESULT		Set_Scene(CScene* pScene);
 	_int		Update_Scene(const _float& fTimeDelta);

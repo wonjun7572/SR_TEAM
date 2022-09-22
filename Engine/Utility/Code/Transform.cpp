@@ -29,6 +29,50 @@ CTransform::~CTransform()
 {
 }
 
+void CTransform::Rotation_Axis_X(const _float & fMovement, const _float & fAngle)
+{
+	_matrix matScale, matRot, matTrans;
+
+	_matrix matUp, matDown;
+
+	_matrix matAxis;
+
+	D3DXMatrixScaling(&matScale, m_vScale.x, m_vScale.y, m_vScale.z);
+	D3DXMatrixRotationX(&matRot, fAngle);
+	D3DXMatrixTranslation(&matTrans, m_vInfo[INFO_POS].x, m_vInfo[INFO_POS].y, m_vInfo[INFO_POS].z);
+
+	D3DXMatrixTranslation(&matUp, 0.f, fMovement, 0.f);
+	D3DXMatrixTranslation(&matDown, 0.f, -fMovement, 0.f);
+
+	m_matWorld = matScale * matDown * matRot * matUp * matTrans;
+}
+
+void CTransform::Rotation_Axis_Y(const _float & fMovement, const _float & fAngle)
+{
+	_matrix matScale, matRot, matTrans;
+
+	_matrix matMove, matOriginalPos;
+
+	_matrix matAxis;
+
+	D3DXMatrixScaling(&matScale, m_vScale.x, m_vScale.y, m_vScale.z);
+	D3DXMatrixRotationY(&matRot, fAngle);
+	/*D3DXMatrixTranslation(&matTrans, m_vInfo[INFO_POS].x * cosf(fAngle) , m_vInfo[INFO_POS].y, m_vInfo[INFO_POS].z * sinf(fAngle));
+
+	D3DXMatrixTranslation(&matMove, fMovement * cosf(fAngle), 0.f, fMovement * sinf(fAngle));
+	D3DXMatrixTranslation(&matOriginalPos, -(fMovement * cosf(fAngle)), 0.f, -(fMovement * sinf(fAngle)));*/
+
+	D3DXMatrixTranslation(&matTrans, m_vInfo[INFO_POS].x, m_vInfo[INFO_POS].y, m_vInfo[INFO_POS].z);
+
+	D3DXMatrixTranslation(&matMove, fMovement, 0.f, 0.f);
+	D3DXMatrixTranslation(&matOriginalPos, -(fMovement), 0.f, 0.f);
+
+	/*D3DXMatrixTranslation(&matMove, m_vInfo[INFO_POS].x + fMovement * vecAngle.x, 0.f, m_vInfo[INFO_POS].z + fMovement * vecAngle.z);
+	D3DXMatrixTranslation(&matOriginalPos, -(m_vInfo[INFO_POS].x + fMovement * vecAngle.x), 0.f, -(m_vInfo[INFO_POS].z + fMovement * vecAngle.z));*/
+
+	m_matWorld = matScale * matMove * matRot * matOriginalPos * matTrans;
+}
+
 void Engine::CTransform::Chase_Target(const _vec3* pTargetPos, const _float& fSpeed, const _float& fTimeDelta)
 {
 	_vec3		vDir = *pTargetPos - m_vInfo[INFO_POS];

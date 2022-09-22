@@ -17,7 +17,11 @@ public:
 	void				Set_Info(INFOID eID, _vec3* pInfo) { memcpy(m_vInfo[eID], pInfo, sizeof(_vec3)); }
 	void				Set_Angle(_vec3* pInfo) { memcpy(m_vAngle, pInfo, sizeof(_vec3)); }
 	void				Set_Scale(_vec3* pInfo) { memcpy(m_vScale, pInfo, sizeof(_vec3)); }
+	////////////////////////////////캐릭터회전///////////////////////////////////////////////////////////
+	void				Rotation_Axis_X(const _float& fMovement, const _float& fAngle);
+	void				Rotation_Axis_Y(const _float& fMovement, const _float& fAngle);
 	/////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 	const _matrix*		Get_WorldMatrixPointer()					 {	return &m_matWorld; }
 	void				Move_Pos(const _vec3* const pDir)			 {	m_vInfo[INFO_POS] += *pDir; }

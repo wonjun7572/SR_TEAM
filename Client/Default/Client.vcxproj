@@ -160,6 +160,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\BackGround.h" />
+    <ClInclude Include="..\Header\CubeArm.h" />
+    <ClInclude Include="..\Header\CubeBody.h" />
+    <ClInclude Include="..\Header\CubeHead.h" />
+    <ClInclude Include="..\Header\CubeLeg.h" />
+    <ClInclude Include="..\Header\CubePlayer.h" />
     <ClInclude Include="..\Header\DynamicCamera.h" />
     <ClInclude Include="..\Header\Loading.h" />
     <ClInclude Include="..\Header\Logo.h" />
@@ -170,6 +175,8 @@
     <ClInclude Include="..\Header\Terrain.h" />
     <ClInclude Include="..\Header\TestMonster.h" />
     <ClInclude Include="..\Header\TestPlayer.h" />
+    <ClInclude Include="..\Header\Wall.h" />
+    <ClInclude Include="..\Header\WallMgr.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="imconfig.h" />
     <ClInclude Include="imgui.h" />
@@ -185,6 +192,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\BackGround.cpp" />
+    <ClCompile Include="..\Code\CubeArm.cpp" />
+    <ClCompile Include="..\Code\CubeBody.cpp" />
+    <ClCompile Include="..\Code\CubeHead.cpp" />
+    <ClCompile Include="..\Code\CubeLeg.cpp" />
+    <ClCompile Include="..\Code\CubePlayer.cpp" />
     <ClCompile Include="..\Code\DynamicCamera.cpp" />
     <ClCompile Include="..\Code\Loading.cpp" />
     <ClCompile Include="..\Code\Logo.cpp" />
@@ -195,6 +207,8 @@
     <ClCompile Include="..\Code\Terrain.cpp" />
     <ClCompile Include="..\Code\TestMonster.cpp" />
     <ClCompile Include="..\Code\TestPlayer.cpp" />
+    <ClCompile Include="..\Code\Wall.cpp" />
+    <ClCompile Include="..\Code\WallMgr.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="imgui.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>

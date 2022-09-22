@@ -38,6 +38,8 @@ inline 	CComponent*				Get_Component(const _tchar* pLayerTag,
 	const _tchar* pComponentTag,
 	COMPONENTID eID);
 
+inline HRESULT			Add_GameObject(const _tchar* pLayerTag, CGameObject* pGameObject, const _tchar* pObjTag);
+
 // ProtoMgr
 inline HRESULT			Ready_Proto(const _tchar* pProtoTag, CComponent* pComponent);
 inline CComponent*		Clone_Proto(const _tchar* pProtoTag);

@@ -3,6 +3,8 @@
 
 #include "Export_Function.h"
 
+#include "Wall.h"
+
 float g_fPlaySound = 1.f;
 
 CTestPlayer::CTestPlayer(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -84,6 +86,24 @@ void CTestPlayer::Key_Input(const _float& fTimeDelta)
 	if (Get_DIKeyState(DIK_LEFT) & 0x8000)
 		m_pTransCom->Rotation(ROT_Y, D3DXToRadian(-180.f * fTimeDelta));
 
+
+	if (Get_DIKeyState(DIK_SPACE) & 0x80)
+	{
+		// map은 하나의 키값만을 허용함 -> 키가 계속 눌러지는 동안 연속적으로 생산됨
+		_vec3		vPos;
+		m_pTransCom->Get_Info(INFO_POS, &vPos);
+
+		m_pWall = CWall::Create(m_pGraphicDev, test, &_vec3(_float(test), 0.f, 0.f));
+
+		TCHAR			szFinalName[256] = L"";
+		const _tchar*	szWallName = L"Wall_%d";
+
+		wsprintf(szFinalName, szWallName, test);
+
+		Engine::Add_GameObject(L"Layer_Wall", m_pWall, szFinalName);
+
+		++test;
+	}
 }
 
 void CTestPlayer::Set_OnTerrain(void)

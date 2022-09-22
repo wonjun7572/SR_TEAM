@@ -64,6 +64,27 @@
     <Filter Include="02. GameObject\01. For_Stage\03. SkyBox">
       <UniqueIdentifier>{b2c3ebcc-394f-4a53-873c-908db73434b4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\04. Wall">
+      <UniqueIdentifier>{139b70e2-b611-4471-8714-9c310caac6a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\04. Wall\Manager">
+      <UniqueIdentifier>{6a4c3150-11d3-4219-972e-d372cfcd2e2c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\05. CubePlayer">
+      <UniqueIdentifier>{992b2236-4268-4746-9cf3-a44c72fad07c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\05. CubePlayer\Arm">
+      <UniqueIdentifier>{23f84953-e185-4e97-93d6-7b9a57d8473e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\05. CubePlayer\Leg">
+      <UniqueIdentifier>{fcfc542e-db5a-4db2-bfef-493af702a15f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\05. CubePlayer\Body">
+      <UniqueIdentifier>{96c1990b-c0ed-45fb-9623-a471fcb2eb2e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\05. CubePlayer\Head">
+      <UniqueIdentifier>{4c596655-6eef-4602-a3c1-423dfbe90103}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -135,6 +156,27 @@
     <ClInclude Include="imstb_truetype.h">
       <Filter>99. Default\헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\Wall.h">
+      <Filter>02. GameObject\01. For_Stage\04. Wall</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\WallMgr.h">
+      <Filter>02. GameObject\01. For_Stage\04. Wall\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CubePlayer.h">
+      <Filter>02. GameObject\01. For_Stage\05. CubePlayer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CubeArm.h">
+      <Filter>02. GameObject\01. For_Stage\05. CubePlayer\Arm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CubeLeg.h">
+      <Filter>02. GameObject\01. For_Stage\05. CubePlayer\Leg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CubeBody.h">
+      <Filter>02. GameObject\01. For_Stage\05. CubePlayer\Body</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CubeHead.h">
+      <Filter>02. GameObject\01. For_Stage\05. CubePlayer\Head</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -196,6 +238,27 @@
     </ClCompile>
     <ClCompile Include="imgui_widgets.cpp">
       <Filter>99. Default\소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Wall.cpp">
+      <Filter>02. GameObject\01. For_Stage\04. Wall</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\WallMgr.cpp">
+      <Filter>02. GameObject\01. For_Stage\04. Wall\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CubePlayer.cpp">
+      <Filter>02. GameObject\01. For_Stage\05. CubePlayer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CubeArm.cpp">
+      <Filter>02. GameObject\01. For_Stage\05. CubePlayer\Arm</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CubeLeg.cpp">
+      <Filter>02. GameObject\01. For_Stage\05. CubePlayer\Leg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CubeBody.cpp">
+      <Filter>02. GameObject\01. For_Stage\05. CubePlayer\Body</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CubeHead.cpp">
+      <Filter>02. GameObject\01. For_Stage\05. CubePlayer\Head</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

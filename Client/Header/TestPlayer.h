@@ -9,6 +9,8 @@ namespace Engine
 	class CCalculator;
 }
 
+class CWall;
+
 class CTestPlayer : public CGameObject
 {
 private:
@@ -32,8 +34,12 @@ private:
 	CTexture*			m_pTextureCom = nullptr;
 	CCalculator*		m_pCalculatorCom = nullptr;
 
+	CWall*				m_pWall = nullptr;
+
 	_vec3				m_vDirection;
 
+private:
+	int test = 0;
 
 public:
 	static CTestPlayer*		Create(LPDIRECT3DDEVICE9 pGraphicDev);

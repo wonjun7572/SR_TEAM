@@ -11,7 +11,7 @@ CFrame::CFrame()
 
 CFrame::~CFrame()
 {
-
+	Free();
 }
 
 _bool CFrame::IsPermit_Call(const _float & fTimeDelta)
