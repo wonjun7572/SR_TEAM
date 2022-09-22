@@ -2,7 +2,6 @@
 #include "..\Header\TestPlayer.h"
 
 #include "Export_Function.h"
-
 #include "Wall.h"
 
 float g_fPlaySound = 1.f;
@@ -121,7 +120,6 @@ void CTestPlayer::Create_Bullet(const _uint& iCnt)
 	wsprintf(szFinalName, szWallName, iCnt);
 
 	Engine::Add_GameObject(L"Layer_Wall", pWall, szFinalName);
-
 	m_liszFinalName.push_back(szFinalName);
 }
 
