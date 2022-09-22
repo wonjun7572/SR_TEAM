@@ -70,6 +70,9 @@
     <Filter Include="04. Manager\04. SoundMgr">
       <UniqueIdentifier>{f3b6f7c7-f618-479c-9eb8-2afb6900a6e1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="04. Manager\05. PoolMgr">
+      <UniqueIdentifier>{3413bb2e-9dc7-412c-8029-dbc9fbe382b8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Header\TriCol.h">
@@ -138,6 +141,7 @@
     <ClInclude Include="..\..\Header\SoundMgr.h">
       <Filter>04. Manager\04. SoundMgr</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Header\PoolMgr.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\TriCol.cpp">
@@ -203,6 +207,7 @@
     <ClCompile Include="..\Code\SoundMgr.cpp">
       <Filter>04. Manager\04. SoundMgr</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\PoolMgr.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Header\Export_Utility.inl">

@@ -22,6 +22,7 @@
 #include "Renderer.h"
 #include "LightMgr.h"
 #include "SoundMgr.h"
+#include "PoolMgr.h"
 
 BEGIN(Engine)
 
