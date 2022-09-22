@@ -1,24 +1,5 @@
-#include "stdafx.h"
-#include "..\Header\MainApp.h"
 
-#include "Logo.h"
-#include "..\Default\imgui_impl_win32.h"
-#include "..\Default\imgui_impl_dx9.h"
-
-static bool show_transform_window = false;
-static bool show_gameobject_window = false;
-static bool show_save_window = false;			//±è±â¹ü
-
-USING(Engine)
-CMainApp::CMainApp()	
-	: m_pGraphicDev(nullptr)
-{
-}
-
-CMainApp::~CMainApp()
-{
 	
-}
 
 HRESULT CMainApp::Ready_MainApp(void)
 {
