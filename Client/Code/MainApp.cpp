@@ -9,6 +9,12 @@ static bool show_transform_window = false;
 static bool show_gameobject_window = false;
 static bool show_save_window = false;			//김기범
 
+/*
+
+깃허브 테스트용 코드입니다
+
+*/
+
 USING(Engine)
 CMainApp::CMainApp()	
 	: m_pGraphicDev(nullptr)
