@@ -36,13 +36,11 @@ private:
 	CTexture*			m_pTextureCom = nullptr;
 	CCalculator*		m_pCalculatorCom = nullptr;
 
-
 	_vec3				m_vDirection;
 
 private:
-	_uint				m_iCnt = 0;
-
 	list<TCHAR*>		m_liszFinalName;
+	_uint				m_iCnt = 0;
 
 public:
 	static CTestPlayer*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
