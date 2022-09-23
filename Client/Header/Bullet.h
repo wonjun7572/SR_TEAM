@@ -23,21 +23,18 @@ public:
 
 public:
 	HRESULT			Add_Component(void);
-	void			Move_bullet(const _float& fTimeDelta);
 
 private:
 	CRcTex*				m_pBufferCom = nullptr;
 	CTransform*			m_pTransCom = nullptr;
 	CTexture*			m_pTextureCom = nullptr;
 	CCubeTex*			m_pCubetexCom = nullptr;
-	_vec3				m_vDirection;
+	_vec3				m_vDirection = _vec3(0.f, 0.f, 0.f);
 	_float				m_fSpeed = 10.f;
 	_float				fTimeDelta = 1.f;
 
-	_vec3				vDir;
-
 public:
 	static CBullet*		Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3* pPos, const _vec3* pDir);
-	virtual void		Free(void);											
+	virtual void		Free(void);
 };
 

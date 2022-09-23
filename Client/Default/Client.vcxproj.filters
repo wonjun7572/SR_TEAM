@@ -183,11 +183,11 @@
     <ClInclude Include="..\Header\CubeHead.h">
       <Filter>02. GameObject\01. For_Stage\05. CubePlayer\Head</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\Bullet.h">
-      <Filter>99. Default\헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\PoolMgr.h">
       <Filter>02. GameObject\03. PoolMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Bullet.h">
+      <Filter>02. GameObject\01. For_Stage\06. Bullet</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -272,11 +272,11 @@
     <ClCompile Include="..\Code\CubeHead.cpp">
       <Filter>02. GameObject\01. For_Stage\05. CubePlayer\Head</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\Bullet.cpp">
-      <Filter>99. Default\소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\PoolMgr.cpp">
       <Filter>02. GameObject\03. PoolMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Bullet.cpp">
+      <Filter>02. GameObject\01. For_Stage\06. Bullet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

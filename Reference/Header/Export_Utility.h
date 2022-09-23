@@ -39,6 +39,7 @@ inline 	CComponent*				Get_Component(const _tchar* pLayerTag,
 	const _tchar* pComponentTag,
 	COMPONENTID eID);
 inline 	CGameObject*			Get_GameObject(const _tchar* pLayerTag, const _tchar* pObjTag);
+inline 	CLayer*				Get_Layer(const _tchar* pLayerTag);
 
 inline HRESULT			Add_GameObject(const _tchar* pLayerTag, CGameObject* pGameObject, const _tchar* pObjTag);
 

@@ -176,6 +176,8 @@ HRESULT	CStage::Ready_Layer_Bullet(const _tchar* pLayerTag)
 	CGameObject*		pGameObject = nullptr;
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
+
+	return S_OK;
 }
 
 HRESULT CStage::Ready_Proto(void)

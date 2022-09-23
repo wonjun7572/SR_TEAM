@@ -40,6 +40,20 @@ HRESULT CLayer::Add_GameObject(const _tchar * pObjTag, CGameObject * pInstance)
 	return S_OK;
 }
 
+HRESULT CLayer::Delete_GameObject(const _tchar * pObjTag, CGameObject * pInstance)
+{
+	if (nullptr == pInstance)
+		return E_FAIL;
+
+	auto iter = find_if(m_mapObject.begin(), m_mapObject.end(), CTag_Finder(pObjTag));
+
+	m_mapObject.erase(pObjTag);
+
+	Safe_Release<CGameObject*>(pInstance);
+
+	return S_OK;
+}
+
 HRESULT CLayer::Ready_Layer(void)
 {
 	return S_OK;

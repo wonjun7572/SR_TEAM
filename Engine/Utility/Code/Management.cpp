@@ -14,6 +14,14 @@ CManagement::~CManagement()
 	Free();
 }
 
+CLayer * CManagement::Get_Layer(const _tchar * pLayerTag)
+{
+	if (nullptr == m_pScene)
+		return nullptr;
+
+	return m_pScene->Get_Layer(pLayerTag);
+}
+
 
 CGameObject * CManagement::Get_GameObject(const _tchar * pLayerTag, const _tchar * pObjTag)
 {
