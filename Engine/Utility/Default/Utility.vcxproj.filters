@@ -73,9 +73,6 @@
     <Filter Include="00. Component\00. VIBuffer\06. HitBox">
       <UniqueIdentifier>{892106c3-da42-4215-900e-a17f34c0d1ba}</UniqueIdentifier>
     </Filter>
-    <Filter Include="04. Manager\05. PoolMgr">
-      <UniqueIdentifier>{6be8f2a3-caf0-48f9-b4a7-4fe5959ef707}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Header\TriCol.h">
@@ -147,9 +144,6 @@
     <ClInclude Include="..\..\Header\Hitbox.h">
       <Filter>00. Component\00. VIBuffer\06. HitBox</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Header\PoolMgr.h">
-      <Filter>04. Manager\05. PoolMgr</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\TriCol.cpp">
@@ -217,9 +211,6 @@
     </ClCompile>
     <ClCompile Include="..\Code\Hitbox.cpp">
       <Filter>00. Component\00. VIBuffer\06. HitBox</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\PoolMgr.cpp">
-      <Filter>04. Manager\05. PoolMgr</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

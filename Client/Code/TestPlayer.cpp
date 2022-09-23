@@ -3,6 +3,7 @@
 
 #include "Export_Function.h"
 #include "Wall.h"
+#include "PoolMgr.h"
 
 float g_fPlaySound = 1.f;
 
@@ -85,10 +86,16 @@ void CTestPlayer::Key_Input(const _float& fTimeDelta)
 	if (Get_DIKeyState(DIK_LEFT) & 0x8000)
 		m_pTransCom->Rotation(ROT_Y, D3DXToRadian(-180.f * fTimeDelta));
 
+	if (Get_DIMouseState(DIM_LB))
+	{
+		Fire_Bullet(&m_vDirection);
+		m_iBulletCnt++;
+	}
+
 
 	if (Get_DIKeyState(DIK_SPACE) & 0x80)
 	{
-		Create_Bullet(m_iCnt);
+		Create_Wall(m_iCnt, 0);
 		m_iCnt++;
 	}
 }
@@ -106,14 +113,14 @@ void CTestPlayer::Set_OnTerrain(void)
 	m_pTransCom->Set_Pos(vPos.x, fHeight + m_pTransCom->m_vScale.y, vPos.z);
 }
 
-void CTestPlayer::Create_Bullet(const _uint& iCnt)
+void CTestPlayer::Create_Wall(const _uint& iCnt, const _uint& iTextureNum)
 {
 	_vec3		vPos;
 	m_pTransCom->Get_Info(INFO_POS, &vPos);
 
-	CWall*	pWall = CWall::Create(m_pGraphicDev, iCnt, &vPos);
+	CGameObject*	pWall = CWall::Create(m_pGraphicDev, iTextureNum, &vPos);
 	
-	TCHAR* szFinalName = new TCHAR[128];
+	TCHAR* szFinalName = new TCHAR[128]; 
 	wsprintf(szFinalName, L"");
 
 	const _tchar*	szWallName = L"Wall_%d";
@@ -121,6 +128,23 @@ void CTestPlayer::Create_Bullet(const _uint& iCnt)
 
 	Engine::Add_GameObject(L"Layer_Wall", pWall, szFinalName);
 	m_liszFinalName.push_back(szFinalName);
+}
+
+void CTestPlayer::Fire_Bullet(const _vec3* pDir)
+{
+	_vec3		vPos;
+	m_pTransCom->Get_Info(INFO_POS, &vPos);
+
+	CGameObject*	pBullet = CPoolMgr::GetInstance()->Reuse_Obj(m_pGraphicDev, &vPos, pDir);
+
+	TCHAR* szFinalName = new TCHAR[128];
+	wsprintf(szFinalName, L"");
+
+	const _tchar*	szWallName = L"Bullet_%d";
+	wsprintf(szFinalName, szWallName, m_iBulletCnt);
+
+	Engine::Add_GameObject(L"Layer_Bullet", pBullet, szFinalName);
+	m_liBulletName.push_back(szFinalName);
 }
 
 CTestPlayer * CTestPlayer::Create(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -140,8 +164,13 @@ void CTestPlayer::Free(void)
 {
 	for (auto& iter : m_liszFinalName)
 		delete iter;
-
+	
 	m_liszFinalName.clear();
+
+	for (auto& iter : m_liBulletName)
+		delete iter;
+
+	m_liBulletName.clear();
 
 	CGameObject::Free();
 }

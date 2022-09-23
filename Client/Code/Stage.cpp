@@ -36,6 +36,7 @@ HRESULT CStage::Ready_Scene(void)
 
 	FAILED_CHECK_RETURN(Ready_Layer_Wall(L"Layer_Wall"), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Layer_Character(L"Layer_Character"), E_FAIL);
+	FAILED_CHECK_RETURN(Ready_Layer_Bullet(L"Layer_Bullet"), E_FAIL);
 
 	return S_OK;
 }
@@ -165,6 +166,16 @@ HRESULT CStage::Ready_Layer_Character(const _tchar * pLayerTag)
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
 	return S_OK;
+}
+
+HRESULT	CStage::Ready_Layer_Bullet(const _tchar* pLayerTag)
+{
+	Engine::CLayer*		pLayer = Engine::CLayer::Create();
+	NULL_CHECK_RETURN(pLayer, E_FAIL);
+
+	CGameObject*		pGameObject = nullptr;
+
+	m_mapLayer.insert({ pLayerTag, pLayer });
 }
 
 HRESULT CStage::Ready_Proto(void)

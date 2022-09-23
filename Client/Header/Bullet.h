@@ -16,7 +16,7 @@ public:
 	virtual ~CBullet();
 
 public:
-	virtual HRESULT Ready_Object(_vec3* pPosition);
+	virtual HRESULT Ready_Object(const _vec3* pPos, const _vec3* pDir);
 	virtual _int	Update_Object(const _float& fTimeDelta) override;
 	virtual void	LateUpdate_Object(void) override;
 	virtual void	Render_Object(void) override;
@@ -37,7 +37,7 @@ private:
 	_vec3				vDir;
 
 public:
-	static CBullet*		Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3* pPosition);
+	static CBullet*		Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3* pPos, const _vec3* pDir);
 	virtual void		Free(void);											
 };
 

@@ -28,7 +28,9 @@ private:
 	void				Key_Input(const _float& fTimeDelta);
 	void				Set_OnTerrain();
 
-	void				Create_Bullet(const _uint& iCnt);
+	void				Create_Wall(const _uint& iCnt, const _uint& iTextureNum);
+
+	void				Fire_Bullet(const _vec3* pDir);
 
 private:
 	CCubeTex*			m_pBufferCom = nullptr;
@@ -40,7 +42,9 @@ private:
 
 private:
 	list<TCHAR*>		m_liszFinalName;
+	list<TCHAR*>		m_liBulletName;
 	_uint				m_iCnt = 0;
+	_uint				m_iBulletCnt = 0;
 
 public:
 	static CTestPlayer*		Create(LPDIRECT3DDEVICE9 pGraphicDev);

@@ -88,6 +88,9 @@
     <Filter Include="02. GameObject\01. For_Stage\06. Bullet">
       <UniqueIdentifier>{e5424f61-e480-4334-a082-ad86a0d49d51}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\03. PoolMgr">
+      <UniqueIdentifier>{5906fc40-e537-40ed-a3d5-246624daf111}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -183,6 +186,9 @@
     <ClInclude Include="..\Header\Bullet.h">
       <Filter>99. Default\헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\PoolMgr.h">
+      <Filter>02. GameObject\03. PoolMgr</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -268,6 +274,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\Bullet.cpp">
       <Filter>99. Default\소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\PoolMgr.cpp">
+      <Filter>02. GameObject\03. PoolMgr</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

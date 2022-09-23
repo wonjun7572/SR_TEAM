@@ -1,5 +1,4 @@
-﻿  PoolMgr.cpp
-     ../Bin\Utility.lib 라이브러리 및 ../Bin\Utility.exp 개체를 생성하고 있습니다.
+﻿     ../Bin\Utility.lib 라이브러리 및 ../Bin\Utility.exp 개체를 생성하고 있습니다.
   Utility.vcxproj -> C:\Users\sam51\Desktop\SR_TEAM\Engine\Utility\Default\../Bin\Utility.dll
   Utility.vcxproj -> ../Bin\Utility.pdb (Full PDB)
           1개 파일이 복사되었습니다.
@@ -38,7 +37,6 @@
   .\Engine\Header\LightMgr.h
   .\Engine\Header\Management.h
   .\Engine\Header\MyFont.h
-  .\Engine\Header\PoolMgr.h
   .\Engine\Header\ProtoMgr.h
   .\Engine\Header\RcCol.h
   .\Engine\Header\RcTex.h
@@ -53,4 +51,4 @@
   .\Engine\Header\Transform.h
   .\Engine\Header\TriCol.h
   .\Engine\Header\VIBuffer.h
-         49개 파일이 복사되었습니다.
+         48개 파일이 복사되었습니다.

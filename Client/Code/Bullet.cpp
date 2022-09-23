@@ -12,7 +12,7 @@ CBullet::~CBullet()
 {
 }
 
-HRESULT CBullet::Ready_Object(_vec3* pPosition)
+HRESULT CBullet::Ready_Object(const _vec3* pPos, const _vec3* pDir)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
@@ -20,9 +20,9 @@ HRESULT CBullet::Ready_Object(_vec3* pPosition)
 
 	//m_pTransCom->m_vInfo[INFO_POS] = vDir = *pPosition;
 
-	vDir = *pPosition;
+	//vDir = *pPos;
 
-	m_pTransCom->Move_Pos(&(vDir * 10.f * 0.1f));
+	//m_pTransCom->Move_Pos(&(vDir * 10.f * 0.1f));
 
 	return S_OK;
 }
@@ -48,7 +48,7 @@ void CBullet::Render_Object(void)
 
 	m_pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
 	
-	m_pTextureCom->Set_Texture(0);
+	m_pTextureCom->Set_Texture(3);
 
 	m_pCubetexCom->Render_Buffer();
 
@@ -65,9 +65,9 @@ HRESULT CBullet::Add_Component(void)
 	NULL_CHECK_RETURN(m_pBufferCom, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_RcTexCom", pComponent });
 
-	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Clone_Proto(L"Proto_BulletTexture"));
+	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Clone_Proto(L"Proto_CubePlayerTexture"));
 	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Proto_BulletTexture", pComponent });
+	m_mapComponent[ID_STATIC].insert({ L"Proto_CubePlayerTexture", pComponent });
 
 	pComponent = m_pTransCom = dynamic_cast<CTransform*>(Clone_Proto(L"Proto_TransformCom"));
 	NULL_CHECK_RETURN(m_pTransCom, E_FAIL);
@@ -79,11 +79,11 @@ HRESULT CBullet::Add_Component(void)
 	return S_OK;
 }
 
-CBullet * CBullet::Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3* pPosition)
+CBullet * CBullet::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3* pPos, const _vec3* pDir)
 {
 	CBullet *	pInstance = new CBullet(pGraphicDev);
 
-	if (FAILED(pInstance->Ready_Object(pPosition)))
+	if (FAILED(pInstance->Ready_Object(pPos, pDir)))
 	{
 		Safe_Release(pInstance);
 		return nullptr;
