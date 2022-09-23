@@ -133,8 +133,8 @@ void CTestPlayer::Create_Wall(const _uint& iCnt, const _uint& iTextureNum)
 	m_pTransCom->Get_Info(INFO_POS, &vPos);
 
 	CGameObject*	pWall = CWall::Create(m_pGraphicDev, iTextureNum, &vPos);
-	
-	TCHAR* szFinalName = new TCHAR[128]; 
+
+	TCHAR* szFinalName = new TCHAR[128];
 	wsprintf(szFinalName, L"");
 
 	const _tchar*	szWallName = L"Wall_%d";
@@ -158,6 +158,7 @@ void CTestPlayer::Fire_Bullet(const _vec3* pDir)
 	wsprintf(szFinalName, szWallName, m_iBulletCnt);
 
 	Engine::Add_GameObject(L"Layer_Bullet", pBullet, szFinalName);
+
 	m_liBulletName.push_back(szFinalName);
 }
 

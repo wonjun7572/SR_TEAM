@@ -37,6 +37,11 @@ CGameObject*			Get_GameObject(const _tchar* pLayerTag, const _tchar* pObjTag)
 	return CManagement::GetInstance()->Get_GameObject(pLayerTag, pObjTag);
 }
 
+CLayer*				Get_Layer(const _tchar* pLayerTag)
+{
+	return CManagement::GetInstance()->Get_Layer(pLayerTag);
+}
+
 HRESULT					Add_GameObject(const _tchar* pLayerTag, CGameObject* pGameObject, const _tchar* pObjTag)
 {
 	return CManagement::GetInstance()->Add_GameObject(pLayerTag, pGameObject, pObjTag);

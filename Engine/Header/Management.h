@@ -15,6 +15,8 @@ private:
 	virtual ~CManagement();
 
 public:
+	CLayer*					Get_Layer(const _tchar* pLayerTag);
+
 	CGameObject*			Get_GameObject(const _tchar* pLayerTag, const _tchar* pObjTag);
 
 	CComponent*				Get_Component(const _tchar* pLayerTag, 
