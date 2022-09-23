@@ -17,7 +17,7 @@ public:
 
 public:
 	HRESULT			Add_GameObject(const _tchar* pObjTag, CGameObject* pInstance);
-	HRESULT			Delete_GameObject(const _tchar* pObjTag, CGameObject* pInstance);
+	HRESULT			Delete_GameObject(const _tchar * pObjTag);
 
 	HRESULT			Ready_Layer(void);
 	_int			Update_Layer(const _float& fTimeDelta);

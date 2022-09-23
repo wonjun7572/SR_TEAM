@@ -15,13 +15,12 @@ public:
 	CGameObject* Reuse_Obj(LPDIRECT3DDEVICE9& pGraphicDev, const _vec3* vPos, const _vec3* vDir);
 
 private:
-	void Release();
-
-private:
 	list<CGameObject*>		m_ObjectPool;
 	int						m_iCount = 0;
 
+public:
+	virtual	void Free();
+
 private:
 	virtual CComponent* Clone() { return nullptr; }
-	virtual	void Free();
 };

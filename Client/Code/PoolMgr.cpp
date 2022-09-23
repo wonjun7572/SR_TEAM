@@ -39,16 +39,27 @@ CGameObject* CPoolMgr::Reuse_Obj(LPDIRECT3DDEVICE9& pGraphicDev,const _vec3* vPo
 		m_ObjectPool.pop_front();
 	}
 
-	return pObj;
-}
+	dynamic_cast<CBullet*>(pObj)->Set_Pos(*vPos);
+	dynamic_cast<CBullet*>(pObj)->MoveToDir(*vDir);
 
-void CPoolMgr::Release()
-{
+	return pObj;
 }
 
 void CPoolMgr::Free()
 {
-	for_each(m_ObjectPool.begin(), m_ObjectPool.end(), CDeleteObj());
+	/*for (auto iter : m_ObjectPool)
+	{
+		_ulong dwCnt = 0;
+
+		dwCnt = iter->Release();
+
+		if (dwCnt == 0)
+			iter = nullptr;
+	}*/
+	//for (auto iter : m_ObjectPool)
+	//{
+	//	Safe_Release<CGameObject*>(iter);
+	//}
+
 	m_ObjectPool.clear();
-	Release();
 }

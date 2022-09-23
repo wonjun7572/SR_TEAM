@@ -23,6 +23,8 @@ public:
 
 public:
 	HRESULT			Add_Component(void);
+	void Set_Pos(const _vec3& vPos);
+	void MoveToDir(const _vec3& vDir);
 
 private:
 	CRcTex*				m_pBufferCom = nullptr;
@@ -31,7 +33,8 @@ private:
 	CCubeTex*			m_pCubetexCom = nullptr;
 	_vec3				m_vDirection = _vec3(0.f, 0.f, 0.f);
 	_float				m_fSpeed = 10.f;
-	_float				fTimeDelta = 1.f;
+	_float				m_fTimeDelta = 0.f;
+
 
 public:
 	static CBullet*		Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3* pPos, const _vec3* pDir);
