@@ -20,7 +20,11 @@ public:
 	////////////////////////////////캐릭터회전///////////////////////////////////////////////////////////
 	void				Rotation_Axis_X(const _float& fMovement, const _float& fAngle);
 	void				Rotation_Axis_Y(const _float& fMovement, const _float& fAngle);
-	/////////////////////////////////////////////////////////////////////////////////////////////////////
+	////피킹/////////////////////////////////////////////////////////////////////////////////////////////
+	void				Get_WorldMatrix(_matrix* pWorld) const { *pWorld = m_matWorld; }
+	//void				Set_WorldMatrix(_matrix* pWorld) { m_matWorld = *pWorld; }
+	//트랜스폼 전 변환값/////////////////////////////////////////////////////////////////////////////////
+	void				Get_BeforeInfo(INFOID eID, _vec3* pInfo) { memcpy(pInfo, m_vInfo[eID], sizeof(_vec3)); }
 
 
 	const _matrix*		Get_WorldMatrixPointer()					 {	return &m_matWorld; }
@@ -39,6 +43,9 @@ public:
 public:
 	void				Chase_Target(const _vec3* pTargetPos, const _float& fSpeed, const _float& fTimeDelta);
 	const _matrix*		Compute_LookAtTarget(const _vec3* pTargetPos);
+	
+public:
+	void				Billboard_Transform(const _float& fTimeDelta);
 
 public:
 	HRESULT				Ready_Transform(void);

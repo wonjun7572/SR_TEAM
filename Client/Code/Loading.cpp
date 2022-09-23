@@ -44,6 +44,8 @@ _uint CLoading::Loading_ForStage(void)
 	//FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_WallTexture", CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/CubeTile/CubeTile_&d.dds", TEX_CUBE, 104)), E_FAIL);
 	/////
 
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_CalculatorCom", CCalculator::Create(m_pGraphicDev)), E_FAIL);
+
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_TransformCom", CTransform::Create()), E_FAIL);
 
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_HitboxCom", CHitBox::Create(m_pGraphicDev)), E_FAIL);

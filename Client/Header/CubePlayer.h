@@ -20,8 +20,14 @@ private:
 	map<const _tchar*, CGameObject*>	m_mapPlayerBody;
 
 private:
-	void			Key_Input(const _float& fTimeDelta);
-	void			Set_OnTerrain(void);
+	HRESULT			Get_BodyTransform(void);
+
+	void			Key_Input(const _float& fTimeDelta);		//	키 입력
+	void			Set_OnTerrain(void);						//	지형 타기
+	void			Assemble(void);								//	몸체 조립
+
+	void			Walk_Animation(void);						//	걷는 모션
+	void			Move(void);									//	실제 이동
 
 private:
 	HRESULT			Add_Component(void);
@@ -46,6 +52,8 @@ private:
 
 	_float			m_fAngle = 0.f;
 	_bool			m_bWalkAngle = true;
+
+	_float			m_fTimeDelta = 0.f;
 
 public:
 	static CCubePlayer*	Create(LPDIRECT3DDEVICE9 pGraphicDev);

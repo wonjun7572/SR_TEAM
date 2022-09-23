@@ -32,6 +32,10 @@ private:
 
 	void				Fire_Bullet(const _vec3* pDir);
 
+	/////////////////////////////////////////////////
+	_vec3				Mouse_Peeking(void);
+	/////////////////////////////////////////////////
+
 private:
 	CCubeTex*			m_pBufferCom = nullptr;
 	CTransform*			m_pTransCom = nullptr;
