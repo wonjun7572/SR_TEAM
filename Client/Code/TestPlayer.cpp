@@ -199,12 +199,18 @@ CTestPlayer * CTestPlayer::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 void CTestPlayer::Free(void)
 {
 	for (auto& iter : m_liszFinalName)
-		delete iter;
+	{
+		if(iter != nullptr)
+			delete iter;
+	}
 	
 	m_liszFinalName.clear();
 
 	for (auto& iter : m_liBulletName)
-		delete iter;
+	{
+		if(iter != nullptr)
+			delete iter;
+	}
 
 	m_liBulletName.clear();
 

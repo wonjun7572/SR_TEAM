@@ -4,16 +4,11 @@
 #include "Logo.h"
 #include "..\Default\imgui_impl_win32.h"
 #include "..\Default\imgui_impl_dx9.h"
+#include "PoolMgr.h"
 
 static bool show_transform_window = false;
 static bool show_gameobject_window = false;
-static bool show_save_window = false;			//김기범
-
-/*
-
-깃허브 테스트용 코드입니다
-
-*/
+static bool show_save_window = false;		
 
 USING(Engine)
 CMainApp::CMainApp()	
@@ -329,6 +324,7 @@ void CMainApp::Free(void)
 	Safe_Release(m_pDeviceClass);
 	Safe_Release(m_pManagementClass);
 
+	CPoolMgr::GetInstance()->Free();
 	Engine::Release_Utility();
 	Engine::Release_System();
 }

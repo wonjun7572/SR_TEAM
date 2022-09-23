@@ -26,18 +26,19 @@ _int CBullet::Update_Object(const _float & fTimeDelta)
 {
 	Engine::CGameObject::Update_Object(fTimeDelta);
 	_vec3 vPos;
-
+	m_fTimeDelta = fTimeDelta;
 	m_pTransCom->Get_Info(INFO_POS, &vPos);
 
-	//if (vPos.x >= 50.f || vPos.y >= 50.f || vPos.z >= 50.f
-	//	|| vPos.x <= -50.f || vPos.y <= -50.f || vPos.z <= -50.f)
-	//{
-	//	m_pTransCom->Set_Pos(0.f, 0.f, 0.f);
-	//	CPoolMgr::GetInstance()->Collect_Obj(this);
-	//}
+	if (vPos.x >= 50.f || vPos.y >= 50.f || vPos.z >= 50.f
+		|| vPos.x <= -50.f || vPos.y <= -50.f || vPos.z <= -50.f)
+	{
+		CPoolMgr::GetInstance()->Collect_Obj(this);
+		Engine::Add_RenderGroup(RENDER_NONALPHA, this);
+		return 0;
+	}
 
 	Engine::Add_RenderGroup(RENDER_NONALPHA, this);
-	m_pTransCom->Move_Pos(&(m_vDirection * fTimeDelta * 5.f));
+	m_pTransCom->Move_Pos(&(m_vDirection * fTimeDelta * m_fSpeed));
 
 	return 0;
 }
@@ -84,6 +85,16 @@ HRESULT CBullet::Add_Component(void)
 	NULL_CHECK_RETURN(m_pCubetexCom, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_CubeTexCom", pComponent });
 	return S_OK;
+}
+
+void CBullet::Set_Pos(const _vec3 & vPos)
+{
+	m_pTransCom->Set_Pos(vPos.x, vPos.y, vPos.z);
+}
+
+void CBullet::MoveToDir(const _vec3 & vDir)
+{
+	m_pTransCom->m_vInfo[INFO_POS] += vDir * m_fTimeDelta * m_fSpeed;
 }
 
 CBullet * CBullet::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3* pPos, const _vec3* pDir)
