@@ -61,6 +61,10 @@ HRESULT CTestPlayer::Add_Component(void)
 	NULL_CHECK_RETURN(m_pTransCom, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_TransformCom", pComponent });
 
+	pComponent = m_pCalculatorCom = dynamic_cast<CCalculator*>(Clone_Proto(L"Proto_CalculatorCom"));
+	NULL_CHECK_RETURN(m_pTransCom, E_FAIL);
+	m_mapComponent[ID_STATIC].insert({ L"Proto_CalculatorCom", pComponent });
+
 	return S_OK;
 }
 
@@ -97,6 +101,16 @@ void CTestPlayer::Key_Input(const _float& fTimeDelta)
 	{
 		Create_Wall(m_iCnt, 0);
 		m_iCnt++;
+	}
+
+	if (Get_DIMouseState(DIM_LB) & 0x80)
+	{
+		_vec3 vMyPos;
+		m_pTransCom->Get_Info(INFO_POS, &vMyPos);
+		_vec3 vPeekPos, vDir;
+		vPeekPos = Mouse_Peeking();
+		vDir = vPeekPos - vMyPos;
+		m_pTransCom->Move_Pos(&(vDir * 10.f * fTimeDelta));
 	}
 }
 
@@ -145,6 +159,27 @@ void CTestPlayer::Fire_Bullet(const _vec3* pDir)
 
 	Engine::Add_GameObject(L"Layer_Bullet", pBullet, szFinalName);
 	m_liBulletName.push_back(szFinalName);
+}
+
+_vec3 CTestPlayer::Mouse_Peeking(void)
+{
+	_vec3		vPos;
+	m_pTransCom->Get_Info(INFO_POS, &vPos);
+
+	CTerrainTex*	TerrainTex = dynamic_cast<CTerrainTex*>(Engine::Get_Component(L"Layer_Environment", L"Terrain", L"Proto_TerrainTexCom", ID_STATIC));
+	NULL_CHECK_RETURN(TerrainTex, vPos);
+
+	CTransform*		TerrainTransform = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Environment", L"Terrain", L"Proto_TransformCom", ID_DYNAMIC));
+	NULL_CHECK_RETURN(TerrainTransform, vPos);
+
+	/*if (m_pCalculatorCom->Peek_Target_Vector(g_hWnd, &_vec3(0, 0, 0), TerrainTex, TerrainTransform).x > 128 ||
+		m_pCalculatorCom->Peek_Target_Vector(g_hWnd, &_vec3(0, 0, 0), TerrainTex, TerrainTransform).x < 0 ||
+		m_pCalculatorCom->Peek_Target_Vector(g_hWnd, &_vec3(0, 0, 0), TerrainTex, TerrainTransform).z > 128 ||
+		m_pCalculatorCom->Peek_Target_Vector(g_hWnd, &_vec3(0, 0, 0), TerrainTex, TerrainTransform).z < 0)
+	{
+		return _vec3(0, 0, 0);
+	}*/
+	return m_pCalculatorCom->Peek_Target_Vector(g_hWnd, &_vec3(0, 0, 0), TerrainTex, TerrainTransform);
 }
 
 CTestPlayer * CTestPlayer::Create(LPDIRECT3DDEVICE9 pGraphicDev)

@@ -44,7 +44,7 @@ void CTransform::Rotation_Axis_X(const _float & fMovement, const _float & fAngle
 	D3DXMatrixTranslation(&matUp, 0.f, fMovement, 0.f);
 	D3DXMatrixTranslation(&matDown, 0.f, -fMovement, 0.f);
 
-	m_matWorld = matScale * matDown * matRot * matUp * matTrans;
+	m_matWorld = matScale * matDown * matRot * matUp  *matTrans;
 }
 
 void CTransform::Rotation_Axis_Y(const _float & fMovement, const _float & fAngle)
@@ -57,18 +57,11 @@ void CTransform::Rotation_Axis_Y(const _float & fMovement, const _float & fAngle
 
 	D3DXMatrixScaling(&matScale, m_vScale.x, m_vScale.y, m_vScale.z);
 	D3DXMatrixRotationY(&matRot, fAngle);
-	/*D3DXMatrixTranslation(&matTrans, m_vInfo[INFO_POS].x * cosf(fAngle) , m_vInfo[INFO_POS].y, m_vInfo[INFO_POS].z * sinf(fAngle));
-
-	D3DXMatrixTranslation(&matMove, fMovement * cosf(fAngle), 0.f, fMovement * sinf(fAngle));
-	D3DXMatrixTranslation(&matOriginalPos, -(fMovement * cosf(fAngle)), 0.f, -(fMovement * sinf(fAngle)));*/
 
 	D3DXMatrixTranslation(&matTrans, m_vInfo[INFO_POS].x, m_vInfo[INFO_POS].y, m_vInfo[INFO_POS].z);
 
 	D3DXMatrixTranslation(&matMove, fMovement, 0.f, 0.f);
 	D3DXMatrixTranslation(&matOriginalPos, -(fMovement), 0.f, 0.f);
-
-	/*D3DXMatrixTranslation(&matMove, m_vInfo[INFO_POS].x + fMovement * vecAngle.x, 0.f, m_vInfo[INFO_POS].z + fMovement * vecAngle.z);
-	D3DXMatrixTranslation(&matOriginalPos, -(m_vInfo[INFO_POS].x + fMovement * vecAngle.x), 0.f, -(m_vInfo[INFO_POS].z + fMovement * vecAngle.z));*/
 
 	m_matWorld = matScale * matMove * matRot * matOriginalPos * matTrans;
 }
@@ -100,6 +93,32 @@ const _matrix* Engine::CTransform::Compute_LookAtTarget(const _vec3* pTargetPos)
 									D3DXVec3Cross(&vAxis, &m_vInfo[INFO_UP], &vLook),
 									acosf(D3DXVec3Dot(D3DXVec3Normalize(&vLook, &vLook), 
 												D3DXVec3Normalize(&vUp, &m_vInfo[INFO_UP]))));
+}
+
+void CTransform::Billboard_Transform(const _float & fTimeDelta)
+{
+	//	이거 쓸라면 Transform Component 속성 Static 이어야됨!
+
+	_matrix	matScale, matRotX, matRotY, matRotZ, matBill, matTrans;
+
+	D3DXMatrixScaling(&matScale, m_vScale.x, m_vScale.y, m_vScale.z);
+	D3DXMatrixRotationX(&matRotX, m_vAngle.x);
+	D3DXMatrixRotationY(&matRotY, m_vAngle.y);
+	D3DXMatrixRotationZ(&matRotZ, m_vAngle.z);
+
+	D3DXMatrixIdentity(&matBill);
+
+	_matrix matView;
+	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
+	matBill.m[0][0] = matView.m[0][0];
+	matBill.m[0][2] = matView.m[0][2];
+	matBill.m[2][0] = matView.m[2][0];
+	matBill.m[2][2] = matView.m[2][2];
+	D3DXMatrixInverse(&matBill, nullptr, &matBill);
+
+	D3DXMatrixTranslation(&matTrans, m_vInfo[INFO_POS].x, m_vInfo[INFO_POS].y, m_vInfo[INFO_POS].z);
+
+	m_matWorld = matScale * matRotX * matRotY * matRotZ * matBill * matTrans;
 }
 
 HRESULT CTransform::Ready_Transform(void)

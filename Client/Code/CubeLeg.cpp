@@ -61,7 +61,7 @@ HRESULT CCubeLeg::Add_Component(void)
 
 	pInstance = m_pTransform = dynamic_cast<CTransform*>(Engine::Clone_Proto(L"Proto_TransformCom"));
 	NULL_CHECK_RETURN(pInstance, E_FAIL);
-	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_TransformCom", pInstance });
+	m_mapComponent[ID_STATIC].insert({ L"Proto_TransformCom", pInstance });
 
 	return S_OK;
 }

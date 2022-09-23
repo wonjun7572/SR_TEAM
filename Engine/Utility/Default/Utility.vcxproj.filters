@@ -73,6 +73,9 @@
     <Filter Include="00. Component\00. VIBuffer\06. HitBox">
       <UniqueIdentifier>{892106c3-da42-4215-900e-a17f34c0d1ba}</UniqueIdentifier>
     </Filter>
+    <Filter Include="00. Component\04. Collision">
+      <UniqueIdentifier>{cca6169d-0d0d-4e60-98cc-70cd354f0c93}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Header\TriCol.h">
@@ -144,6 +147,9 @@
     <ClInclude Include="..\..\Header\Hitbox.h">
       <Filter>00. Component\00. VIBuffer\06. HitBox</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Header\Collision.h">
+      <Filter>00. Component\04. Collision</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\TriCol.cpp">
@@ -211,6 +217,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\Hitbox.cpp">
       <Filter>00. Component\00. VIBuffer\06. HitBox</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Collision.cpp">
+      <Filter>00. Component\04. Collision</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

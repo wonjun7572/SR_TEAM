@@ -3,6 +3,9 @@
 
 BEGIN(Engine)
 
+class CTerrainTex;
+class CTransform;
+
 class ENGINE_DLL CCalculator : public CComponent
 {
 private:
@@ -19,13 +22,15 @@ public:
 		const _ulong& dwCntZ,
 		const _ulong& dwVtxItv = 1);
 
+	//	광선의 시작점을 정할 수 있도록 바꿈. 나중에 Ray충돌 구현할때 한번 더 업그레이드 할 예정
+	_vec3		Peek_Target_Vector(HWND hWnd, _vec3* SrcPos, const CTerrainTex* pTerrainTex, const CTransform* pTransform);
+
 public:
 	virtual CComponent* Clone(void) override;
 	static CCalculator*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
 private:
 	virtual void Free(void) override;
-
 };
 
 END
