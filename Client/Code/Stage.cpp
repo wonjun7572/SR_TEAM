@@ -76,17 +76,17 @@ HRESULT CStage::Ready_Layer_Environment(const _tchar * pLayerTag)
 
 	#pragma region 스테이즈 1 코드
 // DynamicCamera
-	//pGameObject = CDynamicCamera::Create(m_pGraphicDev, &_vec3(0.f, 10.f, -10.f), &_vec3(0.f, 0.f, 0.f), &_vec3(0.f, 1.f, 0.f));
-	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"DynamicCamera", pGameObject), E_FAIL);
-	//m_pCam = dynamic_cast<CDynamicCamera*>(pGameObject);
+	/*pGameObject = CDynamicCamera::Create(m_pGraphicDev, &_vec3(0.f, 10.f, -10.f), &_vec3(0.f, 0.f, 0.f), &_vec3(0.f, 1.f, 0.f));
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"DynamicCamera", pGameObject), E_FAIL);
+	m_pCam = dynamic_cast<CDynamicCamera*>(pGameObject);*/
 	
 	// StaticCamera
 	//pGameObject = CStaticCamera::Create(m_pGraphicDev, &_vec3(0.f, 20.f, -10.f), &_vec3(0.f, 0.f, 0.f), &_vec3(0.f, 1.f, 0.f));
 	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"StaticCamera", pGameObject), E_FAIL);
 	
-	// Terrain
+	//Terrain
 	//pGameObject = CTerrain::Create(m_pGraphicDev);
 	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Terrain", pGameObject), E_FAIL);
@@ -152,7 +152,7 @@ HRESULT CStage::Ready_Layer_Character(const _tchar * pLayerTag)
 	CGameObject*		pGameObject = nullptr;
 
 	#pragma region 큐브 플레이어 잠가 놓았음 툴때문에 
-/*pGameObject = CCubeHead::Create(m_pGraphicDev);
+	/*pGameObject = CCubeHead::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"HEAD", pGameObject), E_FAIL);
 
@@ -178,8 +178,8 @@ HRESULT CStage::Ready_Layer_Character(const _tchar * pLayerTag)
 
 	pGameObject = CCubePlayer::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"PLAYER", pGameObject), E_FAIL);
-*/
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"PLAYER", pGameObject), E_FAIL);*/
+
 #pragma endregion 큐브 플레이어 잠가 놓았음 툴때문에 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
@@ -214,7 +214,7 @@ HRESULT CStage::Ready_Layer_Tool(const _tchar * pLayerTag)
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"DynamicCamera", pGameObject), E_FAIL);
 
 	pGameObject = CTerrain::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, );
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"TerrainByTool", pGameObject), E_FAIL);
 
 	m_mapLayer.insert({ pLayerTag, pLayer });

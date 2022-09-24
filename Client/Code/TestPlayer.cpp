@@ -102,7 +102,7 @@ void CTestPlayer::Key_Input(const _float& fTimeDelta)
 		m_iCnt++;
 	}
 
-	if (Get_DIMouseState(DIM_LB) & 0x80)
+	/*if (Get_DIMouseState(DIM_LB) & 0x80)
 	{
 		_vec3 vMyPos;
 		m_pTransCom->Get_Info(INFO_POS, &vMyPos);
@@ -110,7 +110,7 @@ void CTestPlayer::Key_Input(const _float& fTimeDelta)
 		vPeekPos = Mouse_Peeking();
 		vDir = vPeekPos - vMyPos;
 		m_pTransCom->Move_Pos(&(vDir * 10.f * fTimeDelta));
-	}
+	}*/
 }
 
 void CTestPlayer::Set_OnTerrain(void)
@@ -147,7 +147,7 @@ void CTestPlayer::Fire_Bullet(const _vec3* pDir)
 {
 	_vec3		vPos;
 	m_pTransCom->Get_Info(INFO_POS, &vPos);
-	CGameObject*	pBullet = CPoolMgr::GetInstance()->Reuse_Obj(m_pGraphicDev, &vPos, pDir);
+	FAILED_CHECK_RETURN(CPoolMgr::GetInstance()->Reuse_Obj(m_pGraphicDev, &vPos, pDir), );
 }
 
 _vec3 CTestPlayer::Mouse_Peeking(void)

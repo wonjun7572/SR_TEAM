@@ -57,6 +57,16 @@ HRESULT CLayer::Delete_GameObject(const _tchar * pObjTag)
 	return S_OK;
 }
 
+HRESULT CLayer::Add_GameList(CGameObject * pInstance)
+{
+	if (nullptr == pInstance)
+		return E_FAIL;
+
+	m_ObjectList.push_back(pInstance);
+
+	return S_OK;
+}
+
 HRESULT CLayer::Ready_Layer(void)
 {
 	return S_OK;
@@ -66,12 +76,37 @@ _int CLayer::Update_Layer(const _float & fTimeDelta)
 {
 	_int iResult = 0;
 
-	for (auto& iter : m_mapObject)
+	if (!m_ObjectList.empty())
 	{
-		iResult = iter.second->Update_Object(fTimeDelta);
+		list<CGameObject*>::iterator iter;
 
-		if (iResult & 0x80000000)
-			return iResult;
+		for (iter = m_ObjectList.begin(); iter != m_ObjectList.end();)
+		{
+			iResult = (*iter)->Update_Object(fTimeDelta);
+			if (iResult & 0x80000000)
+			{
+				iter = m_ObjectList.erase(iter);
+			}
+			else
+				++(iter);
+		}
+	}
+	else
+	{
+		map<const _tchar*, CGameObject*>::iterator iter;
+
+		for (iter = m_mapObject.begin(); iter != m_mapObject.end();)
+		{
+			iResult = iter->second->Update_Object(fTimeDelta);
+
+			if (iResult & 0x80000000)
+			{
+				Safe_Release(iter->second);
+				m_mapObject.erase(iter++);
+			}
+			else
+				++iter;
+		}
 	}
 
 	return iResult;
@@ -79,8 +114,16 @@ _int CLayer::Update_Layer(const _float & fTimeDelta)
 
 void CLayer::LateUpdate_Layer(void)
 {
-	for (auto& iter : m_mapObject)
-		iter.second->LateUpdate_Object();
+	if (!m_ObjectList.empty())
+	{
+		for (auto& iter : m_ObjectList)
+			iter->LateUpdate_Object();
+	}
+	else
+	{
+		for (auto& iter : m_mapObject)
+			iter.second->LateUpdate_Object();
+	}
 }
 
 CLayer* CLayer::Create(void)
@@ -95,6 +138,9 @@ CLayer* CLayer::Create(void)
 
 void CLayer::Free(void)
 {
+	for_each(m_ObjectList.begin(), m_ObjectList.end(), CDeleteObj());
+	m_ObjectList.clear();
+
 	for_each(m_mapObject.begin(), m_mapObject.end(), CDeleteMap());
 	m_mapObject.clear();
 }

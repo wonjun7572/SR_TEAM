@@ -20,6 +20,7 @@ public:
 public:
 	HRESULT			Add_GameObject(const _tchar* pObjTag, CGameObject* pInstance);
 	HRESULT			Delete_GameObject(const _tchar * pObjTag);
+	HRESULT			Add_GameList(CGameObject* pInstance);
 
 	HRESULT			Ready_Layer(void);
 	_int			Update_Layer(const _float& fTimeDelta);
@@ -27,6 +28,7 @@ public:
 
 private:
 	map<const _tchar*, CGameObject*>			m_mapObject;
+	list<CGameObject*>							m_ObjectList;
 
 public:
 	static CLayer*		Create(void);
