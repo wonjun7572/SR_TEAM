@@ -57,6 +57,11 @@ inline CComponent*		Clone_Proto(const _tchar* pProtoTag)
 	return CProtoMgr::GetInstance()->Clone_Proto(pProtoTag);
 }
 
+inline HRESULT			Delete_Proto(const _tchar* pProtoTag)
+{
+	return CProtoMgr::GetInstance()->Delete_Proto(pProtoTag);
+}
+
 void		Add_RenderGroup(RENDERID eID, CGameObject* pGameObject)
 {
 	CRenderer::GetInstance()->Add_RenderGroup(eID, pGameObject);

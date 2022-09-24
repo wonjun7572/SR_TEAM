@@ -40,12 +40,18 @@ void CTerrain::Render_Object(void)
 
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
 
-	m_pTextureCom->Set_Texture(0);	// 텍스처 정보 세팅을 우선적으로 한다.
+	if (m_bWireFrame)
+		m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+
+	m_pTextureCom->Set_Texture(m_iTerrainIdx);	// 텍스처 정보 세팅을 우선적으로 한다.
 
 	FAILED_CHECK_RETURN(Set_Material(), );
 //	==	FAILED_CHECK(Set_Material());
 
 	m_pBufferCom->Render_Buffer();
+
+	if (m_bWireFrame)
+		m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
 }
@@ -58,9 +64,9 @@ HRESULT CTerrain::Add_Component(void)
 	NULL_CHECK_RETURN(m_pBufferCom, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_TerrainTexCom", pComponent });
 
-	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Clone_Proto(L"Proto_TerrainTexture"));
+	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Clone_Proto(L"Proto_TerrainTexCom_MapTool"));
 	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Proto_TerrainTexture", pComponent });
+	m_mapComponent[ID_STATIC].insert({ L"Proto_TerrainTexCom_MapTool", pComponent });
 
 	pComponent = m_pTransCom = dynamic_cast<CTransform*>(Clone_Proto(L"Proto_TransformCom"));
 	NULL_CHECK_RETURN(m_pTransCom, E_FAIL);

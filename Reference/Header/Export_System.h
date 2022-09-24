@@ -7,6 +7,7 @@
 #include "FrameMgr.h"
 #include "FontMgr.h"
 #include "InputDev.h"
+#include "InputMgr.h"
 
 BEGIN(Engine)
 
@@ -26,6 +27,18 @@ inline void			Update_Timer(const _tchar* pTimerTag);
 // FrameMgr
 inline _bool		IsPermit_Call(const _tchar* pFrameTag, const _float& fTimeDelta);
 inline HRESULT		Ready_Frame(const _tchar* pFrameTag, const _float& fCallLimit);
+
+// InputMgr
+inline void Ready_Input(HWND hwnd);
+inline void Update_Input();
+
+inline bool GetButton(KEY_TYPE key);
+inline bool GetButtonDown(KEY_TYPE key);
+inline bool GetButtonUp(KEY_TYPE key);
+
+inline void SetAxisMode(bool bAxisMode);
+inline _float GetVerticalAxis();
+inline _float GetHorizontalAxis();
 
 // InputDev
 

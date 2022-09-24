@@ -19,7 +19,6 @@ Engine::CTexture::CTexture(const CTexture& rhs)
 
 	for (_uint i = 0; i < iSize; ++i)
 		m_vecTexture[i]->AddRef();
-
 }
 
 CTexture::~CTexture()

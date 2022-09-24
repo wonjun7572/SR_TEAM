@@ -46,9 +46,7 @@ private:
 
 private:
 	list<TCHAR*>		m_liszFinalName;
-	list<TCHAR*>		m_liBulletName;
 	_uint				m_iCnt = 0;
-	_uint				m_iBulletCnt = 0;
 
 public:
 	static CTestPlayer*		Create(LPDIRECT3DDEVICE9 pGraphicDev);

@@ -50,7 +50,7 @@ void CDynamicCamera::LateUpdate_Object(void)
 
 	if (false == m_bFix)
 	{
-		//Mouse_Fix();
+		Mouse_Fix();
 		Mouse_Move();
 	}
 }

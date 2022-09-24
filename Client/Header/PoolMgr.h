@@ -16,10 +16,13 @@ public:
 
 private:
 	list<CGameObject*>		m_ObjectPool;
-	int						m_iCount = 0;
 
 public:
 	virtual	void Free();
+
+	list<TCHAR*>		m_liBulletName;
+	_uint				m_iBulletCnt = 0;
+
 
 private:
 	virtual CComponent* Clone() { return nullptr; }

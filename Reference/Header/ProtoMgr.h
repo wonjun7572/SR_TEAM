@@ -16,6 +16,9 @@ public:
 	HRESULT			Ready_Proto(const _tchar* pProtoTag, CComponent* pComponent);
 	CComponent*		Clone_Proto(const _tchar* pProtoTag);
 
+	// 프로토 태그로 삭제
+	HRESULT			Delete_Proto(const _tchar * pProtoTag);
+
 private:
 	CComponent*		Find_Proto(const _tchar* pProtoTag);
 

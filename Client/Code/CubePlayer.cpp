@@ -86,7 +86,7 @@ void CCubePlayer::Assemble(void)
 	m_pLeftLegWorld->Set_Pos(vBodyPos.x - 0.5f, vBodyPos.y - 4.f, vBodyPos.z);
 	m_pRightLegWorld->Set_Pos(vBodyPos.x + 0.5f, vBodyPos.y - 4.f, vBodyPos.z);
 
-	cout << vBodyPos.y << endl;
+	//cout << vBodyPos.y << endl;
 }
 
 void CCubePlayer::Walk_Animation(void)

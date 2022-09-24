@@ -19,6 +19,11 @@ public:
 
 	map<const _tchar*, CLayer*> Get_MapLayer() { return m_mapLayer; }
 
+	void Add_Layer(CLayer* pLayer, _tchar* LayerName)
+	{
+		m_mapLayer.insert({ LayerName,pLayer });
+	}
+
 public:
 	virtual		HRESULT		Ready_Scene(void);
 	virtual		_int Update_Scene(const _float& fTimeDelta);

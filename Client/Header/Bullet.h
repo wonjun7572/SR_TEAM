@@ -22,6 +22,7 @@ public:
 	virtual void	Render_Object(void) override;
 
 public:
+	_vec3			Get_Pos() { return m_vPos; }
 	HRESULT			Add_Component(void);
 	void Set_Pos(const _vec3& vPos);
 	void MoveToDir(const _vec3& vDir);
@@ -32,6 +33,7 @@ private:
 	CTexture*			m_pTextureCom = nullptr;
 	CCubeTex*			m_pCubetexCom = nullptr;
 	_vec3				m_vDirection = _vec3(0.f, 0.f, 0.f);
+	_vec3				m_vPos = _vec3(0.f, 0.f, 0.f);
 	_float				m_fSpeed = 10.f;
 	_float				m_fTimeDelta = 0.f;
 

@@ -4,6 +4,7 @@
 BEGIN(Engine)
 
 class CTerrainTex;
+class CCubeTex;
 class CTransform;
 
 class ENGINE_DLL CCalculator : public CComponent
@@ -24,6 +25,9 @@ public:
 
 	//	광선의 시작점을 정할 수 있도록 바꿈. 나중에 Ray충돌 구현할때 한번 더 업그레이드 할 예정
 	_vec3		Peek_Target_Vector(HWND hWnd, _vec3* SrcPos, const CTerrainTex* pTerrainTex, const CTransform* pTransform);
+
+	//	큐브 타겟 피킹
+	_bool		Peek_Cube_Target(HWND hWnd, _vec3 * SrcPos, const CCubeTex * pCubeTex, const CTransform * pTransform);
 
 public:
 	virtual CComponent* Clone(void) override;

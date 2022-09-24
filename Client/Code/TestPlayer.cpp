@@ -93,7 +93,6 @@ void CTestPlayer::Key_Input(const _float& fTimeDelta)
 	if (Get_DIMouseState(DIM_LB))
 	{
 		Fire_Bullet(&m_vDirection);
-		m_iBulletCnt++;
 	}
 
 
@@ -148,18 +147,7 @@ void CTestPlayer::Fire_Bullet(const _vec3* pDir)
 {
 	_vec3		vPos;
 	m_pTransCom->Get_Info(INFO_POS, &vPos);
-
 	CGameObject*	pBullet = CPoolMgr::GetInstance()->Reuse_Obj(m_pGraphicDev, &vPos, pDir);
-
-	TCHAR* szFinalName = new TCHAR[128];
-	wsprintf(szFinalName, L"");
-
-	const _tchar*	szWallName = L"Bullet_%d";
-	wsprintf(szFinalName, szWallName, m_iBulletCnt);
-
-	Engine::Add_GameObject(L"Layer_Bullet", pBullet, szFinalName);
-
-	m_liBulletName.push_back(szFinalName);
 }
 
 _vec3 CTestPlayer::Mouse_Peeking(void)
@@ -205,14 +193,6 @@ void CTestPlayer::Free(void)
 	}
 	
 	m_liszFinalName.clear();
-
-	for (auto& iter : m_liBulletName)
-	{
-		if(iter != nullptr)
-			delete iter;
-	}
-
-	m_liBulletName.clear();
 
 	CGameObject::Free();
 }
