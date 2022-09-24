@@ -29,6 +29,13 @@ private:
 	void			Walk_Animation(void);						//	걷는 모션
 	void			Move(void);									//	실제 이동
 
+	void			Look_Direction(void);						//	바라보는 방향 변경
+
+private:
+	void			Jump(void);
+	_bool			m_bJump = false;
+	_bool			m_bFirst = true;
+
 private:
 	HRESULT			Add_Component(void);
 	CTransform*		m_pTransform = nullptr;

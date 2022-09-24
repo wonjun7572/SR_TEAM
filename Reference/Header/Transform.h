@@ -20,6 +20,7 @@ public:
 	////////////////////////////////캐릭터회전///////////////////////////////////////////////////////////
 	void				Rotation_Axis_X(const _float& fMovement, const _float& fAngle);
 	void				Rotation_Axis_Y(const _float& fMovement, const _float& fAngle);
+	void				Static_Update(void);
 	////피킹/////////////////////////////////////////////////////////////////////////////////////////////
 	void				Get_WorldMatrix(_matrix* pWorld) const { *pWorld = m_matWorld; }
 	//void				Set_WorldMatrix(_matrix* pWorld) { m_matWorld = *pWorld; }

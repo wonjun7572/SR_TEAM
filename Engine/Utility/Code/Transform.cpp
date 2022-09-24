@@ -66,6 +66,22 @@ void CTransform::Rotation_Axis_Y(const _float & fMovement, const _float & fAngle
 	m_matWorld = matScale * matMove * matRot * matOriginalPos * matTrans;
 }
 
+void CTransform::Static_Update(void)
+{
+	//	Static 속성인 Transform의 경우 임의적으로 업데이트 1회 진행하는 코드
+	_matrix matScale, matRotX, matRotY, matRotZ, matTrans;
+
+	D3DXMatrixScaling(&matScale, m_vScale.x, m_vScale.y, m_vScale.z);
+
+	D3DXMatrixRotationX(&matRotX, m_vAngle.x);
+	D3DXMatrixRotationY(&matRotY, m_vAngle.y);
+	D3DXMatrixRotationZ(&matRotZ, m_vAngle.z);
+
+	D3DXMatrixTranslation(&matTrans, m_vInfo[INFO_POS].x, m_vInfo[INFO_POS].y, m_vInfo[INFO_POS].z);
+
+	m_matWorld = matScale * matRotX * matRotY * matRotZ * matTrans;
+}
+
 void Engine::CTransform::Chase_Target(const _vec3* pTargetPos, const _float& fSpeed, const _float& fTimeDelta)
 {
 	_vec3		vDir = *pTargetPos - m_vInfo[INFO_POS];

@@ -26,8 +26,6 @@ HRESULT CWall::Ready_Object(_ulong Texture, _vec3 * Position)
 
 _int CWall::Update_Object(const _float & fTimeDelta)
 {
-	Add_RenderGroup(RENDER_NONALPHA, this);
-
 	_uint iResult = CGameObject::Update_Object(fTimeDelta);
 
 	return iResult;
@@ -35,6 +33,7 @@ _int CWall::Update_Object(const _float & fTimeDelta)
 
 void CWall::LateUpdate_Object(void)
 {
+	Add_RenderGroup(RENDER_NONALPHA, this);
 	CGameObject::LateUpdate_Object();
 }
 

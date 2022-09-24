@@ -16,7 +16,7 @@ CBullet::~CBullet()
 HRESULT CBullet::Ready_Object(const _vec3* pPos, const _vec3* pDir)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
-	m_pTransCom->Set_Scale(0.2f, 0.2f, 0.2f);
+	m_pTransCom->Set_Scale(0.1f, 0.1f, 0.5f);
 	m_pTransCom->m_vInfo[INFO_POS] = *pPos;
 	m_vDirection = *pDir;
 	return S_OK;
@@ -24,26 +24,36 @@ HRESULT CBullet::Ready_Object(const _vec3* pPos, const _vec3* pDir)
 
 _int CBullet::Update_Object(const _float & fTimeDelta)
 {
+	//Engine::CGameObject::Update_Object(fTimeDelta);		//	다이나믹 컴포넌트 업데이트
+
 	_vec3 vPos;
-	m_fTimeDelta = fTimeDelta;
+	m_fTimeDelta += fTimeDelta;
 	m_pTransCom->Get_Info(INFO_POS, &vPos);
-	m_vPos = vPos;
-	Engine::CGameObject::Update_Object(fTimeDelta);
-	if (vPos.x >= 50.f || vPos.y >= 50.f || vPos.z >= 50.f
-		|| vPos.x <= -50.f || vPos.y <= -50.f || vPos.z <= -50.f)
+
+	//if (vPos.x >= 50.f || vPos.y >= 50.f || vPos.z >= 50.f
+	//	|| vPos.x <= -50.f || vPos.y <= -50.f || vPos.z <= -50.f)
+	if (m_fTimeDelta >= 3.f)
 	{
 		CPoolMgr::GetInstance()->Collect_Obj(this);
-		Engine::Add_RenderGroup(RENDER_NONALPHA, this);
+		m_fTimeDelta = 0.f;
+		//Engine::Add_RenderGroup(RENDER_NONALPHA, this);
 		return -1;
 	}
+	Engine::CGameObject::Update_Object(fTimeDelta);
+	//	Engine::CGameObject::Update_Object(fTimeDelta);
 
-	Engine::Add_RenderGroup(RENDER_NONALPHA, this);
 	m_pTransCom->Move_Pos(&(m_vDirection * fTimeDelta * m_fSpeed));
+
+	//Engine::Add_RenderGroup(RENDER_BULLET, this);
+
+	//m_pTransCom->Set_Info(INFO_LOOK, &m_vDirection);
+
 	return 0;
 }
 
 void CBullet::LateUpdate_Object(void)
 {
+	Engine::Add_RenderGroup(RENDER_NONALPHA, this);
 	Engine::CGameObject::LateUpdate_Object();
 }
 
@@ -68,9 +78,9 @@ HRESULT CBullet::Add_Component(void)
 {
 	CComponent* pComponent = nullptr;
 
-	pComponent = m_pBufferCom = dynamic_cast<CRcTex*>(Clone_Proto(L"Proto_RcTexCom"));
-	NULL_CHECK_RETURN(m_pBufferCom, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Proto_RcTexCom", pComponent });
+	//pComponent = m_pBufferCom = dynamic_cast<CRcTex*>(Clone_Proto(L"Proto_RcTexCom"));
+	//NULL_CHECK_RETURN(m_pBufferCom, E_FAIL);
+	//m_mapComponent[ID_STATIC].insert({ L"Proto_RcTexCom", pComponent });
 
 	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Clone_Proto(L"Proto_CubePlayerTexture"));
 	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
@@ -82,7 +92,8 @@ HRESULT CBullet::Add_Component(void)
 
 	pComponent = m_pCubetexCom = dynamic_cast<CCubeTex*>(Clone_Proto(L"Proto_CubeTexCom"));
 	NULL_CHECK_RETURN(m_pCubetexCom, E_FAIL);
-	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_CubeTexCom", pComponent });
+	m_mapComponent[ID_STATIC].insert({ L"Proto_CubeTexCom", pComponent });
+
 	return S_OK;
 }
 
