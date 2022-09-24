@@ -24,22 +24,21 @@ HRESULT CBullet::Ready_Object(const _vec3* pPos, const _vec3* pDir)
 
 _int CBullet::Update_Object(const _float & fTimeDelta)
 {
-	Engine::CGameObject::Update_Object(fTimeDelta);
 	_vec3 vPos;
 	m_fTimeDelta = fTimeDelta;
 	m_pTransCom->Get_Info(INFO_POS, &vPos);
-
+	m_vPos = vPos;
+	Engine::CGameObject::Update_Object(fTimeDelta);
 	if (vPos.x >= 50.f || vPos.y >= 50.f || vPos.z >= 50.f
 		|| vPos.x <= -50.f || vPos.y <= -50.f || vPos.z <= -50.f)
 	{
 		CPoolMgr::GetInstance()->Collect_Obj(this);
 		Engine::Add_RenderGroup(RENDER_NONALPHA, this);
-		return 0;
+		return -1;
 	}
 
 	Engine::Add_RenderGroup(RENDER_NONALPHA, this);
 	m_pTransCom->Move_Pos(&(m_vDirection * fTimeDelta * m_fSpeed));
-
 	return 0;
 }
 

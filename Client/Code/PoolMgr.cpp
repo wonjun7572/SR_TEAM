@@ -31,15 +31,29 @@ CGameObject* CPoolMgr::Reuse_Obj(LPDIRECT3DDEVICE9& pGraphicDev,const _vec3* vPo
 	{
 		pObj = CBullet::Create(pGraphicDev, vPos, vDir);
 		NULL_CHECK_RETURN(pObj, nullptr);
-		++m_iCount;
+		TCHAR* szFinalName = new TCHAR[128];
+		wsprintf(szFinalName, L"");
+
+		const _tchar*	szWallName = L"Bullet_%d";
+		wsprintf(szFinalName, szWallName, m_iBulletCnt);
+		m_iBulletCnt++;
+
+		Engine::Add_GameObject(L"Layer_Bullet", pObj, szFinalName);
+		m_liBulletName.push_back(szFinalName);
+		cout << m_ObjectPool.size() << endl;
 	}
 	else
 	{
 		pObj = m_ObjectPool.front();
 		m_ObjectPool.pop_front();
+		cout << "ReUse" << m_ObjectPool.size() << endl;
 	}
 
-	dynamic_cast<CBullet*>(pObj)->Set_Pos(*vPos);
+	if (dynamic_cast<CBullet*>(pObj)->Get_Pos().x >= 50.f || dynamic_cast<CBullet*>(pObj)->Get_Pos().y >= 50.f || dynamic_cast<CBullet*>(pObj)->Get_Pos().z >= 50.f
+		|| dynamic_cast<CBullet*>(pObj)->Get_Pos().x <= -50.f || dynamic_cast<CBullet*>(pObj)->Get_Pos().y <= -50.f || dynamic_cast<CBullet*>(pObj)->Get_Pos().z <= -50.f)
+	{
+		dynamic_cast<CBullet*>(pObj)->Set_Pos(*vPos);
+	}
 	dynamic_cast<CBullet*>(pObj)->MoveToDir(*vDir);
 
 	return pObj;
@@ -47,19 +61,12 @@ CGameObject* CPoolMgr::Reuse_Obj(LPDIRECT3DDEVICE9& pGraphicDev,const _vec3* vPo
 
 void CPoolMgr::Free()
 {
-	/*for (auto iter : m_ObjectPool)
+	for (auto& iter : m_liBulletName)
 	{
-		_ulong dwCnt = 0;
+		if (iter != nullptr)
+			delete iter;
+	}
 
-		dwCnt = iter->Release();
-
-		if (dwCnt == 0)
-			iter = nullptr;
-	}*/
-	//for (auto iter : m_ObjectPool)
-	//{
-	//	Safe_Release<CGameObject*>(iter);
-	//}
-
+	m_liBulletName.clear();
 	m_ObjectPool.clear();
 }

@@ -5,9 +5,13 @@
 
 #pragma once
 
+
 #include "targetver.h"
 
 #define WIN32_LEAN_AND_MEAN             // 거의 사용되지 않는 내용은 Windows 헤더에서 제외합니다.
+#include "imgui.h"
+#include "imgui_impl_dx9.h"
+#include "imgui_impl_win32.h"
 // Windows 헤더 파일:
 #include <windows.h>
 
@@ -32,11 +36,9 @@
 #include <process.h>
 #include <fstream>
 
-#include "imgui.h"
-#include "imgui_impl_dx9.h"
-#include "imgui_impl_win32.h"
 
-
+#include "Engine_Include.h"
+#include "Export_Function.h"
 
 #ifdef _DEBUG
 
@@ -47,7 +49,7 @@
 #ifndef DBG_NEW 
 
 #define DBG_NEW new ( _NORMAL_BLOCK , __FILE__ , __LINE__ ) 
-//#define new DBG_NEW 
+#define new DBG_NEW 
 
 #endif
 

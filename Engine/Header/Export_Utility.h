@@ -46,7 +46,7 @@ inline HRESULT			Add_GameObject(const _tchar* pLayerTag, CGameObject* pGameObjec
 // ProtoMgr
 inline HRESULT			Ready_Proto(const _tchar* pProtoTag, CComponent* pComponent);
 inline CComponent*		Clone_Proto(const _tchar* pProtoTag);
-
+inline HRESULT			Delete_Proto(const _tchar * pProtoTag);
 
 // Renderer
 inline void							Add_RenderGroup(RENDERID eID, CGameObject* pGameObject);

@@ -15,6 +15,11 @@ public:
 	virtual HRESULT Ready_Buffer(void) override;
 	virtual void Render_Buffer(void) override;
 
+	const _vec3*		Get_VtxPos(void) const { return m_vPos; }
+
+private:
+	_vec3*		m_vPos;
+	_bool		m_bClone;
 public:
 	static CCubeTex*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
 	CComponent*	Clone(void);

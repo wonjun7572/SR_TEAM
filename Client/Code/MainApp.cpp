@@ -1,9 +1,8 @@
 #include "stdafx.h"
 #include "..\Header\MainApp.h"
 
+#include "ImGuiMgr.h"
 #include "Logo.h"
-#include "..\Default\imgui_impl_win32.h"
-#include "..\Default\imgui_impl_dx9.h"
 #include "PoolMgr.h"
 
 static bool show_transform_window = false;
@@ -26,20 +25,25 @@ HRESULT CMainApp::Ready_MainApp(void)
 	FAILED_CHECK_RETURN(SetUp_DefaultSetting(&m_pGraphicDev), E_FAIL);	
 	
 	FAILED_CHECK_RETURN(Ready_Scene(m_pGraphicDev, &m_pManagementClass), E_FAIL);
-
+	Ready_Input(g_hWnd);
+	
 	return S_OK;
 }
 
 _int CMainApp::Update_MainApp(const _float & fTimeDelta)
 {
+	Engine::Update_Input();
 	Engine::SetUp_InputDev();
 
 	NULL_CHECK_RETURN(m_pManagementClass, -1);
 
-	m_pManagementClass->Update_Scene(fTimeDelta);
+	// 툴 프레임 업데이트 
+	ImGui_ImplDX9_NewFrame();
+	ImGui_ImplWin32_NewFrame();
+	ImGui::NewFrame();
+	CImGuiMgr::LoggerWindow();
 
-	if (Get_DIKeyState(DIK_O) & 0x80)
-		m_bImgUI = !m_bImgUI;
+	m_pManagementClass->Update_Scene(fTimeDelta);
 
 	return 0;
 }
@@ -57,12 +61,17 @@ void CMainApp::Render_MainApp(void)
 	Engine::Render_Begin(D3DXCOLOR(0.5f, 0.5f, 0.5f, 1.f));
 	
 	m_pManagementClass->Render_Scene(m_pGraphicDev);
+	
+	// 툴 그리기
+	ImGui::Render();
+	ImGui_ImplDX9_RenderDrawData(ImGui::GetDrawData());
 
-	if (m_bImgUI)
-		Render_ImgUI();
-	else
-		Get_GraphicDev()->SetRenderState(D3DRS_ZENABLE, TRUE);
-
+	if (ImGui::GetIO().ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+	{
+		ImGui::UpdatePlatformWindows();
+		ImGui::RenderPlatformWindowsDefault();
+	}
+	
 	Engine::Render_End();
 }
 
@@ -79,22 +88,34 @@ HRESULT CMainApp::SetUp_DefaultSetting(LPDIRECT3DDEVICE9 * ppGraphicDev)
 
 	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"Font_Default", L"바탕", 15, 20, FW_HEAVY), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"Font_Jinji", L"궁서", 30, 30, FW_NORMAL), E_FAIL);
-
-	// Setup Dear ImGui context
 	IMGUI_CHECKVERSION();
+
+
+	// 툴 세팅
 	ImGui::CreateContext();
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
-	//io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
-	//io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
+	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;       // Enable Keyboard Controls
+																//io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
+	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;           // Enable Docking
+	io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;         // Enable Multi-Viewport / Platform Windows
+																//io.ConfigViewportsNoAutoMerge = true;
+																//io.ConfigViewportsNoTaskBarIcon = true;
 
-	// Setup Dear ImGui style
+																// Setup Dear ImGui style
 	ImGui::StyleColorsDark();
 	//ImGui::StyleColorsLight();
 
+	// When viewports are enabled we tweak WindowRounding/WindowBg so platform windows can look identical to regular ones.
+	ImGuiStyle& style = ImGui::GetStyle();
+	if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+	{
+		style.WindowRounding = 0.0f;
+		style.Colors[ImGuiCol_WindowBg].w = 1.0f;
+	}
+
 	// Setup Platform/Renderer backends
 	ImGui_ImplWin32_Init(g_hWnd);
-	ImGui_ImplDX9_Init(Get_GraphicDev());
-
+	ImGui_ImplDX9_Init(m_pGraphicDev);
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
 
 //#ifdef _DEBUG
@@ -323,8 +344,8 @@ void CMainApp::Free(void)
 	Safe_Release(m_pGraphicDev);
 	Safe_Release(m_pDeviceClass);
 	Safe_Release(m_pManagementClass);
-
-	CPoolMgr::GetInstance()->Free();
+	CImGuiMgr::GetInstance()->DestroyInstance();
+	CPoolMgr::GetInstance()->DestroyInstance();
 	Engine::Release_Utility();
 	Engine::Release_System();
 }

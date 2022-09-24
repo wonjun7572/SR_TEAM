@@ -33,6 +33,41 @@ HRESULT		Ready_Frame(const _tchar* pFrameTag, const _float& fCallLimit)
 	return CFrameMgr::GetInstance()->Ready_Frame(pFrameTag, fCallLimit);
 }
 
+void Ready_Input(HWND hwnd)
+{
+	CInputMgr::GetInstance()->Ready_Input(hwnd);
+}
+void Update_Input()
+{
+	CInputMgr::GetInstance()->Update_Input();
+}
+bool GetButton(KEY_TYPE key)
+{
+	return CInputMgr::GetInstance()->GetButton(key);
+}
+bool GetButtonDown(KEY_TYPE key)
+{
+	return CInputMgr::GetInstance()->GetButtonDown(key);
+}
+bool GetButtonUp(KEY_TYPE key)
+{
+	return CInputMgr::GetInstance()->GetButtonUp(key);
+}
+void SetAxisMode(bool bAxisMode)
+{
+	CInputMgr::GetInstance()->SetAxisMode(bAxisMode);
+}
+
+_float GetVerticalAxis()
+{
+	return CInputMgr::GetInstance()->GetVerticalAxis();
+}
+
+_float GetHorizontalAxis()
+{
+	return CInputMgr::GetInstance()->GetHorizontalAxis();
+}
+
 _byte		Get_DIKeyState(_ubyte byKeyID)
 {
 	return CInputDev::GetInstance()->Get_DIKeyState(byKeyID);
@@ -76,6 +111,7 @@ void	Render_Font(const _tchar* pFontTag,
 
 inline void			Release_System(void)
 {
+	CInputMgr::GetInstance()->DestroyInstance();
 	CFontMgr::GetInstance()->DestroyInstance();
 	CInputDev::GetInstance()->DestroyInstance();
 	CFrameMgr::GetInstance()->DestroyInstance();

@@ -23,22 +23,24 @@ public:
 
 private:
 	HRESULT			Ready_Layer_Environment(const _tchar* pLayerTag);
-
 	HRESULT			Ready_Layer_GameLogic(const _tchar* pLayerTag);
 	HRESULT			Ready_Layer_UI(const _tchar* pLayerTag);
 
 	HRESULT			Ready_Layer_Wall(const _tchar* pLayerTag);
-
 	HRESULT			Ready_Layer_Character(const _tchar* pLayerTag);
-
 	HRESULT			Ready_Layer_Bullet(const _tchar* pLayerTag);
 
-	HRESULT			Ready_Proto(void);
+	// 툴을 위한 레이어
+	HRESULT			Ready_Layer_Tool(const _tchar* pLayerTag);
 
+	HRESULT			Ready_Proto(void);
 	HRESULT			Ready_Light(void);
 
 public:
 	static CStage*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
+
+private:
+	CDynamicCamera* m_pCam = nullptr;
 
 private:
 	virtual void	Free(void);

@@ -1,4 +1,5 @@
 #include "..\..\Header\Layer.h"
+#include "Export_Utility.h"
 
 USING(Engine)
 
@@ -42,19 +43,16 @@ HRESULT CLayer::Add_GameObject(const _tchar * pObjTag, CGameObject * pInstance)
 
 HRESULT CLayer::Delete_GameObject(const _tchar * pObjTag)
 {
-	auto   iter = find_if(m_mapObject.begin(), m_mapObject.end(), CTag_Finder(pObjTag));
+	auto	iter = find_if(m_mapObject.begin(), m_mapObject.end(), CTag_Finder(pObjTag));
 
 	if (iter == m_mapObject.end())
 		return E_FAIL;
 
-	_ulong dwCnt = 0;
+	CGameObject * pInstance = iter->second;
 
-	dwCnt = iter->second->Release();
+	Safe_Release<CGameObject*>(pInstance);
 
-	if (dwCnt == 0)
-		iter->second = nullptr;
-
-	m_mapObject.erase(iter);
+	iter = m_mapObject.erase(iter);
 
 	return S_OK;
 }

@@ -33,6 +33,7 @@
   .\Engine\Header\GraphicDev.h
   .\Engine\Header\Hitbox.h
   .\Engine\Header\InputDev.h
+  .\Engine\Header\InputMgr.h
   .\Engine\Header\Layer.h
   .\Engine\Header\Light.h
   .\Engine\Header\LightMgr.h
@@ -52,4 +53,4 @@
   .\Engine\Header\Transform.h
   .\Engine\Header\TriCol.h
   .\Engine\Header\VIBuffer.h
-         49개 파일이 복사되었습니다.
+         50개 파일이 복사되었습니다.

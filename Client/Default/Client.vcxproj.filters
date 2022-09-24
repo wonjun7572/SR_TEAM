@@ -88,8 +88,17 @@
     <Filter Include="02. GameObject\01. For_Stage\06. Bullet">
       <UniqueIdentifier>{e5424f61-e480-4334-a082-ad86a0d49d51}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\03. PoolMgr">
+    <Filter Include="03. PoolMgr">
       <UniqueIdentifier>{5906fc40-e537-40ed-a3d5-246624daf111}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. ToolMgr">
+      <UniqueIdentifier>{9e7febe0-125c-46b2-888f-34fcc55a03c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="99. Default\Imgui">
+      <UniqueIdentifier>{167c3fd1-44d3-41f0-9fda-383515f4f041}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\99. TestCube">
+      <UniqueIdentifier>{3233272e-e7a2-44ee-942e-403f08eaf1b1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -138,30 +147,6 @@
     <ClInclude Include="..\Header\SkyBox.h">
       <Filter>02. GameObject\01. For_Stage\03. SkyBox</Filter>
     </ClInclude>
-    <ClInclude Include="imconfig.h">
-      <Filter>99. Default\헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="imgui.h">
-      <Filter>99. Default\헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="imgui_impl_dx9.h">
-      <Filter>99. Default\헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="imgui_impl_win32.h">
-      <Filter>99. Default\헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="imgui_internal.h">
-      <Filter>99. Default\헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="imstb_rectpack.h">
-      <Filter>99. Default\헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="imstb_textedit.h">
-      <Filter>99. Default\헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="imstb_truetype.h">
-      <Filter>99. Default\헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\Wall.h">
       <Filter>02. GameObject\01. For_Stage\04. Wall</Filter>
     </ClInclude>
@@ -184,10 +169,70 @@
       <Filter>02. GameObject\01. For_Stage\05. CubePlayer\Head</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\PoolMgr.h">
-      <Filter>02. GameObject\03. PoolMgr</Filter>
+      <Filter>03. PoolMgr</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Bullet.h">
       <Filter>02. GameObject\01. For_Stage\06. Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ImguiMgr.h">
+      <Filter>04. ToolMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="dirent.h">
+      <Filter>99. Default\Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphEditor.h">
+      <Filter>99. Default\Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="imconfig.h">
+      <Filter>99. Default\Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="ImCurveEdit.h">
+      <Filter>99. Default\Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGradient.h">
+      <Filter>99. Default\Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui.h">
+      <Filter>99. Default\Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui_impl_dx9.h">
+      <Filter>99. Default\Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui_impl_win32.h">
+      <Filter>99. Default\Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui_internal.h">
+      <Filter>99. Default\Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGuiFileBrowser.h">
+      <Filter>99. Default\Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGuiFileDialog.h">
+      <Filter>99. Default\Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGuiFileDialogConfig.h">
+      <Filter>99. Default\Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGuizmo.h">
+      <Filter>99. Default\Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="ImSequencer.h">
+      <Filter>99. Default\Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="imstb_rectpack.h">
+      <Filter>99. Default\Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="imstb_textedit.h">
+      <Filter>99. Default\Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="imstb_truetype.h">
+      <Filter>99. Default\Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="ImZoomSlider.h">
+      <Filter>99. Default\Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\TestCube.h">
+      <Filter>02. GameObject\01. For_Stage\99. TestCube</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -230,27 +275,6 @@
     <ClCompile Include="..\Code\SkyBox.cpp">
       <Filter>02. GameObject\01. For_Stage\03. SkyBox</Filter>
     </ClCompile>
-    <ClCompile Include="imgui.cpp">
-      <Filter>99. Default\소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="imgui_demo.cpp">
-      <Filter>99. Default\소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="imgui_draw.cpp">
-      <Filter>99. Default\소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="imgui_impl_dx9.cpp">
-      <Filter>99. Default\소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="imgui_impl_win32.cpp">
-      <Filter>99. Default\소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="imgui_tables.cpp">
-      <Filter>99. Default\소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="imgui_widgets.cpp">
-      <Filter>99. Default\소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\Wall.cpp">
       <Filter>02. GameObject\01. For_Stage\04. Wall</Filter>
     </ClCompile>
@@ -273,10 +297,58 @@
       <Filter>02. GameObject\01. For_Stage\05. CubePlayer\Head</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\PoolMgr.cpp">
-      <Filter>02. GameObject\03. PoolMgr</Filter>
+      <Filter>03. PoolMgr</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Bullet.cpp">
       <Filter>02. GameObject\01. For_Stage\06. Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ImguiMgr.cpp">
+      <Filter>04. ToolMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphEditor.cpp">
+      <Filter>99. Default\Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="ImCurveEdit.cpp">
+      <Filter>99. Default\Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGradient.cpp">
+      <Filter>99. Default\Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui.cpp">
+      <Filter>99. Default\Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui_demo.cpp">
+      <Filter>99. Default\Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui_draw.cpp">
+      <Filter>99. Default\Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui_impl_dx9.cpp">
+      <Filter>99. Default\Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui_impl_win32.cpp">
+      <Filter>99. Default\Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui_tables.cpp">
+      <Filter>99. Default\Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui_widgets.cpp">
+      <Filter>99. Default\Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGuiFileBrowser.cpp">
+      <Filter>99. Default\Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGuiFileDialog.cpp">
+      <Filter>99. Default\Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGuizmo.cpp">
+      <Filter>99. Default\Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="ImSequencer.cpp">
+      <Filter>99. Default\Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\TestCube.cpp">
+      <Filter>02. GameObject\01. For_Stage\99. TestCube</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -296,5 +368,10 @@
     <Text Include="ReadMe.txt">
       <Filter>99. Default</Filter>
     </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="imgui.ini">
+      <Filter>99. Default\Imgui</Filter>
+    </None>
   </ItemGroup>
 </Project>

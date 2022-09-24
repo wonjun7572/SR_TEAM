@@ -45,6 +45,21 @@ CComponent * CProtoMgr::Find_Proto(const _tchar * pProtoTag)
 	return iter->second;
 }
 
+// 프로토 삭제하는 함수
+HRESULT CProtoMgr::Delete_Proto(const _tchar * pProtoTag)
+{
+	auto	iter = find_if(m_mapProto.begin(), m_mapProto.end(), CTag_Finder(pProtoTag));
+
+	if (iter == m_mapProto.end())
+		return E_FAIL;
+
+	Safe_Release(iter->second);
+
+	iter = m_mapProto.erase(iter);
+
+	return S_OK;
+}
+
 void Engine::CProtoMgr::Free(void)
 {
 	for_each(m_mapProto.begin(), m_mapProto.end(), CDeleteMap());

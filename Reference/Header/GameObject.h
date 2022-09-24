@@ -16,6 +16,12 @@ public:
 	CComponent*				Get_Component(const _tchar* pComponentTag, COMPONENTID eID);
 
 public:
+
+	// 텍스처 인덱스 멤버변수롤 만들어서 Get & Set 함수 생성하였음.
+	void		Set_DrawTexIndex(_int iTexIndex) { m_iTexIndex = iTexIndex; }
+	const _int	Get_DrawTexIndex()const { return m_iTexIndex; }
+
+public:
 	virtual		HRESULT		Ready_Object(void);
 	virtual		_int		Update_Object(const _float& fTimeDelta);
 	virtual		void		LateUpdate_Object(void);
@@ -27,6 +33,9 @@ private:
 protected:
 	LPDIRECT3DDEVICE9					m_pGraphicDev;
 	map<const _tchar*, CComponent*>		m_mapComponent[ID_END];
+
+protected:
+	_int				m_iTexIndex = 0;
 
 	CGameObject*			Get_GameObject() { return this; }
 public:

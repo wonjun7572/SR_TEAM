@@ -15,6 +15,8 @@ public:
 	CComponent*				Get_Component(const _tchar* pObjTag, const _tchar* pComponentTag, COMPONENTID eID);
 	CGameObject*			Get_GameObject(const _tchar* pObjTag);
 
+	map<const _tchar*, CGameObject*>	Get_GameObjectMap()	{return m_mapObject;}
+
 public:
 	HRESULT			Add_GameObject(const _tchar* pObjTag, CGameObject* pInstance);
 	HRESULT			Delete_GameObject(const _tchar * pObjTag);
