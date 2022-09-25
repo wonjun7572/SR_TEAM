@@ -4,7 +4,6 @@
 #include "ImGuiMgr.h"
 #include "Logo.h"
 #include "PoolMgr.h"
-#include "ToolScene.h"
 
 static bool show_transform_window = false;
 static bool show_gameobject_window = false;
@@ -139,9 +138,6 @@ HRESULT CMainApp::Ready_Scene(LPDIRECT3DDEVICE9 pGraphicDev, Engine::CManagement
 
 	pScene = CLogo::Create(pGraphicDev);
 	NULL_CHECK_RETURN(pScene, E_FAIL);
-
-	/*pScene = CToolScene::Create(pGraphicDev);
-	NULL_CHECK_RETURN(pScene, E_FAIL);*/
 
 	FAILED_CHECK_RETURN(Engine::Create_Management(pGraphicDev, ppManagement), E_FAIL);
 	(*ppManagement)->AddRef();
