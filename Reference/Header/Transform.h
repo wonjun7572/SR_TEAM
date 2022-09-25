@@ -20,6 +20,9 @@ public:
 	////////////////////////////////캐릭터회전///////////////////////////////////////////////////////////
 	void				Rotation_Axis_X(const _float& fMovement, const _float& fAngle);
 	void				Rotation_Axis_Y(const _float& fMovement, const _float& fAngle);
+	void				Rotation_Axis_Animation(const _float& fXMove, const _float& fYMove, 
+												const _float& fXAngle, const _float& fYAngle,
+												const _float& fExtraMove = 0.f, const _float& fExtraAngle = 0.f);
 	void				Static_Update(void);
 	////피킹/////////////////////////////////////////////////////////////////////////////////////////////
 	void				Get_WorldMatrix(_matrix* pWorld) const { *pWorld = m_matWorld; }

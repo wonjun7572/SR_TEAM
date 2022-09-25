@@ -34,6 +34,7 @@ public:
 private:
 	CTerrainTex*		m_pBufferCom = nullptr;
 	CTransform*			m_pTransCom = nullptr;
+	CTexture*			m_pTextureCom_Tool = nullptr;
 	CTexture*			m_pTextureCom = nullptr;
 
 	_vec3				m_vDirection;

@@ -14,7 +14,7 @@ HRESULT CCubeLeg::Ready_Object(void)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
-	m_pTransform->Set_Scale(0.5f, 2.f, 0.5f);
+	m_pTransform->Set_Scale(0.5f, 1.f, 0.5f);
 
 	return S_OK;
 }
