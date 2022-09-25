@@ -20,6 +20,9 @@
 #include "CubeMonsterBody.h"
 #include "CubeMonsterHead.h"
 
+#include "Uzi.h"
+#include "Shotgun.h"
+#include "Sniper.h"
 
 
 //#include "ImguiMgr.h"
@@ -123,11 +126,17 @@ HRESULT CStage::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 
 	CGameObject*		pGameObject = nullptr;
 
-	// 테스트 플레이어로 테스트중
-	pGameObject = CTestPlayer::Create(m_pGraphicDev);
+	pGameObject = CUzi::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"TestPlayer", pGameObject), E_FAIL);
 
+	pGameObject = CShotgun::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"TestPlayer2", pGameObject), E_FAIL);
+
+	pGameObject = CSniper::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"TestPlayer3", pGameObject), E_FAIL);
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
 	return S_OK;
