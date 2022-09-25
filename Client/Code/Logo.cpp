@@ -5,6 +5,7 @@
 #include "TestPlayer.h"
 #include "TestMonster.h"
 #include "Stage.h"
+#include "ToolScene.h"
 
 CLogo::CLogo(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CScene(pGraphicDev)
@@ -37,7 +38,7 @@ Engine::_int CLogo::Update_Scene(const _float& fTimeDelta)
 
 	if (m_pLoading->Get_Finish())
 	{
-		if (Get_DIKeyState(DIK_RETURN) & 0x8000)
+		if (Get_DIKeyState(DIK_1) & 0x8000)
 		{
 			CScene*		pScene = CStage::Create(m_pGraphicDev);
 			NULL_CHECK_RETURN(pScene, E_FAIL);
@@ -46,6 +47,16 @@ Engine::_int CLogo::Update_Scene(const _float& fTimeDelta)
 
 			return 0;
 		}		
+
+		if (Get_DIKeyState(DIK_2) & 0x8000)
+		{
+			CScene*		pToolScene = CToolScene::Create(m_pGraphicDev);
+			NULL_CHECK_RETURN(pToolScene, E_FAIL);
+
+			FAILED_CHECK_RETURN(Engine::Set_Scene(pToolScene), E_FAIL);
+
+			return 0;
+		}
 	}
 
 	return iResult;

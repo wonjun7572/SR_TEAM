@@ -13,7 +13,7 @@
 #include "CubeFoot.h"
 #include "CubeHand.h"
 
-#include "ImguiMgr.h"
+//#include "ImguiMgr.h"
 
 CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CScene(pGraphicDev)
@@ -218,29 +218,29 @@ HRESULT	CStage::Ready_Layer_Bullet(const _tchar* pLayerTag)
 	return S_OK;
 }
 
-HRESULT CStage::Ready_Layer_Tool(const _tchar * pLayerTag)
-{
-	// 맵툴을 활용할 것이다.
-	CImGuiMgr::GetInstance()->Ready_MapTool(m_pGraphicDev, this);
-
-	Engine::CLayer*		pLayer = Engine::CLayer::Create();
-	NULL_CHECK_RETURN(pLayer, E_FAIL);
-
-	CGameObject*		pGameObject = nullptr;
-
-	// m_pCam 이 중요함
-	pGameObject = m_pCam = CDynamicCamera::Create(m_pGraphicDev, &_vec3(0.f, 10.f, -10.f), &_vec3(0.f, 0.f, 0.f), &_vec3(0.f, 1.f, 0.f));
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"DynamicCamera", pGameObject), E_FAIL);
-
-	pGameObject = CTerrain::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"TerrainByTool", pGameObject), E_FAIL);
-
-	m_mapLayer.insert({ pLayerTag, pLayer });
-
-	return S_OK;
-}
+//HRESULT CStage::Ready_Layer_Tool(const _tchar * pLayerTag)
+//{
+//	// 맵툴을 활용할 것이다.
+//	CImGuiMgr::GetInstance()->Ready_MapTool(m_pGraphicDev, this);
+//
+//	Engine::CLayer*		pLayer = Engine::CLayer::Create();
+//	NULL_CHECK_RETURN(pLayer, E_FAIL);
+//
+//	CGameObject*		pGameObject = nullptr;
+//
+//	// m_pCam 이 중요함
+//	pGameObject = m_pCam = CDynamicCamera::Create(m_pGraphicDev, &_vec3(0.f, 10.f, -10.f), &_vec3(0.f, 0.f, 0.f), &_vec3(0.f, 1.f, 0.f));
+//	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+//	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"DynamicCamera", pGameObject), E_FAIL);
+//
+//	pGameObject = CTerrain::Create(m_pGraphicDev);
+//	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+//	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"TerrainByTool", pGameObject), E_FAIL);
+//
+//	m_mapLayer.insert({ pLayerTag, pLayer });
+//
+//	return S_OK;
+//}
 
 HRESULT CStage::Ready_Proto(void)
 {
