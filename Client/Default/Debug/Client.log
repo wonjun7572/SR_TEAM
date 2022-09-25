@@ -1,10 +1,52 @@
-﻿  ImguiMgr.cpp
-c:\users\sam51\desktop\sr_team\client\code\imguimgr.cpp(244): warning C4390: ';': 제어된 빈 문이 있습니다. 이 문이 필요합니까?
-c:\users\sam51\desktop\sr_team\client\code\imguimgr.cpp(246): warning C4390: ';': 제어된 빈 문이 있습니다. 이 문이 필요합니까?
-c:\users\sam51\desktop\sr_team\client\code\imguimgr.cpp(248): warning C4390: ';': 제어된 빈 문이 있습니다. 이 문이 필요합니까?
-c:\users\sam51\desktop\sr_team\client\code\imguimgr.cpp(264): warning C4390: ';': 제어된 빈 문이 있습니다. 이 문이 필요합니까?
-c:\users\sam51\desktop\sr_team\client\code\imguimgr.cpp(266): warning C4390: ';': 제어된 빈 문이 있습니다. 이 문이 필요합니까?
-c:\users\sam51\desktop\sr_team\client\code\imguimgr.cpp(268): warning C4390: ';': 제어된 빈 문이 있습니다. 이 문이 필요합니까?
-     ../Bin\Client.lib 라이브러리 및 ../Bin\Client.exp 개체를 생성하고 있습니다.
-  Client.vcxproj -> C:\Users\sam51\Desktop\SR_TEAM\Client\Default\../Bin\Client.exe
-  Client.vcxproj -> ../Bin\Client.pdb (Full PDB)
+﻿빌드 시작: 2022-09-25 오후 6:05:07
+     1>2 노드의 "D:\GitHub\SR_TEAM\Client\Default\Client.vcxproj" 프로젝트(Build 대상)입니다.
+     1>Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"../Bin\Client.exe" /INCREMENTAL /NOLOGO /LIBPATH:../../Reference/Library d3d9.lib d3dx9.lib dxguid.lib System.lib Utility.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"../Bin\Client.pdb" /SUBSYSTEM:WINDOWS /LARGEADDRESSAWARE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"../Bin\Client.lib" /MACHINE:X86 Debug\Client.res
+         Debug\BackGround.obj
+         Debug\Bullet.obj
+         Debug\CubeArm.obj
+         Debug\CubeBody.obj
+         Debug\CubeFoot.obj
+         Debug\CubeHand.obj
+         Debug\CubeHead.obj
+         Debug\CubeLeg.obj
+         Debug\CubePlayer.obj
+         Debug\DynamicCamera.obj
+         Debug\ImguiMgr.obj
+         Debug\Loading.obj
+         Debug\Logo.obj
+         Debug\MainApp.obj
+         Debug\PoolMgr.obj
+         Debug\SkyBox.obj
+         Debug\Stage.obj
+         Debug\StaticCamera.obj
+         Debug\Terrain.obj
+         Debug\TestCube.obj
+         Debug\TestMonster.obj
+         Debug\TestPlayer.obj
+         Debug\ToolScene.obj
+         Debug\Wall.obj
+         Debug\WallMgr.obj
+         Debug\Client.obj
+         Debug\GraphEditor.obj
+         Debug\ImCurveEdit.obj
+         Debug\ImGradient.obj
+         Debug\imgui.obj
+         Debug\ImGuiFileBrowser.obj
+         Debug\ImGuiFileDialog.obj
+         Debug\ImGuizmo.obj
+         Debug\imgui_demo.obj
+         Debug\imgui_draw.obj
+         Debug\imgui_impl_dx9.obj
+         Debug\imgui_impl_win32.obj
+         Debug\imgui_tables.obj
+         Debug\imgui_widgets.obj
+         Debug\ImSequencer.obj
+         Debug\stdafx.obj
+            ../Bin\Client.lib 라이브러리 및 ../Bin\Client.exp 개체를 생성하고 있습니다.
+         Client.vcxproj -> D:\GitHub\SR_TEAM\Client\Default\../Bin\Client.exe
+     1>"D:\GitHub\SR_TEAM\Client\Default\Client.vcxproj" 프로젝트를 빌드했습니다(Build 대상).
+
+빌드했습니다.
+
+경과 시간: 00:00:01.51
