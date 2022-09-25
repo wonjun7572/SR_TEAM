@@ -32,7 +32,7 @@ private:
 	HRESULT			Ready_Layer_Bullet(const _tchar* pLayerTag);
 
 	// 툴을 위한 레이어
-	HRESULT			Ready_Layer_Tool(const _tchar* pLayerTag);
+	/*HRESULT			Ready_Layer_Tool(const _tchar* pLayerTag);*/
 
 	HRESULT			Ready_Proto(void);
 	HRESULT			Ready_Light(void);
@@ -40,8 +40,8 @@ private:
 public:
 	static CStage*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
-private:
-	CDynamicCamera* m_pCam = nullptr;
+//private:
+	//CDynamicCamera* m_pCam = nullptr;
 
 private:
 	virtual void	Free(void);
