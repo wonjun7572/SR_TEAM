@@ -66,6 +66,49 @@ void CTransform::Rotation_Axis_Y(const _float & fMovement, const _float & fAngle
 	m_matWorld = matScale * matMove * matRot * matOriginalPos * matTrans;
 }
 
+void CTransform::Rotation_Axis_Animation(const _float & fXMove, const _float & fYMove, const _float & fXAngle, const _float & fYAngle, const _float& fExtraMove, const _float& fExtraAngle)
+{
+	_matrix matScale, matRotX, matRotY, matTrans;
+
+	_matrix matSyncX, matReplaceX, matSyncY, matReplaceY;
+
+	_matrix matExtraSync, matExtraReplace, matRotExtra;
+
+	D3DXMatrixScaling(&matScale, m_vScale.x, m_vScale.y, m_vScale.z);
+	D3DXMatrixTranslation(&matTrans, m_vInfo[INFO_POS].x, m_vInfo[INFO_POS].y, m_vInfo[INFO_POS].z);
+
+	//	X
+	D3DXMatrixTranslation(&matSyncX, 0.f, fXMove, 0.f);
+	D3DXMatrixTranslation(&matReplaceX, 0.f, -fXMove, 0.f);
+	D3DXMatrixRotationX(&matRotX, fXAngle);
+
+	//	Y
+	D3DXMatrixTranslation(&matSyncY, fYMove, 0.f, 0.f);
+	D3DXMatrixTranslation(&matReplaceY, -fYMove, 0.f, 0.f);
+	D3DXMatrixRotationY(&matRotY, fYAngle);
+
+	//	Extra
+	D3DXMatrixTranslation(&matExtraSync, 0.f, fExtraMove, 0.f);
+	D3DXMatrixTranslation(&matExtraReplace, 0.f, -fExtraMove, 0.f);
+	D3DXMatrixRotationX(&matRotExtra, fExtraAngle);
+
+	if (fExtraMove == 0)
+	{
+		m_matWorld = matScale *
+			matSyncX * matRotX * matReplaceX *
+			matSyncY * matRotY * matReplaceY *
+			matTrans;
+	}
+	else
+	{
+		m_matWorld = matScale *
+			matExtraSync * matRotExtra * matExtraReplace *
+			matSyncX * matRotX * matReplaceX *
+			matSyncY * matRotY * matReplaceY *
+			matTrans;
+	}
+}
+
 void CTransform::Static_Update(void)
 {
 	//	Static 속성인 Transform의 경우 임의적으로 업데이트 1회 진행하는 코드

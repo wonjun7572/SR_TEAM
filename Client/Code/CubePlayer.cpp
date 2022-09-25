@@ -46,10 +46,13 @@ void CCubePlayer::LateUpdate_Object(void)
 	if (!m_bJump)
 		Set_OnTerrain();
 
-	//Look_Direction();
+	Look_Direction();
+
+	TransAxis();
 
 	Assemble();
-
+	
+	cout << D3DXToDegree(m_fAngle) << endl;
 }
 
 void CCubePlayer::Render_Object(void)
@@ -88,10 +91,15 @@ void CCubePlayer::Assemble(void)
 	m_pBodyWorld->Get_BeforeInfo(INFO_POS, &vBodyPos);
 	m_pTransform->Set_Pos(vBodyPos.x, vBodyPos.y, vBodyPos.z);
 	m_pHeadWorld->Set_Pos(vBodyPos.x, vBodyPos.y + 3.f, vBodyPos.z);
-	m_pLeftArmWorld->Set_Pos(vBodyPos.x - 1.5f, vBodyPos.y, vBodyPos.z);
-	m_pRightArmWorld->Set_Pos(vBodyPos.x + 1.5f, vBodyPos.y, vBodyPos.z);
-	m_pLeftLegWorld->Set_Pos(vBodyPos.x - 0.5f, vBodyPos.y - 4.f, vBodyPos.z);
-	m_pRightLegWorld->Set_Pos(vBodyPos.x + 0.5f, vBodyPos.y - 4.f, vBodyPos.z);
+	m_pLeftArmWorld->Set_Pos(vBodyPos.x - 1.5f, vBodyPos.y + 1.f, vBodyPos.z);
+	m_pRightArmWorld->Set_Pos(vBodyPos.x + 1.5f, vBodyPos.y + 1.f, vBodyPos.z);
+	m_pLeftLegWorld->Set_Pos(vBodyPos.x - 0.5f, vBodyPos.y - 3.f, vBodyPos.z);
+	m_pRightLegWorld->Set_Pos(vBodyPos.x + 0.5f, vBodyPos.y - 3.f, vBodyPos.z);
+
+	m_pLeftHandWorld->Set_Pos(vBodyPos.x - 1.5f, vBodyPos.y - 1.f, vBodyPos.z);
+	m_pRightHandWorld->Set_Pos(vBodyPos.x + 1.5f, vBodyPos.y - 1.f, vBodyPos.z);
+	m_pLeftFootWorld->Set_Pos(vBodyPos.x - 0.5f, vBodyPos.y - 5.f, vBodyPos.z);
+	m_pRightFootWorld->Set_Pos(vBodyPos.x + 0.5f, vBodyPos.y - 5.f, vBodyPos.z);
 
 	if (m_bFirst)
 	{
@@ -101,6 +109,10 @@ void CCubePlayer::Assemble(void)
 		m_pRightArmWorld->Static_Update();
 		m_pLeftLegWorld->Static_Update();
 		m_pRightLegWorld->Static_Update();
+		m_pLeftHandWorld->Static_Update();
+		m_pRightHandWorld->Static_Update();
+		m_pLeftFootWorld->Static_Update();
+		m_pRightHandWorld->Static_Update();
 	}
 
 	//cout << vBodyPos.y << endl;
@@ -110,31 +122,15 @@ void CCubePlayer::Walk_Animation(void)
 {
 	if (Get_DIKeyState(DIK_W) || Get_DIKeyState(DIK_A) || Get_DIKeyState(DIK_S) || Get_DIKeyState(DIK_D) || Get_DIKeyState(DIK_SPACE) || Get_DIKeyState(DIK_LSHIFT))
 	{
-		if (m_fAngle > 0.3f)
+		if (m_fAngle > 0.6f)
 			m_bWalkAngle = false;
-		if (m_fAngle < -0.3f)
+		if (m_fAngle < -0.6f)
 			m_bWalkAngle = true;
 
 		if (m_bWalkAngle == true)
-		{
 			m_fAngle += m_fTimeDelta * 4;
-
-			m_pLeftArmWorld->Rotation_Axis_X(2.f, m_fAngle);
-			m_pRightArmWorld->Rotation_Axis_X(2.f, -m_fAngle);
-
-			m_pLeftLegWorld->Rotation_Axis_X(2.f, -m_fAngle);
-			m_pRightLegWorld->Rotation_Axis_X(2.f, +m_fAngle);
-		}
 		else if (m_bWalkAngle == false)
-		{
 			m_fAngle -= m_fTimeDelta * 4;
-
-			m_pLeftArmWorld->Rotation_Axis_X(2.f, m_fAngle);
-			m_pRightArmWorld->Rotation_Axis_X(2.f, -m_fAngle);
-
-			m_pLeftLegWorld->Rotation_Axis_X(2.f, -m_fAngle);
-			m_pRightLegWorld->Rotation_Axis_X(2.f, +m_fAngle);
-		}
 	}
 	else if (m_fAngle != 0)
 	{
@@ -143,26 +139,13 @@ void CCubePlayer::Walk_Animation(void)
 			m_fAngle -= m_fTimeDelta;
 			if (m_fAngle < 0)
 				m_fAngle = 0;
-
-			m_pLeftArmWorld->Rotation_Axis_X(2.f, m_fAngle);
-			m_pRightArmWorld->Rotation_Axis_X(2.f, -m_fAngle);
-
-			m_pLeftLegWorld->Rotation_Axis_X(2.f, -m_fAngle);
-			m_pRightLegWorld->Rotation_Axis_X(2.f, m_fAngle);
 		}
 		else if (m_fAngle < 0)
 		{
 			m_fAngle += m_fTimeDelta;
 			if (m_fAngle > 0)
 				m_fAngle = 0;
-
-			m_pLeftArmWorld->Rotation_Axis_X(2.f, m_fAngle);
-			m_pRightArmWorld->Rotation_Axis_X(2.f, -m_fAngle);
-
-			m_pLeftLegWorld->Rotation_Axis_X(2.f, -m_fAngle);
-			m_pRightLegWorld->Rotation_Axis_X(2.f, m_fAngle);
 		}
-
 	}
 }
 
@@ -185,22 +168,24 @@ void CCubePlayer::Move()
 	{
 		m_pTransform->Get_Info(INFO_RIGHT, &vDir);
 
-		/*if (m_fLookAngle > -0.2f)
+		if (m_fLookAngle < 0.4f)
 		{
-		m_fLookAngle -= m_fTimeDelta * 5.f;
-		m_pBodyWorld->Rotation(ROT_Y, -(m_fTimeDelta * 5.f));
-		}*/
+			m_fLookAngle += m_fTimeDelta * 5.f;
+			m_pBodyWorld->Rotation(ROT_Y, -(m_fTimeDelta * 5.f));
+		}
+
 		m_pBodyWorld->Move_Pos(&(vDir * -10.f * m_fTimeDelta));
 	}
 	if (Get_DIKeyState(DIK_D))
 	{
 		m_pTransform->Get_Info(INFO_RIGHT, &vDir);
 
-		/*if (m_fLookAngle < 0.2f)
+		if (m_fLookAngle > -0.4f)
 		{
-		m_fLookAngle += m_fTimeDelta * 5.f;
-		m_pBodyWorld->Rotation(ROT_Y, m_fTimeDelta * 5.f);
-		}*/
+			m_fLookAngle -= m_fTimeDelta * 5.f;
+			m_pBodyWorld->Rotation(ROT_Y, m_fTimeDelta * 5.f);
+		}
+
 		m_pBodyWorld->Move_Pos(&(vDir * 10.f * m_fTimeDelta));
 	}
 
@@ -220,6 +205,37 @@ void CCubePlayer::Move()
 	}
 }
 
+void CCubePlayer::TransAxis(void)
+{
+	_vec3	vBefore, vAfter;
+
+	FAILED_CHECK_RETURN(Get_BodyTransform(), );
+
+	m_pBodyWorld->Get_Info(INFO_POS, &vBefore);
+	m_pBodyWorld->Get_BeforeInfo(INFO_POS, &vAfter);
+
+	m_pLeftArmWorld->Rotation_Axis_Animation(-1.f, -1.5f, m_fAngle, -m_fLookAngle);
+	m_pRightArmWorld->Rotation_Axis_Animation(-1.f, 1.5f, -m_fAngle, -m_fLookAngle);
+
+	m_pLeftLegWorld->Rotation_Axis_Animation(-1.f, -0.5f, -m_fAngle, -m_fLookAngle);
+	m_pRightLegWorld->Rotation_Axis_Animation(-1.f, 0.5f, m_fAngle, -m_fLookAngle);
+
+	if(vBefore == vAfter)	//	이동상태가 
+	{
+		m_pLeftHandWorld->Rotation_Axis_Animation(-3.f, -1.5f, m_fAngle, -m_fLookAngle);
+		m_pRightHandWorld->Rotation_Axis_Animation(-3.f, 1.5f, -m_fAngle, -m_fLookAngle);
+		m_pLeftFootWorld->Rotation_Axis_Animation(-3.f, -0.5f, -m_fAngle, -m_fLookAngle);
+		m_pRightFootWorld->Rotation_Axis_Animation(-3.f, 0.5f, m_fAngle, -m_fLookAngle);
+	}
+	else
+	{
+		m_pLeftHandWorld->Rotation_Axis_Animation(-3.f, -1.5f, m_fAngle, -m_fLookAngle, -1.f, -D3DX_PI / 2.f);
+		m_pRightHandWorld->Rotation_Axis_Animation(-3.f, 1.5f, -m_fAngle, -m_fLookAngle, -1.f, -D3DX_PI / 2.f);
+		m_pLeftFootWorld->Rotation_Axis_Animation(-3.f, -0.5f, -m_fAngle, -m_fLookAngle, -1.f, fabs(m_fAngle));
+		m_pRightFootWorld->Rotation_Axis_Animation(-3.f, 0.5f, m_fAngle, -m_fLookAngle, -1.f, fabs(m_fAngle));
+	}
+}
+
 void CCubePlayer::Look_Direction(void)
 {
 	FAILED_CHECK_RETURN(Get_BodyTransform(), );
@@ -228,7 +244,9 @@ void CCubePlayer::Look_Direction(void)
 	m_pHeadWorld->Get_BeforeInfo(INFO_LOOK, &vHead);
 	m_pBodyWorld->Get_BeforeInfo(INFO_LOOK, &vBody);
 
-	vHead.y = 0.f;
+	m_pBodyWorld->Set_Info(INFO_LOOK, &vHead);
+
+	/*vHead.y = 0.f;
 	vBody.y = 0.f;
 
 	D3DXVec3Normalize(&vHead, &vHead);
@@ -240,9 +258,15 @@ void CCubePlayer::Look_Direction(void)
 	cout << D3DXToDegree(fDiagonal) << endl;
 
 	if (vHead.x > vBody.x)
+	{
 		m_pBodyWorld->Rotation(ROT_Y, fDiagonal);
+		m_fLookAngle -= fDiagonal;
+	}
 	else if (vHead.x < vBody.x)
+	{
 		m_pBodyWorld->Rotation(ROT_Y, -fDiagonal);
+		m_fLookAngle += fDiagonal;
+	}*/
 }
 
 void CCubePlayer::Jump(void)
@@ -262,6 +286,15 @@ HRESULT CCubePlayer::Get_BodyTransform(void)
 	m_pLeftLegWorld = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Character", L"L_LEG", L"Proto_TransformCom", ID_STATIC));
 	NULL_CHECK_RETURN(m_pBodyWorld, E_FAIL);
 	m_pRightLegWorld = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Character", L"R_LEG", L"Proto_TransformCom", ID_STATIC));
+	NULL_CHECK_RETURN(m_pBodyWorld, E_FAIL);
+
+	m_pLeftHandWorld = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Character", L"L_HAND", L"Proto_TransformCom", ID_STATIC));
+	NULL_CHECK_RETURN(m_pBodyWorld, E_FAIL);
+	m_pRightHandWorld = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Character", L"R_HAND", L"Proto_TransformCom", ID_STATIC));
+	NULL_CHECK_RETURN(m_pBodyWorld, E_FAIL);
+	m_pLeftFootWorld = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Character", L"L_FOOT", L"Proto_TransformCom", ID_STATIC));
+	NULL_CHECK_RETURN(m_pBodyWorld, E_FAIL);
+	m_pRightFootWorld = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Character", L"R_FOOT", L"Proto_TransformCom", ID_STATIC));
 	NULL_CHECK_RETURN(m_pBodyWorld, E_FAIL);
 
 	return S_OK;

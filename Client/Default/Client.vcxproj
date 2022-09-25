@@ -163,6 +163,8 @@
     <ClInclude Include="..\Header\Bullet.h" />
     <ClInclude Include="..\Header\CubeArm.h" />
     <ClInclude Include="..\Header\CubeBody.h" />
+    <ClInclude Include="..\Header\CubeFoot.h" />
+    <ClInclude Include="..\Header\CubeHand.h" />
     <ClInclude Include="..\Header\CubeHead.h" />
     <ClInclude Include="..\Header\CubeLeg.h" />
     <ClInclude Include="..\Header\CubePlayer.h" />
@@ -211,6 +213,8 @@
     <ClCompile Include="..\Code\Bullet.cpp" />
     <ClCompile Include="..\Code\CubeArm.cpp" />
     <ClCompile Include="..\Code\CubeBody.cpp" />
+    <ClCompile Include="..\Code\CubeFoot.cpp" />
+    <ClCompile Include="..\Code\CubeHand.cpp" />
     <ClCompile Include="..\Code\CubeHead.cpp" />
     <ClCompile Include="..\Code\CubeLeg.cpp" />
     <ClCompile Include="..\Code\CubePlayer.cpp" />

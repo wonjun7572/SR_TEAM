@@ -1,56 +1,90 @@
-﻿     ../Bin\Utility.lib 라이브러리 및 ../Bin\Utility.exp 개체를 생성하고 있습니다.
-  Utility.vcxproj -> C:\Users\sam51\Desktop\SR_TEAM\Engine\Utility\Default\../Bin\Utility.dll
-  Utility.vcxproj -> ../Bin\Utility.pdb (Full PDB)
-          1개 파일이 복사되었습니다.
-          1개 파일이 복사되었습니다.
-  .\Engine\Header\Calculator.h
-  .\Engine\Header\Camera.h
-  .\Engine\Header\Collision.h
-  .\Engine\Header\Component.h
-  .\Engine\Header\CubeTex.h
-  .\Engine\Header\Engine_Enum.h
-  .\Engine\Header\Engine_Include.h
-  .\Engine\Header\Engine_Macro.h
-  .\Engine\Header\Engine_Struct.h
-  .\Engine\Header\Engine_Template.h
-  .\Engine\Header\Engine_Typedef.h
-  .\Engine\Header\Export_Function.h
-  .\Engine\Header\Export_System.h
-  .\Engine\Header\Export_System.inl
-  .\Engine\Header\Export_Utility.h
-  .\Engine\Header\Export_Utility.inl
-  .\Engine\Header\fmod.h
-  .\Engine\Header\fmod.hpp
-  .\Engine\Header\fmod_codec.h
-  .\Engine\Header\fmod_dsp.h
-  .\Engine\Header\fmod_errors.h
-  .\Engine\Header\fmod_memoryinfo.h
-  .\Engine\Header\fmod_output.h
-  .\Engine\Header\FontMgr.h
-  .\Engine\Header\Frame.h
-  .\Engine\Header\FrameMgr.h
-  .\Engine\Header\GameObject.h
-  .\Engine\Header\GraphicDev.h
-  .\Engine\Header\Hitbox.h
-  .\Engine\Header\InputDev.h
-  .\Engine\Header\InputMgr.h
-  .\Engine\Header\Layer.h
-  .\Engine\Header\Light.h
-  .\Engine\Header\LightMgr.h
-  .\Engine\Header\Management.h
-  .\Engine\Header\MyFont.h
-  .\Engine\Header\ProtoMgr.h
-  .\Engine\Header\RcCol.h
-  .\Engine\Header\RcTex.h
-  .\Engine\Header\Renderer.h
-  .\Engine\Header\Scene.h
-  .\Engine\Header\SoundMgr.h
-  .\Engine\Header\SphereTex.h
-  .\Engine\Header\TerrainTex.h
-  .\Engine\Header\Texture.h
-  .\Engine\Header\Timer.h
-  .\Engine\Header\TimerMgr.h
-  .\Engine\Header\Transform.h
-  .\Engine\Header\TriCol.h
-  .\Engine\Header\VIBuffer.h
-         50개 파일이 복사되었습니다.
+﻿빌드 시작: 2022-09-25 오후 4:36:56
+     1>2 노드의 "D:\GitHub\SR_TEAM\Engine\Utility\Default\Utility.vcxproj" 프로젝트(Build 대상)입니다.
+     1>Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"../Bin\Utility.dll" /INCREMENTAL /NOLOGO /LIBPATH:../../../Reference/Library d3d9.lib d3dx9.lib dxguid.lib System.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"../Bin\Utility.pdb" /SUBSYSTEM:WINDOWS /LARGEADDRESSAWARE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"../Bin\Utility.lib" /MACHINE:X86 /DLL Debug\Collision.obj
+         Debug\Calculator.obj
+         Debug\Camera.obj
+         Debug\Component.obj
+         Debug\CubeTex.obj
+         Debug\GameObject.obj
+         Debug\Hitbox.obj
+         Debug\Layer.obj
+         Debug\Light.obj
+         Debug\LightMgr.obj
+         Debug\Management.obj
+         Debug\ProtoMgr.obj
+         Debug\RcCol.obj
+         Debug\RcTex.obj
+         Debug\Renderer.obj
+         Debug\Scene.obj
+         Debug\SoundMgr.obj
+         Debug\SphereTex.obj
+         Debug\TerrainTex.obj
+         Debug\Texture.obj
+         Debug\Transform.obj
+         Debug\TriCol.obj
+         Debug\VIBuffer.obj
+            ../Bin\Utility.lib 라이브러리 및 ../Bin\Utility.exp 개체를 생성하고 있습니다.
+         Utility.vcxproj -> D:\GitHub\SR_TEAM\Engine\Utility\Default\../Bin\Utility.dll
+       PostBuildEvent:
+         cd /d D:\GitHub\SR_TEAM\
+         call CopyUtility.bat
+         :VCEnd
+                 1개 파일이 복사되었습니다.
+                 1개 파일이 복사되었습니다.
+         .\Engine\Header\Calculator.h
+         .\Engine\Header\Camera.h
+         .\Engine\Header\Collision.h
+         .\Engine\Header\Component.h
+         .\Engine\Header\CubeTex.h
+         .\Engine\Header\Engine_Enum.h
+         .\Engine\Header\Engine_Include.h
+         .\Engine\Header\Engine_Macro.h
+         .\Engine\Header\Engine_Struct.h
+         .\Engine\Header\Engine_Template.h
+         .\Engine\Header\Engine_Typedef.h
+         .\Engine\Header\Export_Function.h
+         .\Engine\Header\Export_System.h
+         .\Engine\Header\Export_System.inl
+         .\Engine\Header\Export_Utility.h
+         .\Engine\Header\Export_Utility.inl
+         .\Engine\Header\fmod.h
+         .\Engine\Header\fmod.hpp
+         .\Engine\Header\fmod_codec.h
+         .\Engine\Header\fmod_dsp.h
+         .\Engine\Header\fmod_errors.h
+         .\Engine\Header\fmod_memoryinfo.h
+         .\Engine\Header\fmod_output.h
+         .\Engine\Header\FontMgr.h
+         .\Engine\Header\Frame.h
+         .\Engine\Header\FrameMgr.h
+         .\Engine\Header\GameObject.h
+         .\Engine\Header\GraphicDev.h
+         .\Engine\Header\Hitbox.h
+         .\Engine\Header\InputDev.h
+         .\Engine\Header\InputMgr.h
+         .\Engine\Header\Layer.h
+         .\Engine\Header\Light.h
+         .\Engine\Header\LightMgr.h
+         .\Engine\Header\Management.h
+         .\Engine\Header\MyFont.h
+         .\Engine\Header\ProtoMgr.h
+         .\Engine\Header\RcCol.h
+         .\Engine\Header\RcTex.h
+         .\Engine\Header\Renderer.h
+         .\Engine\Header\Scene.h
+         .\Engine\Header\SoundMgr.h
+         .\Engine\Header\SphereTex.h
+         .\Engine\Header\TerrainTex.h
+         .\Engine\Header\Texture.h
+         .\Engine\Header\Timer.h
+         .\Engine\Header\TimerMgr.h
+         .\Engine\Header\Transform.h
+         .\Engine\Header\TriCol.h
+         .\Engine\Header\VIBuffer.h
+                50개 파일이 복사되었습니다.
+     1>"D:\GitHub\SR_TEAM\Engine\Utility\Default\Utility.vcxproj" 프로젝트를 빌드했습니다(Build 대상).
+
+빌드했습니다.
+
+경과 시간: 00:00:01.19

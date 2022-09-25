@@ -29,6 +29,8 @@ private:
 	void			Walk_Animation(void);						//	걷는 모션
 	void			Move(void);									//	실제 이동
 
+	void			TransAxis(void);							//	월드행렬 작동
+
 	void			Look_Direction(void);						//	바라보는 방향 변경
 
 private:
@@ -49,6 +51,12 @@ private:
 
 	CTransform*		m_pLeftLegWorld = nullptr;
 	CTransform*		m_pRightLegWorld = nullptr;
+
+	CTransform*		m_pLeftHandWorld = nullptr;
+	CTransform*		m_pRightHandWorld = nullptr;
+
+	CTransform*		m_pLeftFootWorld = nullptr;
+	CTransform*		m_pRightFootWorld = nullptr;
 
 	CCalculator*	m_pCalculatorCom = nullptr;
 
