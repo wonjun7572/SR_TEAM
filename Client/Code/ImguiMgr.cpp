@@ -514,7 +514,7 @@ void CImGuiMgr::Save_Transform(CScene* pScene, wstring strDirectory)
 	}
 
 	CloseHandle(hFile);
-	MSG_BOX(strDirectory + "Save_Complete");
+	MSG_BOX("Save_Complete");
 }
 
 void CImGuiMgr::Load_Transform(LPDIRECT3DDEVICE9 pGrahicDev, CScene *pScene, wstring strDirectory)
