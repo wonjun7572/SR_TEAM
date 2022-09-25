@@ -106,6 +106,9 @@
     <Filter Include="02. GameObject\01. For_Stage\05. CubePlayer\Foot">
       <UniqueIdentifier>{ef04a8e1-ca29-494e-a23b-92df25412a57}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. Scene\10. ToolScene">
+      <UniqueIdentifier>{2a9f7e95-ba1c-4a15-aa57-285ea5c3b0ff}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -246,6 +249,9 @@
     <ClInclude Include="..\Header\CubeFoot.h">
       <Filter>02. GameObject\01. For_Stage\05. CubePlayer\Foot</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\ToolScene.h">
+      <Filter>01. Scene\10. ToolScene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -367,6 +373,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CubeFoot.cpp">
       <Filter>02. GameObject\01. For_Stage\05. CubePlayer\Foot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ToolScene.cpp">
+      <Filter>01. Scene\10. ToolScene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
