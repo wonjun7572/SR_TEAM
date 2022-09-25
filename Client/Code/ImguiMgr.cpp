@@ -61,7 +61,7 @@ void CImGuiMgr::TransformEdit(CCamera* pCamera, CTransform* pTransform, _bool& W
 	ImGui::Begin("Transform");
 	ImGuizmo::BeginFrame();
 	static float snap[3] = { 1.f, 1.f, 1.f };
-	static ImGuizmo::OPERATION mCurrentGizmoOperation(ImGuizmo::ROTATE);
+	static ImGuizmo::OPERATION mCurrentGizmoOperation(ImGuizmo::TRANSLATE);
 	static ImGuizmo::MODE mCurrentGizmoMode(ImGuizmo::WORLD);
 	if (ImGui::IsKeyPressed(90))
 		mCurrentGizmoOperation = ImGuizmo::TRANSLATE;
@@ -237,14 +237,49 @@ void CImGuiMgr::CreateObject(LPDIRECT3DDEVICE9 pGrahicDev, CScene* pScene, CCame
 	ImGui::Begin("Cube Settings");
 
 	ImGui::Text("this is Transform_ButtonMenu");
+
+	static _int iSaveStageNum;
+	static _int iLoadStageNum;
+
+	if (ImGui::RadioButton("Stage1", &iSaveStageNum, 1));
+	ImGui::SameLine();
+	if (ImGui::RadioButton("Stage2", &iSaveStageNum, 2));
+	ImGui::SameLine();
+	if (ImGui::RadioButton("Stage3", &iSaveStageNum, 3));
 	if (ImGui::Button("Save"))
 	{
-		Save_Transform(pScene);
+		if (iSaveStageNum == 1)
+		{
+			Save_Transform(pScene, L"../../Data/Map1.dat");
+		}
+		if (iSaveStageNum == 2)
+		{
+			Save_Transform(pScene, L"../../Data/Map2.dat");
+		}
+		if (iSaveStageNum == 3)
+		{
+			Save_Transform(pScene, L"../../Data/Map3.dat");
+		}
 	}
+	if (ImGui::RadioButton("Stage1", &iLoadStageNum, 1));
 	ImGui::SameLine();
+	if (ImGui::RadioButton("Stage2", &iLoadStageNum, 2));
+	ImGui::SameLine();
+	if (ImGui::RadioButton("Stage3", &iLoadStageNum, 3));
 	if (ImGui::Button("Load"))
 	{
-		Load_Transform(pGrahicDev, pScene);
+		if (iLoadStageNum == 1)
+		{
+			Load_Transform(pGrahicDev, pScene, L"../../Data/Map1.dat");
+		}
+		if (iLoadStageNum == 2)
+		{
+			Load_Transform(pGrahicDev, pScene, L"../../Data/Map2.dat");
+		}
+		if (iLoadStageNum == 3)
+		{
+			Load_Transform(pGrahicDev, pScene, L"../../Data/Map3.dat");
+		}
 	}
 	ImGui::SameLine();
 	if (ImGui::Button("Delete"))
@@ -430,11 +465,11 @@ void CImGuiMgr::TerrainTool(LPDIRECT3DDEVICE9 pGrahicDev, CScene* pScene)
 	ImGui::End();
 }
 
-void CImGuiMgr::Save_Transform(CScene* pScene)
+void CImGuiMgr::Save_Transform(CScene* pScene, wstring strDirectory)
 {
-	wstring Directory = L"../../Data/Map.dat";
+	//wstring Directory = L"../../Data/Map.dat";
 
-	HANDLE      hFile = CreateFile(Directory.c_str(),
+	HANDLE      hFile = CreateFile(strDirectory.c_str(),
 		// 파일의 경로와 이름
 		GENERIC_WRITE,         // 파일 접근 모드 (GENERIC_WRITE : 쓰기 전용, GENERIC_READ : 읽기 전용)
 		NULL,               // 공유 방식(파일이 열려있는 상태에서 다른 프로세스가 오픈할 때 허용할 것인가)    
@@ -479,15 +514,14 @@ void CImGuiMgr::Save_Transform(CScene* pScene)
 	}
 
 	CloseHandle(hFile);
-	MSG_BOX("Save_Complete");
-
+	MSG_BOX(strDirectory + "Save_Complete");
 }
 
-void CImGuiMgr::Load_Transform(LPDIRECT3DDEVICE9 pGrahicDev, CScene *pScene)
+void CImGuiMgr::Load_Transform(LPDIRECT3DDEVICE9 pGrahicDev, CScene *pScene, wstring strDirectory)
 {
-	wstring Directory = L"../../Data/Map.dat";
+	//wstring Directory = L"../../Data/Map.dat";
 
-	HANDLE      hFile = CreateFile(Directory.c_str(),      // 파일의 경로와 이름
+	HANDLE      hFile = CreateFile(strDirectory.c_str(),      // 파일의 경로와 이름
 		GENERIC_READ,         // 파일 접근 모드 (GENERIC_WRITE : 쓰기 전용, GENERIC_READ : 읽기 전용)
 		NULL,               // 공유 방식(파일이 열려있는 상태에서 다른 프로세스가 오픈할 때 허용할 것인가)    
 		NULL,               // 보안 속성(NULL을 지정하면 기본값 상태)
@@ -546,10 +580,8 @@ void CImGuiMgr::Load_Transform(LPDIRECT3DDEVICE9 pGrahicDev, CScene *pScene)
 		if (0 == dwByte)
 			break;
 	}
-	MSG_BOX("Save_Complete");
-	pScene->Add_Layer(pMyLayer, L"Layer_MapTool");
-	
 	CloseHandle(hFile);
+	MSG_BOX("Load_Complete");
 }
 
 void CImGuiMgr::Free()

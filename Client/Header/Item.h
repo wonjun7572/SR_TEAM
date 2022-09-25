@@ -18,7 +18,7 @@ protected:
 	virtual ~CItem();
 
 public:
-	virtual HRESULT Ready_Object(const _vec3& vPos) override;
+	virtual HRESULT Ready_Object(const _vec3& vPos);
 	virtual _int	Update_Object(const _float& fTimeDelta) override;
 	virtual void	LateUpdate_Object() override;
 	virtual void	Render_Object()override;

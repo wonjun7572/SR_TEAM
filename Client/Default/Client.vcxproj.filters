@@ -106,6 +106,12 @@
     <Filter Include="02. GameObject\01. For_Stage\05. CubePlayer\Foot">
       <UniqueIdentifier>{ef04a8e1-ca29-494e-a23b-92df25412a57}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\07. Item">
+      <UniqueIdentifier>{54765a95-0a5a-4adb-ad7c-2bd5b4061f3c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\07. Item\00. HP">
+      <UniqueIdentifier>{6178cb89-6c75-431e-bb6d-1c6511199333}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -246,6 +252,12 @@
     <ClInclude Include="..\Header\CubeFoot.h">
       <Filter>02. GameObject\01. For_Stage\05. CubePlayer\Foot</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\Item.h">
+      <Filter>02. GameObject\01. For_Stage\07. Item</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\HealthPotion.h">
+      <Filter>02. GameObject\01. For_Stage\07. Item\00. HP</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -367,6 +379,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\CubeFoot.cpp">
       <Filter>02. GameObject\01. For_Stage\05. CubePlayer\Foot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Item.cpp">
+      <Filter>02. GameObject\01. For_Stage\07. Item</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\HealthPotion.cpp">
+      <Filter>02. GameObject\01. For_Stage\07. Item\00. HP</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
