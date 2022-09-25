@@ -10,6 +10,9 @@
 #include "CubeBody.h"
 #include "CubeArm.h"
 #include "CubeLeg.h"
+#include "CubeFoot.h"
+#include "CubeHand.h"
+
 #include "ImguiMgr.h"
 
 CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -42,7 +45,7 @@ HRESULT CStage::Ready_Scene(void)
 	FAILED_CHECK_RETURN(Ready_Layer_Bullet(L"Layer_Bullet"), E_FAIL);
 
 	// 툴을 위한 레이어 생성
-	FAILED_CHECK_RETURN(Ready_Layer_Tool(L"Layer_Tool"), E_FAIL);
+	//FAILED_CHECK_RETURN(Ready_Layer_Tool(L"Layer_Tool"), E_FAIL);
 
 	return S_OK;
 }
@@ -50,9 +53,9 @@ HRESULT CStage::Ready_Scene(void)
 _int CStage::Update_Scene(const _float & fTimeDelta)
 {
 	// 스테이지에서 이렇게 업데이트 해주고있음.
-	CImGuiMgr::GetInstance()->WindowLayOut();
+	/*CImGuiMgr::GetInstance()->WindowLayOut();
 	CImGuiMgr::GetInstance()->TerrainTool(m_pGraphicDev, this);
-	CImGuiMgr::GetInstance()->CreateObject(m_pGraphicDev, this, m_pCam);
+	CImGuiMgr::GetInstance()->CreateObject(m_pGraphicDev, this, m_pCam);*/
 
 	return Engine::CScene::Update_Scene(fTimeDelta);
 }
@@ -82,14 +85,14 @@ HRESULT CStage::Ready_Layer_Environment(const _tchar * pLayerTag)
 	m_pCam = dynamic_cast<CDynamicCamera*>(pGameObject);*/
 	
 	// StaticCamera
-	//pGameObject = CStaticCamera::Create(m_pGraphicDev, &_vec3(0.f, 20.f, -10.f), &_vec3(0.f, 0.f, 0.f), &_vec3(0.f, 1.f, 0.f));
-	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"StaticCamera", pGameObject), E_FAIL);
+	pGameObject = CStaticCamera::Create(m_pGraphicDev, &_vec3(0.f, 20.f, -10.f), &_vec3(0.f, 0.f, 0.f), &_vec3(0.f, 1.f, 0.f));
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"StaticCamera", pGameObject), E_FAIL);
 	
 	//Terrain
-	//pGameObject = CTerrain::Create(m_pGraphicDev);
-	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Terrain", pGameObject), E_FAIL);
+	pGameObject = CTerrain::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Terrain", pGameObject), E_FAIL);
 
 #pragma endregion 스테이즈 1 코드
 
@@ -111,9 +114,9 @@ HRESULT CStage::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 	CGameObject*		pGameObject = nullptr;
 
 	// 테스트 플레이어로 테스트중
-	//pGameObject = CTestPlayer::Create(m_pGraphicDev);
-	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"TestPlayer", pGameObject), E_FAIL);
+	pGameObject = CTestPlayer::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"TestPlayer", pGameObject), E_FAIL);
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
@@ -152,33 +155,50 @@ HRESULT CStage::Ready_Layer_Character(const _tchar * pLayerTag)
 	CGameObject*		pGameObject = nullptr;
 
 	#pragma region 큐브 플레이어 잠가 놓았음 툴때문에 
-	/*pGameObject = CCubeHead::Create(m_pGraphicDev);
+	//	머리
+	pGameObject = CCubeHead::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"HEAD", pGameObject), E_FAIL);
-
+	//	몸통
 	pGameObject = CCubeBody::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"BODY", pGameObject), E_FAIL);
-
+	//	왼팔
 	pGameObject = CCubeArm::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"L_ARM", pGameObject), E_FAIL);
-
+	//	오른팔
 	pGameObject = CCubeArm::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"R_ARM", pGameObject), E_FAIL);
-
+	//	왼다리
 	pGameObject = CCubeLeg::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"L_LEG", pGameObject), E_FAIL);
-
+	//	오른다리
 	pGameObject = CCubeLeg::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"R_LEG", pGameObject), E_FAIL);
-
+	//	왼손
+	pGameObject = CCubeHand::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"L_HAND", pGameObject), E_FAIL);
+	//	오른손
+	pGameObject = CCubeHand::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"R_HAND", pGameObject), E_FAIL);
+	//	왼발
+	pGameObject = CCubeFoot::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"L_FOOT", pGameObject), E_FAIL);
+	//	오른발
+	pGameObject = CCubeFoot::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"R_FOOT", pGameObject), E_FAIL);
+	//	조립과 히트박스
 	pGameObject = CCubePlayer::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"PLAYER", pGameObject), E_FAIL);*/
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"PLAYER", pGameObject), E_FAIL);
 
 #pragma endregion 큐브 플레이어 잠가 놓았음 툴때문에 
 	m_mapLayer.insert({ pLayerTag, pLayer });
