@@ -38,6 +38,14 @@ private:
 	HRESULT		Add_Component(void);
 
 
+
+private:
+	_float CurrentLoading;
+	_float OriginLoading;
+
+	_float LoadingBar
+
+
 public:
 
 	static CLoadBar* Create(LPDIRECT3DDEVICE9 pGraphicDev);
