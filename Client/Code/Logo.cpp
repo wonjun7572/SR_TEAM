@@ -52,7 +52,7 @@ Engine::_int CLogo::Update_Scene(const _float& fTimeDelta)
 			FAILED_CHECK_RETURN(Engine::Set_Scene(pScene), E_FAIL);
 
 			return 0;
-		}		
+		}
 
 		if (Get_DIKeyState(DIK_2) & 0x8000)
 		{

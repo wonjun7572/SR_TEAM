@@ -1,9 +1,5 @@
 ﻿     ../Bin\System.lib 라이브러리 및 ../Bin\System.exp 개체를 생성하고 있습니다.
-GraphicDev.obj : warning LNK4020: 'c:\users\beoms\onedrive\문서\github\sr_team\engine\system\default\debug\vc140.pdb'의 형식 레코드가 손상되었습니다. 디버거에서 일부 기호와 형식에 액세스할 수 없습니다.
-FrameMgr.obj : warning LNK4020: 'c:\users\beoms\onedrive\문서\github\sr_team\engine\system\default\debug\vc140.pdb'의 형식 레코드가 손상되었습니다. 디버거에서 일부 기호와 형식에 액세스할 수 없습니다.
-Frame.obj : warning LNK4020: 'c:\users\beoms\onedrive\문서\github\sr_team\engine\system\default\debug\vc140.pdb'의 형식 레코드가 손상되었습니다. 디버거에서 일부 기호와 형식에 액세스할 수 없습니다.
-FontMgr.obj : warning LNK4020: 'c:\users\beoms\onedrive\문서\github\sr_team\engine\system\default\debug\vc140.pdb'의 형식 레코드가 손상되었습니다. 디버거에서 일부 기호와 형식에 액세스할 수 없습니다.
-  System.vcxproj -> C:\Users\beoms\OneDrive\문서\GitHub\SR_TEAM\Engine\System\Default\../Bin\System.dll
+  System.vcxproj -> C:\Users\DecoyZ\Desktop\SR_TEAM\Engine\System\Default\../Bin\System.dll
   System.vcxproj -> ../Bin\System.pdb (Full PDB)
           1개 파일이 복사되었습니다.
           1개 파일이 복사되었습니다.

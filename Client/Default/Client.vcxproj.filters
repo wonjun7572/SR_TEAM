@@ -106,8 +106,32 @@
     <Filter Include="02. GameObject\01. For_Stage\05. CubePlayer\Foot">
       <UniqueIdentifier>{ef04a8e1-ca29-494e-a23b-92df25412a57}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\07. Weapon">
+      <UniqueIdentifier>{2866dcc5-758d-4213-81f5-49d4f574035c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\07. Weapon\00. Parts">
+      <UniqueIdentifier>{478fbffc-7cab-4516-acf3-41a8bb1b51ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\07. Weapon\01. Uzi">
+      <UniqueIdentifier>{2c0bbe60-dcf1-4a0f-8597-2dbaa70ea606}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\07. Weapon\02. Shotgun">
+      <UniqueIdentifier>{1920af0d-ed7d-4afd-9ada-b10f1c3b3b50}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\07. Weapon\03. Sniper">
+      <UniqueIdentifier>{54c4003c-1eab-4f4a-902a-b99e8f6a458a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\07. Weapon\00. Parts\01.Uzi">
+      <UniqueIdentifier>{2f423c96-62f1-4899-a14e-69b748adaa05}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\07. Weapon\00. Parts\02.Shotgun">
+      <UniqueIdentifier>{fdc78895-f0f5-4959-af6e-0c3aaa2706e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\07. Weapon\00. Parts\03.Sniper">
+      <UniqueIdentifier>{9a373401-ba49-4161-ba8f-118863a55ea5}</UniqueIdentifier>
+    </Filter>
     <Filter Include="01. Scene\10. ToolScene">
-      <UniqueIdentifier>{2a9f7e95-ba1c-4a15-aa57-285ea5c3b0ff}</UniqueIdentifier>
+      <UniqueIdentifier>{6425a67f-06c3-46ca-8288-402e1f0d0a5b}</UniqueIdentifier>
     </Filter>
     <Filter Include="02. GameObject\01. For_Stage\07. CubeMonster">
       <UniqueIdentifier>{a596968f-c820-4272-8aca-0ea8adc2bdfb}</UniqueIdentifier>
@@ -276,6 +300,60 @@
     <ClInclude Include="..\Header\CubeFoot.h">
       <Filter>02. GameObject\01. For_Stage\05. CubePlayer\Foot</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\Weapon.h">
+      <Filter>02. GameObject\01. For_Stage\07. Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Sniper.h">
+      <Filter>02. GameObject\01. For_Stage\07. Weapon\03. Sniper</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Shotgun.h">
+      <Filter>02. GameObject\01. For_Stage\07. Weapon\02. Shotgun</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ShotgunPart1.h">
+      <Filter>02. GameObject\01. For_Stage\07. Weapon\00. Parts\02.Shotgun</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ShotgunPart2.h">
+      <Filter>02. GameObject\01. For_Stage\07. Weapon\00. Parts\02.Shotgun</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ShotgunPart3.h">
+      <Filter>02. GameObject\01. For_Stage\07. Weapon\00. Parts\02.Shotgun</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ShotgunPart4.h">
+      <Filter>02. GameObject\01. For_Stage\07. Weapon\00. Parts\02.Shotgun</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ShotgunPart5.h">
+      <Filter>02. GameObject\01. For_Stage\07. Weapon\00. Parts\02.Shotgun</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\SniperPart1.h">
+      <Filter>02. GameObject\01. For_Stage\07. Weapon\00. Parts\03.Sniper</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\SniperPart2.h">
+      <Filter>02. GameObject\01. For_Stage\07. Weapon\00. Parts\03.Sniper</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\SniperPart3.h">
+      <Filter>02. GameObject\01. For_Stage\07. Weapon\00. Parts\03.Sniper</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\SniperPart4.h">
+      <Filter>02. GameObject\01. For_Stage\07. Weapon\00. Parts\03.Sniper</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Uzi.h">
+      <Filter>02. GameObject\01. For_Stage\07. Weapon\01. Uzi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\UziPart1.h">
+      <Filter>02. GameObject\01. For_Stage\07. Weapon\00. Parts\01.Uzi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\UziPart2.h">
+      <Filter>02. GameObject\01. For_Stage\07. Weapon\00. Parts\01.Uzi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\UziPart3.h">
+      <Filter>02. GameObject\01. For_Stage\07. Weapon\00. Parts\01.Uzi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\UziPart4.h">
+      <Filter>02. GameObject\01. For_Stage\07. Weapon\00. Parts\01.Uzi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\UziPart5.h">
+      <Filter>02. GameObject\01. For_Stage\07. Weapon\00. Parts\01.Uzi</Filter>
+    </ClInclude>
     <ClInclude Include="..\Header\ToolScene.h">
       <Filter>01. Scene\10. ToolScene</Filter>
     </ClInclude>
@@ -424,6 +502,60 @@
     </ClCompile>
     <ClCompile Include="..\Code\CubeFoot.cpp">
       <Filter>02. GameObject\01. For_Stage\05. CubePlayer\Foot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Weapon.cpp">
+      <Filter>02. GameObject\01. For_Stage\07. Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Sniper.cpp">
+      <Filter>02. GameObject\01. For_Stage\07. Weapon\03. Sniper</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Shotgun.cpp">
+      <Filter>02. GameObject\01. For_Stage\07. Weapon\02. Shotgun</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ShotgunPart1.cpp">
+      <Filter>02. GameObject\01. For_Stage\07. Weapon\00. Parts\02.Shotgun</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ShotgunPart2.cpp">
+      <Filter>02. GameObject\01. For_Stage\07. Weapon\00. Parts\02.Shotgun</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ShotgunPart3.cpp">
+      <Filter>02. GameObject\01. For_Stage\07. Weapon\00. Parts\02.Shotgun</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ShotgunPart4.cpp">
+      <Filter>02. GameObject\01. For_Stage\07. Weapon\00. Parts\02.Shotgun</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ShotgunPart5.cpp">
+      <Filter>02. GameObject\01. For_Stage\07. Weapon\00. Parts\02.Shotgun</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SniperPart1.cpp">
+      <Filter>02. GameObject\01. For_Stage\07. Weapon\00. Parts\03.Sniper</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SniperPart2.cpp">
+      <Filter>02. GameObject\01. For_Stage\07. Weapon\00. Parts\03.Sniper</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SniperPart3.cpp">
+      <Filter>02. GameObject\01. For_Stage\07. Weapon\00. Parts\03.Sniper</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SniperPart4.cpp">
+      <Filter>02. GameObject\01. For_Stage\07. Weapon\00. Parts\03.Sniper</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Uzi.cpp">
+      <Filter>02. GameObject\01. For_Stage\07. Weapon\01. Uzi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\UziPart5.cpp">
+      <Filter>02. GameObject\01. For_Stage\07. Weapon\00. Parts\01.Uzi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\UziPart1.cpp">
+      <Filter>02. GameObject\01. For_Stage\07. Weapon\00. Parts\01.Uzi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\UziPart2.cpp">
+      <Filter>02. GameObject\01. For_Stage\07. Weapon\00. Parts\01.Uzi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\UziPart3.cpp">
+      <Filter>02. GameObject\01. For_Stage\07. Weapon\00. Parts\01.Uzi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\UziPart4.cpp">
+      <Filter>02. GameObject\01. For_Stage\07. Weapon\00. Parts\01.Uzi</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\ToolScene.cpp">
       <Filter>01. Scene\10. ToolScene</Filter>
