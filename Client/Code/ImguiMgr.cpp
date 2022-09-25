@@ -261,11 +261,11 @@ void CImGuiMgr::CreateObject(LPDIRECT3DDEVICE9 pGrahicDev, CScene* pScene, CCame
 			Save_Transform(pScene, L"../../Data/Map3.dat");
 		}
 	}
-	if (ImGui::RadioButton("Stage1", &iLoadStageNum, 1));
+	if (ImGui::RadioButton("Load_Stage1", &iLoadStageNum, 1));
 	ImGui::SameLine();
-	if (ImGui::RadioButton("Stage2", &iLoadStageNum, 2));
+	if (ImGui::RadioButton("Load_Stage2", &iLoadStageNum, 2));
 	ImGui::SameLine();
-	if (ImGui::RadioButton("Stage3", &iLoadStageNum, 3));
+	if (ImGui::RadioButton("Load_Stage3", &iLoadStageNum, 3));
 	if (ImGui::Button("Load"))
 	{
 		if (iLoadStageNum == 1)
@@ -282,11 +282,6 @@ void CImGuiMgr::CreateObject(LPDIRECT3DDEVICE9 pGrahicDev, CScene* pScene, CCame
 		}
 	}
 	ImGui::SameLine();
-	if (ImGui::Button("Delete"))
-	{
-		CLayer* MyLayer = pScene->Get_Layer(L"Layer_MapTool");
-		MyLayer->Delete_GameObject(m_CurrentSelectGameObjectObjKey.c_str());
-	}
 
 	if (ImGui::CollapsingHeader("Cube Create & Chose Button", ImGuiTreeNodeFlags_DefaultOpen))
 	{
@@ -300,6 +295,12 @@ void CImGuiMgr::CreateObject(LPDIRECT3DDEVICE9 pGrahicDev, CScene* pScene, CCame
 		{
 			m_bCubeSelcetCheck = true;
 			m_bCubeCreateCheck = false;
+		}
+		ImGui::SameLine();
+		if (ImGui::Button("Delete"))
+		{
+			CLayer* MyLayer = pScene->Get_Layer(L"Layer_MapTool");
+			MyLayer->Delete_GameObject(m_CurrentSelectGameObjectObjKey.c_str());
 		}
 	}
 
