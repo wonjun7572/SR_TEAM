@@ -100,6 +100,12 @@
     <Filter Include="02. GameObject\01. For_Stage\99. TestCube">
       <UniqueIdentifier>{3233272e-e7a2-44ee-942e-403f08eaf1b1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\05. CubePlayer\Hand">
+      <UniqueIdentifier>{6ee794c0-aa33-465d-bf04-ae640cc2f219}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\05. CubePlayer\Foot">
+      <UniqueIdentifier>{ef04a8e1-ca29-494e-a23b-92df25412a57}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -234,6 +240,12 @@
     <ClInclude Include="..\Header\TestCube.h">
       <Filter>02. GameObject\01. For_Stage\99. TestCube</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CubeHand.h">
+      <Filter>02. GameObject\01. For_Stage\05. CubePlayer\Hand</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CubeFoot.h">
+      <Filter>02. GameObject\01. For_Stage\05. CubePlayer\Foot</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -349,6 +361,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\TestCube.cpp">
       <Filter>02. GameObject\01. For_Stage\99. TestCube</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CubeHand.cpp">
+      <Filter>02. GameObject\01. For_Stage\05. CubePlayer\Hand</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CubeFoot.cpp">
+      <Filter>02. GameObject\01. For_Stage\05. CubePlayer\Foot</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
