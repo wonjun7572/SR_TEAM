@@ -3,6 +3,7 @@
 
 #include "Export_Function.h"
 #include "LoadBar.h"
+#include "ToolScene.h"
 CLoadingScene::CLoadingScene(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CScene(pGraphicDev)
 {
@@ -54,7 +55,26 @@ _int CLoadingScene::Update_Scene(const _float & fTimeDelta)
 
 	if (true == m_pLoading->Get_Finish())
 	{
-		if (Engine::Get_DIKeyState(DIK_RETURN) & 0x80)
+		if (Get_DIKeyState(DIK_1) & 0x8000)
+		{
+			CScene*		pScene = CStage::Create(m_pGraphicDev);
+			NULL_CHECK_RETURN(pScene, E_FAIL);
+
+			FAILED_CHECK_RETURN(Engine::Set_Scene(pScene), E_FAIL);
+
+			return 0;
+		}
+
+		if (Get_DIKeyState(DIK_2) & 0x8000)
+		{
+			CScene*		pToolScene = CToolScene::Create(m_pGraphicDev);
+			NULL_CHECK_RETURN(pToolScene, E_FAIL);
+
+			FAILED_CHECK_RETURN(Engine::Set_Scene(pToolScene), E_FAIL);
+
+			return 0;
+		}
+		/*if (Engine::Get_DIKeyState(DIK_RETURN) & 0x80)
 		{
 
 			Engine::CScene*		pScene = CStage::Create(m_pGraphicDev);
@@ -64,7 +84,7 @@ _int CLoadingScene::Update_Scene(const _float & fTimeDelta)
 			FAILED_CHECK_RETURN(Engine::Set_Scene(pScene), E_FAIL);
 
 			return 0;
-		}
+		}*/
 	}
 
 	return iExit;

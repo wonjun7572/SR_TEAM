@@ -25,9 +25,9 @@ HRESULT CLogo::Ready_Scene(void)
 
 	FAILED_CHECK_RETURN(Ready_Layer_Environment(L"Ready_Layer_Environment"), E_FAIL);
 
-	// 로딩 클래스 생성
-	m_pLoading = CLoading::Create(m_pGraphicDev, LOADING_STAGE);
-	NULL_CHECK_RETURN(m_pLoading, E_FAIL);
+	//// 로딩 클래스 생성
+	//m_pLoading = CLoading::Create(m_pGraphicDev, LOADING_STAGE);
+	//NULL_CHECK_RETURN(m_pLoading, E_FAIL);
 		
 	return S_OK;
 }
@@ -36,9 +36,15 @@ Engine::_int CLogo::Update_Scene(const _float& fTimeDelta)
 {
 	_int iResult = Engine::CScene::Update_Scene(fTimeDelta);
 
-	if (m_pLoading->Get_Finish())
+	if (m_PlayButton->Get_MouseCheck())
 	{
-		if (Get_DIKeyState(DIK_1) & 0x8000)
+		CScene*		pScene = CLoadingScene::Create(m_pGraphicDev);
+		NULL_CHECK_RETURN(pScene, E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Set_Scene(pScene), E_FAIL);
+		return 0;
+	}
+
+		/*if (Get_DIKeyState(DIK_1) & 0x8000)
 		{
 			CScene*		pScene = CStage::Create(m_pGraphicDev);
 			NULL_CHECK_RETURN(pScene, E_FAIL);
@@ -56,8 +62,8 @@ Engine::_int CLogo::Update_Scene(const _float& fTimeDelta)
 			FAILED_CHECK_RETURN(Engine::Set_Scene(pToolScene), E_FAIL);
 
 			return 0;
-		}
-	}
+		}*/
+	
 
 	return iResult;
 }
@@ -70,7 +76,7 @@ void CLogo::LateUpdate_Scene(void)
 void CLogo::Render_Scene(void)
 {
 	// 개발자 모드 출력 함수
-	Render_Font(L"Font_Jinji", m_pLoading->Get_String(), &_vec2(50.f, 50.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+	//Render_Font(L"Font_Jinji", m_pLoading->Get_String(), &_vec2(50.f, 50.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
 }
 
 HRESULT CLogo::Ready_Layer_Environment(const _tchar * pLayerTag)
@@ -87,6 +93,19 @@ HRESULT CLogo::Ready_Layer_Environment(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"BackGround", pGameObject), E_FAIL);
 		
+
+	//PlayButton
+	m_PlayButton = dynamic_cast<CPlayButton*> (pGameObject = CPlayButton::Create(m_pGraphicDev));
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"PlayButton", pGameObject), E_FAIL);
+
+
+	//OptionButton
+	pGameObject = COptionButton::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"OptionButton", pGameObject), E_FAIL);
+
+
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
 	return S_OK;
@@ -115,8 +134,12 @@ void CLogo::Free(void)
 HRESULT CLogo::Ready_Proto(void)
 {
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_RcTexCom", CRcTex::Create(m_pGraphicDev)), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_LogoTexture", CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Logo/IU.jpg", TEX_NORMAL)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_LogoTexture", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Title/bg_hell.png", TEX_NORMAL)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_ButtonPlayTexture", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Title/MenuBG_00.png", TEX_NORMAL)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_OptionButton", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Title/MenuBG_02.png", TEX_NORMAL)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_TransformCom", CTransform::Create()), E_FAIL);
 
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_LoadingTexCom", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Texture2D/lang_select.png", TEX_NORMAL)), E_FAIL);
 	return S_OK;
 
 }
