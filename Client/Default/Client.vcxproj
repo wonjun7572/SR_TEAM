@@ -167,7 +167,9 @@
     <ClInclude Include="..\Header\CubeLeg.h" />
     <ClInclude Include="..\Header\CubePlayer.h" />
     <ClInclude Include="..\Header\DynamicCamera.h" />
+    <ClInclude Include="..\Header\HealthPotion.h" />
     <ClInclude Include="..\Header\ImguiMgr.h" />
+    <ClInclude Include="..\Header\Item.h" />
     <ClInclude Include="..\Header\Loading.h" />
     <ClInclude Include="..\Header\Logo.h" />
     <ClInclude Include="..\Header\MainApp.h" />
@@ -213,7 +215,9 @@
     <ClCompile Include="..\Code\CubeLeg.cpp" />
     <ClCompile Include="..\Code\CubePlayer.cpp" />
     <ClCompile Include="..\Code\DynamicCamera.cpp" />
+    <ClCompile Include="..\Code\HealthPotion.cpp" />
     <ClCompile Include="..\Code\ImguiMgr.cpp" />
+    <ClCompile Include="..\Code\Item.cpp" />
     <ClCompile Include="..\Code\Loading.cpp" />
     <ClCompile Include="..\Code\Logo.cpp" />
     <ClCompile Include="..\Code\MainApp.cpp" />

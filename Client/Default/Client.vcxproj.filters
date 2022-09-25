@@ -100,6 +100,9 @@
     <Filter Include="02. GameObject\01. For_Stage\99. TestCube">
       <UniqueIdentifier>{3233272e-e7a2-44ee-942e-403f08eaf1b1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\07. Item">
+      <UniqueIdentifier>{168aea35-a23a-49eb-9801-5b421fb8d9a9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -234,6 +237,12 @@
     <ClInclude Include="..\Header\TestCube.h">
       <Filter>02. GameObject\01. For_Stage\99. TestCube</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\Item.h">
+      <Filter>02. GameObject\01. For_Stage\07. Item</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\HealthPotion.h">
+      <Filter>99. Default\헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -349,6 +358,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\TestCube.cpp">
       <Filter>02. GameObject\01. For_Stage\99. TestCube</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Item.cpp">
+      <Filter>02. GameObject\01. For_Stage\07. Item</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\HealthPotion.cpp">
+      <Filter>99. Default\소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
