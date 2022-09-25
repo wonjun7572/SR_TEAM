@@ -5,7 +5,9 @@
 
 #include "BackGround.h"
 #include "Loading.h"
-
+#include "PlayButton.h"
+#include "OptionButton.h"
+#include "LoadingScene.h"
 class CLogo : public Engine::CScene
 {
 private:
@@ -28,7 +30,7 @@ private:
 
 private:
 	CLoading*			m_pLoading = nullptr;
-
+	CPlayButton*		m_PlayButton = nullptr;
 public:
 	static CLogo*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
 

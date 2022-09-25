@@ -28,6 +28,7 @@ private:
 
 	HRESULT			Ready_Layer_Wall(const _tchar* pLayerTag);
 	HRESULT			Ready_Layer_Character(const _tchar* pLayerTag);
+	HRESULT			Ready_Layer_Monster(const _tchar* pLayerTag);
 	HRESULT			Ready_Layer_Bullet(const _tchar* pLayerTag);
 
 	// 툴을 위한 레이어
