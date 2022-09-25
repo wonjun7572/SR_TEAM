@@ -43,7 +43,12 @@ void CTerrain::Render_Object(void)
 	if (m_bWireFrame)
 		m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 
-	m_pTextureCom->Set_Texture(m_iTerrainIdx);	// 텍스처 정보 세팅을 우선적으로 한다.
+	//////////////////////////////////	클라이언트<->툴 변경작업 ///////////////////////////////////////////////////////
+	if (nullptr == m_pTextureCom_Tool)
+		m_pTextureCom->Set_Texture(m_iTerrainIdx);	// 텍스처 정보 세팅을 우선적으로 한다.
+	else
+		m_pTextureCom_Tool->Set_Texture(m_iTerrainIdx);
+	//////////////////////////////////	클라이언트<->툴 변경작업 ///////////////////////////////////////////////////////
 
 	FAILED_CHECK_RETURN(Set_Material(), );
 //	==	FAILED_CHECK(Set_Material());
@@ -64,15 +69,21 @@ HRESULT CTerrain::Add_Component(void)
 	NULL_CHECK_RETURN(m_pBufferCom, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_TerrainTexCom", pComponent });
 
-	//// 맵툴 사용시 해당 컴포넌트 추가
-	/*pComponent = m_pTextureCom_Tool = dynamic_cast<CTexture*>(Clone_Proto(L"Proto_TerrainTexCom_MapTool"));
-	NULL_CHECK_RETURN(m_pTextureCom_Tool, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Proto_TerrainTexCom_MapTool", pComponent });*/
-
-	//// 클라이언트 사용시 해당 컴포넌트 추가
-	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Clone_Proto(L"Proto_TerrainTexture"));
-	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Proto_TerrainTexture", pComponent });
+	//////////////////////////////////	클라이언트<->툴 변경작업 ///////////////////////////////////////////////////////
+	try
+	{	//// 맵툴 사용시 해당 컴포넌트 추가
+		pComponent = m_pTextureCom_Tool = dynamic_cast<CTexture*>(Clone_Proto(L"Proto_TerrainTexCom_MapTool"));
+		if (nullptr == pComponent)
+			throw - 1;
+		m_mapComponent[ID_STATIC].insert({ L"Proto_TerrainTexCom_MapTool", pComponent });
+	}
+	catch (int expn)
+	{
+		pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Clone_Proto(L"Proto_TerrainTexture"));
+		NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
+		m_mapComponent[ID_STATIC].insert({ L"Proto_TerrainTexture", pComponent });
+	}
+	//////////////////////////////////	클라이언트<->툴 변경작업 ///////////////////////////////////////////////////////
 
 	pComponent = m_pTransCom = dynamic_cast<CTransform*>(Clone_Proto(L"Proto_TransformCom"));
 	NULL_CHECK_RETURN(m_pTransCom, E_FAIL);
