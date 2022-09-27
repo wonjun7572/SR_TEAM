@@ -1,5 +1,7 @@
 #include "stdafx.h"
 #include "..\Header\CubePlayer.h"
+#include "PoolMgr.h"
+#include "Bullet.h"
 
 CCubePlayer::CCubePlayer(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
@@ -27,13 +29,16 @@ _int CCubePlayer::Update_Object(const _float & fTimeDelta)
 
 	FAILED_CHECK_RETURN(Get_BodyTransform(), -1);
 
-	CGameObject::Update_Object(fTimeDelta);
-
 	Move();
-	Walk_Animation();
+
+	Animation();
+
+	TransAxis();
 
 	_vec3	vLook;
 	m_pHeadWorld->Get_BeforeInfo(INFO_LOOK, &vLook);
+
+	CGameObject::Update_Object(fTimeDelta);
 
 	Engine::Add_RenderGroup(RENDER_NONALPHA, this);
 
@@ -42,29 +47,38 @@ _int CCubePlayer::Update_Object(const _float & fTimeDelta)
 
 void CCubePlayer::LateUpdate_Object(void)
 {
-	CGameObject::LateUpdate_Object();
 	if (!m_bJump)
 		Set_OnTerrain();
 
+	//TransAxis();
+
 	Look_Direction();
 
-	TransAxis();
-
 	Assemble();
-	
-	//cout << D3DXToDegree(m_fAngle) << endl;
+
+	Fire_Bullet();
+
+	//m_pHitBox->Get_MinMax(&m_vMin, &m_vMax);
+
+	//Get_HitboxMin(&vT1, &vT2);
+
+	//m_pCollision->Check_Collision();
+
+	//cout << m_vMin.x << " " << m_vMin.y << " " << m_vMin.z << "     " << m_vMax.x << " " << m_vMax.y << " " << m_vMax.z << endl;
+
+	CGameObject::LateUpdate_Object();
 }
 
 void CCubePlayer::Render_Object(void)
 {
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
+	/*m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DPMISCCAPS_CULLNONE);
 	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 
 	m_pHitBox->Render_Buffer();
 
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DPMISCCAPS_CULLCCW);
-	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);*/
 }
 
 void CCubePlayer::Set_OnTerrain(void)
@@ -118,33 +132,130 @@ void CCubePlayer::Assemble(void)
 	//cout << vBodyPos.y << endl;
 }
 
-void CCubePlayer::Walk_Animation(void)
+void CCubePlayer::Animation(void)
 {
 	if (Get_DIKeyState(DIK_W) || Get_DIKeyState(DIK_A) || Get_DIKeyState(DIK_S) || Get_DIKeyState(DIK_D) || Get_DIKeyState(DIK_SPACE) || Get_DIKeyState(DIK_LSHIFT))
 	{
-		if (m_fAngle > 0.6f)
+		if (m_fLeftArmAngle > 0.6f)
 			m_bWalkAngle = false;
-		if (m_fAngle < -0.6f)
+		if (m_fLeftArmAngle < -0.6f)
 			m_bWalkAngle = true;
 
 		if (m_bWalkAngle == true)
-			m_fAngle += m_fTimeDelta * 4;
+			m_fLeftArmAngle += m_fTimeDelta * 4.f;
 		else if (m_bWalkAngle == false)
-			m_fAngle -= m_fTimeDelta * 4;
+			m_fLeftArmAngle -= m_fTimeDelta * 4.f;
+
+		m_fRightArmAngle = -m_fLeftArmAngle;
+
+		if (m_fLeftLegAngle > 0.6f)
+			m_bWalkAngle_Leg = false;
+		if (m_fLeftLegAngle < -0.6f)
+			m_bWalkAngle_Leg = true;
+
+		if (m_bWalkAngle_Leg == true)
+			m_fLeftLegAngle += m_fTimeDelta * 4.f;
+		else if (m_bWalkAngle_Leg == false)
+			m_fLeftLegAngle -= m_fTimeDelta * 4.f;
+
+		m_fRightLegAngle = -m_fLeftLegAngle;
+
+		if (m_fHandAngle > -D3DX_PI / 2.f)
+			m_fHandAngle -= m_fTimeDelta * 4;
 	}
-	else if (m_fAngle != 0)
+	if (Get_DIMouseState(DIM_RB))//////////////////////////////////////////////////////////////////////
 	{
-		if (m_fAngle > 0)
+		m_fLeftArmAngle = D3DXToRadian(-90.f) + m_fDownAngle;
+		m_fRightArmAngle = D3DXToRadian(-90.f) + m_fDownAngle;
+		m_fHandAngle = 0.f;
+	}///////////////////////////////////////////////////////////////////////////////////////////////////
+	if(!(Get_DIKeyState(DIK_W)		|| 
+		Get_DIKeyState(DIK_A)		|| 
+		Get_DIKeyState(DIK_S)		|| 
+		Get_DIKeyState(DIK_D)		|| 
+		Get_DIKeyState(DIK_SPACE)	|| 
+		Get_DIKeyState(DIK_LSHIFT)	||
+		Get_DIMouseState(DIM_RB)))
+	{
+		//	¿ÞÆÈº¹±Í
+		if (m_fLeftArmAngle != 0.f)
 		{
-			m_fAngle -= m_fTimeDelta;
-			if (m_fAngle < 0)
-				m_fAngle = 0;
+			if (m_fLeftArmAngle > 0.f)
+			{
+				m_fLeftArmAngle -= D3DXToRadian(10.f);
+				if (m_fLeftArmAngle < 0.f)
+					m_fLeftArmAngle = 0.f;
+			}
+			else if (m_fLeftArmAngle < 0.f)
+			{
+				m_fLeftArmAngle += D3DXToRadian(10.f);
+				if (m_fLeftArmAngle > 0.f)
+					m_fLeftArmAngle = 0.f;
+			}
 		}
-		else if (m_fAngle < 0)
+		//	¿À¸¥ÆÈº¹±Í
+		if (m_fRightArmAngle != 0.f)
 		{
-			m_fAngle += m_fTimeDelta;
-			if (m_fAngle > 0)
-				m_fAngle = 0;
+			if (m_fRightArmAngle > 0.f)
+			{
+				m_fRightArmAngle -= D3DXToRadian(10.f);
+				if (m_fRightArmAngle < 0.f)
+					m_fRightArmAngle = 0.f;
+			}
+			else if (m_fRightArmAngle < 0.f)
+			{
+				m_fRightArmAngle += D3DXToRadian(10.f);
+				if (m_fRightArmAngle > 0.f)
+					m_fRightArmAngle = 0.f;
+			}
+		}
+		//	¿Þ´Ù¸®º¹±Í
+		if (m_fLeftLegAngle != 0.f)
+		{
+			if (m_fLeftLegAngle > 0.f)
+			{
+				m_fLeftLegAngle -= D3DXToRadian(10.f);
+				if (m_fLeftLegAngle < 0.f)
+					m_fLeftLegAngle = 0.f;
+			}
+			else if (m_fLeftLegAngle < 0.f)
+			{
+				m_fLeftLegAngle += D3DXToRadian(10.f);
+				if (m_fLeftLegAngle > 0.f)
+					m_fLeftLegAngle = 0.f;
+			}
+		}
+		//	¿À¸¥´Ù¸®º¹±Í
+		if (m_fRightLegAngle != 0.f)
+		{
+			if (m_fRightLegAngle > 0.f)
+			{
+				m_fRightLegAngle -= D3DXToRadian(10.f);
+				if (m_fRightLegAngle < 0.f)
+					m_fRightLegAngle = 0.f;
+			}
+			else if (m_fRightLegAngle < 0.f)
+			{
+				m_fRightLegAngle += D3DXToRadian(10.f);
+				if (m_fRightLegAngle > 0.f)
+					m_fRightLegAngle = 0.f;
+			}
+		}
+		//	¼Õ º¹±Í
+		if (m_fHandAngle != 0.f)
+		{
+			if (m_fHandAngle > 0.f)
+			{
+				m_fHandAngle -= D3DXToRadian(10.f);
+				if (m_fHandAngle < 0.f)
+					m_fHandAngle = 0.f;
+			}
+			else if (m_fHandAngle < 0.f)
+			{
+				m_fHandAngle += D3DXToRadian(10.f);
+				if (m_fHandAngle > 0.f)
+					m_fHandAngle = 0.f;
+			}
 		}
 	}
 }
@@ -155,52 +266,33 @@ void CCubePlayer::Move()
 
 	if (Get_DIKeyState(DIK_W))
 	{
-		m_pTransform->Get_Info(INFO_LOOK, &vDir);
-		m_pBodyWorld->Move_Pos(&(vDir * 10.f * m_fTimeDelta));
+		m_pBodyWorld->Get_Info(INFO_LOOK, &vDir);
+		m_pBodyWorld->Move_Pos(&(vDir * 30.f * m_fTimeDelta));
 	}
 	if (Get_DIKeyState(DIK_S))
 	{
-		m_pTransform->Get_Info(INFO_LOOK, &vDir);
-		m_pBodyWorld->Move_Pos(&(vDir * -10.f * m_fTimeDelta));
+		m_pBodyWorld->Get_Info(INFO_LOOK, &vDir);
+		m_pBodyWorld->Move_Pos(&(vDir * -30.f * m_fTimeDelta));
 
 	}
 	if (Get_DIKeyState(DIK_A))
 	{
-		m_pTransform->Get_Info(INFO_RIGHT, &vDir);
-
-		if (m_fLookAngle < 0.4f)
-		{
-			m_fLookAngle += m_fTimeDelta * 5.f;
-			m_pBodyWorld->Rotation(ROT_Y, -(m_fTimeDelta * 5.f));
-		}
-
-		m_pBodyWorld->Move_Pos(&(vDir * -10.f * m_fTimeDelta));
+		m_pBodyWorld->Get_Info(INFO_RIGHT, &vDir);
+		m_pBodyWorld->Move_Pos(&(vDir * -30.f * m_fTimeDelta));
 	}
 	if (Get_DIKeyState(DIK_D))
 	{
-		m_pTransform->Get_Info(INFO_RIGHT, &vDir);
-
-		if (m_fLookAngle > -0.4f)
-		{
-			m_fLookAngle -= m_fTimeDelta * 5.f;
-			m_pBodyWorld->Rotation(ROT_Y, m_fTimeDelta * 5.f);
-		}
-
-		m_pBodyWorld->Move_Pos(&(vDir * 10.f * m_fTimeDelta));
+		m_pBodyWorld->Get_Info(INFO_RIGHT, &vDir);
+		m_pBodyWorld->Move_Pos(&(vDir * 30.f * m_fTimeDelta));
 	}
 
 	if (Get_DIKeyState(DIK_SPACE))
 	{
-		/*m_pBodyWorld->Get_Info(INFO_UP, &vDir);
-		m_pBodyWorld->Move_Pos(&(vDir * 10.f * m_fTimeDelta));*/
-
 		m_bJump = true;
 	}
 
 	if (Get_DIKeyState(DIK_LSHIFT))
 	{
-		/*m_pBodyWorld->Get_Info(INFO_UP, &vDir);
-		m_pBodyWorld->Move_Pos(&(vDir * -10.f * m_fTimeDelta));*/
 		m_bJump = false;
 	}
 }
@@ -214,26 +306,15 @@ void CCubePlayer::TransAxis(void)
 	m_pBodyWorld->Get_Info(INFO_POS, &vBefore);
 	m_pBodyWorld->Get_BeforeInfo(INFO_POS, &vAfter);
 
-	m_pLeftArmWorld->Rotation_Axis_Animation(-1.f, -1.5f, m_fAngle, -m_fLookAngle);
-	m_pRightArmWorld->Rotation_Axis_Animation(-1.f, 1.5f, -m_fAngle, -m_fLookAngle);
+	m_pLeftArmWorld->Rotation_Axis_Animation(-1.f, -1.5f, m_fLeftArmAngle, -m_fLookAngle);
+	m_pRightArmWorld->Rotation_Axis_Animation(-1.f, 1.5f, m_fRightArmAngle, -m_fLookAngle);
+	m_pLeftHandWorld->Rotation_Axis_Animation(-3.f, -1.5f, m_fLeftArmAngle, -m_fLookAngle, -1.f, m_fHandAngle);
+	m_pRightHandWorld->Rotation_Axis_Animation(-3.f, 1.5f, m_fRightArmAngle, -m_fLookAngle, -1.f, m_fHandAngle);
 
-	m_pLeftLegWorld->Rotation_Axis_Animation(-1.f, -0.5f, -m_fAngle, -m_fLookAngle);
-	m_pRightLegWorld->Rotation_Axis_Animation(-1.f, 0.5f, m_fAngle, -m_fLookAngle);
-
-	if(vBefore == vAfter)	//	ÀÌµ¿»óÅÂ°¡ 
-	{
-		m_pLeftHandWorld->Rotation_Axis_Animation(-3.f, -1.5f, m_fAngle, -m_fLookAngle);
-		m_pRightHandWorld->Rotation_Axis_Animation(-3.f, 1.5f, -m_fAngle, -m_fLookAngle);
-		m_pLeftFootWorld->Rotation_Axis_Animation(-3.f, -0.5f, -m_fAngle, -m_fLookAngle);
-		m_pRightFootWorld->Rotation_Axis_Animation(-3.f, 0.5f, m_fAngle, -m_fLookAngle);
-	}
-	else
-	{
-		m_pLeftHandWorld->Rotation_Axis_Animation(-3.f, -1.5f, m_fAngle, -m_fLookAngle, -1.f, -D3DX_PI / 2.f);
-		m_pRightHandWorld->Rotation_Axis_Animation(-3.f, 1.5f, -m_fAngle, -m_fLookAngle, -1.f, -D3DX_PI / 2.f);
-		m_pLeftFootWorld->Rotation_Axis_Animation(-3.f, -0.5f, -m_fAngle, -m_fLookAngle, -1.f, fabs(m_fAngle));
-		m_pRightFootWorld->Rotation_Axis_Animation(-3.f, 0.5f, m_fAngle, -m_fLookAngle, -1.f, fabs(m_fAngle));
-	}
+	m_pLeftLegWorld->Rotation_Axis_Animation(-1.f, -0.5f, m_fLeftLegAngle, -m_fLookAngle);
+	m_pRightLegWorld->Rotation_Axis_Animation(-1.f, 0.5f, m_fRightLegAngle, -m_fLookAngle);
+	m_pLeftFootWorld->Rotation_Axis_Animation(-3.f, -0.5f, m_fLeftLegAngle, -m_fLookAngle, -1.f, fabs(m_fLeftLegAngle));
+	m_pRightFootWorld->Rotation_Axis_Animation(-3.f, 0.5f, m_fRightLegAngle, -m_fLookAngle, -1.f, fabs(m_fRightLegAngle));
 }
 
 void CCubePlayer::Look_Direction(void)
@@ -244,29 +325,50 @@ void CCubePlayer::Look_Direction(void)
 	m_pHeadWorld->Get_BeforeInfo(INFO_LOOK, &vHead);
 	m_pBodyWorld->Get_BeforeInfo(INFO_LOOK, &vBody);
 
-	m_pBodyWorld->Set_Info(INFO_LOOK, &vHead);
+	_long MoveX = Get_DIMouseMove(DIMS_X);
+	_long MoveY = Get_DIMouseMove(DIMS_Y);
+	_long MoveZ = Get_DIMouseMove(DIMS_Z);
 
-	/*vHead.y = 0.f;
-	vBody.y = 0.f;
+	m_pBodyWorld->Rotation(ROT_Y, D3DXToRadian(MoveX / 10.f));
+	m_fLookAngle -= D3DXToRadian(MoveX / 10.f);
 
-	D3DXVec3Normalize(&vHead, &vHead);
-	D3DXVec3Normalize(&vBody, &vBody);
+	m_fDownAngle += D3DXToRadian(MoveY / 10.f);
+}
 
-	float fDot = D3DXVec3Dot(&vHead, &vBody);
-	float fDiagonal = acosf(fDot);
-
-	cout << D3DXToDegree(fDiagonal) << endl;
-
-	if (vHead.x > vBody.x)
+void CCubePlayer::Fire_Bullet(void)
+{
+	if (Get_DIMouseState(DIM_RB))
 	{
-		m_pBodyWorld->Rotation(ROT_Y, fDiagonal);
-		m_fLookAngle -= fDiagonal;
+		FAILED_CHECK_RETURN(Get_BodyTransform(), );
+
+		_vec3	vSrcPos;
+		CTransform*	pMuzzle = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Gun", L"Uzi_Part_1_1", L"Proto_TransformCom", ID_STATIC));
+		NULL_CHECK(pMuzzle);
+		pMuzzle->Get_BeforeInfo(INFO_POS, &vSrcPos);
+		CTransform* pTargetTrans = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_GameLogic", L"TestPlayer0", L"Proto_TransformCom", ID_DYNAMIC));
+		NULL_CHECK(pTargetTrans);
+		CCubeTex* pTestPlayer = dynamic_cast<CCubeTex*>(Engine::Get_Component(L"Layer_GameLogic", L"TestPlayer0", L"Proto_CubeTexCom", ID_STATIC));
+		NULL_CHECK(pTestPlayer);
+
+	/*	_vec3	vEye;
+		_matrix	matView;
+		m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
+		D3DXMatrixInverse(&matView, nullptr, &matView);
+		vEye = { matView.m[3][0], matView.m[3][1], matView.m[3][2] };
+		D3DXVec3Normalize(&vEye, &vEye);
+		cout << vEye.x << " " << vEye.y << " " << vEye.z << endl;*/
+
+		_vec3	vPos;
+		m_pHeadWorld->Get_BeforeInfo(INFO_POS, &vPos);
+
+		if (Get_DIMouseState(DIM_LB))
+		{
+			if (m_pCalculatorCom->Peek_Cube_Target(g_hWnd, &_vec3(0, 0, 0) , pTestPlayer, pTargetTrans))
+			{
+				cout << "AAAAAAAAAAAAAAAAAA" << endl;
+			}
+		}
 	}
-	else if (vHead.x < vBody.x)
-	{
-		m_pBodyWorld->Rotation(ROT_Y, -fDiagonal);
-		m_fLookAngle += fDiagonal;
-	}*/
 }
 
 void CCubePlayer::Jump(void)
@@ -468,6 +570,14 @@ HRESULT CCubePlayer::Add_Component(void)
 	pInstance = m_pHitBox = dynamic_cast<CHitBox*>(Engine::Clone_Proto(L"Proto_HitboxCom"));
 	NULL_CHECK_RETURN(pInstance, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_HitboxCom", pInstance });
+
+	pInstance = m_pCollision = dynamic_cast<CCollision*>(Engine::Clone_Proto(L"Proto_CollisionCom"));
+	NULL_CHECK_RETURN(pInstance, E_FAIL);
+	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_CollisionCom", pInstance });
+
+	pInstance = m_pCalculatorCom = dynamic_cast<CCalculator*>(Engine::Clone_Proto(L"Proto_CalculatorCom"));
+	NULL_CHECK_RETURN(pInstance, E_FAIL);
+	m_mapComponent[ID_STATIC].insert({ L"Proto_CalculatorCom", pInstance });
 
 	return S_OK;
 }

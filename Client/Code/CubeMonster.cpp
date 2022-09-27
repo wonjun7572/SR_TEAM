@@ -184,13 +184,13 @@ void CCubeMonster::Set_OnTerrain(void)
 
 void CCubeMonster::Assemble(void)
 {
-	FAILED_CHECK_RETURN(Get_BodyTransform());
+	FAILED_CHECK_RETURN(Get_BodyTransform(), );
 
 
 	m_pMbody->Get_Info(INFO_POS, &BodyPos);
 	m_pMhead->Set_Pos(BodyPos.x, BodyPos.y + 3.f, BodyPos.z);
 	m_pMleftArm->Set_Pos(BodyPos.x - 1.f, BodyPos.y + 0.65f, BodyPos.z + 1.f);
-	m_pMrightArm->Set_Pos(BodyPos.x + 1.f, BodyPos.y + 0.65, BodyPos.z + 1.f);
+	m_pMrightArm->Set_Pos(BodyPos.x + 1.f, BodyPos.y + 0.65f, BodyPos.z + 1.f);
 
 }
 

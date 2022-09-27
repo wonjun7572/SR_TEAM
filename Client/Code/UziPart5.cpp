@@ -36,7 +36,7 @@ void CUziPart5::LateUpdate_Object(void)
 void CUziPart5::Render_Object(void)
 {
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
-	m_pTexture->Set_Texture(71);
+	m_pTexture->Set_Texture(11);
 	m_pCube->Render_Buffer();
 }
 
@@ -54,7 +54,8 @@ HRESULT CUziPart5::Add_Component(void)
 
 	pInstance = m_pTransform = dynamic_cast<CTransform*>(Engine::Clone_Proto(L"Proto_TransformCom"));
 	NULL_CHECK_RETURN(pInstance, E_FAIL);
-	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_TransformCom", pInstance });
+	//m_mapComponent[ID_DYNAMIC].insert({ L"Proto_TransformCom", pInstance });
+	m_mapComponent[ID_STATIC].insert({ L"Proto_TransformCom", pInstance });
 
 
 	return S_OK;

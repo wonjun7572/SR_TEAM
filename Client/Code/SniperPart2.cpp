@@ -15,7 +15,7 @@ HRESULT CSniperPart2::Ready_Object(void)
 {
 
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
-	m_pTransform->Set_Scale(3.0f*1.5, .1f*1.5, .2f);
+	m_pTransform->Set_Scale(3.0f*1.5f, .1f*1.5f, .2f);
 
 	return S_OK;
 }

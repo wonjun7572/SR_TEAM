@@ -26,7 +26,7 @@ public:
 	HRESULT			Ready_Weapon(LPDIRECT3DDEVICE9 pGraphicDev, const _uint& iIndex);
 
 
-private:
+public:
 	virtual void Free(void);
 
 
