@@ -1,10 +1,5 @@
-<<<<<<< Updated upstream
 ﻿     ../Bin\Utility.lib 라이브러리 및 ../Bin\Utility.exp 개체를 생성하고 있습니다.
-=======
-﻿  LINK : ../Bin\Utility.dll을(를) 찾을 수 없거나 마지막 증분 링크에 의해 빌드되지 않았습니다. 전체 링크를 수행하고 있습니다.
-     ../Bin\Utility.lib 라이브러리 및 ../Bin\Utility.exp 개체를 생성하고 있습니다.
->>>>>>> Stashed changes
-  Utility.vcxproj -> C:\Users\DecoyZ\Desktop\SR_TEAM\Engine\Utility\Default\../Bin\Utility.dll
+  Utility.vcxproj -> C:\Users\sam51\Desktop\SR_TEAM\Engine\Utility\Default\../Bin\Utility.dll
   Utility.vcxproj -> ../Bin\Utility.pdb (Full PDB)
           1개 파일이 복사되었습니다.
           1개 파일이 복사되었습니다.
@@ -39,7 +34,6 @@
   .\Engine\Header\Hitbox.h
   .\Engine\Header\InputDev.h
   .\Engine\Header\InputMgr.h
-  .\Engine\Header\Interface.h
   .\Engine\Header\Layer.h
   .\Engine\Header\Light.h
   .\Engine\Header\LightMgr.h
@@ -47,7 +41,6 @@
   .\Engine\Header\MyFont.h
   .\Engine\Header\ProtoMgr.h
   .\Engine\Header\RcCol.h
-  .\Engine\Header\RcRD.h
   .\Engine\Header\RcTex.h
   .\Engine\Header\Renderer.h
   .\Engine\Header\Scene.h
@@ -60,4 +53,4 @@
   .\Engine\Header\Transform.h
   .\Engine\Header\TriCol.h
   .\Engine\Header\VIBuffer.h
-         52개 파일이 복사되었습니다.
+         50개 파일이 복사되었습니다.

@@ -4,9 +4,7 @@
 #include "Export_Function.h"
 
 #include "Wall.h"
-#include "Uzi.h"
-#include "Shotgun.h"
-#include "Sniper.h"
+
 #include "CubePlayer.h"
 #include "CubeHead.h"
 #include "CubeBody.h"
@@ -15,9 +13,6 @@
 #include "CubeFoot.h"
 #include "CubeHand.h"
 
-<<<<<<< Updated upstream
-#include "ImguiMgr.h"
-=======
 
 
 #include "CubeMonster.h"
@@ -28,10 +23,9 @@
 #include "Uzi.h"
 #include "Shotgun.h"
 #include "Sniper.h"
-#include "PI_Default.h"
+
 
 //#include "ImguiMgr.h"
->>>>>>> Stashed changes
 
 CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CScene(pGraphicDev)
@@ -60,10 +54,7 @@ HRESULT CStage::Ready_Scene(void)
 
 	FAILED_CHECK_RETURN(Ready_Layer_Wall(L"Layer_Wall"), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Layer_Character(L"Layer_Character"), E_FAIL);
-<<<<<<< Updated upstream
-=======
-	//FAILED_CHECK_RETURN(Ready_Layer_Monster(L"Layer_Monster"), E_FAIL);
->>>>>>> Stashed changes
+	FAILED_CHECK_RETURN(Ready_Layer_Monster(L"Layer_Monster"), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Layer_Bullet(L"Layer_Bullet"), E_FAIL);
 
 	// 툴을 위한 레이어 생성
@@ -106,7 +97,7 @@ HRESULT CStage::Ready_Layer_Environment(const _tchar * pLayerTag)
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"DynamicCamera", pGameObject), E_FAIL);
 	m_pCam = dynamic_cast<CDynamicCamera*>(pGameObject);*/
 	
-	// StaticCamera	
+	// StaticCamera
 	pGameObject = CStaticCamera::Create(m_pGraphicDev, &_vec3(0.f, 20.f, -10.f), &_vec3(0.f, 0.f, 0.f), &_vec3(0.f, 1.f, 0.f));
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"StaticCamera", pGameObject), E_FAIL);
@@ -132,20 +123,13 @@ HRESULT CStage::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 {
 	Engine::CLayer*		pLayer = Engine::CLayer::Create();
 	NULL_CHECK_RETURN(pLayer, E_FAIL);
+
 	CGameObject*		pGameObject = nullptr;
 
-<<<<<<< Updated upstream
-	// 테스트 플레이어로 테스트중
-=======
-	pGameObject = CPI_Default::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"TestPlayer1234", pGameObject), E_FAIL);
-
->>>>>>> Stashed changes
 	pGameObject = CUzi::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"TestPlayer", pGameObject), E_FAIL);
-	
+
 	pGameObject = CShotgun::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"TestPlayer2", pGameObject), E_FAIL);
@@ -236,6 +220,40 @@ HRESULT CStage::Ready_Layer_Character(const _tchar * pLayerTag)
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"PLAYER", pGameObject), E_FAIL);
 
 #pragma endregion 큐브 플레이어 잠가 놓았음 툴때문에 
+	m_mapLayer.insert({ pLayerTag, pLayer });
+
+	return S_OK;
+}
+
+HRESULT CStage::Ready_Layer_Monster(const _tchar * pLayerTag)
+{
+	Engine::CLayer*		pLayer = Engine::CLayer::Create();
+	NULL_CHECK_RETURN(pLayer, E_FAIL);
+
+	CGameObject*		pGameObject = nullptr;
+
+	pGameObject = CCubeMonsterArm::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"M_LeftArm", pGameObject), E_FAIL);
+
+	pGameObject = CCubeMonsterArm::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"M_RighrArm", pGameObject), E_FAIL);
+
+	pGameObject = CCubeMonsterBody::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"M_Body", pGameObject), E_FAIL);
+
+	pGameObject = CCubeMonsterHead::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"M_Head", pGameObject), E_FAIL);
+
+
+
+	pGameObject = CCubeMonster::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"CubeMonster", pGameObject), E_FAIL);
+
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
 	return S_OK;

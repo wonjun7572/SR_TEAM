@@ -29,7 +29,7 @@ private:
 private:
 	CRcTex*				m_pBufferCom = nullptr;
 	CTexture*			m_pTextureCom = nullptr;
-
+	CTransform*			m_pTransformCom = nullptr;
 public:
 	static CBackGround*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
 

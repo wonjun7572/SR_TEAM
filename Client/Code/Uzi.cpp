@@ -110,8 +110,9 @@ void CUzi::Assemble(void)
 {
 	FAILED_CHECK_RETURN(Get_Parts(),  );
 
-
 	_vec3 vBodyPos;
+	
+	// »çÀÌÁî
 	m_pPart5->Set_Pos(10.f, 2.f, 10.f);
 	m_pPart5->Get_BeforeInfo(INFO_POS, &vBodyPos);
 
