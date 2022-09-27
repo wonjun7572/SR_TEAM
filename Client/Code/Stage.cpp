@@ -13,8 +13,6 @@
 #include "CubeFoot.h"
 #include "CubeHand.h"
 
-
-
 #include "CubeMonster.h"
 #include "CubeMonsterArm.h"
 #include "CubeMonsterBody.h"
@@ -24,6 +22,9 @@
 #include "Shotgun.h"
 #include "Sniper.h"
 
+#include "HealthPotion.h"
+#include "PlayerUI.h"
+#include "PlayerFaceUI.h"
 
 //#include "ImguiMgr.h"
 
@@ -143,6 +144,14 @@ HRESULT CStage::Ready_Layer_UI(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pLayer, E_FAIL);
 
 	CGameObject*		pGameObject = nullptr;
+
+	pGameObject = CPlayerUI::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"PlayerUI", pGameObject), E_FAIL);
+
+	pGameObject = CPlayerFaceUI::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"PlayerFaceUI", pGameObject), E_FAIL);
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
