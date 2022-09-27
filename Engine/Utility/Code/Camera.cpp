@@ -37,5 +37,7 @@ HRESULT Engine::CCamera::Ready_Object(void)
 	D3DXMatrixPerspectiveFovLH(&m_matProj, m_fFov, m_fAspect, m_fNear, m_fFar);
 	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &m_matProj);
 
+	
+
 	return S_OK;
 }

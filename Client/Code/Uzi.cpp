@@ -120,7 +120,6 @@ void CUzi::Assemble(void)
 	m_pPart2->Set_Pos(vBodyPos.x -.2f, vBodyPos.y +.6f, vBodyPos.z);
 	m_pPart3->Set_Pos(vBodyPos.x -.6f, vBodyPos.y + .2f, vBodyPos.z);
 	m_pPart4->Set_Pos(vBodyPos.x -.1f, vBodyPos.y + .4f, vBodyPos.z);
-	
 	//cout << vBodyPos.y << endl;
 }
 

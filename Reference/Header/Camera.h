@@ -19,7 +19,7 @@ public:
 	// 뷰, 투영 행렬 반환 함수
 	_matrix GetView() const { return m_matView; }
 	_matrix GetProj() const { return m_matProj; }
-
+	
 protected:
 	_vec3		m_vEye, m_vAt, m_vUp;
 	_float		m_fFov, m_fAspect, m_fNear, m_fFar;

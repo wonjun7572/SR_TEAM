@@ -53,8 +53,6 @@ HRESULT CVIBuffer::Ready_Buffer(void)
 												&m_pIB,						// 생성할 버텍스 버퍼 컴객체	
 												nullptr)))
 												return E_FAIL;
-	
-
 
 	return S_OK;
 }
