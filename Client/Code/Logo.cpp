@@ -24,10 +24,6 @@ HRESULT CLogo::Ready_Scene(void)
 	FAILED_CHECK_RETURN(Ready_Proto(), E_FAIL);
 
 	FAILED_CHECK_RETURN(Ready_Layer_Environment(L"Ready_Layer_Environment"), E_FAIL);
-
-	//// 로딩 클래스 생성
-	//m_pLoading = CLoading::Create(m_pGraphicDev, LOADING_STAGE);
-	//NULL_CHECK_RETURN(m_pLoading, E_FAIL);
 		
 	return S_OK;
 }
@@ -43,27 +39,6 @@ Engine::_int CLogo::Update_Scene(const _float& fTimeDelta)
 		FAILED_CHECK_RETURN(Engine::Set_Scene(pScene), E_FAIL);
 		return 0;
 	}
-
-		/*if (Get_DIKeyState(DIK_1) & 0x8000)
-		{
-			CScene*		pScene = CStage::Create(m_pGraphicDev);
-			NULL_CHECK_RETURN(pScene, E_FAIL);
-
-			FAILED_CHECK_RETURN(Engine::Set_Scene(pScene), E_FAIL);
-
-			return 0;
-		}
-
-		if (Get_DIKeyState(DIK_2) & 0x8000)
-		{
-			CScene*		pToolScene = CToolScene::Create(m_pGraphicDev);
-			NULL_CHECK_RETURN(pToolScene, E_FAIL);
-
-			FAILED_CHECK_RETURN(Engine::Set_Scene(pToolScene), E_FAIL);
-
-			return 0;
-		}*/
-	
 
 	return iResult;
 }
@@ -84,11 +59,9 @@ HRESULT CLogo::Ready_Layer_Environment(const _tchar * pLayerTag)
 	Engine::CLayer*		pLayer = Engine::CLayer::Create();
 	NULL_CHECK_RETURN(pLayer, E_FAIL);
 
-
 	CGameObject*		pGameObject = nullptr;
 
 	// backGround
-
 	pGameObject = CBackGround::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"BackGround", pGameObject), E_FAIL);
@@ -104,7 +77,6 @@ HRESULT CLogo::Ready_Layer_Environment(const _tchar * pLayerTag)
 	pGameObject = COptionButton::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"OptionButton", pGameObject), E_FAIL);
-
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 

@@ -63,6 +63,8 @@ private:
 	CHitBox*		m_pHitBox = nullptr;
 
 private:
+	ABILITY*		m_tAbility = nullptr;
+
 	_float			m_fLookAngle = 0.f;
 
 	_float			m_fAngle = 0.f;

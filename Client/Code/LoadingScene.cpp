@@ -49,10 +49,6 @@ _int CLoadingScene::Update_Scene(const _float & fTimeDelta)
 	return 0;
 	}*/
 
-
-
-
-
 	if (true == m_pLoading->Get_Finish())
 	{
 		if (Get_DIKeyState(DIK_1) & 0x8000)

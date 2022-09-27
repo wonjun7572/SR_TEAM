@@ -87,14 +87,13 @@ void CCubeMonster::Set_OnTerrain(void)
 
 void CCubeMonster::Assemble(void)
 {
-	FAILED_CHECK_RETURN(Get_BodyTransform());
+	FAILED_CHECK_RETURN(Get_BodyTransform(), );
 
 	_vec3 BodyPos;
 	m_pMbody->Get_BeforeInfo(INFO_POS, &BodyPos);
 	m_pMhead->Set_Pos(BodyPos.x, BodyPos.y + 3.f, BodyPos.z);
 	m_pMleftArm->Set_Pos(BodyPos.x - 1.f, BodyPos.y + 0.65f, BodyPos.z + 1.f);
-	m_pMrightArm->Set_Pos(BodyPos.x + 1.f, BodyPos.y + 0.65, BodyPos.z + 1.f);
-
+	m_pMrightArm->Set_Pos(BodyPos.x + 1.f, BodyPos.y + 0.65f, BodyPos.z + 1.f);
 }
 
 HRESULT CCubeMonster::Get_BodyTransform(void)
@@ -113,9 +112,6 @@ HRESULT CCubeMonster::Get_BodyTransform(void)
 	m_pMhead = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Monster", L"M_Head", L"Proto_TransformCom", ID_DYNAMIC));
 	NULL_CHECK_RETURN(m_pMhead, E_FAIL);
 
-
-
-
 	return S_OK;
 }
 
@@ -123,7 +119,6 @@ HRESULT CCubeMonster::Get_BodyTransform(void)
 
 CCubeMonster * CCubeMonster::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
-
 	CCubeMonster* pInstance = new CCubeMonster(pGraphicDev);
 
 	if (FAILED(pInstance->Ready_Object()))
