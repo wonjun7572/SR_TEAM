@@ -33,9 +33,17 @@ _int CCubeMonsterBody::Update_Object(const _float & fTimeDelta)
 }
 
 void CCubeMonsterBody::LateUpdate_Object(void)
-{
+{	
+	/*CTransform*		pPlayerTransformCom = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Character", L"BODY", L"Proto_TransformCom", ID_DYNAMIC));
+	NULL_CHECK(pPlayerTransformCom);
+	
 
-	CGameObject::LateUpdate_Object();
+	_vec3		vPlayerPos;
+	pPlayerTransformCom->Get_Info(INFO_POS, &vPlayerPos);
+
+	m_pTransform->Chase_Target(&vPlayerPos, 1.f, 0.1f);
+
+	CGameObject::LateUpdate_Object();*/
 }
 
 void CCubeMonsterBody::Render_Object(void)
@@ -62,7 +70,7 @@ HRESULT CCubeMonsterBody::Add_component(void)
 
 	pComponent = m_pTransform = dynamic_cast<CTransform*>(Clone_Proto(L"Proto_TransformCom"));
 	NULL_CHECK_RETURN(m_pTransform, E_FAIL);
-	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_TransformCom", pComponent });
+	m_mapComponent[ID_STATIC].insert({ L"Proto_TransformCom", pComponent });
 
 	return S_OK;
 }

@@ -24,10 +24,7 @@ HRESULT CBackGround::Ready_Object(void)
 
 Engine::_int CBackGround::Update_Object(const _float& fTimeDelta)
 {
-	//m_pTransCom->m_vScale.x = 2.f;
-	//m_pTransCom->m_vScale.y = 2.f;
-
-	//m_pTransCom->m_vAngle.z = D3DXToRadian(45.f);
+	
 
 	Engine::CGameObject::Update_Object(fTimeDelta);
 

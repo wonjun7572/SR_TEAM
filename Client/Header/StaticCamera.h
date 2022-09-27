@@ -20,12 +20,13 @@ public:
 	virtual _int Update_Object(const _float& fTimeDelta) override;
 
 	virtual void LateUpdate_Object(void) override;
+	const _matrix* GetViewmatrix()  { return &m_matView; }
+	const _matrix* GetProjmatrix()  { return &m_matProj; }
 
 private:
 	void		Key_Input(const _float& fTimeDelta);
 	void		Target_Renewal(void);
 	void		Mouse_Fix();
-
 	void		Look_Taget(void);
 
 private:

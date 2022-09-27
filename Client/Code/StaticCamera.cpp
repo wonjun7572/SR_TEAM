@@ -52,7 +52,6 @@ Engine::_int CStaticCamera::Update_Object(const _float& fTimeDelta)
 
 void CStaticCamera::LateUpdate_Object(void)
 {
-
 	CCamera::LateUpdate_Object();
 }
 

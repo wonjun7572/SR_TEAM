@@ -37,8 +37,8 @@ HRESULT CDynamicCamera::Ready_Object(const _vec3* pEye,
 
 Engine::_int CDynamicCamera::Update_Object(const _float& fTimeDelta)
 {
-	Key_Input(fTimeDelta);
-
+	//Key_Input(fTimeDelta);
+	RightCamera(fTimeDelta);
 	_int iExit = CCamera::Update_Object(fTimeDelta);
 
 	return iExit;
@@ -184,3 +184,20 @@ void CDynamicCamera::Mouse_Fix(void)
 	ClientToScreen(g_hWnd, &pt);
 	SetCursorPos(pt.x, pt.y);
 }
+
+//다이나믹 카메라 로딩창에서 실행할것
+void CDynamicCamera::RightCamera(const _float& fTimeDelta)
+{
+
+	_matrix		matCamWorld;
+	D3DXMatrixInverse(&matCamWorld, nullptr, &m_matView);
+
+	_vec3		vRight;
+	memcpy(&vRight, &matCamWorld.m[0][0], sizeof(_vec3));
+
+	_vec3		vLength = *D3DXVec3Normalize(&vRight, &vRight)  * 2.f * fTimeDelta;
+	
+	m_vEye.y = m_fDistnace;
+	m_vEye -= vLength;
+}
+

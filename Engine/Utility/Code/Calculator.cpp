@@ -28,9 +28,11 @@ Engine::_float CCalculator::HeightOnTerrain(_vec3* pPos, const _vec3* pTerrainVt
 	const _ulong& dwCntX, const _ulong& dwCntZ, const _ulong& dwVtxItv)
 {
 	_ulong	dwIndex = _ulong(pPos->z / dwVtxItv) * dwCntX + _ulong(pPos->x / dwVtxItv);
+	// dwindex= 플레이어 포지션x * 129 + 플레이어포지션z* 129
 	_float	fWidth = (pPos->x - pTerrainVtxPos[dwIndex + dwCntX].x) / dwVtxItv;
+	// 플레이어 포지션x - 터레인버텍스포지션[dwIndex+129]의 X
 	_float	fHeight = (pTerrainVtxPos[dwIndex + dwCntX].z - pPos->z) / dwVtxItv;
-
+	// 터레인버텍스포지션[dwIndex+129] - 플레이어 포지션z
 	D3DXPLANE		Plane;
 
 	// 오른쪽 위 삼각형
@@ -52,7 +54,7 @@ Engine::_float CCalculator::HeightOnTerrain(_vec3* pPos, const _vec3* pTerrainVt
 	}
 
 	pPos->y = (-Plane.a * pPos->x - Plane.c * pPos->z - Plane.d) / Plane.b;
-
+	
 	return pPos->y;
 }
 

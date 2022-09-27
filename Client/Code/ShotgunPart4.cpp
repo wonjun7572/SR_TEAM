@@ -15,7 +15,7 @@ HRESULT CShotgunPart4::Ready_Object(void)
 {
 	
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
-	m_pTransform->Set_Scale(.8f*1.5f, .15f*1.5f, .2f);
+	m_pTransform->Set_Scale(.8f*1.5f, .15f*1.5f, .21f);
 	
 
 	return S_OK;
@@ -41,7 +41,7 @@ void CShotgunPart4::Render_Object(void)
 {
 
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
-	m_pTexture->Set_Texture(1);
+	m_pTexture->Set_Texture(45);
 	m_pCube->Render_Buffer();
 }
 

@@ -36,7 +36,7 @@ void CSniperPart1::LateUpdate_Object(void)
 void CSniperPart1::Render_Object(void)
 {
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
-	m_pTexture->Set_Texture(1);
+	m_pTexture->Set_Texture(28);
 	m_pCube->Render_Buffer();
 }
 

@@ -27,5 +27,10 @@ private:
 public:
 	static CCubeMonsterHead*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
 	virtual void Free(void);
+
+
+public:
+	_float fTimeDelta = 1.f;
+	_float m_Current = 1.f;
 };
 

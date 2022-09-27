@@ -24,6 +24,7 @@ private:
 	void		Key_Input(const _float& fTimeDelta);
 	void		Mouse_Move(void);
 	void		Mouse_Fix(void);
+	void		RightCamera(const _float& fTimeDelta);
 
 public:
 	static CDynamicCamera*		Create(LPDIRECT3DDEVICE9 pGraphicDev,
@@ -38,7 +39,7 @@ public:
 private:
 	_bool			m_bFix = false;
 	_bool			m_bCheck = true;
-
+	_float			m_fDistnace = 17.f;
 private:
 	virtual void Free(void) override;
 
