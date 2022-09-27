@@ -12,7 +12,6 @@ private:
 
 public:
 	void Collect_Obj(CGameObject* pObj);
-	//CGameObject* Reuse_Obj(LPDIRECT3DDEVICE9& pGraphicDev, const _vec3* vPos, const _vec3* vDir);
 	HRESULT Reuse_Obj(LPDIRECT3DDEVICE9& pGraphicDev, const _vec3* vPos, const _vec3* vDir);
 
 private:

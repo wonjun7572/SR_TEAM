@@ -6,6 +6,7 @@
 CCubePlayer::CCubePlayer(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
 {
+	ZeroMemory(&m_tAbility, sizeof(ABILITY));
 }
 
 CCubePlayer::~CCubePlayer()
@@ -17,6 +18,9 @@ HRESULT CCubePlayer::Ready_Object(void)
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
 	m_pTransform->Set_Scale(2.f, 5.f, 2.f);
+	m_tAbility = new ABILITY;
+	m_tAbility->iHp = 100;
+	m_tAbility->iDefence = 100;
 
 	ShowCursor(false);
 
@@ -525,7 +529,6 @@ void CCubePlayer::Key_Input(const _float & fTimeDelta)
 
 	//	m_pLeftArmWorld->Rotation_Axis_Y(-1.5f, m_fLookAngle);
 	//	m_pRightArmWorld->Rotation_Axis_Y(1.5f, m_fLookAngle);
-
 	//	m_pBodyWorld->Move_Pos(&(vDir * 10.f * fTimeDelta));
 	//	m_pHeadWorld->Move_Pos(&(vDir * 10.f * fTimeDelta));
 	//	//m_pLeftArmWorld->Move_Pos(&(vDir * 10.f * fTimeDelta));
@@ -537,7 +540,6 @@ void CCubePlayer::Key_Input(const _float & fTimeDelta)
 	//if (Get_DIKeyState(DIK_SPACE))
 	//{
 	//	m_pBodyWorld->Get_Info(INFO_UP, &vDir);
-
 	//	m_pBodyWorld->Move_Pos(&(vDir * 10.f * fTimeDelta));
 	//	m_pHeadWorld->Move_Pos(&(vDir * 10.f * fTimeDelta));
 	//	m_pLeftArmWorld->Move_Pos(&(vDir * 10.f * fTimeDelta));
@@ -549,7 +551,6 @@ void CCubePlayer::Key_Input(const _float & fTimeDelta)
 	//if (Get_DIKeyState(DIK_LSHIFT))
 	//{
 	//	m_pBodyWorld->Get_Info(INFO_UP, &vDir);
-
 	//	m_pBodyWorld->Move_Pos(&(vDir * -10.f * fTimeDelta));
 	//	m_pHeadWorld->Move_Pos(&(vDir * -10.f * fTimeDelta));
 	//	m_pLeftArmWorld->Move_Pos(&(vDir * -10.f * fTimeDelta));
@@ -594,5 +595,6 @@ CCubePlayer * CCubePlayer::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 
 void CCubePlayer::Free(void)
 {
+	Safe_Delete<ABILITY*>(m_tAbility);
 	CGameObject::Free();
 }

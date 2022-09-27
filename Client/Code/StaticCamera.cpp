@@ -75,16 +75,16 @@ CStaticCamera* CStaticCamera::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3*
 void CStaticCamera::Key_Input(const _float& fTimeDelta)
 {
 	// 마우스 휠을 통한 줌인 줌 아웃
-	if (m_fDistance > 1)
+	if (m_fDistance >= 1)
 	{
 		if (Get_DIMouseMove(DIMS_Z) > 0)
-			m_fDistance -= fTimeDelta * m_fSpeed;
+			m_fDistance -= fTimeDelta * m_fSpeed * 5.f;
 	}
 
-	if (m_fDistance < 20)
+	if (m_fDistance <= 20)
 	{
 		if (Get_DIMouseMove(DIMS_Z) < 0)
-			m_fDistance += fTimeDelta * m_fSpeed;
+			m_fDistance += fTimeDelta * m_fSpeed * 5.f;
 	}
 
 	// 카메라 축 회전 방향 제한해야함
@@ -92,10 +92,8 @@ void CStaticCamera::Key_Input(const _float& fTimeDelta)
 	//{
 	//	_vec3 vPlayerPos;
 	//	m_pPlayerTransform->Get_Info(INFO_POS, &vPlayerPos);
-
 	//	//if (Get_DIMouseMove(DIMS_Y) > 0)
 	//		m_fAngle += D3DXToRadian(180.f) * fTimeDelta;
-
 	//	/*if (Get_DIMouseMove(DIMS_Y) < 0)
 	//		m_fAngle += D3DXToRadian(180.f) * fTimeDelta;*/
 	//}

@@ -32,6 +32,11 @@ public:
 	virtual _int	Update_Object(const _float& fTimeDelta) override;
 	virtual void	LateUpdate_Object(void) override;
 	virtual void	Render_Object(void) override;
+
+public:
+	ABILITY*		Get_Ability() { return m_tAbility; }
+	void			Set_Damaged(_int iDamage) { m_tAbility->iHp -= iDamage; }
+
 private:
 	map<const _tchar*, CGameObject*>	m_mapPlayerBody;
 
@@ -58,6 +63,7 @@ private:
 
 private:
 	HRESULT			Add_Component(void);
+	ABILITY*		m_tAbility = nullptr;
 	CTransform*		m_pTransform = nullptr;
 
 	CTransform*		m_pHeadWorld = nullptr;
