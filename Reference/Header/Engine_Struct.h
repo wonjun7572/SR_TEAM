@@ -49,6 +49,47 @@ namespace Engine
 
 	}INDEX32;
 
+	typedef struct tagMonsterState
+	{
+		_int iLevel;
+		_float fCurrentHp;
+		_float fMaxHp;
+		_float fDamage;
+	}MONSTERABILITY;
+
+	typedef struct tagFrame
+	{
+		_uint		AnimationID;
+		_float		fFrameCnt;		//프레임 카운트
+		_float		fFrameMaxCnt;	//프레임 맥스 카운트
+		_float		fTimeScale;		//타임범위
+		_float		fWidth;			//넓이 
+		_float		fHeight;		//높이
+
+	}FRAME;
+
+	//typedef struct tagParticle
+	//{
+	//	_vec3		Position;
+	//	D3DCOLOR	Color;
+	//	_float		Size;
+	//	static const DWORD FVF_PARTICLE;
+	//}PARTICLE;
+	//const DWORD PARTICLE::FVF_PARTICLE = D3DFVF_XYZ | D3DFVF_DIFFUSE | D3DFVF_PSIZE;
+
+	//typedef	struct tagAttribute
+	//{
+	//	_vec3 Position;
+	//	_vec3 Velocity;
+	//	_vec3 Acceleration;
+	//	_float lifeTime;
+	//	_float Age;
+	//	D3DXCOLOR	Color;
+	//	D3DXCOLOR	ColorFade;
+	//	_bool		isAlive;
+	//}ATTRIBUTE;
+
+
 }
 
 

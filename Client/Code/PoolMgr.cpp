@@ -28,7 +28,7 @@ void CPoolMgr::Collect_Obj(CGameObject * pObj)
 
 	m_ObjectPool.push_back(pObj);
 
-	cout << "Collect : " << m_ObjectPool.size() << endl;
+	//cout << "Collect : " << m_ObjectPool.size() << endl;
 }
 
 HRESULT CPoolMgr::Reuse_Obj(LPDIRECT3DDEVICE9& pGraphicDev, const _vec3* vPos, const _vec3* vDir)
@@ -42,7 +42,7 @@ HRESULT CPoolMgr::Reuse_Obj(LPDIRECT3DDEVICE9& pGraphicDev, const _vec3* vPos, c
 
 		Engine::Get_Layer(L"Layer_Bullet")->Add_GameList(pObj);
 
-		cout << "EmptyPoolSize : " << m_ObjectPool.size() << endl;
+	//	cout << "EmptyPoolSize : " << m_ObjectPool.size() << endl;
 
 		/*TCHAR* szFinalName = new TCHAR[128];
 		wsprintf(szFinalName, L"");
@@ -71,7 +71,7 @@ HRESULT CPoolMgr::Reuse_Obj(LPDIRECT3DDEVICE9& pGraphicDev, const _vec3* vPos, c
 
 		Engine::Get_Layer(L"Layer_Bullet")->Add_GameList(pObj);
 
-		cout << " PoolSize : " << m_ObjectPool.size() << endl;
+	//	cout << " PoolSize : " << m_ObjectPool.size() << endl;
 
 		/*TCHAR* szFinalName = new TCHAR[128];
 		wsprintf(szFinalName, L"");
