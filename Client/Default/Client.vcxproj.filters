@@ -133,18 +133,6 @@
     <Filter Include="01. Scene\10. ToolScene">
       <UniqueIdentifier>{6425a67f-06c3-46ca-8288-402e1f0d0a5b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\01. For_Stage\07. CubeMonster">
-      <UniqueIdentifier>{a596968f-c820-4272-8aca-0ea8adc2bdfb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\01. For_Stage\07. CubeMonster\00. CubeMonsterArm">
-      <UniqueIdentifier>{d9dbb2dd-7560-4f37-ae4e-b638f32851cf}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\01. For_Stage\07. CubeMonster\01. CubeMonsterBody">
-      <UniqueIdentifier>{3b25c52f-f049-4e41-a3c0-ce9b88128439}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\01. For_Stage\07. CubeMonster\02. CubeMonsterHead">
-      <UniqueIdentifier>{80b7f2de-099d-4a91-a98a-0fa97e81f1b9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="01. Scene\02. LoadingScene">
       <UniqueIdentifier>{6dd69e23-a69e-4895-8e30-88c0cb658400}</UniqueIdentifier>
     </Filter>
@@ -159,6 +147,27 @@
     </Filter>
     <Filter Include="01. Scene\00. Logo\00. Button\02. OptionButton">
       <UniqueIdentifier>{71a91927-dfba-407f-8ca8-820d5a779386}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\08. Monster">
+      <UniqueIdentifier>{e8cd7a20-be14-4ffc-82a6-921f105af27a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\08. Monster\07. CubeMonster">
+      <UniqueIdentifier>{a596968f-c820-4272-8aca-0ea8adc2bdfb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\08. Monster\07. CubeMonster\00. CubeMonsterArm">
+      <UniqueIdentifier>{d9dbb2dd-7560-4f37-ae4e-b638f32851cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\08. Monster\07. CubeMonster\01. CubeMonsterBody">
+      <UniqueIdentifier>{3b25c52f-f049-4e41-a3c0-ce9b88128439}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\08. Monster\07. CubeMonster\02. CubeMonsterHead">
+      <UniqueIdentifier>{80b7f2de-099d-4a91-a98a-0fa97e81f1b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Scene\02. LoadingScene\01. LoadingScene">
+      <UniqueIdentifier>{7246b6e0-970c-49e8-9662-685760f5d99f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Scene\02. LoadingScene\02. MovieScene">
+      <UniqueIdentifier>{6e998195-b7fa-4745-9200-6ef903d83fd3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -358,19 +367,16 @@
       <Filter>01. Scene\10. ToolScene</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CubeMonster.h">
-      <Filter>02. GameObject\01. For_Stage\07. CubeMonster</Filter>
+      <Filter>02. GameObject\01. For_Stage\08. Monster\07. CubeMonster</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CubeMonsterArm.h">
-      <Filter>02. GameObject\01. For_Stage\07. CubeMonster\00. CubeMonsterArm</Filter>
+      <Filter>02. GameObject\01. For_Stage\08. Monster\07. CubeMonster\00. CubeMonsterArm</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CubeMonsterBody.h">
-      <Filter>02. GameObject\01. For_Stage\07. CubeMonster\01. CubeMonsterBody</Filter>
+      <Filter>02. GameObject\01. For_Stage\08. Monster\07. CubeMonster\01. CubeMonsterBody</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CubeMonsterHead.h">
-      <Filter>02. GameObject\01. For_Stage\07. CubeMonster\02. CubeMonsterHead</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\LoadingScene.h">
-      <Filter>01. Scene\02. LoadingScene</Filter>
+      <Filter>02. GameObject\01. For_Stage\08. Monster\07. CubeMonster\02. CubeMonsterHead</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\LoadBar.h">
       <Filter>01. Scene\02. LoadingScene\00. LoadBar</Filter>
@@ -380,6 +386,9 @@
     </ClInclude>
     <ClInclude Include="..\Header\OptionButton.h">
       <Filter>01. Scene\00. Logo\00. Button\02. OptionButton</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\LoadingScene.h">
+      <Filter>01. Scene\02. LoadingScene\01. LoadingScene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -561,19 +570,16 @@
       <Filter>01. Scene\10. ToolScene</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CubeMonster.cpp">
-      <Filter>02. GameObject\01. For_Stage\07. CubeMonster</Filter>
+      <Filter>02. GameObject\01. For_Stage\08. Monster\07. CubeMonster</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CubeMonsterArm.cpp">
-      <Filter>02. GameObject\01. For_Stage\07. CubeMonster\00. CubeMonsterArm</Filter>
+      <Filter>02. GameObject\01. For_Stage\08. Monster\07. CubeMonster\00. CubeMonsterArm</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CubeMonsterBody.cpp">
-      <Filter>02. GameObject\01. For_Stage\07. CubeMonster\01. CubeMonsterBody</Filter>
+      <Filter>02. GameObject\01. For_Stage\08. Monster\07. CubeMonster\01. CubeMonsterBody</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CubeMonsterHead.cpp">
-      <Filter>02. GameObject\01. For_Stage\07. CubeMonster\02. CubeMonsterHead</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\LoadingScene.cpp">
-      <Filter>01. Scene\02. LoadingScene</Filter>
+      <Filter>02. GameObject\01. For_Stage\08. Monster\07. CubeMonster\02. CubeMonsterHead</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\LoadBar.cpp">
       <Filter>01. Scene\02. LoadingScene\00. LoadBar</Filter>
@@ -583,6 +589,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\OptionButton.cpp">
       <Filter>01. Scene\00. Logo\00. Button\02. OptionButton</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\LoadingScene.cpp">
+      <Filter>01. Scene\02. LoadingScene\01. LoadingScene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

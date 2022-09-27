@@ -42,10 +42,18 @@ private:
 private:
 	_float CurrentLoading;
 	_float OriginLoading;
+	//로딩 비율 
+	_float LoadingRate;
+	_float LoadingBar;
 
-	_float LoadingBar
+
+	_bool	firstLoading = true;			//첫번쨰 로딩 시작시 
+
+	_float m_fNewHeight;
 
 
+	
+	RECT		m_tRect;
 public:
 
 	static CLoadBar* Create(LPDIRECT3DDEVICE9 pGraphicDev);

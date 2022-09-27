@@ -20,7 +20,7 @@ HRESULT COptionButton::Ready_Object(void)
 
 
 
-	m_pTransformCom->Set_Scale(0.1f, 0.1f, 0.f);
+	m_pTransformCom->Set_Scale(0.3f, 0.1f, 0.f);
 	m_pTransformCom->Set_Pos(0.65f, 0.45f, 0.f);
 	return S_OK;
 }

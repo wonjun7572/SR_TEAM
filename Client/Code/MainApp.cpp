@@ -4,7 +4,7 @@
 #include "ImGuiMgr.h"
 #include "Logo.h"
 #include "PoolMgr.h"
-
+#include "MovieScene.h"
 static bool show_transform_window = false;
 static bool show_gameobject_window = false;
 static bool show_save_window = false;		
@@ -118,16 +118,16 @@ HRESULT CMainApp::SetUp_DefaultSetting(LPDIRECT3DDEVICE9 * ppGraphicDev)
 	ImGui_ImplDX9_Init(m_pGraphicDev);
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
 
-//#ifdef _DEBUG
-//	if (::AllocConsole() == TRUE)
-//	{
-//		FILE* nfp[3];
-//		freopen_s(nfp + 0, "CONOUT$", "rb", stdin);
-//		freopen_s(nfp + 1, "CONOUT$", "wb", stdout);
-//		freopen_s(nfp + 2, "CONOUT$", "wb", stderr);
-//		std::ios::sync_with_stdio();
-//	}
-//#endif // _DEBUG
+#ifdef _DEBUG
+	if (::AllocConsole() == TRUE)
+	{
+		FILE* nfp[3];
+		freopen_s(nfp + 0, "CONOUT$", "rb", stdin);
+		freopen_s(nfp + 1, "CONOUT$", "wb", stdout);
+		freopen_s(nfp + 2, "CONOUT$", "wb", stderr);
+		std::ios::sync_with_stdio();
+	}
+#endif // _DEBUG
 
 	return S_OK;
 }

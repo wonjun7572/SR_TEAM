@@ -7,6 +7,9 @@ namespace Engine
 #define		WINCX		800
 #define		WINCY		600
 
+#define		NO_EVENT	0
+#define		CHANGE_EVENT 1
+
 #define		VTXCNTX		129
 #define		VTXCNTZ		129
 #define		VTXITV		1

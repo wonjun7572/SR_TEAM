@@ -22,6 +22,17 @@ HRESULT CLoadBar::Ready_Object()
 	m_pTransformCom->Set_Scale(0.5f, 0.1f, 0.f);
 	m_pTransformCom->Set_Pos(0.f, -0.5f, 0.f);
 
+	RECT rc{ m_tRect.left, m_tRect.top, m_tRect.left, m_tRect.bottom };
+	m_tRect.bottom = 0.05;
+	m_tRect.top = 0.05;
+	m_tRect.left = 0.5;
+	m_tRect.right = 0.5;
+
+	//로딩 비율값 구해주기 
+
+	LoadingRate = (CurrentLoading / OriginLoading);
+	m_fNewHeight = m_tRect.left + m_tRect.right;
+
 	return S_OK;
 }
 
@@ -50,6 +61,8 @@ void CLoadBar::Render_Object(void)
 	m_pRcTexCom->Render_Buffer();
 
 
+
+	
 }
 
 HRESULT CLoadBar::Add_Component(void)

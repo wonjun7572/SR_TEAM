@@ -52,7 +52,7 @@ void CCubePlayer::LateUpdate_Object(void)
 
 	Assemble();
 	
-	cout << D3DXToDegree(m_fAngle) << endl;
+	//cout << D3DXToDegree(m_fAngle) << endl;
 }
 
 void CCubePlayer::Render_Object(void)
