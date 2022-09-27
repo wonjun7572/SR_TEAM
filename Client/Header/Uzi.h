@@ -32,29 +32,6 @@ private:
 
 	void			Animation_Fire(void);						//	°È´Â ¸ð¼Ç
 	
-
-
-private:
-	CTransform*		m_pTransform = nullptr;	
-
-	CTransform*		m_pUziPart1 = nullptr;
-	CTransform*		m_pUziPart2 = nullptr;
-	CTransform*		m_pUziPart3 = nullptr;
-	CTransform*		m_pUziPart4 = nullptr;
-	CTransform*		m_pUziPart5 = nullptr;
-
-	CCalculator*	m_pCalculatorCom = nullptr;
-	CCubeTex*			m_pBufferCom = nullptr;
-	CTexture*			m_pTextureCom = nullptr;
-
-
-	_bool			m_bPartInit = false;
-	_float			m_fTimeDelta = 0.f;
-	_float			m_fUnit = 0.1f;
-
-	list<TCHAR*>		m_liszFinalName;
-
-	
 public:
 	static CUzi*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
 	virtual void Free(void);

@@ -14,7 +14,7 @@ CUziPart4::~CUziPart4()
 HRESULT CUziPart4::Ready_Object(void)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
-	m_pTransform->Set_Scale(.6f, .2f, .2f);
+	m_pTransform->Set_Scale(.7f, .2f, .21f);
 
 	return S_OK;
 }
@@ -35,7 +35,7 @@ void CUziPart4::LateUpdate_Object(void)
 void CUziPart4::Render_Object(void)
 {
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
-	m_pTexture->Set_Texture(0);
+	m_pTexture->Set_Texture(47);
 	m_pCube->Render_Buffer();
 }
 

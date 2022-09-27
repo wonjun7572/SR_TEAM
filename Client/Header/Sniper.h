@@ -30,9 +30,6 @@ private:
 
 	void			Animation_Fire(void);						//	°È´Â ¸ð¼Ç
 
-private:
-
-
 public:
 	static CSniper*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
 	virtual void Free(void);

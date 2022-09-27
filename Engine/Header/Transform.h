@@ -7,7 +7,7 @@ BEGIN(Engine)
 class ENGINE_DLL CTransform : public CComponent
 {
 public:
-	explicit CTransform(void);
+	explicit CTransform(LPDIRECT3DDEVICE9 pGraphicDev);
 	explicit CTransform(const CTransform& rhs);
 	virtual ~CTransform();
 
@@ -62,7 +62,7 @@ public:
 	_matrix			m_matWorld;
 
 public:
-	static CTransform*		Create(void);
+	static CTransform*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
 	virtual CComponent*	Clone(void);
 private:
 	virtual void Free(void);

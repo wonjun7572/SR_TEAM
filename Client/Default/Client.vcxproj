@@ -173,6 +173,15 @@
     <ClInclude Include="..\Header\Loading.h" />
     <ClInclude Include="..\Header\Logo.h" />
     <ClInclude Include="..\Header\MainApp.h" />
+<<<<<<< Updated upstream
+=======
+    <ClInclude Include="..\Header\MiniMap.h" />
+    <ClInclude Include="..\Header\OptionButton.h" />
+    <ClInclude Include="..\Header\PlayButton.h" />
+    <ClInclude Include="..\Header\PlayerInterface.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClInclude>
+>>>>>>> Stashed changes
     <ClInclude Include="..\Header\PoolMgr.h" />
     <ClInclude Include="..\Header\Shotgun.h" />
     <ClInclude Include="..\Header\ShotgunPart1.h" />
@@ -193,6 +202,9 @@
     <ClInclude Include="..\Header\TestMonster.h" />
     <ClInclude Include="..\Header\TestPlayer.h" />
     <ClInclude Include="..\Header\ToolScene.h" />
+    <ClInclude Include="..\Header\PI_Default.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="..\Header\Uzi.h" />
     <ClInclude Include="..\Header\UziPart1.h" />
     <ClInclude Include="..\Header\UziPart2.h" />
@@ -240,6 +252,15 @@
     <ClCompile Include="..\Code\Loading.cpp" />
     <ClCompile Include="..\Code\Logo.cpp" />
     <ClCompile Include="..\Code\MainApp.cpp" />
+<<<<<<< Updated upstream
+=======
+    <ClCompile Include="..\Code\MiniMap.cpp" />
+    <ClCompile Include="..\Code\OptionButton.cpp" />
+    <ClCompile Include="..\Code\PlayButton.cpp" />
+    <ClCompile Include="..\Code\PlayerInterface.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+>>>>>>> Stashed changes
     <ClCompile Include="..\Code\PoolMgr.cpp" />
     <ClCompile Include="..\Code\Shotgun.cpp" />
     <ClCompile Include="..\Code\ShotgunPart1.cpp" />
@@ -260,6 +281,9 @@
     <ClCompile Include="..\Code\TestMonster.cpp" />
     <ClCompile Include="..\Code\TestPlayer.cpp" />
     <ClCompile Include="..\Code\ToolScene.cpp" />
+    <ClCompile Include="..\Code\PI_Default.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\Code\Uzi.cpp" />
     <ClCompile Include="..\Code\UziPart1.cpp" />
     <ClCompile Include="..\Code\UziPart2.cpp" />
