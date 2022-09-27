@@ -51,8 +51,8 @@ public:
 	void  WindowLayOut(); // 맨처음 버튼
 	void  CreateObject(LPDIRECT3DDEVICE9 pGrahicDev, CScene* pScene, CCamera *pCam);// 오브젝트 생성
 	void  TerrainTool(LPDIRECT3DDEVICE9 pGrahicDev, CScene* pScene);				// Terrain Tool
-	void  Save_Transform(CScene* pScene);											// 큐브 오브젝트 저장
-	void  Load_Transform(LPDIRECT3DDEVICE9 pGrahicDev, CScene *pScene);				// 큐브 오브젝트 로드
+	void  Save_Transform(CScene* pScene, wstring strDirectory = L"../../Data/Map.dat");											// 큐브 오브젝트 저장
+	void  Load_Transform(LPDIRECT3DDEVICE9 pGrahicDev, CScene *pScene, wstring strDirectory = L"../../Data/Map.dat");				// 큐브 오브젝트 로드
 
 private:
 	// Map_Tool 변수

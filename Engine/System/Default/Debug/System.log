@@ -1,5 +1,5 @@
 ﻿     ../Bin\System.lib 라이브러리 및 ../Bin\System.exp 개체를 생성하고 있습니다.
-  System.vcxproj -> C:\Users\beoms\OneDrive\문서\GitHub\SR_TEAM\Engine\System\Default\../Bin\System.dll
+  System.vcxproj -> C:\Users\sam51\Desktop\SR_TEAM\Engine\System\Default\../Bin\System.dll
   System.vcxproj -> ../Bin\System.pdb (Full PDB)
           1개 파일이 복사되었습니다.
           1개 파일이 복사되었습니다.
@@ -34,6 +34,7 @@
   .\Engine\Header\Hitbox.h
   .\Engine\Header\InputDev.h
   .\Engine\Header\InputMgr.h
+  .\Engine\Header\Interface.h
   .\Engine\Header\Layer.h
   .\Engine\Header\Light.h
   .\Engine\Header\LightMgr.h
@@ -41,6 +42,7 @@
   .\Engine\Header\MyFont.h
   .\Engine\Header\ProtoMgr.h
   .\Engine\Header\RcCol.h
+  .\Engine\Header\RcRD.h
   .\Engine\Header\RcTex.h
   .\Engine\Header\Renderer.h
   .\Engine\Header\Scene.h
@@ -53,4 +55,4 @@
   .\Engine\Header\Transform.h
   .\Engine\Header\TriCol.h
   .\Engine\Header\VIBuffer.h
-         50개 파일이 복사되었습니다.
+         52개 파일이 복사되었습니다.

@@ -4,8 +4,9 @@
 
 USING(Engine)
 
-CTransform::CTransform()
-	: m_vScale(1.f, 1.f, 1.f)
+CTransform::CTransform(LPDIRECT3DDEVICE9 pGraphicDev)
+	: CComponent(pGraphicDev)
+	, m_vScale(1.f, 1.f, 1.f)
 	, m_vAngle(0.f, 0.f, 0.f)
 {
 	ZeroMemory(m_vInfo, sizeof(m_vInfo));
@@ -230,9 +231,9 @@ _int CTransform::Update_Component(const _float & fTimeDelta)
 	return 0;
 }
 
-CTransform * CTransform::Create(void)
+CTransform * CTransform::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
-	CTransform* pInstance = new CTransform;
+	CTransform* pInstance = new CTransform(pGraphicDev);
 	if (FAILED(pInstance->Ready_Transform()))
 	{
 		Safe_Release(pInstance);

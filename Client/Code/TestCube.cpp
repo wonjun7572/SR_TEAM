@@ -11,25 +11,27 @@ CTestCube::CTestCube(const CGameObject& rhs) : CGameObject(rhs)
 {
 }
 
+CTestCube::~CTestCube()
+{
+}
+
 HRESULT CTestCube::Ready_Object(int PosX, int PosY)
 {
-
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
 	if (PosX == 0 && PosY == 0) {}
 	else
-	{
-		Set_TransformPositon();
-	}
+	{ Set_TransformPositon(); }
+	
 	_vec3 vScale = { 0.5f,0.5f,0.5f };
 	m_pTransCom->Set_Scale(&vScale);
+
 	return S_OK;
 }
 
 _int CTestCube::Update_Object(const _float& fTimeDelta)
 {
 	CGameObject::Update_Object(fTimeDelta);
-
 	Add_RenderGroup(RENDER_PRIORITY, this);
 	return 0;
 }
@@ -103,5 +105,10 @@ CTestCube* CTestCube::Create(LPDIRECT3DDEVICE9 pGraphicDev, int Posx, int Posy)
 	}
 
 	return pInstance;
+}
+
+void CTestCube::Free()
+{
+	CGameObject::Free();
 }
 

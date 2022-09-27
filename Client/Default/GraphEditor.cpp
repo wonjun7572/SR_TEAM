@@ -303,7 +303,7 @@ static void HandleQuadSelection(Delegate& delegate, ImDrawList* drawList, const 
         {
             if (!io.KeyCtrl && !io.KeyShift)
             {
-                for (size_t nodeIndex = 0; nodeIndex < nodeCount; nodeIndex++)
+                for (size_t nodeIndex = 0; nodeIndex < int(nodeCount); nodeIndex++)
                 {
                     delegate.SelectNode(nodeIndex, false);
                 }
@@ -311,7 +311,7 @@ static void HandleQuadSelection(Delegate& delegate, ImDrawList* drawList, const 
 
             nodeOperation = NO_None;
             ImRect selectionRect(bmin, bmax);
-            for (int nodeIndex = 0; nodeIndex < nodeCount; nodeIndex++)
+            for (int nodeIndex = 0; nodeIndex < int(nodeCount); nodeIndex++)
             {
                 const auto node = delegate.GetNode(nodeIndex);
                 ImVec2 nodeRectangleMin = offset + node.mRect.Min * factor;
@@ -457,7 +457,7 @@ static bool HandleConnections(ImDrawList* drawList,
                         break;
                     }
                     bool alreadyExisting = false;
-                    for (size_t linkIndex = 0; linkIndex < linkCount; linkIndex++)
+                    for (size_t linkIndex = 0; linkIndex < int(linkCount); linkIndex++)
                     {
                         const auto link = delegate.GetLink(linkIndex);
                         if (!memcmp(&link, &nl, sizeof(Link)))
@@ -469,7 +469,7 @@ static bool HandleConnections(ImDrawList* drawList,
 
                     if (!alreadyExisting)
                     {
-                        for (int linkIndex = 0; linkIndex < linkCount; linkIndex++)
+                        for (int linkIndex = 0; linkIndex < int(linkCount); linkIndex++)
                         {
                             const auto link = delegate.GetLink(linkIndex);
                             if (link.mOutputNodeIndex == nl.mOutputNodeIndex && link.mOutputSlotIndex == nl.mOutputSlotIndex)
@@ -497,7 +497,7 @@ static bool HandleConnections(ImDrawList* drawList,
                 if (editingInput)
                 {
                     // remove existing link
-                    for (int linkIndex = 0; linkIndex < linkCount; linkIndex++)
+                    for (int linkIndex = 0; linkIndex < int(linkCount); linkIndex++)
                     {
                         const auto link = delegate.GetLink(linkIndex);
                         if (link.mOutputNodeIndex == nodeIndex && link.mOutputSlotIndex == closestConn)

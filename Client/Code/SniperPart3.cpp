@@ -15,7 +15,7 @@ HRESULT CSniperPart3::Ready_Object(void)
 {
 
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
-	m_pTransform->Set_Scale(1.3f*1.5, .3f*1.5, .2f);
+	m_pTransform->Set_Scale(1.4f*1.5, .3f*1.5, .21f);
 
 	return S_OK;
 }
@@ -36,7 +36,7 @@ void CSniperPart3::LateUpdate_Object(void)
 void CSniperPart3::Render_Object(void)
 {
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
-	m_pTexture->Set_Texture(1);
+	m_pTexture->Set_Texture(28);
 	m_pCube->Render_Buffer();
 }
 

@@ -113,7 +113,7 @@ void CShotgun::Assemble(void)
 
 	m_pPart1->Set_Pos(vBodyPos.x - 1.8f*1.5, vBodyPos.y + 0.4f*1.5, vBodyPos.z);
 	m_pPart2->Set_Pos(vBodyPos.x - 0.8f*1.5, vBodyPos.y + 0.2f*1.5, vBodyPos.z);
-	m_pPart3->Set_Pos(vBodyPos.x - 0.6f*1.5, vBodyPos.y + 0.075f*1.5, vBodyPos.z);
+	m_pPart3->Set_Pos(vBodyPos.x - 0.5f*1.5, vBodyPos.y + 0.075f*1.5, vBodyPos.z);
 
 	//
 	//cout << vBodyPos.y << endl;
