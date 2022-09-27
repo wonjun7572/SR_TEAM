@@ -7,7 +7,7 @@ BEGIN(Engine)
 class ENGINE_DLL CTransform : public CComponent
 {
 public:
-	explicit CTransform(void);
+	explicit CTransform(LPDIRECT3DDEVICE9 pGraphicDev);
 	explicit CTransform(const CTransform& rhs);
 	virtual ~CTransform();
 
@@ -23,7 +23,19 @@ public:
 	void				Rotation_Axis_Animation(const _float& fXMove, const _float& fYMove, 
 												const _float& fXAngle, const _float& fYAngle,
 												const _float& fExtraMove = 0.f, const _float& fExtraAngle = 0.f);
+
+	void				Rotation_Axis_Except_Scale(	_vec3* vScale,
+													const _float& fXMove, const _float& fYMove,
+													const _float& fXAngle, const _float& fYAngle,
+													const _float& fExtraMove = 0.f, const _float& fExtraAngle = 0.f);
 	void				Static_Update(void);
+	/////////////////////////////////////////////////////////////////////////////////////////////////////
+	void				Rotation_Axis_Gun(	const _float & fXMove, const _float & fXAngle, 
+											const _float & fYMove, const _float & fYAngle, 
+											const _float & fZMove, const _float & fZAngle	 );
+	void				Flexible_WorldSpace(_vec3* vScale, _vec3 * vAngle, _vec3* vTrans);
+	void				Get_Scale(_vec3* vScale) { memcpy(vScale, m_vScale, sizeof(_vec3)); }
+	void				Get_Angle(_vec3* vAngle) { memcpy(vAngle, m_vAngle, sizeof(_vec3)); }
 	////ÇÇÅ·/////////////////////////////////////////////////////////////////////////////////////////////
 	void				Get_WorldMatrix(_matrix* pWorld) const { *pWorld = m_matWorld; }
 	//void				Set_WorldMatrix(_matrix* pWorld) { m_matWorld = *pWorld; }
@@ -42,6 +54,8 @@ public:
 		m_vInfo[INFO_POS].y = fY;
 		m_vInfo[INFO_POS].z = fZ;
 	}
+
+	void				Set_Rotation(ROTATIONID eID, const _float& fAngle) { *(((_float*)&m_vAngle) + eID) = fAngle; }
 
 
 public:
@@ -62,7 +76,7 @@ public:
 	_matrix			m_matWorld;
 
 public:
-	static CTransform*		Create(void);
+	static CTransform*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
 	virtual CComponent*	Clone(void);
 private:
 	virtual void Free(void);

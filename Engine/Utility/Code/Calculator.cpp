@@ -149,6 +149,8 @@ _bool CCalculator::Peek_Cube_Target(HWND hWnd, _vec3 * SrcPos, const CCubeTex * 
 
 	_vec3		vPoint;
 
+	m_pGraphicDev;
+
 	D3DVIEWPORT9		ViewPort;
 	ZeroMemory(&ViewPort, sizeof(D3DVIEWPORT9));
 	m_pGraphicDev->GetViewport(&ViewPort);

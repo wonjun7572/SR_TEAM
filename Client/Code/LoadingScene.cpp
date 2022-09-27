@@ -162,7 +162,7 @@ HRESULT CLoadingScene::Ready_Proto(void)
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_LoadingTexCom", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Texture2D/lang_select.png", TEX_NORMAL)), E_FAIL);
 
 
-	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_TransformCom", CTransform::Create()), E_FAIL);
+	//FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_TransformCom", CTransform::Create(m_pGraphicDev)), E_FAIL);
 
 	return S_OK;
 }

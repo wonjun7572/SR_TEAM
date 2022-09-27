@@ -4,8 +4,9 @@
 
 USING(Engine)
 
-CTransform::CTransform()
-	: m_vScale(1.f, 1.f, 1.f)
+CTransform::CTransform(LPDIRECT3DDEVICE9 pGraphicDev)
+	: CComponent(pGraphicDev)
+	, m_vScale(1.f, 1.f, 1.f)
 	, m_vAngle(0.f, 0.f, 0.f)
 {
 	ZeroMemory(m_vInfo, sizeof(m_vInfo));
@@ -66,15 +67,108 @@ void CTransform::Rotation_Axis_Y(const _float & fMovement, const _float & fAngle
 	m_matWorld = matScale * matMove * matRot * matOriginalPos * matTrans;
 }
 
+void CTransform::Rotation_Axis_Gun(	const _float & fXMove, const _float & fXAngle,
+									const _float & fYMove, const _float & fYAngle,
+									const _float & fZMove, const _float & fZAngle)
+{
+	_matrix matScale, matRotX, matRotY, matRotZ, matTrans;
+
+	_matrix matSyncX, matReplaceX, matSyncY, matReplaceY, matSyncZ, matReplaceZ;
+
+	D3DXMatrixScaling(&matScale, m_vScale.x, m_vScale.y, m_vScale.z);
+	D3DXMatrixTranslation(&matTrans, m_vInfo[INFO_POS].x, m_vInfo[INFO_POS].y, m_vInfo[INFO_POS].z);
+
+	//	X
+	D3DXMatrixTranslation(&matSyncX, 0.f, fXMove, 0.f);
+	D3DXMatrixTranslation(&matReplaceX, 0.f, -fXMove, 0.f);
+	D3DXMatrixRotationX(&matRotX, fXAngle);
+
+	//	Y
+	D3DXMatrixTranslation(&matSyncY, fYMove, 0.f, 0.f);
+	D3DXMatrixTranslation(&matReplaceY, -fYMove, 0.f, 0.f);
+	D3DXMatrixRotationY(&matRotY, fYAngle);
+
+	//	Z
+	D3DXMatrixTranslation(&matSyncZ, fZMove, 0.f, 0.f);
+	D3DXMatrixTranslation(&matReplaceZ, -fZMove, 0.f, 0.f);
+	D3DXMatrixRotationX(&matRotZ, fZAngle);
+
+	m_matWorld = matScale *
+		matSyncX * matRotX * matReplaceX *
+		matSyncY * matRotY * matReplaceY *
+		matSyncZ * matRotZ * matReplaceZ *
+		matTrans;
+}
+
+void CTransform::Flexible_WorldSpace(_vec3 * vScale, _vec3 * vAngle, _vec3 * vTrans)
+{
+	_matrix matScale, matRotX, matRotY, matRotZ, matTrans;
+
+	D3DXMatrixScaling(&matScale, vScale->x, vScale->y, vScale->z);
+	D3DXMatrixRotationX(&matRotX, vAngle->x);
+	D3DXMatrixRotationX(&matRotY, vAngle->y);
+	D3DXMatrixRotationX(&matRotZ, vAngle->z);
+	D3DXMatrixTranslation(&matTrans, vTrans->x, vTrans->y, vTrans->z);
+
+	m_matWorld = matScale * matRotX * matRotY * matRotZ * matTrans;
+}
+
 void CTransform::Rotation_Axis_Animation(const _float & fXMove, const _float & fYMove, const _float & fXAngle, const _float & fYAngle, const _float& fExtraMove, const _float& fExtraAngle)
 {
 	_matrix matScale, matRotX, matRotY, matTrans;
 
 	_matrix matSyncX, matReplaceX, matSyncY, matReplaceY;
 
+	_matrix matSyncZ;
+
 	_matrix matExtraSync, matExtraReplace, matRotExtra;
 
 	D3DXMatrixScaling(&matScale, m_vScale.x, m_vScale.y, m_vScale.z);
+	D3DXMatrixTranslation(&matTrans, m_vInfo[INFO_POS].x, m_vInfo[INFO_POS].y, m_vInfo[INFO_POS].z);
+
+	//	X
+	D3DXMatrixTranslation(&matSyncX, 0.f, fXMove, 0.f);
+	D3DXMatrixTranslation(&matReplaceX, 0.f, -fXMove, 0.f);
+	D3DXMatrixRotationX(&matRotX, fXAngle);
+
+	//	Y
+	D3DXMatrixTranslation(&matSyncY, fYMove, 0.f, 0.f);
+	D3DXMatrixTranslation(&matReplaceY, -fYMove, 0.f, 0.f);
+	D3DXMatrixRotationY(&matRotY, fYAngle);
+
+	//	Extra
+	D3DXMatrixTranslation(&matExtraSync, 0.f, fExtraMove, 0.f);
+	D3DXMatrixTranslation(&matExtraReplace, 0.f, -fExtraMove, 0.f);
+	D3DXMatrixRotationX(&matRotExtra, fExtraAngle);
+
+	if (fExtraMove == 0)
+	{
+		m_matWorld = matScale *
+			matSyncX * matRotX * matReplaceX *
+			matSyncY * matRotY * matReplaceY *
+			matTrans;
+	}
+	else
+	{
+		m_matWorld = matScale *
+			matExtraSync * matRotExtra * matExtraReplace *
+			matSyncX * matRotX * matReplaceX *
+			matSyncY * matRotY * matReplaceY *
+			matTrans;
+	}
+}
+
+void CTransform::Rotation_Axis_Except_Scale(_vec3 * vScale, const _float & fXMove, const _float & fYMove, const _float & fXAngle, const _float & fYAngle, const _float & fExtraMove, const _float & fExtraAngle)
+{
+	_matrix matScale, matRotX, matRotY, matTrans;
+
+	_matrix matSyncX, matReplaceX, matSyncY, matReplaceY;
+
+	_matrix matSyncZ;
+
+	_matrix matExtraSync, matExtraReplace, matRotExtra;
+
+	D3DXMatrixScaling(&matScale, vScale->x, vScale->y, vScale->z);
 	D3DXMatrixTranslation(&matTrans, m_vInfo[INFO_POS].x, m_vInfo[INFO_POS].y, m_vInfo[INFO_POS].z);
 
 	//	X
@@ -230,9 +324,9 @@ _int CTransform::Update_Component(const _float & fTimeDelta)
 	return 0;
 }
 
-CTransform * CTransform::Create(void)
+CTransform * CTransform::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
-	CTransform* pInstance = new CTransform;
+	CTransform* pInstance = new CTransform(pGraphicDev);
 	if (FAILED(pInstance->Ready_Transform()))
 	{
 		Safe_Release(pInstance);

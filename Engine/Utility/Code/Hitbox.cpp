@@ -17,6 +17,22 @@ CHitBox::~CHitBox()
 {
 }
 
+void CHitBox::Get_MinMax(_vec3* _vMin, _vec3* _vMax)
+{
+	VTXCOL*		pVertex = nullptr;
+
+	UINT dwStride = D3DXGetFVFVertexSize(m_dwFVF);
+
+	m_pVB->Lock(0, 0, (void**)&pVertex, 0);
+
+	D3DXComputeBoundingBox(&pVertex->vPos, m_dwVtxCnt, dwStride, &vMin, &vMax);
+
+	memcpy(_vMin, vMin, sizeof(_vec3));
+	memcpy(_vMax, vMax, sizeof(_vec3));
+
+	m_pIB->Unlock();
+}
+
 HRESULT CHitBox::Ready_Buffer(void)
 {
 	m_dwVtxCnt = 8;

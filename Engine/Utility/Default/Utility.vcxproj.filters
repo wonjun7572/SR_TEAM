@@ -218,7 +218,7 @@
     <ClCompile Include="..\Code\Hitbox.cpp">
       <Filter>00. Component\00. VIBuffer\06. HitBox</Filter>
     </ClCompile>
-    <ClCompile Include="..\Collision.cpp">
+    <ClCompile Include="..\Code\Collision.cpp">
       <Filter>00. Component\04. Collision</Filter>
     </ClCompile>
   </ItemGroup>

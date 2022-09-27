@@ -22,6 +22,9 @@ public:
 	virtual void	Render_Object(void) override;
 
 private:
+	void			TransAxisUzi1(void);							//	월드행렬 작동
+	void			TransAxisUzi2(void);							//	월드행렬 작동
+
 	HRESULT			Add_Component(void);
 	HRESULT			Add_Parts();
 	HRESULT			Get_Parts(void);
@@ -44,15 +47,19 @@ private:
 	CTransform*		m_pUziPart5 = nullptr;
 
 	CCalculator*	m_pCalculatorCom = nullptr;
-	CCubeTex*			m_pBufferCom = nullptr;
-	CTexture*			m_pTextureCom = nullptr;
+	CCubeTex*		m_pBufferCom = nullptr;
+	CTexture*		m_pTextureCom = nullptr;
 
 
 	_bool			m_bPartInit = false;
 	_float			m_fTimeDelta = 0.f;
 	_float			m_fUnit = 0.1f;
 
-	list<TCHAR*>		m_liszFinalName;
+	_float			Test1 = 0.f;
+	_float			Test2 = 0.f;
+	_float			Test3 = 0.f;
+
+	//list<TCHAR*>		m_liszFinalName;
 
 	
 public:
