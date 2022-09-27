@@ -26,8 +26,8 @@ _int CShotgunPart4::Update_Object(const _float & fTimeDelta)
 	Add_RenderGroup(RENDER_NONALPHA, this);
 	CGameObject::Update_Object(fTimeDelta);
 
-	cout << m_fShotgunSize << endl;
-	cout << m_fUziSize << endl;
+	//cout << m_fShotgunSize << endl;
+	//cout << m_fUziSize << endl;
 
 	return 0;
 }

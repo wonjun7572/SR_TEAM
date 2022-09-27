@@ -24,6 +24,7 @@ private:
 	void		Key_Input(const _float& fTimeDelta);
 	void		Mouse_Move(void);
 	void		Mouse_Fix(void);
+	void		RightCamera(const _float& fTimeDelta);
 
 public:
 	void		Save_Position();
@@ -52,6 +53,7 @@ private:
 
 	list<pair<_vec3, _vec3>>  m_liPos;
 
+	_float			m_fDistnace = 17.f;
 private:
 	virtual void Free(void) override;
 };

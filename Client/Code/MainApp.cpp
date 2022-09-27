@@ -4,7 +4,7 @@
 #include "ImGuiMgr.h"
 #include "Logo.h"
 #include "PoolMgr.h"
-
+#include "MovieScene.h"
 static bool show_transform_window = false;
 static bool show_gameobject_window = false;
 static bool show_save_window = false;		

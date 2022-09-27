@@ -13,6 +13,8 @@
 #include "CubeFoot.h"
 #include "CubeHand.h"
 
+
+
 #include "CubeMonster.h"
 #include "CubeMonsterArm.h"
 #include "CubeMonsterBody.h"
@@ -22,9 +24,6 @@
 #include "Shotgun.h"
 #include "Sniper.h"
 
-#include "HealthPotion.h"
-#include "PlayerUI.h"
-#include "PlayerFaceUI.h"
 
 //#include "ImguiMgr.h"
 
@@ -58,6 +57,8 @@ HRESULT CStage::Ready_Scene(void)
 	FAILED_CHECK_RETURN(Ready_Layer_Monster(L"Layer_Monster"), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Layer_Bullet(L"Layer_Bullet"), E_FAIL);
 
+	FAILED_CHECK_RETURN(Ready_Layer_Gun(L"Layer_Gun"), E_FAIL);
+
 	// 툴을 위한 레이어 생성
 	//FAILED_CHECK_RETURN(Ready_Layer_Tool(L"Layer_Tool"), E_FAIL);
 
@@ -66,6 +67,11 @@ HRESULT CStage::Ready_Scene(void)
 
 _int CStage::Update_Scene(const _float & fTimeDelta)
 {
+	// 스테이지에서 이렇게 업데이트 해주고있음.
+	/*CImGuiMgr::GetInstance()->WindowLayOut();
+	CImGuiMgr::GetInstance()->TerrainTool(m_pGraphicDev, this);
+	CImGuiMgr::GetInstance()->CreateObject(m_pGraphicDev, this, m_pCam);*/
+
 	return Engine::CScene::Update_Scene(fTimeDelta);
 }
 
@@ -87,13 +93,13 @@ HRESULT CStage::Ready_Layer_Environment(const _tchar * pLayerTag)
 	CGameObject*		pGameObject = nullptr;
 
 	#pragma region 스테이즈 1 코드
-	// DynamicCamera
-	/*pGameObject = CDynamicCamera::Create(m_pGraphicDev, &_vec3(0.f, 10.f, -10.f), &_vec3(0.f, 0.f, 0.f), &_vec3(0.f, 1.f, 0.f));
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"DynamicCamera", pGameObject), E_FAIL);
-	m_pCam = dynamic_cast<CDynamicCamera*>(pGameObject);*/
+	//DynamicCamera
+	//pGameObject = CDynamicCamera::Create(m_pGraphicDev, &_vec3(0.f, 20.f, -10.f), &_vec3(0.f, 0.f, 0.f), &_vec3(0.f, 15.f, 0.f));
+	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"DynamicCamera", pGameObject), E_FAIL);
+	//m_pCam = dynamic_cast<CDynamicCamera*>(pGameObject);
 	
-	// StaticCamera
+	//StaticCamera
 	pGameObject = CStaticCamera::Create(m_pGraphicDev, &_vec3(0.f, 20.f, -10.f), &_vec3(0.f, 0.f, 0.f), &_vec3(0.f, 1.f, 0.f));
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"StaticCamera", pGameObject), E_FAIL);
@@ -110,10 +116,6 @@ HRESULT CStage::Ready_Layer_Environment(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"SkyBox", pGameObject), E_FAIL);
 
-	pGameObject = CHealthPotion::Create(m_pGraphicDev,_vec3(10.f,5.f,15.f));
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"HealthPotion", pGameObject), E_FAIL);
-
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
 	return S_OK;
@@ -126,17 +128,10 @@ HRESULT CStage::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 
 	CGameObject*		pGameObject = nullptr;
 
-	pGameObject = CUzi::Create(m_pGraphicDev);
+	pGameObject = CTestPlayer::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"TestPlayer", pGameObject), E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"TestPlayer0", pGameObject), E_FAIL);
 
-	pGameObject = CShotgun::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"TestPlayer2", pGameObject), E_FAIL);
-
-	pGameObject = CSniper::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"TestPlayer3", pGameObject), E_FAIL);
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
 	return S_OK;
@@ -148,14 +143,6 @@ HRESULT CStage::Ready_Layer_UI(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pLayer, E_FAIL);
 
 	CGameObject*		pGameObject = nullptr;
-
-	pGameObject = CPlayerUI::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"PlayerUI", pGameObject), E_FAIL);
-
-	pGameObject = CPlayerFaceUI::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"PlayerFaceUI", pGameObject), E_FAIL);
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
@@ -240,25 +227,25 @@ HRESULT CStage::Ready_Layer_Monster(const _tchar * pLayerTag)
 
 	CGameObject*		pGameObject = nullptr;
 
-	pGameObject = CCubeMonsterArm::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"M_LeftArm", pGameObject), E_FAIL);
+	//pGameObject = CCubeMonsterArm::Create(m_pGraphicDev);
+	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"M_LeftArm", pGameObject), E_FAIL);
 
-	pGameObject = CCubeMonsterArm::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"M_RighrArm", pGameObject), E_FAIL);
+	//pGameObject = CCubeMonsterArm::Create(m_pGraphicDev);
+	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"M_RighrArm", pGameObject), E_FAIL);
 
-	pGameObject = CCubeMonsterBody::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"M_Body", pGameObject), E_FAIL);
+	//pGameObject = CCubeMonsterBody::Create(m_pGraphicDev);
+	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"M_Body", pGameObject), E_FAIL);
 
-	pGameObject = CCubeMonsterHead::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"M_Head", pGameObject), E_FAIL);
+	//pGameObject = CCubeMonsterHead::Create(m_pGraphicDev);
+	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"M_Head", pGameObject), E_FAIL);
 
-	pGameObject = CCubeMonster::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"CubeMonster", pGameObject), E_FAIL);
+	//pGameObject = CCubeMonster::Create(m_pGraphicDev);
+	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"CubeMonster", pGameObject), E_FAIL);
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
@@ -276,6 +263,98 @@ HRESULT	CStage::Ready_Layer_Bullet(const _tchar* pLayerTag)
 
 	return S_OK;
 }
+
+HRESULT CStage::Ready_Layer_Gun(const _tchar * pLayerTag)
+{
+	Engine::CLayer*		pLayer = Engine::CLayer::Create();
+	NULL_CHECK_RETURN(pLayer, E_FAIL);
+
+	CGameObject*		pGameObject = nullptr;
+
+	pGameObject = CUzi::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"UZI1", pGameObject), E_FAIL);
+
+	pGameObject = CUzi::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"UZI2", pGameObject), E_FAIL);
+
+	pGameObject = CUziPart1::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Uzi_Part_1_1", pGameObject), E_FAIL);
+
+	pGameObject = CUziPart2::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Uzi_Part_1_2", pGameObject), E_FAIL);
+
+	pGameObject = CUziPart3::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Uzi_Part_1_3", pGameObject), E_FAIL);
+
+	pGameObject = CUziPart4::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Uzi_Part_1_4", pGameObject), E_FAIL);
+
+	pGameObject = CUziPart5::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Uzi_Part_1_5", pGameObject), E_FAIL);
+
+	pGameObject = CUziPart1::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Uzi_Part_2_1", pGameObject), E_FAIL);
+
+	pGameObject = CUziPart2::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Uzi_Part_2_2", pGameObject), E_FAIL);
+
+	pGameObject = CUziPart3::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Uzi_Part_2_3", pGameObject), E_FAIL);
+
+	pGameObject = CUziPart4::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Uzi_Part_2_4", pGameObject), E_FAIL);
+
+	pGameObject = CUziPart5::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Uzi_Part_2_5", pGameObject), E_FAIL);
+
+	//pGameObject = CShotgun::Create(m_pGraphicDev);
+	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"SHOTGUN", pGameObject), E_FAIL);
+
+	//pGameObject = CSniper::Create(m_pGraphicDev);
+	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"SNIPER", pGameObject), E_FAIL);
+
+	m_mapLayer.insert({ pLayerTag, pLayer });
+
+	return S_OK;
+}
+
+//HRESULT CStage::Ready_Layer_Tool(const _tchar * pLayerTag)
+//{
+//	// 맵툴을 활용할 것이다.
+//	CImGuiMgr::GetInstance()->Ready_MapTool(m_pGraphicDev, this);
+//
+//	Engine::CLayer*		pLayer = Engine::CLayer::Create();
+//	NULL_CHECK_RETURN(pLayer, E_FAIL);
+//
+//	CGameObject*		pGameObject = nullptr;
+//
+//	// m_pCam 이 중요함
+//	pGameObject = m_pCam = CDynamicCamera::Create(m_pGraphicDev, &_vec3(0.f, 10.f, -10.f), &_vec3(0.f, 0.f, 0.f), &_vec3(0.f, 1.f, 0.f));
+//	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+//	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"DynamicCamera", pGameObject), E_FAIL);
+//
+//	pGameObject = CTerrain::Create(m_pGraphicDev);
+//	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+//	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"TerrainByTool", pGameObject), E_FAIL);
+//
+//	m_mapLayer.insert({ pLayerTag, pLayer });
+//
+//	return S_OK;
+//}
 
 HRESULT CStage::Ready_Proto(void)
 {

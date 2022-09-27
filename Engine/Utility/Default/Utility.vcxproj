@@ -196,9 +196,9 @@ call CopyUtility.bat</Command>
     <ClInclude Include="..\..\Header\VIBuffer.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Code\Collision.cpp" />
     <ClCompile Include="..\Code\Interface.cpp" />
     <ClCompile Include="..\Code\RcRD.cpp" />
-    <ClCompile Include="..\Collision.cpp" />
     <ClCompile Include="..\Code\Calculator.cpp" />
     <ClCompile Include="..\Code\Camera.cpp" />
     <ClCompile Include="..\Code\Component.cpp" />

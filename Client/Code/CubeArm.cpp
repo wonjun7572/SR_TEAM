@@ -21,9 +21,9 @@ HRESULT CCubeArm::Ready_Object(void)
 
 _int CCubeArm::Update_Object(const _float & fTimeDelta)
 {
-	Add_RenderGroup(RENDER_NONALPHA, this);
-
 	CGameObject::Update_Object(fTimeDelta);
+
+	Add_RenderGroup(RENDER_NONALPHA, this);
 
 	return 0;
 }

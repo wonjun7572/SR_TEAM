@@ -1,9 +1,9 @@
 #include "stdafx.h"
 #include "..\Header\PlayButton.h"
 
+
 #include "Export_Function.h"
 #include "Stage.h"
-
 CPlayButton::CPlayButton(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CGameObject(pGraphicDev)
 {
@@ -14,11 +14,15 @@ CPlayButton::~CPlayButton()
 {
 }
 
+
+
 HRESULT CPlayButton::Ready_Object()
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
-	m_TranformCom->Set_Scale(0.1f, 0.1f, 0.f);
+
+
+	m_TranformCom->Set_Scale(0.3f, 0.1f, 0.f);
 	m_TranformCom->Set_Pos(0.65f, 0.75f, 0.f);
 
 	return S_OK;
@@ -26,6 +30,7 @@ HRESULT CPlayButton::Ready_Object()
 
 _int CPlayButton::Update_Object(const _float & fTimeDelta)
 {
+	
 	if (PointMouse())
 	{
 		if (Get_DIMouseState(DIM_LB) & 0x80)
@@ -33,6 +38,8 @@ _int CPlayButton::Update_Object(const _float & fTimeDelta)
 			Mouse_check = true;
 		}
 	}
+
+
 	Engine::CGameObject::Update_Object(fTimeDelta);
 	Add_RenderGroup(RENDER_UI, this);
 	return 0;
@@ -41,6 +48,9 @@ _int CPlayButton::Update_Object(const _float & fTimeDelta)
 void CPlayButton::LateUpdate_Object(void)
 {
 	CGameObject::LateUpdate_Object();
+	
+
+
 }
 
 void CPlayButton::Render_Object(void)
@@ -48,7 +58,10 @@ void CPlayButton::Render_Object(void)
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_TranformCom->Get_WorldMatrixPointer());
 	m_TextureCom->Set_Texture(0);
 	m_RcTexCom->Render_Buffer();
+
 }
+
+
 
 HRESULT CPlayButton::Add_Component(void)
 {
@@ -65,8 +78,12 @@ HRESULT CPlayButton::Add_Component(void)
 	NULL_CHECK_RETURN(m_TranformCom, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_TransformCom", pComponent });
 
+
+
 	return S_OK;
 }
+
+
 
 CPlayButton * CPlayButton::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
@@ -79,7 +96,10 @@ CPlayButton * CPlayButton::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 		return nullptr;
 	}
 
+
+
 	return pInsatnce;
+
 }
 
 _bool CPlayButton::PointMouse(void)
@@ -90,14 +110,13 @@ _bool CPlayButton::PointMouse(void)
 
 	_long lLeft, lRight, lUp, lDown;
 
-	//윈도우 좌표전체에서 반절로 나누고  스케일값도 반절만큼 빼주고  왼쪽이 나오게 되고 
-	lLeft = _long((0.5 * WINCX) * (1 + m_TranformCom->m_vInfo[INFO_POS].x) - (m_TranformCom->m_vScale.x) * (0.5 * WINCX));
-	//스케일만큼 더해주고
-	lRight = _long((0.5 * WINCX) * (1 + m_TranformCom->m_vInfo[INFO_POS].x) + (m_TranformCom->m_vScale.x * (0.5f * WINCX)));
 
-	//y값만큼  Up
+
+	lLeft = _long((0.5 * WINCX) * (1 + m_TranformCom->m_vInfo[INFO_POS].x) - (m_TranformCom->m_vScale.x) * (0.5 * WINCX));
+	lRight = _long((0.5 * WINCX) * (1 + m_TranformCom->m_vInfo[INFO_POS].x) + (m_TranformCom->m_vScale.x * (0.5f * WINCX)));
 	lUp = _long((0.5 * WINCY) * (1 - m_TranformCom->m_vInfo[INFO_POS].y) - (m_TranformCom->m_vScale.y * (WINCY * 0.5f)));
 	lDown = _long((0.5 * WINCY) * (1 - m_TranformCom->m_vInfo[INFO_POS].y) + (m_TranformCom->m_vScale.y * (WINCY * 0.5f)));
+
 
 	RECT rc = { lLeft, lUp, lRight, lDown };
 
