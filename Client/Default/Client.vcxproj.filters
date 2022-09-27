@@ -166,6 +166,9 @@
     <Filter Include="02. GameObject\01. For_Stage\08. Item\HP">
       <UniqueIdentifier>{1f61a6e7-5928-4ddc-9d0f-8118fa4b4948}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\02. For_Public\02. UI">
+      <UniqueIdentifier>{f2b9c4f9-0f3f-4c22-954b-9a134357078b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -393,6 +396,12 @@
     <ClInclude Include="..\Header\HealthPotion.h">
       <Filter>02. GameObject\01. For_Stage\08. Item\HP</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\PlayerUI.h">
+      <Filter>02. GameObject\02. For_Public\02. UI</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerFaceUI.h">
+      <Filter>02. GameObject\02. For_Public\02. UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -601,6 +610,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\HealthPotion.cpp">
       <Filter>02. GameObject\01. For_Stage\08. Item\HP</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\PlayerUI.cpp">
+      <Filter>02. GameObject\02. For_Public\02. UI</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerFaceUI.cpp">
+      <Filter>02. GameObject\02. For_Public\02. UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

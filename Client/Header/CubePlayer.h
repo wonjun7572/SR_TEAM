@@ -16,6 +16,10 @@ public:
 	virtual _int	Update_Object(const _float& fTimeDelta) override;
 	virtual void	LateUpdate_Object(void) override;
 	virtual void	Render_Object(void) override;
+	
+	ABILITY*		Get_Ability() { return m_tAbility; }
+	void			Set_Damaged(_int iDamage) { m_tAbility->iHp -= iDamage; }
+
 private:
 	map<const _tchar*, CGameObject*>	m_mapPlayerBody;
 
@@ -32,7 +36,7 @@ private:
 	void			TransAxis(void);							//	월드행렬 작동
 
 	void			Look_Direction(void);						//	바라보는 방향 변경
-
+	
 private:
 	void			Jump(void);
 	_bool			m_bJump = false;

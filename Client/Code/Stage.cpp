@@ -23,6 +23,8 @@
 #include "Sniper.h"
 
 #include "HealthPotion.h"
+#include "PlayerUI.h"
+#include "PlayerFaceUI.h"
 
 //#include "ImguiMgr.h"
 
@@ -147,6 +149,14 @@ HRESULT CStage::Ready_Layer_UI(const _tchar * pLayerTag)
 
 	CGameObject*		pGameObject = nullptr;
 
+	pGameObject = CPlayerUI::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"PlayerUI", pGameObject), E_FAIL);
+
+	pGameObject = CPlayerFaceUI::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"PlayerFaceUI", pGameObject), E_FAIL);
+
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
 	return S_OK;
@@ -245,8 +255,6 @@ HRESULT CStage::Ready_Layer_Monster(const _tchar * pLayerTag)
 	pGameObject = CCubeMonsterHead::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"M_Head", pGameObject), E_FAIL);
-
-
 
 	pGameObject = CCubeMonster::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
