@@ -55,11 +55,11 @@ void CPlayerUI::Begin_OrthoProj()
 	D3DXMatrixIdentity(&matWorld);
 	D3DXMatrixIdentity(&matView);
 
-	matView.m[0][0] = 169.f; // 이미지 가로
-	matView.m[1][1] = 89.f; // 이미지 세로
+	matView.m[0][0] = 250.f; // 이미지 가로
+	matView.m[1][1] = 125.f; // 이미지 세로
 	matView.m[2][2] = 1.f;
-	matView.m[3][0] = m_pTransCom->m_vInfo[INFO_POS].x - 230.f;
-	matView.m[3][1] = m_pTransCom->m_vInfo[INFO_POS].y - 220.f;
+	matView.m[3][0] = m_pTransCom->m_vInfo[INFO_POS].x - 550.f;
+	matView.m[3][1] = m_pTransCom->m_vInfo[INFO_POS].y - 335.f;
 
 	D3DXMatrixOrthoLH(&matOrtho, WINCX, WINCY, 0.f, 1.f);
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, &matWorld);

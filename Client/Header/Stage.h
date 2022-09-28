@@ -1,11 +1,9 @@
 #pragma once
 
-//#include "Engine_Include.h"
 #include "Scene.h"
-
+#include "SkyBox.h"
 #include "Terrain.h"
 #include "TestPlayer.h"
-#include "SkyBox.h"
 #include "StaticCamera.h"
 #include "DynamicCamera.h"
 
