@@ -26,6 +26,7 @@
 #include "HealthPotion.h"
 #include "PlayerUI.h"
 #include "PlayerFaceUI.h"
+#include "PlayerHpUI.h"
 
 
 CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -135,6 +136,10 @@ HRESULT CStage::Ready_Layer_UI(const _tchar * pLayerTag)
 	pGameObject = CPlayerFaceUI::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"PlayerFaceUI", pGameObject), E_FAIL);
+
+	pGameObject = CPlayerHpUI::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"PlayerHpUI", pGameObject), E_FAIL);
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 

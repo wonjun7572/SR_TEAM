@@ -15,6 +15,8 @@ public:
 	virtual HRESULT Ready_Buffer(void) override;
 	virtual void Render_Buffer(void) override;
 
+	virtual void Resize_Buffer(_float v1PosX, _float v2PosX);
+
 public:
 	static CRcTex*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
 	CComponent*	Clone(void);

@@ -37,6 +37,7 @@ _uint CLoading::Loading_ForStage(void)
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_TerrainTexCom", CTerrainTex::Create(m_pGraphicDev, VTXCNTX, VTXCNTZ, VTXITV)), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_CubeTexCom", CCubeTex::Create(m_pGraphicDev)), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_SphereTexCom", CSphereTex::Create(m_pGraphicDev)), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"RcTex_HP", CRcTex::Create(m_pGraphicDev)), E_FAIL);
 	}
 
 	{
@@ -65,11 +66,12 @@ _uint CLoading::Loading_ForStage(void)
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"HP_50_Face", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/UI/Player/Face/HP50_%d.png", TEX_NORMAL, 5)), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"HP_25_Face", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/UI/Player/Face/HP25_%d.png", TEX_NORMAL, 5)), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"HP_0_Face", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/UI/Player/Face/HP0.png", TEX_NORMAL)), E_FAIL);
+	
+		// HP
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"HP_Gage", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/UI/Player/Gage/theHUDui_10.png", TEX_NORMAL)), E_FAIL);
 	}
 
 	m_bFinish = true;
-
-	lstrcpy(m_szLoading, L"Loading Complete!!!!!!!");
 
 	return _uint();
 }
