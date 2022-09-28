@@ -26,6 +26,10 @@ public:
 	}
 
 public:
+	ABILITY*      Get_Ability() { return m_tAbility; }
+	void         Set_Damaged(_int iDamage) { m_tAbility->iHp -= iDamage; }
+
+public:
 	virtual HRESULT Ready_Object(void) override;
 	virtual _int	Update_Object(const _float& fTimeDelta) override;
 	virtual void	LateUpdate_Object(void) override;
@@ -74,6 +78,8 @@ private:
 	CCollision*		m_pCollision = nullptr;
 
 	CHitBox*		m_pHitBox = nullptr;
+
+	ABILITY*		m_tAbility = nullptr;
 
 private:
 	_float			m_fLookAngle = 0.f;

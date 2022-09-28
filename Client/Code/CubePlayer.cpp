@@ -16,6 +16,10 @@ HRESULT CCubePlayer::Ready_Object(void)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
+	m_tAbility = new ABILITY;
+	m_tAbility->iHp = 100;
+	m_tAbility->iDefence = 100;
+
 	m_pTransform->Set_Scale(0.2f, 0.5f, 0.2f);
 
 	ShowCursor(false);
@@ -424,5 +428,6 @@ CCubePlayer * CCubePlayer::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 
 void CCubePlayer::Free(void)
 {
+	Safe_Delete<ABILITY*>(m_tAbility);
 	CGameObject::Free();
 }
