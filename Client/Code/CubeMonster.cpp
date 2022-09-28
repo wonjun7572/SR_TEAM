@@ -5,7 +5,7 @@
 CCubeMonster::CCubeMonster(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
 {
-	m_fDetectRange = 50.f;
+	m_fDetectRange = 30.f;
 	m_fMinLenghtRange = 5.f;
 	m_fAttackRange = 1.f;
 	m_MonsterState.fCurrentHp = 100.f;
@@ -113,9 +113,9 @@ _int CCubeMonster::CurrentMonster(_float fTimeDelta)
 		Axis();
 
 		m_pMbody->Chase_Target(&vPlayerPos, m_fSpeed, m_fTimeDelta);
-		m_pMhead->Chase_Target(&vPlayerPos, m_fSpeed, m_fTimeDelta);
-		m_pMleftArm->Chase_Target(&vPlayerPos, m_fSpeed, m_fTimeDelta);
-		m_pMrightArm->Chase_Target(&vPlayerPos, m_fSpeed, m_fTimeDelta);
+		//m_pMhead->Chase_Target(&vPlayerPos, m_fSpeed, m_fTimeDelta);
+		//m_pMleftArm->Chase_Target(&vPlayerPos, m_fSpeed, m_fTimeDelta);
+		//m_pMrightArm->Chase_Target(&vPlayerPos, m_fSpeed, m_fTimeDelta);
 
 	}
 	else
@@ -180,7 +180,7 @@ void CCubeMonster::Assemble(void)
 
 void CCubeMonster::Axis(void)
 {
-	m_pMbody->
+	m_pMleftArm->Get_BeforeInfo(INFO_LOOK, &vPlayerPos);
 }
 
 

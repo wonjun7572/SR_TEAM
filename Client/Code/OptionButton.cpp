@@ -27,7 +27,13 @@ HRESULT COptionButton::Ready_Object(void)
 
 _int COptionButton::Update_Object(const _float & fTimeDelta)
 {
-
+	if (PointMouse())
+	{
+		if (Get_DIMouseState(DIM_LB) & 0x80)
+		{
+			Mouse_check = true;
+		}
+	}
 	Engine::CGameObject::Update_Object(fTimeDelta);
 	Add_RenderGroup(RENDER_UI, this);
 
@@ -78,6 +84,34 @@ COptionButton * COptionButton::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 	}
 
 	return pInstance;
+}
+
+_bool COptionButton::PointMouse(void)
+{
+
+	POINT pt;
+	GetCursorPos(&pt);
+	ScreenToClient(g_hWnd, &pt);
+
+	_long lLeft, lRight, lUp, lDown;
+
+
+
+	lLeft = _long((0.5 * WINCX) * (1 + m_pTransformCom->m_vInfo[INFO_POS].x) - (m_pTransformCom->m_vScale.x) * (0.5 * WINCX));
+	lRight = _long((0.5 * WINCX) * (1 + m_pTransformCom->m_vInfo[INFO_POS].x) + (m_pTransformCom->m_vScale.x * (0.5f * WINCX)));
+	lUp = _long((0.5 * WINCY) * (1 - m_pTransformCom->m_vInfo[INFO_POS].y) - (m_pTransformCom->m_vScale.y * (WINCY * 0.5f)));
+	lDown = _long((0.5 * WINCY) * (1 - m_pTransformCom->m_vInfo[INFO_POS].y) + (m_pTransformCom->m_vScale.y * (WINCY * 0.5f)));
+
+
+	RECT rc = { lLeft, lUp, lRight, lDown };
+
+	if (PtInRect(&rc, pt))
+	{
+		return true;
+	}
+
+	return false;
+
 }
 
 void COptionButton::Free(void)

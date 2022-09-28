@@ -28,9 +28,10 @@ private:
 private:
 	HRESULT		Add_Component(void);
 
+	_bool		PointMouse(void);
+	_bool		Mouse_check = false;
 public:
 	static COptionButton* Create(LPDIRECT3DDEVICE9 pGraphicDev);
-
 private:
 	virtual void Free(void);
 };
