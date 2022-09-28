@@ -36,6 +36,9 @@ void CTestPlayer::LateUpdate_Object(void)
 {
 	/*Engine::CGameObject::LateUpdate_Object();*/
 	Set_OnTerrain();
+	
+	m_pHitBox->Get_MinMax(&m_vMin, &m_vMax);
+	Get_HitboxMin(&vT1, &vT2);
 }
 
 void CTestPlayer::Render_Object(void)
@@ -43,6 +46,10 @@ void CTestPlayer::Render_Object(void)
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransCom->Get_WorldMatrixPointer());
 	m_pTextureCom->Set_Texture(0);	
 	m_pBufferCom->Render_Buffer();
+
+	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+	m_pHitBox->Render_Buffer();
+	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 }
 
 HRESULT CTestPlayer::Add_Component(void)
@@ -64,6 +71,10 @@ HRESULT CTestPlayer::Add_Component(void)
 	pComponent = m_pCalculatorCom = dynamic_cast<CCalculator*>(Clone_Proto(L"Proto_CalculatorCom"));
 	NULL_CHECK_RETURN(m_pTransCom, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_CalculatorCom", pComponent });
+
+	pComponent = m_pHitBox = dynamic_cast<CHitBox*>(Engine::Clone_Proto(L"Proto_HitboxCom"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[ID_STATIC].insert({ L"Proto_HitboxCom", pComponent });
 
 	return S_OK;
 }
@@ -90,10 +101,10 @@ void CTestPlayer::Key_Input(const _float& fTimeDelta)
 	if (Get_DIKeyState(DIK_LEFT) & 0x8000)
 		m_pTransCom->Rotation(ROT_Y, D3DXToRadian(-180.f * fTimeDelta));
 
-	if (Get_DIMouseState(DIM_LB))
+	/*if (Get_DIMouseState(DIM_LB))
 	{
 		Fire_Bullet(&m_vDirection);
-	}
+	}*/
 
 
 	if (Get_DIKeyState(DIK_SPACE) & 0x80)

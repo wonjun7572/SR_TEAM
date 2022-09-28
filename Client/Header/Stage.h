@@ -31,8 +31,7 @@ private:
 	HRESULT			Ready_Layer_Monster(const _tchar* pLayerTag);
 	HRESULT			Ready_Layer_Bullet(const _tchar* pLayerTag);
 
-	// 툴을 위한 레이어
-	HRESULT			Ready_Layer_Tool(const _tchar* pLayerTag);
+	HRESULT			Ready_Layer_Gun(const _tchar* pLayerTag);
 
 	HRESULT			Ready_Proto(void);
 	HRESULT			Ready_Light(void);

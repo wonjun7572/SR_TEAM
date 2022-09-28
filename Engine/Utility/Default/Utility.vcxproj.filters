@@ -230,14 +230,14 @@
     <ClCompile Include="..\Code\Hitbox.cpp">
       <Filter>00. Component\00. VIBuffer\06. HitBox</Filter>
     </ClCompile>
-    <ClCompile Include="..\Collision.cpp">
-      <Filter>00. Component\04. Collision</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\Interface.cpp">
       <Filter>01. GameObject\Interface</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\RcRD.cpp">
       <Filter>00. Component\00. VIBuffer\07. RcRd</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Collision.cpp">
+      <Filter>00. Component\04. Collision</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

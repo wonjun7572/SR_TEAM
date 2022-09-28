@@ -166,6 +166,18 @@
     <Filter Include="01. Scene\02. LoadingScene\01. LoadingScene">
       <UniqueIdentifier>{7246b6e0-970c-49e8-9662-685760f5d99f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. Scene\02. LoadingScene\02. MovieScene">
+      <UniqueIdentifier>{6e998195-b7fa-4745-9200-6ef903d83fd3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\09. UI">
+      <UniqueIdentifier>{5a2321ba-4038-4880-aa2b-daee61f71bac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\10. Item">
+      <UniqueIdentifier>{71bb0e17-c5df-47ed-bc8b-66a0f40e51dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\10. Item\HP">
+      <UniqueIdentifier>{095932e2-2b4b-4b99-bb18-13fad55c9cbd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -387,6 +399,18 @@
     <ClInclude Include="..\Header\LoadingScene.h">
       <Filter>01. Scene\02. LoadingScene\01. LoadingScene</Filter>
     </ClInclude>
+    <ClInclude Include="PlayerFaceUI.h">
+      <Filter>02. GameObject\01. For_Stage\09. UI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\PlayerUI.h">
+      <Filter>02. GameObject\01. For_Stage\09. UI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Item.h">
+      <Filter>02. GameObject\01. For_Stage\10. Item</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\HealthPotion.h">
+      <Filter>02. GameObject\01. For_Stage\10. Item\HP</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -589,6 +613,18 @@
     </ClCompile>
     <ClCompile Include="..\Code\LoadingScene.cpp">
       <Filter>01. Scene\02. LoadingScene\01. LoadingScene</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerFaceUI.cpp">
+      <Filter>02. GameObject\01. For_Stage\09. UI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\PlayerUI.cpp">
+      <Filter>02. GameObject\01. For_Stage\09. UI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Item.cpp">
+      <Filter>02. GameObject\01. For_Stage\10. Item</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\HealthPotion.cpp">
+      <Filter>02. GameObject\01. For_Stage\10. Item\HP</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

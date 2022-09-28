@@ -5,7 +5,7 @@ USING(Engine)
 
 static WORD sphere_vertex(UINT slices, int slice, int stack)
 {
-	return stack*slices + slice + 1;
+	return stack * slices + slice + 1;
 }
 
 CSphereTex::CSphereTex(LPDIRECT3DDEVICE9 pGraphicDev)

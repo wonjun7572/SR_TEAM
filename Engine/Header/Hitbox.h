@@ -12,8 +12,15 @@ private:
 	virtual ~CHitBox();
 
 public:
+	void Get_MinMax(_vec3* _vMin, _vec3* _vMax);
+
+public:
 	virtual HRESULT Ready_Buffer(void) override;
 	virtual void Render_Buffer(void) override;
+
+private:
+	_vec3	vMin = { 0,0,0 };
+	_vec3	vMax = { 0,0,0 };
 
 public:
 	static CHitBox*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
