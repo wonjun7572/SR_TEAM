@@ -173,7 +173,9 @@
     <ClInclude Include="..\Header\CubeMonsterHead.h" />
     <ClInclude Include="..\Header\CubePlayer.h" />
     <ClInclude Include="..\Header\DynamicCamera.h" />
+    <ClInclude Include="..\Header\HealthPotion.h" />
     <ClInclude Include="..\Header\ImguiMgr.h" />
+    <ClInclude Include="..\Header\Item.h" />
     <ClInclude Include="..\Header\LoadBar.h" />
     <ClInclude Include="..\Header\Loading.h" />
     <ClInclude Include="..\Header\LoadingScene.h" />
@@ -181,6 +183,7 @@
     <ClInclude Include="..\Header\MainApp.h" />
     <ClInclude Include="..\Header\OptionButton.h" />
     <ClInclude Include="..\Header\PlayButton.h" />
+    <ClInclude Include="..\Header\PlayerUI.h" />
     <ClInclude Include="..\Header\PoolMgr.h" />
     <ClInclude Include="..\Header\Shotgun.h" />
     <ClInclude Include="..\Header\ShotgunPart1.h" />
@@ -229,6 +232,7 @@
     <ClInclude Include="imstb_textedit.h" />
     <ClInclude Include="imstb_truetype.h" />
     <ClInclude Include="ImZoomSlider.h" />
+    <ClInclude Include="PlayerFaceUI.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
@@ -248,7 +252,9 @@
     <ClCompile Include="..\Code\CubeMonsterHead.cpp" />
     <ClCompile Include="..\Code\CubePlayer.cpp" />
     <ClCompile Include="..\Code\DynamicCamera.cpp" />
+    <ClCompile Include="..\Code\HealthPotion.cpp" />
     <ClCompile Include="..\Code\ImguiMgr.cpp" />
+    <ClCompile Include="..\Code\Item.cpp" />
     <ClCompile Include="..\Code\LoadBar.cpp" />
     <ClCompile Include="..\Code\Loading.cpp" />
     <ClCompile Include="..\Code\LoadingScene.cpp" />
@@ -256,6 +262,7 @@
     <ClCompile Include="..\Code\MainApp.cpp" />
     <ClCompile Include="..\Code\OptionButton.cpp" />
     <ClCompile Include="..\Code\PlayButton.cpp" />
+    <ClCompile Include="..\Code\PlayerUI.cpp" />
     <ClCompile Include="..\Code\PoolMgr.cpp" />
     <ClCompile Include="..\Code\Shotgun.cpp" />
     <ClCompile Include="..\Code\ShotgunPart1.cpp" />
@@ -328,6 +335,7 @@
     <ClCompile Include="ImSequencer.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="PlayerFaceUI.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

@@ -49,6 +49,19 @@ namespace Engine
 
 	}INDEX32;
 
+	typedef struct tagAbility
+	{
+		_int		iHp;			// 체력을 위한
+		_int		iDefence;		// 방어력을 위한
+	}ABILITY;
+
+	typedef struct tagGunAbility
+	{
+		_int		iBulletRate;	// 총알 속도
+		_int		iBulletCount;	// 총알 개수 제한용
+		SKILLID		eSkillID;		// 스킬 ID
+	}GUNABILITY;
+
 	typedef struct tagMonsterState
 	{
 		_int iLevel;
@@ -88,8 +101,6 @@ namespace Engine
 	//	D3DXCOLOR	ColorFade;
 	//	_bool		isAlive;
 	//}ATTRIBUTE;
-
-
 }
 
 

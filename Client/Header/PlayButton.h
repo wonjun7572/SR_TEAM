@@ -15,21 +15,17 @@ class CScene;
 
 class CPlayButton :	public CGameObject
 {
-
 public:
 	CPlayButton(LPDIRECT3DDEVICE9 pGraphicDev);
 	virtual ~CPlayButton();
 
-
-
 public:
 	virtual HRESULT Ready_Object() override;
-	virtual _int Update_Object(const _float& fTimeDelta) override;
-	virtual void LateUpdate_Object(void) override;
-	virtual void Render_Object(void) override;
+	virtual _int	Update_Object(const _float& fTimeDelta) override;
+	virtual void	LateUpdate_Object(void) override;
+	virtual void	Render_Object(void) override;
 
 public:
-
 	_bool	Get_MouseCheck(void) { return Mouse_check; }
 
 private:
@@ -42,12 +38,8 @@ private:
 
 	CLoading*		m_pLoading = nullptr;
 
-
-
 public:
 	static CPlayButton*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
-
-
 
 private:
 	_bool		Mouse_check = false;

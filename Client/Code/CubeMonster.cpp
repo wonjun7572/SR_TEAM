@@ -17,10 +17,6 @@ CCubeMonster::CCubeMonster(LPDIRECT3DDEVICE9 pGraphicDev)
 	m_ePreviousState = m_eCurrentState;
 	m_fSpeed = 1.f;
 	m_fTimeDelta = 0.1f;
-
-
-
-
 }
 
 
@@ -78,26 +74,20 @@ void CCubeMonster::Render_Object(void)
 //ÇöÀç ¸ó½ºÅÍ»óÅÂ 
 _int CCubeMonster::CurrentMonster(_float fTimeDelta)
 {
-	
-	
-	
 	CTransform*		pPlayerTransformCom = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Character", L"BODY", L"Proto_TransformCom", ID_DYNAMIC));
-	NULL_CHECK_RETURN(pPlayerTransformCom, -1);
-
-	
+	NULL_CHECK_RETURN(pPlayerTransformCom, 0);
 	
 	//¸ö
 	m_pMbody = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Monster", L"M_Body", L"Proto_TransformCom", ID_STATIC));
-	NULL_CHECK_RETURN(m_pMbody, -1);
+	NULL_CHECK_RETURN(m_pMbody, 0);
 	m_pMbody->Get_Info(INFO_POS, &m_vPos);
 
 	//¿ÞÆÈ
 	m_pMleftArm = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Monster", L"M_LeftArm", L"Proto_TransformCom", ID_DYNAMIC));
-	NULL_CHECK_RETURN(m_pMleftArm, -1);
+	NULL_CHECK_RETURN(m_pMleftArm, 0);
 	//¿À¸¥ÆÈ
 	m_pMrightArm = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Monster", L"M_RighrArm", L"Proto_TransformCom", ID_DYNAMIC));
-	NULL_CHECK_RETURN(m_pMrightArm, -1);
-
+	NULL_CHECK_RETURN(m_pMrightArm, 0);
 
 	pPlayerTransformCom->Get_Info(Engine::INFO_POS, &vPlayerPos);
 	m_pMbody->Set_Info(INFO_LOOK, &vPlayerPos);
@@ -110,9 +100,6 @@ _int CCubeMonster::CurrentMonster(_float fTimeDelta)
 	m_vDir = vPlayerPos - m_vPos;
 	m_fLengthRange = D3DXVec3Length(&m_vDir);
 	D3DXVec3Normalize(&m_vDir, &m_vDir);
-
-	
-
 
 	_vec3		vRight;
 	memcpy(&vRight, &pPlayerTransformCom->m_matWorld.m[0][0], sizeof(_vec3));
@@ -185,13 +172,10 @@ void CCubeMonster::Set_OnTerrain(void)
 void CCubeMonster::Assemble(void)
 {
 	FAILED_CHECK_RETURN(Get_BodyTransform(), );
-
-
 	m_pMbody->Get_Info(INFO_POS, &BodyPos);
 	m_pMhead->Set_Pos(BodyPos.x, BodyPos.y + 3.f, BodyPos.z);
 	m_pMleftArm->Set_Pos(BodyPos.x - 1.f, BodyPos.y + 0.65f, BodyPos.z + 1.f);
 	m_pMrightArm->Set_Pos(BodyPos.x + 1.f, BodyPos.y + 0.65f, BodyPos.z + 1.f);
-
 }
 
 void CCubeMonster::Axis(void)
@@ -217,9 +201,6 @@ HRESULT CCubeMonster::Get_BodyTransform(void)
 	m_pMhead = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Monster", L"M_Head", L"Proto_TransformCom", ID_DYNAMIC));
 	NULL_CHECK_RETURN(m_pMhead, E_FAIL);
 
-
-
-
 	return S_OK;
 }
 
@@ -240,7 +221,6 @@ _int CCubeMonster::ComeBack(_float fTimeDelta)
 
 CCubeMonster * CCubeMonster::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
-
 	CCubeMonster* pInstance = new CCubeMonster(pGraphicDev);
 
 	if (FAILED(pInstance->Ready_Object()))

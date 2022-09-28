@@ -7,6 +7,8 @@
 #include "Terrain.h"
 #include "Texture.h"
 #include "TestCube.h"
+#include "DynamicCamera.h"
+#include "ToolScene.h"
 
 IMPLEMENT_SINGLETON(CImGuiMgr)
 
@@ -18,6 +20,7 @@ bool CImGuiMgr::Show_Terrain_Window = true;
 bool CImGuiMgr::Show_Player_Window = false;
 bool CImGuiMgr::Show_Monster_Window = false;
 bool CImGuiMgr::Show_Cube_Tool = false;
+bool CImGuiMgr::Show_Camera_Tool = false;
 
 _int CImGuiMgr::m_iInterval = 100;
 _int CImGuiMgr::m_iWidth = 100;
@@ -43,9 +46,14 @@ HRESULT CImGuiMgr::Ready_MapTool(LPDIRECT3DDEVICE9 pGraphicDev, CScene* pScene)
 	return S_OK;
 }
 
-// 여기에 플레이어나 몬스터 기능들 만들어 둘 수 있도록 함수를 만들어 두었음.
-HRESULT CImGuiMgr::Ready_PlayerTool(LPDIRECT3DDEVICE9 pGraphicDev, CScene * pScene)
+HRESULT CImGuiMgr::Ready_PlayerTool(LPDIRECT3DDEVICE9 pGraphicDev, CScene * pScene, CLayer* pLayer)
 {
+	if (pLayer == nullptr)
+	{
+		CLayer* pLayer = Engine::CLayer::Create();
+		pScene->Add_Layer(pLayer, L"Layer_PlayerTool");
+	}
+
 	return S_OK;
 }
 
@@ -54,10 +62,13 @@ HRESULT CImGuiMgr::Ready_MonsterTool(LPDIRECT3DDEVICE9 pGraphicDev, CScene * pSc
 	return S_OK;
 }
 
-// 위치 바꾸기 함수
+HRESULT CImGuiMgr::Ready_CameraTool(LPDIRECT3DDEVICE9 pGraphicDev, CScene * pScene, CLayer * pLayer)
+{
+	return S_OK;
+}
+
 void CImGuiMgr::TransformEdit(CCamera* pCamera, CTransform* pTransform, _bool& Window)
 {
-	// 이렇게 비긴으로 시작 되고 엔드로 끝난다.
 	ImGui::Begin("Transform");
 	ImGuizmo::BeginFrame();
 	static float snap[3] = { 1.f, 1.f, 1.f };
@@ -137,8 +148,6 @@ void CImGuiMgr::TransformEdit(CCamera* pCamera, CTransform* pTransform, _bool& W
 	ClientToScreen(g_hWnd, &lt);
 	ImGuizmo::SetRect(float(lt.x), float(lt.y), float(io.DisplaySize.x), float(io.DisplaySize.y));
 
-	// ImGuizmo::DrawGrid(m_pCam->GetView(), m_pCam->GetPrj(), matId, 100.f);
-
 	ImGuizmo::Manipulate(pCamera->GetView(), pCamera->GetProj(), mCurrentGizmoOperation, mCurrentGizmoMode, matWorld, NULL, useSnap ? &snap[0] : NULL);
 
 	pTransform->m_matWorld = matWorld;
@@ -215,6 +224,7 @@ void CImGuiMgr::WindowLayOut()
 	ImGui::Checkbox("Main_MenuTool", &Show_Main_Menu_Window);
 	ImGui::Checkbox("Cube_Tool", &Show_Cube_Tool);
 	ImGui::Checkbox("MonsterTool", &Show_Monster_Window);
+	ImGui::Checkbox("CameraTool", &Show_Camera_Tool);
 
 	if (ImGui::Button("Clear"))
 	{
@@ -223,6 +233,7 @@ void CImGuiMgr::WindowLayOut()
 		Show_Main_Menu_Window = false;
 		Show_Cube_Tool = false;
 		Show_Monster_Window = false;
+		Show_Camera_Tool = false;
 	}
 
 	ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
@@ -281,19 +292,18 @@ void CImGuiMgr::CreateObject(LPDIRECT3DDEVICE9 pGrahicDev, CScene* pScene, CCame
 			Load_Transform(pGrahicDev, pScene, L"../../Data/Map3.dat");
 		}
 	}
-	ImGui::SameLine();
 
 	if (ImGui::CollapsingHeader("Cube Create & Chose Button", ImGuiTreeNodeFlags_DefaultOpen))
 	{
 		if (ImGui::Button("Create"))
 		{
 			m_bCubeCreateCheck = true;
-			m_bCubeSelcetCheck = false;
+			m_bCubeSelectCheck = false;
 		}
 		ImGui::SameLine();
 		if (ImGui::Button("ChoseCube"))
 		{
-			m_bCubeSelcetCheck = true;
+			m_bCubeSelectCheck = true;
 			m_bCubeCreateCheck = false;
 		}
 		ImGui::SameLine();
@@ -333,7 +343,7 @@ void CImGuiMgr::CreateObject(LPDIRECT3DDEVICE9 pGrahicDev, CScene* pScene, CCame
 		}
 	}
 
-	if (m_bCubeSelcetCheck)
+	if (m_bCubeSelectCheck)
 	{
 		if (ImGui::IsMouseClicked(0))
 		{
@@ -468,8 +478,6 @@ void CImGuiMgr::TerrainTool(LPDIRECT3DDEVICE9 pGrahicDev, CScene* pScene)
 
 void CImGuiMgr::Save_Transform(CScene* pScene, wstring strDirectory)
 {
-	//wstring Directory = L"../../Data/Map.dat";
-
 	HANDLE      hFile = CreateFile(strDirectory.c_str(),
 		// 파일의 경로와 이름
 		GENERIC_WRITE,         // 파일 접근 모드 (GENERIC_WRITE : 쓰기 전용, GENERIC_READ : 읽기 전용)
@@ -520,8 +528,6 @@ void CImGuiMgr::Save_Transform(CScene* pScene, wstring strDirectory)
 
 void CImGuiMgr::Load_Transform(LPDIRECT3DDEVICE9 pGrahicDev, CScene *pScene, wstring strDirectory)
 {
-	//wstring Directory = L"../../Data/Map.dat";
-
 	HANDLE      hFile = CreateFile(strDirectory.c_str(),      // 파일의 경로와 이름
 		GENERIC_READ,         // 파일 접근 모드 (GENERIC_WRITE : 쓰기 전용, GENERIC_READ : 읽기 전용)
 		NULL,               // 공유 방식(파일이 열려있는 상태에서 다른 프로세스가 오픈할 때 허용할 것인가)    
@@ -577,7 +583,6 @@ void CImGuiMgr::Load_Transform(LPDIRECT3DDEVICE9 pGrahicDev, CScene *pScene, wst
 		Transcom->Update_Component(0.01f);
 
 		//   받아온 정보 입력해줘야함
-
 		if (0 == dwByte)
 			break;
 	}
@@ -585,9 +590,104 @@ void CImGuiMgr::Load_Transform(LPDIRECT3DDEVICE9 pGrahicDev, CScene *pScene, wst
 	MSG_BOX("Load_Complete");
 }
 
+void CImGuiMgr::SwitchCamera(LPDIRECT3DDEVICE9 pGrahicDev, CScene * pScene, CLayer* pLayer, CCamera * pCam)
+{
+	if (!Show_Camera_Tool)
+		return;
+
+	ImGui::Begin("Camera Settings");
+
+	if (ImGui::CollapsingHeader("Camera Create & Choose Camera", ImGuiTreeNodeFlags_DefaultOpen))
+	{
+		CGameObject *pGameObject = nullptr;
+		_vec3 pEye = _vec3(0.f, 10.f, -10.f);
+		_vec3 pAt = _vec3(0.f, 0.f, 0.f);
+		_vec3 pUp = _vec3(0.f, 1.f, 0.f);
+		_float fFov = D3DXToRadian(60.f);
+		//_float fAspect, fNear, fFar;
+		// LPDIRECT3DDEVICE9 pGraphicDev, const _vec3* pEye, const _vec3* pAt, const _vec3* pUp, 
+		// const _float& fFov /*= D3DXToRadian(60.f)*/, const _float& fAspect /*= (float)WINCX / WINCY*/, 
+		// const _float& fNear /*= 0.1f*/, const _float& fFar /*= 1000.f*/
+		ImGui::Text("EYE");	ImGui::SameLine(); ImGui::DragFloat3("EYE", pEye, 0.1f, -1000.0f, 1000.0f);
+		ImGui::Text("AT");	ImGui::SameLine(); ImGui::DragFloat3("AT", pAt, 0.1f, -1000.0f, 1000.0f);
+		ImGui::Text("UP");	ImGui::SameLine(); ImGui::DragFloat3("UP", pUp, 0.1f, -1000.0f, 1000.0f);
+		ImGui::Text("FOV"); ImGui::SameLine(); ImGui::DragFloat("FOV", &fFov, 0.1f, 0.f, 120.f);
+		if (ImGui::Button("Create"))
+		{
+			ImVec2 temp = ImGui::GetMousePos();
+			_tchar* szObjTag = new _tchar[20];
+			wstring t = L"DynamicCam_%d";
+			wsprintfW(szObjTag, t.c_str(), m_iIndex);
+			NameList.push_back(szObjTag);
+			pGameObject = CDynamicCamera::Create(pGrahicDev, &pEye, &pAt, &pUp, fFov);
+			NULL_CHECK_RETURN(pGameObject, );
+			FAILED_CHECK_RETURN(pLayer->Add_GameObject(szObjTag, pGameObject), );
+			++m_iIndex;
+		}
+		
+		for (auto& iter : pLayer->Get_GameObjectMap())
+		{
+			char* szCamName;
+			int strSize = WideCharToMultiByte(CP_ACP, 0, iter.first, -1, NULL, 0, NULL, NULL);
+			szCamName = new char[strSize];
+			WideCharToMultiByte(CP_ACP, 0, iter.first, -1, szCamName, strSize, 0, 0);
+			CamList.push_back(szCamName);
+			
+			// 더 만들어봐야함
+			// 여기서 모든 맵에 있는 카메라는 꺼버린다
+			if (ImGui::Button(szCamName))
+			{
+				dynamic_cast<CToolScene*>(pScene)->Set_Camera(dynamic_cast<CDynamicCamera*>(iter.second));
+				dynamic_cast<CDynamicCamera*>(iter.second)->Set_MainCam();
+			}
+			string strCamRecBtn;
+			string strSave = "_Rec";
+			strCamRecBtn = szCamName + strSave;
+			ImGui::SameLine();
+			if (ImGui::Button(strCamRecBtn.c_str()))
+			{
+				dynamic_cast<CDynamicCamera*>(iter.second)->SaveBtn();
+			}
+			string strCamPlayBtn;
+			string strLoad = "_Play";
+			strCamPlayBtn = szCamName + strLoad;
+			ImGui::SameLine();
+			if (ImGui::Button(strCamPlayBtn.c_str()))
+			{
+				dynamic_cast<CDynamicCamera*>(iter.second)->LoadBtn();
+			}
+		}
+	}
+
+	CTransform * pTranscom = nullptr;
+	
+	if (m_bCameraSelectCheck)
+	{
+		map<const _tchar*, CGameObject*> mapCam = pLayer->Get_GameObjectMap();
+
+		for (auto iter = mapCam.begin(); iter != mapCam.end(); ++iter)
+		{
+			pTranscom = dynamic_cast<CTransform*>(iter->second->Get_Component(L"Proto_TransformCom", ID_DYNAMIC));
+			m_CurrentSelectGameObjectObjKey = iter->first;
+		}
+	}
+
+	TransformEdit(pCam, m_pSelectedTransform, Show_Camera_Tool);
+
+	if (pTranscom != nullptr)
+		m_pSelectedTransform = pTranscom;
+
+	ImGui::End();
+}
+
 void CImGuiMgr::Free()
 {
 	for (auto iter : NameList)
+	{
+		Safe_Delete_Array(iter);
+	}
+
+	for (auto iter : CamList)
 	{
 		Safe_Delete_Array(iter);
 	}
