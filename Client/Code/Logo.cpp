@@ -50,8 +50,7 @@ void CLogo::LateUpdate_Scene(void)
 
 void CLogo::Render_Scene(void)
 {
-	// 개발자 모드 출력 함수
-	//Render_Font(L"Font_Jinji", m_pLoading->Get_String(), &_vec2(50.f, 50.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+	
 }
 
 HRESULT CLogo::Ready_Layer_Environment(const _tchar * pLayerTag)

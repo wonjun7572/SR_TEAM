@@ -38,16 +38,7 @@ _int CCubeMonsterHead::Update_Object(const _float & fTimeDelta)
 void CCubeMonsterHead::LateUpdate_Object(void)
 {
 	m_pTexture->Set_Texture(104);
-	//CTransform*		pPlayerTransformCom = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Character", L"BODY", L"Proto_TransformCom", ID_DYNAMIC));
-	//NULL_CHECK(pPlayerTransformCom);
 
-
-	//_vec3		vPlayerPos;
-	//pPlayerTransformCom->Get_Info(INFO_POS, &vPlayerPos);
-
-	//m_pTransform->Chase_Target(&vPlayerPos, 1.f, 0.1f);
-
-	//CGameObject::LateUpdate_Object();
 
 }
 
