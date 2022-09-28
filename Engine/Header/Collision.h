@@ -16,6 +16,7 @@ private:
 public:
 	HRESULT					Ready_Collision(void);
 	_bool					Check_Collision(void);
+	_bool					Wall_Collision(void);
 
 private:
 	_vec3	m_vMin1 = { 0, 0, 0 };

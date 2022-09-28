@@ -1,87 +1,82 @@
-﻿  stdafx.cpp
-  PlayerFaceUI.cpp
-  Client.cpp
-  Weapon.cpp
-  WallMgr.cpp
-  Wall.cpp
-  UziPart5.cpp
-  UziPart4.cpp
-  UziPart3.cpp
-  UziPart2.cpp
-  UziPart1.cpp
-  Uzi.cpp
-  ToolScene.cpp
-  TestPlayer.cpp
-  TestMonster.cpp
-  TestCube.cpp
-  Terrain.cpp
-c:\users\sam51\desktop\sr_team\client\code\terrain.cpp(80): warning C4101: 'expn' :참조되지 않은 지역 변수입니다.
-  StaticCamera.cpp
-  Stage.cpp
-  SniperPart4.cpp
-  SniperPart3.cpp
-  코드를 생성하고 있습니다...
-  컴파일하고 있습니다...
-  SniperPart2.cpp
-  SniperPart1.cpp
-  Sniper.cpp
-  SkyBox.cpp
-  ShotgunPart5.cpp
-  ShotgunPart4.cpp
-  ShotgunPart3.cpp
-  ShotgunPart2.cpp
-  ShotgunPart1.cpp
-  Shotgun.cpp
-  PoolMgr.cpp
-  PlayerUI.cpp
-  PlayButton.cpp
-  OptionButton.cpp
-  MainApp.cpp
-  Logo.cpp
-  LoadingScene.cpp
-  Loading.cpp
-  LoadBar.cpp
-  Item.cpp
-  코드를 생성하고 있습니다...
-  컴파일하고 있습니다...
-  ImguiMgr.cpp
-c:\users\sam51\desktop\sr_team\client\code\imguimgr.cpp(255): warning C4390: ';': 제어된 빈 문이 있습니다. 이 문이 필요합니까?
-c:\users\sam51\desktop\sr_team\client\code\imguimgr.cpp(257): warning C4390: ';': 제어된 빈 문이 있습니다. 이 문이 필요합니까?
-c:\users\sam51\desktop\sr_team\client\code\imguimgr.cpp(259): warning C4390: ';': 제어된 빈 문이 있습니다. 이 문이 필요합니까?
-c:\users\sam51\desktop\sr_team\client\code\imguimgr.cpp(275): warning C4390: ';': 제어된 빈 문이 있습니다. 이 문이 필요합니까?
-c:\users\sam51\desktop\sr_team\client\code\imguimgr.cpp(277): warning C4390: ';': 제어된 빈 문이 있습니다. 이 문이 필요합니까?
-c:\users\sam51\desktop\sr_team\client\code\imguimgr.cpp(279): warning C4390: ';': 제어된 빈 문이 있습니다. 이 문이 필요합니까?
-  HealthPotion.cpp
-  DynamicCamera.cpp
-  CubePlayer.cpp
-  CubeMonsterHead.cpp
-  CubeMonsterBody.cpp
-  CubeMonsterArm.cpp
-  CubeMonster.cpp
-  CubeLeg.cpp
-  CubeHead.cpp
-  CubeHand.cpp
-  CubeFoot.cpp
-  CubeBody.cpp
-  CubeArm.cpp
-  Bullet.cpp
-  BackGround.cpp
-  코드를 생성하고 있습니다...
-  ImSequencer.cpp
-  imgui_widgets.cpp
-  imgui_tables.cpp
-  imgui_impl_win32.cpp
-  imgui_impl_dx9.cpp
-  imgui_draw.cpp
-  imgui_demo.cpp
-  ImGuizmo.cpp
-  ImGuiFileDialog.cpp
-  ImGuiFileBrowser.cpp
-  imgui.cpp
-  ImGradient.cpp
-  ImCurveEdit.cpp
-  GraphEditor.cpp
-  코드를 생성하고 있습니다...
-     ../Bin\Client.lib 라이브러리 및 ../Bin\Client.exp 개체를 생성하고 있습니다.
-  Client.vcxproj -> C:\Users\sam51\Desktop\SR_TEAM\Client\Default\../Bin\Client.exe
-  Client.vcxproj -> ../Bin\Client.pdb (Full PDB)
+﻿빌드 시작: 2022-09-28 오후 4:31:47
+     1>2 노드의 "D:\GitHub\SR_TEAM\Client\Default\Client.vcxproj" 프로젝트(Build 대상)입니다.
+     1>Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"../Bin\Client.exe" /INCREMENTAL /NOLOGO /LIBPATH:../../Reference/Library d3d9.lib d3dx9.lib dxguid.lib System.lib Utility.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"../Bin\Client.pdb" /SUBSYSTEM:WINDOWS /LARGEADDRESSAWARE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"../Bin\Client.lib" /MACHINE:X86 Debug\Client.res
+         Debug\BackGround.obj
+         Debug\Bullet.obj
+         Debug\CubeArm.obj
+         Debug\CubeBody.obj
+         Debug\CubeFoot.obj
+         Debug\CubeHand.obj
+         Debug\CubeHead.obj
+         Debug\CubeLeg.obj
+         Debug\CubeMonster.obj
+         Debug\CubeMonsterArm.obj
+         Debug\CubeMonsterBody.obj
+         Debug\CubeMonsterHead.obj
+         Debug\CubePlayer.obj
+         Debug\DynamicCamera.obj
+         Debug\HealthPotion.obj
+         Debug\ImguiMgr.obj
+         Debug\Item.obj
+         Debug\LoadBar.obj
+         Debug\Loading.obj
+         Debug\LoadingScene.obj
+         Debug\Logo.obj
+         Debug\MainApp.obj
+         Debug\OptionButton.obj
+         Debug\PlayButton.obj
+         Debug\PlayerUI.obj
+         Debug\PoolMgr.obj
+         Debug\Shotgun.obj
+         Debug\ShotgunPart1.obj
+         Debug\ShotgunPart2.obj
+         Debug\ShotgunPart3.obj
+         Debug\ShotgunPart4.obj
+         Debug\ShotgunPart5.obj
+         Debug\SkyBox.obj
+         Debug\Sniper.obj
+         Debug\SniperPart1.obj
+         Debug\SniperPart2.obj
+         Debug\SniperPart3.obj
+         Debug\SniperPart4.obj
+         Debug\Stage.obj
+         Debug\StaticCamera.obj
+         Debug\Terrain.obj
+         Debug\TestCube.obj
+         Debug\TestMonster.obj
+         Debug\TestPlayer.obj
+         Debug\ToolScene.obj
+         Debug\Uzi.obj
+         Debug\UziPart1.obj
+         Debug\UziPart2.obj
+         Debug\UziPart3.obj
+         Debug\UziPart4.obj
+         Debug\UziPart5.obj
+         Debug\Wall.obj
+         Debug\WallMgr.obj
+         Debug\Weapon.obj
+         Debug\Client.obj
+         Debug\GraphEditor.obj
+         Debug\ImCurveEdit.obj
+         Debug\ImGradient.obj
+         Debug\imgui.obj
+         Debug\ImGuiFileBrowser.obj
+         Debug\ImGuiFileDialog.obj
+         Debug\ImGuizmo.obj
+         Debug\imgui_demo.obj
+         Debug\imgui_draw.obj
+         Debug\imgui_impl_dx9.obj
+         Debug\imgui_impl_win32.obj
+         Debug\imgui_tables.obj
+         Debug\imgui_widgets.obj
+         Debug\ImSequencer.obj
+         Debug\PlayerFaceUI.obj
+         Debug\stdafx.obj
+            ../Bin\Client.lib 라이브러리 및 ../Bin\Client.exp 개체를 생성하고 있습니다.
+         Client.vcxproj -> D:\GitHub\SR_TEAM\Client\Default\../Bin\Client.exe
+     1>"D:\GitHub\SR_TEAM\Client\Default\Client.vcxproj" 프로젝트를 빌드했습니다(Build 대상).
+
+빌드했습니다.
+
+경과 시간: 00:00:01.61

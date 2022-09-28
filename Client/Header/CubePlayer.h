@@ -47,7 +47,8 @@ private:
 	void			Animation(void);							
 	void			TransAxis(void);							
 
-	void			Move(void);									
+	void			Move(void);				
+	void			Wall_Collision_Return(void);
 
 	void			Look_Direction(void);						
 
@@ -98,6 +99,9 @@ private:
 
 	_vec3			m_vMin = { 0.f, 0.f, 0.f };
 	_vec3			m_vMax = { 0.f, 0.f, 0.f };
+
+	_vec3			m_vDirection = { 0.f, 0.f, 0.f };
+	_vec3			m_vBeforePos = { 10.f, 10.f, 10.f };
 
 public:
 	static CCubePlayer*	Create(LPDIRECT3DDEVICE9 pGraphicDev);

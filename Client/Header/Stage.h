@@ -34,6 +34,11 @@ private:
 	HRESULT			Ready_Proto(void);
 	HRESULT			Ready_Light(void);
 
+private:
+	////////////¸Ê ÆÄ½Ì
+	_int			m_iIndex = 0;
+	list<_tchar* >	NameList;
+
 public:
 	static CStage*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
 

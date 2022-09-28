@@ -33,7 +33,17 @@ _int CCubePlayer::Update_Object(const _float & fTimeDelta)
 
 	FAILED_CHECK_RETURN(Get_BodyTransform(), -1);
 
-	Move();
+	if (true == m_pCollision->Wall_Collision())
+	{
+		//Wall_Collision_Return();
+		m_pBodyWorld->Set_Pos(m_vBeforePos.x, m_vBeforePos.y, m_vBeforePos.z);
+		//D3DXVec3Normalize(&m_vDirection, &m_vDirection);
+		//m_pBodyWorld->Move_Pos(&(-m_vDirection * 10.f * m_fTimeDelta));
+	}
+	else
+		Move();
+
+	cout << m_vDirection.x << " " << m_vDirection.y << " " << m_vDirection.z << endl;
 
 	Animation();
 
@@ -257,28 +267,32 @@ void CCubePlayer::Animation(void)
 
 void CCubePlayer::Move()
 {
-	_vec3	vDir;
+
 
 	if (Get_DIKeyState(DIK_W))
 	{
-		m_pBodyWorld->Get_Info(INFO_LOOK, &vDir);
-		m_pBodyWorld->Move_Pos(&(vDir * 30.f * m_fTimeDelta));
+		m_pBodyWorld->Get_Info(INFO_LOOK, &m_vDirection);
+		D3DXVec3Normalize(&m_vDirection, &m_vDirection);
+		m_pBodyWorld->Move_Pos(&(m_vDirection * 10.f * m_fTimeDelta));
 	}
 	if (Get_DIKeyState(DIK_S))
 	{
-		m_pBodyWorld->Get_Info(INFO_LOOK, &vDir);
-		m_pBodyWorld->Move_Pos(&(vDir * -30.f * m_fTimeDelta));
+		m_pBodyWorld->Get_Info(INFO_LOOK, &m_vDirection);
+		D3DXVec3Normalize(&m_vDirection, &m_vDirection);
+		m_pBodyWorld->Move_Pos(&(m_vDirection * -10.f * m_fTimeDelta));
 
 	}
 	if (Get_DIKeyState(DIK_A))
 	{
-		m_pBodyWorld->Get_Info(INFO_RIGHT, &vDir);
-		m_pBodyWorld->Move_Pos(&(vDir * -30.f * m_fTimeDelta));
+		m_pBodyWorld->Get_Info(INFO_RIGHT, &m_vDirection);
+		D3DXVec3Normalize(&m_vDirection, &m_vDirection);
+		m_pBodyWorld->Move_Pos(&(m_vDirection * -10.f * m_fTimeDelta));
 	}
 	if (Get_DIKeyState(DIK_D))
 	{
-		m_pBodyWorld->Get_Info(INFO_RIGHT, &vDir);
-		m_pBodyWorld->Move_Pos(&(vDir * 30.f * m_fTimeDelta));
+		m_pBodyWorld->Get_Info(INFO_RIGHT, &m_vDirection);
+		D3DXVec3Normalize(&m_vDirection, &m_vDirection);
+		m_pBodyWorld->Move_Pos(&(m_vDirection * 10.f * m_fTimeDelta));
 	}
 
 	if (Get_DIKeyState(DIK_SPACE))
@@ -290,6 +304,13 @@ void CCubePlayer::Move()
 	{
 		m_bJump = false;
 	}
+}
+
+void CCubePlayer::Wall_Collision_Return(void)
+{
+	_vec3	vecReturn = -m_vDirection;
+	D3DXVec3Normalize(&vecReturn, &vecReturn);
+	m_pBodyWorld->Move_Pos(&(vecReturn * 1.f * m_fTimeDelta));
 }
 
 void CCubePlayer::TransAxis(void)

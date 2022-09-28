@@ -30,7 +30,7 @@ void CHitBox::Get_MinMax(_vec3* _vMin, _vec3* _vMax)
 	memcpy(_vMin, vMin, sizeof(_vec3));
 	memcpy(_vMax, vMax, sizeof(_vec3));
 
-	m_pIB->Unlock();
+	m_pVB->Unlock();
 }
 
 HRESULT CHitBox::Ready_Buffer(void)
