@@ -14,7 +14,7 @@ HRESULT CCubeHead::Ready_Object(void)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
-	m_pTransform->Set_Scale(1.f, 1.f, 1.f);
+	m_pTransform->Set_Scale(0.1f, 0.1f, 0.1f);
 
 	return S_OK;
 }

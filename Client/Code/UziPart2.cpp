@@ -14,7 +14,7 @@ CUziPart2::~CUziPart2()
 HRESULT CUziPart2::Ready_Object(void)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
-	m_pTransform->Set_Scale(.2f, .2f, 1.2f);
+	m_pTransform->Set_Scale(.02f, .02f, 0.12f);
 
 	return S_OK;
 }

@@ -17,9 +17,6 @@ public:
 	virtual void	Render_Object(void) override;
 
 private:
-	void			Key_Input(const _float& fTimeDelta);
-
-private:
 	HRESULT			Add_Component(void);
 	CTransform*		m_pTransform = nullptr;
 	CTexture*		m_pTexture = nullptr;
