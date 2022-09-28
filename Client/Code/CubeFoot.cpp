@@ -14,15 +14,13 @@ HRESULT CCubeFoot::Ready_Object(void)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
-	m_pTransform->Set_Scale(0.5f, 1.f, 0.5f);
+	m_pTransform->Set_Scale(0.05f, 0.1f, 0.05f);
 
 	return S_OK;
 }
 
 _int CCubeFoot::Update_Object(const _float & fTimeDelta)
 {
-	Key_Input(fTimeDelta);
-
 	CGameObject::Update_Object(fTimeDelta);
 
 	Add_RenderGroup(RENDER_NONALPHA, this);
@@ -41,10 +39,6 @@ void CCubeFoot::Render_Object(void)
 
 	m_pTexture->Set_Texture(0);
 	m_pCube->Render_Buffer();
-}
-
-void CCubeFoot::Key_Input(const _float & fTimeDelta)
-{
 }
 
 HRESULT CCubeFoot::Add_Component(void)

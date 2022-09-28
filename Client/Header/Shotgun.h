@@ -23,13 +23,12 @@ public:
 
 private:
 	HRESULT			Add_Component(void);
-	HRESULT			Add_Parts();
 	HRESULT			Get_Parts(void);
-	void			Set_OnTerrain(void);						//	지형 타기
+	void			Set_OnTerrain(void);
 
-	void			Assemble(void);								//	몸체 조립
+	void			Assemble(void);
 
-	void			Animation_Fire(void);						//	걷는 모션
+	void			Animation_Fire(void);
 
 public:
 	static CShotgun*	Create(LPDIRECT3DDEVICE9 pGraphicDev);

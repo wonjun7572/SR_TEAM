@@ -37,8 +37,6 @@ void CSniper::LateUpdate_Object(void)
 	FAILED_CHECK_RETURN(Add_Parts(), );
 	FAILED_CHECK_RETURN(Get_Parts(), );
 	CGameObject::LateUpdate_Object();
-
-	//Animation_Fire();
 }
 
 void CSniper::Render_Object(void)

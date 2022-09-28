@@ -39,8 +39,6 @@ Engine::_int CStaticCamera::Update_Object(const _float& fTimeDelta)
 {
 	Key_Input(fTimeDelta);
 
-	//Target_Renewal();
-
 	Look_Taget();
 
 	Mouse_Fix();
@@ -101,34 +99,6 @@ void CStaticCamera::Key_Input(const _float& fTimeDelta)
 	//}
 }
 
-void CStaticCamera::Target_Renewal(void)
-{
-	if (!m_pPlayerTransform)
-	{
-		m_pPlayerTransform = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Character", L"BODY", L"Proto_TransformCom", ID_DYNAMIC));
-		NULL_CHECK(m_pPlayerTransform);
-	}
-
-	_vec3	vLook;
-	m_pPlayerTransform->Get_Info(INFO_LOOK, &vLook);
-
-	m_vEye = vLook * -1.f;	// ¹æÇâ º¤ÅÍ
-	D3DXVec3Normalize(&m_vEye, &m_vEye);
-
-	m_vEye.y = 1.f;
-	m_vEye *= m_fDistance;	// ¹æÇâ º¤ÅÍ
-
-	_vec3		vRight;
-	memcpy(&vRight, &m_pPlayerTransform->m_matWorld.m[0][0], sizeof(_vec3));
-
-	_matrix		matRot;
-	D3DXMatrixRotationAxis(&matRot, &vRight, m_fAngle);
-	D3DXVec3TransformNormal(&m_vEye, &m_vEye, &matRot);
-
-	m_vEye += m_pPlayerTransform->m_vInfo[INFO_POS];
-	m_vAt = m_pPlayerTransform->m_vInfo[INFO_POS];
-}
-
 void CStaticCamera::Mouse_Fix(void)
 {
 	POINT	pt{ WINCX >> 1 , WINCY >> 1 };
@@ -154,7 +124,7 @@ void CStaticCamera::Look_Taget(void)
 	_vec3 vUp;
 	m_pTransform_Target->Get_Info(INFO_UP, &vUp);
 
-	m_vEye = (vLook * -2.f) + (vUp * 1.f);
+	m_vEye = (vLook * -0.2f) + (vUp * 0.1f);
 	D3DXVec3Normalize(&m_vEye, &m_vEye);
 
 	//m_vEye.y = 1.f;

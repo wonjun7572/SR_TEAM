@@ -33,13 +33,8 @@ _int CShotgun::Update_Object(const _float & fTimeDelta)
 
 void CShotgun::LateUpdate_Object(void)
 {
-
-
-	FAILED_CHECK_RETURN(Add_Parts(), );
 	FAILED_CHECK_RETURN(Get_Parts(), );
 	CGameObject::LateUpdate_Object();
-
-	//Animation_Fire();
 }
 
 void CShotgun::Render_Object(void)
@@ -52,54 +47,16 @@ HRESULT CShotgun::Add_Component(void)
 	return S_OK;
 }
 
-HRESULT CShotgun::Add_Parts()
-{
-	if (!m_bPartInit)
-	{
-		CGameObject*m_pShotgunCreate1 = CShotgunPart1::Create(m_pGraphicDev);
-		CGameObject*m_pShotgunCreate2 = CShotgunPart2::Create(m_pGraphicDev);
-		CGameObject*m_pShotgunCreate3 = CShotgunPart3::Create(m_pGraphicDev);
-		CGameObject*m_pShotgunCreate4 = CShotgunPart4::Create(m_pGraphicDev);
-
-
-		TCHAR* szFinalName = new TCHAR[64];
-		wsprintf(szFinalName, L"ShotgunPart1");
-		Engine::Add_GameObject(L"Layer_GameLogic", m_pShotgunCreate1, szFinalName);
-		m_liszFinalName.push_back(szFinalName);
-
-		TCHAR* szFinalName2 = new TCHAR[64];
-		wsprintf(szFinalName2, L"ShotgunPart2");
-		Engine::Add_GameObject(L"Layer_GameLogic", m_pShotgunCreate2, szFinalName2);
-		m_liszFinalName.push_back(szFinalName2);
-
-		TCHAR* szFinalName3 = new TCHAR[64];
-		wsprintf(szFinalName3, L"ShotgunPart3");
-		Engine::Add_GameObject(L"Layer_GameLogic", m_pShotgunCreate3, szFinalName3);
-		m_liszFinalName.push_back(szFinalName3);
-
-		TCHAR* szFinalName4 = new TCHAR[64];
-		wsprintf(szFinalName4, L"ShotgunPart4");
-		Engine::Add_GameObject(L"Layer_GameLogic", m_pShotgunCreate4, szFinalName4);
-		m_liszFinalName.push_back(szFinalName4);
-		
-		m_bPartInit = true;
-
-	}
-	return S_OK;
-}
-
 HRESULT CShotgun::Get_Parts(void)
 {
-	m_pPart1 = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_GameLogic", L"ShotgunPart1", L"Proto_TransformCom", ID_DYNAMIC));
+	m_pPart1 = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Gun", L"Shotgun_Part_1", L"Proto_TransformCom", ID_DYNAMIC));
 	NULL_CHECK_RETURN(m_pPart1, E_FAIL);
-	m_pPart2 = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_GameLogic", L"ShotgunPart2", L"Proto_TransformCom", ID_DYNAMIC));
+	m_pPart2 = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Gun", L"Shotgun_Part_2", L"Proto_TransformCom", ID_DYNAMIC));
 	NULL_CHECK_RETURN(m_pPart2, E_FAIL);
-	m_pPart3 = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_GameLogic", L"ShotgunPart3", L"Proto_TransformCom", ID_DYNAMIC));
+	m_pPart3 = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Gun", L"Shotgun_Part_3", L"Proto_TransformCom", ID_DYNAMIC));
 	NULL_CHECK_RETURN(m_pPart3, E_FAIL);
-	m_pPart4 = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_GameLogic", L"ShotgunPart4", L"Proto_TransformCom", ID_DYNAMIC));
+	m_pPart4 = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Gun", L"Shotgun_Part_4", L"Proto_TransformCom", ID_DYNAMIC));
 	NULL_CHECK_RETURN(m_pPart4, E_FAIL);
-	//m_pPart5 = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_GameLogic", L"ShotgunPart5", L"Proto_TransformCom", ID_DYNAMIC));
-	//NULL_CHECK_RETURN(m_pPart5, E_FAIL);
 	return S_OK;
 }
 
@@ -115,14 +72,11 @@ void CShotgun::Assemble(void)
 	m_pPart2->Set_Pos(vBodyPos.x - 0.8f*1.5f, vBodyPos.y + 0.2f*1.5f, vBodyPos.z);
 	m_pPart3->Set_Pos(vBodyPos.x - 0.6f*1.5f, vBodyPos.y + 0.075f*1.5f, vBodyPos.z);
 
-	//
-	//cout << vBodyPos.y << endl;
 }
 
 void CShotgun::Animation_Fire(void)
 {
 }
-
 
 void CShotgun::Set_OnTerrain(void)
 {
@@ -155,13 +109,6 @@ CShotgun * CShotgun::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 
 void CShotgun::Free(void)
 {
-	for (auto& iter : m_liszFinalName)
-	{
-		if (iter != nullptr)
-			delete iter;
-	}
-
-	m_liszFinalName.clear();
-	CGameObject::Free();
+	CWeapon::Free();
 }
 
