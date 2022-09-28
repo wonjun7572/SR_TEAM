@@ -59,19 +59,11 @@ HRESULT CStage::Ready_Scene(void)
 
 	FAILED_CHECK_RETURN(Ready_Layer_Gun(L"Layer_Gun"), E_FAIL);
 
-	// 툴을 위한 레이어 생성
-	//FAILED_CHECK_RETURN(Ready_Layer_Tool(L"Layer_Tool"), E_FAIL);
-
 	return S_OK;
 }
 
 _int CStage::Update_Scene(const _float & fTimeDelta)
 {
-	// 스테이지에서 이렇게 업데이트 해주고있음.
-	/*CImGuiMgr::GetInstance()->WindowLayOut();
-	CImGuiMgr::GetInstance()->TerrainTool(m_pGraphicDev, this);
-	CImGuiMgr::GetInstance()->CreateObject(m_pGraphicDev, this, m_pCam);*/
-
 	return Engine::CScene::Update_Scene(fTimeDelta);
 }
 
@@ -82,7 +74,6 @@ void CStage::LateUpdate_Scene(void)
 
 void CStage::Render_Scene(void)
 {
-
 }
 
 HRESULT CStage::Ready_Layer_Environment(const _tchar * pLayerTag)
@@ -91,27 +82,18 @@ HRESULT CStage::Ready_Layer_Environment(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pLayer, E_FAIL);
 
 	CGameObject*		pGameObject = nullptr;
-
-	#pragma region 스테이즈 1 코드
-	//DynamicCamera
-	//pGameObject = CDynamicCamera::Create(m_pGraphicDev, &_vec3(0.f, 20.f, -10.f), &_vec3(0.f, 0.f, 0.f), &_vec3(0.f, 15.f, 0.f));
-	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"DynamicCamera", pGameObject), E_FAIL);
-	//m_pCam = dynamic_cast<CDynamicCamera*>(pGameObject);
 	
-	//StaticCamera
+	// StaticCamera
 	pGameObject = CStaticCamera::Create(m_pGraphicDev, &_vec3(0.f, 20.f, -10.f), &_vec3(0.f, 0.f, 0.f), &_vec3(0.f, 1.f, 0.f));
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"StaticCamera", pGameObject), E_FAIL);
 	
-	//Terrain
+	// Terrain
 	pGameObject = CTerrain::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Terrain", pGameObject), E_FAIL);
 
-#pragma endregion 스테이즈 1 코드
-
-	// sky box
+	// Sky box
 	pGameObject = CSkyBox::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"SkyBox", pGameObject), E_FAIL);
@@ -128,6 +110,7 @@ HRESULT CStage::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 
 	CGameObject*		pGameObject = nullptr;
 
+	// 충돌 테스트를 위한 테스트 플레이어
 	pGameObject = CTestPlayer::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"TestPlayer0", pGameObject), E_FAIL);
@@ -176,7 +159,6 @@ HRESULT CStage::Ready_Layer_Character(const _tchar * pLayerTag)
 
 	CGameObject*		pGameObject = nullptr;
 
-	#pragma region 큐브 플레이어 잠가 놓았음 툴때문에 
 	//	머리
 	pGameObject = CCubeHead::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
@@ -222,7 +204,6 @@ HRESULT CStage::Ready_Layer_Character(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"PLAYER", pGameObject), E_FAIL);
 
-#pragma endregion 큐브 플레이어 잠가 놓았음 툴때문에 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
 	return S_OK;
@@ -326,8 +307,6 @@ HRESULT CStage::Ready_Layer_Gun(const _tchar * pLayerTag)
 	pGameObject = CUziPart5::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Uzi_Part_2_5", pGameObject), E_FAIL);
-
-
 
 	pGameObject = CShotgun::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);

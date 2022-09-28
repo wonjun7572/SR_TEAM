@@ -1,10 +1,10 @@
 #pragma once
 #include "GameObject.h"
 #include "Engine_Include.h"
-#include "Loading.h"
 
 #include "Scene.h"
 #include "Loading.h"
+
 BEGIN(Engine)
 
 class CRcTex;
@@ -12,6 +12,7 @@ class CTexture;
 class CTransform;
 class CScene;
 
+END
 
 class CPlayButton :	public CGameObject
 {
@@ -35,7 +36,6 @@ private:
 	CRcTex*			m_RcTexCom = nullptr;
 	CTransform*		m_TranformCom = nullptr;
 	CTexture*		m_TextureCom = nullptr;
-
 	CLoading*		m_pLoading = nullptr;
 
 public:
@@ -44,9 +44,8 @@ public:
 private:
 	_bool		Mouse_check = false;
 	_bool		PointMouse(void);
-private:
 
+private:
 	virtual void Free(void);
 };
 
-END

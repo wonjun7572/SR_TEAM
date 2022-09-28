@@ -27,8 +27,6 @@ public:
 private:
 	HRESULT			SetUp_DefaultSetting(LPDIRECT3DDEVICE9* ppGraphicDev);
 	HRESULT			Ready_Scene(LPDIRECT3DDEVICE9 pGraphicDev, Engine::CManagement** ppManagement);
-	
-	void			Render_ImgUI();
 
 private:
 	Engine::CGraphicDev*			m_pDeviceClass = nullptr;

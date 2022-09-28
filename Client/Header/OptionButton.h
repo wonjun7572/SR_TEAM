@@ -1,5 +1,6 @@
 #pragma once
 #include "GameObject.h"
+
 BEGIN(Engine)
 
 class CRcTex;
@@ -7,8 +8,7 @@ class CTransform;
 class CTexture;
 END
 
-class COptionButton :
-	public CGameObject
+class COptionButton : public CGameObject
 {
 public:
 	explicit COptionButton(LPDIRECT3DDEVICE9 pGraphicDev);
@@ -30,8 +30,10 @@ private:
 
 	_bool		PointMouse(void);
 	_bool		Mouse_check = false;
+
 public:
 	static COptionButton* Create(LPDIRECT3DDEVICE9 pGraphicDev);
+
 private:
 	virtual void Free(void);
 };

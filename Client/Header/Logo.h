@@ -1,13 +1,12 @@
 #pragma once
 
-//#include "Engine_Include.h"
 #include "Scene.h"
-
-#include "BackGround.h"
 #include "Loading.h"
+#include "BackGround.h"
 #include "PlayButton.h"
 #include "OptionButton.h"
 #include "LoadingScene.h"
+
 class CLogo : public Engine::CScene
 {
 private:
@@ -29,11 +28,11 @@ private:
 private:
 	CLoading*			m_pLoading = nullptr;
 	CPlayButton*		m_PlayButton = nullptr;
+
 public:
 	static CLogo*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
 private:
 	virtual void	Free(void);
-
 };
 

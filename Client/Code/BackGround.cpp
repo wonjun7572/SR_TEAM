@@ -16,16 +16,12 @@ CBackGround::~CBackGround()
 HRESULT CBackGround::Ready_Object(void)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
-
-	
 	
 	return S_OK;
 }
 
 Engine::_int CBackGround::Update_Object(const _float& fTimeDelta)
 {
-	
-
 	Engine::CGameObject::Update_Object(fTimeDelta);
 
 	Add_RenderGroup(RENDER_PRIORITY, this);
