@@ -408,6 +408,9 @@
     <ClInclude Include="..\Header\HealthPotion.h">
       <Filter>02. GameObject\01. For_Stage\10. Item\HP</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\PlayerHpUI.h">
+      <Filter>02. GameObject\01. For_Stage\09. UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -622,6 +625,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\HealthPotion.cpp">
       <Filter>02. GameObject\01. For_Stage\10. Item\HP</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\PlayerHpUI.cpp">
+      <Filter>02. GameObject\01. For_Stage\09. UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

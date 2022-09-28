@@ -11,7 +11,6 @@ public:
 	CRITICAL_SECTION		Get_Crt()		{ return m_Crt;	}
 	_bool					Get_Finish()	{ return m_bFinish; }
 	LOADINGID				Get_LoadingID() { return m_eID; }
-	const _tchar*			Get_String(void) { return m_szLoading; }
 
 public:
 	HRESULT		Ready_Loading(LOADINGID eID);
@@ -28,7 +27,6 @@ private:
 	LPDIRECT3DDEVICE9		m_pGraphicDev;
 	LOADINGID				m_eID;
 	_bool					m_bFinish;
-	_tchar					m_szLoading[128];
 
 public:
 	static CLoading*		Create(LPDIRECT3DDEVICE9 pGraphicDev, LOADINGID eID);

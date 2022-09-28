@@ -183,6 +183,7 @@
     <ClInclude Include="..\Header\MainApp.h" />
     <ClInclude Include="..\Header\OptionButton.h" />
     <ClInclude Include="..\Header\PlayButton.h" />
+    <ClInclude Include="..\Header\PlayerHpUI.h" />
     <ClInclude Include="..\Header\PlayerUI.h" />
     <ClInclude Include="..\Header\PoolMgr.h" />
     <ClInclude Include="..\Header\Shotgun.h" />
@@ -262,6 +263,7 @@
     <ClCompile Include="..\Code\MainApp.cpp" />
     <ClCompile Include="..\Code\OptionButton.cpp" />
     <ClCompile Include="..\Code\PlayButton.cpp" />
+    <ClCompile Include="..\Code\PlayerHpUI.cpp" />
     <ClCompile Include="..\Code\PlayerUI.cpp" />
     <ClCompile Include="..\Code\PoolMgr.cpp" />
     <ClCompile Include="..\Code\Shotgun.cpp" />
