@@ -38,12 +38,6 @@ _bool CCollision::Check_Collision(void)
 	D3DXVec3TransformCoord(&m_vMin2, &m_vMin2, pDstTrans->Get_WorldMatrixPointer());
 	D3DXVec3TransformCoord(&m_vMax2, &m_vMax2, pDstTrans->Get_WorldMatrixPointer());
 
-
-	/*
-	if ( ((m_vMin1.x <= m_vMax2.x && m_vMax1.x >= m_vMin2.x) || (m_vMin1.x >= m_vMax2.x && m_vMax1.x <= m_vMin2.x)) &&
-		((m_vMin1.y <= m_vMax2.y && m_vMax1.y >= m_vMin2.y) || (m_vMin1.y >= m_vMax2.y && m_vMax1.y <= m_vMin2.y)) &&
-		((m_vMin1.z <= m_vMax2.z && m_vMax1.z >= m_vMin2.z) || (m_vMin1.z >= m_vMax2.z && m_vMax1.z <= m_vMin2.z)))
-	*/
 	if (m_vMin1.x <= m_vMax2.x && m_vMax1.x >= m_vMin2.x &&
 		m_vMin1.y <= m_vMax2.y && m_vMax1.y >= m_vMin2.y &&
 		m_vMin1.z <= m_vMax2.z && m_vMax1.z >= m_vMin2.z)
@@ -51,13 +45,6 @@ _bool CCollision::Check_Collision(void)
 		cout << "AAAAAAAAAAAAAAAAAAAAAAAAA" << endl;
 		return true;
 	}
-	/*if (m_vMin1.x <= m_vMax2.x && m_vMax1.x >= m_vMin2.x)
-		cout << "X" << endl;
-	if (m_vMin1.y <= m_vMax2.y && m_vMax1.y >= m_vMin2.y)
-		cout << "Y" << endl;
-	if (m_vMin1.z <= m_vMax2.z && m_vMax1.z >= m_vMin2.z)
-		cout << "Z" << endl;*/
-
 
 	return false;
 }

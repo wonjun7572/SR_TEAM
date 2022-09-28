@@ -327,9 +327,27 @@ HRESULT CStage::Ready_Layer_Gun(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Uzi_Part_2_5", pGameObject), E_FAIL);
 
-	//pGameObject = CShotgun::Create(m_pGraphicDev);
-	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"SHOTGUN", pGameObject), E_FAIL);
+
+
+	pGameObject = CShotgun::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"SHOTGUN", pGameObject), E_FAIL);
+
+	pGameObject = CShotgunPart1::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Shotgun_Part_1", pGameObject), E_FAIL);
+
+	pGameObject = CShotgunPart2::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Shotgun_Part_2", pGameObject), E_FAIL);
+
+	pGameObject = CShotgunPart3::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Shotgun_Part_3", pGameObject), E_FAIL);
+
+	pGameObject = CShotgunPart4::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Shotgun_Part_4", pGameObject), E_FAIL);
 
 	//pGameObject = CSniper::Create(m_pGraphicDev);
 	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
@@ -339,30 +357,6 @@ HRESULT CStage::Ready_Layer_Gun(const _tchar * pLayerTag)
 
 	return S_OK;
 }
-
-//HRESULT CStage::Ready_Layer_Tool(const _tchar * pLayerTag)
-//{
-//	// 맵툴을 활용할 것이다.
-//	CImGuiMgr::GetInstance()->Ready_MapTool(m_pGraphicDev, this);
-//
-//	Engine::CLayer*		pLayer = Engine::CLayer::Create();
-//	NULL_CHECK_RETURN(pLayer, E_FAIL);
-//
-//	CGameObject*		pGameObject = nullptr;
-//
-//	// m_pCam 이 중요함
-//	pGameObject = m_pCam = CDynamicCamera::Create(m_pGraphicDev, &_vec3(0.f, 10.f, -10.f), &_vec3(0.f, 0.f, 0.f), &_vec3(0.f, 1.f, 0.f));
-//	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-//	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"DynamicCamera", pGameObject), E_FAIL);
-//
-//	pGameObject = CTerrain::Create(m_pGraphicDev);
-//	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-//	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"TerrainByTool", pGameObject), E_FAIL);
-//
-//	m_mapLayer.insert({ pLayerTag, pLayer });
-//
-//	return S_OK;
-//}
 
 HRESULT CStage::Ready_Proto(void)
 {

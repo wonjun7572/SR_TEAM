@@ -14,7 +14,7 @@ HRESULT CCubeBody::Ready_Object(void)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
-	m_pTransform->Set_Scale(1.f, 2.f, 0.5f);
+	m_pTransform->Set_Scale(0.1f, 0.2f, 0.05f);
 
 	return S_OK;
 }

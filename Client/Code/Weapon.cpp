@@ -10,7 +10,6 @@ CWeapon::CWeapon(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 }
 
-
 CWeapon::~CWeapon()
 {
 }
@@ -23,7 +22,7 @@ HRESULT CWeapon::Ready_Object(void)
 
 _int CWeapon::Update_Object(const _float & fTimeDelta)
 {
-	return _int();
+	return 0;
 }
 
 void CWeapon::LateUpdate_Object(void)

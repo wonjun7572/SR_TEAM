@@ -25,7 +25,6 @@ public:
 
 private:
 	void		Key_Input(const _float& fTimeDelta);
-	void		Target_Renewal(void);
 	void		Mouse_Fix();
 	void		Look_Taget(void);
 
