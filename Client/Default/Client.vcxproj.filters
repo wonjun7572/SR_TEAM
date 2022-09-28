@@ -166,9 +166,6 @@
     <Filter Include="01. Scene\02. LoadingScene\01. LoadingScene">
       <UniqueIdentifier>{7246b6e0-970c-49e8-9662-685760f5d99f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01. Scene\02. LoadingScene\02. MovieScene">
-      <UniqueIdentifier>{6e998195-b7fa-4745-9200-6ef903d83fd3}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">

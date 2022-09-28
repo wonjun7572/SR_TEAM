@@ -1,7 +1,27 @@
-﻿     ../Bin\Utility.lib 라이브러리 및 ../Bin\Utility.exp 개체를 생성하고 있습니다.
-  Utility.vcxproj -> C:\Users\sam51\Desktop\SR_TEAM\Engine\Utility\Default\../Bin\Utility.dll
+﻿  건너뛰고 있습니다... (관련된 변경 내용 없음)
+  Collision.cpp
+  TriCol.cpp
+  Texture.cpp
+  TerrainTex.cpp
+  SphereTex.cpp
+  SoundMgr.cpp
+  Scene.cpp
+  Renderer.cpp
+  RcTex.cpp
+  RcCol.cpp
+  ProtoMgr.cpp
+  Management.cpp
+  LightMgr.cpp
+  Light.cpp
+  Layer.cpp
+  Hitbox.cpp
+  GameObject.cpp
+  CubeTex.cpp
+  Component.cpp
+  Utility.vcxproj -> C:\Users\beoms\OneDrive\문서\GitHub\SR_TEAM\Engine\Utility\Default\../Bin\Utility.dll
   Utility.vcxproj -> ../Bin\Utility.pdb (Full PDB)
-          1개 파일이 복사되었습니다.
+  다른 프로세스가 파일을 사용 중이기 때문에 프로세스가 액세스 할 수 없습니다.
+          0개 파일이 복사되었습니다.
           1개 파일이 복사되었습니다.
   .\Engine\Header\Calculator.h
   .\Engine\Header\Camera.h
@@ -34,6 +54,7 @@
   .\Engine\Header\Hitbox.h
   .\Engine\Header\InputDev.h
   .\Engine\Header\InputMgr.h
+  .\Engine\Header\Interface.h
   .\Engine\Header\Layer.h
   .\Engine\Header\Light.h
   .\Engine\Header\LightMgr.h
@@ -41,6 +62,7 @@
   .\Engine\Header\MyFont.h
   .\Engine\Header\ProtoMgr.h
   .\Engine\Header\RcCol.h
+  .\Engine\Header\RcRD.h
   .\Engine\Header\RcTex.h
   .\Engine\Header\Renderer.h
   .\Engine\Header\Scene.h
@@ -53,4 +75,4 @@
   .\Engine\Header\Transform.h
   .\Engine\Header\TriCol.h
   .\Engine\Header\VIBuffer.h
-         50개 파일이 복사되었습니다.
+         52개 파일이 복사되었습니다.

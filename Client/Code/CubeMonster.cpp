@@ -196,7 +196,7 @@ void CCubeMonster::Assemble(void)
 
 void CCubeMonster::Axis(void)
 {
-	
+	m_pMbody->
 }
 
 
