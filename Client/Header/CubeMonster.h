@@ -32,6 +32,10 @@ public:
 
 	virtual _int CurrentMonster(_float fTimeDelta);
 	virtual void ChangeCurrent(CurrentState::MONSTERID Idstate);
+
+
+
+
 public:
 	//HP값을 들고오면 되지않을까 death나 여러가지 기타 값요소들을 안에다가 넣어주는 형식
 	_float		Get_CurrentHP() { return m_MonsterState.fCurrentHp; }
