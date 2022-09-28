@@ -9,7 +9,6 @@ CLoadingScene::CLoadingScene(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 }
 
-
 CLoadingScene::~CLoadingScene()
 {
 }
@@ -74,19 +73,12 @@ HRESULT CLoadingScene::Ready_GameLogic_Layer(const _tchar * pLayerTag)
 
 	Engine::CGameObject*		pGameObject = nullptr;
 
-
 	//backGround
-
 	pGameObject = CBackGround::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"BackGround", pGameObject), E_FAIL);
 
-
-
-
 	//LoadBar
-
-
 	pGameObject = CLoadBar::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"LoadBar", pGameObject), E_FAIL);
@@ -104,11 +96,8 @@ HRESULT CLoadingScene::Ready_UI_Layer(const _tchar * pLayerTag)
 
 HRESULT CLoadingScene::Ready_Proto(void)
 {
-	
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_LoadingTexture", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Title/bg_antarctic.png", TEX_NORMAL)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_LoadingTexCom", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Texture2D/fade_horizontal.png", TEX_NORMAL)), E_FAIL);
-
-
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_TransformCom", CTransform::Create(m_pGraphicDev)), E_FAIL);
 
 	return S_OK;

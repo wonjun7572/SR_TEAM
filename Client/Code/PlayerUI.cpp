@@ -15,17 +15,16 @@ CPlayerUI::~CPlayerUI()
 HRESULT CPlayerUI::Ready_Object(void)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
-
+	
 	return S_OK;
 }
 
 Engine::_int CPlayerUI::Update_Object(const _float& fTimeDelta)
 {
 	_int iResult = CGameObject::Update_Object(fTimeDelta);
-
 	Add_RenderGroup(RENDER_UI, this);
 
-	return iResult;
+		return iResult;
 }
 
 void CPlayerUI::LateUpdate_Object(void)
