@@ -325,7 +325,9 @@ void CCubePlayer::Look_Direction(void)
 	_long MoveX = Get_DIMouseMove(DIMS_X);
 	_long MoveY = Get_DIMouseMove(DIMS_Y);
 	_long MoveZ = Get_DIMouseMove(DIMS_Z);
-
+	cout << MoveX << endl;
+	cout << MoveY << endl;
+	cout << MoveZ << endl;
 	m_pBodyWorld->Rotation(ROT_Y, D3DXToRadian(MoveX / 10.f));
 	m_fLookAngle -= D3DXToRadian(MoveX / 10.f);
 
