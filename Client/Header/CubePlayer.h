@@ -37,6 +37,7 @@ public:
 	virtual void	LateUpdate_Object(void) override;
 	virtual void	Render_Object(void) override;
 
+public:
 	CWeapon*		Get_Weapon() { return m_Weapon; }
 
 private:
@@ -112,11 +113,7 @@ private:
 
 	_bool			m_bUzi = true;
 
-	// 떨어져있는 무기를 주우면 벡터에 푸쉬백
 	vector<CWeapon*> m_vecWeapon;
-
-	//_vec3			m_vDirection = { 0.f, 0.f, 0.f };
-	//_vec3			m_vBeforePos = { 10.f, 10.f, 10.f };
 
 public:
 	static CCubePlayer*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
