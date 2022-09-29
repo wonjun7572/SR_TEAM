@@ -38,11 +38,13 @@ _int CCubePlayer::Update_Object(const _float & fTimeDelta)
 
 	Move();
 
-	//cout << m_vDirection.x << " " << m_vDirection.y << " " << m_vDirection.z << endl;
-
 	Animation();
 
+	Assemble();
+
 	TransAxis();
+
+	//cout << m_vDirection.x << " " << m_vDirection.y << " " << m_vDirection.z << endl;
 
 	Gun_Check();
 
@@ -62,11 +64,7 @@ void CCubePlayer::LateUpdate_Object(void)
 
 	Look_Direction();
 
-	Assemble();
-
 	Fire_Bullet();
-
-	//m_pHitBox->Get_MinMax(&m_vMin, &m_vMax);
 
 	m_pCollision->Check_Collision();
 
@@ -274,7 +272,7 @@ void CCubePlayer::Move()
 {
 	////////////방향체크용////////////////
 	_vec3 vPos;
-	m_pBodyWorld->Get_Info(INFO_POS, &vPos);
+	m_pBodyWorld->Get_BeforeInfo(INFO_POS, &vPos);
 	////////////방향체크용////////////////
 
 	_vec3	vDir(0, 0, 0);
