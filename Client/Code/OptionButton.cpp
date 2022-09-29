@@ -13,9 +13,12 @@ COptionButton::~COptionButton()
 
 HRESULT COptionButton::Ready_Object(void)
 {
+	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"OptionButton", L"Roboto-Bold", 15, 15, FW_NORMAL), E_FAIL);
+	m_strOB = L"Option Button";
+
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
-	m_pTransformCom->Set_Scale(0.3f, 0.1f, 0.f);
-	m_pTransformCom->Set_Pos(0.65f, 0.45f, 0.f);
+	m_pTransformCom->Set_Scale(0.28, 0.12f, 0.f);
+	m_pTransformCom->Set_Pos(0.65f, 0.12f, 0.f);
 	return S_OK;
 }
 
@@ -42,9 +45,27 @@ void COptionButton::LateUpdate_Object(void)
 
 void COptionButton::Render_Object(void)
 {
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrixPointer());
-	m_pTextureCom->Set_Texture(0);
+	
+	Begin_OrthoProj();
+	m_iIndex = 0;
+	m_pTextureCom->Set_Texture(m_iIndex);
+
+	if (PointMouse())
+	{
+		{
+			if (Checking = true)
+			{
+				m_iIndex = 1;
+				m_pTextureCom->Set_Texture(m_iIndex);
+			}
+		}
+	}
+
+
 	m_pRcTexCom->Render_Buffer();
+
+	Render_Font(L"OptionButton", m_strOB.c_str(), &_vec2(580.f, 255.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+	End_OrthoProj();
 }
 
 HRESULT COptionButton::Add_Component(void)
@@ -64,6 +85,39 @@ HRESULT COptionButton::Add_Component(void)
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_TransformCom", pComponent });
 
 	return S_OK;
+}
+
+void COptionButton::Begin_OrthoProj()
+{
+	_matrix matWorld, matView, matProj, matOrtho;
+	m_pGraphicDev->GetTransform(D3DTS_WORLD, &matWorld);
+	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
+	m_pGraphicDev->GetTransform(D3DTS_PROJECTION, &matProj);
+
+	memcpy(&m_matWorld, &matWorld, sizeof(_matrix));
+	memcpy(&m_matView, &matView, sizeof(_matrix));
+	memcpy(&m_matProj, &matProj, sizeof(_matrix));
+
+	D3DXMatrixIdentity(&matWorld);
+	D3DXMatrixIdentity(&matView);
+
+	matView.m[0][0] = 250.f; // 이미지 가로
+	matView.m[1][1] = 50.f; // 이미지 세로
+	matView.m[2][2] = 1.f;
+	matView.m[3][0] = m_pTransformCom->m_vInfo[INFO_POS].x + 550.f;
+	matView.m[3][1] = m_pTransformCom->m_vInfo[INFO_POS].y + 50.f;
+
+	D3DXMatrixOrthoLH(&matOrtho, WINCX, WINCY, 0.f, 1.f);
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, &matWorld);
+	m_pGraphicDev->SetTransform(D3DTS_VIEW, &matView);
+	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &matOrtho);
+}
+
+void COptionButton::End_OrthoProj()
+{
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, &m_matWorld);
+	m_pGraphicDev->SetTransform(D3DTS_VIEW, &m_matView);
+	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &m_matProj);
 }
 
 COptionButton * COptionButton::Create(LPDIRECT3DDEVICE9 pGraphicDev)

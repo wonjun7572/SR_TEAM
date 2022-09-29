@@ -28,8 +28,24 @@ private:
 private:
 	HRESULT		Add_Component(void);
 
+private:
+
+	void		Begin_OrthoProj();
+	void		End_OrthoProj();
+
+
+private:
+
 	_bool		PointMouse(void);
 	_bool		Mouse_check = false;
+	_bool		Checking = false;
+
+	_matrix m_matWorld;
+	_matrix m_matView;
+	_matrix m_matProj;
+
+	wstring m_strOB;
+	_int	m_iIndex = 0;
 
 public:
 	static COptionButton* Create(LPDIRECT3DDEVICE9 pGraphicDev);

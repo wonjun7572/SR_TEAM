@@ -174,6 +174,7 @@
     <ClInclude Include="..\Header\CubeMonsterHead.h" />
     <ClInclude Include="..\Header\CubePlayer.h" />
     <ClInclude Include="..\Header\DynamicCamera.h" />
+    <ClInclude Include="..\Header\ExitButton.h" />
     <ClInclude Include="..\Header\GunUI.h" />
     <ClInclude Include="..\Header\HealthPotion.h" />
     <ClInclude Include="..\Header\ImguiMgr.h" />
@@ -182,6 +183,7 @@
     <ClInclude Include="..\Header\Loading.h" />
     <ClInclude Include="..\Header\LoadingScene.h" />
     <ClInclude Include="..\Header\Logo.h" />
+    <ClInclude Include="..\Header\LogoUI.h" />
     <ClInclude Include="..\Header\MainApp.h" />
     <ClInclude Include="..\Header\OptionButton.h" />
     <ClInclude Include="..\Header\PlayButton.h" />
@@ -258,6 +260,7 @@
     <ClCompile Include="..\Code\CubeMonsterHead.cpp" />
     <ClCompile Include="..\Code\CubePlayer.cpp" />
     <ClCompile Include="..\Code\DynamicCamera.cpp" />
+    <ClCompile Include="..\Code\ExitButton.cpp" />
     <ClCompile Include="..\Code\GunUI.cpp" />
     <ClCompile Include="..\Code\HealthPotion.cpp" />
     <ClCompile Include="..\Code\ImguiMgr.cpp" />
@@ -266,6 +269,7 @@
     <ClCompile Include="..\Code\Loading.cpp" />
     <ClCompile Include="..\Code\LoadingScene.cpp" />
     <ClCompile Include="..\Code\Logo.cpp" />
+    <ClCompile Include="..\Code\LogoUI.cpp" />
     <ClCompile Include="..\Code\MainApp.cpp" />
     <ClCompile Include="..\Code\OptionButton.cpp" />
     <ClCompile Include="..\Code\PlayButton.cpp" />
