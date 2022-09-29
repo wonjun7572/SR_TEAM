@@ -1,103 +1,89 @@
-﻿빌드 시작: 2022-09-29 오후 4:35:04
-     1>2 노드의 "D:\GitHub\SR_TEAM\Client\Default\Client.vcxproj" 프로젝트(Build 대상)입니다.
-     1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /I../Default /I../Header /I../Code /I../../Reference/Header /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Yu"stdafx.h" /Fp"Debug\Client.pch" /Fo"Debug\\" /Fd"Debug\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt ..\Code\BulletUI.cpp ..\Code\CubeMonster.cpp ..\Code\CubePlayer.cpp ..\Code\GunUI.cpp ..\Code\PlayerHpUI.cpp ..\Code\Shotgun.cpp ..\Code\Stage.cpp ..\Code\Uzi.cpp PlayerDefenseUI.cpp PlayerFaceUI.cpp
-         CubePlayer.cpp
-         코드를 생성하고 있습니다...
-         건너뛰고 있습니다... (관련된 변경 내용 없음)
-         PlayerFaceUI.cpp
-         PlayerDefenseUI.cpp
-         Uzi.cpp
-         Stage.cpp
-         Shotgun.cpp
-         PlayerHpUI.cpp
-         GunUI.cpp
-         CubeMonster.cpp
-         BulletUI.cpp
-       Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"../Bin\Client.exe" /INCREMENTAL /NOLOGO /LIBPATH:../../Reference/Library d3d9.lib d3dx9.lib dxguid.lib System.lib Utility.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"../Bin\Client.pdb" /SUBSYSTEM:WINDOWS /LARGEADDRESSAWARE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"../Bin\Client.lib" /MACHINE:X86 Debug\Client.res
-         Debug\BackGround.obj
-         Debug\Bullet.obj
-         Debug\BulletUI.obj
-         Debug\CubeArm.obj
-         Debug\CubeBody.obj
-         Debug\CubeFoot.obj
-         Debug\CubeHand.obj
-         Debug\CubeHead.obj
-         Debug\CubeLeg.obj
-         Debug\CubeMonster.obj
-         Debug\CubeMonsterArm.obj
-         Debug\CubeMonsterBody.obj
-         Debug\CubeMonsterHead.obj
-         Debug\CubePlayer.obj
-         Debug\DynamicCamera.obj
-         Debug\ExitButton.obj
-         Debug\GunUI.obj
-         Debug\HealthPotion.obj
-         Debug\ImguiMgr.obj
-         Debug\Item.obj
-         Debug\LoadBar.obj
-         Debug\Loading.obj
-         Debug\LoadingScene.obj
-         Debug\Logo.obj
-         Debug\LogoUI.obj
-         Debug\MainApp.obj
-         Debug\OptionButton.obj
-         Debug\PlayButton.obj
-         Debug\PlayerHpUI.obj
-         Debug\PlayerUI.obj
-         Debug\PoolMgr.obj
-         Debug\Shotgun.obj
-         Debug\ShotgunPart1.obj
-         Debug\ShotgunPart2.obj
-         Debug\ShotgunPart3.obj
-         Debug\ShotgunPart4.obj
-         Debug\ShotgunPart5.obj
-         Debug\SkyBox.obj
-         Debug\Sniper.obj
-         Debug\SniperPart1.obj
-         Debug\SniperPart2.obj
-         Debug\SniperPart3.obj
-         Debug\SniperPart4.obj
-         Debug\Stage.obj
-         Debug\StaticCamera.obj
-         Debug\Terrain.obj
-         Debug\TestCube.obj
-         Debug\TestMonster.obj
-         Debug\TestPlayer.obj
-         Debug\ToolScene.obj
-         Debug\Uzi.obj
-         Debug\UziPart1.obj
-         Debug\UziPart2.obj
-         Debug\UziPart3.obj
-         Debug\UziPart4.obj
-         Debug\UziPart5.obj
-         Debug\Wall.obj
-         Debug\WallMgr.obj
-         Debug\Weapon.obj
-         Debug\WeaponUI.obj
-         Debug\Client.obj
-         Debug\GraphEditor.obj
-         Debug\ImCurveEdit.obj
-         Debug\ImGradient.obj
-         Debug\imgui.obj
-         Debug\ImGuiFileBrowser.obj
-         Debug\ImGuiFileDialog.obj
-         Debug\ImGuizmo.obj
-         Debug\imgui_demo.obj
-         Debug\imgui_draw.obj
-         Debug\imgui_impl_dx9.obj
-         Debug\imgui_impl_win32.obj
-         Debug\imgui_tables.obj
-         Debug\imgui_widgets.obj
-         Debug\ImSequencer.obj
-         Debug\PlayerDefenseUI.obj
-         Debug\PlayerFaceUI.obj
-         Debug\stdafx.obj
-            ../Bin\Client.lib 라이브러리 및 ../Bin\Client.exp 개체를 생성하고 있습니다.
-         Client.vcxproj -> D:\GitHub\SR_TEAM\Client\Default\../Bin\Client.exe
-     1>"D:\GitHub\SR_TEAM\Client\Default\Client.vcxproj" 프로젝트를 빌드했습니다(Build 대상).
-
-빌드했습니다.
-
-경과 시간: 00:00:02.66
+﻿  stdafx.cpp
+  PlayerFaceUI.cpp
+  PlayerDefenseUI.cpp
+  Client.cpp
+  WeaponUI.cpp
+  Weapon.cpp
+  WallMgr.cpp
+  WallMapping.cpp
+  Wall.cpp
+  UziPart5.cpp
+  UziPart4.cpp
+  UziPart3.cpp
+  UziPart2.cpp
+  UziPart1.cpp
+  Uzi.cpp
+  ToolScene.cpp
+  TestPlayer.cpp
+  TestMonster.cpp
+  TestCube.cpp
+  Terrain.cpp
+c:\users\decoyz\desktop\sr_team\client\code\terrain.cpp(80): warning C4101: 'expn' :참조되지 않은 지역 변수입니다.
+  StaticCamera.cpp
+  코드를 생성하고 있습니다...
+  컴파일하고 있습니다...
+  Stage.cpp
+  SniperPart4.cpp
+  SniperPart3.cpp
+  SniperPart2.cpp
+  SniperPart1.cpp
+  Sniper.cpp
+  SkyBox.cpp
+  ShotgunPart5.cpp
+  ShotgunPart4.cpp
+  ShotgunPart3.cpp
+  ShotgunPart2.cpp
+  ShotgunPart1.cpp
+  Shotgun.cpp
+  PoolMgr.cpp
+  PlayerUI.cpp
+  PlayerMapping.cpp
+  PlayerHpUI.cpp
+  PlayButton.cpp
+c:\users\decoyz\desktop\sr_team\client\code\playbutton.cpp(20): warning C4305: '인수': 'double'에서 'Engine::_float'(으)로 잘립니다.
+  OptionButton.cpp
+c:\users\decoyz\desktop\sr_team\client\code\optionbutton.cpp(20): warning C4305: '인수': 'double'에서 'Engine::_float'(으)로 잘립니다.
+  MonsterMapping.cpp
+  코드를 생성하고 있습니다...
+  컴파일하고 있습니다...
+  MainApp.cpp
+  LogoUI.cpp
+  Logo.cpp
+  LoadingScene.cpp
+  Loading.cpp
+c:\users\decoyz\desktop\sr_team\client\code\loading.cpp(87): warning C4129: 'T': 문자 이스케이프 시퀀스를 인식할 수 없습니다.
+  LoadBar.cpp
+  Item.cpp
+  ImguiMgr.cpp
+c:\users\decoyz\desktop\sr_team\client\code\imguimgr.cpp(255): warning C4390: ';': 제어된 빈 문이 있습니다. 이 문이 필요합니까?
+c:\users\decoyz\desktop\sr_team\client\code\imguimgr.cpp(257): warning C4390: ';': 제어된 빈 문이 있습니다. 이 문이 필요합니까?
+c:\users\decoyz\desktop\sr_team\client\code\imguimgr.cpp(259): warning C4390: ';': 제어된 빈 문이 있습니다. 이 문이 필요합니까?
+c:\users\decoyz\desktop\sr_team\client\code\imguimgr.cpp(275): warning C4390: ';': 제어된 빈 문이 있습니다. 이 문이 필요합니까?
+c:\users\decoyz\desktop\sr_team\client\code\imguimgr.cpp(277): warning C4390: ';': 제어된 빈 문이 있습니다. 이 문이 필요합니까?
+c:\users\decoyz\desktop\sr_team\client\code\imguimgr.cpp(279): warning C4390: ';': 제어된 빈 문이 있습니다. 이 문이 필요합니까?
+  HealthPotion.cpp
+  GunUI.cpp
+  ExitButton.cpp
+  DynamicCamera.cpp
+  CubePlayer.cpp
+  CubeMonsterHead.cpp
+  CubeMonsterBody.cpp
+  CubeMonsterArm.cpp
+  CubeMonster.cpp
+  CubeLeg.cpp
+  CubeHead.cpp
+  CubeHand.cpp
+  코드를 생성하고 있습니다...
+c:\users\decoyz\desktop\sr_team\client\code\cubeplayer.cpp(592): warning C4715: 'CCubePlayer::Player_Mapping': 모든 제어 경로에서 값을 반환하지는 않습니다.
+  컴파일하고 있습니다...
+  CubeFoot.cpp
+  CubeBody.cpp
+  CubeArm.cpp
+  BulletUI.cpp
+  Bullet.cpp
+  BaseMapping.cpp
+  BackGround.cpp
+  코드를 생성하고 있습니다...
+     ../Bin\Client.lib 라이브러리 및 ../Bin\Client.exp 개체를 생성하고 있습니다.
+  Client.vcxproj -> C:\Users\DecoyZ\Desktop\SR_TEAM\Client\Default\../Bin\Client.exe
+  Client.vcxproj -> ../Bin\Client.pdb (Full PDB)
