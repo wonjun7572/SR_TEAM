@@ -187,6 +187,21 @@
     <Filter Include="01. Scene\00. Logo\00.LogoUI">
       <UniqueIdentifier>{33ae2b03-193e-4f1d-8ce0-e17e5b2ab5a5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\11. Map">
+      <UniqueIdentifier>{18b81755-5e70-4ea3-9fd4-4b9c17357ca3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\11. Map\Mapping">
+      <UniqueIdentifier>{a7ebac72-8610-45fd-b641-4baba65d4ec1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\11. Map\Mapping\01.Player">
+      <UniqueIdentifier>{767ffe4e-3c0f-4c84-a5f4-33bbd891b59b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\11. Map\Mapping\02.Monster">
+      <UniqueIdentifier>{65079ef6-b2ef-41b4-a1fb-a7806b3b77a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\11. Map\Mapping\03.Wall">
+      <UniqueIdentifier>{b605d09d-8f91-4b75-b269-fe6afb9ddf02}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -432,14 +447,26 @@
     <ClInclude Include="..\Header\BulletUI.h">
       <Filter>02. GameObject\01. For_Stage\09. UI\Weapon</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\GunUI.h">
+      <Filter>99. Default\헤더 파일</Filter>
+    </ClInclude>
     <ClInclude Include="..\Header\ExitButton.h">
       <Filter>01. Scene\00. Logo\00. Button\03. ExitButton</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\LogoUI.h">
       <Filter>01. Scene\00. Logo\00.LogoUI</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\GunUI.h">
-      <Filter>02. GameObject\01. For_Stage\09. UI\Weapon</Filter>
+    <ClInclude Include="..\Header\BaseMapping.h">
+      <Filter>02. GameObject\01. For_Stage\11. Map\Mapping</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\PlayerMapping.h">
+      <Filter>02. GameObject\01. For_Stage\11. Map\Mapping\01.Player</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\MonsterMapping.h">
+      <Filter>02. GameObject\01. For_Stage\11. Map\Mapping\02.Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\WallMapping.h">
+      <Filter>02. GameObject\01. For_Stage\11. Map\Mapping\03.Wall</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -668,14 +695,26 @@
     <ClCompile Include="..\Code\BulletUI.cpp">
       <Filter>02. GameObject\01. For_Stage\09. UI\Weapon</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\GunUI.cpp">
+      <Filter>99. Default\소스 파일</Filter>
+    </ClCompile>
     <ClCompile Include="..\Code\ExitButton.cpp">
       <Filter>01. Scene\00. Logo\00. Button\03. ExitButton</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\LogoUI.cpp">
       <Filter>01. Scene\00. Logo\00.LogoUI</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\GunUI.cpp">
-      <Filter>02. GameObject\01. For_Stage\09. UI\Weapon</Filter>
+    <ClCompile Include="..\Code\BaseMapping.cpp">
+      <Filter>02. GameObject\01. For_Stage\11. Map\Mapping</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\PlayerMapping.cpp">
+      <Filter>02. GameObject\01. For_Stage\11. Map\Mapping\01.Player</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\MonsterMapping.cpp">
+      <Filter>02. GameObject\01. For_Stage\11. Map\Mapping\02.Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\WallMapping.cpp">
+      <Filter>02. GameObject\01. For_Stage\11. Map\Mapping\03.Wall</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
