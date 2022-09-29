@@ -79,6 +79,10 @@ HRESULT CTerrain::Add_Component(void)
 	}
 	catch (int expn)
 	{
+		/*pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Clone_Proto(L"Proto_TerrainTexture_Stage_1"));
+		NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
+		m_mapComponent[ID_STATIC].insert({ L"Proto_TerrainTexture_Stage_1", pComponent });*/
+
 		pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Clone_Proto(L"Proto_TerrainTexture_Stage_1"));
 		NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
 		m_mapComponent[ID_STATIC].insert({ L"Proto_TerrainTexture_Stage_1", pComponent });
