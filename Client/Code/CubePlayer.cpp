@@ -355,7 +355,7 @@ void CCubePlayer::Gun_Check()
 	}
 	if (Get_DIKeyState(DIK_2) & 0x80)
 	{
-		if (!m_vecWeapon.empty())
+		if (m_vecWeapon.size() >= 2)
 		{
 			if (m_vecWeapon[1] != nullptr)
 			{
@@ -366,7 +366,7 @@ void CCubePlayer::Gun_Check()
 	}
 	if (Get_DIKeyState(DIK_3) & 0x80)
 	{
-		if (!m_vecWeapon.empty())
+		if (m_vecWeapon.size() >= 3)
 		{
 			if (m_vecWeapon[2] != nullptr)
 			{
@@ -377,7 +377,7 @@ void CCubePlayer::Gun_Check()
 	}
 	if (Get_DIKeyState(DIK_4) & 0x80)
 	{
-		if (!m_vecWeapon.empty())
+		if (m_vecWeapon.size() >= 4)
 		{
 			if (m_vecWeapon[3] != nullptr)
 			{
@@ -388,7 +388,7 @@ void CCubePlayer::Gun_Check()
 	}
 	if (Get_DIKeyState(DIK_5) & 0x80)
 	{
-		if (!m_vecWeapon.empty())
+		if (m_vecWeapon.size() >= 5)
 		{
 			if (m_vecWeapon[4] != nullptr)
 			{
