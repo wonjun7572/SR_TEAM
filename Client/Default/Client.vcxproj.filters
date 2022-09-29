@@ -181,6 +181,12 @@
     <Filter Include="02. GameObject\01. For_Stage\09. UI\Weapon">
       <UniqueIdentifier>{802bd0cb-abc7-469c-96e0-39c939f1749c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. Scene\00. Logo\00. Button\03. ExitButton">
+      <UniqueIdentifier>{79a36800-b911-45d9-a6b4-4eed3862e843}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Scene\00. Logo\00.LogoUI">
+      <UniqueIdentifier>{33ae2b03-193e-4f1d-8ce0-e17e5b2ab5a5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -429,6 +435,12 @@
     <ClInclude Include="..\Header\GunUI.h">
       <Filter>99. Default\헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\ExitButton.h">
+      <Filter>01. Scene\00. Logo\00. Button\03. ExitButton</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\LogoUI.h">
+      <Filter>01. Scene\00. Logo\00.LogoUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -658,6 +670,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\GunUI.cpp">
       <Filter>99. Default\소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ExitButton.cpp">
+      <Filter>01. Scene\00. Logo\00. Button\03. ExitButton</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\LogoUI.cpp">
+      <Filter>01. Scene\00. Logo\00.LogoUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

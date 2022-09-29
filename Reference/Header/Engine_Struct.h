@@ -53,7 +53,7 @@ namespace Engine
 	{
 		_int		iHp;			// 체력을 위한
 		_int		iDefence;		// 방어력을 위한
-		_int		iGunTexture;	// 총 UI 변경을 위한
+		_int		iGunTexture;			// 총 UI 변경을 위한
 	}ABILITY;
 
 	typedef struct tagGunAbility
