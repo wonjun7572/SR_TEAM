@@ -374,12 +374,12 @@ void CCubePlayer::Move()
 				m_pCollision->Wall_Collision_By_DotSliding(&vSliding);
 
 				m_pBodyWorld->Move_Pos(&(vSliding * m_fSpeed * m_fTimeDelta));
-				FAILED_CHECK_RETURN(CPoolMgr::GetInstance()->Reuse_Obj(m_pGraphicDev, &vPos, &vSliding), );
+				//FAILED_CHECK_RETURN(CPoolMgr::GetInstance()->Reuse_Obj(m_pGraphicDev, &vPos, &vSliding), );
 			}
 			else
 			{
 				m_pBodyWorld->Move_Pos(&(vDir * m_fSpeed * m_fTimeDelta));
-				FAILED_CHECK_RETURN(CPoolMgr::GetInstance()->Reuse_Obj(m_pGraphicDev, &vPos, &vDir), );
+				//FAILED_CHECK_RETURN(CPoolMgr::GetInstance()->Reuse_Obj(m_pGraphicDev, &vPos, &vDir), );
 			}
 		}
 		if (iCollision == WALL_FRONT)
@@ -390,12 +390,12 @@ void CCubePlayer::Move()
 				m_pCollision->Wall_Collision_By_DotSliding(&vSliding);
 
 				m_pBodyWorld->Move_Pos(&(vSliding * m_fSpeed * m_fTimeDelta));
-				FAILED_CHECK_RETURN(CPoolMgr::GetInstance()->Reuse_Obj(m_pGraphicDev, &vPos, &vSliding), );
+				//FAILED_CHECK_RETURN(CPoolMgr::GetInstance()->Reuse_Obj(m_pGraphicDev, &vPos, &vSliding), );
 			}
 			else
 			{
 				m_pBodyWorld->Move_Pos(&(vDir * m_fSpeed * m_fTimeDelta));
-				FAILED_CHECK_RETURN(CPoolMgr::GetInstance()->Reuse_Obj(m_pGraphicDev, &vPos, &vDir), );
+				//FAILED_CHECK_RETURN(CPoolMgr::GetInstance()->Reuse_Obj(m_pGraphicDev, &vPos, &vDir), );
 			}
 		}
 
@@ -403,7 +403,7 @@ void CCubePlayer::Move()
 	else	//	충돌하지 않았으며 충돌한 방향과 반대 방향으로 진행하는 이동 처리
 	{
 		m_pBodyWorld->Move_Pos(&(vDir * m_fSpeed * m_fTimeDelta));
-		FAILED_CHECK_RETURN(CPoolMgr::GetInstance()->Reuse_Obj(m_pGraphicDev, &vPos, &vDir), );
+		//FAILED_CHECK_RETURN(CPoolMgr::GetInstance()->Reuse_Obj(m_pGraphicDev, &vPos, &vDir), );
 	}
 }
 

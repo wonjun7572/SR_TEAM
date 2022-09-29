@@ -82,6 +82,9 @@
     <Filter Include="00. Component\00. VIBuffer\07. RcRd">
       <UniqueIdentifier>{2ff797e1-eb35-4a2c-84d9-6889e3938685}</UniqueIdentifier>
     </Filter>
+    <Filter Include="00. Component\00. VIBuffer\08. Particle">
+      <UniqueIdentifier>{183f50af-1d3c-47f2-9f20-3173e29c2661}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Header\TriCol.h">
@@ -162,6 +165,7 @@
     <ClInclude Include="..\..\Header\RcRD.h">
       <Filter>00. Component\00. VIBuffer\07. RcRd</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Header\PSystem.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\TriCol.cpp">
@@ -239,6 +243,7 @@
     <ClCompile Include="..\Code\Collision.cpp">
       <Filter>00. Component\04. Collision</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\PSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Header\Export_Utility.inl">
