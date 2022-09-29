@@ -18,8 +18,7 @@ public:
 	virtual void	LateUpdate_Object(void) override;
 	virtual void	Render_Object(void) override;
 
-	void			On_WorldMap(void) { m_bMapChange = true; }
-	void			Off_WorldMap(void) { m_bMapChange = false ; }
+	void			Key_Input(void);
 private:
 	void			Begin_OrthoProj();
 	void			End_OrthoProj();
@@ -37,7 +36,8 @@ private:
 	_matrix			m_matProj;
 	_int			m_iTextureIndex = 0;
 
-	_bool			m_bMapChange = true;
+	_bool			m_bWorldMap = false;
+
 public:
 	static CBaseMapping*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
 	virtual void		Free(void);

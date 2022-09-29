@@ -2,6 +2,9 @@
 #include "..\Header\CubeMonster.h"
 #include "Export_Function.h"
 #include "Texture.h"
+
+static _int m_iCnt = 0;
+
 CCubeMonster::CCubeMonster(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
 {
@@ -39,7 +42,7 @@ _int CCubeMonster::Update_Object(const _float & fTimeDelta)
 
 	CurrentMonster(fTimeDelta);
 
-
+	Monster_Mapping();
 	Axis();
 	CGameObject::Update_Object(fTimeDelta);
 
@@ -200,6 +203,32 @@ HRESULT CCubeMonster::Get_BodyTransform(void)
 	//¸Ó¸®
 	m_pMhead = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Monster", L"M_Head", L"Proto_TransformCom", ID_DYNAMIC));
 	NULL_CHECK_RETURN(m_pMhead, E_FAIL);
+
+	return S_OK;
+}
+
+HRESULT CCubeMonster::Monster_Mapping(void)
+{
+	_vec3		vPos;
+	m_pMbody->Get_Info(INFO_POS, &vPos);
+	if (!m_MappingInit)
+	{
+		CGameObject*	m_pMapMonster = CMonsterMapping::Create(m_pGraphicDev);
+		TCHAR* szCntName = new TCHAR[64];
+		wsprintf(szCntName, L"");
+		const _tchar*	szNumbering = L"MapMonster_%d";
+		wsprintf(szCntName, szNumbering, m_iCnt);
+		Engine::Add_GameObject(L"Layer_Mapping", m_pMapMonster, szCntName);
+		m_listMonsterCnt.push_back(szCntName);
+
+
+		m_pMonsterMapping = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Mapping", szCntName, L"Proto_TransformCom", ID_DYNAMIC));
+		NULL_CHECK_RETURN(m_pMonsterMapping, E_FAIL);
+		++m_iCnt;
+		m_MappingInit = true;
+	}
+
+	m_pMonsterMapping->Set_Pos(vPos.x, vPos.y, vPos.z);
 
 	return S_OK;
 }

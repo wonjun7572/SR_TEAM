@@ -35,7 +35,7 @@ private:
 
 	_bool					m_MappingInit = false;
 	_int					m_iCnt = 0;
-	list<TCHAR*>			m_listMonsterCnt;
+	list<TCHAR*>			m_listWallCnt;
 	CTransform*				m_pWallMapping = nullptr;
 
 

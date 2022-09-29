@@ -27,7 +27,7 @@ HRESULT CWall::Ready_Object(_ulong Texture, _vec3 * Position)
 _int CWall::Update_Object(const _float & fTimeDelta)
 {
 	_uint iResult = CGameObject::Update_Object(fTimeDelta);
-
+	//Wall_Mapping();
 	return iResult;
 }
 
@@ -72,13 +72,13 @@ HRESULT CWall::Wall_Mapping(void)
 	m_pTransform->Get_Scale(&vSize);
 	if (!m_MappingInit)
 	{
-		CGameObject*	m_pMapMonster = CWallMapping::Create(m_pGraphicDev);
+		CGameObject*	m_pMapWall = CWallMapping::Create(m_pGraphicDev);
 		TCHAR* szCntName = new TCHAR[64];
 		wsprintf(szCntName, L"");
 		const _tchar*	szNumbering = L"MapWall_%d";
 		wsprintf(szCntName, szNumbering, m_iCnt);
-		Engine::Add_GameObject(L"Layer_Wall", m_pMapMonster, szCntName);
-		m_listMonsterCnt.push_back(szCntName);
+		Engine::Add_GameObject(L"Layer_Wall", m_pMapWall, szCntName);
+		m_listWallCnt.push_back(szCntName);
 
 
 		m_pWallMapping = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Wall", szCntName, L"Proto_TransformCom", ID_DYNAMIC));
@@ -89,6 +89,7 @@ HRESULT CWall::Wall_Mapping(void)
 
 	m_pWallMapping->Set_Pos(vPos.x, vPos.y, vPos.z);
 	m_pWallMapping->Set_Scale(vSize.x, vSize.y, vSize.z);
+
 	return S_OK;
 }
 

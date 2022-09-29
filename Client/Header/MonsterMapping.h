@@ -20,7 +20,7 @@ public:
 private:
 	void			Begin_OrthoProj();
 	void			End_OrthoProj();
-	void			WorldMap(void);
+	void			Key_Input(void);
 
 	HRESULT			Add_Component(void);
 
@@ -33,7 +33,10 @@ private:
 	_matrix			m_matView;
 	_matrix			m_matProj;
 	_int			m_iTextureIndex = 0;
-	_bool			m_bMapChange = true;
+	_bool			m_bWorldMap = false;
+
+
+
 public:
 	static CMonsterMapping*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
 	virtual void		Free(void);

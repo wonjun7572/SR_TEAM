@@ -22,16 +22,15 @@ private:
 	HRESULT			Add_Component(void);
 	void		Begin_OrthoProj();
 	void		End_OrthoProj();
-	void		WorldMap(void);
+	void		Key_Input(void);
 private:
 	CTransform*		m_pTransformPlayer = nullptr;
 	CTransform*		m_pTransform = nullptr;
 	CTexture*		m_pTexture = nullptr;
 	CCubeTex*		m_pCube = nullptr;
 	CRcTex*			m_pBufferCom = nullptr;
-	
-	_bool	m_bMapSwitch = false;
-	_bool	m_bMapChange = true;
+
+	_bool	m_bWorldMap = false;
 	_matrix m_matWorld;
 	_matrix m_matView;
 	_matrix m_matProj;

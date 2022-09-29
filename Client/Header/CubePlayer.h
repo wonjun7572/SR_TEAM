@@ -2,7 +2,7 @@
 #include "GameObject.h"
 #include "Export_Function.h"
 #include "Weapon.h"
-
+#include "PlayerMapping.h"
 USING(Engine)
 
 
@@ -45,6 +45,7 @@ private:
 
 private:
 	HRESULT			Get_BodyTransform(void);
+	HRESULT			Player_Mapping(void);
 
 	void			Key_Input(const _float& fTimeDelta);
 	void			Set_OnTerrain(void);
@@ -114,6 +115,11 @@ private:
 	_bool			m_bUzi = true;
 
 	vector<CWeapon*> m_vecWeapon;
+
+	//맵핑관련 변수입니다.
+	_bool				m_MappingInit = false;
+	CTransform*			m_pBaseMapping = nullptr;
+	list<TCHAR*>		m_listMonsterCnt;
 
 public:
 	static CCubePlayer*	Create(LPDIRECT3DDEVICE9 pGraphicDev);

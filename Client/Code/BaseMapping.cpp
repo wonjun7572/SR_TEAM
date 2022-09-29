@@ -21,16 +21,16 @@ HRESULT CBaseMapping::Ready_Object(void)
 
 _int CBaseMapping::Update_Object(const _float & fTimeDelta)
 {
-	if (!m_bMapChange)
+	if (!m_bWorldMap)
 	{
 		Add_RenderGroup(RENDER_MINIMAP, this);
 	}
-	if (m_bMapChange)
+	if (m_bWorldMap)
 	{
 		Add_RenderGroup(RENDER_MAPVIEW, this);
 	}
 	WorldMap();
-
+	Key_Input();
 	CGameObject::Update_Object(fTimeDelta);
 
 	return 0;
@@ -47,18 +47,32 @@ void CBaseMapping::Render_Object(void)
 
 	Begin_OrthoProj();
 	m_pTexture->Set_Texture(0);
-	if (!m_bMapChange)
+	if (!m_bWorldMap)
 	{
 		m_pRcCom->Render_Buffer();
 	}
 	End_OrthoProj();
 
-	if (m_bMapChange)
+	if (m_bWorldMap)
 	{
 		m_pCube->Render_Buffer();
 	}
 }
 
+
+void CBaseMapping::Key_Input(void)
+{
+	if (Get_DIKeyState(DIK_Y))
+	{
+		CRenderer::GetInstance()->On_Minimap();
+		m_bWorldMap = false;
+	}
+	if (Get_DIKeyState(DIK_U))
+	{
+		CRenderer::GetInstance()->Off_Minimap();
+		m_bWorldMap = true;
+	}	
+}
 
 void CBaseMapping::Begin_OrthoProj()
 {
@@ -82,7 +96,7 @@ void CBaseMapping::Begin_OrthoProj()
 	matView.m[2][2] = 1.f;
 	matView.m[3][0] = MAPPOSX;
 	matView.m[3][1] = MAPPOSY;
-	matView.m[3][2] = 0.001f;//m_pTransform->m_vInfo[INFO_POS].z;; //+0.1f;
+	matView.m[3][2] = 0.002f;//m_pTransform->m_vInfo[INFO_POS].z;; //+0.1f;
 
 
 	D3DXMatrixOrthoLH(&matOrtho, WINCX, WINCY, 0.f, 1.f);
@@ -100,14 +114,7 @@ void CBaseMapping::End_OrthoProj()
 
 void CBaseMapping::WorldMap(void)
 {
-	if (Get_DIKeyState(DIK_9))
-	{
-		m_bMapChange = false;
-	}
-	if (Get_DIKeyState(DIK_0))
-	{
-		m_bMapChange = true;
-	}
+
 }
 
 

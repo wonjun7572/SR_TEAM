@@ -20,15 +20,15 @@ HRESULT CMonsterMapping::Ready_Object(void)
 
 _int CMonsterMapping::Update_Object(const _float & fTimeDelta)
 {
-	if (!m_bMapChange)
+	if (!m_bWorldMap)
 	{
 		Add_RenderGroup(RENDER_MINIMAP, this);
 	}
-	if (m_bMapChange)
+	if (m_bWorldMap)
 	{
 		Add_RenderGroup(RENDER_MAPVIEW, this);
 	}
-	WorldMap();
+	Key_Input();
 
 	CGameObject::Update_Object(fTimeDelta);
 
@@ -46,10 +46,10 @@ void CMonsterMapping::Render_Object(void)
 
 	Begin_OrthoProj();
 	m_pTexture->Set_Texture(43);
-	if(!m_bMapChange)
+	if(!m_bWorldMap)
 		m_pRcCom->Render_Buffer();
 	End_OrthoProj();
-	if(m_bMapChange)
+	if(m_bWorldMap)
 		m_pCube->Render_Buffer();
 }
 
@@ -76,7 +76,7 @@ void CMonsterMapping::Begin_OrthoProj()
 	matView.m[2][2] = 1.f;
 	matView.m[3][0] = MAPPOSX - (MAPCX) + vPos.x * ( ((float)MAPCX*2) / (float)VTXCNTX); //- PINGSIZE /2;
 	matView.m[3][1] = MAPPOSY - (MAPCY) + vPos.z * ( ((float)MAPCY*2) / (float)VTXCNTZ); //- PINGSIZE /2;
-	//matView.m[3][2] = m_pTransCom->m_vInfo[INFO_POS].z+0.1f;
+	matView.m[3][2] = 0.001f;
 
 
 	D3DXMatrixOrthoLH(&matOrtho, WINCX, WINCY, 0.f, 1.f);
@@ -92,15 +92,17 @@ void CMonsterMapping::End_OrthoProj()
 	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &m_matProj);
 }
 
-void CMonsterMapping::WorldMap(void)
+void CMonsterMapping::Key_Input(void)
 {
-	if (Get_DIKeyState(DIK_9))
+	if (Get_DIKeyState(DIK_Y))
 	{
-		m_bMapChange = false;
+		CRenderer::GetInstance()->On_Minimap();
+		m_bWorldMap = false;
 	}
-	if (Get_DIKeyState(DIK_0))
+	if (Get_DIKeyState(DIK_U))
 	{
-		m_bMapChange = true;
+		CRenderer::GetInstance()->Off_Minimap();
+		m_bWorldMap = true;
 	}
 }
 

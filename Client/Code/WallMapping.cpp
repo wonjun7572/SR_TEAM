@@ -20,15 +20,15 @@ HRESULT CWallMapping::Ready_Object(void)
 
 _int CWallMapping::Update_Object(const _float & fTimeDelta)
 {
-	if (!m_bMapChange)
+	if (!m_bWorldMap)
 	{
 		Add_RenderGroup(RENDER_MINIMAP, this);
 	}
-	if (m_bMapChange)
+	if (m_bWorldMap)
 	{
 		Add_RenderGroup(RENDER_MAPVIEW, this);
 	}
-	WorldMap();
+	Key_Input();
 
 	CGameObject::Update_Object(fTimeDelta);
 
@@ -43,21 +43,71 @@ void CWallMapping::LateUpdate_Object(void)
 void CWallMapping::Render_Object(void)
 {
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
-	m_pTexture->Set_Texture(47);
-	m_pCube->Render_Buffer();
+
+	Begin_OrthoProj();
+	m_pTexture->Set_Texture(57);
+	if (!m_bWorldMap)
+		m_pRcCom->Render_Buffer();
+	End_OrthoProj();
+	if (m_bWorldMap)
+		m_pCube->Render_Buffer();
 }
 
-void CWallMapping::WorldMap(void)
+
+void CWallMapping::Begin_OrthoProj()
 {
-	if (Get_DIKeyState(DIK_9))
+	_vec3 vPos;
+	m_pTransform->Get_Info(INFO_POS, &vPos);
+	_vec3 vScale;
+	m_pTransform->Get_Scale(&vScale);
+	_matrix matWorld, matView, matProj, matOrtho;
+	m_pGraphicDev->GetTransform(D3DTS_WORLD, &matWorld);
+	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
+	m_pGraphicDev->GetTransform(D3DTS_PROJECTION, &matProj);
+
+	memcpy(&m_matWorld, &matWorld, sizeof(_matrix));
+	memcpy(&m_matView, &matView, sizeof(_matrix));
+	memcpy(&m_matProj, &matProj, sizeof(_matrix));
+
+	D3DXMatrixIdentity(&matWorld);
+	D3DXMatrixIdentity(&matView);
+
+	matView.m[0][0] = vScale.x *2.f;// PINGSIZE; // 이미지 가로
+	matView.m[1][1] = vScale.z *2.f;// PINGSIZE; // 이미지 세로
+	matView.m[2][2] = 1.f;
+	matView.m[3][0] = MAPPOSX - (MAPCX)+vPos.x * (((float)MAPCX * 2) / (float)VTXCNTX); //- PINGSIZE /2;
+	matView.m[3][1] = MAPPOSY - (MAPCY)+vPos.z * (((float)MAPCY * 2) / (float)VTXCNTZ); //- PINGSIZE /2;
+																						//matView.m[3][2] = m_pTransCom->m_vInfo[INFO_POS].z+0.1f;
+
+
+	D3DXMatrixOrthoLH(&matOrtho, WINCX, WINCY, 0.f, 1.f);
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, &matWorld);
+	m_pGraphicDev->SetTransform(D3DTS_VIEW, &matView);
+	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &matOrtho);
+}
+
+void CWallMapping::End_OrthoProj()
+{
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, &m_matWorld);
+	m_pGraphicDev->SetTransform(D3DTS_VIEW, &m_matView);
+	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &m_matProj);
+}
+
+void CWallMapping::Key_Input(void)
+{
+	if (Get_DIKeyState(DIK_Y))
 	{
-		m_bMapChange = false;
+		CRenderer::GetInstance()->On_Minimap();
+		m_bWorldMap = false;
 	}
-	if (Get_DIKeyState(DIK_0))
+	if (Get_DIKeyState(DIK_U))
 	{
-		m_bMapChange = true;
+		CRenderer::GetInstance()->Off_Minimap();
+		m_bWorldMap = true;
 	}
 }
+
+
 
 HRESULT CWallMapping::Add_Component(void)
 {
@@ -74,6 +124,10 @@ HRESULT CWallMapping::Add_Component(void)
 	pInstance = m_pTransform = dynamic_cast<CTransform*>(Engine::Clone_Proto(L"Proto_TransformCom"));
 	NULL_CHECK_RETURN(pInstance, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_TransformCom", pInstance });
+
+	pInstance = m_pRcCom = dynamic_cast<CRcTex*>(Clone_Proto(L"Proto_RcTexCom"));
+	NULL_CHECK_RETURN(m_pRcCom, E_FAIL);
+	m_mapComponent[ID_STATIC].insert({ L"Proto_RcTexCom", pInstance });
 
 
 	return S_OK;
