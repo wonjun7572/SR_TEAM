@@ -160,6 +160,57 @@
     <Filter Include="01. Scene\00. Logo\00. Button\02. OptionButton">
       <UniqueIdentifier>{71a91927-dfba-407f-8ca8-820d5a779386}</UniqueIdentifier>
     </Filter>
+<<<<<<< Updated upstream
+=======
+    <Filter Include="02. GameObject\01. For_Stage\08. Monster">
+      <UniqueIdentifier>{e8cd7a20-be14-4ffc-82a6-921f105af27a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\08. Monster\07. CubeMonster">
+      <UniqueIdentifier>{a596968f-c820-4272-8aca-0ea8adc2bdfb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\08. Monster\07. CubeMonster\00. CubeMonsterArm">
+      <UniqueIdentifier>{d9dbb2dd-7560-4f37-ae4e-b638f32851cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\08. Monster\07. CubeMonster\01. CubeMonsterBody">
+      <UniqueIdentifier>{3b25c52f-f049-4e41-a3c0-ce9b88128439}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\08. Monster\07. CubeMonster\02. CubeMonsterHead">
+      <UniqueIdentifier>{80b7f2de-099d-4a91-a98a-0fa97e81f1b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Scene\02. LoadingScene\01. LoadingScene">
+      <UniqueIdentifier>{7246b6e0-970c-49e8-9662-685760f5d99f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\09. UI">
+      <UniqueIdentifier>{5a2321ba-4038-4880-aa2b-daee61f71bac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\10. Item">
+      <UniqueIdentifier>{71bb0e17-c5df-47ed-bc8b-66a0f40e51dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\10. Item\HP">
+      <UniqueIdentifier>{095932e2-2b4b-4b99-bb18-13fad55c9cbd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\02. For_Public\02. MapCamera">
+      <UniqueIdentifier>{baf2e66b-eca3-4254-bf99-7cec64145400}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\02. For_Public\02. MapCamera\Mapping">
+      <UniqueIdentifier>{f1bf8d2e-a9ab-4a7d-b79a-426f107f6245}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\02. For_Public\02. MapCamera\Mapping\01.Player">
+      <UniqueIdentifier>{0a06deb0-086a-4d3e-829f-d827fb18de94}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\02. For_Public\02. MapCamera\Mapping\02.Monster">
+      <UniqueIdentifier>{77da89b0-1fbd-4d19-a91c-0c6b0c8208db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\02. For_Public\02. MapCamera\Mapping\03.Wall">
+      <UniqueIdentifier>{ec3c03ed-3982-4f67-8fa4-13268c9a9c0c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\02. For_Public\02. MapCamera\Mapping\04.Base">
+      <UniqueIdentifier>{f18262b2-1895-44b8-9d4f-7b4c45eaa8b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\02. For_Public\02. MapCamera\Mapping\05.Item">
+      <UniqueIdentifier>{3b4fbd1a-a61e-4b95-b5c6-32d92545a03c}</UniqueIdentifier>
+    </Filter>
+>>>>>>> Stashed changes
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -381,6 +432,39 @@
     <ClInclude Include="..\Header\OptionButton.h">
       <Filter>01. Scene\00. Logo\00. Button\02. OptionButton</Filter>
     </ClInclude>
+<<<<<<< Updated upstream
+=======
+    <ClInclude Include="..\Header\LoadingScene.h">
+      <Filter>01. Scene\02. LoadingScene\01. LoadingScene</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerFaceUI.h">
+      <Filter>02. GameObject\01. For_Stage\09. UI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\PlayerUI.h">
+      <Filter>02. GameObject\01. For_Stage\09. UI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Item.h">
+      <Filter>02. GameObject\01. For_Stage\10. Item</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\HealthPotion.h">
+      <Filter>02. GameObject\01. For_Stage\10. Item\HP</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\MapCamera.h">
+      <Filter>02. GameObject\02. For_Public\02. MapCamera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\PlayerMapping.h">
+      <Filter>02. GameObject\02. For_Public\02. MapCamera\Mapping\01.Player</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\MonsterMapping.h">
+      <Filter>02. GameObject\02. For_Public\02. MapCamera\Mapping\02.Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\WallMapping.h">
+      <Filter>02. GameObject\02. For_Public\02. MapCamera\Mapping\03.Wall</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\BaseMapping.h">
+      <Filter>02. GameObject\02. For_Public\02. MapCamera\Mapping\04.Base</Filter>
+    </ClInclude>
+>>>>>>> Stashed changes
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -584,6 +668,39 @@
     <ClCompile Include="..\Code\OptionButton.cpp">
       <Filter>01. Scene\00. Logo\00. Button\02. OptionButton</Filter>
     </ClCompile>
+<<<<<<< Updated upstream
+=======
+    <ClCompile Include="..\Code\LoadingScene.cpp">
+      <Filter>01. Scene\02. LoadingScene\01. LoadingScene</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerFaceUI.cpp">
+      <Filter>02. GameObject\01. For_Stage\09. UI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\PlayerUI.cpp">
+      <Filter>02. GameObject\01. For_Stage\09. UI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Item.cpp">
+      <Filter>02. GameObject\01. For_Stage\10. Item</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\HealthPotion.cpp">
+      <Filter>02. GameObject\01. For_Stage\10. Item\HP</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\MapCamera.cpp">
+      <Filter>02. GameObject\02. For_Public\02. MapCamera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\PlayerMapping.cpp">
+      <Filter>02. GameObject\02. For_Public\02. MapCamera\Mapping\01.Player</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\MonsterMapping.cpp">
+      <Filter>02. GameObject\02. For_Public\02. MapCamera\Mapping\02.Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\WallMapping.cpp">
+      <Filter>02. GameObject\02. For_Public\02. MapCamera\Mapping\03.Wall</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BaseMapping.cpp">
+      <Filter>02. GameObject\02. For_Public\02. MapCamera\Mapping\04.Base</Filter>
+    </ClCompile>
+>>>>>>> Stashed changes
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">

@@ -33,7 +33,7 @@ _int CWall::Update_Object(const _float & fTimeDelta)
 
 void CWall::LateUpdate_Object(void)
 {
-	Add_RenderGroup(RENDER_NONALPHA, this);
+	Add_RenderGroup(RENDER_MAPSETTING, this);
 	CGameObject::LateUpdate_Object();
 }
 
@@ -61,6 +61,34 @@ HRESULT CWall::Add_Component(void)
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_CubePlayerTexture", pComponent });
 
+	return S_OK;
+}
+
+HRESULT CWall::Wall_Mapping(void)
+{
+	_vec3		vPos;
+	_vec3		vSize;
+	m_pTransform->Get_Info(INFO_POS, &vPos);
+	m_pTransform->Get_Scale(&vSize);
+	if (!m_MappingInit)
+	{
+		CGameObject*	m_pMapMonster = CWallMapping::Create(m_pGraphicDev);
+		TCHAR* szCntName = new TCHAR[64];
+		wsprintf(szCntName, L"");
+		const _tchar*	szNumbering = L"MapWall_%d";
+		wsprintf(szCntName, szNumbering, m_iCnt);
+		Engine::Add_GameObject(L"Layer_Wall", m_pMapMonster, szCntName);
+		m_listMonsterCnt.push_back(szCntName);
+
+
+		m_pWallMapping = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Wall", szCntName, L"Proto_TransformCom", ID_DYNAMIC));
+		NULL_CHECK_RETURN(m_pWallMapping, E_FAIL);
+		++m_iCnt;
+		m_MappingInit = true;
+	}
+
+	m_pWallMapping->Set_Pos(vPos.x, vPos.y, vPos.z);
+	m_pWallMapping->Set_Scale(vSize.x, vSize.y, vSize.z);
 	return S_OK;
 }
 

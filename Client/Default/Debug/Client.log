@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 ﻿  ImguiMgr.cpp
 c:\users\sam51\desktop\sr_team\client\code\imguimgr.cpp(244): warning C4390: ';': 제어된 빈 문이 있습니다. 이 문이 필요합니까?
 c:\users\sam51\desktop\sr_team\client\code\imguimgr.cpp(246): warning C4390: ';': 제어된 빈 문이 있습니다. 이 문이 필요합니까?
@@ -7,4 +8,8 @@ c:\users\sam51\desktop\sr_team\client\code\imguimgr.cpp(266): warning C4390: ';'
 c:\users\sam51\desktop\sr_team\client\code\imguimgr.cpp(268): warning C4390: ';': 제어된 빈 문이 있습니다. 이 문이 필요합니까?
      ../Bin\Client.lib 라이브러리 및 ../Bin\Client.exp 개체를 생성하고 있습니다.
   Client.vcxproj -> C:\Users\sam51\Desktop\SR_TEAM\Client\Default\../Bin\Client.exe
+=======
+﻿     ../Bin\Client.lib 라이브러리 및 ../Bin\Client.exp 개체를 생성하고 있습니다.
+  Client.vcxproj -> C:\Users\DecoyZ\Desktop\SR_TEAM\Client\Default\../Bin\Client.exe
+>>>>>>> Stashed changes
   Client.vcxproj -> ../Bin\Client.pdb (Full PDB)

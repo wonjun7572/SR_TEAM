@@ -4,7 +4,6 @@
 
 USING(Engine)
 
-
 class CCubePlayer : public CGameObject
 {
 private:
@@ -21,6 +20,7 @@ private:
 
 private:
 	HRESULT			Get_BodyTransform(void);
+	HRESULT			Mapping(void);
 
 	void			Key_Input(const _float& fTimeDelta);		//	키 입력
 	void			Set_OnTerrain(void);						//	지형 타기
@@ -37,6 +37,9 @@ private:
 	void			Jump(void);
 	_bool			m_bJump = false;
 	_bool			m_bFirst = true;
+	_bool				m_MappingInit = false;
+	CTransform*			m_pBaseMapping = nullptr;
+	list<TCHAR*>		m_listMonsterCnt;
 
 private:
 	HRESULT			Add_Component(void);
@@ -70,6 +73,13 @@ private:
 
 	_float			m_fTimeDelta = 0.f;
 
+<<<<<<< Updated upstream
+=======
+	_vec3			m_vMin = { 0.f, 0.f, 0.f };
+	_vec3			m_vMax = { 0.f, 0.f, 0.f };
+
+
+>>>>>>> Stashed changes
 public:
 	static CCubePlayer*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
 	virtual void Free(void);

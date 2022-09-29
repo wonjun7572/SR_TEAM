@@ -52,7 +52,83 @@ void CCubeMonster::LateUpdate_Object(void)
 
 void CCubeMonster::Render_Object(void)
 {
+<<<<<<< Updated upstream
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
+=======
+//	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pMTransform->Get_WorldMatrixPointer());
+
+}
+
+//현재 몬스터상태 
+_int CCubeMonster::CurrentMonster(_float fTimeDelta)
+{
+	CTransform*		pPlayerTransformCom = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Character", L"BODY", L"Proto_TransformCom", ID_DYNAMIC));
+	NULL_CHECK_RETURN(pPlayerTransformCom, 0);
+	
+	//몸
+	m_pMbody = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Monster", L"M_Body", L"Proto_TransformCom", ID_STATIC));
+	NULL_CHECK_RETURN(m_pMbody, 0);
+	m_pMbody->Get_Info(INFO_POS, &m_vPos);
+
+	//왼팔
+	m_pMleftArm = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Monster", L"M_LeftArm", L"Proto_TransformCom", ID_DYNAMIC));
+	NULL_CHECK_RETURN(m_pMleftArm, 0);
+	//오른팔
+	m_pMrightArm = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Monster", L"M_RighrArm", L"Proto_TransformCom", ID_DYNAMIC));
+	NULL_CHECK_RETURN(m_pMrightArm, 0);
+
+
+	pPlayerTransformCom->Get_Info(Engine::INFO_POS, &vPlayerPos);
+	m_pMbody->Set_Info(INFO_LOOK, &vPlayerPos);
+	m_pMleftArm->Set_Info(INFO_LOOK, &vPlayerPos);
+	m_pMrightArm->Set_Info(INFO_LOOK, &vPlayerPos);
+
+	m_pMrightArm->Compute_LookAtTarget(&vPlayerPos);
+	_matrix matWorld;
+	m_pMTransform->Get_WorldMatrix(&matWorld);
+	m_vDir = vPlayerPos - m_vPos;
+	m_fLengthRange = D3DXVec3Length(&m_vDir);
+	D3DXVec3Normalize(&m_vDir, &m_vDir);
+
+	_vec3		vRight;
+	memcpy(&vRight, &pPlayerTransformCom->m_matWorld.m[0][0], sizeof(_vec3));
+
+
+	_matrix		matRot;
+	D3DXMatrixRotationAxis(&matRot, &vRight, m_fAngle);
+	//탐지
+	if (m_fLengthRange >= m_fMinLenghtRange && m_fLengthRange <= m_fDetectRange)
+	{
+		Axis();
+
+		m_pMbody->Chase_Target(&vPlayerPos, m_fSpeed, m_fTimeDelta);
+		//m_pMhead->Chase_Target(&vPlayerPos, m_fSpeed, m_fTimeDelta);
+		//m_pMleftArm->Chase_Target(&vPlayerPos, m_fSpeed, m_fTimeDelta);
+		//m_pMrightArm->Chase_Target(&vPlayerPos, m_fSpeed, m_fTimeDelta);
+
+	}
+	else
+	{
+		CurrentState::MONSTER_IDLE;
+		ComeBack(fTimeDelta);
+		return 0;
+	}
+
+	return 0;
+
+	
+}
+
+
+//상황이 바뀌는것을 인지시켜줘야하지않을까
+void CCubeMonster::ChangeCurrent(CurrentState::MONSTERID Idstate)
+{
+	m_eCurrentState = Idstate;
+	if (m_ePreviousState != m_eCurrentState)
+	{
+		m_ePreviousState = m_eCurrentState;
+	}
+>>>>>>> Stashed changes
 
 }
 
@@ -113,6 +189,34 @@ HRESULT CCubeMonster::Get_BodyTransform(void)
 	m_pMhead = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Monster", L"M_Head", L"Proto_TransformCom", ID_DYNAMIC));
 	NULL_CHECK_RETURN(m_pMhead, E_FAIL);
 
+<<<<<<< Updated upstream
+=======
+
+	//맵핑 관련 부분입니다.
+	_vec3		vPos;
+	m_pMbody->Get_Info(INFO_POS, &vPos);
+	if (!m_MappingInit)
+	{
+		CGameObject*	m_pMapMonster = CMonsterMapping::Create(m_pGraphicDev);
+		TCHAR* szCntName = new TCHAR[64];
+		wsprintf(szCntName, L"");
+		const _tchar*	szNumbering = L"MapMonster_%d";
+		wsprintf(szCntName, szNumbering, m_iCnt);
+		Engine::Add_GameObject(L"Layer_Monster", m_pMapMonster, szCntName);
+		m_listMonsterCnt.push_back(szCntName);
+
+
+		m_pMonsterMapping = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Monster", szCntName, L"Proto_TransformCom", ID_DYNAMIC));
+		NULL_CHECK_RETURN(m_pMonsterMapping, E_FAIL);
+		++m_iCnt;
+		m_MappingInit = true;
+	}
+
+	m_pMonsterMapping->Set_Pos(vPos.x, vPos.y, vPos.z);
+
+	return S_OK;
+}
+>>>>>>> Stashed changes
 
 
 
@@ -136,5 +240,15 @@ CCubeMonster * CCubeMonster::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 
 void CCubeMonster::Free(void)
 {
+	for (auto& iter : m_listMonsterCnt)
+	{
+		if (iter != nullptr)
+			delete iter;
+	}
+
+	m_listMonsterCnt.clear();
+
+
+
 	CGameObject::Free();
 }

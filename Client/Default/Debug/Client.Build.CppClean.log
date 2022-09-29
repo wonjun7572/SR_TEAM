@@ -2,7 +2,10 @@ c:\users\decoyz\desktop\sr_team\client\default\debug\client.pch
 c:\users\decoyz\desktop\sr_team\client\default\debug\vc140.pdb
 c:\users\decoyz\desktop\sr_team\client\default\debug\vc140.idb
 c:\users\decoyz\desktop\sr_team\client\default\debug\stdafx.obj
+<<<<<<< Updated upstream
 c:\users\decoyz\desktop\sr_team\client\default\debug\sniperpart2.obj
+=======
+>>>>>>> Stashed changes
 c:\users\decoyz\desktop\sr_team\client\default\debug\sniperpart3.obj
 c:\users\decoyz\desktop\sr_team\client\default\debug\sniperpart4.obj
 c:\users\decoyz\desktop\sr_team\client\default\debug\stage.obj
@@ -22,15 +25,26 @@ c:\users\decoyz\desktop\sr_team\client\default\debug\wall.obj
 c:\users\decoyz\desktop\sr_team\client\default\debug\wallmgr.obj
 c:\users\decoyz\desktop\sr_team\client\default\debug\weapon.obj
 c:\users\decoyz\desktop\sr_team\client\default\debug\client.obj
+<<<<<<< Updated upstream
 c:\users\decoyz\desktop\sr_team\client\default\debug\dynamiccamera.obj
+=======
+c:\users\decoyz\desktop\sr_team\client\default\debug\playerfaceui.obj
+c:\users\decoyz\desktop\sr_team\client\default\debug\item.obj
+>>>>>>> Stashed changes
 c:\users\decoyz\desktop\sr_team\client\default\debug\loadbar.obj
 c:\users\decoyz\desktop\sr_team\client\default\debug\loading.obj
 c:\users\decoyz\desktop\sr_team\client\default\debug\loadingscene.obj
 c:\users\decoyz\desktop\sr_team\client\default\debug\logo.obj
 c:\users\decoyz\desktop\sr_team\client\default\debug\mainapp.obj
+<<<<<<< Updated upstream
 c:\users\decoyz\desktop\sr_team\client\default\debug\minimap.obj
 c:\users\decoyz\desktop\sr_team\client\default\debug\optionbutton.obj
 c:\users\decoyz\desktop\sr_team\client\default\debug\playbutton.obj
+=======
+c:\users\decoyz\desktop\sr_team\client\default\debug\optionbutton.obj
+c:\users\decoyz\desktop\sr_team\client\default\debug\playbutton.obj
+c:\users\decoyz\desktop\sr_team\client\default\debug\playerui.obj
+>>>>>>> Stashed changes
 c:\users\decoyz\desktop\sr_team\client\default\debug\poolmgr.obj
 c:\users\decoyz\desktop\sr_team\client\default\debug\shotgun.obj
 c:\users\decoyz\desktop\sr_team\client\default\debug\shotgunpart1.obj
@@ -41,6 +55,10 @@ c:\users\decoyz\desktop\sr_team\client\default\debug\shotgunpart5.obj
 c:\users\decoyz\desktop\sr_team\client\default\debug\skybox.obj
 c:\users\decoyz\desktop\sr_team\client\default\debug\sniper.obj
 c:\users\decoyz\desktop\sr_team\client\default\debug\sniperpart1.obj
+<<<<<<< Updated upstream
+=======
+c:\users\decoyz\desktop\sr_team\client\default\debug\sniperpart2.obj
+>>>>>>> Stashed changes
 c:\users\decoyz\desktop\sr_team\client\default\debug\background.obj
 c:\users\decoyz\desktop\sr_team\client\default\debug\bullet.obj
 c:\users\decoyz\desktop\sr_team\client\default\debug\cubearm.obj
@@ -54,7 +72,13 @@ c:\users\decoyz\desktop\sr_team\client\default\debug\cubemonsterarm.obj
 c:\users\decoyz\desktop\sr_team\client\default\debug\cubemonsterbody.obj
 c:\users\decoyz\desktop\sr_team\client\default\debug\cubemonsterhead.obj
 c:\users\decoyz\desktop\sr_team\client\default\debug\cubeplayer.obj
+<<<<<<< Updated upstream
 c:\users\decoyz\desktop\sr_team\client\default\debug\pi_default.obj
+=======
+c:\users\decoyz\desktop\sr_team\client\default\debug\dynamiccamera.obj
+c:\users\decoyz\desktop\sr_team\client\default\debug\healthpotion.obj
+c:\users\decoyz\desktop\sr_team\client\default\debug\imguimgr.obj
+>>>>>>> Stashed changes
 c:\users\decoyz\desktop\sr_team\client\default\debug\grapheditor.obj
 c:\users\decoyz\desktop\sr_team\client\default\debug\imcurveedit.obj
 c:\users\decoyz\desktop\sr_team\client\default\debug\imgradient.obj
@@ -69,6 +93,14 @@ c:\users\decoyz\desktop\sr_team\client\default\debug\imgui_impl_win32.obj
 c:\users\decoyz\desktop\sr_team\client\default\debug\imgui_tables.obj
 c:\users\decoyz\desktop\sr_team\client\default\debug\imgui_widgets.obj
 c:\users\decoyz\desktop\sr_team\client\default\debug\imsequencer.obj
+<<<<<<< Updated upstream
+=======
+c:\users\decoyz\desktop\sr_team\client\default\debug\mapcamera.obj
+c:\users\decoyz\desktop\sr_team\client\default\debug\player_mapping.obj
+c:\users\decoyz\desktop\sr_team\client\default\debug\playermapping.obj
+c:\users\decoyz\desktop\sr_team\client\default\debug\monstermapping.obj
+c:\users\decoyz\desktop\sr_team\client\default\debug\wallmapping.obj
+>>>>>>> Stashed changes
 c:\users\decoyz\desktop\sr_team\client\bin\client.lib
 c:\users\decoyz\desktop\sr_team\client\bin\client.exp
 c:\users\decoyz\desktop\sr_team\client\bin\client.ilk

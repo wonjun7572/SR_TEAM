@@ -160,6 +160,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\BackGround.h" />
+    <ClInclude Include="..\Header\BaseMapping.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="..\Header\Bullet.h" />
     <ClInclude Include="..\Header\CubeArm.h" />
     <ClInclude Include="..\Header\CubeBody.h" />
@@ -179,8 +182,15 @@
     <ClInclude Include="..\Header\LoadingScene.h" />
     <ClInclude Include="..\Header\Logo.h" />
     <ClInclude Include="..\Header\MainApp.h" />
+    <ClInclude Include="..\Header\MapCamera.h" />
+    <ClInclude Include="..\Header\MonsterMapping.h" />
     <ClInclude Include="..\Header\OptionButton.h" />
     <ClInclude Include="..\Header\PlayButton.h" />
+<<<<<<< Updated upstream
+=======
+    <ClInclude Include="..\Header\PlayerMapping.h" />
+    <ClInclude Include="..\Header\PlayerUI.h" />
+>>>>>>> Stashed changes
     <ClInclude Include="..\Header\PoolMgr.h" />
     <ClInclude Include="..\Header\Shotgun.h" />
     <ClInclude Include="..\Header\ShotgunPart1.h" />
@@ -208,6 +218,9 @@
     <ClInclude Include="..\Header\UziPart4.h" />
     <ClInclude Include="..\Header\UziPart5.h" />
     <ClInclude Include="..\Header\Wall.h" />
+    <ClInclude Include="..\Header\WallMapping.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="..\Header\WallMgr.h" />
     <ClInclude Include="..\Header\Weapon.h" />
     <ClInclude Include="Client.h" />
@@ -235,6 +248,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\BackGround.cpp" />
+    <ClCompile Include="..\Code\BaseMapping.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\Code\Bullet.cpp" />
     <ClCompile Include="..\Code\CubeArm.cpp" />
     <ClCompile Include="..\Code\CubeBody.cpp" />
@@ -254,8 +270,15 @@
     <ClCompile Include="..\Code\LoadingScene.cpp" />
     <ClCompile Include="..\Code\Logo.cpp" />
     <ClCompile Include="..\Code\MainApp.cpp" />
+    <ClCompile Include="..\Code\MapCamera.cpp" />
+    <ClCompile Include="..\Code\MonsterMapping.cpp" />
     <ClCompile Include="..\Code\OptionButton.cpp" />
     <ClCompile Include="..\Code\PlayButton.cpp" />
+<<<<<<< Updated upstream
+=======
+    <ClCompile Include="..\Code\PlayerMapping.cpp" />
+    <ClCompile Include="..\Code\PlayerUI.cpp" />
+>>>>>>> Stashed changes
     <ClCompile Include="..\Code\PoolMgr.cpp" />
     <ClCompile Include="..\Code\Shotgun.cpp" />
     <ClCompile Include="..\Code\ShotgunPart1.cpp" />
@@ -283,6 +306,9 @@
     <ClCompile Include="..\Code\UziPart4.cpp" />
     <ClCompile Include="..\Code\UziPart5.cpp" />
     <ClCompile Include="..\Code\Wall.cpp" />
+    <ClCompile Include="..\Code\WallMapping.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\Code\WallMgr.cpp" />
     <ClCompile Include="..\Code\Weapon.cpp" />
     <ClCompile Include="Client.cpp" />

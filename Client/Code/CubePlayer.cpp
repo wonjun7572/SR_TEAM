@@ -1,6 +1,12 @@
 #include "stdafx.h"
 #include "..\Header\CubePlayer.h"
+<<<<<<< Updated upstream
 
+=======
+#include "PoolMgr.h"
+#include "Bullet.h"
+#include "PlayerMapping.h"
+>>>>>>> Stashed changes
 CCubePlayer::CCubePlayer(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
 {
@@ -29,8 +35,14 @@ _int CCubePlayer::Update_Object(const _float & fTimeDelta)
 
 	CGameObject::Update_Object(fTimeDelta);
 
+<<<<<<< Updated upstream
 	Move();
 	Walk_Animation();
+=======
+	TransAxis();
+	
+	Mapping();
+>>>>>>> Stashed changes
 
 	_vec3	vLook;
 	m_pHeadWorld->Get_BeforeInfo(INFO_LOOK, &vLook);
@@ -155,8 +167,13 @@ void CCubePlayer::Move()
 
 	if (Get_DIKeyState(DIK_W))
 	{
+<<<<<<< Updated upstream
 		m_pTransform->Get_Info(INFO_LOOK, &vDir);
 		m_pBodyWorld->Move_Pos(&(vDir * 10.f * m_fTimeDelta));
+=======
+		m_pBodyWorld->Get_Info(INFO_LOOK, &vDir);
+		m_pBodyWorld->Move_Pos(&(vDir * 330.f * m_fTimeDelta));
+>>>>>>> Stashed changes
 	}
 	if (Get_DIKeyState(DIK_S))
 	{
@@ -188,7 +205,22 @@ void CCubePlayer::Move()
 
 		m_pBodyWorld->Move_Pos(&(vDir * 10.f * m_fTimeDelta));
 	}
-
+	if (Get_DIKeyState(DIK_Y))
+	{
+		CRenderer::GetInstance()->On_Minimap();		
+	}
+	if (Get_DIKeyState(DIK_U))
+	{
+		CRenderer::GetInstance()->Off_Minimap();
+	}
+	if (Get_DIKeyState(DIK_0))
+	{
+		CRenderer::GetInstance()->On_Mapview();
+	}
+	if (Get_DIKeyState(DIK_9))
+	{
+		CRenderer::GetInstance()->Off_Mapview();
+	}
 	if (Get_DIKeyState(DIK_SPACE))
 	{
 		/*m_pBodyWorld->Get_Info(INFO_UP, &vDir);
@@ -269,6 +301,25 @@ void CCubePlayer::Look_Direction(void)
 	}*/
 }
 
+HRESULT CCubePlayer::Mapping(void)
+{
+	// ¸Ê»ý¼º
+	if (!m_MappingInit)
+	{
+		CGameObject*	m_pMapMonster = CPlayerMapping::Create(m_pGraphicDev);
+		TCHAR* szCntName = new TCHAR[64];
+		wsprintf(szCntName, L"Map");
+		Engine::Add_GameObject(L"Layer_UI", m_pMapMonster, szCntName);
+		m_listMonsterCnt.push_back(szCntName);
+
+		m_pBaseMapping = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_UI", szCntName, L"Proto_TransformCom", ID_DYNAMIC));
+		NULL_CHECK_RETURN(m_pBaseMapping, E_FAIL);
+		m_MappingInit = true;
+	}
+
+	//m_pBaseMapping->Set_Pos(65.f, 0.f, 65.f);
+}
+
 void CCubePlayer::Jump(void)
 {
 }
@@ -296,6 +347,12 @@ HRESULT CCubePlayer::Get_BodyTransform(void)
 	NULL_CHECK_RETURN(m_pBodyWorld, E_FAIL);
 	m_pRightFootWorld = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Character", L"R_FOOT", L"Proto_TransformCom", ID_STATIC));
 	NULL_CHECK_RETURN(m_pBodyWorld, E_FAIL);
+
+	
+
+
+
+
 
 	return S_OK;
 }

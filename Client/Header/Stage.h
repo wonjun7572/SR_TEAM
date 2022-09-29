@@ -5,7 +5,11 @@
 
 #include "Terrain.h"
 #include "TestPlayer.h"
+<<<<<<< Updated upstream
 #include "SkyBox.h"
+=======
+#include "MapCamera.h"
+>>>>>>> Stashed changes
 #include "StaticCamera.h"
 #include "DynamicCamera.h"
 
