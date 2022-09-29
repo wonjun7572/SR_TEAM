@@ -8,10 +8,7 @@ namespace CurrentState
 	enum MONSTERID { MONSTER_IDLE, MONSTER_COMEBACK, MONSTER_ATTACK, MONSTER_DEATH, MONSTER_END };
 }
 
-
 USING(Engine)
-
-
 
 class  CCubeMonster : public CGameObject
 {
@@ -33,16 +30,9 @@ public:
 	virtual _int CurrentMonster(_float fTimeDelta);
 	virtual void ChangeCurrent(CurrentState::MONSTERID Idstate);
 
-
-
-
 public:
 	//HP값을 들고오면 되지않을까 death나 여러가지 기타 값요소들을 안에다가 넣어주는 형식
 	_float		Get_CurrentHP() { return m_MonsterState.fCurrentHp; }
-	
-
-
-
 
 private:
 	map<const _tchar*, CGameObject*>	m_mapMonsterBody;
@@ -52,12 +42,10 @@ private:
 	void			Assemble(void);
 	void			Axis(void);
 
-
 	HRESULT			Get_BodyTransform(void);
 
 private:
 	HRESULT  Add_Component(void);
-
 
 	//몬스터 
 
@@ -74,19 +62,12 @@ private:
 
 	CTexture*			m_pTextureCom = nullptr;
 
-
-
 	//플레이어 
 	CTransform*		pPlayerTransformCom = nullptr;
 
-
-
 	CCalculator*		m_pCalculator = nullptr;
 
-
-			
-
-//test
+	//test
 private:
 
 	_int		Attack(_float fTimeDelta);
@@ -94,7 +75,7 @@ private:
 
 
 private:
-	
+
 
 	//탐지범위를 줄것이다. 
 	_float			m_fDetectRange;
@@ -115,7 +96,7 @@ private:
 	//공격이 필요할것이고 멈추는상태도 필요하고 
 	_bool				m_bAttack;
 	_bool				m_bShoot;
-	
+
 
 	_vec3	m_vEye, m_vAt;
 	_float m_fDistance = 13.f;
@@ -130,11 +111,6 @@ private:
 	//api방식 그대로 그냥 가져와주면 되지않을까라는 의문을 가져본다. 
 
 	MONSTERABILITY					m_MonsterState;
-	FRAME							m_tFrame;
-
-
-
-
 
 public:
 	static CCubeMonster*	Create(LPDIRECT3DDEVICE9 pGraphicDev);

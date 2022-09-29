@@ -29,17 +29,10 @@ _int CPlayerHpUI::Update_Object(const _float & fTimeDelta)
 	if (m_pPlayer == nullptr)
 		m_pPlayer = Engine::Get_GameObject(L"Layer_Character", L"PLAYER");
 
-	m_testTime += fTimeDelta;
 	if (m_pPlayer != nullptr)
 	{
 		m_iHp = dynamic_cast<CCubePlayer*>(m_pPlayer)->Get_Ability()->iHp;
 		m_strHp = to_wstring(m_iHp);
-	}
-
-	if (m_testTime > 0.1f)
-	{
-		dynamic_cast<CCubePlayer*>(m_pPlayer)->Set_Damaged(5);
-		m_testTime = 0.f;
 	}
 
 	return iResult;
@@ -54,7 +47,7 @@ void CPlayerHpUI::Render_Object(void)
 {
 	Begin_OrthoProj();
 	m_pTextureCom->Set_Texture(0);
-	m_pBufferCom->Resize_Buffer(m_iHp * 0.01f, m_iHp * 0.01f);
+	m_pBufferCom->Resize_Buffer(m_iHp * 0.01f);
 	m_pBufferCom->Render_Buffer();
 	End_OrthoProj();
 	Render_Font(L"HP", m_strHp.c_str(), &(_vec2(88.f, 580.f)), D3DXCOLOR(0.5f, 0.5f, 0.3f, 1.f));
@@ -104,11 +97,11 @@ HRESULT CPlayerHpUI::Add_Component()
 
 	pComponent = m_pTransCom = dynamic_cast<CTransform*>(Clone_Proto(L"Proto_TransformCom"));
 	NULL_CHECK_RETURN(m_pTransCom, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Proto_TransformCom", pComponent });
+	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_TransformCom", pComponent });
 
 	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Clone_Proto(L"HP_Gage"));
 	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
-	m_mapComponent[ID_DYNAMIC].insert({ L"HP_Gage", pComponent });
+	m_mapComponent[ID_STATIC].insert({ L"HP_Gage", pComponent });
 
 	return S_OK;
 }

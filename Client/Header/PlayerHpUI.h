@@ -33,8 +33,6 @@ private:
 	_int	m_iHp;
 	wstring m_strHp;
 
-	_float m_testTime = 0.f;
-
 public:
 	static CPlayerHpUI*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
 	void Free(void) override;
