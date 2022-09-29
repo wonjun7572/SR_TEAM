@@ -30,6 +30,8 @@ private:
 
 	void			Animation_Fire(void);
 
+	void			TransAxisShotgun(void);
+
 public:
 	static CShotgun*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
 	virtual void Free(void);

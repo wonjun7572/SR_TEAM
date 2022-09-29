@@ -16,6 +16,9 @@ private:
 public:
 	HRESULT					Ready_Collision(void);
 	_bool					Check_Collision(void);
+	_int					Wall_Collision(_vec3* vNorm);
+
+	_int					Wall_Collision_By_DotSliding(_vec3* vChangeDir);
 
 private:
 	_vec3	m_vMin1 = { 0, 0, 0 };
