@@ -22,16 +22,35 @@ public:
 	virtual void	Render_Object(void) override;
 
 private:
+	void			TransAxisUzi1(void);
+	void			TransAxisUzi2(void);
+
 	HRESULT			Add_Component(void);
 	HRESULT			Add_Parts();
 	HRESULT			Get_Parts(void);
 
-	void			Set_OnTerrain(void);						//	지형 타기
+	void			Set_OnTerrain(void);
 	
-	void			Assemble(void);								//	몸체 조립
+	void			Assemble(void);
 
-	void			Animation_Fire(void);						//	걷는 모션
+	void			Animation_Fire(void);
 	
+private:
+	CTransform*		m_pTransform = nullptr;	
+
+	CTransform*		m_pUziPart1 = nullptr;
+	CTransform*		m_pUziPart2 = nullptr;
+	CTransform*		m_pUziPart3 = nullptr;
+	CTransform*		m_pUziPart4 = nullptr;
+	CTransform*		m_pUziPart5 = nullptr;
+
+	CCalculator*	m_pCalculatorCom = nullptr;
+	CCubeTex*		m_pBufferCom = nullptr;
+	CTexture*		m_pTextureCom = nullptr;
+
+	_float			m_fTimeDelta = 0.f;
+	_float			m_fUnit = 0.1f;
+
 public:
 	static CUzi*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
 	virtual void Free(void);

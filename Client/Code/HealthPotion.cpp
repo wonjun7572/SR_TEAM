@@ -20,9 +20,8 @@ CHealthPotion::~CHealthPotion()
 HRESULT CHealthPotion::Ready_Object(const _vec3& vPos)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
-
-	//m_pTransCom->Set_Pos()
-
+	m_pTransCom->Set_Pos(vPos.x, vPos.y, vPos.z);
+	m_pTransCom->Set_Scale(2.f, 2.f, 2.f);
 	return S_OK;
 }
 

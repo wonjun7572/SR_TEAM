@@ -18,6 +18,15 @@ private:
 	virtual ~CTestPlayer();
 
 public:
+	void			Get_HitboxMin(_vec3* vMin, _vec3* vMax)
+	{
+		D3DXVec3TransformCoord(vMin, &m_vMin, m_pTransCom->Get_WorldMatrixPointer());
+		D3DXVec3TransformCoord(vMax, &m_vMax, m_pTransCom->Get_WorldMatrixPointer());
+
+		//cout << vMin->x << " " << vMin->y << " " << vMin->z << "     " << vMax->x << " " << vMax->y << " " << vMax->z << endl;
+	}
+
+public:
 	virtual HRESULT Ready_Object(void) override;
 	virtual _int	Update_Object(const _float& fTimeDelta) override;
 	virtual void	LateUpdate_Object(void) override;
@@ -42,7 +51,15 @@ private:
 	CTexture*			m_pTextureCom = nullptr;
 	CCalculator*		m_pCalculatorCom = nullptr;
 
+	CHitBox*			m_pHitBox = nullptr;
+
 	_vec3				m_vDirection;
+
+	_vec3				m_vMin = { 0,0,0 };
+	_vec3				m_vMax = { 0,0,0 };
+
+	_vec3				vT1 = { 0,0,0 };
+	_vec3				vT2 = { 0,0,0 };
 
 private:
 	list<TCHAR*>		m_liszFinalName;

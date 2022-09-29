@@ -37,8 +37,6 @@ void CSniper::LateUpdate_Object(void)
 	FAILED_CHECK_RETURN(Add_Parts(), );
 	FAILED_CHECK_RETURN(Get_Parts(), );
 	CGameObject::LateUpdate_Object();
-
-	//Animation_Fire();
 }
 
 void CSniper::Render_Object(void)
@@ -112,9 +110,9 @@ void CSniper::Assemble(void)
 	m_pPart4->Set_Pos(40.f, 2.f, 10.f);
 	m_pPart4->Get_BeforeInfo(INFO_POS, &vBodyPos);
 
-	m_pPart1->Set_Pos(vBodyPos.x - 1.8f*1.5, vBodyPos.y + 0.65f*1.5, vBodyPos.z);
-	m_pPart2->Set_Pos(vBodyPos.x - 3.6f*1.5, vBodyPos.y + 0.4f*1.5, vBodyPos.z);
-	m_pPart3->Set_Pos(vBodyPos.x - 2.f*1.5, vBodyPos.y + 0.2f*1.5, vBodyPos.z);
+	m_pPart1->Set_Pos(vBodyPos.x - 1.8f*1.5f, vBodyPos.y + 0.65f*1.5f, vBodyPos.z);
+	m_pPart2->Set_Pos(vBodyPos.x - 3.6f*1.5f, vBodyPos.y + 0.4f*1.5f, vBodyPos.z);
+	m_pPart3->Set_Pos(vBodyPos.x - 2.f*1.5f, vBodyPos.y + 0.2f*1.5f, vBodyPos.z);
 	
 	
 	//

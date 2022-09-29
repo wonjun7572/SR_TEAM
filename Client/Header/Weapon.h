@@ -21,14 +21,14 @@ public:
 	virtual void	LateUpdate_Object(void) override;
 	virtual void	Render_Object(void) override;
 
+public:
+	GUNABILITY* Get_Ability() { return m_tAbility; }
 
 public:
 	HRESULT			Ready_Weapon(LPDIRECT3DDEVICE9 pGraphicDev, const _uint& iIndex);
 
-
-private:
+public:
 	virtual void Free(void);
-
 
 protected:
 	//น฿ป็
@@ -40,6 +40,8 @@ protected:
 protected:	
 	CTransform*		m_pTransform = nullptr;
 	CWeapon*		m_pWeapon = nullptr;
+
+	GUNABILITY*		m_tAbility = nullptr;
 
 	CTransform*		m_pPart1 = nullptr;
 	CTransform*		m_pPart2 = nullptr;

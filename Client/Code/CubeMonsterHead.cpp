@@ -7,6 +7,7 @@
 CCubeMonsterHead::CCubeMonsterHead(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
 {
+	fTimeDelta = 1.f;
 }
 
 CCubeMonsterHead::~CCubeMonsterHead()
@@ -30,14 +31,14 @@ _int CCubeMonsterHead::Update_Object(const _float & fTimeDelta)
 	Add_RenderGroup(RENDER_ALPHA, this);
 	CGameObject::Update_Object(fTimeDelta);
 
-
-
+	
 	return 0;
 }
 
 void CCubeMonsterHead::LateUpdate_Object(void)
 {
-	CGameObject::LateUpdate_Object();
+	m_pTexture->Set_Texture(104);
+
 
 }
 
@@ -46,8 +47,7 @@ void CCubeMonsterHead::Render_Object(void)
 
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
 
-	m_pTexture->Set_Texture(0);
-
+	m_pTexture->Set_Texture(104);
 	m_pCubeTexture->Render_Buffer();
 
 }

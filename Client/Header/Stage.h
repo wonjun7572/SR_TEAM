@@ -1,18 +1,12 @@
 #pragma once
 
-//#include "Engine_Include.h"
 #include "Scene.h"
-
+#include "SkyBox.h"
 #include "Terrain.h"
 #include "TestPlayer.h"
-<<<<<<< Updated upstream
-#include "SkyBox.h"
-=======
-#include "MapCamera.h"
->>>>>>> Stashed changes
 #include "StaticCamera.h"
 #include "DynamicCamera.h"
-
+#include "DynamicCamera.h"
 class CStage : public Engine::CScene
 {
 private:
@@ -35,11 +29,15 @@ private:
 	HRESULT			Ready_Layer_Monster(const _tchar* pLayerTag);
 	HRESULT			Ready_Layer_Bullet(const _tchar* pLayerTag);
 
-	// ÅøÀ» À§ÇÑ ·¹ÀÌ¾î
-	HRESULT			Ready_Layer_Tool(const _tchar* pLayerTag);
+	HRESULT			Ready_Layer_Gun(const _tchar* pLayerTag);
 
 	HRESULT			Ready_Proto(void);
 	HRESULT			Ready_Light(void);
+
+private:
+	////////////¸Ê ÆÄ½Ì
+	_int			m_iIndex = 0;
+	list<_tchar* >	NameList;
 
 public:
 	static CStage*		Create(LPDIRECT3DDEVICE9 pGraphicDev);

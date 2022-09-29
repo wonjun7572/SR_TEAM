@@ -14,7 +14,7 @@ CUziPart2::~CUziPart2()
 HRESULT CUziPart2::Ready_Object(void)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
-	m_pTransform->Set_Scale(1.2f, .2f, .21f);
+	m_pTransform->Set_Scale(.02f, .02f, 0.12f);
 
 	return S_OK;
 }
@@ -53,7 +53,8 @@ HRESULT CUziPart2::Add_Component(void)
 
 	pInstance = m_pTransform = dynamic_cast<CTransform*>(Engine::Clone_Proto(L"Proto_TransformCom"));
 	NULL_CHECK_RETURN(pInstance, E_FAIL);
-	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_TransformCom", pInstance });
+	//m_mapComponent[ID_DYNAMIC].insert({ L"Proto_TransformCom", pInstance });
+	m_mapComponent[ID_STATIC].insert({ L"Proto_TransformCom", pInstance });
 
 
 	return S_OK;

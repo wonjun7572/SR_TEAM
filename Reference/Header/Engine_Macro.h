@@ -4,23 +4,11 @@
 namespace Engine
 {
 
-<<<<<<< Updated upstream
-#define		WINCX		800
-#define		WINCY		600
-=======
 #define		WINCX		1600
 #define		WINCY		900
 
-#define		MAPCX		100.f
-#define		MAPCY		100.f
-#define		MAPPOSX		600.f		
-#define		MAPPOSY		300.f
-#define		PINGSIZE	10.f
-
-
 #define		NO_EVENT	0
 #define		CHANGE_EVENT 1
->>>>>>> Stashed changes
 
 #define		VTXCNTX		129
 #define		VTXCNTZ		129

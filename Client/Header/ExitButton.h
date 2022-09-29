@@ -1,0 +1,61 @@
+#pragma once
+#include "GameObject.h"
+#include "Engine_Include.h"
+
+BEGIN(Engine)
+
+class CRcTex;
+class CTransform;
+class CTexture;
+
+
+class CExitButton :	public CGameObject
+{
+public:
+	CExitButton(LPDIRECT3DDEVICE9 pGraphicDev);
+	virtual ~CExitButton();
+
+public:
+
+	virtual HRESULT Ready_Object()	override;
+	virtual _int	Update_Object(const _float& fTimeDelta) override;
+	virtual void	LateUpdate_Object(void)	override;
+	virtual void	Render_Object(void) override;
+
+private:
+	CRcTex*			m_pRcTexCom = nullptr;
+	CTransform*     m_pTransformCom = nullptr;
+	CTexture*		m_pTextureCom = nullptr;
+
+private:
+	HRESULT		Add_Component(void);
+
+
+	void		Begin_OrthoProj();
+	void		End_OrthoProj();
+
+
+
+	_matrix m_matWorld;
+	_matrix m_matView;
+	_matrix m_matProj;
+
+private:
+	_bool		Mouse_check = false;
+	_bool		Checking = false;
+	_bool		PointMouse(void);
+
+	wstring		m_strEB;
+	_int		m_iIndex = 0;
+
+public:
+	static CExitButton* Create(LPDIRECT3DDEVICE9 pGraphicDev);
+
+private:
+	virtual void Free(void);
+
+
+
+};
+
+END

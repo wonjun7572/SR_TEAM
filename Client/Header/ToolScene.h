@@ -23,12 +23,12 @@ public:
 
 private:
 	HRESULT			Ready_Layer_Environment(const _tchar* pLayerTag);
-	//	HRESULT			Ready_Layer_GameLogic(const _tchar* pLayerTag);
+	HRESULT			Ready_Layer_GameLogic(const _tchar* pLayerTag);
 	HRESULT			Ready_Layer_UI(const _tchar* pLayerTag);
 
+	HRESULT			Ready_Layer_Camera(const _tchar* pLayerTag);
+
 	HRESULT			Ready_Layer_Wall(const _tchar* pLayerTag);
-	//	HRESULT			Ready_Layer_Character(const _tchar* pLayerTag);
-	//	HRESULT			Ready_Layer_Bullet(const _tchar* pLayerTag);
 
 	// 툴을 위한 레이어
 	HRESULT			Ready_Layer_Tool(const _tchar* pLayerTag);
@@ -37,10 +37,17 @@ private:
 	HRESULT			Ready_Light(void);
 
 public:
+	void Set_Camera(CDynamicCamera* pCamera) { m_pCam = pCamera; }
+	CDynamicCamera* Get_Camera() { return m_pCam; }
+
+public:
 	static CToolScene*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
 private:
-	CDynamicCamera* m_pCam = nullptr;
+	CLayer*				m_pCamLayer = nullptr;
+
+private:
+	CDynamicCamera*		m_pCam = nullptr;
 
 private:
 	virtual void	Free(void);

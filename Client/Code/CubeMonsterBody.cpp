@@ -33,9 +33,8 @@ _int CCubeMonsterBody::Update_Object(const _float & fTimeDelta)
 }
 
 void CCubeMonsterBody::LateUpdate_Object(void)
-{
+{	
 
-	CGameObject::LateUpdate_Object();
 }
 
 void CCubeMonsterBody::Render_Object(void)
@@ -62,7 +61,7 @@ HRESULT CCubeMonsterBody::Add_component(void)
 
 	pComponent = m_pTransform = dynamic_cast<CTransform*>(Clone_Proto(L"Proto_TransformCom"));
 	NULL_CHECK_RETURN(m_pTransform, E_FAIL);
-	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_TransformCom", pComponent });
+	m_mapComponent[ID_STATIC].insert({ L"Proto_TransformCom", pComponent });
 
 	return S_OK;
 }

@@ -14,7 +14,7 @@ HRESULT CCubeHead::Ready_Object(void)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
-	m_pTransform->Set_Scale(1.f, 1.f, 1.f);
+	m_pTransform->Set_Scale(0.1f, 0.1f, 0.1f);
 
 	return S_OK;
 }
@@ -23,9 +23,9 @@ _int CCubeHead::Update_Object(const _float & fTimeDelta)
 {
 	Key_Input(fTimeDelta);
 
-	Add_RenderGroup(RENDER_NONALPHA, this);
-
 	CGameObject::Update_Object(fTimeDelta);
+
+	Add_RenderGroup(RENDER_NONALPHA, this);
 
 	return 0;
 }

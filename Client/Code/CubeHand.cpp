@@ -14,24 +14,22 @@ HRESULT CCubeHand::Ready_Object(void)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
-	m_pTransform->Set_Scale(0.5f, 1.f, 0.5f);
+	m_pTransform->Set_Scale(0.05f, 0.1f, 0.05f);
 
 	return S_OK;
 }
 
 _int CCubeHand::Update_Object(const _float & fTimeDelta)
 {
-	Add_RenderGroup(RENDER_NONALPHA, this);
-
 	CGameObject::Update_Object(fTimeDelta);
+
+	Add_RenderGroup(RENDER_NONALPHA, this);
 
 	return 0;
 }
 
 void CCubeHand::LateUpdate_Object(void)
 {
-	Key_Input(0.1f);
-
 	CGameObject::LateUpdate_Object();
 }
 
@@ -41,10 +39,6 @@ void CCubeHand::Render_Object(void)
 
 	m_pTexture->Set_Texture(0);
 	m_pCube->Render_Buffer();
-}
-
-void CCubeHand::Key_Input(const _float & fTimeDelta)
-{
 }
 
 HRESULT CCubeHand::Add_Component(void)

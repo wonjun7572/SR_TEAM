@@ -3,6 +3,9 @@
 
 #include "Export_Function.h"
 
+_vec3 vEye = _vec3(0.f, 0.f, 0.f);
+_vec3 vAt = _vec3(0.f, 0.f, 0.f);
+
 CDynamicCamera::CDynamicCamera(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CCamera(pGraphicDev)
 {
@@ -37,11 +40,20 @@ HRESULT CDynamicCamera::Ready_Object(const _vec3* pEye,
 
 Engine::_int CDynamicCamera::Update_Object(const _float& fTimeDelta)
 {
-	Key_Input(fTimeDelta);
+	//Key_Input(fTimeDelta);
+	RightCamera(fTimeDelta);
+	if (m_bSave)
+		Save_Position();
+	
+	if (m_bLoad)
+		Load_Position();
 
 	_int iExit = CCamera::Update_Object(fTimeDelta);
 
-	return iExit;
+	if (m_bMainCameraOn)
+		CCamera::Update_Object(fTimeDelta);
+	
+	return 0;
 }
 
 void CDynamicCamera::LateUpdate_Object(void)
@@ -50,8 +62,8 @@ void CDynamicCamera::LateUpdate_Object(void)
 
 	if (false == m_bFix)
 	{
-		Mouse_Fix();
-		Mouse_Move();
+		//Mouse_Fix();
+		//Mouse_Move();
 	}
 }
 
@@ -72,10 +84,38 @@ CDynamicCamera* CDynamicCamera::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec
 	return pInstance;
 }
 
+void CDynamicCamera::Save_Position()
+{
+	if(vEye != m_vEye || vAt != m_vAt)
+		m_liPos.push_back(make_pair(m_vEye, m_vAt));
+	vEye = m_vEye;
+	vAt = m_vAt;
+}
+
+void CDynamicCamera::Load_Position()
+{
+	if (m_liPos.empty())
+		return;
+
+	m_vEye = m_liPos.front().first;
+	m_vAt  = m_liPos.front().second;
+	m_liPos.pop_front();
+}
+
 void CDynamicCamera::Key_Input(const _float& fTimeDelta)
 {
 	_matrix		matCamWorld;
 	D3DXMatrixInverse(&matCamWorld, nullptr, &m_matView);
+
+	if (Get_DIKeyState(DIK_U) & 0x80)
+	{
+		SaveBtn();
+	}
+
+	if (Get_DIKeyState(DIK_I) & 0x80)
+	{
+		LoadBtn();
+	}
 
 	if (Get_DIKeyState(DIK_W) & 0x80)
 	{
@@ -183,4 +223,20 @@ void CDynamicCamera::Mouse_Fix(void)
 
 	ClientToScreen(g_hWnd, &pt);
 	SetCursorPos(pt.x, pt.y);
+}
+
+//다이나믹 카메라 로딩창에서 실행할것
+void CDynamicCamera::RightCamera(const _float& fTimeDelta)
+{
+
+	_matrix		matCamWorld;
+	D3DXMatrixInverse(&matCamWorld, nullptr, &m_matView);
+
+	_vec3		vRight;
+	memcpy(&vRight, &matCamWorld.m[0][0], sizeof(_vec3));
+
+	_vec3		vLength = *D3DXVec3Normalize(&vRight, &vRight)  * 2.f * fTimeDelta;
+	
+	m_vEye.y = m_fDistnace;
+	m_vEye -= vLength;
 }

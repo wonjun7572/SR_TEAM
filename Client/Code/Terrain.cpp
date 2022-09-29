@@ -38,7 +38,7 @@ void CTerrain::Render_Object(void)
 {
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransCom->Get_WorldMatrixPointer());
 
-	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
+	//m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
 
 	if (m_bWireFrame)
 		m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
@@ -79,9 +79,13 @@ HRESULT CTerrain::Add_Component(void)
 	}
 	catch (int expn)
 	{
-		pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Clone_Proto(L"Proto_TerrainTexture"));
+		/*pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Clone_Proto(L"Proto_TerrainTexture_Stage_1"));
 		NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
-		m_mapComponent[ID_STATIC].insert({ L"Proto_TerrainTexture", pComponent });
+		m_mapComponent[ID_STATIC].insert({ L"Proto_TerrainTexture_Stage_1", pComponent });*/
+
+		pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Clone_Proto(L"Proto_TerrainTexture_Stage_1"));
+		NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
+		m_mapComponent[ID_STATIC].insert({ L"Proto_TerrainTexture_Stage_1", pComponent });
 	}
 	//////////////////////////////////	클라이언트<->툴 변경작업 ///////////////////////////////////////////////////////
 

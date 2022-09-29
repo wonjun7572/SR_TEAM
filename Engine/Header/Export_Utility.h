@@ -10,6 +10,7 @@
 #include "CubeTex.h"
 #include "SphereTex.h"
 #include "Hitbox.h"
+#include "Collision.h"
 
 #include "Calculator.h"
 #include "Transform.h"

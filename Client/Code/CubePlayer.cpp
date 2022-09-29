@@ -1,12 +1,8 @@
 #include "stdafx.h"
 #include "..\Header\CubePlayer.h"
-<<<<<<< Updated upstream
-
-=======
 #include "PoolMgr.h"
 #include "Bullet.h"
-#include "PlayerMapping.h"
->>>>>>> Stashed changes
+
 CCubePlayer::CCubePlayer(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
 {
@@ -20,7 +16,14 @@ HRESULT CCubePlayer::Ready_Object(void)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
-	m_pTransform->Set_Scale(2.f, 5.f, 2.f);
+	m_tAbility = new ABILITY;
+	m_tAbility->iHp = 100;
+	m_tAbility->iDefence = 100;
+
+	m_pTransform->Set_Scale(0.4f, 1.f, 0.4f);
+	m_pTransform->Set_Pos(10.f, 10.f, 10.f);
+
+	m_fSpeed = 10.f;
 
 	ShowCursor(false);
 
@@ -33,19 +36,19 @@ _int CCubePlayer::Update_Object(const _float & fTimeDelta)
 
 	FAILED_CHECK_RETURN(Get_BodyTransform(), -1);
 
-	CGameObject::Update_Object(fTimeDelta);
-
-<<<<<<< Updated upstream
 	Move();
-	Walk_Animation();
-=======
-	TransAxis();
-	
-	Mapping();
->>>>>>> Stashed changes
 
-	_vec3	vLook;
-	m_pHeadWorld->Get_BeforeInfo(INFO_LOOK, &vLook);
+	//cout << m_vDirection.x << " " << m_vDirection.y << " " << m_vDirection.z << endl;
+
+	Animation();
+
+	TransAxis();
+
+	Gun_Check();
+
+	//FAILED_CHECK_RETURN(CPoolMgr::GetInstance()->Reuse_Obj(m_pGraphicDev, &vPos, &m_vDirection), -1);
+
+	CGameObject::Update_Object(fTimeDelta);
 
 	Engine::Add_RenderGroup(RENDER_NONALPHA, this);
 
@@ -54,17 +57,20 @@ _int CCubePlayer::Update_Object(const _float & fTimeDelta)
 
 void CCubePlayer::LateUpdate_Object(void)
 {
-	CGameObject::LateUpdate_Object();
 	if (!m_bJump)
 		Set_OnTerrain();
 
 	Look_Direction();
 
-	TransAxis();
-
 	Assemble();
-	
-	cout << D3DXToDegree(m_fAngle) << endl;
+
+	Fire_Bullet();
+
+	//m_pHitBox->Get_MinMax(&m_vMin, &m_vMax);
+
+	m_pCollision->Check_Collision();
+
+	CGameObject::LateUpdate_Object();
 }
 
 void CCubePlayer::Render_Object(void)
@@ -73,7 +79,7 @@ void CCubePlayer::Render_Object(void)
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DPMISCCAPS_CULLNONE);
 	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 
-	m_pHitBox->Render_Buffer();
+	//m_pHitBox->Render_Buffer();
 
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DPMISCCAPS_CULLCCW);
 	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
@@ -90,7 +96,7 @@ void CCubePlayer::Set_OnTerrain(void)
 	Engine::CTerrainTex*	pTerrainTexCom = dynamic_cast<Engine::CTerrainTex*>(Engine::Get_Component(L"Layer_Environment", L"Terrain", L"Proto_TerrainTexCom", ID_STATIC));
 	NULL_CHECK(pTerrainTexCom);
 
-	_float fHeight = m_pCalculatorCom->HeightOnTerrain(&vPos, pTerrainTexCom->Get_VtxPos(), VTXCNTX, VTXCNTZ) + 6.f;
+	_float fHeight = m_pCalculatorCom->HeightOnTerrain(&vPos, pTerrainTexCom->Get_VtxPos(), VTXCNTX, VTXCNTZ) + 0.6f;
 
 	m_pBodyWorld->Set_Pos(vPos.x, fHeight, vPos.z);
 }
@@ -99,19 +105,21 @@ void CCubePlayer::Assemble(void)
 {
 	FAILED_CHECK_RETURN(Get_BodyTransform(), );
 
-	_vec3 vBodyPos;
+	_vec3 vBodyPos, vBodyAfterPos;
 	m_pBodyWorld->Get_BeforeInfo(INFO_POS, &vBodyPos);
-	m_pTransform->Set_Pos(vBodyPos.x, vBodyPos.y, vBodyPos.z);
-	m_pHeadWorld->Set_Pos(vBodyPos.x, vBodyPos.y + 3.f, vBodyPos.z);
-	m_pLeftArmWorld->Set_Pos(vBodyPos.x - 1.5f, vBodyPos.y + 1.f, vBodyPos.z);
-	m_pRightArmWorld->Set_Pos(vBodyPos.x + 1.5f, vBodyPos.y + 1.f, vBodyPos.z);
-	m_pLeftLegWorld->Set_Pos(vBodyPos.x - 0.5f, vBodyPos.y - 3.f, vBodyPos.z);
-	m_pRightLegWorld->Set_Pos(vBodyPos.x + 0.5f, vBodyPos.y - 3.f, vBodyPos.z);
+	m_pBodyWorld->Get_Info(INFO_POS, &vBodyAfterPos);
 
-	m_pLeftHandWorld->Set_Pos(vBodyPos.x - 1.5f, vBodyPos.y - 1.f, vBodyPos.z);
-	m_pRightHandWorld->Set_Pos(vBodyPos.x + 1.5f, vBodyPos.y - 1.f, vBodyPos.z);
-	m_pLeftFootWorld->Set_Pos(vBodyPos.x - 0.5f, vBodyPos.y - 5.f, vBodyPos.z);
-	m_pRightFootWorld->Set_Pos(vBodyPos.x + 0.5f, vBodyPos.y - 5.f, vBodyPos.z);
+	m_pTransform->Set_Pos(vBodyPos.x, vBodyPos.y, vBodyPos.z);
+	m_pHeadWorld->Set_Pos(vBodyPos.x, vBodyPos.y + 0.3f, vBodyPos.z);
+	m_pLeftArmWorld->Set_Pos(vBodyPos.x - 0.15f, vBodyPos.y + 0.1f, vBodyPos.z);
+	m_pRightArmWorld->Set_Pos(vBodyPos.x + 0.15f, vBodyPos.y + 0.1f, vBodyPos.z);
+	m_pLeftLegWorld->Set_Pos(vBodyPos.x - 0.05f, vBodyPos.y - 0.3f, vBodyPos.z);
+	m_pRightLegWorld->Set_Pos(vBodyPos.x + 0.05f, vBodyPos.y - 0.3f, vBodyPos.z);
+
+	m_pLeftHandWorld->Set_Pos(vBodyPos.x - 0.15f, vBodyPos.y - 0.1f, vBodyPos.z);
+	m_pRightHandWorld->Set_Pos(vBodyPos.x + 0.15f, vBodyPos.y - 0.1f, vBodyPos.z);
+	m_pLeftFootWorld->Set_Pos(vBodyPos.x - 0.05f, vBodyPos.y - 0.5f, vBodyPos.z);
+	m_pRightFootWorld->Set_Pos(vBodyPos.x + 0.05f, vBodyPos.y - 0.5f, vBodyPos.z);
 
 	if (m_bFirst)
 	{
@@ -126,114 +134,276 @@ void CCubePlayer::Assemble(void)
 		m_pLeftFootWorld->Static_Update();
 		m_pRightHandWorld->Static_Update();
 	}
-
-	//cout << vBodyPos.y << endl;
 }
 
-void CCubePlayer::Walk_Animation(void)
+void CCubePlayer::Animation(void)
 {
 	if (Get_DIKeyState(DIK_W) || Get_DIKeyState(DIK_A) || Get_DIKeyState(DIK_S) || Get_DIKeyState(DIK_D) || Get_DIKeyState(DIK_SPACE) || Get_DIKeyState(DIK_LSHIFT))
 	{
-		if (m_fAngle > 0.6f)
+		if (m_fLeftArmAngle > 0.6f)
 			m_bWalkAngle = false;
-		if (m_fAngle < -0.6f)
+		if (m_fLeftArmAngle < -0.6f)
 			m_bWalkAngle = true;
 
 		if (m_bWalkAngle == true)
-			m_fAngle += m_fTimeDelta * 4;
+			m_fLeftArmAngle += m_fTimeDelta * 4.f;
 		else if (m_bWalkAngle == false)
-			m_fAngle -= m_fTimeDelta * 4;
+			m_fLeftArmAngle -= m_fTimeDelta * 4.f;
+
+		m_fRightArmAngle = -m_fLeftArmAngle;
+
+		if (m_fLeftLegAngle > 0.6f)
+			m_bWalkAngle_Leg = false;
+		if (m_fLeftLegAngle < -0.6f)
+			m_bWalkAngle_Leg = true;
+
+		if (m_bWalkAngle_Leg == true)
+			m_fLeftLegAngle += m_fTimeDelta * 4.f;
+		else if (m_bWalkAngle_Leg == false)
+			m_fLeftLegAngle -= m_fTimeDelta * 4.f;
+
+		m_fRightLegAngle = -m_fLeftLegAngle;
+
+		if (m_fHandAngle > -D3DX_PI / 2.f)
+			m_fHandAngle -= m_fTimeDelta * 4;
 	}
-	else if (m_fAngle != 0)
+	if (Get_DIMouseState(DIM_RB))
 	{
-		if (m_fAngle > 0)
+		// 우지 견착
+		m_fLeftArmAngle = D3DXToRadian(-90.f) + m_fDownAngle;
+		m_fRightArmAngle = D3DXToRadian(-90.f) + m_fDownAngle;
+		m_fHandAngle = 0.f;
+
+		// 샷건 견착
+		/*m_fLeftArmAngle = D3DXToRadian(-75.f) + m_fDownAngle;
+		m_fRightArmAngle = m_fDownAngle;
+		m_fHandAngle = D3DXToRadian(-90.f);*/
+	}
+	if (!(Get_DIKeyState(DIK_W) ||
+		Get_DIKeyState(DIK_A) ||
+		Get_DIKeyState(DIK_S) ||
+		Get_DIKeyState(DIK_D) ||
+		Get_DIKeyState(DIK_SPACE) ||
+		Get_DIKeyState(DIK_LSHIFT) ||
+		Get_DIMouseState(DIM_RB)))
+	{
+
+		if (m_fLeftArmAngle != 0.f)
 		{
-			m_fAngle -= m_fTimeDelta;
-			if (m_fAngle < 0)
-				m_fAngle = 0;
+			if (m_fLeftArmAngle > 0.f)
+			{
+				m_fLeftArmAngle -= D3DXToRadian(10.f);
+				if (m_fLeftArmAngle < 0.f)
+					m_fLeftArmAngle = 0.f;
+			}
+			else if (m_fLeftArmAngle < 0.f)
+			{
+				m_fLeftArmAngle += D3DXToRadian(10.f);
+				if (m_fLeftArmAngle > 0.f)
+					m_fLeftArmAngle = 0.f;
+			}
 		}
-		else if (m_fAngle < 0)
+
+		if (m_fRightArmAngle != 0.f)
 		{
-			m_fAngle += m_fTimeDelta;
-			if (m_fAngle > 0)
-				m_fAngle = 0;
+			if (m_fRightArmAngle > 0.f)
+			{
+				m_fRightArmAngle -= D3DXToRadian(10.f);
+				if (m_fRightArmAngle < 0.f)
+					m_fRightArmAngle = 0.f;
+			}
+			else if (m_fRightArmAngle < 0.f)
+			{
+				m_fRightArmAngle += D3DXToRadian(10.f);
+				if (m_fRightArmAngle > 0.f)
+					m_fRightArmAngle = 0.f;
+			}
+		}
+
+		if (m_fLeftLegAngle != 0.f)
+		{
+			if (m_fLeftLegAngle > 0.f)
+			{
+				m_fLeftLegAngle -= D3DXToRadian(10.f);
+				if (m_fLeftLegAngle < 0.f)
+					m_fLeftLegAngle = 0.f;
+			}
+			else if (m_fLeftLegAngle < 0.f)
+			{
+				m_fLeftLegAngle += D3DXToRadian(10.f);
+				if (m_fLeftLegAngle > 0.f)
+					m_fLeftLegAngle = 0.f;
+			}
+		}
+
+		if (m_fRightLegAngle != 0.f)
+		{
+			if (m_fRightLegAngle > 0.f)
+			{
+				m_fRightLegAngle -= D3DXToRadian(10.f);
+				if (m_fRightLegAngle < 0.f)
+					m_fRightLegAngle = 0.f;
+			}
+			else if (m_fRightLegAngle < 0.f)
+			{
+				m_fRightLegAngle += D3DXToRadian(10.f);
+				if (m_fRightLegAngle > 0.f)
+					m_fRightLegAngle = 0.f;
+			}
+		}
+
+		if (m_fHandAngle != 0.f)
+		{
+			if (m_fHandAngle > 0.f)
+			{
+				m_fHandAngle -= D3DXToRadian(10.f);
+				if (m_fHandAngle < 0.f)
+					m_fHandAngle = 0.f;
+			}
+			else if (m_fHandAngle < 0.f)
+			{
+				m_fHandAngle += D3DXToRadian(10.f);
+				if (m_fHandAngle > 0.f)
+					m_fHandAngle = 0.f;
+			}
 		}
 	}
 }
 
 void CCubePlayer::Move()
 {
-	_vec3	vDir;
+	////////////방향체크용////////////////
+	_vec3 vPos;
+	m_pBodyWorld->Get_Info(INFO_POS, &vPos);
+	////////////방향체크용////////////////
 
-	if (Get_DIKeyState(DIK_W))
+	_vec3	vDir(0, 0, 0);
+	_vec3	vNormal(0, 0, 0);
+
+	if (Get_DIKeyState(DIK_W) && Get_DIKeyState(DIK_A))
 	{
-<<<<<<< Updated upstream
-		m_pTransform->Get_Info(INFO_LOOK, &vDir);
-		m_pBodyWorld->Move_Pos(&(vDir * 10.f * m_fTimeDelta));
-=======
+		_vec3 vLook, vRight;
+		m_pBodyWorld->Get_Info(INFO_LOOK, &vLook);
+		m_pBodyWorld->Get_Info(INFO_RIGHT, &vRight);
+		vRight *= -1.f;
+
+		vDir = vLook + vRight;
+
+		D3DXVec3Normalize(&vDir, &vDir);
+	}
+	else if (Get_DIKeyState(DIK_W) && Get_DIKeyState(DIK_D))
+	{
+		_vec3 vLook, vRight;
+		m_pBodyWorld->Get_Info(INFO_LOOK, &vLook);
+		m_pBodyWorld->Get_Info(INFO_RIGHT, &vRight);
+
+		vDir = vLook + vRight;
+
+		D3DXVec3Normalize(&vDir, &vDir);
+	}
+	else if (Get_DIKeyState(DIK_S) && Get_DIKeyState(DIK_D))
+	{
+		_vec3 vLook, vRight;
+		m_pBodyWorld->Get_Info(INFO_LOOK, &vLook);
+		m_pBodyWorld->Get_Info(INFO_RIGHT, &vRight);
+		vLook *= -1.f;
+
+		vDir = vLook + vRight;
+
+		D3DXVec3Normalize(&vDir, &vDir);
+	}
+	else if (Get_DIKeyState(DIK_S) && Get_DIKeyState(DIK_A))
+	{
+		_vec3 vLook, vRight;
+		m_pBodyWorld->Get_Info(INFO_LOOK, &vLook);
+		m_pBodyWorld->Get_Info(INFO_RIGHT, &vRight);
+		vLook *= -1.f;
+		vRight *= -1.f;
+
+		vDir = vLook + vRight;
+
+		D3DXVec3Normalize(&vDir, &vDir);
+	}
+	else if (Get_DIKeyState(DIK_W))
+	{
 		m_pBodyWorld->Get_Info(INFO_LOOK, &vDir);
-		m_pBodyWorld->Move_Pos(&(vDir * 330.f * m_fTimeDelta));
->>>>>>> Stashed changes
+		D3DXVec3Normalize(&vDir, &vDir);
 	}
-	if (Get_DIKeyState(DIK_S))
+	else if (Get_DIKeyState(DIK_S))
 	{
-		m_pTransform->Get_Info(INFO_LOOK, &vDir);
-		m_pBodyWorld->Move_Pos(&(vDir * -10.f * m_fTimeDelta));
+		m_pBodyWorld->Get_Info(INFO_LOOK, &vDir);
+		D3DXVec3Normalize(&vDir, &vDir);
+		vDir = -vDir;
+	}
+	else if (Get_DIKeyState(DIK_A))
+	{
+		m_pBodyWorld->Get_Info(INFO_RIGHT, &vDir);
+		D3DXVec3Normalize(&vDir, &vDir);
+		vDir = -vDir;
+	}
+	else if (Get_DIKeyState(DIK_D))
+	{
+		m_pBodyWorld->Get_Info(INFO_RIGHT, &vDir);
+		D3DXVec3Normalize(&vDir, &vDir);
+	}
 
-	}
-	if (Get_DIKeyState(DIK_A))
-	{
-		m_pTransform->Get_Info(INFO_RIGHT, &vDir);
-
-		if (m_fLookAngle < 0.4f)
-		{
-			m_fLookAngle += m_fTimeDelta * 5.f;
-			m_pBodyWorld->Rotation(ROT_Y, -(m_fTimeDelta * 5.f));
-		}
-
-		m_pBodyWorld->Move_Pos(&(vDir * -10.f * m_fTimeDelta));
-	}
-	if (Get_DIKeyState(DIK_D))
-	{
-		m_pTransform->Get_Info(INFO_RIGHT, &vDir);
-
-		if (m_fLookAngle > -0.4f)
-		{
-			m_fLookAngle -= m_fTimeDelta * 5.f;
-			m_pBodyWorld->Rotation(ROT_Y, m_fTimeDelta * 5.f);
-		}
-
-		m_pBodyWorld->Move_Pos(&(vDir * 10.f * m_fTimeDelta));
-	}
-	if (Get_DIKeyState(DIK_Y))
-	{
-		CRenderer::GetInstance()->On_Minimap();		
-	}
-	if (Get_DIKeyState(DIK_U))
-	{
-		CRenderer::GetInstance()->Off_Minimap();
-	}
-	if (Get_DIKeyState(DIK_0))
-	{
-		CRenderer::GetInstance()->On_Mapview();
-	}
-	if (Get_DIKeyState(DIK_9))
-	{
-		CRenderer::GetInstance()->Off_Mapview();
-	}
 	if (Get_DIKeyState(DIK_SPACE))
 	{
-		/*m_pBodyWorld->Get_Info(INFO_UP, &vDir);
-		m_pBodyWorld->Move_Pos(&(vDir * 10.f * m_fTimeDelta));*/
-
 		m_bJump = true;
 	}
 
 	if (Get_DIKeyState(DIK_LSHIFT))
 	{
-		/*m_pBodyWorld->Get_Info(INFO_UP, &vDir);
-		m_pBodyWorld->Move_Pos(&(vDir * -10.f * m_fTimeDelta));*/
 		m_bJump = false;
+	}
+
+	_int iCollision = m_pCollision->Wall_Collision(&vNormal);
+
+	if (-1 != iCollision)
+	{
+		float fDot = D3DXVec3Dot(&vNormal, &vDir);
+		float fDiagonal = acosf(fDot);
+
+		cout << D3DXToDegree(fDiagonal) << endl;
+
+		if (iCollision == WALL_RIGHT || iCollision == WALL_LEFT || iCollision == WALL_BACK)
+		{
+			if (D3DXToDegree(fDiagonal) > 90.f)
+			{
+				_vec3 vSliding = vDir;
+				m_pCollision->Wall_Collision_By_DotSliding(&vSliding);
+
+				m_pBodyWorld->Move_Pos(&(vSliding * m_fSpeed * m_fTimeDelta));
+				FAILED_CHECK_RETURN(CPoolMgr::GetInstance()->Reuse_Obj(m_pGraphicDev, &vPos, &vSliding), );
+			}
+			else
+			{
+				m_pBodyWorld->Move_Pos(&(vDir * m_fSpeed * m_fTimeDelta));
+				FAILED_CHECK_RETURN(CPoolMgr::GetInstance()->Reuse_Obj(m_pGraphicDev, &vPos, &vDir), );
+			}
+		}
+		if (iCollision == WALL_FRONT)
+		{
+			if (D3DXToDegree(fDiagonal) < 90.f)
+			{
+				_vec3 vSliding = vDir;
+				m_pCollision->Wall_Collision_By_DotSliding(&vSliding);
+
+				m_pBodyWorld->Move_Pos(&(vSliding * m_fSpeed * m_fTimeDelta));
+				FAILED_CHECK_RETURN(CPoolMgr::GetInstance()->Reuse_Obj(m_pGraphicDev, &vPos, &vSliding), );
+			}
+			else
+			{
+				m_pBodyWorld->Move_Pos(&(vDir * m_fSpeed * m_fTimeDelta));
+				FAILED_CHECK_RETURN(CPoolMgr::GetInstance()->Reuse_Obj(m_pGraphicDev, &vPos, &vDir), );
+			}
+		}
+
+	}
+	else	//	충돌하지 않았으며 충돌한 방향과 반대 방향으로 진행하는 이동 처리
+	{
+		m_pBodyWorld->Move_Pos(&(vDir * m_fSpeed * m_fTimeDelta));
+		FAILED_CHECK_RETURN(CPoolMgr::GetInstance()->Reuse_Obj(m_pGraphicDev, &vPos, &vDir), );
 	}
 }
 
@@ -246,26 +416,20 @@ void CCubePlayer::TransAxis(void)
 	m_pBodyWorld->Get_Info(INFO_POS, &vBefore);
 	m_pBodyWorld->Get_BeforeInfo(INFO_POS, &vAfter);
 
-	m_pLeftArmWorld->Rotation_Axis_Animation(-1.f, -1.5f, m_fAngle, -m_fLookAngle);
-	m_pRightArmWorld->Rotation_Axis_Animation(-1.f, 1.5f, -m_fAngle, -m_fLookAngle);
+	m_pLeftArmWorld->Rotation_Axis_Animation(-0.1f, -0.15f, m_fLeftArmAngle, -m_fLookAngle);
+	m_pRightArmWorld->Rotation_Axis_Animation(-0.1f, 0.15f, m_fRightArmAngle, -m_fLookAngle);
 
-	m_pLeftLegWorld->Rotation_Axis_Animation(-1.f, -0.5f, -m_fAngle, -m_fLookAngle);
-	m_pRightLegWorld->Rotation_Axis_Animation(-1.f, 0.5f, m_fAngle, -m_fLookAngle);
+	//if (Get_DIMouseState(DIM_RB))
+	//	m_pLeftHandWorld->Rotation_Axis_Special(-0.3f, -0.15f, m_fLeftArmAngle, -m_fLookAngle, -0.1f, -m_fHandAngle);
+	//else
+	m_pLeftHandWorld->Rotation_Axis_Animation(-0.3f, -0.15f, m_fLeftArmAngle, -m_fLookAngle, -0.1f, m_fHandAngle);
 
-	if(vBefore == vAfter)	//	이동상태가 
-	{
-		m_pLeftHandWorld->Rotation_Axis_Animation(-3.f, -1.5f, m_fAngle, -m_fLookAngle);
-		m_pRightHandWorld->Rotation_Axis_Animation(-3.f, 1.5f, -m_fAngle, -m_fLookAngle);
-		m_pLeftFootWorld->Rotation_Axis_Animation(-3.f, -0.5f, -m_fAngle, -m_fLookAngle);
-		m_pRightFootWorld->Rotation_Axis_Animation(-3.f, 0.5f, m_fAngle, -m_fLookAngle);
-	}
-	else
-	{
-		m_pLeftHandWorld->Rotation_Axis_Animation(-3.f, -1.5f, m_fAngle, -m_fLookAngle, -1.f, -D3DX_PI / 2.f);
-		m_pRightHandWorld->Rotation_Axis_Animation(-3.f, 1.5f, -m_fAngle, -m_fLookAngle, -1.f, -D3DX_PI / 2.f);
-		m_pLeftFootWorld->Rotation_Axis_Animation(-3.f, -0.5f, -m_fAngle, -m_fLookAngle, -1.f, fabs(m_fAngle));
-		m_pRightFootWorld->Rotation_Axis_Animation(-3.f, 0.5f, m_fAngle, -m_fLookAngle, -1.f, fabs(m_fAngle));
-	}
+	m_pRightHandWorld->Rotation_Axis_Animation(-0.3f, 0.15f, m_fRightArmAngle, -m_fLookAngle, -0.1f, m_fHandAngle);
+
+	m_pLeftLegWorld->Rotation_Axis_Animation(-0.1f, -0.05f, m_fLeftLegAngle, -m_fLookAngle);
+	m_pRightLegWorld->Rotation_Axis_Animation(-0.1f, 0.05f, m_fRightLegAngle, -m_fLookAngle);
+	m_pLeftFootWorld->Rotation_Axis_Animation(-0.3f, -0.05f, m_fLeftLegAngle, -m_fLookAngle, -0.1f, fabs(m_fLeftLegAngle));
+	m_pRightFootWorld->Rotation_Axis_Animation(-0.3f, 0.05f, m_fRightLegAngle, -m_fLookAngle, -0.1f, fabs(m_fRightLegAngle));
 }
 
 void CCubePlayer::Look_Direction(void)
@@ -276,48 +440,109 @@ void CCubePlayer::Look_Direction(void)
 	m_pHeadWorld->Get_BeforeInfo(INFO_LOOK, &vHead);
 	m_pBodyWorld->Get_BeforeInfo(INFO_LOOK, &vBody);
 
-	m_pBodyWorld->Set_Info(INFO_LOOK, &vHead);
+	_long MoveX = Get_DIMouseMove(DIMS_X);
+	_long MoveY = Get_DIMouseMove(DIMS_Y);
+	_long MoveZ = Get_DIMouseMove(DIMS_Z);
 
-	/*vHead.y = 0.f;
-	vBody.y = 0.f;
+	m_pBodyWorld->Rotation(ROT_Y, D3DXToRadian(MoveX / 10.f));
+	m_fLookAngle -= D3DXToRadian(MoveX / 10.f);
 
-	D3DXVec3Normalize(&vHead, &vHead);
-	D3DXVec3Normalize(&vBody, &vBody);
-
-	float fDot = D3DXVec3Dot(&vHead, &vBody);
-	float fDiagonal = acosf(fDot);
-
-	cout << D3DXToDegree(fDiagonal) << endl;
-
-	if (vHead.x > vBody.x)
-	{
-		m_pBodyWorld->Rotation(ROT_Y, fDiagonal);
-		m_fLookAngle -= fDiagonal;
-	}
-	else if (vHead.x < vBody.x)
-	{
-		m_pBodyWorld->Rotation(ROT_Y, -fDiagonal);
-		m_fLookAngle += fDiagonal;
-	}*/
+	m_fDownAngle += D3DXToRadian(MoveY / 10.f);
 }
 
-HRESULT CCubePlayer::Mapping(void)
+void CCubePlayer::Fire_Bullet(void)
 {
-	// 맵생성
-	if (!m_MappingInit)
+	if (Get_DIMouseState(DIM_RB))
 	{
-		CGameObject*	m_pMapMonster = CPlayerMapping::Create(m_pGraphicDev);
-		TCHAR* szCntName = new TCHAR[64];
-		wsprintf(szCntName, L"Map");
-		Engine::Add_GameObject(L"Layer_UI", m_pMapMonster, szCntName);
-		m_listMonsterCnt.push_back(szCntName);
+		FAILED_CHECK_RETURN(Get_BodyTransform(), );
 
-		m_pBaseMapping = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_UI", szCntName, L"Proto_TransformCom", ID_DYNAMIC));
-		NULL_CHECK_RETURN(m_pBaseMapping, E_FAIL);
-		m_MappingInit = true;
+		_vec3	vSrcPos;
+		//CTransform*	pMuzzle = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Gun", L"Uzi_Part_1_1", L"Proto_TransformCom", ID_STATIC));
+		//NULL_CHECK(pMuzzle);
+		//pMuzzle->Get_BeforeInfo(INFO_POS, &vSrcPos);
+		CTransform* pTargetTrans = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_GameLogic", L"TestPlayer0", L"Proto_TransformCom", ID_DYNAMIC));
+		NULL_CHECK(pTargetTrans);
+		CCubeTex* pTestPlayer = dynamic_cast<CCubeTex*>(Engine::Get_Component(L"Layer_GameLogic", L"TestPlayer0", L"Proto_CubeTexCom", ID_STATIC));
+		NULL_CHECK(pTestPlayer);
+
+		_vec3	vPos;
+		m_pHeadWorld->Get_BeforeInfo(INFO_POS, &vPos);
+
+		if (Get_DIMouseState(DIM_LB))
+		{
+			if (m_pCalculatorCom->Peek_Cube_Target(g_hWnd, &_vec3(0, 0, 0), pTestPlayer, pTargetTrans))
+			{
+				cout << "AAAAAAAAAAAAAAAAAA" << endl;
+			}
+		}
+	}
+}
+
+void CCubePlayer::Gun_Check(void)
+{
+	// 만약 땅에 떨어진 UZI랑 충돌을 했다면 m_vecWeapon에 pushback으로 우지가 들어간다.
+	// ex코드
+	if (m_bUzi == true)
+	{
+		m_vecWeapon.push_back(dynamic_cast<CWeapon*>(Engine::Get_GameObject(L"Layer_Gun", L"UZI1")));
+		m_bUzi = false;
 	}
 
-	//m_pBaseMapping->Set_Pos(65.f, 0.f, 65.f);
+	if (Get_DIKeyState(DIK_1) & 0x80)
+	{
+		if (!m_vecWeapon.empty())
+		{
+			if (m_vecWeapon[0] != nullptr)
+			{
+				m_Weapon = m_vecWeapon[0];
+				m_tAbility->iGunTexture = 0; // 혹여나 총 업그레이드해서 다른 총으로 보이게 된다면 이 숫자와 UI/Gun 에 들어있는 숫자와 비교해서 넣으면됨.
+			}
+		}
+	}
+	if (Get_DIKeyState(DIK_2) & 0x80)
+	{
+		if (m_vecWeapon.size() >= 2)
+		{
+			if (m_vecWeapon[1] != nullptr)
+			{
+				m_Weapon = m_vecWeapon[1];
+				m_tAbility->iGunTexture = 1;
+			}
+		}
+	}
+	if (Get_DIKeyState(DIK_3) & 0x80)
+	{
+		if (m_vecWeapon.size() >= 3)
+		{
+			if (m_vecWeapon[2] != nullptr)
+			{
+				m_Weapon = m_vecWeapon[2];
+				m_tAbility->iGunTexture = 2;
+			}
+		}
+	}
+	if (Get_DIKeyState(DIK_4) & 0x80)
+	{
+		if (m_vecWeapon.size() >= 4)
+		{
+			if (m_vecWeapon[3] != nullptr)
+			{
+				m_Weapon = m_vecWeapon[3];
+				m_tAbility->iGunTexture = 3;
+			}
+		}
+	}
+	if (Get_DIKeyState(DIK_5) & 0x80)
+	{
+		if (m_vecWeapon.size() >= 5)
+		{
+			if (m_vecWeapon[4] != nullptr)
+			{
+				m_Weapon = m_vecWeapon[4];
+				m_tAbility->iGunTexture = 4;
+			}
+		}
+	}
 }
 
 void CCubePlayer::Jump(void)
@@ -348,170 +573,11 @@ HRESULT CCubePlayer::Get_BodyTransform(void)
 	m_pRightFootWorld = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Character", L"R_FOOT", L"Proto_TransformCom", ID_STATIC));
 	NULL_CHECK_RETURN(m_pBodyWorld, E_FAIL);
 
-	
-
-
-
-
-
 	return S_OK;
 }
 
 void CCubePlayer::Key_Input(const _float & fTimeDelta)
 {
-	_vec3	vDir;
-
-	// 몸의 방향이 원래대로 돌아오도록 구현해야 함
-	// 다리 회전 적용해야 함
-	// 움직임의 기준을 바디? 히트박스?
-
-	//#pragma region 팔다리회전
-	//
-	//	if (Get_DIKeyState(DIK_W) || Get_DIKeyState(DIK_A) || Get_DIKeyState(DIK_S) || Get_DIKeyState(DIK_D))
-	//	{
-	//		if (m_fAngle > 0.3f)
-	//			m_bWalkAngle = false;
-	//		if (m_fAngle < -0.3f)
-	//			m_bWalkAngle = true;
-	//
-	//		if (m_bWalkAngle == true)
-	//		{
-	//			m_fAngle += fTimeDelta * 4;
-	//
-	//			m_pLeftArmWorld->Rotation_Axis_X(2.f, m_fAngle);
-	//			m_pRightArmWorld->Rotation_Axis_X(2.f, -m_fAngle);
-	//
-	//			m_pLeftLegWorld->Rotation_Axis_X(2.f, -m_fAngle);
-	//			m_pRightLegWorld->Rotation_Axis_X(2.f, +m_fAngle);
-	//		}
-	//		else if (m_bWalkAngle == false)
-	//		{
-	//			m_fAngle -= fTimeDelta * 4;
-	//
-	//			m_pLeftArmWorld->Rotation_Axis_X(2.f, m_fAngle);
-	//			m_pRightArmWorld->Rotation_Axis_X(2.f, -m_fAngle);
-	//
-	//			m_pLeftLegWorld->Rotation_Axis_X(2.f, -m_fAngle);
-	//			m_pRightLegWorld->Rotation_Axis_X(2.f, +m_fAngle);
-	//		}
-	//	}
-	//	else if (m_fAngle != 0)
-	//	{
-	//		if (m_fAngle > 0)
-	//		{
-	//			m_fAngle -= fTimeDelta;
-	//			if (m_fAngle < 0)
-	//				m_fAngle = 0;
-	//
-	//			m_pLeftArmWorld->Rotation_Axis_X(2.f, m_fAngle);
-	//			m_pRightArmWorld->Rotation_Axis_X(2.f, -m_fAngle);
-	//			m_pLeftLegWorld->Rotation_Axis_X(2.f, -m_fAngle);
-	//			m_pRightLegWorld->Rotation_Axis_X(2.f, m_fAngle);
-	//		}
-	//		else if (m_fAngle < 0)
-	//		{
-	//			m_fAngle += fTimeDelta;
-	//			if (m_fAngle > 0)
-	//				m_fAngle = 0;
-	//
-	//			m_pLeftArmWorld->Rotation_Axis_X(2.f, m_fAngle);
-	//			m_pRightArmWorld->Rotation_Axis_X(2.f, -m_fAngle);
-	//			m_pLeftLegWorld->Rotation_Axis_X(2.f, -m_fAngle);
-	//			m_pRightLegWorld->Rotation_Axis_X(2.f, m_fAngle);
-	//		}
-	//
-	//	}
-	//
-	//#pragma endregion 팔다리움직임
-
-	//if (Get_DIKeyState(DIK_W))
-	//{
-	//	m_pTransform->Get_Info(INFO_LOOK, &vDir);
-
-	//	m_pBodyWorld->Move_Pos(&(vDir * 10.f * fTimeDelta));
-	//	m_pHeadWorld->Move_Pos(&(vDir * 10.f * fTimeDelta));
-	//	//m_pLeftArmWorld->Move_Pos(&(vDir * 10.f * fTimeDelta));
-	//	//m_pRightArmWorld->Move_Pos(&(vDir * 10.f * fTimeDelta));
-	//	m_pLeftLegWorld->Move_Pos(&(vDir * 10.f * fTimeDelta));
-	//	m_pRightLegWorld->Move_Pos(&(vDir * 10.f * fTimeDelta));
-	//}
-	//if (Get_DIKeyState(DIK_S))
-	//{
-	//	m_pTransform->Get_Info(INFO_LOOK, &vDir);
-
-	//	m_pBodyWorld->Move_Pos(&(vDir * -10.f * fTimeDelta));
-	//	m_pHeadWorld->Move_Pos(&(vDir * -10.f * fTimeDelta));
-	//	//m_pLeftArmWorld->Move_Pos(&(vDir * -10.f * fTimeDelta));
-	//	//m_pRightArmWorld->Move_Pos(&(vDir * -10.f * fTimeDelta));
-	//	m_pLeftLegWorld->Move_Pos(&(vDir * -10.f * fTimeDelta));
-	//	m_pRightLegWorld->Move_Pos(&(vDir * -10.f * fTimeDelta));
-	//}
-	//if (Get_DIKeyState(DIK_A))
-	//{
-	//	m_pTransform->Get_Info(INFO_RIGHT, &vDir);
-
-	//	if (m_fLookAngle > -0.2f)
-	//	{
-	//		m_fLookAngle -= fTimeDelta * 5.f;
-	//		m_pBodyWorld->Rotation(ROT_Y, -(fTimeDelta * 5.f));
-	//	}
-
-	//			m_pBodyWorld->Move_Pos(&(vDir * -10.f * fTimeDelta));
-	//			m_pHeadWorld->Move_Pos(&(vDir * -10.f * fTimeDelta));
-
-	//	/*m_pLeftArmWorld->Move_Pos(&(vDir * -10.f * fTimeDelta));
-	//	m_pRightArmWorld->Move_Pos(&(vDir * -10.f * fTimeDelta));*/
-
-	//	m_pLeftArmWorld->Rotation_Axis_Y(-1.5f, m_fLookAngle);
-	//	m_pRightArmWorld->Rotation_Axis_Y(1.5f, m_fLookAngle);
-
-	//			m_pLeftLegWorld->Move_Pos(&(vDir * -10.f * fTimeDelta));
-	//			m_pRightLegWorld->Move_Pos(&(vDir * -10.f * fTimeDelta));
-	//}
-	//if (Get_DIKeyState(DIK_D))
-	//{
-	//	m_pTransform->Get_Info(INFO_RIGHT, &vDir);
-
-	//	if (m_fLookAngle < 0.2f)
-	//	{
-	//		m_fLookAngle += fTimeDelta * 5.f;
-	//		m_pBodyWorld->Rotation(ROT_Y, fTimeDelta * 5.f);
-	//	}
-
-	//	m_pLeftArmWorld->Rotation_Axis_Y(-1.5f, m_fLookAngle);
-	//	m_pRightArmWorld->Rotation_Axis_Y(1.5f, m_fLookAngle);
-
-	//	m_pBodyWorld->Move_Pos(&(vDir * 10.f * fTimeDelta));
-	//	m_pHeadWorld->Move_Pos(&(vDir * 10.f * fTimeDelta));
-	//	//m_pLeftArmWorld->Move_Pos(&(vDir * 10.f * fTimeDelta));
-	//	//m_pRightArmWorld->Move_Pos(&(vDir * 10.f * fTimeDelta));
-	//	m_pLeftLegWorld->Move_Pos(&(vDir * 10.f * fTimeDelta));
-	//	m_pRightLegWorld->Move_Pos(&(vDir * 10.f * fTimeDelta));
-	//}
-
-	//if (Get_DIKeyState(DIK_SPACE))
-	//{
-	//	m_pBodyWorld->Get_Info(INFO_UP, &vDir);
-
-	//	m_pBodyWorld->Move_Pos(&(vDir * 10.f * fTimeDelta));
-	//	m_pHeadWorld->Move_Pos(&(vDir * 10.f * fTimeDelta));
-	//	m_pLeftArmWorld->Move_Pos(&(vDir * 10.f * fTimeDelta));
-	//	m_pRightArmWorld->Move_Pos(&(vDir * 10.f * fTimeDelta));
-	//	m_pLeftLegWorld->Move_Pos(&(vDir * 10.f * fTimeDelta));
-	//	m_pRightLegWorld->Move_Pos(&(vDir * 10.f * fTimeDelta));
-	//}
-
-	//if (Get_DIKeyState(DIK_LSHIFT))
-	//{
-	//	m_pBodyWorld->Get_Info(INFO_UP, &vDir);
-
-	//	m_pBodyWorld->Move_Pos(&(vDir * -10.f * fTimeDelta));
-	//	m_pHeadWorld->Move_Pos(&(vDir * -10.f * fTimeDelta));
-	//	m_pLeftArmWorld->Move_Pos(&(vDir * -10.f * fTimeDelta));
-	//	m_pRightArmWorld->Move_Pos(&(vDir * -10.f * fTimeDelta));
-	//	m_pLeftLegWorld->Move_Pos(&(vDir * -10.f * fTimeDelta));
-	//	m_pRightLegWorld->Move_Pos(&(vDir * -10.f * fTimeDelta));
-	//}
 }
 
 HRESULT CCubePlayer::Add_Component(void)
@@ -525,6 +591,14 @@ HRESULT CCubePlayer::Add_Component(void)
 	pInstance = m_pHitBox = dynamic_cast<CHitBox*>(Engine::Clone_Proto(L"Proto_HitboxCom"));
 	NULL_CHECK_RETURN(pInstance, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_HitboxCom", pInstance });
+
+	pInstance = m_pCollision = dynamic_cast<CCollision*>(Engine::Clone_Proto(L"Proto_CollisionCom"));
+	NULL_CHECK_RETURN(pInstance, E_FAIL);
+	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_CollisionCom", pInstance });
+
+	pInstance = m_pCalculatorCom = dynamic_cast<CCalculator*>(Engine::Clone_Proto(L"Proto_CalculatorCom"));
+	NULL_CHECK_RETURN(pInstance, E_FAIL);
+	m_mapComponent[ID_STATIC].insert({ L"Proto_CalculatorCom", pInstance });
 
 	return S_OK;
 }
@@ -541,5 +615,6 @@ CCubePlayer * CCubePlayer::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 
 void CCubePlayer::Free(void)
 {
+	Safe_Delete<ABILITY*>(m_tAbility);
 	CGameObject::Free();
 }

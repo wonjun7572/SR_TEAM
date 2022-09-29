@@ -16,7 +16,7 @@ CBullet::~CBullet()
 HRESULT CBullet::Ready_Object(const _vec3* pPos, const _vec3* pDir)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
-	m_pTransCom->Set_Scale(0.1f, 0.1f, 0.5f);
+	m_pTransCom->Set_Scale(0.1f, 0.1f, 0.1f);
 	m_pTransCom->m_vInfo[INFO_POS] = *pPos;
 	m_vDirection = *pDir;
 	return S_OK;

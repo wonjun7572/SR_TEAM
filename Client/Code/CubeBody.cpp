@@ -14,16 +14,17 @@ HRESULT CCubeBody::Ready_Object(void)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
-	m_pTransform->Set_Scale(1.f, 2.f, 0.5f);
+	m_pTransform->Set_Scale(0.1f, 0.2f, 0.05f);
+	m_pTransform->Set_Pos(10.f, 10.f, 10.f);
 
 	return S_OK;
 }
 
 _int CCubeBody::Update_Object(const _float & fTimeDelta)
 {
-	Add_RenderGroup(RENDER_NONALPHA, this);
-
 	CGameObject::Update_Object(fTimeDelta);
+
+	Add_RenderGroup(RENDER_NONALPHA, this);
 
 	return 0;
 }

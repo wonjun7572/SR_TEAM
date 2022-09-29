@@ -160,10 +160,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\BackGround.h" />
-    <ClInclude Include="..\Header\BaseMapping.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
-    </ClInclude>
     <ClInclude Include="..\Header\Bullet.h" />
+    <ClInclude Include="..\Header\BulletUI.h" />
     <ClInclude Include="..\Header\CubeArm.h" />
     <ClInclude Include="..\Header\CubeBody.h" />
     <ClInclude Include="..\Header\CubeFoot.h" />
@@ -176,21 +174,21 @@
     <ClInclude Include="..\Header\CubeMonsterHead.h" />
     <ClInclude Include="..\Header\CubePlayer.h" />
     <ClInclude Include="..\Header\DynamicCamera.h" />
+    <ClInclude Include="..\Header\ExitButton.h" />
+    <ClInclude Include="..\Header\GunUI.h" />
+    <ClInclude Include="..\Header\HealthPotion.h" />
     <ClInclude Include="..\Header\ImguiMgr.h" />
+    <ClInclude Include="..\Header\Item.h" />
     <ClInclude Include="..\Header\LoadBar.h" />
     <ClInclude Include="..\Header\Loading.h" />
     <ClInclude Include="..\Header\LoadingScene.h" />
     <ClInclude Include="..\Header\Logo.h" />
+    <ClInclude Include="..\Header\LogoUI.h" />
     <ClInclude Include="..\Header\MainApp.h" />
-    <ClInclude Include="..\Header\MapCamera.h" />
-    <ClInclude Include="..\Header\MonsterMapping.h" />
     <ClInclude Include="..\Header\OptionButton.h" />
     <ClInclude Include="..\Header\PlayButton.h" />
-<<<<<<< Updated upstream
-=======
-    <ClInclude Include="..\Header\PlayerMapping.h" />
+    <ClInclude Include="..\Header\PlayerHpUI.h" />
     <ClInclude Include="..\Header\PlayerUI.h" />
->>>>>>> Stashed changes
     <ClInclude Include="..\Header\PoolMgr.h" />
     <ClInclude Include="..\Header\Shotgun.h" />
     <ClInclude Include="..\Header\ShotgunPart1.h" />
@@ -218,11 +216,9 @@
     <ClInclude Include="..\Header\UziPart4.h" />
     <ClInclude Include="..\Header\UziPart5.h" />
     <ClInclude Include="..\Header\Wall.h" />
-    <ClInclude Include="..\Header\WallMapping.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
-    </ClInclude>
     <ClInclude Include="..\Header\WallMgr.h" />
     <ClInclude Include="..\Header\Weapon.h" />
+    <ClInclude Include="..\Header\WeaponUI.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="dirent.h" />
     <ClInclude Include="GraphEditor.h" />
@@ -242,16 +238,16 @@
     <ClInclude Include="imstb_textedit.h" />
     <ClInclude Include="imstb_truetype.h" />
     <ClInclude Include="ImZoomSlider.h" />
+    <ClInclude Include="PlayerDefenseUI.h" />
+    <ClInclude Include="PlayerFaceUI.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\BackGround.cpp" />
-    <ClCompile Include="..\Code\BaseMapping.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="..\Code\Bullet.cpp" />
+    <ClCompile Include="..\Code\BulletUI.cpp" />
     <ClCompile Include="..\Code\CubeArm.cpp" />
     <ClCompile Include="..\Code\CubeBody.cpp" />
     <ClCompile Include="..\Code\CubeFoot.cpp" />
@@ -264,21 +260,21 @@
     <ClCompile Include="..\Code\CubeMonsterHead.cpp" />
     <ClCompile Include="..\Code\CubePlayer.cpp" />
     <ClCompile Include="..\Code\DynamicCamera.cpp" />
+    <ClCompile Include="..\Code\ExitButton.cpp" />
+    <ClCompile Include="..\Code\GunUI.cpp" />
+    <ClCompile Include="..\Code\HealthPotion.cpp" />
     <ClCompile Include="..\Code\ImguiMgr.cpp" />
+    <ClCompile Include="..\Code\Item.cpp" />
     <ClCompile Include="..\Code\LoadBar.cpp" />
     <ClCompile Include="..\Code\Loading.cpp" />
     <ClCompile Include="..\Code\LoadingScene.cpp" />
     <ClCompile Include="..\Code\Logo.cpp" />
+    <ClCompile Include="..\Code\LogoUI.cpp" />
     <ClCompile Include="..\Code\MainApp.cpp" />
-    <ClCompile Include="..\Code\MapCamera.cpp" />
-    <ClCompile Include="..\Code\MonsterMapping.cpp" />
     <ClCompile Include="..\Code\OptionButton.cpp" />
     <ClCompile Include="..\Code\PlayButton.cpp" />
-<<<<<<< Updated upstream
-=======
-    <ClCompile Include="..\Code\PlayerMapping.cpp" />
+    <ClCompile Include="..\Code\PlayerHpUI.cpp" />
     <ClCompile Include="..\Code\PlayerUI.cpp" />
->>>>>>> Stashed changes
     <ClCompile Include="..\Code\PoolMgr.cpp" />
     <ClCompile Include="..\Code\Shotgun.cpp" />
     <ClCompile Include="..\Code\ShotgunPart1.cpp" />
@@ -306,11 +302,9 @@
     <ClCompile Include="..\Code\UziPart4.cpp" />
     <ClCompile Include="..\Code\UziPart5.cpp" />
     <ClCompile Include="..\Code\Wall.cpp" />
-    <ClCompile Include="..\Code\WallMapping.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="..\Code\WallMgr.cpp" />
     <ClCompile Include="..\Code\Weapon.cpp" />
+    <ClCompile Include="..\Code\WeaponUI.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="GraphEditor.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
@@ -354,6 +348,8 @@
     <ClCompile Include="ImSequencer.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="PlayerDefenseUI.cpp" />
+    <ClCompile Include="PlayerFaceUI.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

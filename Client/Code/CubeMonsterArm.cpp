@@ -38,8 +38,6 @@ _int CCubeMonsterArm::Update_Object(const _float & fTimeDelta)
 void CCubeMonsterArm::LateUpdate_Object(void)
 {
 
-
-	CGameObject::LateUpdate_Object();
 }
 
 void	CCubeMonsterArm::Render_Object(void)

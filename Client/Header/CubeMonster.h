@@ -1,22 +1,18 @@
 #pragma once
 #include "GameObject.h"
 #include "Export_Function.h"
-<<<<<<< Updated upstream
-=======
 #include "Engine_Include.h"
 #include "CubePlayer.h"
-#include "MonsterMapping.h"
 namespace CurrentState
 {
 	enum MONSTERID { MONSTER_IDLE, MONSTER_COMEBACK, MONSTER_ATTACK, MONSTER_DEATH, MONSTER_END };
 }
 
->>>>>>> Stashed changes
-
 USING(Engine)
 
 class  CCubeMonster : public CGameObject
 {
+
 public:
 	explicit CCubeMonster(LPDIRECT3DDEVICE9 pGraphicDev);
 	virtual ~CCubeMonster();
@@ -28,36 +24,50 @@ public:
 	virtual void	LateUpdate_Object(void) override;
 	virtual void	Render_Object(void) override;
 
+
+	//test
+
+	virtual _int CurrentMonster(_float fTimeDelta);
+	virtual void ChangeCurrent(CurrentState::MONSTERID Idstate);
+
+public:
+	//HP값을 들고오면 되지않을까 death나 여러가지 기타 값요소들을 안에다가 넣어주는 형식
+	_float		Get_CurrentHP() { return m_MonsterState.fCurrentHp; }
+
 private:
 	map<const _tchar*, CGameObject*>	m_mapMonsterBody;
-
 private:
 
-	void	Set_OnTerrain(void);
+	void			Set_OnTerrain(void);
 	void			Assemble(void);
+	void			Axis(void);
+
 	HRESULT			Get_BodyTransform(void);
 
 private:
 	HRESULT  Add_Component(void);
 
-	CTransform*			m_pTransform = nullptr;
+	//몬스터 
+
+	CTransform*			m_pMTransform = nullptr;
 	//팔
 	CTransform*			m_pMleftArm = nullptr;
 	CTransform*			m_pMrightArm = nullptr;
+
 	//몸통
 	CTransform*			m_pMbody = nullptr;
 
 	//뚝배기
 	CTransform*			m_pMhead = nullptr;
 
+	CTexture*			m_pTextureCom = nullptr;
+
+	//플레이어 
+	CTransform*		pPlayerTransformCom = nullptr;
+
 	CCalculator*		m_pCalculator = nullptr;
 
-
-<<<<<<< Updated upstream
-=======
-			
-
-//test
+	//test
 private:
 
 	_int		Attack(_float fTimeDelta);
@@ -65,7 +75,7 @@ private:
 
 
 private:
-	
+
 
 	//탐지범위를 줄것이다. 
 	_float			m_fDetectRange;
@@ -87,6 +97,7 @@ private:
 	_bool				m_bAttack;
 	_bool				m_bShoot;
 
+
 	_vec3	m_vEye, m_vAt;
 	_float m_fDistance = 13.f;
 	// 몬스터 자기자신
@@ -100,17 +111,6 @@ private:
 	//api방식 그대로 그냥 가져와주면 되지않을까라는 의문을 가져본다. 
 
 	MONSTERABILITY					m_MonsterState;
-	FRAME							m_tFrame;
-
-
-	//맵핑넘버
-	_int		m_iCnt = 0;
-	CTransform*			m_pMonsterMapping = nullptr;
-	list<TCHAR*>		m_listMonsterCnt;
-	_bool				m_MappingInit = false;
-
-
->>>>>>> Stashed changes
 
 public:
 	static CCubeMonster*	Create(LPDIRECT3DDEVICE9 pGraphicDev);

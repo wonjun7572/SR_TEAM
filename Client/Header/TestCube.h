@@ -36,6 +36,8 @@ private:
 	CTexture*			m_pTextureCom = nullptr;
 	CCalculator*		m_pCalculatorCom = nullptr;
 
+	CHitBox*			m_pHitBox = nullptr;
+
 private:
 	_bool				m_bWireFrame = false;
 
