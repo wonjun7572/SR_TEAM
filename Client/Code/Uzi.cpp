@@ -15,6 +15,12 @@ CUzi::~CUzi()
 HRESULT CUzi::Ready_Object(void)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
+	m_tAbility = new GUNABILITY;
+
+	m_tAbility->fBulletRate = 100.f;
+	m_tAbility->fRemainBulletCnt = 100.f;
+	m_tAbility->fBulletCount = 300.f;
+
 	return S_OK;
 }
 
@@ -261,6 +267,7 @@ CUzi * CUzi::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 
 void CUzi::Free(void)
 {
+	Safe_Delete<GUNABILITY*>(m_tAbility);
 	CWeapon::Free();
 }
 

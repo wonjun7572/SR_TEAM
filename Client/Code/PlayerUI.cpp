@@ -23,8 +23,7 @@ Engine::_int CPlayerUI::Update_Object(const _float& fTimeDelta)
 {
 	_int iResult = CGameObject::Update_Object(fTimeDelta);
 	Add_RenderGroup(RENDER_UI, this);
-
-		return iResult;
+	return iResult;
 }
 
 void CPlayerUI::LateUpdate_Object(void)
@@ -84,11 +83,11 @@ HRESULT CPlayerUI::Add_Component()
 
 	pComponent = m_pTransCom = dynamic_cast<CTransform*>(Clone_Proto(L"Proto_TransformCom"));
 	NULL_CHECK_RETURN(m_pTransCom, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Proto_TransformCom", pComponent });
+	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_TransformCom", pComponent });
 
 	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Clone_Proto(L"theHUDui_7"));
 	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
-	m_mapComponent[ID_DYNAMIC].insert({ L"theHUDui_7", pComponent });
+	m_mapComponent[ID_STATIC].insert({ L"theHUDui_7", pComponent });
 
 	return S_OK;
 }
