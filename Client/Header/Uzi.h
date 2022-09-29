@@ -35,8 +35,6 @@ private:
 
 	void			Animation_Fire(void);
 	
-
-
 private:
 	CTransform*		m_pTransform = nullptr;	
 

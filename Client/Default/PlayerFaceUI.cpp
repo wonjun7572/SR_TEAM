@@ -19,9 +19,7 @@ HRESULT CPlayerFaceUI::Ready_Object(void)
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
 	if (m_pPlayer == nullptr)
-	{
 		m_pPlayer = Engine::Get_GameObject(L"Layer_Character",L"PLAYER");
-	}
 
 	return S_OK;
 }

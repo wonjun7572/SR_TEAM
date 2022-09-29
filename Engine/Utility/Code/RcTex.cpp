@@ -75,6 +75,37 @@ void CRcTex::Render_Buffer(void)
 	CVIBuffer::Render_Buffer();
 }
 
+void CRcTex::Resize_Buffer(_float vX)
+{
+	VTXTEX*		pVertex = nullptr;
+
+	m_pVB->Lock(0, 0, (void**)&pVertex, 0);
+	
+	pVertex[1].vPos = { -1.f + (vX * 2.f), 1.f, 0.f };   //   -1 ~ 1юс
+	pVertex[1].vTexUV = { (vX), 0.f };
+
+	pVertex[2].vPos = { -1.f + (vX * 2.f), -1.f, 0.f };
+	pVertex[2].vTexUV = { (vX), 1.f };
+
+	m_pVB->Unlock();
+}
+
+void CRcTex::Resize_Buffer_Reverse(_float vX)
+{
+	VTXTEX*		pVertex = nullptr;
+
+	m_pVB->Lock(0, 0, (void**)&pVertex, 0);
+
+	pVertex[0].vPos = { (-1.f + (2.f - (vX * 2.f))), 1.f, 0.f };   //   -1 ~ 1юс
+	pVertex[0].vTexUV = { (1 - vX) , 0.f };
+
+	pVertex[3].vPos = { (-1.f + (2.f - (vX * 2.f))), -1.f, 0.f };
+	pVertex[3].vTexUV = { (1 - vX) , 1.f };
+
+	m_pVB->Unlock();
+}
+
+
 CRcTex * CRcTex::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 	CRcTex*	pInstance = new CRcTex(pGraphicDev);

@@ -17,8 +17,8 @@ HRESULT CCubePlayer::Ready_Object(void)
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
 	m_tAbility = new ABILITY;
+	m_tAbility->iDefence = 10;
 	m_tAbility->iHp = 100;
-	m_tAbility->iDefence = 100;
 
 	m_pTransform->Set_Scale(0.2f, 0.5f, 0.2f);
 
@@ -38,6 +38,8 @@ _int CCubePlayer::Update_Object(const _float & fTimeDelta)
 	Animation();
 
 	TransAxis();
+
+	Gun_Check();
 
 	CGameObject::Update_Object(fTimeDelta);
 
@@ -328,6 +330,73 @@ void CCubePlayer::Look_Direction(void)
 	m_fLookAngle -= D3DXToRadian(MoveX / 10.f);
 
 	m_fDownAngle += D3DXToRadian(MoveY / 10.f);
+}
+
+void CCubePlayer::Gun_Check()
+{
+	// 만약 땅에 떨어진 UZI랑 충돌을 했다면 m_vecWeapon에 pushback으로 우지가 들어간다.
+	// ex코드
+	if (m_bUzi == true)
+	{
+		m_vecWeapon.push_back(dynamic_cast<CWeapon*>(Engine::Get_GameObject(L"Layer_Gun", L"UZI1")));
+		m_bUzi = false;
+	}
+
+	if (Get_DIKeyState(DIK_1) & 0x80)
+	{
+		if (!m_vecWeapon.empty())
+		{
+			if (m_vecWeapon[0] != nullptr)
+			{
+				m_Weapon = m_vecWeapon[0];
+				m_tAbility->iGunTexture = 0; // 혹여나 총 업그레이드해서 다른 총으로 보이게 된다면 이 숫자와 UI/Gun 에 들어있는 숫자와 비교해서 넣으면됨.
+			}
+		}
+	}
+	if (Get_DIKeyState(DIK_2) & 0x80)
+	{
+		if (m_vecWeapon.size() >= 2)
+		{
+			if (m_vecWeapon[1] != nullptr)
+			{
+				m_Weapon = m_vecWeapon[1];
+				m_tAbility->iGunTexture = 1;
+			}
+		}
+	}
+	if (Get_DIKeyState(DIK_3) & 0x80)
+	{
+		if (m_vecWeapon.size() >= 3)
+		{
+			if (m_vecWeapon[2] != nullptr)
+			{
+				m_Weapon = m_vecWeapon[2];
+				m_tAbility->iGunTexture = 2;
+			}
+		}
+	}
+	if (Get_DIKeyState(DIK_4) & 0x80)
+	{
+		if (m_vecWeapon.size() >= 4)
+		{
+			if (m_vecWeapon[3] != nullptr)
+			{
+				m_Weapon = m_vecWeapon[3];
+				m_tAbility->iGunTexture = 3;
+			}
+		}
+	}
+	if (Get_DIKeyState(DIK_5) & 0x80)
+	{
+		if (m_vecWeapon.size() >= 5)
+		{
+			if (m_vecWeapon[4] != nullptr)
+			{
+				m_Weapon = m_vecWeapon[4];
+				m_tAbility->iGunTexture = 4;
+			}
+		}
+	}
 }
 
 void CCubePlayer::Fire_Bullet(void)

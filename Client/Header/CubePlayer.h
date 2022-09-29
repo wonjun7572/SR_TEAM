@@ -1,6 +1,7 @@
 #pragma once
 #include "GameObject.h"
 #include "Export_Function.h"
+#include "Weapon.h"
 
 USING(Engine)
 
@@ -34,6 +35,9 @@ public:
 	virtual _int	Update_Object(const _float& fTimeDelta) override;
 	virtual void	LateUpdate_Object(void) override;
 	virtual void	Render_Object(void) override;
+
+	CWeapon*		Get_Weapon() { return m_Weapon; }
+
 private:
 	map<const _tchar*, CGameObject*>	m_mapPlayerBody;
 
@@ -50,6 +54,8 @@ private:
 	void			Move(void);									
 
 	void			Look_Direction(void);						
+
+	void			Gun_Check();
 
 	void			Fire_Bullet(void);
 
@@ -98,6 +104,13 @@ private:
 
 	_vec3			m_vMin = { 0.f, 0.f, 0.f };
 	_vec3			m_vMax = { 0.f, 0.f, 0.f };
+
+	CWeapon*		m_Weapon = nullptr;
+
+	_bool			m_bUzi = true;
+
+	// 떨어져있는 무기를 주우면 벡터에 푸쉬백
+	vector<CWeapon*> m_vecWeapon;
 
 public:
 	static CCubePlayer*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
