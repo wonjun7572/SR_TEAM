@@ -122,8 +122,10 @@ void CStaticCamera::Look_Taget(void)
 	_vec3 vUp;
 	m_pTransform_Target->Get_Info(INFO_UP, &vUp);
 
-	m_vEye = (vLook * -0.2f) + (vUp * 0.1f);
+	//m_vEye = (vLook * -0.2f) + (vUp * 0.1f);
+	m_vEye = (vLook * -2.f);// +(vUp * 1.f);
 	D3DXVec3Normalize(&m_vEye, &m_vEye);
+	m_vEye *= 0.1f;
 
 	//m_vEye.y = 1.f;
 	m_vEye *= m_fDistance;

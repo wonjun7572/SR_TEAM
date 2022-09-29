@@ -36,7 +36,7 @@ void CUziPart5::LateUpdate_Object(void)
 void CUziPart5::Render_Object(void)
 {
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
-	m_pTexture->Set_Texture(11);
+	m_pTexture->Set_Texture(71);
 	m_pCube->Render_Buffer();
 }
 

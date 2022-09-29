@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "..\Header\Shotgun.h"
-
+#include "CubePlayer.h"
 
 CShotgun::CShotgun(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CWeapon(pGraphicDev)
@@ -35,6 +35,8 @@ void CShotgun::LateUpdate_Object(void)
 {
 	FAILED_CHECK_RETURN(Get_Parts(), );
 	CGameObject::LateUpdate_Object();
+
+	TransAxisShotgun();
 }
 
 void CShotgun::Render_Object(void)
@@ -65,17 +67,77 @@ void CShotgun::Assemble(void)
 {
 	FAILED_CHECK_RETURN(Get_Parts(), );
 	_vec3 vBodyPos;
-	m_pPart4->Set_Pos(20.f, 2.f, 10.f);
+	m_pPart4->Set_Pos(20.f, 0.5f, 10.f);
 	m_pPart4->Get_BeforeInfo(INFO_POS, &vBodyPos);
 
-	m_pPart1->Set_Pos(vBodyPos.x - 1.8f*1.5f, vBodyPos.y + 0.4f*1.5f, vBodyPos.z);
-	m_pPart2->Set_Pos(vBodyPos.x - 0.8f*1.5f, vBodyPos.y + 0.2f*1.5f, vBodyPos.z);
-	m_pPart3->Set_Pos(vBodyPos.x - 0.6f*1.5f, vBodyPos.y + 0.075f*1.5f, vBodyPos.z);
+	m_pPart1->Set_Pos(vBodyPos.x - 0.27f, vBodyPos.y + 0.06f, vBodyPos.z);
+	m_pPart2->Set_Pos(vBodyPos.x - 0.12f, vBodyPos.y + 0.03f, vBodyPos.z);
+	m_pPart3->Set_Pos(vBodyPos.x - 0.09f, vBodyPos.y + 0.01125f, vBodyPos.z);
 
 }
 
 void CShotgun::Animation_Fire(void)
 {
+}
+
+void CShotgun::TransAxisShotgun(void)
+{
+	CCubePlayer* pPlayer = dynamic_cast<CCubePlayer*>(Engine::Get_GameObject(L"Layer_Character", L"PLAYER"));
+	_float fLookAngle, fLeftArmAngle, fRightArmAngle, fHandAngle;
+	pPlayer->Get_Angle(fLookAngle, fLeftArmAngle, fRightArmAngle, fHandAngle);
+
+	FAILED_CHECK_RETURN(Get_Parts(), );
+
+	CTransform*		m_pRightHandWorld = nullptr;
+	m_pRightHandWorld = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Character", L"R_HAND", L"Proto_TransformCom", ID_STATIC));
+	NULL_CHECK_RETURN(m_pRightHandWorld, );
+
+	_vec3 vWeaponPos, vPos, vRight, vUp, vLook, vAngle, vScale;
+	m_pRightHandWorld->Get_Info(INFO_RIGHT, &vRight);
+	m_pRightHandWorld->Get_Info(INFO_UP, &vUp);
+	m_pRightHandWorld->Get_Info(INFO_LOOK, &vLook);
+	m_pRightHandWorld->Get_Info(INFO_POS, &vPos);
+	m_pRightHandWorld->Get_Scale(&vScale);
+
+	vWeaponPos = vUp * -1.f;
+	vWeaponPos += vPos;
+
+	//m_pPart5->Set_Pos(vWeaponPos.x, vWeaponPos.y, vWeaponPos.z);
+	//m_pPart5->Set_Rotation(ROT_X, fRightArmAngle + D3DXToRadian(90.f) + fHandAngle);
+	//m_pPart5->Set_Rotation(ROT_Y, -fLookAngle);
+	//m_pPart5->Static_Update();
+
+	vWeaponPos = (vUp * -1.5f) + (vLook);
+	vWeaponPos += vPos;
+
+	m_pPart4->Set_Pos(vWeaponPos.x, vWeaponPos.y, vWeaponPos.z);
+	m_pPart4->Set_Rotation(ROT_X, fRightArmAngle + D3DXToRadian(90.f) + fHandAngle);
+	m_pPart4->Set_Rotation(ROT_Y, -fLookAngle);
+	m_pPart4->Static_Update();
+
+	vWeaponPos = (vUp * -2.f) + (vLook * 0.4f);
+	vWeaponPos += vPos;
+
+	m_pPart3->Set_Pos(vWeaponPos.x, vWeaponPos.y, vWeaponPos.z);
+	m_pPart3->Set_Rotation(ROT_X, fRightArmAngle + D3DXToRadian(90.f) + fHandAngle);
+	m_pPart3->Set_Rotation(ROT_Y, -fLookAngle);
+	m_pPart3->Static_Update();
+
+	vWeaponPos = (vUp * -1.8f) + (vLook * 1.8f);
+	vWeaponPos += vPos;
+
+	m_pPart2->Set_Pos(vWeaponPos.x, vWeaponPos.y, vWeaponPos.z);
+	m_pPart2->Set_Rotation(ROT_X, fRightArmAngle + D3DXToRadian(90.f) + fHandAngle);
+	m_pPart2->Set_Rotation(ROT_Y, -fLookAngle);
+	m_pPart2->Static_Update();
+
+	vWeaponPos = (vUp * -3.f) + (vLook * 1.8f);
+	vWeaponPos += vPos;
+
+	m_pPart1->Set_Pos(vWeaponPos.x, vWeaponPos.y, vWeaponPos.z);
+	m_pPart1->Set_Rotation(ROT_X, fRightArmAngle + D3DXToRadian(90.f) + fHandAngle);
+	m_pPart1->Set_Rotation(ROT_Y, -fLookAngle);
+	m_pPart1->Static_Update();
 }
 
 void CShotgun::Set_OnTerrain(void)

@@ -158,6 +158,51 @@ void CTransform::Rotation_Axis_Animation(const _float & fXMove, const _float & f
 	}
 }
 
+void CTransform::Rotation_Axis_Special(const _float & fXMove, const _float & fYMove, const _float & fXAngle, const _float & fYAngle, const _float & fExtraMove, const _float & fExtraAngle)
+{
+	_matrix matScale, matRotX, matRotY, matTrans;
+
+	_matrix matSyncX, matReplaceX, matSyncY, matReplaceY;
+
+	_matrix matSyncZ;
+
+	_matrix matExtraSync, matExtraReplace, matRotExtra;
+
+	D3DXMatrixScaling(&matScale, m_vScale.x, m_vScale.y, m_vScale.z);
+	D3DXMatrixTranslation(&matTrans, m_vInfo[INFO_POS].x, m_vInfo[INFO_POS].y, m_vInfo[INFO_POS].z);
+
+	//	X
+	D3DXMatrixTranslation(&matSyncX, 0.f, fXMove, 0.f);
+	D3DXMatrixTranslation(&matReplaceX, 0.f, -fXMove, 0.f);
+	D3DXMatrixRotationX(&matRotX, fXAngle);
+
+	//	Y
+	D3DXMatrixTranslation(&matSyncY, fYMove, 0.f, 0.f);
+	D3DXMatrixTranslation(&matReplaceY, -fYMove, 0.f, 0.f);
+	D3DXMatrixRotationY(&matRotY, fYAngle);
+
+	//	Extra
+	D3DXMatrixTranslation(&matExtraSync, 0.f, fExtraMove, 0.f);
+	D3DXMatrixTranslation(&matExtraReplace, 0.f, -fExtraMove, 0.f);
+	D3DXMatrixRotationZ(&matRotExtra, fExtraAngle);
+
+	if (fExtraMove == 0)
+	{
+		m_matWorld = matScale *
+			matSyncX * matRotX * matReplaceX *
+			matSyncY * matRotY * matReplaceY *
+			matTrans;
+	}
+	else
+	{
+		m_matWorld = matScale *
+			matExtraSync * matRotExtra * matExtraReplace *
+			matSyncX * matRotX * matReplaceX *
+			matSyncY * matRotY * matReplaceY *
+			matTrans;
+	}
+}
+
 void CTransform::Rotation_Axis_Except_Scale(_vec3 * vScale, const _float & fXMove, const _float & fYMove, const _float & fXAngle, const _float & fYAngle, const _float & fExtraMove, const _float & fExtraAngle)
 {
 	_matrix matScale, matRotX, matRotY, matTrans;

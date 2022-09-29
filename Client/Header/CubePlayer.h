@@ -13,7 +13,7 @@ private:
 	virtual ~CCubePlayer();
 
 public:
-	void			Get_HitboxMin(_vec3* vMin, _vec3* vMax) 
+	void			Get_HitboxMin(_vec3* vMin, _vec3* vMax)
 	{
 		D3DXVec3TransformCoord(vMin, &m_vMin, m_pTransform->Get_WorldMatrixPointer());
 		D3DXVec3TransformCoord(vMax, &m_vMax, m_pTransform->Get_WorldMatrixPointer());
@@ -25,6 +25,7 @@ public:
 		fRightArm = m_fRightArmAngle;
 		fHandAngle = m_fHandAngle;
 	}
+	//void			Get_Direction(_vec3* vDir) { memcpy(vDir, m_vDirection, sizeof(_vec3)); }
 
 public:
 	ABILITY*      Get_Ability() { return m_tAbility; }
@@ -44,20 +45,20 @@ private:
 private:
 	HRESULT			Get_BodyTransform(void);
 
-	void			Key_Input(const _float& fTimeDelta);		
-	void			Set_OnTerrain(void);						
-	void			Assemble(void);								
+	void			Key_Input(const _float& fTimeDelta);
+	void			Set_OnTerrain(void);
+	void			Assemble(void);
 
-	void			Animation(void);							
-	void			TransAxis(void);							
+	void			Animation(void);
+	void			TransAxis(void);
 
-	void			Move(void);									
+	void			Move(void);
 
-	void			Look_Direction(void);						
-
-	void			Gun_Check();
+	void			Look_Direction(void);
 
 	void			Fire_Bullet(void);
+
+	void			Gun_Check(void);
 
 private:
 	void			Jump(void);
@@ -105,12 +106,17 @@ private:
 	_vec3			m_vMin = { 0.f, 0.f, 0.f };
 	_vec3			m_vMax = { 0.f, 0.f, 0.f };
 
+	_float			m_fSpeed = 10.f;
+
 	CWeapon*		m_Weapon = nullptr;
 
 	_bool			m_bUzi = true;
 
 	// 떨어져있는 무기를 주우면 벡터에 푸쉬백
 	vector<CWeapon*> m_vecWeapon;
+
+	//_vec3			m_vDirection = { 0.f, 0.f, 0.f };
+	//_vec3			m_vBeforePos = { 10.f, 10.f, 10.f };
 
 public:
 	static CCubePlayer*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
