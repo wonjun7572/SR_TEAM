@@ -53,13 +53,14 @@ namespace Engine
 	{
 		_int		iHp;			// 체력을 위한
 		_int		iDefence;		// 방어력을 위한
+		_int		iGunTexture;			// 총 UI 변경을 위한
 	}ABILITY;
 
 	typedef struct tagGunAbility
 	{
-		_int		iBulletRate;	// 총알 속도
-		_int		iBulletCount;	// 총알 개수 제한용
-		SKILLID		eSkillID;		// 스킬 ID
+		_float		fBulletRate;	  // 총알 속도
+		_float		fRemainBulletCnt; // 남은 총알 개수 
+		_float		fBulletCount;	  // 총알 개수 제한용
 	}GUNABILITY;
 
 	typedef struct tagMonsterState
@@ -69,17 +70,6 @@ namespace Engine
 		_float fMaxHp;
 		_float fDamage;
 	}MONSTERABILITY;
-
-	typedef struct tagFrame
-	{
-		_uint		AnimationID;
-		_float		fFrameCnt;		//프레임 카운트
-		_float		fFrameMaxCnt;	//프레임 맥스 카운트
-		_float		fTimeScale;		//타임범위
-		_float		fWidth;			//넓이 
-		_float		fHeight;		//높이
-
-	}FRAME;
 
 	//typedef struct tagParticle
 	//{

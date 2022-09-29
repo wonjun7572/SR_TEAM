@@ -14,7 +14,7 @@ CLoadingScene::~CLoadingScene()
 }
 
 HRESULT CLoadingScene::Ready_Scene(void)
-{
+{/*
 	FAILED_CHECK_RETURN(Engine::CScene::Ready_Scene(), E_FAIL);
 
 	FAILED_CHECK_RETURN(Ready_GameLogic_Layer(L"GameLogic"), E_FAIL);
@@ -22,6 +22,7 @@ HRESULT CLoadingScene::Ready_Scene(void)
 	m_pLoading = CLoading::Create(m_pGraphicDev, LOADING_STAGE);
 	NULL_CHECK_RETURN(m_pLoading, E_FAIL);
 
+	return S_OK;*/
 	return S_OK;
 }
 
@@ -63,7 +64,11 @@ void CLoadingScene::Render_Scene(void)
 
 HRESULT CLoadingScene::Ready_Environment_Layer(const _tchar * pLayerTag)
 {
+	
 	return S_OK;
+
+
+
 }
 
 HRESULT CLoadingScene::Ready_GameLogic_Layer(const _tchar * pLayerTag)
