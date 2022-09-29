@@ -24,6 +24,7 @@ public:
 		fRightArm = m_fRightArmAngle;
 		fHandAngle = m_fHandAngle;
 	}
+	//void			Get_Direction(_vec3* vDir) { memcpy(vDir, m_vDirection, sizeof(_vec3)); }
 
 public:
 	ABILITY*      Get_Ability() { return m_tAbility; }
@@ -100,8 +101,10 @@ private:
 	_vec3			m_vMin = { 0.f, 0.f, 0.f };
 	_vec3			m_vMax = { 0.f, 0.f, 0.f };
 
-	_vec3			m_vDirection = { 0.f, 0.f, 0.f };
-	_vec3			m_vBeforePos = { 10.f, 10.f, 10.f };
+	_float			m_fSpeed = 10.f;
+
+	//_vec3			m_vDirection = { 0.f, 0.f, 0.f };
+	//_vec3			m_vBeforePos = { 10.f, 10.f, 10.f };
 
 public:
 	static CCubePlayer*	Create(LPDIRECT3DDEVICE9 pGraphicDev);

@@ -81,11 +81,12 @@ void CRcTex::Resize_Buffer(_float v1PosX, _float v2PosX)
 
 	m_pVB->Lock(0, 0, (void**)&pVertex, 0);
 	
-	pVertex[1].vPos = { v1PosX, 1.f, 0.f };
+	pVertex[1].vPos = { -1.f + (v1PosX * 2.f), 1.f, 0.f };	//	-1 ~ 1юс
 	pVertex[1].vTexUV = { (v1PosX), 0.f };
 
-	pVertex[2].vPos = { v2PosX, -1.f, 0.f };
-	pVertex[2].vTexUV = { (v2PosX), 1.f };
+	pVertex[2].vPos = { -1.f + (v1PosX * 2.f), -1.f, 0.f };
+	pVertex[2].vTexUV = { (v1PosX), 1.f };
+
 	m_pVB->Unlock();
 }
 

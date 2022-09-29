@@ -24,6 +24,10 @@ public:
 												const _float& fXAngle, const _float& fYAngle,
 												const _float& fExtraMove = 0.f, const _float& fExtraAngle = 0.f);
 
+	void				Rotation_Axis_Special(	const _float& fXMove, const _float& fYMove,
+												const _float& fXAngle, const _float& fYAngle,
+												const _float& fExtraMove = 0.f, const _float& fExtraAngle = 0.f);
+
 	void				Rotation_Axis_Except_Scale(	_vec3* vScale,
 													const _float& fXMove, const _float& fYMove,
 													const _float& fXAngle, const _float& fYAngle,
