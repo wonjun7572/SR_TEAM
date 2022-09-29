@@ -175,6 +175,12 @@
     <Filter Include="02. GameObject\01. For_Stage\10. Item\HP">
       <UniqueIdentifier>{095932e2-2b4b-4b99-bb18-13fad55c9cbd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. Scene\00. Logo\01. LogoUI">
+      <UniqueIdentifier>{3c1bbe63-1b77-466b-a4b3-eaa9a448be77}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Scene\00. Logo\00. Button\03. ExitButton">
+      <UniqueIdentifier>{2a91af4e-deef-4c53-ad95-9285e699f701}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -408,6 +414,12 @@
     <ClInclude Include="..\Header\HealthPotion.h">
       <Filter>02. GameObject\01. For_Stage\10. Item\HP</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\LogoUI.h">
+      <Filter>01. Scene\00. Logo\01. LogoUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ExitButton.h">
+      <Filter>01. Scene\00. Logo\00. Button\03. ExitButton</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -418,9 +430,6 @@
     </ClCompile>
     <ClCompile Include="..\Code\MainApp.cpp">
       <Filter>00. MainApp</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\Logo.cpp">
-      <Filter>01. Scene\00. Logo</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\BackGround.cpp">
       <Filter>02. GameObject\00. For_Logo\00. BackGround</Filter>
@@ -622,6 +631,15 @@
     </ClCompile>
     <ClCompile Include="..\Code\HealthPotion.cpp">
       <Filter>02. GameObject\01. For_Stage\10. Item\HP</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\LogoUI.cpp">
+      <Filter>01. Scene\00. Logo\01. LogoUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Logo.cpp">
+      <Filter>01. Scene\00. Logo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ExitButton.cpp">
+      <Filter>01. Scene\00. Logo\00. Button\03. ExitButton</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

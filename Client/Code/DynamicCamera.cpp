@@ -40,14 +40,14 @@ HRESULT CDynamicCamera::Ready_Object(const _vec3* pEye,
 
 Engine::_int CDynamicCamera::Update_Object(const _float& fTimeDelta)
 {
-	Key_Input(fTimeDelta);
-
+	//Key_Input(fTimeDelta);
+	RightCamera(fTimeDelta);
 	if (m_bSave)
 		Save_Position();
 	
 	if (m_bLoad)
 		Load_Position();
-	//RightCamera(fTimeDelta);
+
 	_int iExit = CCamera::Update_Object(fTimeDelta);
 
 	if (m_bMainCameraOn)
@@ -63,7 +63,7 @@ void CDynamicCamera::LateUpdate_Object(void)
 	if (false == m_bFix)
 	{
 		//Mouse_Fix();
-		Mouse_Move();
+		//Mouse_Move();
 	}
 }
 
