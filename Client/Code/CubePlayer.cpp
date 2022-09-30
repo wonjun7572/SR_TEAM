@@ -440,7 +440,7 @@ void CCubePlayer::TransAxis(void)
 	m_pLeftArmWorld->Rotation_Axis_Animation(-0.1f, -0.15f, m_fLeftArmAngle, -m_fLookAngle);
 	m_pRightArmWorld->Rotation_Axis_Animation(-0.1f, 0.15f, m_fRightArmAngle, -m_fLookAngle);
 
-	if (Get_DIMouseState(DIM_RB) || (	(m_Weapon == Engine::Get_GameObject(L"Layer_Gun", L"SHOTGUN")) ||
+	if ((nullptr != m_Weapon) && Get_DIMouseState(DIM_RB) || (	(m_Weapon == Engine::Get_GameObject(L"Layer_Gun", L"SHOTGUN")) ||
 		(m_Weapon == Engine::Get_GameObject(L"Layer_Gun", L"SNIPER"))	)	)
 		m_pLeftHandWorld->Rotation_Axis_Special(-0.3f, -0.15f, m_fLeftArmAngle, -m_fLookAngle, -0.1f, -m_fHandAngle);
 	else
@@ -661,6 +661,8 @@ HRESULT CCubePlayer::Player_Mapping(void)
 		NULL_CHECK_RETURN(m_pBaseMapping, E_FAIL);
 		m_MappingInit = true;
 	}
+
+	return S_OK;
 }
 
 void CCubePlayer::Key_Input(const _float & fTimeDelta)
