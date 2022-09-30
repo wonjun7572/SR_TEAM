@@ -17,7 +17,7 @@ HRESULT COptionButton::Ready_Object(void)
 	m_strOB = L"Option Button";
 
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
-	m_pTransformCom->Set_Scale(0.28, 0.12f, 0.f);
+	m_pTransformCom->Set_Scale(0.28f, 0.12f, 0.f);
 	m_pTransformCom->Set_Pos(0.65f, 0.12f, 0.f);
 	return S_OK;
 }
