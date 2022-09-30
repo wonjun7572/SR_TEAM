@@ -29,9 +29,9 @@ HRESULT CHealthPotion::Ready_Object(const _vec3& vPos)
 
 Engine::_int CHealthPotion::Update_Object(const _float& fTimeDelta)
 {
-	if (m_bDead = true)
+	if (m_bDead)
 	{
-		dynamic_cast<CCubePlayer*>(Engine::Get_GameObject(L"Layer_Character", L"PLAYER"))->Obtain_HealthPotion();
+		dynamic_cast<CCubePlayer*>(Engine::Get_GameObject(L"Layer_Character", L"PLAYER"))->Capture_Shotgun();
 		return -1;
 	}
 
@@ -73,9 +73,9 @@ HRESULT CHealthPotion::Add_Component(void)
 	m_mapComponent[ID_STATIC].insert({ L"Proto_HitboxCom", pComponent });
 
 	// 변경해줘야함
-	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Clone_Proto(L"Proto_AcquireHealthPotion"));
+	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Clone_Proto(L"Proto_PlayerTexture"));
 	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Proto_AcquireHealthPotion", pComponent });
+	m_mapComponent[ID_STATIC].insert({ L"Proto_PlayerTexture", pComponent });
 
 	pComponent = m_pTransCom = dynamic_cast<CTransform*>(Clone_Proto(L"Proto_TransformCom"));
 	NULL_CHECK_RETURN(m_pTransCom, E_FAIL);

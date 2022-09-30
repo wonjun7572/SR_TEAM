@@ -159,8 +159,6 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\Header\AcquireBullet.h" />
-    <ClInclude Include="..\Header\AcquireDefense.h" />
     <ClInclude Include="..\Header\BackGround.h" />
     <ClInclude Include="..\Header\BaseMapping.h" />
     <ClInclude Include="..\Header\Bullet.h" />
@@ -253,8 +251,6 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\Code\AcquireBullet.cpp" />
-    <ClCompile Include="..\Code\AcquireDefense.cpp" />
     <ClCompile Include="..\Code\BackGround.cpp" />
     <ClCompile Include="..\Code\BaseMapping.cpp" />
     <ClCompile Include="..\Code\Bullet.cpp" />

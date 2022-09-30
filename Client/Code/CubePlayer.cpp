@@ -35,7 +35,7 @@ HRESULT CCubePlayer::Ready_Object(void)
 	m_bSniper = false;
 
 	ShowCursor(false);
-	cout << m_tAbility->iHp << "" << endl;
+
 	return S_OK;
 }
 

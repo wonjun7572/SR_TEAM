@@ -38,9 +38,6 @@
 #include "GetSniper.h"
 
 
-#include "AcquireBullet.h"
-#include "AcquireDefense.h"
-
 
 CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CScene(pGraphicDev)
@@ -513,25 +510,6 @@ HRESULT CStage::Ready_Layer_Item(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"GetSniper", pGameObject), E_FAIL);
 
-
-	
-	pGameObject = CHealthPotion::Create(m_pGraphicDev, _vec3(15, 1, 15));
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"AcquireHealthPotion", pGameObject), E_FAIL);
-
-
-	//AcquireBullet
-	pGameObject = CAcquireBullet::Create(m_pGraphicDev, _vec3(25, 1,25));
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"AcquireBullet", pGameObject), E_FAIL);
-	//AcquireDefense
-	pGameObject = CAcquireDefense::Create(m_pGraphicDev, _vec3(10, 1, 10));
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"AcquireDefense", pGameObject), E_FAIL);
-	
-	
-	
-	
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
 	return S_OK;

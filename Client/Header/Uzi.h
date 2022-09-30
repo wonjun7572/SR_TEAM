@@ -25,7 +25,6 @@ public:
 	void			Set_Uzi(void) { m_bEquiped = true; }
 	void			Off_Uzi(void) { m_bEquiped = false; }
 	_bool			Get_State(void) { return m_bEquiped; }
-	void			Get_Bullet(_int iBullet = 100) { m_tAbility->fRemainBulletCnt += iBullet; }
 private:
 	_bool			m_bEquiped = false;
 
@@ -64,8 +63,6 @@ private:
 	_float			C2 = 0.f;
 	_float			D1 = 0.f;
 	_float			D2 = 0.f;
-
-	_bool			Obtain_Bullet;
 
 public:
 	static CUzi*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
