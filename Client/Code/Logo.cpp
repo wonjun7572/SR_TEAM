@@ -7,7 +7,7 @@
 #include "Stage.h"
 #include "ToolScene.h"
 #include "TestCube.h"
-
+#include "BaseMapping.h"
 
 CLogo::CLogo(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CScene(pGraphicDev)
@@ -173,11 +173,11 @@ HRESULT CLogo::Ready_Layer_Wall(const _tchar * pLayerTag)
 		wsprintfW(Load_Name, t.c_str(), m_iIndex);
 		NameList.push_back(Load_Name);
 
-		pGameObject =  CTestCube::Create(m_pGraphicDev);
+		pGameObject =  CBaseMapping::Create(m_pGraphicDev);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(pLayer->Add_GameObject(Load_Name, pGameObject), E_FAIL);
 
-		//지금 여기서 터지고 있다. 
+	 
 		pGameObject->Set_DrawTexIndex(iDrawIndex);
 
 
@@ -272,7 +272,9 @@ HRESULT CLogo::Ready_Proto(void)
 		//FAILED_CHECK_RETURN(Engine::Ready_Proto(L"HP_25_Face", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/UI/Player/Face/HP25_%d.png", TEX_NORMAL, 5)), E_FAIL);
 		//FAILED_CHECK_RETURN(Engine::Ready_Proto(L"HP_0_Face", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/UI/Player/Face/HP0.png", TEX_NORMAL)), E_FAIL);
 	}
-
+	{
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Minimap", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/\Texture2D/hud_minimap_bg.png", TEX_NORMAL)), E_FAIL);
+	}
 
 
 	return S_OK;

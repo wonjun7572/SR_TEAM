@@ -116,7 +116,20 @@ private:
 	_bool			m_bShotgun;
 	_bool			m_bSniper;
 
+
+
+
+
 	vector<CWeapon*> m_vecWeapon;
+
+
+
+	
+	//ITEM
+	_bool			m_bHp;
+
+
+
 
 	//맵핑관련 변수입니다.
 	_bool				m_MappingInit = false;
@@ -127,6 +140,12 @@ public:
 	void			Capture_Uzi(void) { m_bUzi = true; }
 	void			Capture_Shotgun(void) { m_bShotgun = true; }
 	void			Capture_Sniper(void) { m_bSniper = true; }
+
+
+
+//ITEM
+public:
+	void			Obtain_HealthPotion(_int m_iHp = 50) { m_tAbility->iHp += m_iHp; };
 
 public:
 	static CCubePlayer*	Create(LPDIRECT3DDEVICE9 pGraphicDev);

@@ -172,9 +172,6 @@
     <Filter Include="02. GameObject\01. For_Stage\10. Item">
       <UniqueIdentifier>{71bb0e17-c5df-47ed-bc8b-66a0f40e51dd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\01. For_Stage\10. Item\HP">
-      <UniqueIdentifier>{095932e2-2b4b-4b99-bb18-13fad55c9cbd}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. GameObject\01. For_Stage\09. UI\Player">
       <UniqueIdentifier>{b471c66c-802e-402b-8039-2b7e6e8b32e1}</UniqueIdentifier>
     </Filter>
@@ -201,6 +198,15 @@
     </Filter>
     <Filter Include="02. GameObject\01. For_Stage\11. Map\Mapping\03.Wall">
       <UniqueIdentifier>{b605d09d-8f91-4b75-b269-fe6afb9ddf02}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\10. Item\00. HP">
+      <UniqueIdentifier>{095932e2-2b4b-4b99-bb18-13fad55c9cbd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\10. Item\01. Bullet">
+      <UniqueIdentifier>{e7e611c0-7b5d-493b-abb8-0608762f3d1b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\10. Item\02. Defense">
+      <UniqueIdentifier>{0af22f1f-14f8-49b3-87f9-95acd2834889}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -363,9 +369,6 @@
     <ClInclude Include="..\Header\ShotgunPart4.h">
       <Filter>02. GameObject\01. For_Stage\07. Weapon\00. Parts\02.Shotgun</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\ShotgunPart5.h">
-      <Filter>02. GameObject\01. For_Stage\07. Weapon\00. Parts\02.Shotgun</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\SniperPart1.h">
       <Filter>02. GameObject\01. For_Stage\07. Weapon\00. Parts\03.Sniper</Filter>
     </ClInclude>
@@ -427,7 +430,7 @@
       <Filter>02. GameObject\01. For_Stage\10. Item</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\HealthPotion.h">
-      <Filter>02. GameObject\01. For_Stage\10. Item\HP</Filter>
+      <Filter>02. GameObject\01. For_Stage\10. Item\00. HP</Filter>
     </ClInclude>
     <ClInclude Include="PlayerDefenseUI.h">
       <Filter>02. GameObject\01. For_Stage\09. UI\Player</Filter>
@@ -467,6 +470,21 @@
     </ClInclude>
     <ClInclude Include="..\Header\WallMapping.h">
       <Filter>02. GameObject\01. For_Stage\11. Map\Mapping\03.Wall</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\GetShotgun.h">
+      <Filter>99. Default\헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\GetSniper.h">
+      <Filter>99. Default\헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\GetUzi.h">
+      <Filter>99. Default\헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\AcquireBullet.h">
+      <Filter>02. GameObject\01. For_Stage\10. Item\01. Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\AcquireDefense.h">
+      <Filter>02. GameObject\01. For_Stage\10. Item\02. Defense</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -611,9 +629,6 @@
     <ClCompile Include="..\Code\ShotgunPart4.cpp">
       <Filter>02. GameObject\01. For_Stage\07. Weapon\00. Parts\02.Shotgun</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\ShotgunPart5.cpp">
-      <Filter>02. GameObject\01. For_Stage\07. Weapon\00. Parts\02.Shotgun</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\SniperPart1.cpp">
       <Filter>02. GameObject\01. For_Stage\07. Weapon\00. Parts\03.Sniper</Filter>
     </ClCompile>
@@ -675,7 +690,7 @@
       <Filter>02. GameObject\01. For_Stage\10. Item</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\HealthPotion.cpp">
-      <Filter>02. GameObject\01. For_Stage\10. Item\HP</Filter>
+      <Filter>02. GameObject\01. For_Stage\10. Item\00. HP</Filter>
     </ClCompile>
     <ClCompile Include="PlayerDefenseUI.cpp">
       <Filter>02. GameObject\01. For_Stage\09. UI\Player</Filter>
@@ -715,6 +730,21 @@
     </ClCompile>
     <ClCompile Include="..\Code\WallMapping.cpp">
       <Filter>02. GameObject\01. For_Stage\11. Map\Mapping\03.Wall</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\GetShotgun.cpp">
+      <Filter>99. Default\소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\GetSniper.cpp">
+      <Filter>99. Default\소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\GetUzi.cpp">
+      <Filter>99. Default\소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\AcquireBullet.cpp">
+      <Filter>02. GameObject\01. For_Stage\10. Item\01. Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\AcquireDefense.cpp">
+      <Filter>02. GameObject\01. For_Stage\10. Item\02. Defense</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
