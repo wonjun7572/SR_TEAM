@@ -42,13 +42,13 @@ void CUzi::LateUpdate_Object(void)
 {	
 	if (m_bEquiped)
 	{
-		FAILED_CHECK_RETURN(Get_Parts(), );
-		CGameObject::LateUpdate_Object();
-
 		if (Engine::Get_GameObject(L"Layer_Gun", L"UZI1") == this)
 			TransAxisUzi1();
 		else if (Engine::Get_GameObject(L"Layer_Gun", L"UZI2") == this)
 			TransAxisUzi2();
+
+		FAILED_CHECK_RETURN(Get_Parts(), );
+		CGameObject::LateUpdate_Object();
 	}
 }
 

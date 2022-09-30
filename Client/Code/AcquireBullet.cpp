@@ -35,12 +35,9 @@ _int CAcquireBullet::Update_Object(const _float & fTimeDelta)
 
 	if (m_bDead)
 	{
-		dynamic_cast<CUzi*>(Engine::Get_GameObject(L"Layer_Gun", L"UZI1"))->Get_Bullet();
+		dynamic_cast<CUzi*>(Engine::Get_GameObject(L"Layer_Item", L"UZI1"))->Get_Bullet();
+		return -1;
 	}
-
-	//dynamic_cast<CUzi*>(Engine::Get_GameObject(L"Layer_Item", ))
-	
-
 
 	CItem::Update_Object(fTimeDelta);
 	Add_RenderGroup(RENDER_NONALPHA, this);
