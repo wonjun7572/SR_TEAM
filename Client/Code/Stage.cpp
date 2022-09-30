@@ -494,9 +494,9 @@ HRESULT CStage::Ready_Layer_Item(const _tchar * pLayerTag)
 
 	CGameObject*		pGameObject = nullptr;
 
-	//pGameObject = CHealthPotion::Create(m_pGraphicDev, _vec3(20,1,20));
-	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"HealthPotion", pGameObject), E_FAIL);
+	pGameObject = CHealthPotion::Create(m_pGraphicDev, _vec3(15, 1, 15));
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"HealthPotion", pGameObject), E_FAIL);
 
 	pGameObject = CGetUzi::Create(m_pGraphicDev, _vec3(20, 1, 20));
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);

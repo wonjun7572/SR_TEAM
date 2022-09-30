@@ -203,6 +203,244 @@ void CTransform::Rotation_Axis_Special(const _float & fXMove, const _float & fYM
 	}
 }
 
+void CTransform::Rotation_Axis_Optional(ROTATIONID eID_01, const _float & fMove_01, const _float & fAngle_01, ROTATIONID eID_02, const _float & fMove_02, const _float & fAngle_02, ROTATIONID eID_03, const _float & fMove_03, const _float & fAngle_03, ROTATIONID eID_04, const _float & fMove_04, const _float & fAngle_04)
+{
+	// 사용할거면 업데이트 후에 돌리기
+
+	_matrix	matScale, matTrans;													//	Scale, Trans는 기존의 것 사용
+
+	_matrix matRot_01, matRot_02, matRot_03, matRot_04;							//	회전 행렬
+
+	_matrix matSyncAxis_01, matSyncAxis_02, matSyncAxis_03, matSyncAxis_04;		//	축 이동
+
+	_matrix	matAsyncAxis_01, matAsyncAxis_02, matAsyncAxis_03, matAsyncAxis_04;	//	축 복귀
+
+	D3DXMatrixScaling(&matScale, m_vScale.x, m_vScale.y, m_vScale.z);
+	D3DXMatrixTranslation(&matTrans, m_vInfo[INFO_POS].x, m_vInfo[INFO_POS].y, m_vInfo[INFO_POS].z);
+
+	if (eID_02 = ROT_END)
+	{
+		switch (eID_01)
+		{
+		case ROT_X:
+			D3DXMatrixTranslation(&matSyncAxis_01, 0.f, fMove_01, 0.f);
+			D3DXMatrixRotationX(&matRot_01, fAngle_01);
+			D3DXMatrixTranslation(&matAsyncAxis_01, 0.f, -fMove_01, 0.f);
+			break;
+		case ROT_Y:
+			D3DXMatrixTranslation(&matSyncAxis_01, fMove_01, 0.f, 0.f);
+			D3DXMatrixRotationY(&matRot_01, fAngle_01);
+			D3DXMatrixTranslation(&matAsyncAxis_01, -fMove_01, 0.f, 0.f);
+			break;
+		case ROT_Z:
+			D3DXMatrixTranslation(&matSyncAxis_01, 0.f, fMove_01, 0.f);
+			D3DXMatrixRotationZ(&matRot_01, fAngle_01);
+			D3DXMatrixTranslation(&matAsyncAxis_01, 0.f, -fMove_01, 0.f);
+			break;
+		}
+
+		m_matWorld = matScale *
+			matSyncAxis_01 * matRot_01 * matAsyncAxis_01 *
+			matTrans;
+	}
+	else if (eID_03 == ROT_END)
+	{
+		switch (eID_01)
+		{
+		case ROT_X:
+			D3DXMatrixTranslation(&matSyncAxis_01, 0.f, fMove_01, 0.f);
+			D3DXMatrixRotationX(&matRot_01, fAngle_01);
+			D3DXMatrixTranslation(&matAsyncAxis_01, 0.f, -fMove_01, 0.f);
+			break;
+		case ROT_Y:
+			D3DXMatrixTranslation(&matSyncAxis_01, fMove_01, 0.f, 0.f);
+			D3DXMatrixRotationY(&matRot_01, fAngle_01);
+			D3DXMatrixTranslation(&matAsyncAxis_01, -fMove_01, 0.f, 0.f);
+			break;
+		case ROT_Z:
+			D3DXMatrixTranslation(&matSyncAxis_01, 0.f, fMove_01, 0.f);
+			D3DXMatrixRotationZ(&matRot_01, fAngle_01);
+			D3DXMatrixTranslation(&matAsyncAxis_01, 0.f, -fMove_01, 0.f);
+			break;
+		}
+
+		switch (eID_02)
+		{
+		case ROT_X:
+			D3DXMatrixTranslation(&matSyncAxis_02, 0.f, fMove_02, 0.f);
+			D3DXMatrixRotationX(&matRot_02, fAngle_02);
+			D3DXMatrixTranslation(&matAsyncAxis_02, 0.f, -fMove_02, 0.f);
+			break;
+		case ROT_Y:
+			D3DXMatrixTranslation(&matSyncAxis_02, fMove_02, 0.f, 0.f);
+			D3DXMatrixRotationY(&matRot_02, fAngle_02);
+			D3DXMatrixTranslation(&matAsyncAxis_02, -fMove_02, 0.f, 0.f);
+			break;
+		case ROT_Z:
+			D3DXMatrixTranslation(&matSyncAxis_02, 0.f, fMove_02, 0.f);
+			D3DXMatrixRotationZ(&matRot_02, fAngle_02);
+			D3DXMatrixTranslation(&matAsyncAxis_02, 0.f, -fMove_02, 0.f);
+			break;
+		}
+
+		m_matWorld = matScale *
+			matSyncAxis_01 * matRot_01 * matAsyncAxis_01 *
+			matSyncAxis_02 * matRot_02 * matAsyncAxis_02 *
+			matTrans;
+	}
+	else if (eID_04 == ROT_END)
+	{
+		switch (eID_01)
+		{
+		case ROT_X:
+			D3DXMatrixTranslation(&matSyncAxis_01, 0.f, fMove_01, 0.f);
+			D3DXMatrixRotationX(&matRot_01, fAngle_01);
+			D3DXMatrixTranslation(&matAsyncAxis_01, 0.f, -fMove_01, 0.f);
+			break;
+		case ROT_Y:
+			D3DXMatrixTranslation(&matSyncAxis_01, fMove_01, 0.f, 0.f);
+			D3DXMatrixRotationY(&matRot_01, fAngle_01);
+			D3DXMatrixTranslation(&matAsyncAxis_01, -fMove_01, 0.f, 0.f);
+			break;
+		case ROT_Z:
+			D3DXMatrixTranslation(&matSyncAxis_01, 0.f, fMove_01, 0.f);
+			D3DXMatrixRotationZ(&matRot_01, fAngle_01);
+			D3DXMatrixTranslation(&matAsyncAxis_01, 0.f, -fMove_01, 0.f);
+			break;
+		}
+
+		switch (eID_02)
+		{
+		case ROT_X:
+			D3DXMatrixTranslation(&matSyncAxis_02, 0.f, fMove_02, 0.f);
+			D3DXMatrixRotationX(&matRot_02, fAngle_02);
+			D3DXMatrixTranslation(&matAsyncAxis_02, 0.f, -fMove_02, 0.f);
+			break;
+		case ROT_Y:
+			D3DXMatrixTranslation(&matSyncAxis_02, fMove_02, 0.f, 0.f);
+			D3DXMatrixRotationY(&matRot_02, fAngle_02);
+			D3DXMatrixTranslation(&matAsyncAxis_02, -fMove_02, 0.f, 0.f);
+			break;
+		case ROT_Z:
+			D3DXMatrixTranslation(&matSyncAxis_02, 0.f, fMove_02, 0.f);
+			D3DXMatrixRotationZ(&matRot_02, fAngle_02);
+			D3DXMatrixTranslation(&matAsyncAxis_02, 0.f, -fMove_02, 0.f);
+			break;
+		}
+
+		switch (eID_03)
+		{
+		case ROT_X:
+			D3DXMatrixTranslation(&matSyncAxis_03, 0.f, fMove_03, 0.f);
+			D3DXMatrixRotationX(&matRot_03, fAngle_03);
+			D3DXMatrixTranslation(&matAsyncAxis_03, 0.f, -fMove_03, 0.f);
+			break;
+		case ROT_Y:
+			D3DXMatrixTranslation(&matSyncAxis_03, fMove_03, 0.f, 0.f);
+			D3DXMatrixRotationY(&matRot_03, fAngle_03);
+			D3DXMatrixTranslation(&matAsyncAxis_03, -fMove_03, 0.f, 0.f);
+			break;
+		case ROT_Z:
+			D3DXMatrixTranslation(&matSyncAxis_03, 0.f, fMove_03, 0.f);
+			D3DXMatrixRotationZ(&matRot_03, fAngle_03);
+			D3DXMatrixTranslation(&matAsyncAxis_03, 0.f, -fMove_03, 0.f);
+			break;
+		}
+
+		m_matWorld = matScale *
+			matSyncAxis_01 * matRot_01 * matAsyncAxis_01 *
+			matSyncAxis_02 * matRot_02 * matAsyncAxis_02 *
+			matSyncAxis_03 * matRot_03 * matAsyncAxis_03 *
+			matTrans;
+	}
+	else
+	{
+		switch (eID_01)
+		{
+		case ROT_X:
+			D3DXMatrixTranslation(&matSyncAxis_01, 0.f, fMove_01, 0.f);
+			D3DXMatrixRotationX(&matRot_01, fAngle_01);
+			D3DXMatrixTranslation(&matAsyncAxis_01, 0.f, -fMove_01, 0.f);
+			break;
+		case ROT_Y:
+			D3DXMatrixTranslation(&matSyncAxis_01, fMove_01, 0.f, 0.f);
+			D3DXMatrixRotationY(&matRot_01, fAngle_01);
+			D3DXMatrixTranslation(&matAsyncAxis_01, -fMove_01, 0.f, 0.f);
+			break;
+		case ROT_Z:
+			D3DXMatrixTranslation(&matSyncAxis_01, 0.f, fMove_01, 0.f);
+			D3DXMatrixRotationZ(&matRot_01, fAngle_01);
+			D3DXMatrixTranslation(&matAsyncAxis_01, 0.f, -fMove_01, 0.f);
+			break;
+		}
+
+		switch (eID_02)
+		{
+		case ROT_X:
+			D3DXMatrixTranslation(&matSyncAxis_02, 0.f, fMove_02, 0.f);
+			D3DXMatrixRotationX(&matRot_02, fAngle_02);
+			D3DXMatrixTranslation(&matAsyncAxis_02, 0.f, -fMove_02, 0.f);
+			break;
+		case ROT_Y:
+			D3DXMatrixTranslation(&matSyncAxis_02, fMove_02, 0.f, 0.f);
+			D3DXMatrixRotationY(&matRot_02, fAngle_02);
+			D3DXMatrixTranslation(&matAsyncAxis_02, -fMove_02, 0.f, 0.f);
+			break;
+		case ROT_Z:
+			D3DXMatrixTranslation(&matSyncAxis_02, 0.f, fMove_02, 0.f);
+			D3DXMatrixRotationZ(&matRot_02, fAngle_02);
+			D3DXMatrixTranslation(&matAsyncAxis_02, 0.f, -fMove_02, 0.f);
+			break;
+		}
+
+		switch (eID_03)
+		{
+		case ROT_X:
+			D3DXMatrixTranslation(&matSyncAxis_03, 0.f, fMove_03, 0.f);
+			D3DXMatrixRotationX(&matRot_03, fAngle_03);
+			D3DXMatrixTranslation(&matAsyncAxis_03, 0.f, -fMove_03, 0.f);
+			break;
+		case ROT_Y:
+			D3DXMatrixTranslation(&matSyncAxis_03, fMove_03, 0.f, 0.f);
+			D3DXMatrixRotationY(&matRot_03, fAngle_03);
+			D3DXMatrixTranslation(&matAsyncAxis_03, -fMove_03, 0.f, 0.f);
+			break;
+		case ROT_Z:
+			D3DXMatrixTranslation(&matSyncAxis_03, 0.f, fMove_03, 0.f);
+			D3DXMatrixRotationZ(&matRot_03, fAngle_03);
+			D3DXMatrixTranslation(&matAsyncAxis_03, 0.f, -fMove_03, 0.f);
+			break;
+		}
+
+		switch (eID_04)
+		{
+		case ROT_X:
+			D3DXMatrixTranslation(&matSyncAxis_04, 0.f, fMove_04, 0.f);
+			D3DXMatrixRotationX(&matRot_04, fAngle_04);
+			D3DXMatrixTranslation(&matAsyncAxis_04, 0.f, -fMove_04, 0.f);
+			break;
+		case ROT_Y:
+			D3DXMatrixTranslation(&matSyncAxis_04, fMove_04, 0.f, 0.f);
+			D3DXMatrixRotationY(&matRot_04, fAngle_04);
+			D3DXMatrixTranslation(&matAsyncAxis_04, -fMove_04, 0.f, 0.f);
+			break;
+		case ROT_Z:
+			D3DXMatrixTranslation(&matSyncAxis_04, 0.f, fMove_04, 0.f);
+			D3DXMatrixRotationZ(&matRot_04, fAngle_04);
+			D3DXMatrixTranslation(&matAsyncAxis_04, 0.f, -fMove_04, 0.f);
+			break;
+		}
+
+		m_matWorld = matScale *
+			matSyncAxis_01 * matRot_01 * matAsyncAxis_01 *
+			matSyncAxis_02 * matRot_02 * matAsyncAxis_02 *
+			matSyncAxis_03 * matRot_03 * matAsyncAxis_03 *
+			matSyncAxis_04 * matRot_04 * matAsyncAxis_04 *
+			matTrans;
+
+	}
+}
+
 void CTransform::Rotation_Axis_Except_Scale(_vec3 * vScale, const _float & fXMove, const _float & fYMove, const _float & fXAngle, const _float & fYAngle, const _float & fExtraMove, const _float & fExtraAngle)
 {
 	_matrix matScale, matRotX, matRotY, matTrans;
