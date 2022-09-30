@@ -187,6 +187,18 @@
     <Filter Include="01. Scene\00. Logo\00.LogoUI">
       <UniqueIdentifier>{33ae2b03-193e-4f1d-8ce0-e17e5b2ab5a5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\10. Item\Weapon">
+      <UniqueIdentifier>{4b9e897a-0596-46f0-81c5-0c7a838f6795}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\10. Item\Weapon\GetUzi">
+      <UniqueIdentifier>{72209b49-c270-4dd8-9f7c-575dca57135c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\10. Item\Weapon\GetShotgun">
+      <UniqueIdentifier>{89c0e3ce-46e0-4a54-80f4-c3d3fa82c471}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\10. Item\Weapon\GetSniper">
+      <UniqueIdentifier>{67026bfb-aa71-4bac-b07f-a94803870689}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -348,9 +360,6 @@
     <ClInclude Include="..\Header\ShotgunPart4.h">
       <Filter>02. GameObject\01. For_Stage\07. Weapon\00. Parts\02.Shotgun</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\ShotgunPart5.h">
-      <Filter>02. GameObject\01. For_Stage\07. Weapon\00. Parts\02.Shotgun</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\SniperPart1.h">
       <Filter>02. GameObject\01. For_Stage\07. Weapon\00. Parts\03.Sniper</Filter>
     </ClInclude>
@@ -432,14 +441,23 @@
     <ClInclude Include="..\Header\BulletUI.h">
       <Filter>02. GameObject\01. For_Stage\09. UI\Weapon</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\GunUI.h">
-      <Filter>99. Default\헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\ExitButton.h">
       <Filter>01. Scene\00. Logo\00. Button\03. ExitButton</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\LogoUI.h">
       <Filter>01. Scene\00. Logo\00.LogoUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\GetUzi.h">
+      <Filter>02. GameObject\01. For_Stage\10. Item\Weapon\GetUzi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\GetShotgun.h">
+      <Filter>02. GameObject\01. For_Stage\10. Item\Weapon\GetShotgun</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\GetSniper.h">
+      <Filter>02. GameObject\01. For_Stage\10. Item\Weapon\GetSniper</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\GunUI.h">
+      <Filter>02. GameObject\01. For_Stage\09. UI\Weapon</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -584,9 +602,6 @@
     <ClCompile Include="..\Code\ShotgunPart4.cpp">
       <Filter>02. GameObject\01. For_Stage\07. Weapon\00. Parts\02.Shotgun</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\ShotgunPart5.cpp">
-      <Filter>02. GameObject\01. For_Stage\07. Weapon\00. Parts\02.Shotgun</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\SniperPart1.cpp">
       <Filter>02. GameObject\01. For_Stage\07. Weapon\00. Parts\03.Sniper</Filter>
     </ClCompile>
@@ -668,14 +683,23 @@
     <ClCompile Include="..\Code\BulletUI.cpp">
       <Filter>02. GameObject\01. For_Stage\09. UI\Weapon</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\GunUI.cpp">
-      <Filter>99. Default\소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\ExitButton.cpp">
       <Filter>01. Scene\00. Logo\00. Button\03. ExitButton</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\LogoUI.cpp">
       <Filter>01. Scene\00. Logo\00.LogoUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\GetUzi.cpp">
+      <Filter>02. GameObject\01. For_Stage\10. Item\Weapon\GetUzi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\GetShotgun.cpp">
+      <Filter>02. GameObject\01. For_Stage\10. Item\Weapon\GetShotgun</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\GetSniper.cpp">
+      <Filter>02. GameObject\01. For_Stage\10. Item\Weapon\GetSniper</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\GunUI.cpp">
+      <Filter>02. GameObject\01. For_Stage\09. UI\Weapon</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -111,9 +111,16 @@ private:
 
 	CWeapon*		m_Weapon = nullptr;
 
-	_bool			m_bUzi = true;
+	_bool			m_bUzi;
+	_bool			m_bShotgun;
+	_bool			m_bSniper;
 
 	vector<CWeapon*> m_vecWeapon;
+
+public:
+	void			Capture_Uzi(void) { m_bUzi = true; }
+	void			Capture_Shotgun(void) { m_bShotgun = true; }
+	void			Capture_Sniper(void) { m_bSniper = true; }
 
 public:
 	static CCubePlayer*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
