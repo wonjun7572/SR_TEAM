@@ -187,6 +187,9 @@
     <Filter Include="01. Scene\00. Logo\00.LogoUI">
       <UniqueIdentifier>{33ae2b03-193e-4f1d-8ce0-e17e5b2ab5a5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\06. Bullet\MBullet">
+      <UniqueIdentifier>{34d61fcd-dc60-4e53-93b9-8404c123b543}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -203,9 +206,6 @@
     </ClInclude>
     <ClInclude Include="..\Header\MainApp.h">
       <Filter>00. MainApp</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\Logo.h">
-      <Filter>01. Scene\00. Logo</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\BackGround.h">
       <Filter>02. GameObject\00. For_Logo\00. BackGround</Filter>
@@ -440,6 +440,12 @@
     </ClInclude>
     <ClInclude Include="..\Header\LogoUI.h">
       <Filter>01. Scene\00. Logo\00.LogoUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Logo.h">
+      <Filter>01. Scene\00. Logo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\MBullet.h">
+      <Filter>02. GameObject\01. For_Stage\06. Bullet\MBullet</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -676,6 +682,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\LogoUI.cpp">
       <Filter>01. Scene\00. Logo\00.LogoUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\MBullet.cpp">
+      <Filter>02. GameObject\01. For_Stage\06. Bullet\MBullet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

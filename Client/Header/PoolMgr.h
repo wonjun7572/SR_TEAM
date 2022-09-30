@@ -13,7 +13,7 @@ private:
 public:
 	void Collect_Obj(CGameObject* pObj);
 	HRESULT Reuse_Obj(LPDIRECT3DDEVICE9& pGraphicDev, const _vec3* vPos, const _vec3* vDir);
-
+	//HRESULT Retry_Obj(LPDIRECT3DDEVICE9& pGraphicDev, const _vec3* vPos, const _vec3* vDir, const _float fSpeed, const _float fScale, const _float fDamage, const _float fInterval);
 private:
 	list<CGameObject*>		m_ObjectPool;
 	int						m_iCount = 0;

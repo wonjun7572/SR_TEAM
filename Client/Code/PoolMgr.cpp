@@ -3,7 +3,7 @@
 #include "PoolMgr.h"
 #include "Export_Function.h"
 #include "Bullet.h"
-
+#include "MBullet.h"
 IMPLEMENT_SINGLETON(CPoolMgr)
 
 CPoolMgr::CPoolMgr()
@@ -91,6 +91,48 @@ HRESULT CPoolMgr::Reuse_Obj(LPDIRECT3DDEVICE9& pGraphicDev, const _vec3* vPos, c
 
 	return S_OK;
 }
+//
+//HRESULT CPoolMgr::Retry_Obj(LPDIRECT3DDEVICE9 & pGraphicDev, const _vec3 * vPos, const _vec3 * vDir, const _float fSpeed, const _float fScale, const _float fDamage, const _float fInterval)
+//{
+//
+//	CGameObject* pObj = nullptr;
+//
+//	if (m_ObjectPool.empty())
+//	{
+//	/*	pObj = CBullet::Create(pGraphicDev, vPos, vDir, fSpeed, fScale, fDamage, fInterval);
+//		NULL_CHECK_RETURN(pObj, E_FAIL);
+//
+//		Engine::Get_Layer(L"Layer_Bullet")->Add_GameList(pObj);*/
+//
+//		pObj = CMBullet::Create(pGraphicDev, vPos, vDir, fSpeed, fScale, fDamage, fInterval);
+//		NULL_CHECK_RETURN(pObj, E_FAIL);
+//		Engine::Get_Layer(L"Layer_MBullet")->Add_GameList(pObj);
+//
+//	}
+//	else
+//	{
+//		pObj = m_ObjectPool.front();
+//
+//		NULL_CHECK_RETURN(pObj, E_FAIL);
+//		m_ObjectPool.pop_front();
+//
+//		dynamic_cast<CBullet*>(pObj)->Set_Dir(*vDir);
+//
+//		Engine::Get_Layer(L"Layer_MBullet")->Add_GameList(pObj);
+//
+//
+//
+//		dynamic_cast<CBullet*>(pObj)->Set_Pos(*vPos);
+//		dynamic_cast<CBullet*>(pObj)->MoveToDir(*vDir);
+//
+//	}
+//
+//
+//	return S_OK;
+//}
+//
+
+
 
 //CGameObject* CPoolMgr::Reuse_Obj(LPDIRECT3DDEVICE9& pGraphicDev,const _vec3* vPos, const _vec3* vDir)
 //{

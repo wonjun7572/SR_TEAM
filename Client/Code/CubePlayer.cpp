@@ -36,10 +36,13 @@ _int CCubePlayer::Update_Object(const _float & fTimeDelta)
 
 	FAILED_CHECK_RETURN(Get_BodyTransform(), -1);
 
+	_vec3 vPos;
+	m_pTransform->Get_Info(INFO_POS, &vPos);
+
+	cout << vPos.x << " " << vPos.y << " " << vPos.z << endl;
+
 	Move();
-
-	//cout << m_vDirection.x << " " << m_vDirection.y << " " << m_vDirection.z << endl;
-
+	
 	Animation();
 
 	TransAxis();
@@ -321,7 +324,7 @@ void CCubePlayer::Move()
 		vRight *= -1.f;
 
 		vDir = vLook + vRight;
-
+		
 		D3DXVec3Normalize(&vDir, &vDir);
 	}
 	else if (Get_DIKeyState(DIK_W))
@@ -405,6 +408,9 @@ void CCubePlayer::Move()
 		m_pBodyWorld->Move_Pos(&(vDir * m_fSpeed * m_fTimeDelta));
 		FAILED_CHECK_RETURN(CPoolMgr::GetInstance()->Reuse_Obj(m_pGraphicDev, &vPos, &vDir), );
 	}
+
+	//cout << m_pBodyWorld <<  "    " <<  endl;
+	
 }
 
 void CCubePlayer::TransAxis(void)
@@ -443,9 +449,7 @@ void CCubePlayer::Look_Direction(void)
 	_long MoveX = Get_DIMouseMove(DIMS_X);
 	_long MoveY = Get_DIMouseMove(DIMS_Y);
 	_long MoveZ = Get_DIMouseMove(DIMS_Z);
-	cout << MoveX << endl;
-	cout << MoveY << endl;
-	cout << MoveZ << endl;
+
 	m_pBodyWorld->Rotation(ROT_Y, D3DXToRadian(MoveX / 10.f));
 	m_fLookAngle -= D3DXToRadian(MoveX / 10.f);
 
