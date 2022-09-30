@@ -3,6 +3,8 @@
 #include "Export_Function.h"
 #include "Engine_Include.h"
 #include "CubePlayer.h"
+#include "MonsterMapping.h"
+
 namespace CurrentState
 {
 	enum MONSTERID { MONSTER_IDLE, MONSTER_COMEBACK, MONSTER_ATTACK, MONSTER_DEATH, MONSTER_END };
@@ -43,7 +45,7 @@ private:
 	void			Axis(void);
 
 	HRESULT			Get_BodyTransform(void);
-
+	HRESULT			Monster_Mapping(void);
 private:
 	HRESULT  Add_Component(void);
 
@@ -75,7 +77,6 @@ private:
 
 
 private:
-
 
 	//탐지범위를 줄것이다. 
 	_float			m_fDetectRange;
@@ -111,6 +112,13 @@ private:
 	//api방식 그대로 그냥 가져와주면 되지않을까라는 의문을 가져본다. 
 
 	MONSTERABILITY					m_MonsterState;
+
+	//맵핑 관련 변수입니다.
+	_int		m_iCnt = 0;
+	CTransform*			m_pMonsterMapping = nullptr;
+	list<TCHAR*>		m_listMonsterCnt;
+	_bool				m_MappingInit = false;
+
 
 public:
 	static CCubeMonster*	Create(LPDIRECT3DDEVICE9 pGraphicDev);

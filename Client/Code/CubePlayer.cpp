@@ -55,6 +55,7 @@ _int CCubePlayer::Update_Object(const _float & fTimeDelta)
 	Assemble();
 	////////////////////////
 
+	Player_Mapping();
 	//FAILED_CHECK_RETURN(CPoolMgr::GetInstance()->Reuse_Obj(m_pGraphicDev, &vPos, &m_vDirection), -1);
 
 	CGameObject::Update_Object(fTimeDelta);
@@ -644,6 +645,22 @@ HRESULT CCubePlayer::Get_BodyTransform(void)
 	NULL_CHECK_RETURN(m_pBodyWorld, E_FAIL);
 
 	return S_OK;
+}
+
+HRESULT CCubePlayer::Player_Mapping(void)
+{
+	if (!m_MappingInit)
+	{
+		CGameObject*	m_pMapMonster = CPlayerMapping::Create(m_pGraphicDev);
+		TCHAR* szCntName = new TCHAR[64];
+		wsprintf(szCntName, L"Map");
+		Engine::Add_GameObject(L"Layer_Mapping", m_pMapMonster, szCntName);
+		m_listMonsterCnt.push_back(szCntName);
+
+		m_pBaseMapping = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Mapping", szCntName, L"Proto_TransformCom", ID_DYNAMIC));
+		NULL_CHECK_RETURN(m_pBaseMapping, E_FAIL);
+		m_MappingInit = true;
+	}
 }
 
 void CCubePlayer::Key_Input(const _float & fTimeDelta)

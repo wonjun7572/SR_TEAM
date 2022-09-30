@@ -70,7 +70,7 @@ _int CCollision::Wall_Collision(_vec3* vNorm)
 		CTransform* pWallTransform = dynamic_cast<CTransform*>(iter.second->Get_Component(L"Proto_TransformCom", ID_DYNAMIC));
 		NULL_CHECK_RETURN(pWallTransform, false);
 		CHitBox* pWallBox = dynamic_cast<CHitBox*>(iter.second->Get_Component(L"Proto_HitboxCom", ID_STATIC));
-		NULL_CHECK_RETURN(pWallTransform, false);
+		NULL_CHECK_RETURN(pWallBox, false);
 
 		m_pSrc->Get_MinMax(&m_vMin1, &m_vMax1);
 		m_pDst->Get_MinMax(&m_vMin2, &m_vMax2);

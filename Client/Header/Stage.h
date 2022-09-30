@@ -28,6 +28,7 @@ private:
 	HRESULT			Ready_Layer_Character(const _tchar* pLayerTag);
 	HRESULT			Ready_Layer_Monster(const _tchar* pLayerTag);
 	HRESULT			Ready_Layer_Bullet(const _tchar* pLayerTag);
+	HRESULT			Ready_Layer_Mapping(const _tchar* pLayerTag);
 
 	HRESULT			Ready_Layer_Gun(const _tchar* pLayerTag);
 
