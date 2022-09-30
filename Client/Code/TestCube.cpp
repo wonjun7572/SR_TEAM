@@ -1,12 +1,9 @@
 #include "stdafx.h"
 #include "TestCube.h"
-#include "WallMapping.h"
 
 #include "Export_Function.h"
-static _int m_iCnt = 0;
 
 CTestCube::CTestCube(LPDIRECT3DDEVICE9 pGraphicDev) : CGameObject(pGraphicDev)
-
 {
 }
 
@@ -21,6 +18,7 @@ CTestCube::~CTestCube()
 HRESULT CTestCube::Ready_Object(int PosX, int PosY)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
+
 	if (PosX == 0 && PosY == 0) {}
 	else
 	{ Set_TransformPositon(); }
@@ -31,12 +29,10 @@ HRESULT CTestCube::Ready_Object(int PosX, int PosY)
 	return S_OK;
 }
 
-
 _int CTestCube::Update_Object(const _float& fTimeDelta)
 {
 	CGameObject::Update_Object(fTimeDelta);
-	Add_RenderGroup(RENDER_NONALPHA, this);
-	Wall_Mapping();
+	Add_RenderGroup(RENDER_PRIORITY, this);
 	return 0;
 }
 
@@ -106,34 +102,6 @@ HRESULT CTestCube::Add_Component()
 	return S_OK;
 }
 
-HRESULT CTestCube::Wall_Mapping(void)
-{
-	_vec3		vPos;
-	_vec3		vSize;
-	m_pTransCom->Get_Info(INFO_POS, &vPos);
-	m_pTransCom->Get_Scale(&vSize);
-	if (!m_MappingInit)
-	{
-		CGameObject*	m_pMapWall = CWallMapping::Create(m_pGraphicDev);
-		TCHAR* szCntName = new TCHAR[64];
-		wsprintf(szCntName, L"");
-		const _tchar*	szNumbering = L"MapWall_%d";
-		wsprintf(szCntName, szNumbering, m_iCnt);
-		Engine::Add_GameObject(L"Layer_Mapping", m_pMapWall, szCntName);
-		m_listWallCnt.push_back(szCntName);
-
-
-		m_pWallMapping = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Mapping", szCntName, L"Proto_TransformCom", ID_DYNAMIC));
-		NULL_CHECK_RETURN(m_pWallMapping, E_FAIL);
-		++m_iCnt;
-		m_MappingInit = true;
-	}
-
-	m_pWallMapping->Set_Pos(vPos.x, vPos.y, vPos.z);
-	m_pWallMapping->Set_Scale(vSize.x, vSize.y, vSize.z);
-
-	return S_OK;
-}
 CTestCube* CTestCube::Create(LPDIRECT3DDEVICE9 pGraphicDev, int Posx, int Posy)
 {
 	CTestCube*	pInstance = new CTestCube(pGraphicDev);
@@ -143,6 +111,7 @@ CTestCube* CTestCube::Create(LPDIRECT3DDEVICE9 pGraphicDev, int Posx, int Posy)
 		Safe_Release(pInstance);
 		return nullptr;
 	}
+
 	return pInstance;
 }
 

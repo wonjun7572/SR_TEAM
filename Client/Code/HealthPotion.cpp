@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "..\Header\HealthPotion.h"
 
-#include "CubePlayer.h"
 
 CHealthPotion::CHealthPotion(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CItem(pGraphicDev)
@@ -22,19 +21,12 @@ HRESULT CHealthPotion::Ready_Object(const _vec3& vPos)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 	m_pTransCom->Set_Pos(vPos.x, vPos.y, vPos.z);
-	m_pTransCom->Set_Scale(1.f, 1.f, 1.f);
-	m_pTransCom->Static_Update();
+	m_pTransCom->Set_Scale(2.f, 2.f, 2.f);
 	return S_OK;
 }
 
 Engine::_int CHealthPotion::Update_Object(const _float& fTimeDelta)
 {
-	if (m_bDead)
-	{
-		dynamic_cast<CCubePlayer*>(Engine::Get_GameObject(L"Layer_Character", L"PLAYER"))->Capture_Shotgun();
-		return -1;
-	}
-
 	CItem::Update_Object(fTimeDelta);
 	Add_RenderGroup(RENDER_NONALPHA, this);
 	return 0;
@@ -50,14 +42,6 @@ void CHealthPotion::Render_Object()
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransCom->Get_WorldMatrixPointer());
 	m_pTextureCom->Set_Texture(0);
 	m_pBufferCom->Render_Buffer();
-
-	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DPMISCCAPS_CULLNONE);
-	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
-
-	//m_pHitBox->Render_Buffer();
-
-	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DPMISCCAPS_CULLCCW);
-	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 }
 
 HRESULT CHealthPotion::Add_Component(void)
@@ -67,10 +51,6 @@ HRESULT CHealthPotion::Add_Component(void)
 	pComponent = m_pBufferCom = dynamic_cast<CSphereTex*>(Clone_Proto(L"Proto_SphereTexCom"));
 	NULL_CHECK_RETURN(m_pBufferCom, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_SphereTexCom", pComponent });
-
-	pComponent = m_pHitBox = dynamic_cast<CHitBox*>(Clone_Proto(L"Proto_HitboxCom"));
-	NULL_CHECK_RETURN(m_pBufferCom, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Proto_HitboxCom", pComponent });
 
 	// 변경해줘야함
 	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Clone_Proto(L"Proto_PlayerTexture"));

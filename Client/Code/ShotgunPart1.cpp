@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "..\Header\ShotgunPart1.h"
-#include "Shotgun.h"
+
 
 CShotgunPart1::CShotgunPart1(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CWeapon(pGraphicDev)
@@ -22,11 +22,9 @@ HRESULT CShotgunPart1::Ready_Object(void)
 
 _int CShotgunPart1::Update_Object(const _float & fTimeDelta)
 {
-	if (dynamic_cast<CShotgun*>(Engine::Get_GameObject(L"Layer_Gun", L"SHOTGUN"))->Get_State())
-	{
-		Add_RenderGroup(RENDER_NONALPHA, this);
-		CGameObject::Update_Object(fTimeDelta);
-	}
+	Add_RenderGroup(RENDER_NONALPHA, this);
+	CGameObject::Update_Object(fTimeDelta);
+
 	return 0;
 }
 

@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "..\Header\UziPart5.h"
-#include "Uzi.h"
+
 
 CUziPart5::CUziPart5(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CWeapon(pGraphicDev)
@@ -22,12 +22,9 @@ HRESULT CUziPart5::Ready_Object(void)
 
 _int CUziPart5::Update_Object(const _float & fTimeDelta)
 {
-	if (dynamic_cast<CUzi*>(Engine::Get_GameObject(L"Layer_Gun", L"UZI1"))->Get_State() ||
-		dynamic_cast<CUzi*>(Engine::Get_GameObject(L"Layer_Gun", L"UZI2"))->Get_State())
-	{
-		Add_RenderGroup(RENDER_NONALPHA, this);
-		CGameObject::Update_Object(fTimeDelta);
-	}
+	Add_RenderGroup(RENDER_NONALPHA, this);
+	CGameObject::Update_Object(fTimeDelta);
+
 	return 0;
 }
 
@@ -57,8 +54,8 @@ HRESULT CUziPart5::Add_Component(void)
 
 	pInstance = m_pTransform = dynamic_cast<CTransform*>(Engine::Clone_Proto(L"Proto_TransformCom"));
 	NULL_CHECK_RETURN(pInstance, E_FAIL);
-	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_TransformCom", pInstance });
-	//m_mapComponent[ID_STATIC].insert({ L"Proto_TransformCom", pInstance });
+	//m_mapComponent[ID_DYNAMIC].insert({ L"Proto_TransformCom", pInstance });
+	m_mapComponent[ID_STATIC].insert({ L"Proto_TransformCom", pInstance });
 
 
 	return S_OK;

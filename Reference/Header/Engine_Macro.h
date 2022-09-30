@@ -7,12 +7,6 @@ namespace Engine
 #define		WINCX		1600
 #define		WINCY		900
 
-#define		MAPCX		100.f
-#define		MAPCY		100.f
-#define		MAPPOSX		675.f		
-#define		MAPPOSY		300.f
-#define		PINGSIZE	5.f
-
 #define		NO_EVENT	0
 #define		CHANGE_EVENT 1
 

@@ -20,13 +20,6 @@ public:
 	virtual void	LateUpdate_Object(void) override;
 	virtual void	Render_Object(void) override;
 
-public:
-	void			Set_Sniper(void) { m_bEquiped = true; }
-	void			Off_Sniper(void) { m_bEquiped = false; }
-	_bool			Get_State(void) { return m_bEquiped; }
-private:
-	_bool			m_bEquiped = false;
-
 private:
 	HRESULT			Add_Component(void);
 	HRESULT			Add_Parts();
@@ -36,8 +29,6 @@ private:
 	void			Assemble(void);								//	¸öÃ¼ Á¶¸³
 
 	void			Animation_Fire(void);						//	°È´Â ¸ð¼Ç
-
-	void			TransAxis_Sniper(void);
 
 public:
 	static CSniper*	Create(LPDIRECT3DDEVICE9 pGraphicDev);

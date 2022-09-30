@@ -6,7 +6,7 @@
 #include "TestPlayer.h"
 #include "StaticCamera.h"
 #include "DynamicCamera.h"
-#include "DynamicCamera.h"
+
 class CStage : public Engine::CScene
 {
 private:
@@ -28,11 +28,12 @@ private:
 	HRESULT			Ready_Layer_Character(const _tchar* pLayerTag);
 	HRESULT			Ready_Layer_Monster(const _tchar* pLayerTag);
 	HRESULT			Ready_Layer_Bullet(const _tchar* pLayerTag);
-	HRESULT			Ready_Layer_Mapping(const _tchar* pLayerTag);
-
+	
+	HRESULT			Ready_Layer_MBullet(const _tchar* pLayerTag);
+	
+	
+	
 	HRESULT			Ready_Layer_Gun(const _tchar* pLayerTag);
-
-	HRESULT			Ready_Layer_Item(const _tchar* pLayerTag);
 
 	HRESULT			Ready_Proto(void);
 	HRESULT			Ready_Light(void);

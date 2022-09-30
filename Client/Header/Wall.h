@@ -1,6 +1,6 @@
 #pragma once
 #include "GameObject.h"
-#include "WallMapping.h"
+
 namespace Engine
 {
 	class CCubeTex;
@@ -25,19 +25,12 @@ public:
 
 private:
 	HRESULT					Add_Component(void);
-	HRESULT					Wall_Mapping(void);
 	CCubeTex*				m_pCubeTex = nullptr;
 	CTexture*				m_pTexture = nullptr;
 	CTransform*				m_pTransform = nullptr;
 
 private:
 	_ulong					m_dwWallTextureNum;
-
-	_bool					m_MappingInit = false;
-	_int					m_iCnt = 0;
-	list<TCHAR*>			m_listWallCnt;
-	CTransform*				m_pWallMapping = nullptr;
-
 
 public:
 	static CWall*	Create(LPDIRECT3DDEVICE9 pGraphicDev, _ulong Texture, _vec3 * Position);

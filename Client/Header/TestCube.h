@@ -18,8 +18,6 @@ private:
 	virtual ~CTestCube();
 public:
 	HRESULT				Ready_Object(int PosX, int PosY);
-	HRESULT				Wall_Mapping(void);
-
 	virtual _int		Update_Object(const _float& fTimeDelta) override;
 	virtual void		Render_Object(void) override;
 
@@ -39,11 +37,6 @@ private:
 	CCalculator*		m_pCalculatorCom = nullptr;
 
 	CHitBox*			m_pHitBox = nullptr;
-
-
-	_bool					m_MappingInit = false;
-	list<TCHAR*>			m_listWallCnt;
-	CTransform*				m_pWallMapping = nullptr;
 
 private:
 	_bool				m_bWireFrame = false;

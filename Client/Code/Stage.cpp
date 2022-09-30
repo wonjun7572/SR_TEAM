@@ -23,6 +23,7 @@
 #include "Shotgun.h"
 #include "Sniper.h"
 
+#include "HealthPotion.h"
 #include "PlayerUI.h"
 #include "PlayerFaceUI.h"
 #include "PlayerHpUI.h"
@@ -30,13 +31,6 @@
 #include "WeaponUI.h"
 #include "BulletUI.h"
 #include "GunUI.h"
-#include "BaseMapping.h"
-
-#include "HealthPotion.h"
-#include "GetUzi.h"
-#include "GetShotgun.h"
-#include "GetSniper.h"
-
 
 
 CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -68,11 +62,8 @@ HRESULT CStage::Ready_Scene(void)
 	FAILED_CHECK_RETURN(Ready_Layer_Character(L"Layer_Character"), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Layer_Monster(L"Layer_Monster"), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Layer_Bullet(L"Layer_Bullet"), E_FAIL);
-	FAILED_CHECK_RETURN(Ready_Layer_Mapping(L"Layer_Mapping"), E_FAIL);
-
+	FAILED_CHECK_RETURN(Ready_Layer_MBullet(L"Layer_MBullet"), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Layer_Gun(L"Layer_Gun"), E_FAIL);
-
-	FAILED_CHECK_RETURN(Ready_Layer_Item(L"Layer_Item"), E_FAIL);
 
 	return S_OK;
 }
@@ -129,10 +120,6 @@ HRESULT CStage::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 	pGameObject = CTestPlayer::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"TestPlayer0", pGameObject), E_FAIL);
-
-	pGameObject = CBaseMapping::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"BaseMapping", pGameObject), E_FAIL);
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
@@ -312,7 +299,7 @@ HRESULT CStage::Ready_Layer_Monster(const _tchar * pLayerTag)
 
 	CGameObject*		pGameObject = nullptr;
 
-	/*pGameObject = CCubeMonsterArm::Create(m_pGraphicDev);
+	pGameObject = CCubeMonsterArm::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"M_LeftArm", pGameObject), E_FAIL);
 
@@ -330,7 +317,9 @@ HRESULT CStage::Ready_Layer_Monster(const _tchar * pLayerTag)
 
 	pGameObject = CCubeMonster::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"CubeMonster", pGameObject), E_FAIL);*/
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"CubeMonster", pGameObject), E_FAIL);
+
+
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
@@ -349,16 +338,12 @@ HRESULT	CStage::Ready_Layer_Bullet(const _tchar* pLayerTag)
 	return S_OK;
 }
 
-HRESULT CStage::Ready_Layer_Mapping(const _tchar * pLayerTag)
+HRESULT CStage::Ready_Layer_MBullet(const _tchar * pLayerTag)
 {
 	Engine::CLayer*		pLayer = Engine::CLayer::Create();
 	NULL_CHECK_RETURN(pLayer, E_FAIL);
 
 	CGameObject*		pGameObject = nullptr;
-
-	pGameObject = CBaseMapping::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"BaseMapping", pGameObject), E_FAIL);
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
@@ -420,7 +405,7 @@ HRESULT CStage::Ready_Layer_Gun(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Uzi_Part_2_5", pGameObject), E_FAIL);
 
-	pGameObject = CShotgun::Create(m_pGraphicDev);
+	/*pGameObject = CShotgun::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"SHOTGUN", pGameObject), E_FAIL);
 
@@ -438,77 +423,11 @@ HRESULT CStage::Ready_Layer_Gun(const _tchar * pLayerTag)
 
 	pGameObject = CShotgunPart4::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Shotgun_Part_4", pGameObject), E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Shotgun_Part_4", pGameObject), E_FAIL);*/
 
-	pGameObject = CSniper::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"SNIPER", pGameObject), E_FAIL);
-
-	pGameObject = CSniperPart1::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Sniper_Part_1", pGameObject), E_FAIL);
-
-	pGameObject = CSniperPart2::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Sniper_Part_2", pGameObject), E_FAIL);
-
-	pGameObject = CSniperPart3::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Sniper_Part_3", pGameObject), E_FAIL);
-
-	pGameObject = CSniperPart4::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Sniper_Part_4", pGameObject), E_FAIL);
-
-	////////////////////////////////////파밍용무기///////////////////////////////////////
-	/*pGameObject = CUziPart1::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Uzi_Part_Floor_1", pGameObject), E_FAIL);
-
-	pGameObject = CUziPart2::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Uzi_Part_Floor_2", pGameObject), E_FAIL);
-
-	pGameObject = CUziPart3::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Uzi_Part_Floor_3", pGameObject), E_FAIL);
-
-	pGameObject = CUziPart4::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Uzi_Part_Floor_4", pGameObject), E_FAIL);
-
-	pGameObject = CUziPart5::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Uzi_Part_Floor_5", pGameObject), E_FAIL);*/
-	/////////////////////////////////////////////////////////////////////////////////////
-
-	m_mapLayer.insert({ pLayerTag, pLayer });
-
-	return S_OK;
-}
-
-HRESULT CStage::Ready_Layer_Item(const _tchar * pLayerTag)
-{
-	Engine::CLayer*		pLayer = Engine::CLayer::Create();
-	NULL_CHECK_RETURN(pLayer, E_FAIL);
-
-	CGameObject*		pGameObject = nullptr;
-
-	//pGameObject = CHealthPotion::Create(m_pGraphicDev, _vec3(20,1,20));
+	//pGameObject = CSniper::Create(m_pGraphicDev);
 	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"HealthPotion", pGameObject), E_FAIL);
-
-	pGameObject = CGetUzi::Create(m_pGraphicDev, _vec3(20, 1, 20));
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"GetUzi", pGameObject), E_FAIL);
-
-	pGameObject = CGetShotgun::Create(m_pGraphicDev, _vec3(30, 1, 30));
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"GetShotgun", pGameObject), E_FAIL);
-
-	pGameObject = CGetSniper::Create(m_pGraphicDev, _vec3(30, 1, 20));
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"GetSniper", pGameObject), E_FAIL);
+	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"SNIPER", pGameObject), E_FAIL);
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 

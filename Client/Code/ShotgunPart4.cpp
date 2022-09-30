@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "..\Header\ShotgunPart4.h"
-#include "Shotgun.h"
+
 
 CShotgunPart4::CShotgunPart4(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CWeapon(pGraphicDev)
@@ -22,11 +22,12 @@ HRESULT CShotgunPart4::Ready_Object(void)
 
 _int CShotgunPart4::Update_Object(const _float & fTimeDelta)
 {
-	if (dynamic_cast<CShotgun*>(Engine::Get_GameObject(L"Layer_Gun", L"SHOTGUN"))->Get_State())
-	{
-		Add_RenderGroup(RENDER_NONALPHA, this);
-		CGameObject::Update_Object(fTimeDelta);
-	}
+	Add_RenderGroup(RENDER_NONALPHA, this);
+	CGameObject::Update_Object(fTimeDelta);
+
+	//cout << m_fShotgunSize << endl;
+	//cout << m_fUziSize << endl;
+
 	return 0;
 }
 
@@ -37,6 +38,7 @@ void CShotgunPart4::LateUpdate_Object(void)
 
 void CShotgunPart4::Render_Object(void)
 {
+
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
 	m_pTexture->Set_Texture(45);
 	m_pCube->Render_Buffer();

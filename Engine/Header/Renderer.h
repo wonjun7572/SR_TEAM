@@ -19,8 +19,6 @@ public:
 	void		Render_GameObject(LPDIRECT3DDEVICE9& pGraphicDev);
 	void		Clear_RenderGroup(void);
 
-	void		On_Minimap(void) { m_bMinimap = true; }
-	void		Off_Minimap(void) { m_bMinimap = false; }
 
 	list<CGameObject*>			Get_GameObjectGroup(RENDERID eId)
 	{
@@ -29,7 +27,6 @@ public:
 
 private:
 	list<CGameObject*>			m_RenderGroup[RENDER_END];
-	_bool						m_bMinimap = false;
 
 private:
 	virtual CComponent*	Clone(void) { return nullptr; }

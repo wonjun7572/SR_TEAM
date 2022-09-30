@@ -20,8 +20,6 @@ public:
 
 	_int					Wall_Collision_By_DotSliding(_vec3* vChangeDir);
 
-	void					Get_Item(void);
-
 private:
 	_vec3	m_vMin1 = { 0, 0, 0 };
 	_vec3	m_vMin2 = { 0, 0, 0 };
