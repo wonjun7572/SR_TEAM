@@ -447,9 +447,6 @@
     <ClInclude Include="..\Header\BulletUI.h">
       <Filter>02. GameObject\01. For_Stage\09. UI\Weapon</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\GunUI.h">
-      <Filter>99. Default\헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\ExitButton.h">
       <Filter>01. Scene\00. Logo\00. Button\03. ExitButton</Filter>
     </ClInclude>
@@ -467,6 +464,9 @@
     </ClInclude>
     <ClInclude Include="..\Header\WallMapping.h">
       <Filter>02. GameObject\01. For_Stage\11. Map\Mapping\03.Wall</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\GunUI.h">
+      <Filter>02. GameObject\01. For_Stage\09. UI\Weapon</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -695,9 +695,6 @@
     <ClCompile Include="..\Code\BulletUI.cpp">
       <Filter>02. GameObject\01. For_Stage\09. UI\Weapon</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\GunUI.cpp">
-      <Filter>99. Default\소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\ExitButton.cpp">
       <Filter>01. Scene\00. Logo\00. Button\03. ExitButton</Filter>
     </ClCompile>
@@ -715,6 +712,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\WallMapping.cpp">
       <Filter>02. GameObject\01. For_Stage\11. Map\Mapping\03.Wall</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\GunUI.cpp">
+      <Filter>02. GameObject\01. For_Stage\09. UI\Weapon</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

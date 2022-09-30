@@ -1,38 +1,24 @@
-﻿  Calculator.cpp
-  코드를 생성하고 있습니다...
-  컴파일하고 있습니다...
-  VIBuffer.cpp
-  TriCol.cpp
-  Transform.cpp
+﻿  Transform.cpp
   Texture.cpp
   TerrainTex.cpp
   SphereTex.cpp
   SoundMgr.cpp
-  Scene.cpp
-  Renderer.cpp
   RcTex.cpp
   RcRD.cpp
-  RcCol.cpp
-  ProtoMgr.cpp
   Management.cpp
-  LightMgr.cpp
-  Light.cpp
   Layer.cpp
   Interface.cpp
   Hitbox.cpp
-  GameObject.cpp
-  코드를 생성하고 있습니다...
-  컴파일하고 있습니다...
   CubeTex.cpp
-  Component.cpp
   Collision.cpp
-c:\users\decoyz\desktop\sr_team\engine\utility\code\collision.cpp(90): warning C4101: 'fU' :참조되지 않은 지역 변수입니다.
-c:\users\decoyz\desktop\sr_team\engine\utility\code\collision.cpp(90): warning C4101: 'fV' :참조되지 않은 지역 변수입니다.
-c:\users\decoyz\desktop\sr_team\engine\utility\code\collision.cpp(90): warning C4101: 'fDist' :참조되지 않은 지역 변수입니다.
+c:\users\sam51\desktop\sr_team\engine\utility\code\collision.cpp(90): warning C4101: 'fU' :참조되지 않은 지역 변수입니다.
+c:\users\sam51\desktop\sr_team\engine\utility\code\collision.cpp(90): warning C4101: 'fV' :참조되지 않은 지역 변수입니다.
+c:\users\sam51\desktop\sr_team\engine\utility\code\collision.cpp(90): warning C4101: 'fDist' :참조되지 않은 지역 변수입니다.
   Camera.cpp
+  Calculator.cpp
   코드를 생성하고 있습니다...
      ../Bin\Utility.lib 라이브러리 및 ../Bin\Utility.exp 개체를 생성하고 있습니다.
-  Utility.vcxproj -> C:\Users\DecoyZ\Desktop\SR_TEAM\Engine\Utility\Default\../Bin\Utility.dll
+  Utility.vcxproj -> C:\Users\sam51\Desktop\SR_TEAM\Engine\Utility\Default\../Bin\Utility.dll
   Utility.vcxproj -> ../Bin\Utility.pdb (Full PDB)
           1개 파일이 복사되었습니다.
           1개 파일이 복사되었습니다.

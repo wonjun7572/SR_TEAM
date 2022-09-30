@@ -588,7 +588,9 @@ HRESULT CCubePlayer::Player_Mapping(void)
 		m_pBaseMapping = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Mapping", szCntName, L"Proto_TransformCom", ID_DYNAMIC));
 		NULL_CHECK_RETURN(m_pBaseMapping, E_FAIL);
 		m_MappingInit = true;
+		return S_OK;
 	}
+	return E_FAIL;
 }
 
 void CCubePlayer::Key_Input(const _float & fTimeDelta)
@@ -630,6 +632,14 @@ CCubePlayer * CCubePlayer::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 
 void CCubePlayer::Free(void)
 {
+	for (auto& iter : m_listMonsterCnt)
+	{
+		if (iter != nullptr)
+			delete iter;
+	}
+
+	m_listMonsterCnt.clear();
+
 	Safe_Delete<ABILITY*>(m_tAbility);
 	CGameObject::Free();
 }

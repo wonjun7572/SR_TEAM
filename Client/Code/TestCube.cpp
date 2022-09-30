@@ -148,6 +148,14 @@ CTestCube* CTestCube::Create(LPDIRECT3DDEVICE9 pGraphicDev, int Posx, int Posy)
 
 void CTestCube::Free()
 {
+	for (auto& iter : m_listWallCnt)
+	{
+		if (iter != nullptr)
+			delete iter;
+	}
+
+	m_listWallCnt.clear();
+
 	CGameObject::Free();
 }
 

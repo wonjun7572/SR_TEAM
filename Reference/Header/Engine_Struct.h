@@ -32,35 +32,6 @@ namespace Engine
 
 	const _ulong	FVF_CUBE = D3DFVF_XYZ | D3DFVF_TEX1 | D3DFVF_TEXCOORDSIZE3(0);		// D3DFVF_TEXCOORDSIZE3 : 텍스처의 UV값이 FLOAT 형 3개의 크기만큼이며, 괄호산의 숫자 0의 의미는 본래 버텍스에 텍스처 UV 값이 여러개가 올 수 있는데 그중 0번째 것이 값을 지정하겠다는 의미이다.
 
-	typedef struct tagParticle
-	{
-		_vec3		vPos;
-		_ulong		dwColor;
-		_float		fSize;
-
-	}PARTICLE;
-
-	const _ulong FVF_PARTICLE = D3DFVF_XYZ | D3DFVF_DIFFUSE;
-
-	typedef struct tagAttribute
-	{
-		tagAttribute()
-		{
-			fLifeTime = 0.f;
-			fAge	  = 0.f;
-			bAlive	  = true;
-		}
-
-		_vec3	vPos;
-		_vec3	vVelocity;
-		_vec3   vAcceleration;
-		_float  fLifeTime;
-		_float	fAge;
-		_ulong	dwColor;
-		_ulong  dwColorFade;
-		_bool	bAlive;
-	}ATTRIBUTE;
-
 	typedef	struct tagIndex16
 	{
 		_ushort			_0;
@@ -98,37 +69,6 @@ namespace Engine
 		_float fMaxHp;
 		_float fDamage;
 	}MONSTERABILITY;
-
-	typedef struct BoundingBox
-	{
-		BoundingBox()
-		{
-			vMin.x = INFINITY;
-			vMin.y = INFINITY;
-			vMin.z = INFINITY;
-
-			vMax.x = INFINITY;
-			vMax.y = INFINITY;
-			vMax.z = INFINITY;
-		}
-
-		_vec3 vMin;
-		_vec3 vMax;
-
-		bool BoundingBox::isPointInside(D3DXVECTOR3& p)
-		{
-			if (p.x >= vMin.x && p.y >= vMin.y && p.z >= vMin.z &&
-				p.x <= vMax.x && p.y <= vMax.y && p.z <= vMax.z)
-			{
-				return true;
-			}
-			else
-			{
-				return false;
-			}
-		}
-
-	}BOUNDINGBOX;
 }
 
 

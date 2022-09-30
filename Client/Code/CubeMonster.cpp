@@ -221,7 +221,6 @@ HRESULT CCubeMonster::Monster_Mapping(void)
 		Engine::Add_GameObject(L"Layer_Mapping", m_pMapMonster, szCntName);
 		m_listMonsterCnt.push_back(szCntName);
 
-
 		m_pMonsterMapping = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Mapping", szCntName, L"Proto_TransformCom", ID_DYNAMIC));
 		NULL_CHECK_RETURN(m_pMonsterMapping, E_FAIL);
 		++m_iCnt;
@@ -262,5 +261,12 @@ CCubeMonster * CCubeMonster::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 
 void CCubeMonster::Free(void)
 {
+
+	for (auto& iter : m_listMonsterCnt)
+	{
+		if (iter != nullptr)
+			delete iter;
+	}
+
 	CGameObject::Free();
 }
