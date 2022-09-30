@@ -21,12 +21,18 @@ public:
 	virtual void	LateUpdate_Object(void) override;
 	virtual void	Render_Object(void) override;
 
+public:
+	void			Set_Uzi(void) { m_bEquiped = true; }
+	void			Off_Uzi(void) { m_bEquiped = false; }
+	_bool			Get_State(void) { return m_bEquiped; }
+private:
+	_bool			m_bEquiped = false;
+
 private:
 	void			TransAxisUzi1(void);
 	void			TransAxisUzi2(void);
 
 	HRESULT			Add_Component(void);
-	HRESULT			Add_Parts();
 	HRESULT			Get_Parts(void);
 
 	void			Set_OnTerrain(void);
@@ -36,8 +42,6 @@ private:
 	void			Animation_Fire(void);
 	
 private:
-	CTransform*		m_pTransform = nullptr;	
-
 	CTransform*		m_pUziPart1 = nullptr;
 	CTransform*		m_pUziPart2 = nullptr;
 	CTransform*		m_pUziPart3 = nullptr;
@@ -50,6 +54,15 @@ private:
 
 	_float			m_fTimeDelta = 0.f;
 	_float			m_fUnit = 0.1f;
+
+	_float			A1 = 0.f;
+	_float			A2 = 0.f;
+	_float			B1 = 0.f;
+	_float			B2 = 0.f;
+	_float			C1 = 0.f;
+	_float			C2 = 0.f;
+	_float			D1 = 0.f;
+	_float			D2 = 0.f;
 
 public:
 	static CUzi*	Create(LPDIRECT3DDEVICE9 pGraphicDev);

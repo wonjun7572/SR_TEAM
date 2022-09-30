@@ -34,6 +34,12 @@ protected:
 	LPDIRECT3DDEVICE9					m_pGraphicDev;
 	map<const _tchar*, CComponent*>		m_mapComponent[ID_END];
 
+public:
+	void			Kill_Obj(void) { m_bDead = true; }
+
+protected:
+	_bool			m_bDead = false;
+
 protected:
 	_int				m_iTexIndex = 0;
 

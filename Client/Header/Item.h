@@ -32,4 +32,3 @@ protected:
 protected:
 	virtual void Free()override;
 };
-

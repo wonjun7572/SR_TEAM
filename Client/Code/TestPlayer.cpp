@@ -107,12 +107,6 @@ void CTestPlayer::Key_Input(const _float& fTimeDelta)
 	}*/
 
 
-	if (Get_DIKeyState(DIK_SPACE) & 0x80)
-	{
-		Create_Wall(m_iCnt, 0);
-		m_iCnt++;
-	}
-
 	/*if (Get_DIMouseState(DIM_LB) & 0x80)
 	{
 		_vec3 vMyPos;
