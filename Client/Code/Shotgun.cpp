@@ -15,28 +15,39 @@ CShotgun::~CShotgun()
 HRESULT CShotgun::Ready_Object(void)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
+	m_tAbility = new GUNABILITY;
+
+	m_tAbility->fBulletRate = 50.f;
+	m_tAbility->fRemainBulletCnt = 50.f;
+	m_tAbility->fBulletCount = 300.f;
+
+	m_bEquiped = false;
 
 	return S_OK;
 }
 
 _int CShotgun::Update_Object(const _float & fTimeDelta)
 {
-	m_fTimeDelta = fTimeDelta;
+	if (m_bEquiped)
+	{
+		m_fTimeDelta = fTimeDelta;
 
-	Assemble();
-
-	Engine::Add_RenderGroup(RENDER_NONALPHA, this);
-	CGameObject::Update_Object(fTimeDelta);
+		Engine::Add_RenderGroup(RENDER_NONALPHA, this);
+		CGameObject::Update_Object(fTimeDelta);
+	}
 
 	return 0;
 }
 
 void CShotgun::LateUpdate_Object(void)
 {
-	FAILED_CHECK_RETURN(Get_Parts(), );
-	CGameObject::LateUpdate_Object();
+	if (m_bEquiped)
+	{
+		FAILED_CHECK_RETURN(Get_Parts(), );
+		CGameObject::LateUpdate_Object();
 
-	TransAxisShotgun();
+		TransAxisShotgun();
+	}
 }
 
 void CShotgun::Render_Object(void)
@@ -66,6 +77,7 @@ HRESULT CShotgun::Get_Parts(void)
 void CShotgun::Assemble(void)
 {
 	FAILED_CHECK_RETURN(Get_Parts(), );
+
 	_vec3 vBodyPos;
 	m_pPart4->Set_Pos(20.f, 0.5f, 10.f);
 	m_pPart4->Get_BeforeInfo(INFO_POS, &vBodyPos);
@@ -89,7 +101,7 @@ void CShotgun::TransAxisShotgun(void)
 	FAILED_CHECK_RETURN(Get_Parts(), );
 
 	CTransform*		m_pRightHandWorld = nullptr;
-	m_pRightHandWorld = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Character", L"R_HAND", L"Proto_TransformCom", ID_STATIC));
+	m_pRightHandWorld = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Character", L"R_HAND", L"Proto_TransformCom", ID_DYNAMIC));
 	NULL_CHECK_RETURN(m_pRightHandWorld, );
 
 	_vec3 vWeaponPos, vPos, vRight, vUp, vLook, vAngle, vScale;
@@ -171,6 +183,7 @@ CShotgun * CShotgun::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 
 void CShotgun::Free(void)
 {
+	Safe_Delete<GUNABILITY*>(m_tAbility);
 	CWeapon::Free();
 }
 

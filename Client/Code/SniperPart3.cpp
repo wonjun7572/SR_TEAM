@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "..\Header\SniperPart3.h"
-
+#include "Sniper.h"
 
 CSniperPart3::CSniperPart3(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
@@ -14,16 +14,19 @@ CSniperPart3::~CSniperPart3()
 HRESULT CSniperPart3::Ready_Object(void)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
-	m_pTransform->Set_Scale(1.4f*1.5f, 0.3f*1.5f, 0.21f);
+	//m_pTransform->Set_Scale(2.1f, 0.45f, 0.21f);
+	m_pTransform->Set_Scale(0.021f, 0.045f, 0.21f);
 
 	return S_OK;
 }
 
 _int CSniperPart3::Update_Object(const _float & fTimeDelta)
 {
-	Add_RenderGroup(RENDER_NONALPHA, this);
-	CGameObject::Update_Object(fTimeDelta);
-
+	if (dynamic_cast<CSniper*>(Engine::Get_GameObject(L"Layer_Gun", L"SNIPER"))->Get_State())
+	{
+		Add_RenderGroup(RENDER_NONALPHA, this);
+		CGameObject::Update_Object(fTimeDelta);
+	}
 	return 0;
 }
 
