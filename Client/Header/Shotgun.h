@@ -16,6 +16,14 @@ private:
 	virtual ~CShotgun();
 
 public:
+	void			Set_ShotGun(void) { m_bEquiped = true; }
+	void			Off_ShotGun(void) { m_bEquiped = false; }
+	_bool			Get_State(void) { return m_bEquiped; }
+	void			Get_Bullet() { m_tAbility->fRemainBulletCnt += 100; }
+private:
+	_bool			m_bEquiped = false;
+
+public:
 	virtual HRESULT Ready_Object(void) override;
 	virtual _int	Update_Object(const _float& fTimeDelta) override;
 	virtual void	LateUpdate_Object(void) override;
