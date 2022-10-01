@@ -37,12 +37,9 @@
 #include "GetShotgun.h"
 #include "GetSniper.h"
 
-<<<<<<< Updated upstream
 #include "ObtainBullet.h"
 #include "ObtainDefense.h"
-=======
 #include "LetterBox.h"
->>>>>>> Stashed changes
 
 CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CScene(pGraphicDev)
@@ -78,7 +75,7 @@ HRESULT CStage::Ready_Scene(void)
 	FAILED_CHECK_RETURN(Ready_Layer_Gun(L"Layer_Gun"), E_FAIL);
 
 	FAILED_CHECK_RETURN(Ready_Layer_Item(L"Layer_Item"), E_FAIL);
-
+	// 고치고있는중입니다.
 	return S_OK;
 }
 

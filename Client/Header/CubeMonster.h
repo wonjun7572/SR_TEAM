@@ -30,8 +30,12 @@ public:
 
 public:
 	//HP값을 들고오면 되지않을까 death나 여러가지 기타 값요소들을 안에다가 넣어주는 형식
-	_float		Get_CurrentHP() { return m_MonsterState.fCurrentHp; }
-	void		Set_Damage() { m_MonsterState.fDamage -= 10; }
+	
+	_float		Get_CurrentHP() { return m_MonsterState->fCurrentHp; }
+	
+	MONSTERABILITY*	Get_MAbility() { return m_MonsterState; }
+	
+	void		Set_Damage() { m_MonsterState->fCurrentHp -= 10; }
 private:
 	map<const _tchar*, CGameObject*>	m_mapMonsterBody;
 private:
@@ -104,7 +108,7 @@ private:
 	//몬스터만 관리하는것을 Engine::struct.h에 넣어서 체력을 넣어주면되지 않을까 
 	//api방식 그대로 그냥 가져와주면 되지않을까라는 의문을 가져본다. 
 
-	MONSTERABILITY					m_MonsterState;
+	MONSTERABILITY*			m_MonsterState;
 
 	//맵핑 관련 변수입니다.
 	_int		m_iCnt = 0;
