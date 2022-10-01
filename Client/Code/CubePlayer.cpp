@@ -475,16 +475,15 @@ void CCubePlayer::Fire_Bullet(void)
 {
 	if (Get_DIMouseState(DIM_RB))
 	{
-		/*FAILED_CHECK_RETURN(Get_BodyTransform(), );
-
-		_vec3	vSrcPos;
-		CTransform* pTargetTrans = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_GameLogic", L"TestPlayer0", L"Proto_TransformCom", ID_DYNAMIC));
-		NULL_CHECK(pTargetTrans);
-		CCubeTex* pTestPlayer = dynamic_cast<CCubeTex*>(Engine::Get_Component(L"Layer_GameLogic", L"TestPlayer0", L"Proto_CubeTexCom", ID_STATIC));
-		NULL_CHECK(pTestPlayer);
-
-		_vec3	vPos;
-		m_pHeadWorld->Get_BeforeInfo(INFO_POS, &vPos);
+		//FAILED_CHECK_RETURN(Get_BodyTransform(), );
+		//_vec3	vSrcPos;
+		//CTransform* pTargetTrans = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_GameLogic", L"TestPlayer0", L"Proto_TransformCom", ID_DYNAMIC));
+		//NULL_CHECK(pTargetTrans);
+		//CCubeTex* pTestPlayer = dynamic_cast<CCubeTex*>(Engine::Get_Component(L"Layer_GameLogic", L"TestPlayer0", L"Proto_CubeTexCom", ID_STATIC));
+		//NULL_CHECK(pTestPlayer);
+		//
+		//_vec3	vPos;
+		//m_pHeadWorld->Get_BeforeInfo(INFO_POS, &vPos);
 
 		if (Get_DIMouseState(DIM_LB))
 		{
@@ -492,11 +491,11 @@ void CCubePlayer::Fire_Bullet(void)
 
 			dynamic_cast<CBulletParticle*>(pGameObject)->addParticle();
 
-			if (m_pCalculatorCom->Peek_Cube_Target(g_hWnd, &_vec3(0, 0, 0), pTestPlayer, pTargetTrans))
-			{
-				cout << "AAAAAAAAAAAAAAAAAA" << endl;
-			}
-		}*/
+			//if (m_pCalculatorCom->Peek_Cube_Target(g_hWnd, &_vec3(0, 0, 0), pTestPlayer, pTargetTrans))
+			//{
+			//	cout << "AAAAAAAAAAAAAAAAAA" << endl;
+			//}
+		}
 	}
 }
 

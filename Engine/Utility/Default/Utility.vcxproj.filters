@@ -162,9 +162,6 @@
     <ClInclude Include="..\..\Header\RcRD.h">
       <Filter>00. Component\00. VIBuffer\07. RcRd</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Header\ParticleBuffer.h">
-      <Filter>00. Component\00. VIBuffer</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Header\PSystem.h">
       <Filter>01. GameObject\ParticleSystem</Filter>
     </ClInclude>
@@ -247,9 +244,6 @@
     </ClCompile>
     <ClCompile Include="..\Code\Collision.cpp">
       <Filter>00. Component\04. Collision</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\ParticleBuffer.cpp">
-      <Filter>00. Component\00. VIBuffer</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\PSystem.cpp">
       <Filter>01. GameObject\ParticleSystem</Filter>
