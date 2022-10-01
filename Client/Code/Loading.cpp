@@ -40,8 +40,7 @@ _uint CLoading::Loading_ForStage(void)
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"RcTex_Defense", CRcTex::Create(m_pGraphicDev)), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"RcTex_Bullet", CRcTex::Create(m_pGraphicDev)), E_FAIL);
 		// PARTICLE
-		//FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FLARE", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/flare.bmp", TEX_NORMAL)), E_FAIL);
-		//FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FLARE", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/flare_alpha.dds", TEX_NORMAL)), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FLARE_Alpha", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Particle/fireball_hit_big%d.png", TEX_NORMAL, 8)), E_FAIL);
 	}
 
 	{

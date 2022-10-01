@@ -12,8 +12,8 @@ class ENGINE_DLL CPSystem : public CGameObject
 {
 protected:
 	explicit CPSystem(LPDIRECT3DDEVICE9 pGraphicDev);
-	explicit CPSystem(const CPSystem& rhs);
 	virtual ~CPSystem();
+
 public:
 	virtual		HRESULT		Ready_Object(void);
 	virtual		_int		Update_Object(const _float& fTimeDelta);
@@ -22,11 +22,9 @@ public:
 	virtual		void		Free(void);
 
 public:
-	virtual _bool	init(IDirect3DDevice9* pGraphicDev, const _tchar * texFileName); // D3D 장치 의존적인 초기화 작업
 	virtual void	reset();									// 시스템 내 모든 파티클 속성 리셋
 	virtual void	resetParticle(ATTRIBUTE* attribute) = 0;	// 한 파티클의 속성을 리셋
 	virtual void	addParticle();								// 파티클을 추가
-	virtual void	update(_float fTimeDelta) = 0;				// 파티클 갱신
 
 	virtual void	preRender();		// 렌더링에 앞서 지정할 초기 렌더 상태
 	virtual void	render();			// 렌더링
@@ -64,13 +62,11 @@ protected:
 	virtual void removeDeadParticles();	// 죽은 파티클을 리스트에서 제거
 
 protected:
-	//IDirect3DDevice9*			m_pGarphicDev;
 	_vec3						m_origin;			// 시스템의 원천. 파티클이 시작되는 곳
 	_float						m_fEmitRate;		// 시스템에 새로운 파티클이 추가되는 비율. (개수/s)
 	_float						m_fSize;			// 시스템 내 모든 파티클의 크기
 
-	IDirect3DTexture9*			m_Tex;
-	//CTexture*					m_pTextureCom;
+	CTexture*					m_pTextureCom;
 	IDirect3DVertexBuffer9*		m_vb;
 
 	list<ATTRIBUTE>				m_particles;		// 시스템 내 파티클 속성 리스트

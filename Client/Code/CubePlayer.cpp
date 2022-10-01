@@ -708,13 +708,8 @@ void CCubePlayer::Free(void)
 		if (iter != nullptr)
 			delete iter;
 	}
-	Safe_Delete<ABILITY*>(m_tAbility);
 
-	for (auto& iter : m_listMonsterCnt)
-	{
-		if (iter != nullptr)
-			delete iter;
-	}
+	Safe_Delete<ABILITY*>(m_tAbility);
 
 	m_listMonsterCnt.clear();
 	CGameObject::Free();

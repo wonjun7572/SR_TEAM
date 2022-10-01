@@ -9,28 +9,12 @@ CPSystem::CPSystem(LPDIRECT3DDEVICE9 pGraphicDev)
 	, m_origin({ 0.f,0.f,0.f })
 	, m_fEmitRate(0.f)
 	, m_fSize(0.f)
-	//, m_pTextureCom		(nullptr)
-	, m_Tex(nullptr)
+	, m_pTextureCom(nullptr)
 	, m_vb(nullptr)
 	, m_maxParticles(0)
 	, m_vbSize(0)
 	, m_vbOffset(0)
 	, m_vbBatchSize(0)
-{
-}
-
-CPSystem::CPSystem(const CPSystem & rhs)
-	: CGameObject(rhs)
-	, m_origin(rhs.m_origin)
-	, m_fEmitRate(rhs.m_fEmitRate)
-	, m_fSize(rhs.m_fSize)
-	//, m_pTextureCom		(rhs.m_pTextureCom)
-	, m_Tex(rhs.m_Tex)
-	, m_vb(rhs.m_vb)
-	, m_maxParticles(rhs.m_maxParticles)
-	, m_vbSize(rhs.m_vbSize)
-	, m_vbOffset(rhs.m_vbOffset)
-	, m_vbBatchSize(rhs.m_vbBatchSize)
 {
 }
 
@@ -62,10 +46,12 @@ _int CPSystem::Update_Object(const _float & fTimeDelta)
 
 void CPSystem::LateUpdate_Object(void)
 {
+	CGameObject::LateUpdate_Object();
 }
 
 void CPSystem::Render_Object(void)
 {
+	render();
 }
 
 void CPSystem::Free(void)
@@ -73,22 +59,8 @@ void CPSystem::Free(void)
 	m_particles.clear();
 
 	Safe_Release(m_vb);
-	Safe_Release(m_Tex);
 
 	CGameObject::Free();
-}
-
-_bool CPSystem::init(IDirect3DDevice9 * pGraphicDev, const _tchar * texFileName)
-{
-	if (D3DXCreateTextureFromFile(m_pGraphicDev,
-		texFileName,
-		&m_Tex))
-	{
-		MSG_BOX("particle texture file failed");
-		return false;
-	}
-
-	return true;
 }
 
 void CPSystem::reset()
@@ -113,7 +85,7 @@ void CPSystem::addParticle()
 void CPSystem::preRender()
 {
 	// 렌더링에 앞서 지정할 초기 렌더 상태
-	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, false);
+	//m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, false);
 
 	// 현재 지정된 전체 텍스처 포인트 스프라이트의 텍스처 매핑에 이용할 것임
 	m_pGraphicDev->SetRenderState(D3DRS_POINTSPRITEENABLE, true);
@@ -139,19 +111,16 @@ void CPSystem::preRender()
 	m_pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
 	m_pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
 
-	//m_pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, true);
-	//m_pGraphicDev->SetRenderState(D3DRS_ALPHAREF, 0x00);
-	//m_pGraphicDev->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
+	m_pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, true);
+	m_pGraphicDev->SetRenderState(D3DRS_ALPHAREF, 0x00);
+	m_pGraphicDev->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
 }
 
 void CPSystem::render()
 {
-	if (!m_particles.empty())
-	{
 		// 렌더 상태 지정
 		preRender();
 
-		m_pGraphicDev->SetTexture(0, m_Tex);
 		m_pGraphicDev->SetFVF(FVF_PARTICLE);
 		m_pGraphicDev->SetStreamSource(0, m_vb, 0, sizeof(PARTICLE));
 
@@ -230,12 +199,11 @@ void CPSystem::render()
 		m_vbOffset += m_vbBatchSize;
 
 		postRender();
-	}
 }
 
 void CPSystem::postRender() // 렌더상태를 복구하기 위해 필요한 함수
 {
-	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, true);
+	//m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, true);
 	m_pGraphicDev->SetRenderState(D3DRS_POINTSPRITEENABLE, false);
 	m_pGraphicDev->SetRenderState(D3DRS_POINTSCALEENABLE, false);
 	m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, false);
