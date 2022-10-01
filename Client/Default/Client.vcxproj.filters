@@ -510,6 +510,9 @@
     <ClInclude Include="..\Header\PlayerDefenseUI.h">
       <Filter>02. GameObject\01. For_Stage\09. UI\Player</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\MaxPlusHp.h">
+      <Filter>02. GameObject\01. For_Stage\10. Item\HP</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -778,6 +781,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\PlayerDefenseUI.cpp">
       <Filter>02. GameObject\01. For_Stage\09. UI\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\MaxPlusHp.cpp">
+      <Filter>02. GameObject\01. For_Stage\10. Item\HP</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
