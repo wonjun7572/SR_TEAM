@@ -123,6 +123,64 @@ void CSniper::Animation_Fire(void)
 {
 }
 
+<<<<<<< Updated upstream
+=======
+void CSniper::TransAxis_Sniper(void)
+{
+	CCubePlayer* pPlayer = dynamic_cast<CCubePlayer*>(Engine::Get_GameObject(L"Layer_Character", L"PLAYER"));
+	_float fLookAngle, fLeftArmAngle, fRightArmAngle, fHandAngle;
+	pPlayer->Get_Angle(fLookAngle, fLeftArmAngle, fRightArmAngle, fHandAngle);
+
+	FAILED_CHECK_RETURN(Get_Parts(), );
+
+	CTransform*		m_pRightHandWorld = nullptr;
+	m_pRightHandWorld = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Character", L"R_HAND", L"Proto_TransformCom", ID_DYNAMIC));
+	NULL_CHECK_RETURN(m_pRightHandWorld, );
+
+	_vec3 vWeaponPos, vPos, vRight, vUp, vLook, vAngle, vScale;
+	m_pRightHandWorld->Get_Info(INFO_RIGHT, &vRight);
+	m_pRightHandWorld->Get_Info(INFO_UP, &vUp);
+	m_pRightHandWorld->Get_Info(INFO_LOOK, &vLook);
+	m_pRightHandWorld->Get_Info(INFO_POS, &vPos);
+	m_pRightHandWorld->Get_Scale(&vScale);
+
+	vWeaponPos = vUp * -1.f;
+	vWeaponPos += vPos;
+
+	vWeaponPos = (vUp * -1.f) + (vLook);
+	vWeaponPos += vPos;
+
+	m_pPart4->Set_Pos(vWeaponPos.x, vWeaponPos.y, vWeaponPos.z);
+	m_pPart4->Set_Rotation(ROT_X, fRightArmAngle + D3DXToRadian(90.f) + fHandAngle);
+	m_pPart4->Set_Rotation(ROT_Y, -fLookAngle);
+	m_pPart4->Static_Update();
+
+	vWeaponPos = (vUp * -3.5f) + (vLook * 2.);
+	vWeaponPos += vPos;
+
+	m_pPart3->Set_Pos(vWeaponPos.x, vWeaponPos.y, vWeaponPos.z);
+	m_pPart3->Set_Rotation(ROT_X, fRightArmAngle + D3DXToRadian(90.f) + fHandAngle);
+	m_pPart3->Set_Rotation(ROT_Y, -fLookAngle);
+	m_pPart3->Static_Update();
+
+	vWeaponPos = (vUp * -10.f) + (vLook * 2.4f);
+	vWeaponPos += vPos;
+
+	m_pPart2->Set_Pos(vWeaponPos.x, vWeaponPos.y, vWeaponPos.z);
+	m_pPart2->Set_Rotation(ROT_X, fRightArmAngle + D3DXToRadian(90.f) + fHandAngle);
+	m_pPart2->Set_Rotation(ROT_Y, -fLookAngle);
+	m_pPart2->Static_Update();
+
+	vWeaponPos = (vUp * -3.5f) + (vLook * 3.3f);
+	vWeaponPos += vPos;
+
+	m_pPart1->Set_Pos(vWeaponPos.x, vWeaponPos.y, vWeaponPos.z);
+	m_pPart1->Set_Rotation(ROT_X, fRightArmAngle + D3DXToRadian(90.f) + fHandAngle);
+	m_pPart1->Set_Rotation(ROT_Y, -fLookAngle);
+	m_pPart1->Static_Update();
+}
+
+>>>>>>> Stashed changes
 
 void CSniper::Set_OnTerrain(void)
 {

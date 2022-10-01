@@ -38,6 +38,11 @@ _int CCubePlayer::Update_Object(const _float & fTimeDelta)
 
 	Move();
 
+<<<<<<< Updated upstream
+=======
+	//Look_Direction();
+
+>>>>>>> Stashed changes
 	Animation();
 
 	Assemble();

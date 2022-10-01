@@ -115,7 +115,7 @@ void CShotgun::TransAxisShotgun(void)
 	m_pPart4->Set_Rotation(ROT_Y, -fLookAngle);
 	m_pPart4->Static_Update();
 
-	vWeaponPos = (vUp * -2.f) + (vLook * 0.4f);
+	vWeaponPos = (vUp * -2.2f) + (vLook * 1.3f);
 	vWeaponPos += vPos;
 
 	m_pPart3->Set_Pos(vWeaponPos.x, vWeaponPos.y, vWeaponPos.z);
@@ -123,7 +123,7 @@ void CShotgun::TransAxisShotgun(void)
 	m_pPart3->Set_Rotation(ROT_Y, -fLookAngle);
 	m_pPart3->Static_Update();
 
-	vWeaponPos = (vUp * -1.8f) + (vLook * 1.8f);
+	vWeaponPos = (vUp * -2.6f) + (vLook * 1.6f);
 	vWeaponPos += vPos;
 
 	m_pPart2->Set_Pos(vWeaponPos.x, vWeaponPos.y, vWeaponPos.z);
@@ -131,7 +131,7 @@ void CShotgun::TransAxisShotgun(void)
 	m_pPart2->Set_Rotation(ROT_Y, -fLookAngle);
 	m_pPart2->Static_Update();
 
-	vWeaponPos = (vUp * -3.f) + (vLook * 1.8f);
+	vWeaponPos = (vUp * -4.3f) + (vLook * 2.f);
 	vWeaponPos += vPos;
 
 	m_pPart1->Set_Pos(vWeaponPos.x, vWeaponPos.y, vWeaponPos.z);
