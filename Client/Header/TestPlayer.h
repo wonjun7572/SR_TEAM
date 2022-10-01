@@ -41,6 +41,8 @@ private:
 
 	void				Fire_Bullet(const _vec3* pDir);
 
+	_bool				Hit_Check(void);
+
 	/////////////////////////////////////////////////
 	_vec3				Mouse_Peeking(void);
 	/////////////////////////////////////////////////
@@ -50,6 +52,8 @@ private:
 	CTransform*			m_pTransCom = nullptr;
 	CTexture*			m_pTextureCom = nullptr;
 	CCalculator*		m_pCalculatorCom = nullptr;
+
+	CCollision*			m_pCollision = nullptr;
 
 	CHitBox*			m_pHitBox = nullptr;
 

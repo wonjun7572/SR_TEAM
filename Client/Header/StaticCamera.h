@@ -30,7 +30,7 @@ private:
 
 private:
 	CTransform*		m_pTransform_Target = nullptr;
-	_float			m_fDistance = 10.f;
+	_float			m_fDistance;
 	_float			m_fSpeed = 10.f;
 	_float			m_fAngle = 0.f;
 
