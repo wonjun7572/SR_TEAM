@@ -15,7 +15,7 @@ HRESULT CShotgunPart1::Ready_Object(void)
 {
 
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
-	m_pTransform->Set_Scale(0.019f, 0.015f, 0.195f);
+	m_pTransform->Set_Scale(0.019f, 0.014f, 0.195f);
 
 	return S_OK;
 }

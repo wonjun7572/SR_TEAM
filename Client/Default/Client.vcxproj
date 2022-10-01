@@ -183,6 +183,7 @@
     <ClInclude Include="..\Header\HealthPotion.h" />
     <ClInclude Include="..\Header\ImguiMgr.h" />
     <ClInclude Include="..\Header\Item.h" />
+    <ClInclude Include="..\Header\LetterBox.h" />
     <ClInclude Include="..\Header\LoadBar.h" />
     <ClInclude Include="..\Header\Loading.h" />
     <ClInclude Include="..\Header\LoadingScene.h" />
@@ -278,6 +279,7 @@
     <ClCompile Include="..\Code\HealthPotion.cpp" />
     <ClCompile Include="..\Code\ImguiMgr.cpp" />
     <ClCompile Include="..\Code\Item.cpp" />
+    <ClCompile Include="..\Code\LetterBox.cpp" />
     <ClCompile Include="..\Code\LoadBar.cpp" />
     <ClCompile Include="..\Code\Loading.cpp" />
     <ClCompile Include="..\Code\LoadingScene.cpp" />
