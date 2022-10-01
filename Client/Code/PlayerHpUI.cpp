@@ -50,7 +50,7 @@ void CPlayerHpUI::Render_Object(void)
 	m_pBufferCom->Resize_Buffer(m_iHp * 0.01f);
 	m_pBufferCom->Render_Buffer();
 	End_OrthoProj();
-	Render_Font(L"HP", m_strHp.c_str(), &(_vec2(88.f, 700.f)), D3DXCOLOR(0.5f, 0.5f, 0.3f, 1.f));
+	Render_Font(L"HP", m_strHp.c_str(), &(_vec2(182.f, 872.f)), D3DXCOLOR(0.5f, 0.5f, 0.3f, 1.f));
 }
 
 void CPlayerHpUI::Begin_OrthoProj()

@@ -45,10 +45,12 @@ void CGunUI::Render_Object(void)
 {
 	Begin_OrthoProj();
 
-	if (m_pPlayer != nullptr)
+	if (dynamic_cast<CCubePlayer*>(m_pPlayer)->Get_Weapon() != nullptr)
+	{
 		m_pTextureCom->Set_Texture(m_iGunIndex);
+		m_pBufferCom->Render_Buffer();
+	}
 
-	m_pBufferCom->Render_Buffer();
 	End_OrthoProj();
 }
 

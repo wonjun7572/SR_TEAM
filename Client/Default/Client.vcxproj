@@ -190,6 +190,7 @@
     <ClInclude Include="..\Header\Logo.h" />
     <ClInclude Include="..\Header\LogoUI.h" />
     <ClInclude Include="..\Header\MainApp.h" />
+    <ClInclude Include="..\Header\MaxPlusHp.h" />
     <ClInclude Include="..\Header\MonsterMapping.h" />
     <ClInclude Include="..\Header\MonsterUI.h" />
     <ClInclude Include="..\Header\ObtainBullet.h" />
@@ -229,6 +230,7 @@
     <ClInclude Include="..\Header\WallMgr.h" />
     <ClInclude Include="..\Header\Weapon.h" />
     <ClInclude Include="..\Header\WeaponUI.h" />
+    <ClInclude Include="..\Header\BulletParticle.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="dirent.h" />
     <ClInclude Include="GraphEditor.h" />
@@ -248,8 +250,8 @@
     <ClInclude Include="imstb_textedit.h" />
     <ClInclude Include="imstb_truetype.h" />
     <ClInclude Include="ImZoomSlider.h" />
-    <ClInclude Include="PlayerDefenseUI.h" />
-    <ClInclude Include="PlayerFaceUI.h" />
+    <ClInclude Include="..\Header\PlayerDefenseUI.h" />
+    <ClInclude Include="..\Header\PlayerFaceUI.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
@@ -286,6 +288,7 @@
     <ClCompile Include="..\Code\Logo.cpp" />
     <ClCompile Include="..\Code\LogoUI.cpp" />
     <ClCompile Include="..\Code\MainApp.cpp" />
+    <ClCompile Include="..\Code\MaxPlusHp.cpp" />
     <ClCompile Include="..\Code\MonsterMapping.cpp" />
     <ClCompile Include="..\Code\MonsterUI.cpp" />
     <ClCompile Include="..\Code\ObtainBullet.cpp" />
@@ -325,6 +328,7 @@
     <ClCompile Include="..\Code\WallMgr.cpp" />
     <ClCompile Include="..\Code\Weapon.cpp" />
     <ClCompile Include="..\Code\WeaponUI.cpp" />
+    <ClCompile Include="..\Code\BulletParticle.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="GraphEditor.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
@@ -368,8 +372,8 @@
     <ClCompile Include="ImSequencer.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="PlayerDefenseUI.cpp" />
-    <ClCompile Include="PlayerFaceUI.cpp" />
+    <ClCompile Include="..\Code\PlayerDefenseUI.cpp" />
+    <ClCompile Include="..\Code\PlayerFaceUI.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

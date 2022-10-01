@@ -25,6 +25,10 @@
 #include "LightMgr.h"
 #include "SoundMgr.h"
 
+#include "PSystem.h"
+
+//#include "ParticleBuffer.h"
+
 BEGIN(Engine)
 
 // Management

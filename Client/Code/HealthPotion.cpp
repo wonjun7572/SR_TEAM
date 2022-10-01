@@ -73,9 +73,9 @@ HRESULT CHealthPotion::Add_Component(void)
 	m_mapComponent[ID_STATIC].insert({ L"Proto_HitboxCom", pComponent });
 
 	// 변경해줘야함
-	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Clone_Proto(L"Proto_PlayerTexture"));
+	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Clone_Proto(L"Proto_Hp"));
 	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Proto_PlayerTexture", pComponent });
+	m_mapComponent[ID_STATIC].insert({ L"Proto_Hp", pComponent });
 
 	pComponent = m_pTransCom = dynamic_cast<CTransform*>(Clone_Proto(L"Proto_TransformCom"));
 	NULL_CHECK_RETURN(m_pTransCom, E_FAIL);

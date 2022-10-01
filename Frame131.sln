@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "00. Client", "00. Client", "{611D668D-6E69-46A6-89A5-AE85B8F2A3A8}"
 EndProject
@@ -40,7 +40,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Utility", "Engine\Utility\D
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "99. Notepad", "99. Notepad", "{BFB5A9A8-6CF1-4711-B9E5-89E729C9BE6C}"
 	ProjectSection(SolutionItems) = preProject
-		강법석.txt = 강법석.txt
+		강범석.txt = 강범석.txt
 		김기범.txt = 김기범.txt
 		조현준.txt = 조현준.txt
 		최원준.txt = 최원준.txt

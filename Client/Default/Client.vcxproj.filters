@@ -220,8 +220,8 @@
     <Filter Include="02. GameObject\01. For_Stage\09. UI\Monster">
       <UniqueIdentifier>{731aa290-825a-4b95-a42c-ded1bb9aa586}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\01. For_Stage\09. UI\LetterBox">
-      <UniqueIdentifier>{58414d14-86a4-407c-a8a9-05b909ad4858}</UniqueIdentifier>
+    <Filter Include="02. GameObject\01. For_Stage\12. Particle">
+      <UniqueIdentifier>{e67edead-06ae-4acc-bd1b-e08effea4297}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -447,12 +447,6 @@
     <ClInclude Include="..\Header\HealthPotion.h">
       <Filter>02. GameObject\01. For_Stage\10. Item\HP</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerDefenseUI.h">
-      <Filter>02. GameObject\01. For_Stage\09. UI\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerFaceUI.h">
-      <Filter>02. GameObject\01. For_Stage\09. UI\Player</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\PlayerHpUI.h">
       <Filter>02. GameObject\01. For_Stage\09. UI\Player</Filter>
     </ClInclude>
@@ -505,7 +499,19 @@
       <Filter>02. GameObject\01. For_Stage\09. UI\Monster</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\LetterBox.h">
-      <Filter>02. GameObject\01. For_Stage\09. UI\LetterBox</Filter>
+      <Filter>99. Default\헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\BulletParticle.h">
+      <Filter>02. GameObject\01. For_Stage\12. Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\PlayerFaceUI.h">
+      <Filter>02. GameObject\01. For_Stage\09. UI\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\PlayerDefenseUI.h">
+      <Filter>02. GameObject\01. For_Stage\09. UI\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\MaxPlusHp.h">
+      <Filter>02. GameObject\01. For_Stage\10. Item\HP</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -713,12 +719,6 @@
     <ClCompile Include="..\Code\HealthPotion.cpp">
       <Filter>02. GameObject\01. For_Stage\10. Item\HP</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerDefenseUI.cpp">
-      <Filter>02. GameObject\01. For_Stage\09. UI\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerFaceUI.cpp">
-      <Filter>02. GameObject\01. For_Stage\09. UI\Player</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\PlayerHpUI.cpp">
       <Filter>02. GameObject\01. For_Stage\09. UI\Player</Filter>
     </ClCompile>
@@ -771,7 +771,19 @@
       <Filter>02. GameObject\01. For_Stage\09. UI\Monster</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\LetterBox.cpp">
-      <Filter>02. GameObject\01. For_Stage\09. UI\LetterBox</Filter>
+      <Filter>99. Default\소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BulletParticle.cpp">
+      <Filter>02. GameObject\01. For_Stage\12. Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\PlayerFaceUI.cpp">
+      <Filter>02. GameObject\01. For_Stage\09. UI\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\PlayerDefenseUI.cpp">
+      <Filter>02. GameObject\01. For_Stage\09. UI\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\MaxPlusHp.cpp">
+      <Filter>02. GameObject\01. For_Stage\10. Item\HP</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
