@@ -58,7 +58,7 @@ void CObtainDefense::Render_Object()
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DPMISCCAPS_CULLNONE);
 	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 
-	m_pHitBox->Render_Buffer();
+	
 
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DPMISCCAPS_CULLCCW);
 	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
@@ -77,9 +77,9 @@ HRESULT CObtainDefense::Add_Component(void)
 	m_mapComponent[ID_STATIC].insert({ L"Proto_HitboxCom", pComponent });
 
 	// 변경해줘야함
-	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Clone_Proto(L"Proto_PlayerTexture"));
+	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Clone_Proto(L"Proto_Defense"));
 	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Proto_PlayerTexture", pComponent });
+	m_mapComponent[ID_STATIC].insert({ L"Proto_Defense", pComponent });
 
 	pComponent = m_pTransCom = dynamic_cast<CTransform*>(Clone_Proto(L"Proto_TransformCom"));
 	NULL_CHECK_RETURN(m_pTransCom, E_FAIL);

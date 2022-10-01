@@ -100,6 +100,7 @@ _uint CLoading::Loading_ForStage(void)
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_Hp", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/UI/Sprite/Hp2.jpg", TEX_NORMAL)), E_FAIL);
 
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_MaxHp", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/UI/Sprite/Hp.png", TEX_NORMAL)), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_Defense", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/UI/Sprite/DSC04709.jpg", TEX_NORMAL)), E_FAIL);
 	}
 
 	
