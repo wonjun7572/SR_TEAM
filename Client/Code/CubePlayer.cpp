@@ -35,7 +35,7 @@ HRESULT CCubePlayer::Ready_Object(void)
 	m_bShotgun = false;
 	m_bSniper = false;
 
-	ShowCursor(false);
+	//ShowCursor(false);
 
 	return S_OK;
 }

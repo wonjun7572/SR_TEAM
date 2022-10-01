@@ -190,6 +190,9 @@
     <ClInclude Include="..\Header\LogoUI.h" />
     <ClInclude Include="..\Header\MainApp.h" />
     <ClInclude Include="..\Header\MonsterMapping.h" />
+    <ClInclude Include="..\Header\MonsterUI.h" />
+    <ClInclude Include="..\Header\ObtainBullet.h" />
+    <ClInclude Include="..\Header\ObtainDefense.h" />
     <ClInclude Include="..\Header\OptionButton.h" />
     <ClInclude Include="..\Header\PlayButton.h" />
     <ClInclude Include="..\Header\PlayerHpUI.h" />
@@ -283,6 +286,9 @@
     <ClCompile Include="..\Code\LogoUI.cpp" />
     <ClCompile Include="..\Code\MainApp.cpp" />
     <ClCompile Include="..\Code\MonsterMapping.cpp" />
+    <ClCompile Include="..\Code\MonsterUI.cpp" />
+    <ClCompile Include="..\Code\ObtainBullet.cpp" />
+    <ClCompile Include="..\Code\ObtainDefense.cpp" />
     <ClCompile Include="..\Code\OptionButton.cpp" />
     <ClCompile Include="..\Code\PlayButton.cpp" />
     <ClCompile Include="..\Code\PlayerHpUI.cpp" />

@@ -25,17 +25,13 @@ public:
 	virtual _int	Update_Object(const _float& fTimeDelta) override;
 	virtual void	LateUpdate_Object(void) override;
 	virtual void	Render_Object(void) override;
-
-
-	//test
-
 	virtual _int CurrentMonster(_float fTimeDelta);
 	virtual void ChangeCurrent(CurrentState::MONSTERID Idstate);
 
 public:
 	//HP값을 들고오면 되지않을까 death나 여러가지 기타 값요소들을 안에다가 넣어주는 형식
 	_float		Get_CurrentHP() { return m_MonsterState.fCurrentHp; }
-
+	void		Set_Damage() { m_MonsterState.fDamage -= 10; }
 private:
 	map<const _tchar*, CGameObject*>	m_mapMonsterBody;
 private:
@@ -78,7 +74,7 @@ private:
 
 private:
 
-	//탐지범위를 줄것이다. 
+	
 	_float			m_fDetectRange;
 	_float			m_fAttackRange;
 	_float			m_fLengthRange;
@@ -89,16 +85,13 @@ private:
 	_float			m_fTimeDelta;
 	_float			m_fAngle = 0;
 	_float			m_floatAngle = 0;
-	//몬스터 상태를 확인해주기위해서 사용해보려고한다. 이게 가능하냐?
+	
 	CurrentState::MONSTERID		m_eCurrentState;
 	CurrentState::MONSTERID		m_ePreviousState;
 
 
-	//공격이 필요할것이고 멈추는상태도 필요하고 
 	_bool				m_bAttack;
 	_bool				m_bShoot;
-
-
 	_vec3	m_vEye, m_vAt;
 	_float m_fDistance = 13.f;
 	// 몬스터 자기자신

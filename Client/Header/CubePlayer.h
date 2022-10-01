@@ -39,7 +39,7 @@ public:
 
 public:
 	CWeapon*		Get_Weapon() { return m_Weapon; }
-
+	
 private:
 	map<const _tchar*, CGameObject*>	m_mapPlayerBody;
 
@@ -127,6 +127,12 @@ public:
 	void			Capture_Uzi(void) { m_bUzi = true; }
 	void			Capture_Shotgun(void) { m_bShotgun = true; }
 	void			Capture_Sniper(void) { m_bSniper = true; }
+
+
+	//ITEM
+	void		Get_Defense() { m_tAbility->iDefence += 10; }
+	void		Get_Hp() { m_tAbility->iHp += 10; }
+
 
 public:
 	static CCubePlayer*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
