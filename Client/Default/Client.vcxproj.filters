@@ -214,6 +214,9 @@
     <Filter Include="02. GameObject\01. For_Stage\10. Item\GunItem\GetSniper">
       <UniqueIdentifier>{53fa6b4b-f522-4262-a3ad-994b68bb55f0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\12. LetterBox">
+      <UniqueIdentifier>{9bc5ebbf-708d-4f36-bc03-a05eeec388fd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -486,6 +489,18 @@
     <ClInclude Include="..\Header\GunUI.h">
       <Filter>02. GameObject\01. For_Stage\09. UI\Weapon</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\MonsterUI.h">
+      <Filter>99. Default\헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ObtainBullet.h">
+      <Filter>99. Default\헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ObtainDefense.h">
+      <Filter>99. Default\헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\LetterBox.h">
+      <Filter>02. GameObject\01. For_Stage\12. LetterBox</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -739,6 +754,18 @@
     </ClCompile>
     <ClCompile Include="..\Code\GunUI.cpp">
       <Filter>02. GameObject\01. For_Stage\09. UI\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\MonsterUI.cpp">
+      <Filter>99. Default\소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ObtainBullet.cpp">
+      <Filter>99. Default\소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ObtainDefense.cpp">
+      <Filter>99. Default\소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\LetterBox.cpp">
+      <Filter>02. GameObject\01. For_Stage\12. LetterBox</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
