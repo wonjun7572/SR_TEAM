@@ -214,12 +214,6 @@
     <Filter Include="02. GameObject\01. For_Stage\10. Item\GunItem\GetSniper">
       <UniqueIdentifier>{53fa6b4b-f522-4262-a3ad-994b68bb55f0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\01. For_Stage\10. Item\ETC">
-      <UniqueIdentifier>{ad69e781-164f-482b-b24b-5baaa5d577c6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\01. For_Stage\09. UI\Monster">
-      <UniqueIdentifier>{a596b69e-7ada-4f1c-a032-0b60d2915296}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -492,15 +486,6 @@
     <ClInclude Include="..\Header\GunUI.h">
       <Filter>02. GameObject\01. For_Stage\09. UI\Weapon</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\ObtainBullet.h">
-      <Filter>02. GameObject\01. For_Stage\10. Item\ETC</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\ObtainDefense.h">
-      <Filter>02. GameObject\01. For_Stage\10. Item\ETC</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\MonsterUI.h">
-      <Filter>02. GameObject\01. For_Stage\09. UI\Monster</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -754,15 +739,6 @@
     </ClCompile>
     <ClCompile Include="..\Code\GunUI.cpp">
       <Filter>02. GameObject\01. For_Stage\09. UI\Weapon</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\ObtainBullet.cpp">
-      <Filter>02. GameObject\01. For_Stage\10. Item\ETC</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\ObtainDefense.cpp">
-      <Filter>02. GameObject\01. For_Stage\10. Item\ETC</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\MonsterUI.cpp">
-      <Filter>02. GameObject\01. For_Stage\09. UI\Monster</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

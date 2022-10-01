@@ -539,7 +539,7 @@ void CCollision::Get_Item(void)
 	}
 }
 
-_bool CCollision::HitScan(HWND hWnd, _vec3 * SrcPos, const CCubeTex * pCubeTex, const CTransform * pTransform)
+_bool CCollision::HitScan(HWND hWnd, _vec3 * SrcPos, const CCubeTex * pCubeTex, const CTransform * pTransform, _vec3* vReturn)
 {
 	if (!Get_DIMouseState(DIM_RB))
 		return false;
@@ -551,8 +551,6 @@ _bool CCollision::HitScan(HWND hWnd, _vec3 * SrcPos, const CCubeTex * pCubeTex, 
 	GetCursorPos(&ptMouse);
 	ScreenToClient(hWnd, &ptMouse);
 
-	cout << ptMouse.x << " " << ptMouse.y << endl;
-
 	_vec3		vPoint;
 
 	D3DVIEWPORT9		ViewPort;
@@ -562,7 +560,11 @@ _bool CCollision::HitScan(HWND hWnd, _vec3 * SrcPos, const CCubeTex * pCubeTex, 
 	// 뷰포트 -> 투영
 	vPoint.x = ptMouse.x / (ViewPort.Width * 0.5f) - 1.f;
 	vPoint.y = ptMouse.y / -(ViewPort.Height * 0.5f) + 1.f;
-	vPoint.z = 0.f;
+	vPoint.z = 1.f;	//	이거 1해야됨!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////
 
 	// 투영 -> 뷰 스페이스
 	_matrix		matProj;
@@ -575,20 +577,20 @@ _bool CCollision::HitScan(HWND hWnd, _vec3 * SrcPos, const CCubeTex * pCubeTex, 
 
 	// 뷰 스페이스 -> 월드
 
-	_matrix		matView, matCamera;
+	_matrix		matView;
 	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
-
-	D3DXMatrixInverse(&matCamera, nullptr, &matView);
 
 	vRayPos = *SrcPos;
 
 	D3DXVec3TransformCoord(&vRayPos, &vRayPos, &matView);
-	vRayDir = vRayPos - vPoint;
+	vRayDir = vPoint - vRayPos;
 	D3DXMatrixInverse(&matView, nullptr, &matView);
 	D3DXVec3TransformCoord(&vRayPos, &vRayPos, &matView);
 	D3DXVec3TransformNormal(&vRayDir, &vRayDir, &matView);
 
 	D3DXVec3Normalize(&vRayDir, &vRayDir);
+
+	*vReturn = vRayDir;
 
 	// 월드 -> 로컬
 	_matrix		matWorld;
@@ -647,6 +649,7 @@ _bool CCollision::HitScan(HWND hWnd, _vec3 * SrcPos, const CCubeTex * pCubeTex, 
 	{
 		return true;
 	}
+
 	dwVtxIdx[0] = 4;
 	dwVtxIdx[1] = 3;
 	dwVtxIdx[2] = 7;
@@ -802,7 +805,54 @@ _bool CCollision::Hit_In_ViewPort(HWND hWnd, const CCubeTex * pCubeTex, const CT
 	GetCursorPos(&ptMouse);
 	ScreenToClient(hWnd, &ptMouse);
 
-	return _bool();
+	const _vec3*	pCubtVtx = pCubeTex->Get_VtxPos();
+	_vec3	vChangeVtx[8];
+
+	_matrix matWorld;
+	pTransform->Get_WorldMatrix(&matWorld);
+	for (int i = 0; i < 8; ++i)
+	{
+		D3DXVec3TransformCoord(&vChangeVtx[i], &pCubtVtx[i], &matWorld);
+	}
+
+	_matrix matView;
+	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
+	for (int i = 0; i < 8; ++i)
+	{
+		D3DXVec3TransformCoord(&vChangeVtx[i], &vChangeVtx[i], &matView);
+	}
+
+	_matrix matProj;
+	m_pGraphicDev->GetTransform(D3DTS_PROJECTION, &matProj);
+	for (int i = 0; i < 8; ++i)
+	{
+		D3DXVec3TransformCoord(&vChangeVtx[i], &vChangeVtx[i], &matProj);
+	}
+
+	D3DVIEWPORT9 Viewport;
+	m_pGraphicDev->GetViewport(&Viewport);
+
+	_matrix matVP;
+	D3DXMatrixIdentity(&matVP);
+
+	matVP.m[0][0] = Viewport.Width / 2.f;
+	matVP.m[1][1] = -(Viewport.Height / 2.f);
+	matVP.m[2][2] = Viewport.MaxZ - Viewport.MinZ;
+	matVP.m[3][0] = Viewport.X + (Viewport.Width / 2.f);	
+	matVP.m[3][1] = (Viewport.Height / 2.f) + Viewport.Y;
+	matVP.m[3][2] = Viewport.MinZ;
+
+	_vec3 pt[8];
+	for (int i = 0; i < 8; ++i)
+	{
+		D3DXVec3TransformCoord(&pt[i], &vChangeVtx[i], &matVP);
+	}
+
+	cout << pt[0].x << " " << pt[0].y << endl;
+
+
+
+	return false;
 }
 
 CCollision * CCollision::Create(LPDIRECT3DDEVICE9 pGraphicDev)

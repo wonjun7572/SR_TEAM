@@ -30,7 +30,7 @@ HRESULT CStaticCamera::Ready_Object(const _vec3* pEye,
 	m_fNear = fNear;
 	m_fFar = fFar;
 
-	m_fDistance = 1.f;
+	m_fDistance = 10.f;
 
 	FAILED_CHECK_RETURN(CCamera::Ready_Object(), E_FAIL);
 
@@ -127,7 +127,7 @@ void CStaticCamera::Look_Taget(void)
 	//m_vEye = (vLook * -0.2f) + (vUp * 0.1f);
 	m_vEye = (vLook * -1.f);// +(vUp * 1.f);
 	D3DXVec3Normalize(&m_vEye, &m_vEye);
-	//m_vEye *= 0.1f;
+	m_vEye *= 0.1f;
 
 	//m_vEye.y = 1.f;
 	m_vEye *= m_fDistance;

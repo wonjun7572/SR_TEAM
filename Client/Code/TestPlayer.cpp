@@ -179,10 +179,17 @@ _bool CTestPlayer::Hit_Check(void)
 		(Engine::Get_Component(L"Layer_Gun", L"Uzi_Part_1_1", L"Proto_TransformCom", ID_DYNAMIC))->Get_Info(INFO_POS, &vSrcPos);
 	m_pTransCom->Static_Update();
 
-	if (m_pCollision->HitScan(g_hWnd, &vSrcPos, this->m_pBufferCom, this->m_pTransCom))
+	_vec3 vDir;
+
+	if (m_pCollision->HitScan(g_hWnd, &vSrcPos, this->m_pBufferCom, this->m_pTransCom, &vDir))
 	{
+		cout << "À¸¾Ç" << endl;
 		return true;
 	}
+
+	//m_pCollision->Hit_In_ViewPort(g_hWnd, this->m_pBufferCom, this->m_pTransCom);
+
+	//FAILED_CHECK_RETURN(CPoolMgr::GetInstance()->Reuse_Obj(m_pGraphicDev, &vSrcPos, &vDir), );
 
 	return false;
 }
