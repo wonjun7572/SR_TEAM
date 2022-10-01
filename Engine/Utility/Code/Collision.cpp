@@ -1,6 +1,9 @@
 #include "..\Header\Collision.h"
 #include "Export_Function.h"
 
+#include "../../Client/Header/Uzi.h"
+#include "../../Client/Header/Item.h"
+
 USING(Engine)
 
 CCollision::CCollision(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -42,7 +45,7 @@ _bool CCollision::Check_Collision(void)
 		m_vMin1.y <= m_vMax2.y && m_vMax1.y >= m_vMin2.y &&
 		m_vMin1.z <= m_vMax2.z && m_vMax1.z >= m_vMin2.z)
 	{
-		cout << "AAAAAAAAAAAAAAAAAAAAAAAAA" << endl;
+		//cout << "AAAAAAAAAAAAAAAAAAAAAAAAA" << endl;
 		return true;
 	}
 
@@ -69,8 +72,8 @@ _int CCollision::Wall_Collision(_vec3* vNorm)
 		CHitBox* pWallBox = dynamic_cast<CHitBox*>(iter.second->Get_Component(L"Proto_HitboxCom", ID_STATIC));
 		NULL_CHECK_RETURN(pWallBox, false);
 
-		m_pSrc->Get_MinMax(&m_vMin1, &m_vMax1);
-		m_pDst->Get_MinMax(&m_vMin2, &m_vMax2);
+		pPlayerBox->Get_MinMax(&m_vMin1, &m_vMax1);
+		pWallBox->Get_MinMax(&m_vMin2, &m_vMax2);
 
 		D3DXVec3TransformCoord(&m_vMin1, &m_vMin1, pPlayerTransform->Get_WorldMatrixPointer());
 		D3DXVec3TransformCoord(&m_vMax1, &m_vMax1, pPlayerTransform->Get_WorldMatrixPointer());
@@ -390,8 +393,8 @@ _int CCollision::Wall_Collision_By_DotSliding(_vec3 * vChangeDir)
 		CHitBox* pWallBox = dynamic_cast<CHitBox*>(iter.second->Get_Component(L"Proto_HitboxCom", ID_STATIC));
 		NULL_CHECK_RETURN(pWallTransform, false);
 
-		m_pSrc->Get_MinMax(&m_vMin1, &m_vMax1);
-		m_pDst->Get_MinMax(&m_vMin2, &m_vMax2);
+		pPlayerBox->Get_MinMax(&m_vMin1, &m_vMax1);
+		pWallBox->Get_MinMax(&m_vMin2, &m_vMax2);
 
 		D3DXVec3TransformCoord(&m_vMin1, &m_vMin1, pPlayerTransform->Get_WorldMatrixPointer());
 		D3DXVec3TransformCoord(&m_vMax1, &m_vMax1, pPlayerTransform->Get_WorldMatrixPointer());
@@ -494,6 +497,362 @@ _int CCollision::Wall_Collision_By_DotSliding(_vec3 * vChangeDir)
 	}
 
 	return -1;
+}
+
+void CCollision::Get_Item(void)
+{
+	CLayer* pLayer = Engine::Get_Layer(L"Layer_Item");
+	map<const _tchar*, CGameObject*> mapItem = pLayer->Get_GameObjectMap();
+
+	if (mapItem.empty())
+		return;
+
+	CTransform*	pPlayerTransform = dynamic_cast<CTransform*>(Get_Component(L"Layer_Character", L"PLAYER", L"Proto_TransformCom", ID_DYNAMIC));
+	CHitBox* pPlayerBox = dynamic_cast<CHitBox*>(Get_Component(L"Layer_Character", L"PLAYER", L"Proto_HitboxCom", ID_STATIC));
+
+	CTransform* pPlayerBodyTransform = dynamic_cast<CTransform*>(Get_Component(L"Layer_Character", L"BODY", L"Proto_TransformCom", ID_DYNAMIC));
+
+	_vec3 vPlayerPos;
+	pPlayerTransform->Get_Info(INFO_POS, &vPlayerPos);
+
+	for (auto iter : mapItem)
+	{
+		CTransform* pItemTransform = dynamic_cast<CTransform*>(iter.second->Get_Component(L"Proto_TransformCom", ID_DYNAMIC));
+		NULL_CHECK_RETURN(pItemTransform, );
+		CHitBox* pItemBox = dynamic_cast<CHitBox*>(iter.second->Get_Component(L"Proto_HitboxCom", ID_STATIC));
+		NULL_CHECK_RETURN(pItemBox, );
+
+		pPlayerBox->Get_MinMax(&m_vMin1, &m_vMax1);
+		pItemBox->Get_MinMax(&m_vMin2, &m_vMax2);
+
+		D3DXVec3TransformCoord(&m_vMin1, &m_vMin1, pPlayerTransform->Get_WorldMatrixPointer());
+		D3DXVec3TransformCoord(&m_vMax1, &m_vMax1, pPlayerTransform->Get_WorldMatrixPointer());
+		D3DXVec3TransformCoord(&m_vMin2, &m_vMin2, pItemTransform->Get_WorldMatrixPointer());
+		D3DXVec3TransformCoord(&m_vMax2, &m_vMax2, pItemTransform->Get_WorldMatrixPointer());
+
+		if (m_vMin1.x <= m_vMax2.x && m_vMax1.x >= m_vMin2.x &&
+			m_vMin1.y <= m_vMax2.y && m_vMax1.y >= m_vMin2.y &&
+			m_vMin1.z <= m_vMax2.z && m_vMax1.z >= m_vMin2.z)
+		{
+			iter.second->Kill_Obj();
+		}
+	}
+}
+
+_bool CCollision::HitScan(HWND hWnd, _vec3 * SrcPos, const CCubeTex * pCubeTex, const CTransform * pTransform, _vec3* vReturn)
+{
+	if (!Get_DIMouseState(DIM_RB))
+		return false;
+	if (!Get_DIMouseState(DIM_LB))
+		return false;
+
+	POINT		ptMouse{};
+
+	GetCursorPos(&ptMouse);
+	ScreenToClient(hWnd, &ptMouse);
+
+	_vec3		vPoint;
+
+	D3DVIEWPORT9		ViewPort;
+	ZeroMemory(&ViewPort, sizeof(D3DVIEWPORT9));
+	m_pGraphicDev->GetViewport(&ViewPort);
+
+	// 뷰포트 -> 투영
+	vPoint.x = ptMouse.x / (ViewPort.Width * 0.5f) - 1.f;
+	vPoint.y = ptMouse.y / -(ViewPort.Height * 0.5f) + 1.f;
+	vPoint.z = 1.f;	//	이거 1해야됨!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////
+
+	// 투영 -> 뷰 스페이스
+	_matrix		matProj;
+
+	m_pGraphicDev->GetTransform(D3DTS_PROJECTION, &matProj);
+	D3DXMatrixInverse(&matProj, nullptr, &matProj);
+	D3DXVec3TransformCoord(&vPoint, &vPoint, &matProj);
+
+	_vec3	vRayDir, vRayPos;		// 뷰 스페이스 영역에 있는 상태
+
+	// 뷰 스페이스 -> 월드
+
+	_matrix		matView;
+	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
+
+	vRayPos = *SrcPos;
+
+	D3DXVec3TransformCoord(&vRayPos, &vRayPos, &matView);
+	vRayDir = vPoint - vRayPos;
+	D3DXMatrixInverse(&matView, nullptr, &matView);
+	D3DXVec3TransformCoord(&vRayPos, &vRayPos, &matView);
+	D3DXVec3TransformNormal(&vRayDir, &vRayDir, &matView);
+
+	D3DXVec3Normalize(&vRayDir, &vRayDir);
+
+	*vReturn = vRayDir;
+
+	// 월드 -> 로컬
+	_matrix		matWorld;
+
+	pTransform->Get_WorldMatrix(&matWorld);
+
+	const _vec3*	pCubtVtx = pCubeTex->Get_VtxPos();
+
+	_ulong	dwVtxIdx[3]{};
+	_float	fU, fV, fDist;
+	_vec3	vWorldVtx_01, vWorldVtx_02, vWorldVtx_03;
+
+	// +X
+	dwVtxIdx[0] = 1;
+	dwVtxIdx[1] = 5;
+	dwVtxIdx[2] = 6;
+	D3DXVec3TransformCoord(&vWorldVtx_01, &pCubtVtx[dwVtxIdx[0]], &matWorld);
+	D3DXVec3TransformCoord(&vWorldVtx_02, &pCubtVtx[dwVtxIdx[1]], &matWorld);
+	D3DXVec3TransformCoord(&vWorldVtx_03, &pCubtVtx[dwVtxIdx[2]], &matWorld);
+	if (D3DXIntersectTri(&vWorldVtx_01,
+		&vWorldVtx_02,
+		&vWorldVtx_03,
+		&vRayPos, &vRayDir,
+		&fU, &fV, &fDist))
+	{
+		return true;
+	}
+	dwVtxIdx[0] = 1;
+	dwVtxIdx[1] = 6;
+	dwVtxIdx[2] = 2;
+	D3DXVec3TransformCoord(&vWorldVtx_01, &pCubtVtx[dwVtxIdx[0]], &matWorld);
+	D3DXVec3TransformCoord(&vWorldVtx_02, &pCubtVtx[dwVtxIdx[1]], &matWorld);
+	D3DXVec3TransformCoord(&vWorldVtx_03, &pCubtVtx[dwVtxIdx[2]], &matWorld);
+	if (D3DXIntersectTri(&vWorldVtx_01,
+		&vWorldVtx_02,
+		&vWorldVtx_03,
+		&vRayPos, &vRayDir,
+		&fU, &fV, &fDist))
+	{
+		return true;
+	}
+	// ~+X
+
+	// -X
+	dwVtxIdx[0] = 4;
+	dwVtxIdx[1] = 0;
+	dwVtxIdx[2] = 3;
+	D3DXVec3TransformCoord(&vWorldVtx_01, &pCubtVtx[dwVtxIdx[0]], &matWorld);
+	D3DXVec3TransformCoord(&vWorldVtx_02, &pCubtVtx[dwVtxIdx[1]], &matWorld);
+	D3DXVec3TransformCoord(&vWorldVtx_03, &pCubtVtx[dwVtxIdx[2]], &matWorld);
+	if (D3DXIntersectTri(&vWorldVtx_01,
+		&vWorldVtx_02,
+		&vWorldVtx_03,
+		&vRayPos, &vRayDir,
+		&fU, &fV, &fDist))
+	{
+		return true;
+	}
+
+	dwVtxIdx[0] = 4;
+	dwVtxIdx[1] = 3;
+	dwVtxIdx[2] = 7;
+	D3DXVec3TransformCoord(&vWorldVtx_01, &pCubtVtx[dwVtxIdx[0]], &matWorld);
+	D3DXVec3TransformCoord(&vWorldVtx_02, &pCubtVtx[dwVtxIdx[1]], &matWorld);
+	D3DXVec3TransformCoord(&vWorldVtx_03, &pCubtVtx[dwVtxIdx[2]], &matWorld);
+	if (D3DXIntersectTri(&vWorldVtx_01,
+		&vWorldVtx_02,
+		&vWorldVtx_03,
+		&vRayPos, &vRayDir,
+		&fU, &fV, &fDist))
+	{
+		return true;
+	}
+	// ~-X
+
+	// Y
+	dwVtxIdx[0] = 4;
+	dwVtxIdx[1] = 5;
+	dwVtxIdx[2] = 1;
+	D3DXVec3TransformCoord(&vWorldVtx_01, &pCubtVtx[dwVtxIdx[0]], &matWorld);
+	D3DXVec3TransformCoord(&vWorldVtx_02, &pCubtVtx[dwVtxIdx[1]], &matWorld);
+	D3DXVec3TransformCoord(&vWorldVtx_03, &pCubtVtx[dwVtxIdx[2]], &matWorld);
+	if (D3DXIntersectTri(&vWorldVtx_01,
+		&vWorldVtx_02,
+		&vWorldVtx_03,
+		&vRayPos, &vRayDir,
+		&fU, &fV, &fDist))
+	{
+		return true;
+	}
+
+	dwVtxIdx[0] = 4;
+	dwVtxIdx[1] = 1;
+	dwVtxIdx[2] = 0;
+	D3DXVec3TransformCoord(&vWorldVtx_01, &pCubtVtx[dwVtxIdx[0]], &matWorld);
+	D3DXVec3TransformCoord(&vWorldVtx_02, &pCubtVtx[dwVtxIdx[1]], &matWorld);
+	D3DXVec3TransformCoord(&vWorldVtx_03, &pCubtVtx[dwVtxIdx[2]], &matWorld);
+	if (D3DXIntersectTri(&vWorldVtx_01,
+		&vWorldVtx_02,
+		&vWorldVtx_03,
+		&vRayPos, &vRayDir,
+		&fU, &fV, &fDist))
+	{
+		return true;
+	}
+	// ~ +Y
+
+	// ~ -Y
+	dwVtxIdx[0] = 3;
+	dwVtxIdx[1] = 2;
+	dwVtxIdx[2] = 6;
+	D3DXVec3TransformCoord(&vWorldVtx_01, &pCubtVtx[dwVtxIdx[0]], &matWorld);
+	D3DXVec3TransformCoord(&vWorldVtx_02, &pCubtVtx[dwVtxIdx[1]], &matWorld);
+	D3DXVec3TransformCoord(&vWorldVtx_03, &pCubtVtx[dwVtxIdx[2]], &matWorld);
+	if (D3DXIntersectTri(&vWorldVtx_01,
+		&vWorldVtx_02,
+		&vWorldVtx_03,
+		&vRayPos, &vRayDir,
+		&fU, &fV, &fDist))
+	{
+		return true;
+	}
+
+	dwVtxIdx[0] = 3;
+	dwVtxIdx[1] = 6;
+	dwVtxIdx[2] = 7;
+	D3DXVec3TransformCoord(&vWorldVtx_01, &pCubtVtx[dwVtxIdx[0]], &matWorld);
+	D3DXVec3TransformCoord(&vWorldVtx_02, &pCubtVtx[dwVtxIdx[1]], &matWorld);
+	D3DXVec3TransformCoord(&vWorldVtx_03, &pCubtVtx[dwVtxIdx[2]], &matWorld);
+	if (D3DXIntersectTri(&vWorldVtx_01,
+		&vWorldVtx_02,
+		&vWorldVtx_03,
+		&vRayPos, &vRayDir,
+		&fU, &fV, &fDist))
+	{
+		return true;
+	}
+	// ~ -Y
+
+	// Z+
+	dwVtxIdx[0] = 7;
+	dwVtxIdx[1] = 6;
+	dwVtxIdx[2] = 5;
+	D3DXVec3TransformCoord(&vWorldVtx_01, &pCubtVtx[dwVtxIdx[0]], &matWorld);
+	D3DXVec3TransformCoord(&vWorldVtx_02, &pCubtVtx[dwVtxIdx[1]], &matWorld);
+	D3DXVec3TransformCoord(&vWorldVtx_03, &pCubtVtx[dwVtxIdx[2]], &matWorld);
+	if (D3DXIntersectTri(&vWorldVtx_01,
+		&vWorldVtx_02,
+		&vWorldVtx_03,
+		&vRayPos, &vRayDir,
+		&fU, &fV, &fDist))
+	{
+		return true;
+	}
+
+	dwVtxIdx[0] = 7;
+	dwVtxIdx[1] = 5;
+	dwVtxIdx[2] = 4;
+	D3DXVec3TransformCoord(&vWorldVtx_01, &pCubtVtx[dwVtxIdx[0]], &matWorld);
+	D3DXVec3TransformCoord(&vWorldVtx_02, &pCubtVtx[dwVtxIdx[1]], &matWorld);
+	D3DXVec3TransformCoord(&vWorldVtx_03, &pCubtVtx[dwVtxIdx[2]], &matWorld);
+	if (D3DXIntersectTri(&vWorldVtx_01,
+		&vWorldVtx_02,
+		&vWorldVtx_03,
+		&vRayPos, &vRayDir,
+		&fU, &fV, &fDist))
+	{
+		return true;
+	}
+
+	// ~Z+
+
+	// Z-
+	dwVtxIdx[0] = 0;
+	dwVtxIdx[1] = 1;
+	dwVtxIdx[2] = 2;
+	D3DXVec3TransformCoord(&vWorldVtx_01, &pCubtVtx[dwVtxIdx[0]], &matWorld);
+	D3DXVec3TransformCoord(&vWorldVtx_02, &pCubtVtx[dwVtxIdx[1]], &matWorld);
+	D3DXVec3TransformCoord(&vWorldVtx_03, &pCubtVtx[dwVtxIdx[2]], &matWorld);
+	if (D3DXIntersectTri(&vWorldVtx_01,
+		&vWorldVtx_02,
+		&vWorldVtx_03,
+		&vRayPos, &vRayDir,
+		&fU, &fV, &fDist))
+	{
+		return true;
+	}
+
+	dwVtxIdx[0] = 0;
+	dwVtxIdx[1] = 2;
+	dwVtxIdx[2] = 3;
+	D3DXVec3TransformCoord(&vWorldVtx_01, &pCubtVtx[dwVtxIdx[0]], &matWorld);
+	D3DXVec3TransformCoord(&vWorldVtx_02, &pCubtVtx[dwVtxIdx[1]], &matWorld);
+	D3DXVec3TransformCoord(&vWorldVtx_03, &pCubtVtx[dwVtxIdx[2]], &matWorld);
+	if (D3DXIntersectTri(&vWorldVtx_01,
+		&vWorldVtx_02,
+		&vWorldVtx_03,
+		&vRayPos, &vRayDir,
+		&fU, &fV, &fDist))
+	{
+		return true;
+	}
+
+	// ~Z-
+	return false;
+}
+
+_bool CCollision::Hit_In_ViewPort(HWND hWnd, const CCubeTex * pCubeTex, const CTransform * pTransform)
+{
+	POINT		ptMouse{};
+
+	GetCursorPos(&ptMouse);
+	ScreenToClient(hWnd, &ptMouse);
+
+	const _vec3*	pCubtVtx = pCubeTex->Get_VtxPos();
+	_vec3	vChangeVtx[8];
+
+	_matrix matWorld;
+	pTransform->Get_WorldMatrix(&matWorld);
+	for (int i = 0; i < 8; ++i)
+	{
+		D3DXVec3TransformCoord(&vChangeVtx[i], &pCubtVtx[i], &matWorld);
+	}
+
+	_matrix matView;
+	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
+	for (int i = 0; i < 8; ++i)
+	{
+		D3DXVec3TransformCoord(&vChangeVtx[i], &vChangeVtx[i], &matView);
+	}
+
+	_matrix matProj;
+	m_pGraphicDev->GetTransform(D3DTS_PROJECTION, &matProj);
+	for (int i = 0; i < 8; ++i)
+	{
+		D3DXVec3TransformCoord(&vChangeVtx[i], &vChangeVtx[i], &matProj);
+	}
+
+	D3DVIEWPORT9 Viewport;
+	m_pGraphicDev->GetViewport(&Viewport);
+
+	_matrix matVP;
+	D3DXMatrixIdentity(&matVP);
+
+	matVP.m[0][0] = Viewport.Width / 2.f;
+	matVP.m[1][1] = -(Viewport.Height / 2.f);
+	matVP.m[2][2] = Viewport.MaxZ - Viewport.MinZ;
+	matVP.m[3][0] = Viewport.X + (Viewport.Width / 2.f);	
+	matVP.m[3][1] = (Viewport.Height / 2.f) + Viewport.Y;
+	matVP.m[3][2] = Viewport.MinZ;
+
+	_vec3 pt[8];
+	for (int i = 0; i < 8; ++i)
+	{
+		D3DXVec3TransformCoord(&pt[i], &vChangeVtx[i], &matVP);
+	}
+
+	cout << pt[0].x << " " << pt[0].y << endl;
+
+
+
+	return false;
 }
 
 CCollision * CCollision::Create(LPDIRECT3DDEVICE9 pGraphicDev)

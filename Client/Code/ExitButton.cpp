@@ -14,7 +14,7 @@ CExitButton::~CExitButton()
 
 HRESULT CExitButton::Ready_Object()
 {
-	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"ExitFont", L"Roboto-Bold", 15, 15, FW_NORMAL), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"ExitFont", L"Roboto-Bold", 37, 30, FW_NORMAL), E_FAIL);
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 	m_pTransformCom->Set_Scale(0.28f, 0.11f, 0.f);
 	m_pTransformCom->Set_Pos(0.65f, -0.2f, 0.f);
@@ -59,7 +59,7 @@ void CExitButton::Render_Object(void)
 		}
 	}
 	m_pRcTexCom->Render_Buffer();
-	Render_Font(L"ExitFont", m_strEB.c_str(), &_vec2(600.f, 355.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+	Render_Font(L"ExitFont", m_strEB.c_str(), &_vec2(1150.f, 530.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
 	End_OrthoProj();
 
 	

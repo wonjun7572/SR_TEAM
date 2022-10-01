@@ -5,6 +5,8 @@
 #include "Wall.h"
 #include "PoolMgr.h"
 
+#include "UziPart1.h"
+
 float g_fPlaySound = 1.f;
 
 CTestPlayer::CTestPlayer(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -26,7 +28,13 @@ HRESULT CTestPlayer::Ready_Object(void)
 
 _int CTestPlayer::Update_Object(const _float & fTimeDelta)
 {
+	if (m_bDead)
+	{
+		return -1;
+	}
+
 	Key_Input(fTimeDelta);
+
 	Engine::CGameObject::Update_Object(fTimeDelta);
 	Add_RenderGroup(RENDER_NONALPHA, this);
 	return 0;
@@ -36,15 +44,20 @@ void CTestPlayer::LateUpdate_Object(void)
 {
 	/*Engine::CGameObject::LateUpdate_Object();*/
 	Set_OnTerrain();
-	
-	m_pHitBox->Get_MinMax(&m_vMin, &m_vMax);
-	Get_HitboxMin(&vT1, &vT2);
+
+	if (Hit_Check())
+	{
+		this->Kill_Obj();
+	}
+
+	//m_pHitBox->Get_MinMax(&m_vMin, &m_vMax);
+	//Get_HitboxMin(&vT1, &vT2);
 }
 
 void CTestPlayer::Render_Object(void)
 {
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransCom->Get_WorldMatrixPointer());
-	m_pTextureCom->Set_Texture(0);	
+	m_pTextureCom->Set_Texture(0);
 	m_pBufferCom->Render_Buffer();
 
 	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
@@ -76,6 +89,10 @@ HRESULT CTestPlayer::Add_Component(void)
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_HitboxCom", pComponent });
 
+	pComponent = m_pCollision = dynamic_cast<CCollision*>(Engine::Clone_Proto(L"Proto_CollisionCom"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[ID_STATIC].insert({ L"Proto_CollisionCom", pComponent });
+
 	return S_OK;
 }
 
@@ -106,12 +123,6 @@ void CTestPlayer::Key_Input(const _float& fTimeDelta)
 		Fire_Bullet(&m_vDirection);
 	}*/
 
-
-	if (Get_DIKeyState(DIK_SPACE) & 0x80)
-	{
-		Create_Wall(m_iCnt, 0);
-		m_iCnt++;
-	}
 
 	/*if (Get_DIMouseState(DIM_LB) & 0x80)
 	{
@@ -161,6 +172,28 @@ void CTestPlayer::Fire_Bullet(const _vec3* pDir)
 	FAILED_CHECK_RETURN(CPoolMgr::GetInstance()->Reuse_Obj(m_pGraphicDev, &vPos, pDir), );
 }
 
+_bool CTestPlayer::Hit_Check(void)
+{
+	_vec3 vSrcPos;
+	dynamic_cast<CTransform*>
+		(Engine::Get_Component(L"Layer_Gun", L"Uzi_Part_1_1", L"Proto_TransformCom", ID_DYNAMIC))->Get_Info(INFO_POS, &vSrcPos);
+	m_pTransCom->Static_Update();
+
+	_vec3 vDir;
+
+	if (m_pCollision->HitScan(g_hWnd, &vSrcPos, this->m_pBufferCom, this->m_pTransCom, &vDir))
+	{
+		cout << "À¸¾Ç" << endl;
+		return true;
+	}
+
+	//m_pCollision->Hit_In_ViewPort(g_hWnd, this->m_pBufferCom, this->m_pTransCom);
+
+	//FAILED_CHECK_RETURN(CPoolMgr::GetInstance()->Reuse_Obj(m_pGraphicDev, &vSrcPos, &vDir), );
+
+	return false;
+}
+
 _vec3 CTestPlayer::Mouse_Peeking(void)
 {
 	_vec3		vPos;
@@ -197,13 +230,13 @@ CTestPlayer * CTestPlayer::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 
 void CTestPlayer::Free(void)
 {
-	for (auto& iter : m_liszFinalName)
+	/*for (auto& iter : m_liszFinalName)
 	{
 		if(iter != nullptr)
 			delete iter;
 	}
 	
-	m_liszFinalName.clear();
+	m_liszFinalName.clear();*/
 
 	CGameObject::Free();
 }

@@ -2,6 +2,9 @@
 #include "..\Header\CubePlayer.h"
 #include "PoolMgr.h"
 #include "Bullet.h"
+#include "Uzi.h"
+#include "Shotgun.h"
+#include "Sniper.h"
 
 CCubePlayer::CCubePlayer(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
@@ -19,13 +22,19 @@ HRESULT CCubePlayer::Ready_Object(void)
 	m_tAbility = new ABILITY;
 	m_tAbility->iHp = 100;
 	m_tAbility->iDefence = 100;
+	m_tAbility->iGunTexture = 5;
 
 	m_pTransform->Set_Scale(0.4f, 1.f, 0.4f);
 	m_pTransform->Set_Pos(10.f, 10.f, 10.f);
+	m_pTransform->Static_Update();
 
 	m_fSpeed = 10.f;
 
-	ShowCursor(false);
+	m_bUzi = false;
+	m_bShotgun = false;
+	m_bSniper = false;
+
+	//ShowCursor(false);
 
 	return S_OK;
 }
@@ -36,22 +45,15 @@ _int CCubePlayer::Update_Object(const _float & fTimeDelta)
 
 	FAILED_CHECK_RETURN(Get_BodyTransform(), -1);
 
+	// 이동, 애니메이션 관련
 	Move();
 
-<<<<<<< Updated upstream
-=======
-	//Look_Direction();
+	Look_Direction();
 
->>>>>>> Stashed changes
 	Animation();
 
 	Assemble();
-
-	TransAxis();
-
-	//cout << m_vDirection.x << " " << m_vDirection.y << " " << m_vDirection.z << endl;
-
-	Gun_Check();
+	////////////////////////
 
 	Player_Mapping();
 	//FAILED_CHECK_RETURN(CPoolMgr::GetInstance()->Reuse_Obj(m_pGraphicDev, &vPos, &m_vDirection), -1);
@@ -68,11 +70,13 @@ void CCubePlayer::LateUpdate_Object(void)
 	if (!m_bJump)
 		Set_OnTerrain();
 
-	Look_Direction();
+	TransAxis();	//	월드함수 갈아엎으려면 Update 이후에 작업해줘야함
 
 	Fire_Bullet();
 
-	m_pCollision->Check_Collision();
+	m_pCollision->Get_Item();
+
+	Gun_Check();
 
 	CGameObject::LateUpdate_Object();
 }
@@ -171,17 +175,25 @@ void CCubePlayer::Animation(void)
 		if (m_fHandAngle > -D3DX_PI / 2.f)
 			m_fHandAngle -= m_fTimeDelta * 4;
 	}
-	if (Get_DIMouseState(DIM_RB))
+	if (	Get_DIMouseState(DIM_RB) || 
+			(m_Weapon == Engine::Get_GameObject(L"Layer_Gun", L"SHOTGUN")) ||
+			(m_Weapon == Engine::Get_GameObject(L"Layer_Gun", L"SNIPER"))	)
 	{
 		// 우지 견착
-		m_fLeftArmAngle = D3DXToRadian(-90.f) + m_fDownAngle;
-		m_fRightArmAngle = D3DXToRadian(-90.f) + m_fDownAngle;
-		m_fHandAngle = 0.f;
-
-		// 샷건 견착
-		/*m_fLeftArmAngle = D3DXToRadian(-75.f) + m_fDownAngle;
-		m_fRightArmAngle = m_fDownAngle;
-		m_fHandAngle = D3DXToRadian(-90.f);*/
+		if ((m_Weapon == Engine::Get_GameObject(L"Layer_Gun", L"UZI1")))
+		{
+			m_fLeftArmAngle = D3DXToRadian(-90.f) + m_fDownAngle;
+			m_fRightArmAngle = D3DXToRadian(-90.f) + m_fDownAngle;
+			m_fHandAngle = 0.f;
+		}
+		// 샷건 / 스나 견착
+		if ((m_Weapon == Engine::Get_GameObject(L"Layer_Gun", L"SHOTGUN")) ||
+			(m_Weapon == Engine::Get_GameObject(L"Layer_Gun", L"SNIPER")))
+		{
+			m_fLeftArmAngle = D3DXToRadian(-75.f) + m_fDownAngle;
+			m_fRightArmAngle = m_fDownAngle;
+			m_fHandAngle = D3DXToRadian(-90.f);
+		}
 	}
 	if (!(Get_DIKeyState(DIK_W) ||
 		Get_DIKeyState(DIK_A) ||
@@ -192,35 +204,55 @@ void CCubePlayer::Animation(void)
 		Get_DIMouseState(DIM_RB)))
 	{
 
-		if (m_fLeftArmAngle != 0.f)
+		if (!(m_Weapon == Engine::Get_GameObject(L"Layer_Gun", L"SHOTGUN")) &&
+			!(m_Weapon == Engine::Get_GameObject(L"Layer_Gun", L"SNIPER")))
 		{
-			if (m_fLeftArmAngle > 0.f)
+			if (m_fLeftArmAngle != 0.f)
 			{
-				m_fLeftArmAngle -= D3DXToRadian(10.f);
-				if (m_fLeftArmAngle < 0.f)
-					m_fLeftArmAngle = 0.f;
-			}
-			else if (m_fLeftArmAngle < 0.f)
-			{
-				m_fLeftArmAngle += D3DXToRadian(10.f);
 				if (m_fLeftArmAngle > 0.f)
-					m_fLeftArmAngle = 0.f;
+				{
+					m_fLeftArmAngle -= D3DXToRadian(10.f);
+					if (m_fLeftArmAngle < 0.f)
+						m_fLeftArmAngle = 0.f;
+				}
+				else if (m_fLeftArmAngle < 0.f)
+				{
+					m_fLeftArmAngle += D3DXToRadian(10.f);
+					if (m_fLeftArmAngle > 0.f)
+						m_fLeftArmAngle = 0.f;
+				}
 			}
-		}
 
-		if (m_fRightArmAngle != 0.f)
-		{
-			if (m_fRightArmAngle > 0.f)
+			if (m_fRightArmAngle != 0.f)
 			{
-				m_fRightArmAngle -= D3DXToRadian(10.f);
-				if (m_fRightArmAngle < 0.f)
-					m_fRightArmAngle = 0.f;
-			}
-			else if (m_fRightArmAngle < 0.f)
-			{
-				m_fRightArmAngle += D3DXToRadian(10.f);
 				if (m_fRightArmAngle > 0.f)
-					m_fRightArmAngle = 0.f;
+				{
+					m_fRightArmAngle -= D3DXToRadian(10.f);
+					if (m_fRightArmAngle < 0.f)
+						m_fRightArmAngle = 0.f;
+				}
+				else if (m_fRightArmAngle < 0.f)
+				{
+					m_fRightArmAngle += D3DXToRadian(10.f);
+					if (m_fRightArmAngle > 0.f)
+						m_fRightArmAngle = 0.f;
+				}
+			}
+
+			if (m_fHandAngle != 0.f)
+			{
+				if (m_fHandAngle > 0.f)
+				{
+					m_fHandAngle -= D3DXToRadian(10.f);
+					if (m_fHandAngle < 0.f)
+						m_fHandAngle = 0.f;
+				}
+				else if (m_fHandAngle < 0.f)
+				{
+					m_fHandAngle += D3DXToRadian(10.f);
+					if (m_fHandAngle > 0.f)
+						m_fHandAngle = 0.f;
+				}
 			}
 		}
 
@@ -255,22 +287,6 @@ void CCubePlayer::Animation(void)
 					m_fRightLegAngle = 0.f;
 			}
 		}
-
-		if (m_fHandAngle != 0.f)
-		{
-			if (m_fHandAngle > 0.f)
-			{
-				m_fHandAngle -= D3DXToRadian(10.f);
-				if (m_fHandAngle < 0.f)
-					m_fHandAngle = 0.f;
-			}
-			else if (m_fHandAngle < 0.f)
-			{
-				m_fHandAngle += D3DXToRadian(10.f);
-				if (m_fHandAngle > 0.f)
-					m_fHandAngle = 0.f;
-			}
-		}
 	}
 }
 
@@ -278,7 +294,7 @@ void CCubePlayer::Move()
 {
 	////////////방향체크용////////////////
 	_vec3 vPos;
-	m_pBodyWorld->Get_BeforeInfo(INFO_POS, &vPos);
+	m_pBodyWorld->Get_Info(INFO_POS, &vPos);
 	////////////방향체크용////////////////
 
 	_vec3	vDir(0, 0, 0);
@@ -378,12 +394,12 @@ void CCubePlayer::Move()
 				m_pCollision->Wall_Collision_By_DotSliding(&vSliding);
 
 				m_pBodyWorld->Move_Pos(&(vSliding * m_fSpeed * m_fTimeDelta));
-				FAILED_CHECK_RETURN(CPoolMgr::GetInstance()->Reuse_Obj(m_pGraphicDev, &vPos, &vSliding), );
+				//FAILED_CHECK_RETURN(CPoolMgr::GetInstance()->Reuse_Obj(m_pGraphicDev, &vPos, &vSliding), );
 			}
 			else
 			{
 				m_pBodyWorld->Move_Pos(&(vDir * m_fSpeed * m_fTimeDelta));
-				FAILED_CHECK_RETURN(CPoolMgr::GetInstance()->Reuse_Obj(m_pGraphicDev, &vPos, &vDir), );
+				//FAILED_CHECK_RETURN(CPoolMgr::GetInstance()->Reuse_Obj(m_pGraphicDev, &vPos, &vDir), );
 			}
 		}
 		if (iCollision == WALL_FRONT)
@@ -394,20 +410,19 @@ void CCubePlayer::Move()
 				m_pCollision->Wall_Collision_By_DotSliding(&vSliding);
 
 				m_pBodyWorld->Move_Pos(&(vSliding * m_fSpeed * m_fTimeDelta));
-				FAILED_CHECK_RETURN(CPoolMgr::GetInstance()->Reuse_Obj(m_pGraphicDev, &vPos, &vSliding), );
+				//FAILED_CHECK_RETURN(CPoolMgr::GetInstance()->Reuse_Obj(m_pGraphicDev, &vPos, &vSliding), );
 			}
 			else
 			{
 				m_pBodyWorld->Move_Pos(&(vDir * m_fSpeed * m_fTimeDelta));
-				FAILED_CHECK_RETURN(CPoolMgr::GetInstance()->Reuse_Obj(m_pGraphicDev, &vPos, &vDir), );
+				//FAILED_CHECK_RETURN(CPoolMgr::GetInstance()->Reuse_Obj(m_pGraphicDev, &vPos, &vDir), );
 			}
 		}
-
 	}
 	else	//	충돌하지 않았으며 충돌한 방향과 반대 방향으로 진행하는 이동 처리
 	{
 		m_pBodyWorld->Move_Pos(&(vDir * m_fSpeed * m_fTimeDelta));
-		FAILED_CHECK_RETURN(CPoolMgr::GetInstance()->Reuse_Obj(m_pGraphicDev, &vPos, &vDir), );
+		//FAILED_CHECK_RETURN(CPoolMgr::GetInstance()->Reuse_Obj(m_pGraphicDev, &vPos, &vDir), );
 	}
 }
 
@@ -423,10 +438,11 @@ void CCubePlayer::TransAxis(void)
 	m_pLeftArmWorld->Rotation_Axis_Animation(-0.1f, -0.15f, m_fLeftArmAngle, -m_fLookAngle);
 	m_pRightArmWorld->Rotation_Axis_Animation(-0.1f, 0.15f, m_fRightArmAngle, -m_fLookAngle);
 
-	//if (Get_DIMouseState(DIM_RB))
-	//	m_pLeftHandWorld->Rotation_Axis_Special(-0.3f, -0.15f, m_fLeftArmAngle, -m_fLookAngle, -0.1f, -m_fHandAngle);
-	//else
-	m_pLeftHandWorld->Rotation_Axis_Animation(-0.3f, -0.15f, m_fLeftArmAngle, -m_fLookAngle, -0.1f, m_fHandAngle);
+	if ((nullptr != m_Weapon) && Get_DIMouseState(DIM_RB) || (	(m_Weapon == Engine::Get_GameObject(L"Layer_Gun", L"SHOTGUN")) ||
+		(m_Weapon == Engine::Get_GameObject(L"Layer_Gun", L"SNIPER"))	)	)
+		m_pLeftHandWorld->Rotation_Axis_Special(-0.3f, -0.15f, m_fLeftArmAngle, -m_fLookAngle, -0.1f, -m_fHandAngle);
+	else
+		m_pLeftHandWorld->Rotation_Axis_Animation(-0.3f, -0.15f, m_fLeftArmAngle, -m_fLookAngle, -0.1f, m_fHandAngle);
 
 	m_pRightHandWorld->Rotation_Axis_Animation(-0.3f, 0.15f, m_fRightArmAngle, -m_fLookAngle, -0.1f, m_fHandAngle);
 
@@ -458,12 +474,9 @@ void CCubePlayer::Fire_Bullet(void)
 {
 	if (Get_DIMouseState(DIM_RB))
 	{
-		FAILED_CHECK_RETURN(Get_BodyTransform(), );
+		/*FAILED_CHECK_RETURN(Get_BodyTransform(), );
 
 		_vec3	vSrcPos;
-		//CTransform*	pMuzzle = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Gun", L"Uzi_Part_1_1", L"Proto_TransformCom", ID_STATIC));
-		//NULL_CHECK(pMuzzle);
-		//pMuzzle->Get_BeforeInfo(INFO_POS, &vSrcPos);
 		CTransform* pTargetTrans = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_GameLogic", L"TestPlayer0", L"Proto_TransformCom", ID_DYNAMIC));
 		NULL_CHECK(pTargetTrans);
 		CCubeTex* pTestPlayer = dynamic_cast<CCubeTex*>(Engine::Get_Component(L"Layer_GameLogic", L"TestPlayer0", L"Proto_CubeTexCom", ID_STATIC));
@@ -478,7 +491,7 @@ void CCubePlayer::Fire_Bullet(void)
 			{
 				cout << "AAAAAAAAAAAAAAAAAA" << endl;
 			}
-		}
+		}*/
 	}
 }
 
@@ -488,8 +501,45 @@ void CCubePlayer::Gun_Check(void)
 	// ex코드
 	if (m_bUzi == true)
 	{
-		m_vecWeapon.push_back(dynamic_cast<CWeapon*>(Engine::Get_GameObject(L"Layer_Gun", L"UZI1")));
+		dynamic_cast<CSniper*>(Engine::Get_GameObject(L"Layer_Gun", L"SNIPER"))->Off_Sniper();
+		dynamic_cast<CShotgun*>(Engine::Get_GameObject(L"Layer_Gun", L"SHOTGUN"))->Off_ShotGun();
+		dynamic_cast<CUzi*>(Engine::Get_GameObject(L"Layer_Gun", L"UZI1"))->Set_Uzi();
+		dynamic_cast<CUzi*>(Engine::Get_GameObject(L"Layer_Gun", L"UZI2"))->Set_Uzi();
+
+//		m_vecWeapon.push_back(dynamic_cast<CWeapon*>(Engine::Get_GameObject(L"Layer_Gun", L"UZI1")));
+		m_Weapon = dynamic_cast<CWeapon*>(Engine::Get_GameObject(L"Layer_Gun", L"UZI1"));
+		m_vecWeapon.push_back(m_Weapon);
+		m_tAbility->iGunTexture = 0;
+
 		m_bUzi = false;
+	}
+	if (m_bShotgun == true)
+	{
+		dynamic_cast<CSniper*>(Engine::Get_GameObject(L"Layer_Gun", L"SNIPER"))->Off_Sniper();
+		dynamic_cast<CUzi*>(Engine::Get_GameObject(L"Layer_Gun", L"UZI1"))->Off_Uzi();
+		dynamic_cast<CUzi*>(Engine::Get_GameObject(L"Layer_Gun", L"UZI2"))->Off_Uzi();
+		dynamic_cast<CShotgun*>(Engine::Get_GameObject(L"Layer_Gun", L"SHOTGUN"))->Set_ShotGun();
+
+		//m_vecWeapon.push_back(dynamic_cast<CWeapon*>(Engine::Get_GameObject(L"Layer_Gun", L"SHOTGUN")));
+		m_Weapon = dynamic_cast<CWeapon*>(Engine::Get_GameObject(L"Layer_Gun", L"SHOTGUN"));
+		m_vecWeapon.push_back(m_Weapon);
+		m_tAbility->iGunTexture = 2;
+
+		m_bShotgun = false;
+	}
+	if (m_bSniper == true)
+	{
+		dynamic_cast<CUzi*>(Engine::Get_GameObject(L"Layer_Gun", L"UZI1"))->Off_Uzi();
+		dynamic_cast<CUzi*>(Engine::Get_GameObject(L"Layer_Gun", L"UZI2"))->Off_Uzi();
+		dynamic_cast<CShotgun*>(Engine::Get_GameObject(L"Layer_Gun", L"SHOTGUN"))->Off_ShotGun();
+		dynamic_cast<CSniper*>(Engine::Get_GameObject(L"Layer_Gun", L"SNIPER"))->Set_Sniper();
+
+		//m_vecWeapon.push_back(dynamic_cast<CWeapon*>(Engine::Get_GameObject(L"Layer_Gun", L"SNIPER")));
+		m_Weapon = dynamic_cast<CWeapon*>(Engine::Get_GameObject(L"Layer_Gun", L"SNIPER"));
+		m_vecWeapon.push_back(m_Weapon);
+		m_tAbility->iGunTexture = 4;
+
+		m_bSniper = false;
 	}
 
 	if (Get_DIKeyState(DIK_1) & 0x80)
@@ -498,6 +548,10 @@ void CCubePlayer::Gun_Check(void)
 		{
 			if (m_vecWeapon[0] != nullptr)
 			{
+				dynamic_cast<CSniper*>(Engine::Get_GameObject(L"Layer_Gun", L"SNIPER"))->Off_Sniper();
+				dynamic_cast<CShotgun*>(Engine::Get_GameObject(L"Layer_Gun", L"SHOTGUN"))->Off_ShotGun();
+				dynamic_cast<CUzi*>(Engine::Get_GameObject(L"Layer_Gun", L"UZI1"))->Set_Uzi();
+				dynamic_cast<CUzi*>(Engine::Get_GameObject(L"Layer_Gun", L"UZI2"))->Set_Uzi();
 				m_Weapon = m_vecWeapon[0];
 				m_tAbility->iGunTexture = 0; // 혹여나 총 업그레이드해서 다른 총으로 보이게 된다면 이 숫자와 UI/Gun 에 들어있는 숫자와 비교해서 넣으면됨.
 			}
@@ -509,8 +563,12 @@ void CCubePlayer::Gun_Check(void)
 		{
 			if (m_vecWeapon[1] != nullptr)
 			{
+				dynamic_cast<CSniper*>(Engine::Get_GameObject(L"Layer_Gun", L"SNIPER"))->Off_Sniper();
+				dynamic_cast<CUzi*>(Engine::Get_GameObject(L"Layer_Gun", L"UZI1"))->Off_Uzi();
+				dynamic_cast<CUzi*>(Engine::Get_GameObject(L"Layer_Gun", L"UZI2"))->Off_Uzi();
+				dynamic_cast<CShotgun*>(Engine::Get_GameObject(L"Layer_Gun", L"SHOTGUN"))->Set_ShotGun();
 				m_Weapon = m_vecWeapon[1];
-				m_tAbility->iGunTexture = 1;
+				m_tAbility->iGunTexture = 2;
 			}
 		}
 	}
@@ -520,8 +578,12 @@ void CCubePlayer::Gun_Check(void)
 		{
 			if (m_vecWeapon[2] != nullptr)
 			{
+				dynamic_cast<CUzi*>(Engine::Get_GameObject(L"Layer_Gun", L"UZI1"))->Off_Uzi();
+				dynamic_cast<CUzi*>(Engine::Get_GameObject(L"Layer_Gun", L"UZI2"))->Off_Uzi();
+				dynamic_cast<CShotgun*>(Engine::Get_GameObject(L"Layer_Gun", L"SHOTGUN"))->Off_ShotGun();
+				dynamic_cast<CSniper*>(Engine::Get_GameObject(L"Layer_Gun", L"SNIPER"))->Set_Sniper();
 				m_Weapon = m_vecWeapon[2];
-				m_tAbility->iGunTexture = 2;
+				m_tAbility->iGunTexture = 4;
 			}
 		}
 	}
@@ -559,22 +621,22 @@ HRESULT CCubePlayer::Get_BodyTransform(void)
 	NULL_CHECK_RETURN(m_pHeadWorld, E_FAIL);
 	m_pBodyWorld = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Character", L"BODY", L"Proto_TransformCom", ID_DYNAMIC));
 	NULL_CHECK_RETURN(m_pBodyWorld, E_FAIL);
-	m_pLeftArmWorld = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Character", L"L_ARM", L"Proto_TransformCom", ID_STATIC));
+	m_pLeftArmWorld = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Character", L"L_ARM", L"Proto_TransformCom", ID_DYNAMIC));
 	NULL_CHECK_RETURN(m_pBodyWorld, E_FAIL);
-	m_pRightArmWorld = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Character", L"R_ARM", L"Proto_TransformCom", ID_STATIC));
+	m_pRightArmWorld = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Character", L"R_ARM", L"Proto_TransformCom", ID_DYNAMIC));
 	NULL_CHECK_RETURN(m_pBodyWorld, E_FAIL);
-	m_pLeftLegWorld = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Character", L"L_LEG", L"Proto_TransformCom", ID_STATIC));
+	m_pLeftLegWorld = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Character", L"L_LEG", L"Proto_TransformCom", ID_DYNAMIC));
 	NULL_CHECK_RETURN(m_pBodyWorld, E_FAIL);
-	m_pRightLegWorld = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Character", L"R_LEG", L"Proto_TransformCom", ID_STATIC));
+	m_pRightLegWorld = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Character", L"R_LEG", L"Proto_TransformCom", ID_DYNAMIC));
 	NULL_CHECK_RETURN(m_pBodyWorld, E_FAIL);
 
-	m_pLeftHandWorld = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Character", L"L_HAND", L"Proto_TransformCom", ID_STATIC));
+	m_pLeftHandWorld = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Character", L"L_HAND", L"Proto_TransformCom", ID_DYNAMIC));
 	NULL_CHECK_RETURN(m_pBodyWorld, E_FAIL);
-	m_pRightHandWorld = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Character", L"R_HAND", L"Proto_TransformCom", ID_STATIC));
+	m_pRightHandWorld = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Character", L"R_HAND", L"Proto_TransformCom", ID_DYNAMIC));
 	NULL_CHECK_RETURN(m_pBodyWorld, E_FAIL);
-	m_pLeftFootWorld = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Character", L"L_FOOT", L"Proto_TransformCom", ID_STATIC));
+	m_pLeftFootWorld = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Character", L"L_FOOT", L"Proto_TransformCom", ID_DYNAMIC));
 	NULL_CHECK_RETURN(m_pBodyWorld, E_FAIL);
-	m_pRightFootWorld = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Character", L"R_FOOT", L"Proto_TransformCom", ID_STATIC));
+	m_pRightFootWorld = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Character", L"R_FOOT", L"Proto_TransformCom", ID_DYNAMIC));
 	NULL_CHECK_RETURN(m_pBodyWorld, E_FAIL);
 
 	return S_OK;
@@ -594,6 +656,8 @@ HRESULT CCubePlayer::Player_Mapping(void)
 		NULL_CHECK_RETURN(m_pBaseMapping, E_FAIL);
 		m_MappingInit = true;
 	}
+
+	return S_OK;
 }
 
 void CCubePlayer::Key_Input(const _float & fTimeDelta)

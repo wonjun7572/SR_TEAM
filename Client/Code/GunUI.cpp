@@ -17,6 +17,8 @@ HRESULT CGunUI::Ready_Object(void)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
+	m_iGunIndex = 0;
+
 	return S_OK;
 }
 

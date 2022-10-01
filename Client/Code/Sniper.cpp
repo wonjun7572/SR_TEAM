@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "..\Header\Sniper.h"
 
+#include "CubePlayer.h"
+
 
 CSniper::CSniper(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CWeapon(pGraphicDev)
@@ -15,28 +17,40 @@ CSniper::~CSniper()
 HRESULT CSniper::Ready_Object(void)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
+	m_tAbility = new GUNABILITY;
+
+	m_tAbility->fBulletRate = 50.f;
+	m_tAbility->fRemainBulletCnt = 50.f;
+	m_tAbility->fBulletCount = 300.f;
+
+	m_bEquiped = false;
+
 	return S_OK;
 }
 
 _int CSniper::Update_Object(const _float & fTimeDelta)
 {
-	m_fTimeDelta = fTimeDelta;
+	if (m_bEquiped)
+	{
+		m_fTimeDelta = fTimeDelta;
 
-	Assemble();
-
-	Engine::Add_RenderGroup(RENDER_NONALPHA, this);
-	CGameObject::Update_Object(fTimeDelta);
+		Engine::Add_RenderGroup(RENDER_NONALPHA, this);
+		CGameObject::Update_Object(fTimeDelta);
+	}
 
 	return 0;
 }
 
 void CSniper::LateUpdate_Object(void)
 {
+	if (m_bEquiped)
+	{
+		FAILED_CHECK_RETURN(Get_Parts(), );
 
+		TransAxis_Sniper();
 
-	FAILED_CHECK_RETURN(Add_Parts(), );
-	FAILED_CHECK_RETURN(Get_Parts(), );
-	CGameObject::LateUpdate_Object();
+		CGameObject::LateUpdate_Object();
+	}
 }
 
 void CSniper::Render_Object(void)
@@ -88,16 +102,14 @@ HRESULT CSniper::Add_Parts()
 
 HRESULT CSniper::Get_Parts(void)
 {
-	m_pPart1 = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_GameLogic", L"SniperPart1", L"Proto_TransformCom", ID_DYNAMIC));
+	m_pPart1 = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Gun", L"Sniper_Part_1", L"Proto_TransformCom", ID_DYNAMIC));
 	NULL_CHECK_RETURN(m_pPart1, E_FAIL);
-	m_pPart2 = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_GameLogic", L"SniperPart2", L"Proto_TransformCom", ID_DYNAMIC));
+	m_pPart2 = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Gun", L"Sniper_Part_2", L"Proto_TransformCom", ID_DYNAMIC));
 	NULL_CHECK_RETURN(m_pPart2, E_FAIL);
-	m_pPart3 = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_GameLogic", L"SniperPart3", L"Proto_TransformCom", ID_DYNAMIC));
+	m_pPart3 = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Gun", L"Sniper_Part_3", L"Proto_TransformCom", ID_DYNAMIC));
 	NULL_CHECK_RETURN(m_pPart3, E_FAIL);
-	m_pPart4 = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_GameLogic", L"SniperPart4", L"Proto_TransformCom", ID_DYNAMIC));
+	m_pPart4 = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Gun", L"Sniper_Part_4", L"Proto_TransformCom", ID_DYNAMIC));
 	NULL_CHECK_RETURN(m_pPart4, E_FAIL);
-	//m_pPart5 = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_GameLogic", L"SniperPart5", L"Proto_TransformCom", ID_DYNAMIC));
-	//NULL_CHECK_RETURN(m_pPart5, E_FAIL);
 	return S_OK;
 }
 
@@ -123,8 +135,6 @@ void CSniper::Animation_Fire(void)
 {
 }
 
-<<<<<<< Updated upstream
-=======
 void CSniper::TransAxis_Sniper(void)
 {
 	CCubePlayer* pPlayer = dynamic_cast<CCubePlayer*>(Engine::Get_GameObject(L"Layer_Character", L"PLAYER"));
@@ -147,7 +157,7 @@ void CSniper::TransAxis_Sniper(void)
 	vWeaponPos = vUp * -1.f;
 	vWeaponPos += vPos;
 
-	vWeaponPos = (vUp * -1.f) + (vLook);
+	vWeaponPos = (vUp * -1.5f) + (vLook);
 	vWeaponPos += vPos;
 
 	m_pPart4->Set_Pos(vWeaponPos.x, vWeaponPos.y, vWeaponPos.z);
@@ -155,7 +165,7 @@ void CSniper::TransAxis_Sniper(void)
 	m_pPart4->Set_Rotation(ROT_Y, -fLookAngle);
 	m_pPart4->Static_Update();
 
-	vWeaponPos = (vUp * -3.5f) + (vLook * 2.);
+	vWeaponPos = (vUp * -2.f) + (vLook * 0.4f);
 	vWeaponPos += vPos;
 
 	m_pPart3->Set_Pos(vWeaponPos.x, vWeaponPos.y, vWeaponPos.z);
@@ -163,7 +173,7 @@ void CSniper::TransAxis_Sniper(void)
 	m_pPart3->Set_Rotation(ROT_Y, -fLookAngle);
 	m_pPart3->Static_Update();
 
-	vWeaponPos = (vUp * -10.f) + (vLook * 2.4f);
+	vWeaponPos = (vUp * -1.8f) + (vLook * 1.8f);
 	vWeaponPos += vPos;
 
 	m_pPart2->Set_Pos(vWeaponPos.x, vWeaponPos.y, vWeaponPos.z);
@@ -171,7 +181,7 @@ void CSniper::TransAxis_Sniper(void)
 	m_pPart2->Set_Rotation(ROT_Y, -fLookAngle);
 	m_pPart2->Static_Update();
 
-	vWeaponPos = (vUp * -3.5f) + (vLook * 3.3f);
+	vWeaponPos = (vUp * -3.f) + (vLook * 1.8f);
 	vWeaponPos += vPos;
 
 	m_pPart1->Set_Pos(vWeaponPos.x, vWeaponPos.y, vWeaponPos.z);
@@ -180,7 +190,6 @@ void CSniper::TransAxis_Sniper(void)
 	m_pPart1->Static_Update();
 }
 
->>>>>>> Stashed changes
 
 void CSniper::Set_OnTerrain(void)
 {
@@ -213,13 +222,7 @@ CSniper * CSniper::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 
 void CSniper::Free(void)
 {
-	for (auto& iter : m_liszFinalName)
-	{
-		if (iter != nullptr)
-			delete iter;
-	}
-
-	m_liszFinalName.clear();
-	CGameObject::Free();
+	Safe_Delete<GUNABILITY*>(m_tAbility);
+	CWeapon::Free();
 }
 

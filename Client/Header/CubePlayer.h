@@ -39,7 +39,7 @@ public:
 
 public:
 	CWeapon*		Get_Weapon() { return m_Weapon; }
-
+	
 private:
 	map<const _tchar*, CGameObject*>	m_mapPlayerBody;
 
@@ -112,7 +112,9 @@ private:
 
 	CWeapon*		m_Weapon = nullptr;
 
-	_bool			m_bUzi = true;
+	_bool			m_bUzi;
+	_bool			m_bShotgun;
+	_bool			m_bSniper;
 
 	vector<CWeapon*> m_vecWeapon;
 
@@ -120,6 +122,17 @@ private:
 	_bool				m_MappingInit = false;
 	CTransform*			m_pBaseMapping = nullptr;
 	list<TCHAR*>		m_listMonsterCnt;
+
+public:
+	void			Capture_Uzi(void) { m_bUzi = true; }
+	void			Capture_Shotgun(void) { m_bShotgun = true; }
+	void			Capture_Sniper(void) { m_bSniper = true; }
+
+
+	//ITEM
+	void		Get_Defense() { m_tAbility->iDefence += 10; }
+	void		Get_Hp() { m_tAbility->iHp += 10; }
+
 
 public:
 	static CCubePlayer*	Create(LPDIRECT3DDEVICE9 pGraphicDev);

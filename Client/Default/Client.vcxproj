@@ -176,6 +176,9 @@
     <ClInclude Include="..\Header\CubePlayer.h" />
     <ClInclude Include="..\Header\DynamicCamera.h" />
     <ClInclude Include="..\Header\ExitButton.h" />
+    <ClInclude Include="..\Header\GetShotgun.h" />
+    <ClInclude Include="..\Header\GetSniper.h" />
+    <ClInclude Include="..\Header\GetUzi.h" />
     <ClInclude Include="..\Header\GunUI.h" />
     <ClInclude Include="..\Header\HealthPotion.h" />
     <ClInclude Include="..\Header\ImguiMgr.h" />
@@ -188,6 +191,9 @@
     <ClInclude Include="..\Header\LogoUI.h" />
     <ClInclude Include="..\Header\MainApp.h" />
     <ClInclude Include="..\Header\MonsterMapping.h" />
+    <ClInclude Include="..\Header\MonsterUI.h" />
+    <ClInclude Include="..\Header\ObtainBullet.h" />
+    <ClInclude Include="..\Header\ObtainDefense.h" />
     <ClInclude Include="..\Header\OptionButton.h" />
     <ClInclude Include="..\Header\PlayButton.h" />
     <ClInclude Include="..\Header\PlayerHpUI.h" />
@@ -199,7 +205,6 @@
     <ClInclude Include="..\Header\ShotgunPart2.h" />
     <ClInclude Include="..\Header\ShotgunPart3.h" />
     <ClInclude Include="..\Header\ShotgunPart4.h" />
-    <ClInclude Include="..\Header\ShotgunPart5.h" />
     <ClInclude Include="..\Header\SkyBox.h" />
     <ClInclude Include="..\Header\Sniper.h" />
     <ClInclude Include="..\Header\SniperPart1.h" />
@@ -267,6 +272,9 @@
     <ClCompile Include="..\Code\CubePlayer.cpp" />
     <ClCompile Include="..\Code\DynamicCamera.cpp" />
     <ClCompile Include="..\Code\ExitButton.cpp" />
+    <ClCompile Include="..\Code\GetShotgun.cpp" />
+    <ClCompile Include="..\Code\GetSniper.cpp" />
+    <ClCompile Include="..\Code\GetUzi.cpp" />
     <ClCompile Include="..\Code\GunUI.cpp" />
     <ClCompile Include="..\Code\HealthPotion.cpp" />
     <ClCompile Include="..\Code\ImguiMgr.cpp" />
@@ -279,6 +287,9 @@
     <ClCompile Include="..\Code\LogoUI.cpp" />
     <ClCompile Include="..\Code\MainApp.cpp" />
     <ClCompile Include="..\Code\MonsterMapping.cpp" />
+    <ClCompile Include="..\Code\MonsterUI.cpp" />
+    <ClCompile Include="..\Code\ObtainBullet.cpp" />
+    <ClCompile Include="..\Code\ObtainDefense.cpp" />
     <ClCompile Include="..\Code\OptionButton.cpp" />
     <ClCompile Include="..\Code\PlayButton.cpp" />
     <ClCompile Include="..\Code\PlayerHpUI.cpp" />
@@ -290,7 +301,6 @@
     <ClCompile Include="..\Code\ShotgunPart2.cpp" />
     <ClCompile Include="..\Code\ShotgunPart3.cpp" />
     <ClCompile Include="..\Code\ShotgunPart4.cpp" />
-    <ClCompile Include="..\Code\ShotgunPart5.cpp" />
     <ClCompile Include="..\Code\SkyBox.cpp" />
     <ClCompile Include="..\Code\Sniper.cpp" />
     <ClCompile Include="..\Code\SniperPart1.cpp" />
