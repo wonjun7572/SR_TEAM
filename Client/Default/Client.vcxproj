@@ -225,6 +225,7 @@
     <ClInclude Include="..\Header\WallMgr.h" />
     <ClInclude Include="..\Header\Weapon.h" />
     <ClInclude Include="..\Header\WeaponUI.h" />
+    <ClInclude Include="BulletParticle.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="dirent.h" />
     <ClInclude Include="GraphEditor.h" />
@@ -317,6 +318,7 @@
     <ClCompile Include="..\Code\WallMgr.cpp" />
     <ClCompile Include="..\Code\Weapon.cpp" />
     <ClCompile Include="..\Code\WeaponUI.cpp" />
+    <ClCompile Include="BulletParticle.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="GraphEditor.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>

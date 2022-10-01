@@ -5,6 +5,7 @@
 #include "Uzi.h"
 #include "Shotgun.h"
 #include "Sniper.h"
+#include "BulletParticle.h"
 
 CCubePlayer::CCubePlayer(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
@@ -492,6 +493,10 @@ void CCubePlayer::Fire_Bullet(void)
 
 		if (Get_DIMouseState(DIM_LB))
 		{
+			CGameObject* pGameObject = Engine::Get_GameObject(L"Layer_Environment", L"BulletParticle");
+
+			dynamic_cast<CBulletParticle*>(pGameObject)->addParticle();
+
 			if (m_pCalculatorCom->Peek_Cube_Target(g_hWnd, &_vec3(0, 0, 0), pTestPlayer, pTargetTrans))
 			{
 				cout << "AAAAAAAAAAAAAAAAAA" << endl;
@@ -701,9 +706,14 @@ CCubePlayer * CCubePlayer::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 
 	return pInstance;
 }
-
+     
 void CCubePlayer::Free(void)
 {
+	for (auto& iter : m_listMonsterCnt)
+	{
+		if (iter != nullptr)
+			delete iter;
+	}
 	Safe_Delete<ABILITY*>(m_tAbility);
 	CGameObject::Free();
 }

@@ -39,6 +39,9 @@ _uint CLoading::Loading_ForStage(void)
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"RcTex_HP", CRcTex::Create(m_pGraphicDev)), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"RcTex_Defense", CRcTex::Create(m_pGraphicDev)), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"RcTex_Bullet", CRcTex::Create(m_pGraphicDev)), E_FAIL);
+		// PARTICLE
+		//FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FLARE", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/flare.bmp", TEX_NORMAL)), E_FAIL);
+		//FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FLARE", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/flare_alpha.dds", TEX_NORMAL)), E_FAIL);
 	}
 
 	{
@@ -82,13 +85,10 @@ _uint CLoading::Loading_ForStage(void)
 	// GUN
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Gun_UI", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/UI/Gun/Gun_%d.png", TEX_NORMAL, 6)), E_FAIL);
 	}
-
 	// Map
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Minimap", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/\Texture2D/hud_minimap_bg.png", TEX_NORMAL)), E_FAIL);
 
 	m_bFinish = true;
-
-
 
 	return _uint();
 }

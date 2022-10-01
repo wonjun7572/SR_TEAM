@@ -180,7 +180,9 @@ call CopyUtility.bat</Command>
     <ClInclude Include="..\..\Header\Light.h" />
     <ClInclude Include="..\..\Header\LightMgr.h" />
     <ClInclude Include="..\..\Header\Management.h" />
+    <ClInclude Include="..\..\Header\ParticleBuffer.h" />
     <ClInclude Include="..\..\Header\ProtoMgr.h" />
+    <ClInclude Include="..\..\Header\PSystem.h" />
     <ClInclude Include="..\..\Header\RcCol.h" />
     <ClInclude Include="..\..\Header\RcRD.h" />
     <ClInclude Include="..\..\Header\RcTex.h" />
@@ -198,6 +200,8 @@ call CopyUtility.bat</Command>
   <ItemGroup>
     <ClCompile Include="..\Code\Collision.cpp" />
     <ClCompile Include="..\Code\Interface.cpp" />
+    <ClCompile Include="..\Code\ParticleBuffer.cpp" />
+    <ClCompile Include="..\Code\PSystem.cpp" />
     <ClCompile Include="..\Code\RcRD.cpp" />
     <ClCompile Include="..\Code\Calculator.cpp" />
     <ClCompile Include="..\Code\Camera.cpp" />

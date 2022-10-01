@@ -36,6 +36,7 @@
 #include "GetUzi.h"
 #include "GetShotgun.h"
 #include "GetSniper.h"
+#include "BulletParticle.h"
 
 
 
@@ -112,6 +113,11 @@ HRESULT CStage::Ready_Layer_Environment(const _tchar * pLayerTag)
 	pGameObject = CSkyBox::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"SkyBox", pGameObject), E_FAIL);
+
+	pGameObject = CBulletParticle::Create(m_pGraphicDev);
+	dynamic_cast<CPSystem*>(pGameObject)->init(m_pGraphicDev, L"../Bin/Resources/flare_alpha.dds");
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"BulletParticle", pGameObject), E_FAIL);
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
