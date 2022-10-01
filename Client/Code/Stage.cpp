@@ -37,7 +37,8 @@
 #include "GetShotgun.h"
 #include "GetSniper.h"
 
-
+#include "ObtainBullet.h"
+#include "ObtainDefense.h"
 
 CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CScene(pGraphicDev)
@@ -509,6 +510,16 @@ HRESULT CStage::Ready_Layer_Item(const _tchar * pLayerTag)
 	pGameObject = CGetSniper::Create(m_pGraphicDev, _vec3(30, 1, 20));
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"GetSniper", pGameObject), E_FAIL);
+
+
+	pGameObject = CObtainBullet::Create(m_pGraphicDev, _vec3(25, 1, 25));
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"OBTAINBULLET", pGameObject), E_FAIL);
+
+
+	pGameObject = CObtainDefense::Create(m_pGraphicDev, _vec3(19, 1, 19));
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"OBTAINDEFENSE", pGameObject), E_FAIL);
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 

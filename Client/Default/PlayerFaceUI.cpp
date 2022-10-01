@@ -50,8 +50,7 @@ void CPlayerFaceUI::Render_Object(void)
 {
 	Begin_OrthoProj();
 	
-	if (dynamic_cast<CCubePlayer*>(m_pPlayer)->Get_Ability()->iHp <= 100 && 
-		dynamic_cast<CCubePlayer*>(m_pPlayer)->Get_Ability()->iHp > 75)
+	if (dynamic_cast<CCubePlayer*>(m_pPlayer)->Get_Ability()->iHp > 75)
 	{
 		m_pTexture_100->Set_Texture((_ulong)m_fFrame);
 	}

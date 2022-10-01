@@ -15,7 +15,7 @@ CPlayButton::~CPlayButton()
 
 HRESULT CPlayButton::Ready_Object()
 {
-	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"PlayButtontFont", L"Roboto-Bold", 15, 15, FW_NORMAL), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"PlayButtontFont", L"Roboto-Bold", 36, 30, FW_NORMAL), E_FAIL);
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 	m_TranformCom->Set_Scale(0.28f, 0.1f, 0.f);
 	m_TranformCom->Set_Pos(0.65f, 0.45f, 0.f);
@@ -61,7 +61,7 @@ void CPlayButton::Render_Object(void)
 		}
 	}
 	m_RcTexCom->Render_Buffer();
-	Render_Font(L"PlayButtontFont", m_strPB.c_str(), &_vec2(600.f, 155.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+	Render_Font(L"PlayButtontFont", m_strPB.c_str(), &_vec2(1150.f, 230.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
 	End_OrthoProj();
 }
 

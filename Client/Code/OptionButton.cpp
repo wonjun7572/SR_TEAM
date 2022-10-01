@@ -13,7 +13,7 @@ COptionButton::~COptionButton()
 
 HRESULT COptionButton::Ready_Object(void)
 {
-	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"OptionButton", L"Roboto-Bold", 15, 15, FW_NORMAL), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"OptionButton", L"Roboto-Bold", 30, 30, FW_NORMAL), E_FAIL);
 	m_strOB = L"Option Button";
 
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
@@ -64,7 +64,7 @@ void COptionButton::Render_Object(void)
 
 	m_pRcTexCom->Render_Buffer();
 
-	Render_Font(L"OptionButton", m_strOB.c_str(), &_vec2(580.f, 255.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+	Render_Font(L"OptionButton", m_strOB.c_str(), &_vec2(1130.f, 380.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
 	End_OrthoProj();
 }
 

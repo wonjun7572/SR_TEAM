@@ -3,8 +3,6 @@
 
 #include "CubePlayer.h"
 
-#include "Uzi.h"
-
 CHealthPotion::CHealthPotion(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CItem(pGraphicDev)
 {
@@ -31,12 +29,12 @@ HRESULT CHealthPotion::Ready_Object(const _vec3& vPos)
 
 Engine::_int CHealthPotion::Update_Object(const _float& fTimeDelta)
 {
+
 	if (m_bDead)
 	{
-		//dynamic_cast<CUzi*>(Engine::Get_GameObject(L"Layer_Gun", L"UZI1"))->Get_Bullet();
+		dynamic_cast<CCubePlayer*>(Engine::Get_GameObject(L"Layer_Character", L"PLAYER"))->Get_Hp();
 		return -1;
 	}
-
 	CItem::Update_Object(fTimeDelta);
 	Add_RenderGroup(RENDER_NONALPHA, this);
 	return 0;
