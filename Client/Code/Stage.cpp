@@ -37,8 +37,12 @@
 #include "GetShotgun.h"
 #include "GetSniper.h"
 
+<<<<<<< Updated upstream
 #include "ObtainBullet.h"
 #include "ObtainDefense.h"
+=======
+#include "LetterBox.h"
+>>>>>>> Stashed changes
 
 CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CScene(pGraphicDev)
@@ -131,10 +135,9 @@ HRESULT CStage::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"TestPlayer0", pGameObject), E_FAIL);
 
-	pGameObject = CBaseMapping::Create(m_pGraphicDev);
+	pGameObject = CLetterBox::Create(m_pGraphicDev,L"21323",1);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"BaseMapping", pGameObject), E_FAIL);
-
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"TestPlayer1", pGameObject), E_FAIL);
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
 	return S_OK;

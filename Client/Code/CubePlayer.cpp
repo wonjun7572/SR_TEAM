@@ -48,7 +48,7 @@ _int CCubePlayer::Update_Object(const _float & fTimeDelta)
 	// 이동, 애니메이션 관련
 	Move();
 
-	Look_Direction();
+	//Look_Direction();
 
 	Animation();
 
@@ -700,5 +700,13 @@ CCubePlayer * CCubePlayer::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 void CCubePlayer::Free(void)
 {
 	Safe_Delete<ABILITY*>(m_tAbility);
+
+	for (auto& iter : m_listMonsterCnt)
+	{
+		if (iter != nullptr)
+			delete iter;
+	}
+
+	m_listMonsterCnt.clear();
 	CGameObject::Free();
 }

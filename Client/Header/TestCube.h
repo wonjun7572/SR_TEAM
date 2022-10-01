@@ -28,6 +28,9 @@ public:
 
 	_bool*				Get_WireFrame() { return &m_bWireFrame; }
 	void				Set_WireFrame(_bool bWireFrame) { m_bWireFrame = bWireFrame; }
+	
+	
+	HRESULT				Interact(void);
 
 private:
 	HRESULT				Add_Component(void);
@@ -36,6 +39,8 @@ private:
 	CCubeTex*			m_pBufferCom = nullptr;
 	CTransform*			m_pTransCom = nullptr;
 	CTexture*			m_pTextureCom = nullptr;
+	
+
 	CCalculator*		m_pCalculatorCom = nullptr;
 
 	CHitBox*			m_pHitBox = nullptr;
@@ -47,6 +52,14 @@ private:
 
 private:
 	_bool				m_bWireFrame = false;
+
+private:
+	_int				m_CubeIndex = 0;
+	_bool				m_bSwitch = false;
+	CTexture*			m_pFontTextureCom = nullptr;
+	wstring				m_strPress;
+
+
 
 public:
 	static CTestCube*		Create(LPDIRECT3DDEVICE9 pGraphicDev, int Posx = 0, int Posy = 0);

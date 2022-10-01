@@ -262,5 +262,12 @@ CCubeMonster * CCubeMonster::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 
 void CCubeMonster::Free(void)
 {
+	for (auto& iter : m_listMonsterCnt)
+	{
+	if(iter != nullptr)
+	delete iter;
+	}
+
+	m_listMonsterCnt.clear();
 	CGameObject::Free();
 }
