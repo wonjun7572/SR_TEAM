@@ -71,8 +71,8 @@ void CMonsterMapping::Begin_OrthoProj()
 	D3DXMatrixIdentity(&matWorld);
 	D3DXMatrixIdentity(&matView);
 
-	matView.m[0][0] = PINGSIZE; // 이미지 가로
-	matView.m[1][1] = PINGSIZE; // 이미지 세로
+	matView.m[0][0] = PINGSIZE*WINCX / WINCY* MAPCX / MAPCY; // 이미지 가로
+	matView.m[1][1] = PINGSIZE*WINCX / WINCY* MAPCX / MAPCY; // 이미지 세로
 	matView.m[2][2] = 1.f;
 	matView.m[3][0] = MAPPOSX - (MAPCX) + vPos.x * ( ((float)MAPCX*2) / (float)VTXCNTX); //- PINGSIZE /2;
 	matView.m[3][1] = MAPPOSY - (MAPCY) + vPos.z * ( ((float)MAPCY*2) / (float)VTXCNTZ); //- PINGSIZE /2;

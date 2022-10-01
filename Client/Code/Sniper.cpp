@@ -157,7 +157,7 @@ void CSniper::TransAxis_Sniper(void)
 	vWeaponPos = vUp * -1.f;
 	vWeaponPos += vPos;
 
-	vWeaponPos = (vUp * -1.5f) + (vLook);
+	vWeaponPos = (vUp * -1.f) + (vLook);
 	vWeaponPos += vPos;
 
 	m_pPart4->Set_Pos(vWeaponPos.x, vWeaponPos.y, vWeaponPos.z);
@@ -165,7 +165,7 @@ void CSniper::TransAxis_Sniper(void)
 	m_pPart4->Set_Rotation(ROT_Y, -fLookAngle);
 	m_pPart4->Static_Update();
 
-	vWeaponPos = (vUp * -2.f) + (vLook * 0.4f);
+	vWeaponPos = (vUp * -3.5f) + (vLook * 2.);
 	vWeaponPos += vPos;
 
 	m_pPart3->Set_Pos(vWeaponPos.x, vWeaponPos.y, vWeaponPos.z);
@@ -173,7 +173,7 @@ void CSniper::TransAxis_Sniper(void)
 	m_pPart3->Set_Rotation(ROT_Y, -fLookAngle);
 	m_pPart3->Static_Update();
 
-	vWeaponPos = (vUp * -1.8f) + (vLook * 1.8f);
+	vWeaponPos = (vUp * -10.f) + (vLook * 2.4f);
 	vWeaponPos += vPos;
 
 	m_pPart2->Set_Pos(vWeaponPos.x, vWeaponPos.y, vWeaponPos.z);
@@ -181,7 +181,7 @@ void CSniper::TransAxis_Sniper(void)
 	m_pPart2->Set_Rotation(ROT_Y, -fLookAngle);
 	m_pPart2->Static_Update();
 
-	vWeaponPos = (vUp * -3.f) + (vLook * 1.8f);
+	vWeaponPos = (vUp * -3.5f) + (vLook * 3.3f);
 	vWeaponPos += vPos;
 
 	m_pPart1->Set_Pos(vWeaponPos.x, vWeaponPos.y, vWeaponPos.z);
