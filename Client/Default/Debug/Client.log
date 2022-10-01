@@ -1,4 +1,4 @@
-﻿  CubeMonster.cpp
+﻿  Stage.cpp
      ../Bin\Client.lib 라이브러리 및 ../Bin\Client.exp 개체를 생성하고 있습니다.
   Client.vcxproj -> C:\Users\beoms\OneDrive\문서\GitHub\SR_TEAM\Client\Default\../Bin\Client.exe
   Client.vcxproj -> ../Bin\Client.pdb (Full PDB)

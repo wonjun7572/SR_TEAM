@@ -37,12 +37,9 @@
 #include "GetShotgun.h"
 #include "GetSniper.h"
 
-<<<<<<< Updated upstream
 #include "ObtainBullet.h"
 #include "ObtainDefense.h"
-=======
 #include "LetterBox.h"
->>>>>>> Stashed changes
 
 CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CScene(pGraphicDev)
