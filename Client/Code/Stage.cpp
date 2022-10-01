@@ -32,13 +32,20 @@
 #include "GunUI.h"
 #include "BaseMapping.h"
 
-#include "HealthPotion.h"
 #include "GetUzi.h"
 #include "GetShotgun.h"
 #include "GetSniper.h"
 
+//MonsterUI
+#include "MonsterUI.h"
+
+//Item
+#include "HealthPotion.h"
 #include "ObtainBullet.h"
 #include "ObtainDefense.h"
+#include "MaxPlusHp.h"
+
+
 #include "LetterBox.h"
 
 CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -174,6 +181,14 @@ HRESULT CStage::Ready_Layer_UI(const _tchar * pLayerTag)
 	pGameObject = CGunUI::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"GunUI", pGameObject), E_FAIL);
+
+
+
+	//Monster
+	pGameObject = CMonsterUI::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"MonsterHpUI", pGameObject), E_FAIL);
+
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
@@ -313,7 +328,7 @@ HRESULT CStage::Ready_Layer_Monster(const _tchar * pLayerTag)
 
 	CGameObject*		pGameObject = nullptr;
 
-	/*pGameObject = CCubeMonsterArm::Create(m_pGraphicDev);
+	pGameObject = CCubeMonsterArm::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"M_LeftArm", pGameObject), E_FAIL);
 
@@ -331,7 +346,7 @@ HRESULT CStage::Ready_Layer_Monster(const _tchar * pLayerTag)
 
 	pGameObject = CCubeMonster::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"CubeMonster", pGameObject), E_FAIL);*/
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"CubeMonster", pGameObject), E_FAIL);
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
@@ -520,6 +535,10 @@ HRESULT CStage::Ready_Layer_Item(const _tchar * pLayerTag)
 	pGameObject = CObtainDefense::Create(m_pGraphicDev, _vec3(19, 1, 19));
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"OBTAINDEFENSE", pGameObject), E_FAIL);
+
+	pGameObject = CMaxPlusHp::Create(m_pGraphicDev, _vec3(23, 2, 23));
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"MAXHP", pGameObject), E_FAIL);
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 

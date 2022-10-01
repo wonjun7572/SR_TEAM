@@ -49,7 +49,7 @@ void CPlayerDefenseUI::Render_Object(void)
 	m_pBufferCom->Resize_Buffer(m_iDefense * 0.01f);
 	m_pBufferCom->Render_Buffer();
 	End_OrthoProj();
-	Render_Font(L"HP", m_strDefense.c_str(), &(_vec2(88.f, 552.f)), D3DXCOLOR(0.5f, 0.5f, 0.3f, 1.f));
+	Render_Font(L"HP", m_strDefense.c_str(), &(_vec2(182.f, 832.f)), D3DXCOLOR(0.5f, 0.5f, 0.3f, 1.f));
 }
 
 void CPlayerDefenseUI::Begin_OrthoProj()

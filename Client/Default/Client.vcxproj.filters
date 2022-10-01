@@ -214,11 +214,11 @@
     <Filter Include="02. GameObject\01. For_Stage\10. Item\GunItem\GetSniper">
       <UniqueIdentifier>{53fa6b4b-f522-4262-a3ad-994b68bb55f0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\01. For_Stage\10. Item\ETC">
-      <UniqueIdentifier>{873e25ca-5327-4889-a7bb-0cf342b1e514}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. GameObject\01. For_Stage\09. UI\Monster">
       <UniqueIdentifier>{731aa290-825a-4b95-a42c-ded1bb9aa586}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\10. Item\ETC">
+      <UniqueIdentifier>{873e25ca-5327-4889-a7bb-0cf342b1e514}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -501,6 +501,12 @@
     <ClInclude Include="..\Header\MonsterUI.h">
       <Filter>02. GameObject\01. For_Stage\09. UI\Monster</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\LetterBox.h">
+      <Filter>99. Default\헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\MaxPlusHp.h">
+      <Filter>02. GameObject\01. For_Stage\10. Item\HP</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -763,6 +769,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\MonsterUI.cpp">
       <Filter>02. GameObject\01. For_Stage\09. UI\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\LetterBox.cpp">
+      <Filter>99. Default\소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\MaxPlusHp.cpp">
+      <Filter>02. GameObject\01. For_Stage\10. Item\HP</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

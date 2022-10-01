@@ -31,6 +31,7 @@ private:
 
 	CGameObject* m_pPlayer = nullptr;
 	_int	m_iHp;
+	_int	m_iMaxHp;
 	wstring m_strHp;
 
 public:

@@ -56,8 +56,8 @@ void CBulletUI::Render_Object(void)
 	m_pBufferCom->Resize_Buffer_Reverse(m_fRemainBullet / m_fTotalBullet);
 	m_pBufferCom->Render_Buffer();
 	End_OrthoProj();
-	Render_Font(L"REMAINBULLET", m_strReminaBullet.c_str(), &(_vec2(760.f, 560.f)), D3DXCOLOR(0.5f, 0.5f, 0.3f, 1.f));
-	Render_Font(L"TOTALBULLET", m_strTotalBullet.c_str(), &(_vec2(757.5f, 580.f)), D3DXCOLOR(0.5f, 0.5f, 0.3f, 1.f));
+	Render_Font(L"REMAINBULLET", m_strReminaBullet.c_str(), &(_vec2(1100.f, 700.f)), D3DXCOLOR(0.5f, 0.5f, 0.3f, 1.f));
+	Render_Font(L"TOTALBULLET", m_strTotalBullet.c_str(), &(_vec2(1100.f, 700.f)), D3DXCOLOR(0.5f, 0.5f, 0.3f, 1.f));
 }
 
 void CBulletUI::Begin_OrthoProj()

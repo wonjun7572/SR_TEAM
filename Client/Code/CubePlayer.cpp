@@ -21,6 +21,7 @@ HRESULT CCubePlayer::Ready_Object(void)
 
 	m_tAbility = new ABILITY;
 	m_tAbility->iHp = 100;
+	m_tAbility->iMaxHp = 100;
 	m_tAbility->iDefence = 100;
 	m_tAbility->iGunTexture = 5;
 
@@ -692,7 +693,7 @@ CCubePlayer * CCubePlayer::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 	CCubePlayer* pInstance = new CCubePlayer(pGraphicDev);
 
 	if (FAILED(pInstance->Ready_Object()))
-		Safe_Release(pInstance);
+	Safe_Release(pInstance);
 
 	return pInstance;
 }

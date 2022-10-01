@@ -87,16 +87,16 @@ void CStaticCamera::Key_Input(const _float& fTimeDelta)
 			m_fDistance += fTimeDelta * m_fSpeed * 5.f;
 	}
 
-	// 카메라 축 회전 방향 제한해야함
-	//if (m_pPlayerTransform)
-	//{
-	//	_vec3 vPlayerPos;
-	//	m_pPlayerTransform->Get_Info(INFO_POS, &vPlayerPos);
-	//	//if (Get_DIMouseMove(DIMS_Y) > 0)
-	//		m_fAngle += D3DXToRadian(180.f) * fTimeDelta;
-	//	/*if (Get_DIMouseMove(DIMS_Y) < 0)
-	//		m_fAngle += D3DXToRadian(180.f) * fTimeDelta;*/
-	//}
+	 //카메라 축 회전 방향 제한해야함
+	if (m_pPlayerTransform)
+	{
+		_vec3 vPlayerPos;
+		m_pPlayerTransform->Get_Info(INFO_POS, &vPlayerPos);
+		//if (Get_DIMouseMove(DIMS_Y) > 0)
+			m_fAngle += D3DXToRadian(180.f) * fTimeDelta;
+		/*if (Get_DIMouseMove(DIMS_Y) < 0)
+			m_fAngle += D3DXToRadian(180.f) * fTimeDelta;*/
+	}
 }
 
 void CStaticCamera::Mouse_Fix(void)
