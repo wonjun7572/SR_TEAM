@@ -10,7 +10,7 @@ namespace Engine
 
 	}VTXCOL;
 
-	const _ulong		FVF_COL = D3DFVF_XYZ | D3DFVF_DIFFUSE | D3DFVF_TEX0;
+	const _ulong	FVF_COL = D3DFVF_XYZ | D3DFVF_DIFFUSE | D3DFVF_TEX0;
 
 
 	typedef struct tagVertexTex
@@ -30,8 +30,27 @@ namespace Engine
 
 	}VTXCUBE;
 
-	const _ulong		FVF_CUBE = D3DFVF_XYZ | D3DFVF_TEX1 | D3DFVF_TEXCOORDSIZE3(0);		// D3DFVF_TEXCOORDSIZE3 : 텍스처의 UV값이 FLOAT 형 3개의 크기만큼이며, 괄호산의 숫자 0의 의미는 본래 버텍스에 텍스처 UV 값이 여러개가 올 수 있는데 그중 0번째 것이 값을 지정하겠다는 의미이다.
+	const _ulong	FVF_CUBE = D3DFVF_XYZ | D3DFVF_TEX1 | D3DFVF_TEXCOORDSIZE3(0);		// D3DFVF_TEXCOORDSIZE3 : 텍스처의 UV값이 FLOAT 형 3개의 크기만큼이며, 괄호산의 숫자 0의 의미는 본래 버텍스에 텍스처 UV 값이 여러개가 올 수 있는데 그중 0번째 것이 값을 지정하겠다는 의미이다.
 
+	typedef struct tagParticle 
+	{
+		_vec3	vPos;
+		_ulong	dwColor;
+	}PARTICLE;
+
+	const _ulong	FVF_PARTICLE = D3DFVF_XYZ | D3DFVF_DIFFUSE;
+
+	typedef	struct tagAttribute
+	{
+		_vec3  vPos;
+		_vec3  vVelocity;
+		_vec3  vAcceleration;
+		_float fLifeTime;
+		_float fAge;
+		_ulong dwColor;
+		_ulong dwColorFade;
+		_bool  bAlive;
+	}ATTRIBUTE;
 
 	typedef	struct tagIndex16
 	{
@@ -70,7 +89,6 @@ namespace Engine
 		_float fMaxHp;
 		_float fDamage;
 	}MONSTERABILITY;
-
 }
 
 
