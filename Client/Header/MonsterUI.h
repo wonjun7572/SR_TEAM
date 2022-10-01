@@ -26,9 +26,10 @@ private:
 	CTransform* m_pTransCom = nullptr;
 	CTexture* m_pTextureCom = nullptr;
 
-	_matrix m_matWorld;
-	_matrix m_matView;
-	_matrix m_matProj;
+	//CTransform* m_pMhead = nullptr;
+	//_matrix m_matWorld;
+	//_matrix m_matView;
+	//_matrix m_matProj;
 
 	CGameObject* m_pMonster = nullptr;
 	_int	m_iHp;

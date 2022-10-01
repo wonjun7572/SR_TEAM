@@ -8,6 +8,28 @@ static _int m_iCnt = 0;
 CCubeMonster::CCubeMonster(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
 {
+	//m_fDetectRange = 30.f;
+	//m_fMinLenghtRange = 5.f;
+	//m_fAttackRange = 1.f;
+	//m_MonsterState->fCurrentHp = 100.f;
+	//m_MonsterState->fMaxHp = 100.f;
+	//m_MonsterState->fCurrentHp = m_MonsterState->fMaxHp;
+	//m_MonsterState->iLevel = 1;
+	//m_MonsterState->fDamage = 1.f;
+	//m_eCurrentState = CurrentState::MONSTER_IDLE;
+	//m_ePreviousState = m_eCurrentState;
+	//m_fSpeed = 1.f;
+	//m_fTimeDelta = 0.1f;
+}
+
+
+CCubeMonster::~CCubeMonster()
+{
+}
+
+HRESULT CCubeMonster::Ready_Object(void)
+{
+	m_MonsterState = new MONSTERABILITY;
 	m_fDetectRange = 30.f;
 	m_fMinLenghtRange = 5.f;
 	m_fAttackRange = 1.f;
@@ -20,15 +42,6 @@ CCubeMonster::CCubeMonster(LPDIRECT3DDEVICE9 pGraphicDev)
 	m_ePreviousState = m_eCurrentState;
 	m_fSpeed = 1.f;
 	m_fTimeDelta = 0.1f;
-}
-
-
-CCubeMonster::~CCubeMonster()
-{
-}
-
-HRESULT CCubeMonster::Ready_Object(void)
-{
 
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 	//m_pMTransform->m_vInfo[Engine::INFO_POS] = m_vPos;
@@ -70,7 +83,7 @@ void CCubeMonster::LateUpdate_Object(void)
 
 void CCubeMonster::Render_Object(void)
 {
-//	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pMTransform->Get_WorldMatrixPointer());
+
 
 }
 
