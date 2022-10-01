@@ -45,19 +45,23 @@ private:
 
 	CHitBox*			m_pHitBox = nullptr;
 
-
-	_bool					m_MappingInit = false;
+private: // 맵핑 관련
+	_bool					m_bMappingInit = false;
 	list<TCHAR*>			m_listWallCnt;
+	list<TCHAR*>			m_listWallCnt2;
+	list<TCHAR*>			m_listLetterCnt;
 	CTransform*				m_pWallMapping = nullptr;
 
 private:
 	_bool				m_bWireFrame = false;
 
-private:
+private: // 문 상호작용 관련
 	_int				m_CubeIndex = 0;
 	_bool				m_bSwitch = false;
-	CTexture*			m_pFontTextureCom = nullptr;
+	_bool				m_bLetterboxInit = false;
+	_bool				m_bDoorOpen = false;
 	wstring				m_strPress;
+	CGameObject*		m_pLetterBox = nullptr;
 
 
 

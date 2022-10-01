@@ -47,6 +47,11 @@ HRESULT					Add_GameObject(const _tchar* pLayerTag, CGameObject* pGameObject, co
 	return CManagement::GetInstance()->Add_GameObject(pLayerTag, pGameObject, pObjTag);
 }
 
+HRESULT					Delete_GameObject(const _tchar* pLayerTag, const _tchar* pObjTag)
+{
+	return CManagement::GetInstance()->Delete_GameObject(pLayerTag, pObjTag);
+}
+
 inline HRESULT			Ready_Proto(const _tchar* pProtoTag, CComponent* pComponent)
 {
 	return CProtoMgr::GetInstance()->Ready_Proto(pProtoTag, pComponent);
