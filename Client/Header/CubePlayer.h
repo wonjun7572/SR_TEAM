@@ -132,7 +132,7 @@ public:
 	//ITEM
 	void		Get_Defense() { m_tAbility->iDefence += 10; }
 	void		Get_Hp() { m_tAbility->iHp += 10; }
-	void		Get_MaxHp() { m_tAbility->iMaxHp + 30.f; }
+	void		Get_MaxHp() { m_tAbility->iMaxHp += 30; }
 
 public:
 	static CCubePlayer*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
