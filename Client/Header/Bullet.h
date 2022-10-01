@@ -29,12 +29,12 @@ public:
 	void			Set_Dir(const _vec3& vDir) { m_vDirection = vDir; }
 
 private:
-
+	//CRcTex*				m_pBufferCom = nullptr;
 	CTransform*			m_pTransCom = nullptr;
 	CTexture*			m_pTextureCom = nullptr;
 	CCubeTex*			m_pCubetexCom = nullptr;
 	_vec3				m_vDirection = _vec3(0.f, 0.f, 0.f);
-	_float				m_fSpeed = 30.f;
+	_float				m_fSpeed = 50.f;
 	_float				m_fTimeDelta = 0.f;
 
 

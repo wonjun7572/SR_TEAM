@@ -2,7 +2,7 @@
 #include "GameObject.h"
 #include "Export_Function.h"
 #include "Weapon.h"
-
+#include "PlayerMapping.h"
 USING(Engine)
 
 
@@ -37,13 +37,15 @@ public:
 	virtual void	LateUpdate_Object(void) override;
 	virtual void	Render_Object(void) override;
 
+public:
 	CWeapon*		Get_Weapon() { return m_Weapon; }
-
+	
 private:
 	map<const _tchar*, CGameObject*>	m_mapPlayerBody;
 
 private:
 	HRESULT			Get_BodyTransform(void);
+	HRESULT			Player_Mapping(void);
 
 	void			Key_Input(const _float& fTimeDelta);
 	void			Set_OnTerrain(void);
@@ -110,13 +112,27 @@ private:
 
 	CWeapon*		m_Weapon = nullptr;
 
-	_bool			m_bUzi = true;
+	_bool			m_bUzi;
+	_bool			m_bShotgun;
+	_bool			m_bSniper;
 
-	// 떨어져있는 무기를 주우면 벡터에 푸쉬백
 	vector<CWeapon*> m_vecWeapon;
 
-	//_vec3			m_vDirection = { 0.f, 0.f, 0.f };
-	//_vec3			m_vBeforePos = { 10.f, 10.f, 10.f };
+	//맵핑관련 변수입니다.
+	_bool				m_MappingInit = false;
+	CTransform*			m_pBaseMapping = nullptr;
+	list<TCHAR*>		m_listMonsterCnt;
+
+public:
+	void			Capture_Uzi(void) { m_bUzi = true; }
+	void			Capture_Shotgun(void) { m_bShotgun = true; }
+	void			Capture_Sniper(void) { m_bSniper = true; }
+
+
+	//ITEM
+	void		Get_Defense() { m_tAbility->iDefence += 10; }
+	void		Get_Hp() { m_tAbility->iHp += 10; }
+
 
 public:
 	static CCubePlayer*	Create(LPDIRECT3DDEVICE9 pGraphicDev);

@@ -187,8 +187,38 @@
     <Filter Include="01. Scene\00. Logo\00.LogoUI">
       <UniqueIdentifier>{33ae2b03-193e-4f1d-8ce0-e17e5b2ab5a5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\01. For_Stage\06. Bullet\MBullet">
-      <UniqueIdentifier>{34d61fcd-dc60-4e53-93b9-8404c123b543}</UniqueIdentifier>
+    <Filter Include="02. GameObject\01. For_Stage\11. Map">
+      <UniqueIdentifier>{18b81755-5e70-4ea3-9fd4-4b9c17357ca3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\11. Map\Mapping">
+      <UniqueIdentifier>{a7ebac72-8610-45fd-b641-4baba65d4ec1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\11. Map\Mapping\01.Player">
+      <UniqueIdentifier>{767ffe4e-3c0f-4c84-a5f4-33bbd891b59b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\11. Map\Mapping\02.Monster">
+      <UniqueIdentifier>{65079ef6-b2ef-41b4-a1fb-a7806b3b77a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\11. Map\Mapping\03.Wall">
+      <UniqueIdentifier>{b605d09d-8f91-4b75-b269-fe6afb9ddf02}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\10. Item\GunItem">
+      <UniqueIdentifier>{2297fd2f-74c1-4681-a7a4-c5d6aee9b900}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\10. Item\GunItem\GetUzi">
+      <UniqueIdentifier>{789ec30b-9ef2-4cbc-954c-1097a1a9debb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\10. Item\GunItem\GetShotgun">
+      <UniqueIdentifier>{d2187283-dba6-471c-84a7-ff16dc4f16d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\10. Item\GunItem\GetSniper">
+      <UniqueIdentifier>{53fa6b4b-f522-4262-a3ad-994b68bb55f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\10. Item\ETC">
+      <UniqueIdentifier>{ad69e781-164f-482b-b24b-5baaa5d577c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\09. UI\Monster">
+      <UniqueIdentifier>{a596b69e-7ada-4f1c-a032-0b60d2915296}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -206,6 +236,9 @@
     </ClInclude>
     <ClInclude Include="..\Header\MainApp.h">
       <Filter>00. MainApp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Logo.h">
+      <Filter>01. Scene\00. Logo</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\BackGround.h">
       <Filter>02. GameObject\00. For_Logo\00. BackGround</Filter>
@@ -348,9 +381,6 @@
     <ClInclude Include="..\Header\ShotgunPart4.h">
       <Filter>02. GameObject\01. For_Stage\07. Weapon\00. Parts\02.Shotgun</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\ShotgunPart5.h">
-      <Filter>02. GameObject\01. For_Stage\07. Weapon\00. Parts\02.Shotgun</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\SniperPart1.h">
       <Filter>02. GameObject\01. For_Stage\07. Weapon\00. Parts\03.Sniper</Filter>
     </ClInclude>
@@ -432,20 +462,44 @@
     <ClInclude Include="..\Header\BulletUI.h">
       <Filter>02. GameObject\01. For_Stage\09. UI\Weapon</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\GunUI.h">
-      <Filter>99. Default\헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\ExitButton.h">
       <Filter>01. Scene\00. Logo\00. Button\03. ExitButton</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\LogoUI.h">
       <Filter>01. Scene\00. Logo\00.LogoUI</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\Logo.h">
-      <Filter>01. Scene\00. Logo</Filter>
+    <ClInclude Include="..\Header\BaseMapping.h">
+      <Filter>02. GameObject\01. For_Stage\11. Map\Mapping</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\MBullet.h">
-      <Filter>02. GameObject\01. For_Stage\06. Bullet\MBullet</Filter>
+    <ClInclude Include="..\Header\PlayerMapping.h">
+      <Filter>02. GameObject\01. For_Stage\11. Map\Mapping\01.Player</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\MonsterMapping.h">
+      <Filter>02. GameObject\01. For_Stage\11. Map\Mapping\02.Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\WallMapping.h">
+      <Filter>02. GameObject\01. For_Stage\11. Map\Mapping\03.Wall</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\GetShotgun.h">
+      <Filter>02. GameObject\01. For_Stage\10. Item\GunItem\GetShotgun</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\GetSniper.h">
+      <Filter>02. GameObject\01. For_Stage\10. Item\GunItem\GetSniper</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\GetUzi.h">
+      <Filter>02. GameObject\01. For_Stage\10. Item\GunItem\GetUzi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\GunUI.h">
+      <Filter>02. GameObject\01. For_Stage\09. UI\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ObtainBullet.h">
+      <Filter>02. GameObject\01. For_Stage\10. Item\ETC</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ObtainDefense.h">
+      <Filter>02. GameObject\01. For_Stage\10. Item\ETC</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\MonsterUI.h">
+      <Filter>02. GameObject\01. For_Stage\09. UI\Monster</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -590,9 +644,6 @@
     <ClCompile Include="..\Code\ShotgunPart4.cpp">
       <Filter>02. GameObject\01. For_Stage\07. Weapon\00. Parts\02.Shotgun</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\ShotgunPart5.cpp">
-      <Filter>02. GameObject\01. For_Stage\07. Weapon\00. Parts\02.Shotgun</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\SniperPart1.cpp">
       <Filter>02. GameObject\01. For_Stage\07. Weapon\00. Parts\03.Sniper</Filter>
     </ClCompile>
@@ -674,17 +725,44 @@
     <ClCompile Include="..\Code\BulletUI.cpp">
       <Filter>02. GameObject\01. For_Stage\09. UI\Weapon</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\GunUI.cpp">
-      <Filter>99. Default\소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\ExitButton.cpp">
       <Filter>01. Scene\00. Logo\00. Button\03. ExitButton</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\LogoUI.cpp">
       <Filter>01. Scene\00. Logo\00.LogoUI</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\MBullet.cpp">
-      <Filter>02. GameObject\01. For_Stage\06. Bullet\MBullet</Filter>
+    <ClCompile Include="..\Code\BaseMapping.cpp">
+      <Filter>02. GameObject\01. For_Stage\11. Map\Mapping</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\PlayerMapping.cpp">
+      <Filter>02. GameObject\01. For_Stage\11. Map\Mapping\01.Player</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\MonsterMapping.cpp">
+      <Filter>02. GameObject\01. For_Stage\11. Map\Mapping\02.Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\WallMapping.cpp">
+      <Filter>02. GameObject\01. For_Stage\11. Map\Mapping\03.Wall</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\GetShotgun.cpp">
+      <Filter>02. GameObject\01. For_Stage\10. Item\GunItem\GetShotgun</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\GetSniper.cpp">
+      <Filter>02. GameObject\01. For_Stage\10. Item\GunItem\GetSniper</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\GetUzi.cpp">
+      <Filter>02. GameObject\01. For_Stage\10. Item\GunItem\GetUzi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\GunUI.cpp">
+      <Filter>02. GameObject\01. For_Stage\09. UI\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ObtainBullet.cpp">
+      <Filter>02. GameObject\01. For_Stage\10. Item\ETC</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ObtainDefense.cpp">
+      <Filter>02. GameObject\01. For_Stage\10. Item\ETC</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\MonsterUI.cpp">
+      <Filter>02. GameObject\01. For_Stage\09. UI\Monster</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

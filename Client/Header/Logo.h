@@ -24,7 +24,6 @@ private:
 	HRESULT			Ready_Layer_Environment(const _tchar* pLayerTag);
 	HRESULT			Ready_Layer_GameLogic(const _tchar* pLayerTag) { return S_OK; }
 	HRESULT			Ready_Layer_UI(const _tchar* pLayerTag);
-	HRESULT			Ready_Layer_Wall(const _tchar* pLayerTag);
 	HRESULT			Ready_Proto(void);
 
 private:
@@ -35,8 +34,6 @@ private:
 	CLogoUI*			m_LogoUI = nullptr;
 
 	_bool				m_bWireFrame = false;
-	_int				m_iIndex = 0;
-	list<_tchar*>		NameList;
 
 	wstring m_strPB;
 public:

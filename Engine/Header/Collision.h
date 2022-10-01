@@ -5,6 +5,8 @@
 BEGIN(Engine);
 
 class CHitBox;
+class CCubeTex;
+class CTransform;
 
 class ENGINE_DLL CCollision : public CComponent
 {
@@ -19,6 +21,12 @@ public:
 	_int					Wall_Collision(_vec3* vNorm);
 
 	_int					Wall_Collision_By_DotSliding(_vec3* vChangeDir);
+
+	void					Get_Item(void);
+
+	_bool					HitScan(HWND hWnd, _vec3 * SrcPos, const CCubeTex * pCubeTex, const CTransform * pTransform);
+
+	_bool					Hit_In_ViewPort(HWND hWnd, const CCubeTex * pCubeTex, const CTransform * pTransform);
 
 private:
 	_vec3	m_vMin1 = { 0, 0, 0 };

@@ -27,7 +27,12 @@ public:
 	void				Rotation_Axis_Special(	const _float& fXMove, const _float& fYMove,
 												const _float& fXAngle, const _float& fYAngle,
 												const _float& fExtraMove = 0.f, const _float& fExtraAngle = 0.f);
+	void				Rotation_Axis_Optional(	ROTATIONID eID_01, const _float& fMove_01, const _float& fAngle_01,
+												ROTATIONID eID_02 = ROT_END, const _float& fMove_02 = 0.f, const _float& fAngle_02 = 0.f,
+												ROTATIONID eID_03 = ROT_END, const _float& fMove_03 = 0.f, const _float& fAngle_03 = 0.f,
+												ROTATIONID eID_04 = ROT_END, const _float& fMove_04 = 0.f, const _float& fAngle_04 = 0.f);
 
+	// ¾È¾¸
 	void				Rotation_Axis_Except_Scale(	_vec3* vScale,
 													const _float& fXMove, const _float& fYMove,
 													const _float& fXAngle, const _float& fYAngle,
