@@ -74,8 +74,6 @@ void CCubePlayer::LateUpdate_Object(void)
 
 	Fire_Bullet();
 
-	m_pCollision->Check_Collision();
-
 	m_pCollision->Get_Item();
 
 	Gun_Check();
@@ -476,12 +474,9 @@ void CCubePlayer::Fire_Bullet(void)
 {
 	if (Get_DIMouseState(DIM_RB))
 	{
-		FAILED_CHECK_RETURN(Get_BodyTransform(), );
+		/*FAILED_CHECK_RETURN(Get_BodyTransform(), );
 
 		_vec3	vSrcPos;
-		//CTransform*	pMuzzle = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Gun", L"Uzi_Part_1_1", L"Proto_TransformCom", ID_STATIC));
-		//NULL_CHECK(pMuzzle);
-		//pMuzzle->Get_BeforeInfo(INFO_POS, &vSrcPos);
 		CTransform* pTargetTrans = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_GameLogic", L"TestPlayer0", L"Proto_TransformCom", ID_DYNAMIC));
 		NULL_CHECK(pTargetTrans);
 		CCubeTex* pTestPlayer = dynamic_cast<CCubeTex*>(Engine::Get_Component(L"Layer_GameLogic", L"TestPlayer0", L"Proto_CubeTexCom", ID_STATIC));
@@ -496,7 +491,7 @@ void CCubePlayer::Fire_Bullet(void)
 			{
 				cout << "AAAAAAAAAAAAAAAAAA" << endl;
 			}
-		}
+		}*/
 	}
 }
 

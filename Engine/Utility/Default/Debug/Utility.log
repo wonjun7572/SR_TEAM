@@ -1,6 +1,12 @@
-﻿빌드 시작: 2022-09-30 오후 3:15:01
+﻿빌드 시작: 2022-10-01 오전 1:02:09
      1>2 노드의 "D:\GitHub\SR_TEAM\Engine\Utility\Default\Utility.vcxproj" 프로젝트(Build 대상)입니다.
-     1>Link:
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /I../../Header /I../Code /I../../../Reference/Header /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _USRDLL /D UTILITY_EXPORTS /D _WINDLL /D _UNICODE /D UNICODE /D ENGINE_EXPORTS /D _WINDLL /D _UNICODE /D UNICODE /D ENGINE_EXPORTS /D _WINDLL /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\" /Fd"Debug\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt ..\Code\Collision.cpp
+         Collision.cpp
+     1>d:\github\sr_team\engine\utility\code\collision.cpp(93): warning C4101: 'fU' :참조되지 않은 지역 변수입니다.
+     1>d:\github\sr_team\engine\utility\code\collision.cpp(93): warning C4101: 'fV' :참조되지 않은 지역 변수입니다.
+     1>d:\github\sr_team\engine\utility\code\collision.cpp(93): warning C4101: 'fDist' :참조되지 않은 지역 변수입니다.
+       Link:
          C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"../Bin\Utility.dll" /INCREMENTAL /NOLOGO /LIBPATH:../../../Reference/Library d3d9.lib d3dx9.lib dxguid.lib System.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"../Bin\Utility.pdb" /SUBSYSTEM:WINDOWS /LARGEADDRESSAWARE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"../Bin\Utility.lib" /MACHINE:X86 /DLL Debug\Collision.obj
          Debug\Interface.obj
          Debug\RcRD.obj
@@ -91,4 +97,4 @@
 
 빌드했습니다.
 
-경과 시간: 00:00:01.16
+경과 시간: 00:00:03.40

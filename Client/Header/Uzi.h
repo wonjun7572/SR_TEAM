@@ -25,6 +25,7 @@ public:
 	void			Set_Uzi(void) { m_bEquiped = true; }
 	void			Off_Uzi(void) { m_bEquiped = false; }
 	_bool			Get_State(void) { return m_bEquiped; }
+	void			Get_Bullet() { m_tAbility->fRemainBulletCnt += 10; }
 private:
 	_bool			m_bEquiped = false;
 
