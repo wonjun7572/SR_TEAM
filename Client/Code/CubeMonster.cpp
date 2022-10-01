@@ -11,11 +11,11 @@ CCubeMonster::CCubeMonster(LPDIRECT3DDEVICE9 pGraphicDev)
 	m_fDetectRange = 30.f;
 	m_fMinLenghtRange = 5.f;
 	m_fAttackRange = 1.f;
-	m_MonsterState.fCurrentHp = 100.f;
-	m_MonsterState.fMaxHp = 100.f;
-	m_MonsterState.fCurrentHp = m_MonsterState.fMaxHp;
-	m_MonsterState.iLevel = 1;
-	m_MonsterState.fDamage = 1.f;
+	m_MonsterState->fCurrentHp = 100.f;
+	m_MonsterState->fMaxHp = 100.f;
+	m_MonsterState->fCurrentHp = m_MonsterState->fMaxHp;
+	m_MonsterState->iLevel = 1;
+	m_MonsterState->fDamage = 1.f;
 	m_eCurrentState = CurrentState::MONSTER_IDLE;
 	m_ePreviousState = m_eCurrentState;
 	m_fSpeed = 1.f;

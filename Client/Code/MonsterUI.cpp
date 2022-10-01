@@ -26,12 +26,12 @@ _int CMonsterUI::Update_Object(const _float & fTimeDelta)
 
 	if (m_pMonster != nullptr)
 	{
-		m_iHp = dynamic_cast<CCubeMonster*>(m_pMonster)->Get_MAbility()->m_MonsterState.fCurrentHp;
+	m_iHp = dynamic_cast<CCubeMonster*>(Engine::Get_GameObject(L"Layer_Monster", L"CubeMonster"))->Get_MAbility()->fCurrentHp;
 		m_strHp = to_wstring(m_iHp);
 	}
 
 	
-	return _int();
+	return iResult;
 }
 
 void CMonsterUI::LateUpdate_Object(void)
