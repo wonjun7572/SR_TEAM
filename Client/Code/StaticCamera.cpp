@@ -43,7 +43,7 @@ Engine::_int CStaticCamera::Update_Object(const _float& fTimeDelta)
 
 	Look_Taget();
 
-	Mouse_Fix();
+	//Mouse_Fix();
 
 	_int iExit = CCamera::Update_Object(fTimeDelta);
 

@@ -43,6 +43,7 @@ inline 	CGameObject*			Get_GameObject(const _tchar* pLayerTag, const _tchar* pOb
 inline 	CLayer*				Get_Layer(const _tchar* pLayerTag);
 
 inline HRESULT			Add_GameObject(const _tchar* pLayerTag, CGameObject* pGameObject, const _tchar* pObjTag);
+inline HRESULT			Delete_GameObject(const _tchar* pLayerTag, const _tchar* pObjTag);
 
 // ProtoMgr
 inline HRESULT			Ready_Proto(const _tchar* pProtoTag, CComponent* pComponent);

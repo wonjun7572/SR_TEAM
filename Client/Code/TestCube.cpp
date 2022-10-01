@@ -1,9 +1,11 @@
 #include "stdafx.h"
 #include "TestCube.h"
 #include "WallMapping.h"
+#include "LetterBox.h"
 
 #include "Export_Function.h"
-static _int m_iCnt = 0;
+static _int m_iMappingCnt = 0;
+static _int m_iLetterCnt = 0;
 
 CTestCube::CTestCube(LPDIRECT3DDEVICE9 pGraphicDev) : CGameObject(pGraphicDev)
 
@@ -117,6 +119,8 @@ bool CTestCube::Set_SelectGizmo()
 
 HRESULT CTestCube::Interact(void)
 {
+	CGameObject*		pGameObject = nullptr;
+
 	CTransform*		pPlayerTransformCom = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Character", L"BODY", L"Proto_TransformCom", ID_DYNAMIC));
 	NULL_CHECK_RETURN(pPlayerTransformCom, E_FAIL);
 	_vec3		vPlayerPos;
@@ -129,21 +133,54 @@ HRESULT CTestCube::Interact(void)
 	fDistance = D3DXVec3Length(&vDir);
 	
 	
-	if (fDistance <= 10.f)
+	if (fDistance <= 15.f)
 	{
 		m_bSwitch = true;
 	}
-	if (m_bSwitch)
+	if (fDistance > 15.f)
 	{
-		if(m_iTexIndex==37) //초록색문
-			if(vPos.y<15)
-			vPos.y += 0.1f;
-			m_pTransCom->Set_Pos(vPos.x, vPos.y, vPos.z);
+		m_bSwitch = false;
+	}
+
+	if (!m_bLetterboxInit&& m_iTexIndex == 37 && m_bSwitch)
+	{
+		m_bLetterboxInit = true;
+
+		m_pLetterBox = CLetterBox::Create(m_pGraphicDev, L"Press [E] to Interact", sizeof(L"Press [E] to Interact"), 0);
+
+		TCHAR* szCntName = new TCHAR[64];
+		wsprintf(szCntName, L"WallLetter");
+		Engine::Add_GameObject(L"Layer_Mapping", m_pLetterBox, szCntName);
+		m_listLetterCnt.push_back(szCntName);
+
+		++m_iLetterCnt;
+		cout << m_iLetterCnt << endl;
+		Safe_Delete_Array(szCntName);
 
 	}
 
+	if (m_bSwitch && Get_DIKeyState(DIK_E))
+	{
+		if (m_iTexIndex == 37) //초록색문
+			if (vPos.y < 15)
+				m_bDoorOpen = true;			
+	}	
 
+	if (m_bSwitch && m_pLetterBox != nullptr)
+	{
+		dynamic_cast<CLetterBox*>(m_pLetterBox)->On_Switch();
+	}
+	if (!m_bSwitch && m_pLetterBox !=nullptr)
+	{
+		dynamic_cast<CLetterBox*>(m_pLetterBox)->Off_Switch();
+	}
 
+	if(m_bDoorOpen)
+	{ 
+		if(vPos.y < 15)
+		vPos.y -= 0.1f;
+		m_pTransCom->Set_Pos(vPos.x, vPos.y, vPos.z);
+	}
 }
 
 HRESULT CTestCube::Add_Component()
@@ -180,21 +217,22 @@ HRESULT CTestCube::Wall_Mapping(void)
 	_vec3		vSize;
 	m_pTransCom->Get_Info(INFO_POS, &vPos);
 	m_pTransCom->Get_Scale(&vSize);
-	if (!m_MappingInit)
+	if (!m_bMappingInit)
 	{
+		m_bMappingInit = true;
+
 		CGameObject*	m_pMapWall = CWallMapping::Create(m_pGraphicDev);
 		TCHAR* szCntName = new TCHAR[64];
 		wsprintf(szCntName, L"");
 		const _tchar*	szNumbering = L"MapWall_%d";
-		wsprintf(szCntName, szNumbering, m_iCnt);
+		wsprintf(szCntName, szNumbering, m_iMappingCnt);
 		Engine::Add_GameObject(L"Layer_Mapping", m_pMapWall, szCntName);
 		m_listWallCnt.push_back(szCntName);
 
 
 		m_pWallMapping = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Mapping", szCntName, L"Proto_TransformCom", ID_DYNAMIC));
 		NULL_CHECK_RETURN(m_pWallMapping, E_FAIL);
-		++m_iCnt;
-		m_MappingInit = true;
+		++m_iMappingCnt;
 	}
 
 	m_pWallMapping->Set_Pos(vPos.x, vPos.y, vPos.z);
@@ -223,6 +261,7 @@ void CTestCube::Free()
 	}
 
 	m_listWallCnt.clear();
+
 
 	CGameObject::Free();
 }

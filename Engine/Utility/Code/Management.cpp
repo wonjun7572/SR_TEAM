@@ -46,6 +46,13 @@ HRESULT CManagement::Add_GameObject(const _tchar * pLayerTag, CGameObject * pGam
 	return S_OK;
 }
 
+HRESULT CManagement::Delete_GameObject(const _tchar * pLayerTag, const _tchar * pObjTag)
+{
+	FAILED_CHECK_RETURN(m_pScene->Get_MapLayer()[pLayerTag]->Delete_GameObject(pObjTag), E_FAIL);
+
+	return S_OK;
+}
+
 HRESULT CManagement::Set_Scene(CScene * pScene)
 {
 	Safe_Release(m_pScene);	 // 기존 scene을 삭제

@@ -220,6 +220,9 @@
     <Filter Include="02. GameObject\01. For_Stage\09. UI\Monster">
       <UniqueIdentifier>{731aa290-825a-4b95-a42c-ded1bb9aa586}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\09. UI\LetterBox">
+      <UniqueIdentifier>{58414d14-86a4-407c-a8a9-05b909ad4858}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -501,6 +504,9 @@
     <ClInclude Include="..\Header\MonsterUI.h">
       <Filter>02. GameObject\01. For_Stage\09. UI\Monster</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\LetterBox.h">
+      <Filter>02. GameObject\01. For_Stage\09. UI\LetterBox</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -763,6 +769,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\MonsterUI.cpp">
       <Filter>02. GameObject\01. For_Stage\09. UI\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\LetterBox.cpp">
+      <Filter>02. GameObject\01. For_Stage\09. UI\LetterBox</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
