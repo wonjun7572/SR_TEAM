@@ -5,6 +5,7 @@
 #include "Uzi.h"
 #include "Shotgun.h"
 #include "Sniper.h"
+#include "BulletParticle.h"
 
 CCubePlayer::CCubePlayer(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
@@ -475,24 +476,27 @@ void CCubePlayer::Fire_Bullet(void)
 {
 	if (Get_DIMouseState(DIM_RB))
 	{
-		/*FAILED_CHECK_RETURN(Get_BodyTransform(), );
-
-		_vec3	vSrcPos;
-		CTransform* pTargetTrans = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_GameLogic", L"TestPlayer0", L"Proto_TransformCom", ID_DYNAMIC));
-		NULL_CHECK(pTargetTrans);
-		CCubeTex* pTestPlayer = dynamic_cast<CCubeTex*>(Engine::Get_Component(L"Layer_GameLogic", L"TestPlayer0", L"Proto_CubeTexCom", ID_STATIC));
-		NULL_CHECK(pTestPlayer);
-
-		_vec3	vPos;
-		m_pHeadWorld->Get_BeforeInfo(INFO_POS, &vPos);
+		//FAILED_CHECK_RETURN(Get_BodyTransform(), );
+		//_vec3	vSrcPos;
+		//CTransform* pTargetTrans = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_GameLogic", L"TestPlayer0", L"Proto_TransformCom", ID_DYNAMIC));
+		//NULL_CHECK(pTargetTrans);
+		//CCubeTex* pTestPlayer = dynamic_cast<CCubeTex*>(Engine::Get_Component(L"Layer_GameLogic", L"TestPlayer0", L"Proto_CubeTexCom", ID_STATIC));
+		//NULL_CHECK(pTestPlayer);
+		//
+		//_vec3	vPos;
+		//m_pHeadWorld->Get_BeforeInfo(INFO_POS, &vPos);
 
 		if (Get_DIMouseState(DIM_LB))
 		{
-			if (m_pCalculatorCom->Peek_Cube_Target(g_hWnd, &_vec3(0, 0, 0), pTestPlayer, pTargetTrans))
-			{
-				cout << "AAAAAAAAAAAAAAAAAA" << endl;
-			}
-		}*/
+			CGameObject* pGameObject = Engine::Get_GameObject(L"Layer_Environment", L"BulletParticle");
+
+			dynamic_cast<CBulletParticle*>(pGameObject)->addParticle();
+
+			//if (m_pCalculatorCom->Peek_Cube_Target(g_hWnd, &_vec3(0, 0, 0), pTestPlayer, pTargetTrans))
+			//{
+			//	cout << "AAAAAAAAAAAAAAAAAA" << endl;
+			//}
+		}
 	}
 }
 
@@ -697,16 +701,16 @@ CCubePlayer * CCubePlayer::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 
 	return pInstance;
 }
-
+     
 void CCubePlayer::Free(void)
 {
-	Safe_Delete<ABILITY*>(m_tAbility);
-
 	for (auto& iter : m_listMonsterCnt)
 	{
 		if (iter != nullptr)
 			delete iter;
 	}
+
+	Safe_Delete<ABILITY*>(m_tAbility);
 
 	m_listMonsterCnt.clear();
 	CGameObject::Free();

@@ -17,6 +17,8 @@ private:
 	void		Begin_OrthoProj();
 	void		End_OrthoProj();
 
+	void		TestUIForSetting();
+
 private:
 	HRESULT Add_Component();
 
@@ -33,6 +35,11 @@ private:
 	_int	m_iHp;
 	_int	m_iMaxHp;
 	wstring m_strHp;
+
+	_float testCX = 0.f;
+	_float testCY = 0.f;
+	_float testX = 0.f;
+	_float testY = 0.f;
 
 public:
 	static CPlayerHpUI*		Create(LPDIRECT3DDEVICE9 pGraphicDev);

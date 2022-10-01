@@ -52,9 +52,12 @@ void CBulletUI::LateUpdate_Object(void)
 void CBulletUI::Render_Object(void)
 {
 	Begin_OrthoProj();
-	m_pTextureCom->Set_Texture(0);
-	m_pBufferCom->Resize_Buffer_Reverse(m_fRemainBullet / m_fTotalBullet);
-	m_pBufferCom->Render_Buffer();
+	if (dynamic_cast<CCubePlayer*>(m_pPlayer)->Get_Weapon() != nullptr)
+	{	
+		m_pTextureCom->Set_Texture(0);
+		m_pBufferCom->Resize_Buffer_Reverse(m_fRemainBullet / m_fTotalBullet);
+		m_pBufferCom->Render_Buffer();
+	}
 	End_OrthoProj();
 	Render_Font(L"REMAINBULLET", m_strReminaBullet.c_str(), &(_vec2(1100.f, 700.f)), D3DXCOLOR(0.5f, 0.5f, 0.3f, 1.f));
 	Render_Font(L"TOTALBULLET", m_strTotalBullet.c_str(), &(_vec2(1100.f, 700.f)), D3DXCOLOR(0.5f, 0.5f, 0.3f, 1.f));
@@ -75,7 +78,7 @@ void CBulletUI::Begin_OrthoProj()
 	D3DXMatrixIdentity(&matView);
 
 	matView.m[0][0] = 160.f; // 이미지 가로
-	matView.m[1][1] = 20.f;   // 이미지 세로
+	matView.m[1][1] = 10.f;   // 이미지 세로
 	matView.m[2][2] = 1.f;
 	matView.m[3][0] = m_pTransCom->m_vInfo[INFO_POS].x + 520.f;
 	matView.m[3][1] = m_pTransCom->m_vInfo[INFO_POS].y - 415.f;

@@ -142,8 +142,7 @@ HRESULT CTestCube::Interact(void)
 
 	}
 
-
-
+	return S_OK;
 }
 
 HRESULT CTestCube::Add_Component()
