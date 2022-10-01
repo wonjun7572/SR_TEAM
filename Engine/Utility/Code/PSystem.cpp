@@ -85,7 +85,7 @@ void CPSystem::addParticle()
 void CPSystem::preRender()
 {
 	// 렌더링에 앞서 지정할 초기 렌더 상태
-	//m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, false);
+	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, false);
 
 	// 현재 지정된 전체 텍스처 포인트 스프라이트의 텍스처 매핑에 이용할 것임
 	m_pGraphicDev->SetRenderState(D3DRS_POINTSPRITEENABLE, true);
@@ -203,7 +203,7 @@ void CPSystem::render()
 
 void CPSystem::postRender() // 렌더상태를 복구하기 위해 필요한 함수
 {
-	//m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, true);
+	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, true);
 	m_pGraphicDev->SetRenderState(D3DRS_POINTSPRITEENABLE, false);
 	m_pGraphicDev->SetRenderState(D3DRS_POINTSCALEENABLE, false);
 	m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, false);

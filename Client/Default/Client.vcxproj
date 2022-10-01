@@ -200,6 +200,7 @@
     <ClInclude Include="..\Header\PlayerMapping.h" />
     <ClInclude Include="..\Header\PlayerUI.h" />
     <ClInclude Include="..\Header\PoolMgr.h" />
+    <ClInclude Include="..\Header\ShopCube.h" />
     <ClInclude Include="..\Header\Shotgun.h" />
     <ClInclude Include="..\Header\ShotgunPart1.h" />
     <ClInclude Include="..\Header\ShotgunPart2.h" />
@@ -297,6 +298,7 @@
     <ClCompile Include="..\Code\PlayerMapping.cpp" />
     <ClCompile Include="..\Code\PlayerUI.cpp" />
     <ClCompile Include="..\Code\PoolMgr.cpp" />
+    <ClCompile Include="..\Code\ShopCube.cpp" />
     <ClCompile Include="..\Code\Shotgun.cpp" />
     <ClCompile Include="..\Code\ShotgunPart1.cpp" />
     <ClCompile Include="..\Code\ShotgunPart2.cpp" />

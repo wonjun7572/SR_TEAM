@@ -223,6 +223,9 @@
     <Filter Include="02. GameObject\01. For_Stage\12. Particle">
       <UniqueIdentifier>{e67edead-06ae-4acc-bd1b-e08effea4297}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\13. Shop">
+      <UniqueIdentifier>{2508fd4b-dd5a-4d48-88de-2e2e7bdbcc86}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -510,6 +513,9 @@
     <ClInclude Include="..\Header\PlayerDefenseUI.h">
       <Filter>02. GameObject\01. For_Stage\09. UI\Player</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\ShopCube.h">
+      <Filter>99. Default\헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -778,6 +784,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\PlayerDefenseUI.cpp">
       <Filter>02. GameObject\01. For_Stage\09. UI\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ShopCube.cpp">
+      <Filter>99. Default\소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
