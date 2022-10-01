@@ -1,7 +1,18 @@
-﻿     ../Bin\Utility.lib 라이브러리 및 ../Bin\Utility.exp 개체를 생성하고 있습니다.
-  Utility.vcxproj -> C:\Users\DecoyZ\Desktop\SR_TEAM\Engine\Utility\Default\../Bin\Utility.dll
+﻿  건너뛰고 있습니다... (관련된 변경 내용 없음)
+  VIBuffer.cpp
+  TriCol.cpp
+  SoundMgr.cpp
+  Scene.cpp
+  Renderer.cpp
+  RcCol.cpp
+  ProtoMgr.cpp
+  LightMgr.cpp
+  Light.cpp
+  Component.cpp
+  Utility.vcxproj -> C:\Users\beoms\OneDrive\문서\GitHub\SR_TEAM\Engine\Utility\Default\../Bin\Utility.dll
   Utility.vcxproj -> ../Bin\Utility.pdb (Full PDB)
-          1개 파일이 복사되었습니다.
+  다른 프로세스가 파일을 사용 중이기 때문에 프로세스가 액세스 할 수 없습니다.
+          0개 파일이 복사되었습니다.
           1개 파일이 복사되었습니다.
   .\Engine\Header\Calculator.h
   .\Engine\Header\Camera.h
