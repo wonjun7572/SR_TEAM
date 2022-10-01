@@ -202,6 +202,7 @@
     <Filter Include="02. GameObject\01. For_Stage\11. Map\Mapping\03.Wall">
       <UniqueIdentifier>{b605d09d-8f91-4b75-b269-fe6afb9ddf02}</UniqueIdentifier>
     </Filter>
+<<<<<<< Updated upstream
     <Filter Include="02. GameObject\01. For_Stage\10. Item\GunItem">
       <UniqueIdentifier>{2297fd2f-74c1-4681-a7a4-c5d6aee9b900}</UniqueIdentifier>
     </Filter>
@@ -216,6 +217,10 @@
     </Filter>
     <Filter Include="02. GameObject\01. For_Stage\12. LetterBox">
       <UniqueIdentifier>{9bc5ebbf-708d-4f36-bc03-a05eeec388fd}</UniqueIdentifier>
+=======
+    <Filter Include="02. GameObject\02. For_Public\02. LetterBox">
+      <UniqueIdentifier>{925a7bda-c328-490c-857d-6d7afc4801f1}</UniqueIdentifier>
+>>>>>>> Stashed changes
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -478,6 +483,7 @@
       <Filter>02. GameObject\01. For_Stage\11. Map\Mapping\03.Wall</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\GetShotgun.h">
+<<<<<<< Updated upstream
       <Filter>02. GameObject\01. For_Stage\10. Item\GunItem\GetShotgun</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\GetSniper.h">
@@ -500,6 +506,18 @@
     </ClInclude>
     <ClInclude Include="..\Header\LetterBox.h">
       <Filter>02. GameObject\01. For_Stage\12. LetterBox</Filter>
+=======
+      <Filter>99. Default\헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\GetSniper.h">
+      <Filter>99. Default\헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\GetUzi.h">
+      <Filter>99. Default\헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\LetterBox.h">
+      <Filter>02. GameObject\02. For_Public\02. LetterBox</Filter>
+>>>>>>> Stashed changes
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -744,6 +762,7 @@
       <Filter>02. GameObject\01. For_Stage\11. Map\Mapping\03.Wall</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\GetShotgun.cpp">
+<<<<<<< Updated upstream
       <Filter>02. GameObject\01. For_Stage\10. Item\GunItem\GetShotgun</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\GetSniper.cpp">
@@ -766,6 +785,18 @@
     </ClCompile>
     <ClCompile Include="..\Code\LetterBox.cpp">
       <Filter>02. GameObject\01. For_Stage\12. LetterBox</Filter>
+=======
+      <Filter>99. Default\소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\GetSniper.cpp">
+      <Filter>99. Default\소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\GetUzi.cpp">
+      <Filter>99. Default\소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\LetterBox.cpp">
+      <Filter>02. GameObject\02. For_Public\02. LetterBox</Filter>
+>>>>>>> Stashed changes
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
