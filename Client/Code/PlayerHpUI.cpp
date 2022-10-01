@@ -18,7 +18,7 @@ HRESULT CPlayerHpUI::Ready_Object(void)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 	//FONT
-	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"HP", L"Electronic Highway Sign", 5, 10, FW_NORMAL), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"HP", L"Electronic Highway Sign", testCX, testCY, FW_NORMAL), E_FAIL);
 	return S_OK;
 }
 
@@ -35,6 +35,8 @@ _int CPlayerHpUI::Update_Object(const _float & fTimeDelta)
 		m_strHp = to_wstring(m_iHp);
 	}
 
+	TestUIForSetting();
+
 	return iResult;
 }
 
@@ -50,7 +52,7 @@ void CPlayerHpUI::Render_Object(void)
 	m_pBufferCom->Resize_Buffer(m_iHp * 0.01f);
 	m_pBufferCom->Render_Buffer();
 	End_OrthoProj();
-	Render_Font(L"HP", m_strHp.c_str(), &(_vec2(88.f, 580.f)), D3DXCOLOR(0.5f, 0.5f, 0.3f, 1.f));
+	Render_Font(L"HP", m_strHp.c_str(), &(_vec2(testX, testY)), D3DXCOLOR(0.5f, 0.5f, 0.3f, 1.f));
 }
 
 void CPlayerHpUI::Begin_OrthoProj()
@@ -84,6 +86,28 @@ void CPlayerHpUI::End_OrthoProj()
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, &m_matWorld);
 	m_pGraphicDev->SetTransform(D3DTS_VIEW, &m_matView);
 	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &m_matProj);
+}
+
+void CPlayerHpUI::TestUIForSetting()
+{
+	if (Get_DIKeyState(DIK_UP) & 0x80)
+		testY += 0.1f;
+	if (Get_DIKeyState(DIK_DOWN) & 0x80)
+		testY -= 0.1f;
+	if (Get_DIKeyState(DIK_LEFT) & 0x80)
+		testX -= 0.1f;
+	if (Get_DIKeyState(DIK_RIGHT) & 0x80)
+		testX += 0.1f;
+	if (Get_DIKeyState(DIK_H) & 0x80)
+		testCY += 0.1f;
+	if (Get_DIKeyState(DIK_N) & 0x80)
+		testCY -= 0.1f;
+	if (Get_DIKeyState(DIK_B) & 0x80)
+		testCX -= 0.1f;
+	if (Get_DIKeyState(DIK_M) & 0x80)
+		testCX += 0.1f;
+
+	cout << testX << " " << testY << " " << testCX << " " << testCY << endl;
 }
 
 
@@ -123,3 +147,4 @@ void CPlayerHpUI::Free(void)
 {
 	CGameObject::Free();
 }
+
