@@ -17,6 +17,7 @@ HRESULT CBulletUI::Ready_Object(void)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 	//FONT
+
 	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"REMAINBULLET", L"Electronic Highway Sign", 8, 12, FW_NORMAL), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"TOTALBULLET", L"Electronic Highway Sign", 8, 12, FW_NORMAL), E_FAIL);
 	
