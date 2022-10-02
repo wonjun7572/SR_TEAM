@@ -48,6 +48,7 @@
 
 #include "LetterBox.h"
 #include "BulletParticle.h"
+#include "ShopCube.h"
 
 CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CScene(pGraphicDev)
@@ -127,6 +128,10 @@ HRESULT CStage::Ready_Layer_Environment(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"BulletParticle", pGameObject), E_FAIL);
 
+	pGameObject = CShopCube::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"ShopCube", pGameObject), E_FAIL);
+
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
 	return S_OK;
@@ -187,13 +192,10 @@ HRESULT CStage::Ready_Layer_UI(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"GunUI", pGameObject), E_FAIL);
 
-
-
 	//Monster
 	pGameObject = CMonsterUI::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"MonsterHpUI", pGameObject), E_FAIL);
-
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 

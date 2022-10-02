@@ -1,5 +1,19 @@
-﻿  Loading.cpp
-c:\users\beoms\onedrive\문서\github\sr_team\client\code\loading.cpp(112): warning C4129: 'T': 문자 이스케이프 시퀀스를 인식할 수 없습니다.
+﻿  Stage.cpp
+c:\users\sam51\desktop\sr_team\client\header\cubeplayer.h(135): warning C4552: '+': 의미 없는 연산자입니다. 파생 작업이 있는 연산자여야 합니다.
+  건너뛰고 있습니다... (관련된 변경 내용 없음)
+  imgui_widgets.cpp
+  imgui_tables.cpp
+  imgui_impl_win32.cpp
+  imgui_impl_dx9.cpp
+  imgui_draw.cpp
+  imgui.cpp
+  ImSequencer.cpp
+  ImGuizmo.cpp
+  ImGuiFileDialog.cpp
+  ImGuiFileBrowser.cpp
+  ImGradient.cpp
+  ImCurveEdit.cpp
+  GraphEditor.cpp
      ../Bin\Client.lib 라이브러리 및 ../Bin\Client.exp 개체를 생성하고 있습니다.
-  Client.vcxproj -> C:\Users\beoms\OneDrive\문서\GitHub\SR_TEAM\Client\Default\../Bin\Client.exe
+  Client.vcxproj -> C:\Users\sam51\Desktop\SR_TEAM\Client\Default\../Bin\Client.exe
   Client.vcxproj -> ../Bin\Client.pdb (Full PDB)

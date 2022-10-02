@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "..\Header\ShopCube.h"
 
-
 CShopCube::CShopCube(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
 {
