@@ -25,6 +25,7 @@ public:
 		COMPONENTID eID);
 
 	HRESULT					Add_GameObject(const _tchar* pLayerTag, CGameObject* pGameObject, const _tchar* pObjTag);
+	HRESULT					Delete_GameObject(const _tchar* pLayerTag, const _tchar* pObjTag);
 
 public:
 	HRESULT		Set_Scene(CScene* pScene);

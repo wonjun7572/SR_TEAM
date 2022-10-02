@@ -13,12 +13,22 @@ CLetterBox::~CLetterBox()
 {
 }
 
-HRESULT CLetterBox::Ready_Object(_tchar* tDialogue, _int iIndex)
+HRESULT CLetterBox::Ready_Object(_tchar* tDialogue, _int iSize, _int iIndex)
 {
-	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"Letterbox2", L"Roboto-Bold", 15, 25, FW_EXTRABOLD), E_FAIL);
-	m_strLetter2 = tDialogue;
+	m_fFontAlpha = 1.f;
+	m_fFontSize = 25.f;
+
+	m_iIndex = iIndex;
+	m_strLetterName = new TCHAR[64];
+	wsprintf(m_strLetterName, L"LetterBox%d",iLetterBoxCnt);
 	
+	m_strLetterContents = tDialogue;
+	m_iTextAmount = iSize - 3;
+
+	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, m_strLetterName, L"Roboto-Bold", m_fFontSize, 40, FW_HEAVY), E_FAIL);
+	iLetterBoxCnt++;
+
 	return S_OK;
 }
 
@@ -26,6 +36,7 @@ _int CLetterBox::Update_Object(const _float & fTimeDelta)
 {
 	CGameObject::Update_Object(fTimeDelta);
 	 Add_RenderGroup(RENDER_UI, this);
+	 Alpha_Effect();
 
 	return 0;
 }
@@ -37,14 +48,15 @@ void CLetterBox::LateUpdate_Object(void)
 
 void CLetterBox::Render_Object(void)
 {
+	if (m_iIndex == 0)
+		PlayerNotice();
 
+
+		
 	//m_pGraphicDev->SetTransform(D3DTS_WORLD, m_TranformCom->Get_WorldMatrixPointer());
-	Begin_OrthoProj();
 	//m_pRcCom->Render_Buffer();
-	_float fA = sizeof(m_strLetter2);
-	Engine::Render_Font(L"Letterbox2", m_strLetter2.c_str(), &(_vec2(WINCX/4-fA*fA*0.15, WINCY/2)), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
-
-	End_OrthoProj();
+	//Begin_OrthoProj();
+	//End_OrthoProj();
 }
 
 HRESULT CLetterBox::Add_Component(void)
@@ -63,6 +75,29 @@ HRESULT CLetterBox::Add_Component(void)
 	NULL_CHECK_RETURN(m_TranformCom, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_TransformCom", pComponent });
 	return S_OK;
+}
+
+void CLetterBox::Alpha_Effect()
+{
+	if (m_bPowerSwitch)
+	{
+		if (!m_bAlphaSwitch)
+		{
+			m_fFontAlpha -= 0.015f;
+			if (m_fFontAlpha <= 0)
+				m_bAlphaSwitch = true;
+		}
+		if (m_bAlphaSwitch)
+		{
+			m_fFontAlpha += 0.015f;
+			if (m_fFontAlpha >= 1)
+				m_bAlphaSwitch = false;
+		}
+	}
+	if (!m_bPowerSwitch)
+	{
+		m_fFontAlpha = 1.f;
+	}
 }
 
 void CLetterBox::Begin_OrthoProj()
@@ -99,11 +134,27 @@ void CLetterBox::End_OrthoProj()
 	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &m_matProj);
 }
 
-CLetterBox * CLetterBox::Create(LPDIRECT3DDEVICE9 pGraphicDev, _tchar* tDialogue, _int iIndex)
+void CLetterBox::PlayerNotice()
+{
+	if (m_bPowerSwitch)
+	{
+		Engine::Render_Font(m_strLetterName, m_strLetterContents.c_str(), &(_vec2((WINCX / 2) - (m_iTextAmount)*(m_fFontSize / 4), (WINCY / 2) + 150 * (WINCX / WINCY))), D3DXCOLOR(1.f, 1.f, 1.f, m_fFontAlpha));
+	}
+}
+
+void CLetterBox::HitCombo()
+{
+}
+
+void CLetterBox::DialogueBox()
+{
+}
+
+CLetterBox * CLetterBox::Create(LPDIRECT3DDEVICE9 pGraphicDev, _tchar* tDialogue, _int iSize, _int iIndex)
 {
 	CLetterBox* pInstance = new CLetterBox(pGraphicDev);
 
-	if (FAILED(pInstance->Ready_Object(tDialogue, iIndex)))
+	if (FAILED(pInstance->Ready_Object(tDialogue, iSize, iIndex)))
 	{
 		Safe_Release(pInstance);
 		return nullptr;
@@ -114,7 +165,7 @@ CLetterBox * CLetterBox::Create(LPDIRECT3DDEVICE9 pGraphicDev, _tchar* tDialogue
 
 void CLetterBox::Free(void)
 {
+	Safe_Delete(m_strLetterName);	
 	CGameObject::Free();
-
 }
 

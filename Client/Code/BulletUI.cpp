@@ -18,7 +18,7 @@ HRESULT CBulletUI::Ready_Object(void)
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 	//FONT
 	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"REMAINBULLET", L"Electronic Highway Sign", 8, 12, FW_NORMAL), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"TOTALBULLET", L"Electronic Highway Sign", 8, 10, FW_NORMAL), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"TOTALBULLET", L"Electronic Highway Sign", 8, 12, FW_NORMAL), E_FAIL);
 	
 	return S_OK;
 }
@@ -59,8 +59,9 @@ void CBulletUI::Render_Object(void)
 		m_pBufferCom->Render_Buffer();
 	}
 	End_OrthoProj();
-	Render_Font(L"REMAINBULLET", m_strReminaBullet.c_str(), &(_vec2(1100.f, 700.f)), D3DXCOLOR(0.5f, 0.5f, 0.3f, 1.f));
-	Render_Font(L"TOTALBULLET", m_strTotalBullet.c_str(), &(_vec2(1100.f, 700.f)), D3DXCOLOR(0.5f, 0.5f, 0.3f, 1.f));
+	Render_Font(L"REMAINBULLET", m_strReminaBullet.c_str(), &(_vec2(1515.f, 855.f)), D3DXCOLOR(0.5f, 0.5f, 0.3f, 1.f));
+	//Render_Font(L"REMAINBULLET", m_strReminaBullet.c_str(), &(_vec2(200.f, 300.f)), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+	Render_Font(L"TOTALBULLET", m_strTotalBullet.c_str(), &(_vec2(1545.f, 855.f)), D3DXCOLOR(0.5f, 0.5f, 0.3f, 1.f));
 }
 
 void CBulletUI::Begin_OrthoProj()
