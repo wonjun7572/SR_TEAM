@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "BulletParticle.h"
 #include "StaticCamera.h"
+#include "CubePlayer.h"
 
 CBulletParticle::CBulletParticle(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CPSystem(pGraphicDev)
@@ -30,7 +31,7 @@ _int CBulletParticle::Update_Object(const _float & fTimeDelta)
 
 		iter->fAge += fTimeDelta;
 
-		if (iter->fAge > iter->fLifeTime) // kill 
+		if (iter->fAge > iter->fLifeTime)
 			iter->bAlive = false;
 	}
 	removeDeadParticles();
@@ -94,26 +95,61 @@ void CBulletParticle::resetParticle(ATTRIBUTE * attribute)
 {
 	attribute->bAlive = true;
 
-	CStaticCamera* pCam = nullptr;
-	pCam = dynamic_cast<CStaticCamera*>(Engine::Get_GameObject(L"Layer_Environment", L"StaticCamera"));
+	CGameObject* pPlayer = nullptr;
+	pPlayer = Engine::Get_GameObject(L"Layer_Character",L"PLAYER");
+	NULL_CHECK_RETURN(pPlayer, );
 
-	D3DXVECTOR3 cameraPos;
-	pCam->Get_Position(&cameraPos);
+	CTransform* pTransform = nullptr;
+	
+	if (dynamic_cast<CCubePlayer*>(pPlayer)->Get_Weapon() == Engine::Get_GameObject(L"Layer_Gun", L"UZI1"))
+	{
+		pTransform = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Gun", L"Uzi_Part_1_1", L"Proto_TransformCom", ID_DYNAMIC));
+		NULL_CHECK_RETURN(pTransform, );
+		D3DXVECTOR3 vPos;
+		pTransform->Get_Info(INFO_POS, &vPos);
 
-	D3DXVECTOR3 cameraDir;
-	pCam->Get_Look(&cameraDir);
+		D3DXVECTOR3 vDir;
+		pTransform->Get_Info(INFO_LOOK, &vDir);
 
-	// change to camera position
-	attribute->vPos = cameraPos;
-	attribute->vPos.y += 1.5f; // slightly below camera
-	// so its like we're carrying a gun
+		attribute->vPos = vPos;
 
-	// travels in the direction the camera is looking
-	attribute->vVelocity = cameraDir * 100.0f;
+		attribute->dwColor = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
 
-	// green
-	attribute->dwColor = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+		attribute->fAge = 0.0f;
+		attribute->fLifeTime = 0.5f; 
+	}
+	else if (dynamic_cast<CCubePlayer*>(pPlayer)->Get_Weapon() == Engine::Get_GameObject(L"Layer_Gun", L"SHOTGUN"))
+	{
+		pTransform = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Gun", L"Shotgun_Part_1", L"Proto_TransformCom", ID_DYNAMIC));
+		NULL_CHECK_RETURN(pTransform, );
+		D3DXVECTOR3 vPos;
+		pTransform->Get_Info(INFO_POS, &vPos);
 
-	attribute->fAge = 0.0f;
-	attribute->fLifeTime = 1.0f; // lives for 1 seconds
+		D3DXVECTOR3 vDir;
+		pTransform->Get_Info(INFO_LOOK, &vDir);
+
+		attribute->vPos = vPos + vDir;
+
+		attribute->dwColor = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+
+		attribute->fAge = 0.0f;
+		attribute->fLifeTime = 0.5f; 
+	}
+	else if (dynamic_cast<CCubePlayer*>(pPlayer)->Get_Weapon() == Engine::Get_GameObject(L"Layer_Gun", L"SNIPER"))
+	{
+		pTransform = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Gun", L"Sniper_Part_2", L"Proto_TransformCom", ID_DYNAMIC));
+		NULL_CHECK_RETURN(pTransform, );
+		D3DXVECTOR3 vPos;
+		pTransform->Get_Info(INFO_POS, &vPos);
+
+		D3DXVECTOR3 vDir;
+		pTransform->Get_Info(INFO_LOOK, &vDir);
+
+		attribute->vPos = vPos + vDir;
+
+		attribute->dwColor = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+
+		attribute->fAge = 0.0f;
+		attribute->fLifeTime = 0.5f; 
+	}
 }

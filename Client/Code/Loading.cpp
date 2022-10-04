@@ -2,6 +2,7 @@
 #include "..\Header\Loading.h"
 
 #include "Export_Function.h"
+#include "..\..\Engine\Header\Engine_Macro.h"
 
 CLoading::CLoading(LPDIRECT3DDEVICE9 pGraphicDev)
 	: m_pGraphicDev(pGraphicDev)
@@ -29,9 +30,7 @@ HRESULT CLoading::Ready_Loading(LOADINGID eID)
 
 _uint CLoading::Loading_ForStage(void)
 {
-	
 	// 버퍼 컴포넌트들
-	
 	{
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_TriColCom", CTriCol::Create(m_pGraphicDev)), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_RcColCom", CRcCol::Create(m_pGraphicDev)), E_FAIL);
@@ -42,9 +41,8 @@ _uint CLoading::Loading_ForStage(void)
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"RcTex_Defense", CRcTex::Create(m_pGraphicDev)), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"RcTex_Bullet", CRcTex::Create(m_pGraphicDev)), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FLARE_Alpha", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Particle/fireball_hit_big%d.png", TEX_NORMAL, 8)), E_FAIL);
-
+	
 	}
-
 	
 	
 	{
@@ -60,7 +58,6 @@ _uint CLoading::Loading_ForStage(void)
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_CalculatorCom", CCalculator::Create(m_pGraphicDev)), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_HitboxCom", CHitBox::Create(m_pGraphicDev)), E_FAIL);
 	}
-
 	
 	// PLAYER UI
 	{
@@ -74,56 +71,74 @@ _uint CLoading::Loading_ForStage(void)
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"HP_0_Face", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/UI/Player/Face/HP0.png", TEX_NORMAL)), E_FAIL);
 	}
 
-
-
 	{
-	// HP
-	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"HP_Gage", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/UI/Player/Gage/theHUDui_10.png", TEX_NORMAL)), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Monster_HP", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Texture2D/Palette Texture.png", TEX_NORMAL)), E_FAIL);
-
-	// DEFENSE
-	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"DEFENSE_Gage", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/UI/Player/Gage/theHUDui_9.png", TEX_NORMAL)), E_FAIL);
+		// HP
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"HP_Gage", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/UI/Player/Gage/theHUDui_10.png", TEX_NORMAL)), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Monster_HP", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Texture2D/Palette Texture.png", TEX_NORMAL)), E_FAIL);
+		// DEFENSE
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"DEFENSE_Gage", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/UI/Player/Gage/theHUDui_9.png", TEX_NORMAL)), E_FAIL);
 	}
-
-
 
 	// WEAPON UI
 	{
-	// HUD
-	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"theHUDui_11", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/UI/Weapon/theHUDui_11.png", TEX_NORMAL)), E_FAIL);
-	
-	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"BULLET_Gage", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/UI/Weapon/theHUDui_12.png", TEX_NORMAL)), E_FAIL);
-	// GUN
-	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Gun_UI", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/UI/Gun/Gun_%d.png", TEX_NORMAL, 6)), E_FAIL);
+		// HUD
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"theHUDui_11", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/UI/Weapon/theHUDui_11.png", TEX_NORMAL)), E_FAIL);
+
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"BULLET_Gage", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/UI/Weapon/theHUDui_12.png", TEX_NORMAL)), E_FAIL);
+		// GUN
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Gun_UI", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/UI/Gun/Gun_%d.png", TEX_NORMAL, 6)), E_FAIL);
 	}
 	
 	//ITEM
 	{
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_Hp", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/UI/Sprite/Hp2.jpg", TEX_NORMAL)), E_FAIL);
-
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_MaxHp", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/UI/Sprite/Hp.png", TEX_NORMAL)), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_Defense", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/UI/Sprite/DSC04709.jpg", TEX_NORMAL)), E_FAIL);
 	}
 
-	
-	
 	{
 		// Map
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Minimap", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/\Texture2D/hud_minimap_bg.png", TEX_NORMAL)), E_FAIL);
 	}
 
+	// PNGtoCube
+	{
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"DynamicBuffer", CDynamicBuffer::Create(m_pGraphicDev, L"../Bin/Resources/Texture2D/heavycaliber_scopeui.png", 0.01f, 1.f,2.f)), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"DynamicBuffer_Tex", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Texture2D/heavycaliber_scopeui.png", TEX_NORMAL)), E_FAIL);
+	
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"RIFLE_ITEM", CDynamicBuffer::Create(m_pGraphicDev, L"../Bin/Resources/PngToCube/rifle_hud.png", 0.01f, 1.f, 1.f)), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"RIFLE_ITEM_TEX", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/PngToCube/rifle_hud.png", TEX_NORMAL)), E_FAIL);
+	
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"SHOTGUN_ITEM", CDynamicBuffer::Create(m_pGraphicDev, L"../Bin/Resources/PngToCube/ssg_hud.png", 0.01f, 1.f, 1.f)), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"SHOTGUN_ITEM_TEX", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/PngToCube/ssg_hud.png", TEX_NORMAL)), E_FAIL);
 
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"SNIPER_ITEM", CDynamicBuffer::Create(m_pGraphicDev, L"../Bin/Resources/PngToCube/cannonui.png", 0.01f, 1.f, 1.f)), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"SNIPER_ITEM_TEX", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/PngToCube/cannonui.png", TEX_NORMAL)), E_FAIL);
+	
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"ADDHP_ITEM", CDynamicBuffer::Create(m_pGraphicDev, L"../Bin/Resources/PngToCube/HP.png", 0.01f, 1.f, 1.f)), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"ADDHP_ITEM_TEX", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/PngToCube/HP.png", TEX_NORMAL)), E_FAIL);
 
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"ADDDEFENCE_ITEM", CDynamicBuffer::Create(m_pGraphicDev, L"../Bin/Resources/PngToCube/Defence.png", 0.01f, 1.f, 1.f)), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"ADDDEFENCE_ITEM_TEX", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/PngToCube/Defence.png", TEX_NORMAL)), E_FAIL);
 
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"ADDMAXHP_ITEM", CDynamicBuffer::Create(m_pGraphicDev, L"../Bin/Resources/PngToCube/AddMaxHp.png", 0.01f, 1.f, 1.f)), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"ADDMAXHP_ITEM_TEX", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/PngToCube/AddMaxHp.png", TEX_NORMAL)), E_FAIL);
 
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"BULLET_ITEM", CDynamicBuffer::Create(m_pGraphicDev, L"../Bin/Resources/PngToCube/ammo_box_pistol.png", 0.01f, 1.f, 1.f)), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"BULLET_ITEM_TEX", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/PngToCube/ammo_box_pistol.png", TEX_NORMAL)), E_FAIL);
+	}
 
+	// ITEM
+	{
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"ITEM_HITBOX_TransformCom", CTransform::Create(m_pGraphicDev)), E_FAIL);
+	}
 
-
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_CrossHeader_Rifle", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/UI/Sprite/CrossHair_Rifle.png", TEX_NORMAL)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_CrossHeader_ShotGun", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/UI/Sprite/CrossHair_ShotGun.png", TEX_NORMAL)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_CrossHeader_Sniper", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/UI/Sprite/CrossHair_Sniper.png", TEX_NORMAL)), E_FAIL);
 	m_bFinish = true;
 
-
-
-	return _uint();
+	return 0;
 }
 
 _uint CLoading::Loading_ForBoss(void)

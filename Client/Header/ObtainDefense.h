@@ -1,11 +1,9 @@
 #pragma once
 #include "Item.h"
-class CObtainDefense :
-	public CItem
+class CObtainDefense :	public CItem
 {
 private:
 	explicit CObtainDefense(LPDIRECT3DDEVICE9 pGraphicDev);
-	explicit CObtainDefense(const CGameObject& rhs);
 	virtual ~CObtainDefense();
 
 public:
@@ -16,13 +14,11 @@ public:
 
 private:
 	HRESULT			Add_Component(void);
-	CHitBox*		m_pHitBox = nullptr;
 
 public:
 	static CObtainDefense* Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3& vPos);
 
 protected:
 	void Free() override;
-
 };
 

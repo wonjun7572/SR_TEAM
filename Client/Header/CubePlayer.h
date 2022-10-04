@@ -116,6 +116,8 @@ private:
 	_bool			m_bShotgun;
 	_bool			m_bSniper;
 
+	_bool			m_bSinperZoom = false;
+
 	vector<CWeapon*> m_vecWeapon;
 
 	//맵핑관련 변수입니다.
@@ -128,6 +130,7 @@ public:
 	void			Capture_Shotgun(void) { m_bShotgun = true; }
 	void			Capture_Sniper(void) { m_bSniper = true; }
 
+	_bool		Get_SniperZoom() { return m_bSinperZoom; }
 
 	//ITEM
 	void		Get_Defense() { m_tAbility->iDefence += 10; }

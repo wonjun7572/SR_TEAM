@@ -6,19 +6,81 @@ USING(Engine)
 IMPLEMENT_SINGLETON(CInputDev)
 
 CInputDev::CInputDev()
-	: m_pInputSDK(nullptr)
-	, m_pKeyBoard(nullptr)
-	, m_pMouse(nullptr)
+	: m_pInputSDK(nullptr), m_pKeyBoard(nullptr), m_pMouse(nullptr)
 {
-	// 참조값으로 제로메모리
-	ZeroMemory(&m_byKeyState, sizeof(m_byKeyState));
+	ZeroMemory(m_byKeyState, sizeof(m_byKeyState));
 	ZeroMemory(&m_MouseState, sizeof(m_MouseState));
 }
+
 
 CInputDev::~CInputDev()
 {
 	Free();
 }
+
+bool CInputDev::Key_Pressing(int _iKey)
+{
+	if (Get_DIKeyState(_iKey) & 0x80)
+		return true;
+
+	return false;
+}
+
+bool CInputDev::Key_Down(int _byKeyID)
+{
+	if (!m_bKeyState[_byKeyID] && Get_DIKeyState(_byKeyID) & 0x80)
+	{
+		m_bKeyState[_byKeyID] = true;
+		return true;
+	}
+
+	for (int i = 0; i < 256; ++i)
+	{
+		if (m_bKeyState[i] && !(Get_DIKeyState(i) & 0x80))
+		{
+			m_bKeyState[i] = false;
+		}
+	}
+	return false;
+}
+
+bool CInputDev::Key_Up(int _iKey)
+{
+	if (m_bKeyState[_iKey] && !(Get_DIKeyState(_iKey) & 0x80))
+	{
+		m_bKeyState[_iKey] = false;
+		return true;
+	}
+
+	for (int i = 0; i < 256; ++i)
+	{
+		if (!m_bKeyState[i] && (Get_DIKeyState(i) & 0x80))
+		{
+			m_bKeyState[i] = true;
+		}
+	}
+
+	return false;
+}
+
+bool CInputDev::Mouse_Down(MOUSEKEYSTATE _MouseButton)
+{
+	if (!m_bMouseState[_MouseButton] && m_MouseState.rgbButtons[_MouseButton] & 0x80)
+	{
+		m_bMouseState[_MouseButton] = true;
+		return true;
+	}
+
+	for (int i = 0; i < 4; ++i)
+	{
+		if (m_bMouseState[i] && !(m_MouseState.rgbButtons[i] & 0x80))
+		{
+			m_bMouseState[i] = false;
+		}
+	}
+	return false;
+}
+
 
 HRESULT CInputDev::Ready_InputDev(HINSTANCE hInst, HWND hWnd)
 {
@@ -41,6 +103,7 @@ HRESULT CInputDev::Ready_InputDev(HINSTANCE hInst, HWND hWnd)
 	// 장치에 대한 access 버전을 받아오는 함수
 	m_pKeyBoard->Acquire();
 
+
 	// 마우스 객체 생성
 	FAILED_CHECK_RETURN(m_pInputSDK->CreateDevice(GUID_SysMouse, &m_pMouse, nullptr), E_FAIL);
 
@@ -56,7 +119,7 @@ HRESULT CInputDev::Ready_InputDev(HINSTANCE hInst, HWND hWnd)
 	return S_OK;
 }
 
-void CInputDev::SetUp_InputDev()
+void CInputDev::SetUp_InputDev(void)
 {
 	m_pKeyBoard->GetDeviceState(256, m_byKeyState);
 	m_pMouse->GetDeviceState(sizeof(m_MouseState), &m_MouseState);

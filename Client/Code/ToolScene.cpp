@@ -4,6 +4,7 @@
 #include "Export_Function.h"
 #include "Wall.h"
 #include "ImguiMgr.h"
+#include "TestGun.h"
 
 CToolScene::CToolScene(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CScene(pGraphicDev)
@@ -60,6 +61,11 @@ HRESULT CToolScene::Ready_Layer_Environment(const _tchar * pLayerTag)
 	pGameObject = CSkyBox::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"SkyBox", pGameObject), E_FAIL);
+
+	pGameObject = CTestGun::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"TestGun", pGameObject), E_FAIL);
+
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 

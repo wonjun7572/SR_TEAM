@@ -15,7 +15,6 @@ public:
 
 private:
 	HRESULT			Add_Component(void);
-	CHitBox*		m_pHitBox = nullptr;
 
 public:
 	static CGetUzi* Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3& vPos);

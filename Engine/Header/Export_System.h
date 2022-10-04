@@ -41,6 +41,12 @@ inline void SetAxisMode(bool bAxisMode);
 inline _float GetVerticalAxis();
 inline _float GetHorizontalAxis();
 
+inline _bool		Key_Pressing(_int _iKey);
+inline _bool		Key_Down(_int _iKey);
+inline _bool		Key_Up(_int _iKey);
+inline _bool		Mouse_Down(MOUSEKEYSTATE _MouseButton);
+
+
 // InputDev
 
 inline _byte		Get_DIKeyState(_ubyte byKeyID);

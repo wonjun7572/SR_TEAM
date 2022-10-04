@@ -23,11 +23,22 @@ public:
 	virtual void	LateUpdate_Object() override;
 	virtual void	Render_Object()override;
 
+	virtual void    Move_Item(const _float& fTimeDelta);
+
 protected:
-	CTexture*	 m_pTextureCom = nullptr;
-	CTransform*	 m_pTransCom = nullptr;
-	CSphereTex*	 m_pBufferCom = nullptr;
-	CCalculator* m_pCalculatorCom = nullptr;
+	CDynamicBuffer* m_pDBufferCom = nullptr;
+	CTexture*	    m_pTextureCom = nullptr;
+	CTransform*	    m_pTransCom = nullptr;
+	CSphereTex*		m_pBufferCom = nullptr;
+	CCalculator*	m_pCalculatorCom = nullptr;
+	
+	CHitBox*	 m_pHitBox = nullptr;
+	CTransform*  m_pHitBoxTransCom = nullptr;
+
+	_float		 m_fRotSpeed = -180.f;
+	_float		 m_fYSpeed = 0.f;
+	_int		 m_iReverseDir = 1;
+	_float		 m_fFrame = 0.f;
 
 protected:
 	virtual void Free()override;

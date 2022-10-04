@@ -1,12 +1,9 @@
 #pragma once
 #include "Item.h"
-class CObtainBullet :
-	public CItem
+class CObtainBullet : public CItem
 {
-
 private:
 	explicit CObtainBullet(LPDIRECT3DDEVICE9 pGraphicDev);
-	explicit CObtainBullet(const CGameObject& rhs);
 	virtual ~CObtainBullet();
 
 public:
@@ -17,13 +14,11 @@ public:
 
 private:
 	HRESULT			Add_Component(void);
-	CHitBox*		m_pHitBox = nullptr;
 
 public:
 	static CObtainBullet* Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3& vPos);
 
 protected:
 	void Free() override;
-
 };
 
