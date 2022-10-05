@@ -55,9 +55,6 @@
     <Filter Include="02. GameObject\02. For_Public">
       <UniqueIdentifier>{98c8ba54-2e7c-4c81-ad80-68e242cf8c19}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\02. For_Public\00. DynamicCamera">
-      <UniqueIdentifier>{e514a172-e61f-44ca-a57b-b9e601538f45}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. GameObject\02. For_Public\01. StaticCamera">
       <UniqueIdentifier>{16f0def3-4911-4ea3-8331-aff0318350a1}</UniqueIdentifier>
     </Filter>
@@ -234,6 +231,9 @@
     </Filter>
     <Filter Include="02. GameObject\01. For_Stage\15. Crosshair">
       <UniqueIdentifier>{3f226a98-4f8f-4047-88ae-9e99d5ca4d7d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\02. For_Public\00. DynamicCamera">
+      <UniqueIdentifier>{e514a172-e61f-44ca-a57b-b9e601538f45}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

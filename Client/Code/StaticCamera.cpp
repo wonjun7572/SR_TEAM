@@ -172,6 +172,7 @@ void CStaticCamera::Look_Taget(void)
 		m_pTransform_Target->Get_Info(INFO_POS, &vPos);
 
 		D3DXVec3Normalize(&vLook, &vLook);
+		
 		m_vEye += vPos;
 		m_vAt = vPos;
 	}
