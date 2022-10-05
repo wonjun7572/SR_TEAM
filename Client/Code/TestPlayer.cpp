@@ -49,7 +49,6 @@ void CTestPlayer::LateUpdate_Object(void)
 	{
 		this->Kill_Obj();
 	}
-
 	//m_pHitBox->Get_MinMax(&m_vMin, &m_vMax);
 	//Get_HitboxMin(&vT1, &vT2);
 }

@@ -15,14 +15,12 @@ CGraphicDev::~CGraphicDev()
 	Free();
 }
 
-
 HRESULT CGraphicDev::Ready_GraphicDev(HWND hWnd, WINMODE eMode, 
 									const _uint & iSizeX, const _uint & iSizeY,
 									CGraphicDev** ppGraphicDev)
 {
 	m_pSDK = Direct3DCreate9(D3D_SDK_VERSION);
 	NULL_CHECK_RETURN(m_pSDK, E_FAIL);
-
 
 	D3DCAPS9		DeviceCaps;
 	ZeroMemory(&DeviceCaps, sizeof(D3DCAPS9));
@@ -62,8 +60,6 @@ HRESULT CGraphicDev::Ready_GraphicDev(HWND hWnd, WINMODE eMode,
 	FAILED_CHECK_RETURN(m_pSDK->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, hWnd, dwFlag, &Present_Parameters, &m_pGraphicDev), E_FAIL);
 
 	*ppGraphicDev = this;
-
-
 
 	return S_OK;
 }

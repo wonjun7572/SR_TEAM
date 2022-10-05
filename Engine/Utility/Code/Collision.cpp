@@ -517,7 +517,7 @@ void CCollision::Get_Item(void)
 
 	for (auto iter : mapItem)
 	{
-		CTransform* pItemTransform = dynamic_cast<CTransform*>(iter.second->Get_Component(L"Proto_TransformCom", ID_DYNAMIC));
+		CTransform* pItemTransform = dynamic_cast<CTransform*>(iter.second->Get_Component(L"ITEM_HITBOX_TransformCom", ID_DYNAMIC));
 		NULL_CHECK_RETURN(pItemTransform, );
 		CHitBox* pItemBox = dynamic_cast<CHitBox*>(iter.second->Get_Component(L"Proto_HitboxCom", ID_STATIC));
 		NULL_CHECK_RETURN(pItemBox, );

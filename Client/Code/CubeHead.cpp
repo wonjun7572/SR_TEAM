@@ -37,8 +37,8 @@ void CCubeHead::LateUpdate_Object(void)
 
 void CCubeHead::Render_Object(void)
 {
+	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
-
 	m_pTexture->Set_Texture(102);
 	m_pCube->Render_Buffer();
 }

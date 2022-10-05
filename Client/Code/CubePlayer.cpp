@@ -50,12 +50,11 @@ _int CCubePlayer::Update_Object(const _float & fTimeDelta)
 	// 이동, 애니메이션 관련
 	Move();
 
-	//Look_Direction();
+	Look_Direction();
 
 	Animation();
 
 	Assemble();
-	////////////////////////
 
 	Player_Mapping();
 	//FAILED_CHECK_RETURN(CPoolMgr::GetInstance()->Reuse_Obj(m_pGraphicDev, &vPos, &m_vDirection), -1);
@@ -86,12 +85,12 @@ void CCubePlayer::LateUpdate_Object(void)
 void CCubePlayer::Render_Object(void)
 {
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
-	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DPMISCCAPS_CULLNONE);
+	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 
 	//m_pHitBox->Render_Buffer();
 
-	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DPMISCCAPS_CULLCCW);
+	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 }
 
@@ -197,6 +196,15 @@ void CCubePlayer::Animation(void)
 			m_fHandAngle = D3DXToRadian(-90.f);
 		}
 	}
+
+	if (m_Weapon == Engine::Get_GameObject(L"Layer_Gun", L"SNIPER"))
+	{
+		if (Get_DIMouseState(DIM_RB))
+			m_bSinperZoom = true;
+		else
+			m_bSinperZoom = false;
+	}
+
 	if (!(Get_DIKeyState(DIK_W) ||
 		Get_DIKeyState(DIK_A) ||
 		Get_DIKeyState(DIK_S) ||
@@ -485,6 +493,9 @@ void CCubePlayer::Fire_Bullet(void)
 		//
 		//_vec3	vPos;
 		//m_pHeadWorld->Get_BeforeInfo(INFO_POS, &vPos);
+
+	
+
 
 		if (Get_DIMouseState(DIM_LB))
 		{

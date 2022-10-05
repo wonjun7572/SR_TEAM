@@ -90,6 +90,24 @@ void			SetUp_InputDev(void)
 	CInputDev::GetInstance()->SetUp_InputDev();
 }
 
+_bool		Key_Pressing(_int _iKey)
+{
+	return CInputDev::GetInstance()->Key_Pressing(_iKey);
+}
+_bool		Key_Down(_int _iKey)
+{
+	return CInputDev::GetInstance()->Key_Down(_iKey);
+}
+_bool		Key_Up(_int _iKey)
+{
+	return CInputDev::GetInstance()->Key_Up(_iKey);
+}
+_bool		Mouse_Down(MOUSEKEYSTATE _MouseButton)
+{
+	return CInputDev::GetInstance()->Mouse_Down(_MouseButton);
+}
+
+
 HRESULT			Ready_Font(LPDIRECT3DDEVICE9 pGraphicDev,
 	const _tchar* pFontTag,	 // 키값
 	const _tchar* pFontType, // 서체

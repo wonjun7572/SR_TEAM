@@ -26,6 +26,7 @@
 #include "SoundMgr.h"
 
 #include "PSystem.h"
+#include "DynamicBuffer.h"
 
 //#include "ParticleBuffer.h"
 

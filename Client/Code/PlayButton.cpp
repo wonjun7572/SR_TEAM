@@ -28,8 +28,6 @@ _int CPlayButton::Update_Object(const _float & fTimeDelta)
 {
 	if (PointMouse())
 	{
-		
-		
 		if (Get_DIMouseState(DIM_LB) & 0x80)
 			Mouse_check = true;
 	}

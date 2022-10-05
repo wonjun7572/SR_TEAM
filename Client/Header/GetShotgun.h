@@ -1,7 +1,6 @@
 #pragma once
 #include "Item.h"
-class CGetShotgun :
-	public CItem
+class CGetShotgun :	public CItem
 {
 public:
 	explicit CGetShotgun(LPDIRECT3DDEVICE9 pGraphicDev);
@@ -15,7 +14,6 @@ public:
 
 private:
 	HRESULT			Add_Component(void);
-	CHitBox*		m_pHitBox = nullptr;
 
 public:
 	static CGetShotgun* Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3& vPos);

@@ -38,6 +38,30 @@ void CItem::Render_Object()
 {
 }
 
+void CItem::Move_Item(const _float& fTimeDelta)
+{
+	m_fRotSpeed++;
+
+	if (m_fRotSpeed > 180.f)
+		m_fRotSpeed = -180.f;
+
+	m_pTransCom->Set_Rotation(ROT_X, D3DXToRadian(m_fRotSpeed));
+	_vec3 vPos;
+	m_pTransCom->Get_Info(INFO_POS, &vPos);
+
+	m_fFrame += fTimeDelta;
+
+	if (m_fFrame > 1.f)
+	{
+		m_iReverseDir *= -1;
+		m_fFrame = 0.f;
+	}
+
+	m_fYSpeed = fTimeDelta * m_iReverseDir * 0.5f;
+
+	m_pTransCom->Set_Pos(vPos.x, vPos.y + m_fYSpeed, vPos.z);
+}
+
 void CItem::Free()
 {
 	CGameObject::Free();

@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "..\Header\OptionButton.h"
 #include "Export_Function.h"
+#include "ToolScene.h"
 
 COptionButton::COptionButton(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CGameObject(pGraphicDev)
@@ -29,6 +30,7 @@ _int COptionButton::Update_Object(const _float & fTimeDelta)
 		if (Get_DIMouseState(DIM_LB) & 0x80)
 		{
 			Mouse_check = true;
+			return 0;
 		}
 	}
 

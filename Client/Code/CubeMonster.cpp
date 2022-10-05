@@ -22,7 +22,6 @@ CCubeMonster::CCubeMonster(LPDIRECT3DDEVICE9 pGraphicDev)
 	//m_fTimeDelta = 0.1f;
 }
 
-
 CCubeMonster::~CCubeMonster()
 {
 }
@@ -50,7 +49,6 @@ HRESULT CCubeMonster::Ready_Object(void)
 
 _int CCubeMonster::Update_Object(const _float & fTimeDelta)
 {
-
 	FAILED_CHECK_RETURN(Get_BodyTransform(), -1);
 
 	CurrentMonster(fTimeDelta);
@@ -68,7 +66,6 @@ void CCubeMonster::LateUpdate_Object(void)
 	CTransform*		pPlayerTransformCom = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Character", L"BODY", L"Proto_TransformCom", ID_DYNAMIC));
 	//NULL_CHECK(pPlayerTransformCom);
 
-
 	//_vec3		vPlayerPos;
 	//pPlayerTransformCom->Get_Info(INFO_POS, &vPlayerPos);
 
@@ -78,7 +75,6 @@ void CCubeMonster::LateUpdate_Object(void)
 	Assemble();
 
 	//Set_OnTerrain();
-
 }
 
 void CCubeMonster::Render_Object(void)
@@ -120,9 +116,9 @@ _int CCubeMonster::CurrentMonster(_float fTimeDelta)
 	_vec3		vRight;
 	memcpy(&vRight, &pPlayerTransformCom->m_matWorld.m[0][0], sizeof(_vec3));
 
-
 	_matrix		matRot;
 	D3DXMatrixRotationAxis(&matRot, &vRight, m_fAngle);
+
 	//탐지
 	if (m_fLengthRange >= m_fMinLenghtRange && m_fLengthRange <= m_fDetectRange)
 	{
@@ -132,7 +128,6 @@ _int CCubeMonster::CurrentMonster(_float fTimeDelta)
 		//m_pMhead->Chase_Target(&vPlayerPos, m_fSpeed, m_fTimeDelta);
 		//m_pMleftArm->Chase_Target(&vPlayerPos, m_fSpeed, m_fTimeDelta);
 		//m_pMrightArm->Chase_Target(&vPlayerPos, m_fSpeed, m_fTimeDelta);
-
 	}
 	else
 	{
@@ -142,10 +137,7 @@ _int CCubeMonster::CurrentMonster(_float fTimeDelta)
 	}
 
 	return 0;
-
-	
 }
-
 
 //상황이 바뀌는것을 인지시켜줘야하지않을까
 void CCubeMonster::ChangeCurrent(CurrentState::MONSTERID Idstate)
@@ -155,11 +147,7 @@ void CCubeMonster::ChangeCurrent(CurrentState::MONSTERID Idstate)
 	{
 		m_ePreviousState = m_eCurrentState;
 	}
-
-	
 }
-
-
 
 HRESULT CCubeMonster::Add_Component(void)
 {
@@ -168,22 +156,13 @@ HRESULT CCubeMonster::Add_Component(void)
 	NULL_CHECK_RETURN(m_pMTransform, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_TransformCom", 	pInsatnce });
 
-
-
 	return 0;
 }
-
-
-
-
 
 void CCubeMonster::Set_OnTerrain(void)
 {
 	
 }
-
-
-
 
 void CCubeMonster::Assemble(void)
 {
@@ -198,8 +177,6 @@ void CCubeMonster::Axis(void)
 {
 	m_pMleftArm->Get_BeforeInfo(INFO_LOOK, &vPlayerPos);
 }
-
-
 
 HRESULT CCubeMonster::Get_BodyTransform(void)
 {
@@ -246,8 +223,6 @@ HRESULT CCubeMonster::Monster_Mapping(void)
 	return S_OK;
 }
 
-
-
 _int CCubeMonster::Attack(_float fTimeDelta)
 {
 	return 0;
@@ -256,8 +231,6 @@ _int CCubeMonster::Attack(_float fTimeDelta)
 _int CCubeMonster::ComeBack(_float fTimeDelta)
 {
 	ChangeCurrent(CurrentState::MONSTER_COMEBACK);
-
-
 	return NO_EVENT;
 }
 
@@ -282,5 +255,8 @@ void CCubeMonster::Free(void)
 	}
 
 	m_listMonsterCnt.clear();
+
+	Safe_Delete<MONSTERABILITY*>(m_MonsterState);
+
 	CGameObject::Free();
 }

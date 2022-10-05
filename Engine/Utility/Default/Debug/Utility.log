@@ -1,4 +1,5 @@
-﻿  Utility.vcxproj -> C:\Users\DecoyZ\Desktop\SR_TEAM\Engine\Utility\Default\../Bin\Utility.dll
+﻿     ../Bin\Utility.lib 라이브러리 및 ../Bin\Utility.exp 개체를 생성하고 있습니다.
+  Utility.vcxproj -> C:\Users\sam51\Desktop\SR_TEAM\Engine\Utility\Default\../Bin\Utility.dll
   Utility.vcxproj -> ../Bin\Utility.pdb (Full PDB)
           1개 파일이 복사되었습니다.
           1개 파일이 복사되었습니다.
@@ -7,6 +8,7 @@
   .\Engine\Header\Collision.h
   .\Engine\Header\Component.h
   .\Engine\Header\CubeTex.h
+  .\Engine\Header\DynamicBuffer.h
   .\Engine\Header\Engine_Enum.h
   .\Engine\Header\Engine_Include.h
   .\Engine\Header\Engine_Macro.h
@@ -48,6 +50,26 @@
   .\Engine\Header\Scene.h
   .\Engine\Header\SoundMgr.h
   .\Engine\Header\SphereTex.h
+  .\Engine\Header\stb_connected_components.h
+  .\Engine\Header\stb_c_lexer.h
+  .\Engine\Header\stb_divide.h
+  .\Engine\Header\stb_ds.h
+  .\Engine\Header\stb_dxt.h
+  .\Engine\Header\stb_easy_font.h
+  .\Engine\Header\stb_herringbone_wang_tile.h
+  .\Engine\Header\stb_hexwave.h
+  .\Engine\Header\stb_image.h
+  .\Engine\Header\stb_image_resize.h
+  .\Engine\Header\stb_image_write.h
+  .\Engine\Header\stb_include.h
+  .\Engine\Header\stb_leakcheck.h
+  .\Engine\Header\stb_perlin.h
+  .\Engine\Header\stb_rect_pack.h
+  .\Engine\Header\stb_sprintf.h
+  .\Engine\Header\stb_textedit.h
+  .\Engine\Header\stb_tilemap_editor.h
+  .\Engine\Header\stb_truetype.h
+  .\Engine\Header\stb_voxel_render.h
   .\Engine\Header\TerrainTex.h
   .\Engine\Header\Texture.h
   .\Engine\Header\Timer.h
@@ -55,4 +77,4 @@
   .\Engine\Header\Transform.h
   .\Engine\Header\TriCol.h
   .\Engine\Header\VIBuffer.h
-         53개 파일이 복사되었습니다.
+         74개 파일이 복사되었습니다.

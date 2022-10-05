@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "..\Header\StaticCamera.h"
+#include "CubePlayer.h"
 
 
 
@@ -43,7 +44,7 @@ Engine::_int CStaticCamera::Update_Object(const _float& fTimeDelta)
 
 	Look_Taget();
 
-	//Mouse_Fix();
+	Mouse_Fix();
 
 	_int iExit = CCamera::Update_Object(fTimeDelta);
 
@@ -74,28 +75,18 @@ CStaticCamera* CStaticCamera::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3*
 
 void CStaticCamera::Key_Input(const _float& fTimeDelta)
 {
-	// 마우스 휠을 통한 줌인 줌 아웃
-	if (m_fDistance >= 1)
-	{
-		if (Get_DIMouseMove(DIMS_Z) > 0)
-			m_fDistance -= fTimeDelta * m_fSpeed * 5.f;
-	}
-
-	if (m_fDistance <= 20)
-	{
-		if (Get_DIMouseMove(DIMS_Z) < 0)
-			m_fDistance += fTimeDelta * m_fSpeed * 5.f;
-	}
+	if (Key_Down(DIK_V))
+		m_bChangePOV = !m_bChangePOV;
 
 	 //카메라 축 회전 방향 제한해야함
-	if (m_pPlayerTransform)
+	if (m_pTransform_Target)
 	{
 		_vec3 vPlayerPos;
-		m_pPlayerTransform->Get_Info(INFO_POS, &vPlayerPos);
-		//if (Get_DIMouseMove(DIMS_Y) > 0)
+		m_pTransform_Target->Get_Info(INFO_POS, &vPlayerPos);
+		if (Get_DIMouseMove(DIMS_Y) > 0)
 			m_fAngle += D3DXToRadian(180.f) * fTimeDelta;
-		/*if (Get_DIMouseMove(DIMS_Y) < 0)
-			m_fAngle += D3DXToRadian(180.f) * fTimeDelta;*/
+		if (Get_DIMouseMove(DIMS_Y) < 0)
+			m_fAngle += D3DXToRadian(180.f) * fTimeDelta;
 	}
 }
 
@@ -105,6 +96,7 @@ void CStaticCamera::Mouse_Fix(void)
 
 	ClientToScreen(g_hWnd, &pt);
 	SetCursorPos(pt.x, pt.y);
+	ShowCursor(false);
 }
 
 void CStaticCamera::Look_Taget(void)
@@ -115,29 +107,94 @@ void CStaticCamera::Look_Taget(void)
 		NULL_CHECK(m_pTransform_Target);
 	}
 
-	_vec3 vLook;
-	m_pTransform_Target->Get_Info(INFO_LOOK, &vLook);
+	CGameObject* pPlayer = nullptr;
+	pPlayer = Engine::Get_GameObject(L"Layer_Character", L"PLAYER");
 
-	_vec3 vRight;
-	m_pTransform_Target->Get_Info(INFO_RIGHT, &vRight);
+	if (!m_bChangePOV && (dynamic_cast<CCubePlayer*>(pPlayer)->Get_Weapon() == Engine::Get_GameObject(L"Layer_Gun", L"UZI1")||
+		dynamic_cast<CCubePlayer*>(pPlayer)->Get_Weapon() == Engine::Get_GameObject(L"Layer_Gun", L"SHOTGUN")))
+	{
+		_vec3 vLook;
+		m_pTransform_Target->Get_Info(INFO_LOOK, &vLook);
 
-	_vec3 vUp;
-	m_pTransform_Target->Get_Info(INFO_UP, &vUp);
+		_vec3 vRight;
+		m_pTransform_Target->Get_Info(INFO_RIGHT, &vRight);
 
-	//m_vEye = (vLook * -0.2f) + (vUp * 0.1f);
-	m_vEye = (vLook * -1.f);// +(vUp * 1.f);
-	D3DXVec3Normalize(&m_vEye, &m_vEye);
-	m_vEye *= 0.1f;
+		_vec3 vUp;
+		m_pTransform_Target->Get_Info(INFO_UP, &vUp);
 
-	//m_vEye.y = 1.f;
-	m_vEye *= m_fDistance;
+		m_vEye = (vLook * -1.f);
+		D3DXVec3Normalize(&m_vEye, &m_vEye);
+		m_vEye *= 0.1f;
 
-	_vec3 vPos;
-	m_pTransform_Target->Get_Info(INFO_POS, &vPos);
+		_vec3 vPos;
+		m_pTransform_Target->Get_Info(INFO_POS, &vPos);
 
-	m_vEye += vPos;
-	m_vAt = vPos;// - (vRight * 3.f);
+		m_vEye += vPos;
+		m_vAt = vPos;
+	}
+	else if(m_bChangePOV && (dynamic_cast<CCubePlayer*>(pPlayer)->Get_Weapon() == Engine::Get_GameObject(L"Layer_Gun", L"UZI1") || 
+		dynamic_cast<CCubePlayer*>(pPlayer)->Get_Weapon() == Engine::Get_GameObject(L"Layer_Gun", L"SHOTGUN")))
+	{
+		_vec3 vLook;
+		m_pTransform_Target->Get_Info(INFO_LOOK, &vLook);
 
-	//m_vEye.x += 2.f;
-	//m_vAt.x += 2.f;
+		_vec3 vRight;
+		m_pTransform_Target->Get_Info(INFO_RIGHT, &vRight);
+
+		_vec3 vUp;
+		m_pTransform_Target->Get_Info(INFO_UP, &vUp);
+
+		m_vEye = (vLook * -1.f);
+		D3DXVec3Normalize(&m_vEye, &m_vEye);
+		m_vEye *= 1.5f;
+
+		_vec3 vPos;
+		m_pTransform_Target->Get_Info(INFO_POS, &vPos);
+
+		D3DXVec3Normalize(&vRight, &vRight);
+		m_vEye += vPos + (vRight * 0.5f);
+		m_vAt = vPos + (vRight * 0.5f);
+	}
+	else if (dynamic_cast<CCubePlayer*>(pPlayer)->Get_SniperZoom() == true)
+	{
+		_vec3 vLook;
+		m_pTransform_Target->Get_Info(INFO_LOOK, &vLook);
+
+		_vec3 vRight;
+		m_pTransform_Target->Get_Info(INFO_RIGHT, &vRight);
+
+		_vec3 vUp;
+		m_pTransform_Target->Get_Info(INFO_UP, &vUp);
+
+		m_vEye = (vLook * -1.f);
+
+		_vec3 vPos;
+		m_pTransform_Target->Get_Info(INFO_POS, &vPos);
+
+		D3DXVec3Normalize(&vLook, &vLook);
+		
+		m_vEye += vPos;
+		m_vAt = vPos;
+	}
+	else
+	{
+		_vec3 vLook;
+		m_pTransform_Target->Get_Info(INFO_LOOK, &vLook);
+
+		_vec3 vRight;
+		m_pTransform_Target->Get_Info(INFO_RIGHT, &vRight);
+
+		_vec3 vUp;
+		m_pTransform_Target->Get_Info(INFO_UP, &vUp);
+
+		m_vEye = (vLook * -1.f);
+		D3DXVec3Normalize(&m_vEye, &m_vEye);
+		m_vEye *= 0.1f;
+
+		_vec3 vPos;
+		m_pTransform_Target->Get_Info(INFO_POS, &vPos);
+
+		m_vEye += vPos;
+		m_vAt = vPos;
+	}
 }

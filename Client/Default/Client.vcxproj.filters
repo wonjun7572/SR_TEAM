@@ -55,9 +55,6 @@
     <Filter Include="02. GameObject\02. For_Public">
       <UniqueIdentifier>{98c8ba54-2e7c-4c81-ad80-68e242cf8c19}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\02. For_Public\00. DynamicCamera">
-      <UniqueIdentifier>{e514a172-e61f-44ca-a57b-b9e601538f45}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. GameObject\02. For_Public\01. StaticCamera">
       <UniqueIdentifier>{16f0def3-4911-4ea3-8331-aff0318350a1}</UniqueIdentifier>
     </Filter>
@@ -222,6 +219,21 @@
     </Filter>
     <Filter Include="02. GameObject\01. For_Stage\12. Particle">
       <UniqueIdentifier>{e67edead-06ae-4acc-bd1b-e08effea4297}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\13. Shop">
+      <UniqueIdentifier>{2d1d12a2-777e-4547-bede-e2da24f6ed53}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\02. For_Public\99. LogoCamera">
+      <UniqueIdentifier>{99dab64c-74e5-4182-8849-04d15878175e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\14. TestGun">
+      <UniqueIdentifier>{3b3fd916-cb19-4791-a200-192f29921ab2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\15. Crosshair">
+      <UniqueIdentifier>{3f226a98-4f8f-4047-88ae-9e99d5ca4d7d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\02. For_Public\00. DynamicCamera">
+      <UniqueIdentifier>{e514a172-e61f-44ca-a57b-b9e601538f45}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -513,6 +525,21 @@
     <ClInclude Include="..\Header\MaxPlusHp.h">
       <Filter>02. GameObject\01. For_Stage\10. Item\HP</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\ShopCube.h">
+      <Filter>02. GameObject\01. For_Stage\13. Shop</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\LogoCamera.h">
+      <Filter>02. GameObject\02. For_Public\99. LogoCamera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\TestGun.h">
+      <Filter>02. GameObject\01. For_Stage\14. TestGun</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\RifleGun.h">
+      <Filter>99. Default\헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CrossHeader.h">
+      <Filter>02. GameObject\01. For_Stage\15. Crosshair</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -784,6 +811,21 @@
     </ClCompile>
     <ClCompile Include="..\Code\MaxPlusHp.cpp">
       <Filter>02. GameObject\01. For_Stage\10. Item\HP</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ShopCube.cpp">
+      <Filter>02. GameObject\01. For_Stage\13. Shop</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\LogoCamera.cpp">
+      <Filter>02. GameObject\02. For_Public\99. LogoCamera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\TestGun.cpp">
+      <Filter>02. GameObject\01. For_Stage\14. TestGun</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\RifleGun.cpp">
+      <Filter>99. Default\소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CrossHeader.cpp">
+      <Filter>02. GameObject\01. For_Stage\15. Crosshair</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

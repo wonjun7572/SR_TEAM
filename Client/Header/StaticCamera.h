@@ -34,6 +34,8 @@ private:
 	_float			m_fSpeed = 10.f;
 	_float			m_fAngle = 0.f;
 
+	_bool			m_bChangePOV = false;
+
 public:
 	static CStaticCamera*		Create(LPDIRECT3DDEVICE9 pGraphicDev,
 		const _vec3* pEye,
@@ -45,9 +47,5 @@ public:
 		const _float& fFar = 1000.f);
 
 private:
-	CTransform* m_pPlayerTransform = nullptr;
-
-private:
 	virtual void Free(void) override;
-
 };
