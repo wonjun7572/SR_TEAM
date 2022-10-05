@@ -35,15 +35,6 @@ void CWeapon::Render_Object(void)
 
 HRESULT CWeapon::Ready_Weapon(LPDIRECT3DDEVICE9 pGraphicDev, const _uint & iIndex)
 {
-	/*switch (iIndex)
-	{
-	case 1:
-		CUzi*	pInstance = CUzi::Create(pGraphicDev);
-		NULL_CHECK_RETURN(pInstance, E_FAIL );
-		m_WeaponList.push_back(pInstance);
-		break;
-	}	*/
-
 	return S_OK;
 }
 

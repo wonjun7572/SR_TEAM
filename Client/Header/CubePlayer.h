@@ -120,6 +120,9 @@ private:
 
 	vector<CWeapon*> m_vecWeapon;
 
+	// 총관련 변수
+	_float			m_fBulletTime = 0.f;
+
 	//맵핑관련 변수입니다.
 	_bool				m_MappingInit = false;
 	CTransform*			m_pBaseMapping = nullptr;

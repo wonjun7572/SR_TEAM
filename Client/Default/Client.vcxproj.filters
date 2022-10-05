@@ -235,6 +235,9 @@
     <Filter Include="02. GameObject\02. For_Public\00. DynamicCamera">
       <UniqueIdentifier>{e514a172-e61f-44ca-a57b-b9e601538f45}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\16. RifleRange">
+      <UniqueIdentifier>{a93305e5-8ba7-457a-b12b-18e64b6a6185}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -513,9 +516,6 @@
     <ClInclude Include="..\Header\LetterBox.h">
       <Filter>99. Default\헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\BulletParticle.h">
-      <Filter>02. GameObject\01. For_Stage\12. Particle</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\PlayerFaceUI.h">
       <Filter>02. GameObject\01. For_Stage\09. UI\Player</Filter>
     </ClInclude>
@@ -539,6 +539,15 @@
     </ClInclude>
     <ClInclude Include="..\Header\CrossHeader.h">
       <Filter>02. GameObject\01. For_Stage\15. Crosshair</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\TargetCube.h">
+      <Filter>02. GameObject\01. For_Stage\16. RifleRange</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ShotParticle.h">
+      <Filter>02. GameObject\01. For_Stage\12. Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\BulletParticle.h">
+      <Filter>02. GameObject\01. For_Stage\12. Particle</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -800,9 +809,6 @@
     <ClCompile Include="..\Code\LetterBox.cpp">
       <Filter>99. Default\소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\BulletParticle.cpp">
-      <Filter>02. GameObject\01. For_Stage\12. Particle</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\PlayerFaceUI.cpp">
       <Filter>02. GameObject\01. For_Stage\09. UI\Player</Filter>
     </ClCompile>
@@ -826,6 +832,15 @@
     </ClCompile>
     <ClCompile Include="..\Code\CrossHeader.cpp">
       <Filter>02. GameObject\01. For_Stage\15. Crosshair</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\TargetCube.cpp">
+      <Filter>02. GameObject\01. For_Stage\16. RifleRange</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ShotParticle.cpp">
+      <Filter>02. GameObject\01. For_Stage\12. Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BulletParicle.cpp">
+      <Filter>02. GameObject\01. For_Stage\12. Particle</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

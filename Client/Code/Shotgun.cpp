@@ -17,9 +17,10 @@ HRESULT CShotgun::Ready_Object(void)
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 	m_tAbility = new GUNABILITY;
 
-	m_tAbility->fBulletRate = 50.f;
+	m_tAbility->fBulletRate = 1.f;
 	m_tAbility->fRemainBulletCnt = 50.f;
 	m_tAbility->fBulletCount = 300.f;
+	m_tAbility->fBulletAttack = 30.f;
 
 	m_bEquiped = false;
 

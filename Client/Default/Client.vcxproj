@@ -163,6 +163,7 @@
     <ClInclude Include="..\Header\BaseMapping.h" />
     <ClInclude Include="..\Header\Bullet.h" />
     <ClInclude Include="..\Header\BulletUI.h" />
+    <ClInclude Include="..\Header\BulletParticle.h" />
     <ClInclude Include="..\Header\CrossHeader.h" />
     <ClInclude Include="..\Header\CubeArm.h" />
     <ClInclude Include="..\Header\CubeBody.h" />
@@ -220,6 +221,7 @@
     <ClInclude Include="..\Header\SniperPart4.h" />
     <ClInclude Include="..\Header\Stage.h" />
     <ClInclude Include="..\Header\StaticCamera.h" />
+    <ClInclude Include="..\Header\TargetCube.h" />
     <ClInclude Include="..\Header\Terrain.h" />
     <ClInclude Include="..\Header\TestCube.h" />
     <ClInclude Include="..\Header\TestGun.h" />
@@ -237,7 +239,7 @@
     <ClInclude Include="..\Header\WallMgr.h" />
     <ClInclude Include="..\Header\Weapon.h" />
     <ClInclude Include="..\Header\WeaponUI.h" />
-    <ClInclude Include="..\Header\BulletParticle.h" />
+    <ClInclude Include="..\Header\ShotParticle.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="dirent.h" />
     <ClInclude Include="GraphEditor.h" />
@@ -267,6 +269,7 @@
     <ClCompile Include="..\Code\BackGround.cpp" />
     <ClCompile Include="..\Code\BaseMapping.cpp" />
     <ClCompile Include="..\Code\Bullet.cpp" />
+    <ClCompile Include="..\Code\BulletParicle.cpp" />
     <ClCompile Include="..\Code\BulletUI.cpp" />
     <ClCompile Include="..\Code\CrossHeader.cpp" />
     <ClCompile Include="..\Code\CubeArm.cpp" />
@@ -325,6 +328,7 @@
     <ClCompile Include="..\Code\SniperPart4.cpp" />
     <ClCompile Include="..\Code\Stage.cpp" />
     <ClCompile Include="..\Code\StaticCamera.cpp" />
+    <ClCompile Include="..\Code\TargetCube.cpp" />
     <ClCompile Include="..\Code\Terrain.cpp" />
     <ClCompile Include="..\Code\TestCube.cpp" />
     <ClCompile Include="..\Code\TestGun.cpp" />
@@ -342,7 +346,7 @@
     <ClCompile Include="..\Code\WallMgr.cpp" />
     <ClCompile Include="..\Code\Weapon.cpp" />
     <ClCompile Include="..\Code\WeaponUI.cpp" />
-    <ClCompile Include="..\Code\BulletParticle.cpp" />
+    <ClCompile Include="..\Code\ShotParticle.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="GraphEditor.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>

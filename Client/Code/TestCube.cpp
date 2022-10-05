@@ -85,14 +85,11 @@ void CTestCube::Render_Object()
 
 	if (m_bWireFrame)
 		m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
-	
 		
 	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 	m_pHitBox->Render_Buffer();
 	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 	m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
-	m_pTransCom->Billboard_Transform(0.1f);
-
 }
 
 // 큐브를 선택 후 터레인 자리위에 올려 놓는 함수

@@ -5,6 +5,7 @@
 #include "Uzi.h"
 #include "Shotgun.h"
 #include "Sniper.h"
+#include "ShotParticle.h"
 #include "BulletParticle.h"
 
 CCubePlayer::CCubePlayer(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -44,6 +45,7 @@ HRESULT CCubePlayer::Ready_Object(void)
 _int CCubePlayer::Update_Object(const _float & fTimeDelta)
 {
 	m_fTimeDelta = fTimeDelta;
+	m_fBulletTime += fTimeDelta;
 
 	FAILED_CHECK_RETURN(Get_BodyTransform(), -1);
 
@@ -57,6 +59,7 @@ _int CCubePlayer::Update_Object(const _float & fTimeDelta)
 	Assemble();
 
 	Player_Mapping();
+
 	//FAILED_CHECK_RETURN(CPoolMgr::GetInstance()->Reuse_Obj(m_pGraphicDev, &vPos, &m_vDirection), -1);
 
 	CGameObject::Update_Object(fTimeDelta);
@@ -73,8 +76,14 @@ void CCubePlayer::LateUpdate_Object(void)
 
 	TransAxis();	//	월드함수 갈아엎으려면 Update 이후에 작업해줘야함
 
-	Fire_Bullet();
-
+	if (m_Weapon)
+	{
+		if (m_Weapon->Get_Ability()->fBulletRate - m_fBulletTime <= 0.f)
+		{
+			Fire_Bullet();
+		}
+	}
+	
 	m_pCollision->Get_Item();
 
 	Gun_Check();
@@ -186,6 +195,7 @@ void CCubePlayer::Animation(void)
 			m_fLeftArmAngle = D3DXToRadian(-90.f) + m_fDownAngle;
 			m_fRightArmAngle = D3DXToRadian(-90.f) + m_fDownAngle;
 			m_fHandAngle = 0.f;
+		
 		}
 		// 샷건 / 스나 견착
 		if ((m_Weapon == Engine::Get_GameObject(L"Layer_Gun", L"SHOTGUN")) ||
@@ -394,8 +404,6 @@ void CCubePlayer::Move()
 		float fDot = D3DXVec3Dot(&vNormal, &vDir);
 		float fDiagonal = acosf(fDot);
 
-		cout << D3DXToDegree(fDiagonal) << endl;
-
 		if (iCollision == WALL_RIGHT || iCollision == WALL_LEFT || iCollision == WALL_BACK)
 		{
 			if (D3DXToDegree(fDiagonal) > 90.f)
@@ -484,29 +492,22 @@ void CCubePlayer::Fire_Bullet(void)
 {
 	if (Get_DIMouseState(DIM_RB))
 	{
-		//FAILED_CHECK_RETURN(Get_BodyTransform(), );
-		//_vec3	vSrcPos;
-		//CTransform* pTargetTrans = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_GameLogic", L"TestPlayer0", L"Proto_TransformCom", ID_DYNAMIC));
-		//NULL_CHECK(pTargetTrans);
-		//CCubeTex* pTestPlayer = dynamic_cast<CCubeTex*>(Engine::Get_Component(L"Layer_GameLogic", L"TestPlayer0", L"Proto_CubeTexCom", ID_STATIC));
-		//NULL_CHECK(pTestPlayer);
-		//
-		//_vec3	vPos;
-		//m_pHeadWorld->Get_BeforeInfo(INFO_POS, &vPos);
-
-	
-
-
 		if (Get_DIMouseState(DIM_LB))
 		{
-			CGameObject* pGameObject = Engine::Get_GameObject(L"Layer_Environment", L"BulletParticle");
+			if (m_Weapon->Get_Ability()->fRemainBulletCnt > 0)
+			{
+				CGameObject* pBullet = Engine::Get_GameObject(L"Layer_Environment", L"BulletParticle");
+				dynamic_cast<CBulletParticle*>(pBullet)->addParticle();
 
-			dynamic_cast<CBulletParticle*>(pGameObject)->addParticle();
+				CGameObject* pShot = Engine::Get_GameObject(L"Layer_Environment", L"ShotParticle");
+				dynamic_cast<CShotParticle*>(pShot)->addParticle();
 
-			//if (m_pCalculatorCom->Peek_Cube_Target(g_hWnd, &_vec3(0, 0, 0), pTestPlayer, pTargetTrans))
-			//{
-			//	cout << "AAAAAAAAAAAAAAAAAA" << endl;
-			//}
+				_float fGunSound = 1.f;
+				PlaySoundGun(L"RifleShot.mp3", SOUND_EFFECT, fGunSound);
+				m_Weapon->Set_MinusBullet();
+				m_Weapon->Set_Shoot(true);
+				m_fBulletTime = 0.f;
+			}
 		}
 	}
 }
@@ -522,7 +523,7 @@ void CCubePlayer::Gun_Check(void)
 		dynamic_cast<CUzi*>(Engine::Get_GameObject(L"Layer_Gun", L"UZI1"))->Set_Uzi();
 		dynamic_cast<CUzi*>(Engine::Get_GameObject(L"Layer_Gun", L"UZI2"))->Set_Uzi();
 
-//		m_vecWeapon.push_back(dynamic_cast<CWeapon*>(Engine::Get_GameObject(L"Layer_Gun", L"UZI1")));
+      //m_vecWeapon.push_back(dynamic_cast<CWeapon*>(Engine::Get_GameObject(L"Layer_Gun", L"UZI1")));
 		m_Weapon = dynamic_cast<CWeapon*>(Engine::Get_GameObject(L"Layer_Gun", L"UZI1"));
 		m_vecWeapon.push_back(m_Weapon);
 		m_tAbility->iGunTexture = 0;

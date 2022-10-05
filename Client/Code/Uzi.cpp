@@ -17,8 +17,9 @@ HRESULT CUzi::Ready_Object(void)
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 	m_tAbility = new GUNABILITY;
 
-	m_tAbility->fBulletRate = 100.f;
-	m_tAbility->fRemainBulletCnt = 100.f;
+	m_tAbility->fBulletAttack = 20.f;
+	m_tAbility->fBulletRate = 0.1f;
+	m_tAbility->fRemainBulletCnt = 300.f;
 	m_tAbility->fBulletCount = 300.f;
 
 	m_bEquiped = false;
@@ -309,24 +310,6 @@ void CUzi::Assemble(void)
 void CUzi::Animation_Fire(void)
 {
 }
-
-
-void CUzi::Set_OnTerrain(void)
-{
-	/*m_pUziWorld = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Character", L"UziPart5", L"Proto_TransformCom", ID_DYNAMIC));
-	NULL_CHECK_RETURN(m_pUziWorld, );
-
-	_vec3		vPos;
-	m_pUziWorld->Get_Info(INFO_POS, &vPos);
-
-	Engine::CTerrainTex*	pTerrainTexCom = dynamic_cast<Engine::CTerrainTex*>(Engine::Get_Component(L"Layer_Environment", L"Terrain", L"Proto_TerrainTexCom", ID_STATIC));
-	NULL_CHECK(pTerrainTexCom);
-
-	_float fHeight = m_pCalculatorCom->HeightOnTerrain(&vPos, pTerrainTexCom->Get_VtxPos(), VTXCNTX, VTXCNTZ);
-
-	m_pUziWorld->Set_Pos(vPos.x, fHeight, vPos.z);*/
-}
-
 
 CUzi * CUzi::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {

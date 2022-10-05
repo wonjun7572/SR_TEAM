@@ -40,10 +40,14 @@ _uint CLoading::Loading_ForStage(void)
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"RcTex_HP", CRcTex::Create(m_pGraphicDev)), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"RcTex_Defense", CRcTex::Create(m_pGraphicDev)), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"RcTex_Bullet", CRcTex::Create(m_pGraphicDev)), E_FAIL);
-		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FLARE_Alpha", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Particle/fireball_hit_big%d.png", TEX_NORMAL, 8)), E_FAIL);
 	
 	}
-	
+
+	// ÆÄÆ¼Å¬
+	{
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"SHOTPARTICLE", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Particle/fireball_hit_big0.png", TEX_NORMAL)), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"BULLETPARTICLE", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Particle/BulletParticle.png", TEX_NORMAL)), E_FAIL);
+	}
 	
 	{
 //		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_TerrainTexture", CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Terrain/Grass_%d.tga", TEX_NORMAL)), E_FAIL);

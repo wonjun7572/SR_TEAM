@@ -1,12 +1,10 @@
 #include "stdafx.h"
 #include "..\Header\LogoUI.h"
 
-
 CLogoUI::CLogoUI(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
 {
 }
-
 
 CLogoUI::~CLogoUI()
 {
@@ -43,8 +41,6 @@ void CLogoUI::Render_Object(void)
 	End_OrthoProj();
 }
 
-
-
 void CLogoUI::Begin_OrthoProj()
 {
 	_matrix matWorld, matView, matProj, matOrtho;
@@ -59,7 +55,7 @@ void CLogoUI::Begin_OrthoProj()
 	D3DXMatrixIdentity(&matWorld);
 	D3DXMatrixIdentity(&matView);
 
-	matView.m[0][0] = 800; // 이미지 가로
+	matView.m[0][0] = 800;	 // 이미지 가로
 	matView.m[1][1] = 900.f; // 이미지 세로
 	matView.m[2][2] = 1.f;
 	matView.m[3][0] = m_pTransCom->m_vInfo[INFO_POS].x;

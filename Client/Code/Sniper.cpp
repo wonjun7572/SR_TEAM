@@ -19,9 +19,10 @@ HRESULT CSniper::Ready_Object(void)
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 	m_tAbility = new GUNABILITY;
 
-	m_tAbility->fBulletRate = 50.f;
-	m_tAbility->fRemainBulletCnt = 50.f;
-	m_tAbility->fBulletCount = 300.f;
+	m_tAbility->fBulletRate = 3.f;
+	m_tAbility->fRemainBulletCnt = 10.f;
+	m_tAbility->fBulletCount = 100.f;
+	m_tAbility->fBulletAttack = 80.f;
 
 	m_bEquiped = false;
 
@@ -125,10 +126,6 @@ void CSniper::Assemble(void)
 	m_pPart1->Set_Pos(vBodyPos.x - 1.8f*1.5f, vBodyPos.y + 0.65f*1.5f, vBodyPos.z);
 	m_pPart2->Set_Pos(vBodyPos.x - 3.6f*1.5f, vBodyPos.y + 0.4f*1.5f, vBodyPos.z);
 	m_pPart3->Set_Pos(vBodyPos.x - 2.f*1.5f, vBodyPos.y + 0.2f*1.5f, vBodyPos.z);
-	
-	
-	//
-	//cout << vBodyPos.y << endl;
 }
 
 void CSniper::Animation_Fire(void)

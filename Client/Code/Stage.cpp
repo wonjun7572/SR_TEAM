@@ -47,11 +47,13 @@
 
 
 #include "LetterBox.h"
-#include "BulletParticle.h"
+#include "ShotParticle.h"
 #include "ShopCube.h"
 
 #include "RifleGun.h"
 #include "CrossHeader.h"
+#include "TargetCube.h"
+#include "BulletParticle.h"
 
 CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CScene(pGraphicDev)
@@ -126,6 +128,10 @@ HRESULT CStage::Ready_Layer_Environment(const _tchar * pLayerTag)
 	pGameObject = CSkyBox::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"SkyBox", pGameObject), E_FAIL);
+
+	pGameObject = CShotParticle::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"ShotParticle", pGameObject), E_FAIL);
 
 	pGameObject = CBulletParticle::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
@@ -362,6 +368,43 @@ HRESULT CStage::Ready_Layer_Monster(const _tchar * pLayerTag)
 	//pGameObject = CCubeMonster::Create(m_pGraphicDev);
 	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"CubeMonster", pGameObject), E_FAIL);
+
+	pGameObject = CTargetCube::Create(m_pGraphicDev, _vec3(27.f, 0.6f, 20.f));
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"TargetCube1", pGameObject), E_FAIL);
+
+	pGameObject = CTargetCube::Create(m_pGraphicDev, _vec3(30.f, 0.6f, 20.f));
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"TargetCube2", pGameObject), E_FAIL);
+
+	pGameObject = CTargetCube::Create(m_pGraphicDev, _vec3(33.f, 0.6f, 20.f));
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"TargetCube3", pGameObject), E_FAIL);
+
+	pGameObject = CTargetCube::Create(m_pGraphicDev, _vec3(27.f, 1.6f, 20.f));
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"TargetCube4", pGameObject), E_FAIL);
+
+	pGameObject = CTargetCube::Create(m_pGraphicDev, _vec3(30.f, 1.6f, 20.f));
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"TargetCube5", pGameObject), E_FAIL);
+
+	pGameObject = CTargetCube::Create(m_pGraphicDev, _vec3(33.f, 1.6f, 20.f));
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"TargetCube6", pGameObject), E_FAIL);
+
+	pGameObject = CTargetCube::Create(m_pGraphicDev, _vec3(27.f, 2.6f, 20.f));
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"TargetCube7", pGameObject), E_FAIL);
+
+	pGameObject = CTargetCube::Create(m_pGraphicDev, _vec3(30.f, 2.6f, 20.f));
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"TargetCube8", pGameObject), E_FAIL);
+
+	pGameObject = CTargetCube::Create(m_pGraphicDev, _vec3(33.f, 2.6f, 20.f));
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"TargetCube9", pGameObject), E_FAIL);
+
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 

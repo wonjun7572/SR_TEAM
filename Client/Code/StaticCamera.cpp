@@ -81,12 +81,10 @@ void CStaticCamera::Key_Input(const _float& fTimeDelta)
 	 //카메라 축 회전 방향 제한해야함
 	if (m_pTransform_Target)
 	{
-		_vec3 vPlayerPos;
-		m_pTransform_Target->Get_Info(INFO_POS, &vPlayerPos);
-		if (Get_DIMouseMove(DIMS_Y) > 0)
-			m_fAngle += D3DXToRadian(180.f) * fTimeDelta;
-		if (Get_DIMouseMove(DIMS_Y) < 0)
-			m_fAngle += D3DXToRadian(180.f) * fTimeDelta;
+		_vec3 vUp;
+		m_pTransform_Target->Get_Info(INFO_UP, &vUp);
+		cout << "vUp.X: " << vUp.x << " vUp.Y: " << vUp.y << " vUp.Z: " << vUp.z << "\n";
+		// 업벡터 y값을 해결해주면됨.
 	}
 }
 
@@ -173,8 +171,8 @@ void CStaticCamera::Look_Taget(void)
 
 		D3DXVec3Normalize(&vLook, &vLook);
 		
-		m_vEye += vPos;
-		m_vAt = vPos;
+		m_vEye += vPos + (vLook * 10.f);
+		m_vAt = vPos + (vLook * 10.f);
 	}
 	else
 	{

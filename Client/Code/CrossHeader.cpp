@@ -39,7 +39,7 @@ _int CCrossHeader::Update_Object(const _float & fTimeDelta)
 	else if (dynamic_cast<CCubePlayer*>(pPlayer)->Get_Weapon() == Engine::Get_GameObject(L"Layer_Gun", L"SNIPER"))
 	{
 		if(dynamic_cast<CCubePlayer*>(pPlayer)->Get_SniperZoom() == true)
-			m_eGunID = GUN_SNIPER_ZOOMIN;
+			m_eGunID = GUN_SNIPER_ZOOMIN;	
 		else
 			m_eGunID = GUN_SNIPER_ZOOMOUT;
 	}
@@ -112,8 +112,8 @@ void CCrossHeader::Begin_OrthoProj(GUN_ID eID)
 	}
 	else if (eID == GUN_SNIPER_ZOOMIN)
 	{
-		matView.m[0][0] = 800.f;	  // 이미지 가로
-		matView.m[1][1] = 450.f;	  // 이미지 세로
+		matView.m[0][0] = 1600.f;	  // 이미지 가로
+		matView.m[1][1] = 900.f;	  // 이미지 세로
 		matView.m[2][2] = 0.f;
 		matView.m[3][0] = m_pTransCom->m_vInfo[INFO_POS].x;
 		matView.m[3][1] = m_pTransCom->m_vInfo[INFO_POS].y;

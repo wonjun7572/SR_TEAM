@@ -1,7 +1,7 @@
 #pragma once
 #include "PSystem.h"
 
-class CBulletParticle :	public CPSystem
+class CBulletParticle : public CPSystem
 {
 protected:
 	explicit CBulletParticle(LPDIRECT3DDEVICE9 pGraphicDev);
@@ -16,9 +16,7 @@ public:
 public:
 	HRESULT						Add_Component(void);
 	static CBulletParticle*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
-	virtual		void		Free(void);
-
-	_float	 m_tFrame = 0.f;
+	virtual		void			Free(void);
 
 public:
 	virtual		void		resetParticle(ATTRIBUTE* attribute);
