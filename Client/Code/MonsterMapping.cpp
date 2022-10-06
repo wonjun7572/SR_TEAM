@@ -20,13 +20,13 @@ HRESULT CMonsterMapping::Ready_Object(void)
 
 _int CMonsterMapping::Update_Object(const _float & fTimeDelta)
 {
-	if (!m_bWorldMap)
-	{
-		Add_RenderGroup(RENDER_MINIMAP, this);
-	}
 	if (m_bWorldMap)
 	{
-		Add_RenderGroup(RENDER_MAPVIEW, this);
+		Add_RenderGroup(RENDER_WORLDMAP, this);
+	}
+	if (m_bMinimap)
+	{
+		Add_RenderGroup(RENDER_MINIMAP, this);
 	}
 	Key_Input();
 
@@ -46,7 +46,7 @@ void CMonsterMapping::Render_Object(void)
 
 	Begin_OrthoProj();
 	m_pTexture->Set_Texture(43);
-	if(!m_bWorldMap)
+	if(m_bMinimap)
 		m_pRcCom->Render_Buffer();
 	End_OrthoProj();
 	if(m_bWorldMap)
@@ -94,16 +94,8 @@ void CMonsterMapping::End_OrthoProj()
 
 void CMonsterMapping::Key_Input(void)
 {
-	if (Get_DIKeyState(DIK_Y))
-	{
-		CRenderer::GetInstance()->On_Minimap();
-		m_bWorldMap = false;
-	}
-	if (Get_DIKeyState(DIK_U))
-	{
-		CRenderer::GetInstance()->Off_Minimap();
-		m_bWorldMap = true;
-	}
+	m_bWorldMap = dynamic_cast<CBaseMapping*>(Engine::Get_GameObject(STAGE_MAPPING, L"BaseMapping"))->Get_Worldmap();
+	m_bMinimap = dynamic_cast<CBaseMapping*>(Engine::Get_GameObject(STAGE_MAPPING, L"BaseMapping"))->Get_Minimap();
 }
 
 
