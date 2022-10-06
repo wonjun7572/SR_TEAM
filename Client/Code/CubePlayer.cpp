@@ -10,7 +10,7 @@
 #include "Sniper.h"
 #include "ShotParticle.h"
 #include "BulletParticle.h"
-
+#include "Inventory.h"
 CCubePlayer::CCubePlayer(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
 {
@@ -47,30 +47,23 @@ HRESULT CCubePlayer::Ready_Object(void)
 
 _int CCubePlayer::Update_Object(const _float & fTimeDelta)
 {
+	Update_NullCheck();
 	m_fTimeDelta = fTimeDelta;
 	m_fBulletTime += fTimeDelta;
-
-	FAILED_CHECK_RETURN(Get_BodyTransform(), -1);
-
-	Update_NullCheck();
-
-	// 이동, 애니메이션 관련
-	Move();
-
-	//Look_Direction();
-
-	Animation();
-
+	Look_Direction();
 	Assemble();
-
 	Player_Mapping();
-
-	//FAILED_CHECK_RETURN(CPoolMgr::GetInstance()->Reuse_Obj(m_pGraphicDev, &vPos, &m_vDirection), -1);
-
+	Engine::Add_RenderGroup(RENDER_NONALPHA, this);
 	CGameObject::Update_Object(fTimeDelta);
 
-	Engine::Add_RenderGroup(RENDER_NONALPHA, this);
-
+	FAILED_CHECK_RETURN(Get_BodyTransform(), -1);
+	if (!(dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->Get_Switch()))
+	{
+		// 이동, 애니메이션 관련
+		Move();
+		Animation();
+		//FAILED_CHECK_RETURN(CPoolMgr::GetInstance()->Reuse_Obj(m_pGraphicDev, &vPos, &m_vDirection), -1);
+	}
 	return 0;
 }
 
