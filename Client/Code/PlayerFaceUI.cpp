@@ -20,10 +20,10 @@ HRESULT CPlayerFaceUI::Ready_Object(void)
 
 	D3DXMatrixOrthoLH(&m_ProjMatrix, WINCX, WINCY, 0.f, 1.f);
 
-	m_fX = -740.f;
+	m_fX = -722.f;
 	m_fY = 375.f;
-	m_fSizeX = 89.f;
-	m_fSizeY = 133.f;
+	m_fSizeX = 146.f;
+	m_fSizeY = 155.f;
 
 	if (m_pPlayer == nullptr)
 		m_pPlayer = Engine::Get_GameObject(L"Layer_Character", L"PLAYER");
@@ -36,7 +36,7 @@ _int CPlayerFaceUI::Update_Object(const _float & fTimeDelta)
 	if (m_pPlayer == nullptr)
 		m_pPlayer = Engine::Get_GameObject(STAGE_CHARACTER, L"PLAYER");
 
-	m_pTransCom->Set_Scale(m_fSizeX, m_fSizeY, 1.f);
+	m_pTransCom->Set_Scale(m_fSizeX , m_fSizeY, 1.f);
 	m_pTransCom->Set_Pos(m_fX, -m_fY, 0.f);
 
 	m_fFrame += 5.f * fTimeDelta * 0.2f;

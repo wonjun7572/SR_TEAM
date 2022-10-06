@@ -26,7 +26,7 @@ HRESULT CShop::Ready_Object(void)
 	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"RAILGUN MODE", L"Roboto-Bold", 10, 10, FW_NORMAL), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"BURST MODE", L"Roboto-Bold", 10, 10, FW_NORMAL), E_FAIL);
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
-
+	
 	D3DXMatrixOrthoLH(&m_matProj, WINCX, WINCY, 0.f, 1.f);
 
 	//ShopView
