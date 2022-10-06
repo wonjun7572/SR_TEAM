@@ -81,10 +81,10 @@ void CRcTex::Resize_Buffer(_float vX)
 
 	m_pVB->Lock(0, 0, (void**)&pVertex, 0);
 	
-	pVertex[1].vPos = { -1.f + (vX * 2.f), 0.5f, 0.f };   //   -1 ~ 1임
+	pVertex[1].vPos = { -0.5f + (vX * 1.f), 0.5f, 0.f };   //   -1 ~ 1임
 	pVertex[1].vTexUV = { (vX), 0.f };
 
-	pVertex[2].vPos = { -1.f + (vX * 2.f), -0.5f, 0.f };
+	pVertex[2].vPos = { -0.5f + (vX * 1.f), -0.5f, 0.f };
 	pVertex[2].vTexUV = { (vX), 1.f };
 
 	m_pVB->Unlock();
@@ -96,11 +96,11 @@ void CRcTex::Resize_Buffer_Reverse(_float vX)
 
 	m_pVB->Lock(0, 0, (void**)&pVertex, 0);
 
-	pVertex[0].vPos = { (-1.f + (2.f - (vX * 2.f))), 0.5f, 0.f };   //   -1 ~ 1임
-	pVertex[0].vTexUV = { (1 - vX) , 0.f };
+	pVertex[0].vPos = { (-0.5f + (1.f - (vX * 1.f))), 0.5f, 0.f };   //   -1 ~ 1임
+	pVertex[0].vTexUV = { (1.f - vX) , 0.f };
 
-	pVertex[3].vPos = { (-1.f + (2.f - (vX * 2.f))), -0.5f, 0.f };
-	pVertex[3].vTexUV = { (1 - vX) , 1.f };
+	pVertex[3].vPos = { (-0.5f + (1.f - (vX * 1.f))), -0.5f, 0.f };
+	pVertex[3].vTexUV = { (1.f - vX) , 1.f };
 
 	m_pVB->Unlock();
 }

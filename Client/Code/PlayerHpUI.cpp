@@ -19,9 +19,9 @@ HRESULT CPlayerHpUI::Ready_Object(void)
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 	D3DXMatrixOrthoLH(&m_ProjMatrix, WINCX, WINCY, 0.f, 1.f);
 
-	m_fX = -479.f;
+	m_fX = -442.f;
 	m_fY = 428.f;
-	m_fSizeX = 139.8f;
+	m_fSizeX = 204.5f;
 	m_fSizeY = 21.f;
 
 	//FONT
@@ -31,7 +31,6 @@ HRESULT CPlayerHpUI::Ready_Object(void)
 
 _int CPlayerHpUI::Update_Object(const _float & fTimeDelta)
 {
-
 	m_pTransCom->Set_Scale(m_fSizeX, m_fSizeY, 1.f);
 	m_pTransCom->Set_Pos(m_fX, -m_fY, 0.f);
 

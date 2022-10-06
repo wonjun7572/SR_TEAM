@@ -8,6 +8,7 @@
 #include "ToolScene.h"
 #include "LogoBilBoard.h"
 #include "LogoCamera.h"
+
 CLogo::CLogo(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CScene(pGraphicDev)
 {
@@ -29,7 +30,6 @@ HRESULT CLogo::Ready_Scene(void)
 	m_pLoading = CLoading::Create(m_pGraphicDev, LOADING_STAGE);
 	NULL_CHECK_RETURN(m_pLoading, E_FAIL);
 
-
 	return S_OK;
 }
 
@@ -37,15 +37,16 @@ Engine::_int CLogo::Update_Scene(const _float& fTimeDelta)
 {
 	_int iResult = Engine::CScene::Update_Scene(fTimeDelta);
 
-	if (m_PlayButton->Get_MouseCheck())
+	if (m_pLoading->Get_Finish())
 	{
-		CScene*      pScene = CStage::Create(m_pGraphicDev);
-		NULL_CHECK_RETURN(pScene, E_FAIL);
-		FAILED_CHECK_RETURN(Engine::Set_Scene(pScene), E_FAIL);
-		return 0;
+		if (m_PlayButton->Get_MouseCheck())
+		{
+			CScene*      pScene = CStage::Create(m_pGraphicDev);
+			NULL_CHECK_RETURN(pScene, E_FAIL);
+			FAILED_CHECK_RETURN(Engine::Set_Scene(pScene), E_FAIL);
+			return 0;
+		}
 	}
-
-
 
 	return iResult;
 }
