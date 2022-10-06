@@ -241,6 +241,9 @@
     <Filter Include="02. GameObject\01. For_Stage\09. UI\LetterBox">
       <UniqueIdentifier>{3690129c-7dca-40ce-965a-b361c928a598}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\00. For_Logo\01. BillBoard">
+      <UniqueIdentifier>{86146145-ea8c-49af-a4a6-baaa3910d0b7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -525,9 +528,6 @@
     <ClInclude Include="..\Header\MaxPlusHp.h">
       <Filter>02. GameObject\01. For_Stage\10. Item\HP</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\ShopCube.h">
-      <Filter>02. GameObject\01. For_Stage\13. Shop</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\LogoCamera.h">
       <Filter>02. GameObject\02. For_Public\99. LogoCamera</Filter>
     </ClInclude>
@@ -551,6 +551,15 @@
     </ClInclude>
     <ClInclude Include="Define.h">
       <Filter>99. Default\헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\LogoBilboard.h">
+      <Filter>02. GameObject\00. For_Logo\01. BillBoard</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CubeShop.h">
+      <Filter>02. GameObject\01. For_Stage\13. Shop</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Shop.h">
+      <Filter>02. GameObject\01. For_Stage\13. Shop</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -818,9 +827,6 @@
     <ClCompile Include="..\Code\MaxPlusHp.cpp">
       <Filter>02. GameObject\01. For_Stage\10. Item\HP</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\ShopCube.cpp">
-      <Filter>02. GameObject\01. For_Stage\13. Shop</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\LogoCamera.cpp">
       <Filter>02. GameObject\02. For_Public\99. LogoCamera</Filter>
     </ClCompile>
@@ -841,6 +847,15 @@
     </ClCompile>
     <ClCompile Include="..\Code\LetterBox.cpp">
       <Filter>02. GameObject\01. For_Stage\09. UI\LetterBox</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\LogoBilboard.cpp">
+      <Filter>02. GameObject\00. For_Logo\01. BillBoard</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CubeShop.cpp">
+      <Filter>02. GameObject\01. For_Stage\13. Shop</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Shop.cpp">
+      <Filter>02. GameObject\01. For_Stage\13. Shop</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

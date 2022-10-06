@@ -6,8 +6,8 @@
 #include "TestMonster.h"
 #include "Stage.h"
 #include "ToolScene.h"
+#include "LogoBilBoard.h"
 #include "LogoCamera.h"
-
 CLogo::CLogo(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CScene(pGraphicDev)
 {
@@ -23,11 +23,12 @@ HRESULT CLogo::Ready_Scene(void)
 		return E_FAIL;
 
 	FAILED_CHECK_RETURN(Ready_Proto(), E_FAIL);
-	FAILED_CHECK_RETURN(Ready_Layer_Environment(LOGO_ENVIRONMENT), E_FAIL);
-	FAILED_CHECK_RETURN(Ready_Layer_UI(LOGO_UI), E_FAIL);
+	FAILED_CHECK_RETURN(Ready_Layer_Environment(L"Ready_Layer_Environment"), E_FAIL);
+	FAILED_CHECK_RETURN(Ready_Layer_UI(L"Ready_Layer_UI"), E_FAIL);
 
 	m_pLoading = CLoading::Create(m_pGraphicDev, LOADING_STAGE);
 	NULL_CHECK_RETURN(m_pLoading, E_FAIL);
+
 
 	return S_OK;
 }
@@ -38,19 +39,13 @@ Engine::_int CLogo::Update_Scene(const _float& fTimeDelta)
 
 	if (m_PlayButton->Get_MouseCheck())
 	{
-		CScene*		pScene = CStage::Create(m_pGraphicDev);
+		CScene*      pScene = CStage::Create(m_pGraphicDev);
 		NULL_CHECK_RETURN(pScene, E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Set_Scene(pScene), E_FAIL);
 		return 0;
 	}
 
-	if (m_OptionButton->Get_MouseCheck())
-	{
-		CScene*		pToolScene = CToolScene::Create(m_pGraphicDev);
-		NULL_CHECK_RETURN(pToolScene, E_FAIL);
-		FAILED_CHECK_RETURN(Engine::Set_Scene(pToolScene), E_FAIL);
-		return 0;
-	}
+
 
 	return iResult;
 }
@@ -62,24 +57,33 @@ void CLogo::LateUpdate_Scene(void)
 
 void CLogo::Render_Scene(void)
 {
+
+
+	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
+
+
+	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
+
+
+
 }
 
 HRESULT CLogo::Ready_Layer_Environment(const _tchar * pLayerTag)
 {
-	Engine::CLayer*		pLayer = Engine::CLayer::Create();
+	Engine::CLayer*      pLayer = Engine::CLayer::Create();
 	NULL_CHECK_RETURN(pLayer, E_FAIL);
 
-	CGameObject*		pGameObject = nullptr;
+	CGameObject*      pGameObject = nullptr;
 
 	// backGround
 	pGameObject = CBackGround::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"BackGround", pGameObject), E_FAIL);
 
-	//DynamicCamera
-	pGameObject = CLogoCamera::Create(m_pGraphicDev, &_vec3(0.f, 20.f, -10.f), &_vec3(0.f, 0.f, 0.f), &_vec3(0.f, 1.f, 0.f));
+	pGameObject = CLogoCamera::Create(m_pGraphicDev, &_vec3(0.f, 10.f, -20.f), &_vec3(0.f, 10.f, 0.f), &_vec3(0.f, 1.f, 0.f));
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"LogoCamera", pGameObject), E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"DynamicCamera", pGameObject), E_FAIL);
+
 
 	//Terrian 
 	pGameObject = CTerrain::Create(m_pGraphicDev);
@@ -91,18 +95,23 @@ HRESULT CLogo::Ready_Layer_Environment(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"SkyBox", pGameObject), E_FAIL);
 
-	
+	//Billboard
+	pGameObject = CLogoBilboard::Create(m_pGraphicDev, _vec3(15.f, 1.f, 15.f));
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"LogoBilboard", pGameObject), E_FAIL);
+
+
 	m_mapLayer.insert({ pLayerTag, pLayer });
 	return S_OK;
 }
 
 HRESULT CLogo::Ready_Layer_UI(const _tchar * pLayerTag)
 {
-	
-	Engine::CLayer*		pLayer = Engine::CLayer::Create();
+
+	Engine::CLayer*      pLayer = Engine::CLayer::Create();
 	NULL_CHECK_RETURN(pLayer, E_FAIL);
 
-	CGameObject*		pGameObject = nullptr;
+	CGameObject*      pGameObject = nullptr;
 
 	pGameObject = CLogoUI::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
@@ -126,10 +135,9 @@ HRESULT CLogo::Ready_Layer_UI(const _tchar * pLayerTag)
 
 	return S_OK;
 }
-
 CLogo * CLogo::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
-	CLogo*	pInstance = new CLogo(pGraphicDev);
+	CLogo*   pInstance = new CLogo(pGraphicDev);
 
 	if (FAILED(pInstance->Ready_Scene()))
 	{
@@ -143,8 +151,10 @@ CLogo * CLogo::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 void CLogo::Free(void)
 {
 	Safe_Release(m_pLoading);
+
 	Engine::CScene::Free();
 }
+
 
 HRESULT CLogo::Ready_Proto(void)
 {
@@ -153,20 +163,27 @@ HRESULT CLogo::Ready_Proto(void)
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(TRANSFORM_COMP, CTransform::Create(m_pGraphicDev)), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(CUBETEX_COMP, CCubeTex::Create(m_pGraphicDev)), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(TERRAINTEX_COMP, CTerrainTex::Create(m_pGraphicDev, VTXCNTX, VTXCNTZ, VTXITV)), E_FAIL);
-	}
 
-	//Texture
+	}
 	{
-		FAILED_CHECK_RETURN(Engine::Ready_Proto(LOGO_TERRAIN_TEX, CTexture::Create(m_pGraphicDev, LOGO_TERRAIN_TEX_PATH, TEX_NORMAL)), E_FAIL);
-		FAILED_CHECK_RETURN(Engine::Ready_Proto(LOGO_SKYBOX_TEX, CTexture::Create(m_pGraphicDev, LOGO_SKYBOX_TEX_PATH, TEX_CUBE, 4)), E_FAIL);
+		//Texture
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_TerrainTexture_Stage_1", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Texture2D/tex_stone_3.png", TEX_NORMAL)), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_TerrainTexture", CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Terrain/Grass_%d.tga", TEX_NORMAL)), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_CubeTexture", CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/SkyBox/burger%d.dds", TEX_CUBE, 4)), E_FAIL);
+
+
+
+	}
+	{      //MENUUI
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_OptionButton", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/UI/MenuUI/UI%d.png", TEX_NORMAL, 2)), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_LogoUITexture", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/UI/Sprite/character_select_UI_1.png", TEX_NORMAL)), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_ButtonPlayTexture", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/UI/MenuUI/UI%d.png", TEX_NORMAL, 2)), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_ExitButton", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/UI/MenuUI/UI%d.png", TEX_NORMAL, 2)), E_FAIL);
 	}
 
-	//MENUUI
-	{		
-		FAILED_CHECK_RETURN(Engine::Ready_Proto(OPTION_BTN_TEX, CTexture::Create(m_pGraphicDev, OPTION_BTN_TEX_PATH, TEX_NORMAL, 2)), E_FAIL);
-		FAILED_CHECK_RETURN(Engine::Ready_Proto(LOGO_UI_TEX, CTexture::Create(m_pGraphicDev, LOGO_UI_TEX_PATH, TEX_NORMAL)), E_FAIL);
-		FAILED_CHECK_RETURN(Engine::Ready_Proto(PLAY_BTN_TEX, CTexture::Create(m_pGraphicDev, PLAY_BTN_TEX_PATH, TEX_NORMAL, 2)), E_FAIL);
-		FAILED_CHECK_RETURN(Engine::Ready_Proto(EXIT_BTN_TEX, CTexture::Create(m_pGraphicDev, EXIT_BTN_TEX_PATH, TEX_NORMAL, 2)), E_FAIL);
+	//Menu Bilboard
+	{
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_LogoBil", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Texture2D/amidevil.png", TEX_NORMAL)), E_FAIL);
 	}
 
 	return S_OK;

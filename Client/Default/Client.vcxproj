@@ -176,6 +176,7 @@
     <ClInclude Include="..\Header\CubeMonsterBody.h" />
     <ClInclude Include="..\Header\CubeMonsterHead.h" />
     <ClInclude Include="..\Header\CubePlayer.h" />
+    <ClInclude Include="..\Header\CubeShop.h" />
     <ClInclude Include="..\Header\DynamicCamera.h" />
     <ClInclude Include="..\Header\ExitButton.h" />
     <ClInclude Include="..\Header\GetShotgun.h" />
@@ -190,6 +191,7 @@
     <ClInclude Include="..\Header\Loading.h" />
     <ClInclude Include="..\Header\LoadingScene.h" />
     <ClInclude Include="..\Header\Logo.h" />
+    <ClInclude Include="..\Header\LogoBilboard.h" />
     <ClInclude Include="..\Header\LogoCamera.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClInclude>
@@ -206,7 +208,7 @@
     <ClInclude Include="..\Header\PlayerMapping.h" />
     <ClInclude Include="..\Header\PlayerUI.h" />
     <ClInclude Include="..\Header\PoolMgr.h" />
-    <ClInclude Include="..\Header\ShopCube.h" />
+    <ClInclude Include="..\Header\Shop.h" />
     <ClInclude Include="..\Header\Shotgun.h" />
     <ClInclude Include="..\Header\ShotgunPart1.h" />
     <ClInclude Include="..\Header\ShotgunPart2.h" />
@@ -283,6 +285,7 @@
     <ClCompile Include="..\Code\CubeMonsterBody.cpp" />
     <ClCompile Include="..\Code\CubeMonsterHead.cpp" />
     <ClCompile Include="..\Code\CubePlayer.cpp" />
+    <ClCompile Include="..\Code\CubeShop.cpp" />
     <ClCompile Include="..\Code\DynamicCamera.cpp" />
     <ClCompile Include="..\Code\ExitButton.cpp" />
     <ClCompile Include="..\Code\GetShotgun.cpp" />
@@ -297,6 +300,7 @@
     <ClCompile Include="..\Code\Loading.cpp" />
     <ClCompile Include="..\Code\LoadingScene.cpp" />
     <ClCompile Include="..\Code\Logo.cpp" />
+    <ClCompile Include="..\Code\LogoBilboard.cpp" />
     <ClCompile Include="..\Code\LogoCamera.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClCompile>
@@ -313,7 +317,7 @@
     <ClCompile Include="..\Code\PlayerMapping.cpp" />
     <ClCompile Include="..\Code\PlayerUI.cpp" />
     <ClCompile Include="..\Code\PoolMgr.cpp" />
-    <ClCompile Include="..\Code\ShopCube.cpp" />
+    <ClCompile Include="..\Code\Shop.cpp" />
     <ClCompile Include="..\Code\Shotgun.cpp" />
     <ClCompile Include="..\Code\ShotgunPart1.cpp" />
     <ClCompile Include="..\Code\ShotgunPart2.cpp" />

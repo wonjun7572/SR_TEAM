@@ -3,7 +3,7 @@
 
 #include "Export_Function.h"
 #include "Stage.h"
- 
+
 CPlayButton::CPlayButton(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CGameObject(pGraphicDev)
 {
@@ -15,7 +15,7 @@ CPlayButton::~CPlayButton()
 
 HRESULT CPlayButton::Ready_Object()
 {
-	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"PlayButtontFont", ROBOTO_BOLD, 36, 30, FW_NORMAL), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"PlayButtontFont", L"Roboto-Bold", 36, 30, FW_NORMAL), E_FAIL);
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 	m_TranformCom->Set_Scale(0.28f, 0.1f, 0.f);
 	m_TranformCom->Set_Pos(0.65f, 0.45f, 0.f);
@@ -28,6 +28,8 @@ _int CPlayButton::Update_Object(const _float & fTimeDelta)
 {
 	if (PointMouse())
 	{
+
+
 		if (Get_DIMouseState(DIM_LB) & 0x80)
 			Mouse_check = true;
 	}
@@ -69,15 +71,15 @@ HRESULT CPlayButton::Add_Component(void)
 
 	pComponent = m_RcTexCom = dynamic_cast<CRcTex*>(Clone_Proto(RCTEX_COMP));
 	NULL_CHECK_RETURN(m_RcTexCom, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"CPlayBtn_RcTexCom", pComponent });
+	m_mapComponent[ID_STATIC].insert({ RCTEX_COMP, pComponent });
 
-	pComponent = m_TextureCom = dynamic_cast<CTexture*>(Clone_Proto(PLAY_BTN_TEX));
+	pComponent = m_TextureCom = dynamic_cast<CTexture*>(Clone_Proto(L"Proto_ButtonPlayTexture"));
 	NULL_CHECK_RETURN(m_TextureCom, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"CPlayBtn_ButtonPlayTexture", pComponent });
+	m_mapComponent[ID_STATIC].insert({ L"Proto_ButtonPlayTexture", pComponent });
 
 	pComponent = m_TranformCom = dynamic_cast<CTransform*>(Clone_Proto(TRANSFORM_COMP));
 	NULL_CHECK_RETURN(m_TranformCom, E_FAIL);
-	m_mapComponent[ID_DYNAMIC].insert({ L"CPlayBtn_TransformCom", pComponent });
+	m_mapComponent[ID_DYNAMIC].insert({ TRANSFORM_COMP, pComponent });
 
 	return S_OK;
 }
@@ -96,8 +98,8 @@ void CPlayButton::Begin_OrthoProj()
 	D3DXMatrixIdentity(&matWorld);
 	D3DXMatrixIdentity(&matView);
 
-	matView.m[0][0] = 250.f; // 이미지 가로
-	matView.m[1][1] = 50.f; // 이미지 세로
+	matView.m[0][0] = 500.f; // 이미지 가로
+	matView.m[1][1] = 100.f; // 이미지 세로
 	matView.m[2][2] = 1.f;
 	matView.m[3][0] = m_TranformCom->m_vInfo[INFO_POS].x + 550.f;
 	matView.m[3][1] = m_TranformCom->m_vInfo[INFO_POS].y + 200.f;
@@ -136,10 +138,10 @@ _bool CPlayButton::PointMouse(void)
 
 	_long lLeft, lRight, lUp, lDown;
 
-	lLeft  = _long((0.5 * WINCX) * (1 + m_TranformCom->m_vInfo[INFO_POS].x) - (m_TranformCom->m_vScale.x  * (0.5 * WINCX)));
+	lLeft = _long((0.5 * WINCX) * (1 + m_TranformCom->m_vInfo[INFO_POS].x) - (m_TranformCom->m_vScale.x  * (0.5 * WINCX)));
 	lRight = _long((0.5 * WINCX) * (1 + m_TranformCom->m_vInfo[INFO_POS].x) + (m_TranformCom->m_vScale.x  * (0.5 * WINCX)));
-	lUp    = _long((0.5 * WINCY) * (1 - m_TranformCom->m_vInfo[INFO_POS].y) - (m_TranformCom->m_vScale.y  * (WINCY * 0.5)));
-	lDown  = _long((0.5 * WINCY) * (1 - m_TranformCom->m_vInfo[INFO_POS].y) + (m_TranformCom->m_vScale.y  * (WINCY * 0.5)));
+	lUp = _long((0.5 * WINCY) * (1 - m_TranformCom->m_vInfo[INFO_POS].y) - (m_TranformCom->m_vScale.y  * (WINCY * 0.5)));
+	lDown = _long((0.5 * WINCY) * (1 - m_TranformCom->m_vInfo[INFO_POS].y) + (m_TranformCom->m_vScale.y  * (WINCY * 0.5)));
 
 	RECT rc = { lLeft, lUp, lRight, lDown };
 

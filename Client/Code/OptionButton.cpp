@@ -2,7 +2,6 @@
 #include "..\Header\OptionButton.h"
 #include "Export_Function.h"
 #include "ToolScene.h"
-
 COptionButton::COptionButton(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CGameObject(pGraphicDev)
 {
@@ -29,6 +28,8 @@ _int COptionButton::Update_Object(const _float & fTimeDelta)
 	{
 		if (Get_DIMouseState(DIM_LB) & 0x80)
 		{
+
+
 			Mouse_check = true;
 			return 0;
 		}
@@ -47,7 +48,7 @@ void COptionButton::LateUpdate_Object(void)
 
 void COptionButton::Render_Object(void)
 {
-	
+
 	Begin_OrthoProj();
 	m_iIndex = 0;
 	m_pTextureCom->Set_Texture(m_iIndex);
@@ -73,7 +74,7 @@ void COptionButton::Render_Object(void)
 HRESULT COptionButton::Add_Component(void)
 {
 	CComponent* pComponent = nullptr;
-	
+
 	pComponent = m_pRcTexCom = dynamic_cast<CRcTex*>(Clone_Proto(L"Proto_RcTexCom"));
 	NULL_CHECK_RETURN(m_pRcTexCom, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_RcTexCom", pComponent });
@@ -82,9 +83,9 @@ HRESULT COptionButton::Add_Component(void)
 	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_OptionButton", pComponent });
 
-	pComponent = m_pTransformCom = dynamic_cast<CTransform*>(Clone_Proto(TRANSFORM_COMP));
+	pComponent = m_pTransformCom = dynamic_cast<CTransform*>(Clone_Proto(L"Proto_TransformCom"));
 	NULL_CHECK_RETURN(m_pTransformCom, E_FAIL);
-	m_mapComponent[ID_DYNAMIC].insert({ TRANSFORM_COMP, pComponent });
+	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_TransformCom", pComponent });
 
 	return S_OK;
 }
@@ -103,8 +104,8 @@ void COptionButton::Begin_OrthoProj()
 	D3DXMatrixIdentity(&matWorld);
 	D3DXMatrixIdentity(&matView);
 
-	matView.m[0][0] = 250.f; // 이미지 가로
-	matView.m[1][1] = 50.f; // 이미지 세로
+	matView.m[0][0] = 500.f; // 이미지 가로
+	matView.m[1][1] = 100.f; // 이미지 세로
 	matView.m[2][2] = 1.f;
 	matView.m[3][0] = m_pTransformCom->m_vInfo[INFO_POS].x + 550.f;
 	matView.m[3][1] = m_pTransformCom->m_vInfo[INFO_POS].y + 50.f;
@@ -143,10 +144,10 @@ _bool COptionButton::PointMouse(void)
 
 	_long lLeft, lRight, lUp, lDown;
 
-	lLeft  = _long((0.5 * WINCX) * (1 + m_pTransformCom->m_vInfo[INFO_POS].x) - (m_pTransformCom->m_vScale.x * (0.5 * WINCX)));
+	lLeft = _long((0.5 * WINCX) * (1 + m_pTransformCom->m_vInfo[INFO_POS].x) - (m_pTransformCom->m_vScale.x * (0.5 * WINCX)));
 	lRight = _long((0.5 * WINCX) * (1 + m_pTransformCom->m_vInfo[INFO_POS].x) + (m_pTransformCom->m_vScale.x * (0.5 * WINCX)));
-	lUp    = _long((0.5 * WINCY) * (1 - m_pTransformCom->m_vInfo[INFO_POS].y) - (m_pTransformCom->m_vScale.y * (WINCY * 0.5)));
-	lDown  = _long((0.5 * WINCY) * (1 - m_pTransformCom->m_vInfo[INFO_POS].y) + (m_pTransformCom->m_vScale.y * (WINCY * 0.5)));
+	lUp = _long((0.5 * WINCY) * (1 - m_pTransformCom->m_vInfo[INFO_POS].y) - (m_pTransformCom->m_vScale.y * (WINCY * 0.5)));
+	lDown = _long((0.5 * WINCY) * (1 - m_pTransformCom->m_vInfo[INFO_POS].y) + (m_pTransformCom->m_vScale.y * (WINCY * 0.5)));
 
 	RECT rc = { lLeft, lUp, lRight, lDown };
 
