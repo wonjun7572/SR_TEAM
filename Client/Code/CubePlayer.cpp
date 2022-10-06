@@ -57,7 +57,7 @@ _int CCubePlayer::Update_Object(const _float & fTimeDelta)
 	// 이동, 애니메이션 관련
 	Move();
 
-	//Look_Direction();
+	Look_Direction();
 
 	Animation();
 
