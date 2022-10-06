@@ -39,8 +39,6 @@ private:
 	_bool			m_bWorldMap = false;
 	_bool			m_bMinimap = false;
 
-
-
 public:
 	static CMonsterMapping*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
 	virtual void		Free(void);
