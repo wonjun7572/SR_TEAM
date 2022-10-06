@@ -19,7 +19,7 @@ HRESULT CPlayerFaceUI::Ready_Object(void)
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
 	if (m_pPlayer == nullptr)
-		m_pPlayer = Engine::Get_GameObject(L"Layer_Character",L"PLAYER");
+		m_pPlayer = Engine::Get_GameObject(STAGE_CHARACTER,L"PLAYER");
 
 	return S_OK;
 }
@@ -27,7 +27,7 @@ HRESULT CPlayerFaceUI::Ready_Object(void)
 _int CPlayerFaceUI::Update_Object(const _float & fTimeDelta)
 {
 	if (m_pPlayer == nullptr)
-		m_pPlayer = Engine::Get_GameObject(L"Layer_Character", L"PLAYER");
+		m_pPlayer = Engine::Get_GameObject(STAGE_CHARACTER, L"PLAYER");
 	
 	m_fFrame += 5.f * fTimeDelta * 0.2f;
 
@@ -119,9 +119,9 @@ HRESULT CPlayerFaceUI::Add_Component()
 	NULL_CHECK_RETURN(m_pBufferCom, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_RcTexCom", pComponent });
 
-	pComponent = m_pTransCom = dynamic_cast<CTransform*>(Clone_Proto(L"Proto_TransformCom"));
+	pComponent = m_pTransCom = dynamic_cast<CTransform*>(Clone_Proto(TRANSFORM_COMP));
 	NULL_CHECK_RETURN(m_pTransCom, E_FAIL);
-	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_TransformCom", pComponent });
+	m_mapComponent[ID_DYNAMIC].insert({ TRANSFORM_COMP, pComponent });
 
 	pComponent = m_pTexture_100 = dynamic_cast<CTexture*>(Clone_Proto(L"HP_100_Face"));
 	NULL_CHECK_RETURN(m_pTexture_100, E_FAIL);

@@ -87,14 +87,16 @@ namespace Engine
 
 	typedef struct tagGunAbility
 	{
+		_float		fBulletAttack;
 		_float		fBulletRate;	  // 총알 속도
 		_float		fRemainBulletCnt; // 남은 총알 개수 
 		_float		fBulletCount;	  // 총알 개수 제한용
+		_bool		bShoot;
 	}GUNABILITY;
 
 	typedef struct tagMonsterState
 	{
-		_int iLevel;
+		_int   iLevel;
 		_float fCurrentHp;
 		_float fMaxHp;
 		_float fDamage;

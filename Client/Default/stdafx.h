@@ -36,7 +36,7 @@
 #include <process.h>
 #include <fstream>
 
-
+#include "Define.h"
 #include "Engine_Include.h"
 #include "Export_Function.h"
 

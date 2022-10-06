@@ -73,6 +73,7 @@ inline void StopSound(CHANNELID eID);
 inline void StopAll();
 inline void PlaySlow(TCHAR * pSoundKey, CHANNELID eID, float fVolume, float fRate);
 inline void SetChannelVolume(CHANNELID eID, float fVolume);
+inline void PlaySoundGun(TCHAR* pSoundKey, CHANNELID eID, float fVolume);
 
 inline void			Release_Utility(void);
 

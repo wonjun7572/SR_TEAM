@@ -1,8 +1,7 @@
 #include "stdafx.h"
 #include "..\Header\StaticCamera.h"
 #include "CubePlayer.h"
-
-
+#include "Weapon.h"
 
 CStaticCamera::CStaticCamera(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CCamera(pGraphicDev)
@@ -41,12 +40,12 @@ HRESULT CStaticCamera::Ready_Object(const _vec3* pEye,
 Engine::_int CStaticCamera::Update_Object(const _float& fTimeDelta)
 {
 	Key_Input(fTimeDelta);
-
+	
 	Look_Taget();
-
+	
 	Mouse_Fix();
 
-	_int iExit = CCamera::Update_Object(fTimeDelta);
+	_int	iExit = CCamera::Update_Object(fTimeDelta);
 
 	return iExit;
 }
@@ -77,17 +76,6 @@ void CStaticCamera::Key_Input(const _float& fTimeDelta)
 {
 	if (Key_Down(DIK_V))
 		m_bChangePOV = !m_bChangePOV;
-
-	 //카메라 축 회전 방향 제한해야함
-	if (m_pTransform_Target)
-	{
-		_vec3 vPlayerPos;
-		m_pTransform_Target->Get_Info(INFO_POS, &vPlayerPos);
-		if (Get_DIMouseMove(DIMS_Y) > 0)
-			m_fAngle += D3DXToRadian(180.f) * fTimeDelta;
-		if (Get_DIMouseMove(DIMS_Y) < 0)
-			m_fAngle += D3DXToRadian(180.f) * fTimeDelta;
-	}
 }
 
 void CStaticCamera::Mouse_Fix(void)
@@ -103,15 +91,15 @@ void CStaticCamera::Look_Taget(void)
 {
 	if (nullptr == m_pTransform_Target)
 	{
-		m_pTransform_Target = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Character", L"HEAD", L"Proto_TransformCom", ID_DYNAMIC));
+		m_pTransform_Target = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_CHARACTER, L"HEAD", TRANSFORM_COMP, ID_DYNAMIC));
 		NULL_CHECK(m_pTransform_Target);
 	}
 
 	CGameObject* pPlayer = nullptr;
-	pPlayer = Engine::Get_GameObject(L"Layer_Character", L"PLAYER");
+	pPlayer = Engine::Get_GameObject(STAGE_CHARACTER, L"PLAYER");
 
-	if (!m_bChangePOV && (dynamic_cast<CCubePlayer*>(pPlayer)->Get_Weapon() == Engine::Get_GameObject(L"Layer_Gun", L"UZI1")||
-		dynamic_cast<CCubePlayer*>(pPlayer)->Get_Weapon() == Engine::Get_GameObject(L"Layer_Gun", L"SHOTGUN")))
+	if (!m_bChangePOV && (dynamic_cast<CCubePlayer*>(pPlayer)->Get_Weapon() == dynamic_cast<CWeapon*>(Engine::Get_GameObject(STAGE_GUN, L"UZI1"))||
+		dynamic_cast<CCubePlayer*>(pPlayer)->Get_Weapon() == dynamic_cast<CWeapon*>(Engine::Get_GameObject(STAGE_GUN, L"SHOTGUN"))))
 	{
 		_vec3 vLook;
 		m_pTransform_Target->Get_Info(INFO_LOOK, &vLook);
@@ -129,11 +117,12 @@ void CStaticCamera::Look_Taget(void)
 		_vec3 vPos;
 		m_pTransform_Target->Get_Info(INFO_POS, &vPos);
 
+		m_fFov = D3DXToRadian(60.f);
 		m_vEye += vPos;
 		m_vAt = vPos;
 	}
-	else if(m_bChangePOV && (dynamic_cast<CCubePlayer*>(pPlayer)->Get_Weapon() == Engine::Get_GameObject(L"Layer_Gun", L"UZI1") || 
-		dynamic_cast<CCubePlayer*>(pPlayer)->Get_Weapon() == Engine::Get_GameObject(L"Layer_Gun", L"SHOTGUN")))
+	else if(m_bChangePOV && (dynamic_cast<CCubePlayer*>(pPlayer)->Get_Weapon() == dynamic_cast<CWeapon*>(Engine::Get_GameObject(STAGE_GUN, L"UZI1")) ||
+		dynamic_cast<CCubePlayer*>(pPlayer)->Get_Weapon() == dynamic_cast<CWeapon*>(Engine::Get_GameObject(STAGE_GUN, L"SHOTGUN"))))
 	{
 		_vec3 vLook;
 		m_pTransform_Target->Get_Info(INFO_LOOK, &vLook);
@@ -152,6 +141,8 @@ void CStaticCamera::Look_Taget(void)
 		m_pTransform_Target->Get_Info(INFO_POS, &vPos);
 
 		D3DXVec3Normalize(&vRight, &vRight);
+
+		m_fFov = D3DXToRadian(60.f);
 		m_vEye += vPos + (vRight * 0.5f);
 		m_vAt = vPos + (vRight * 0.5f);
 	}
@@ -173,8 +164,9 @@ void CStaticCamera::Look_Taget(void)
 
 		D3DXVec3Normalize(&vLook, &vLook);
 		
+		m_fFov = D3DXToRadian(15.f);
 		m_vEye += vPos;
-		m_vAt = vPos;
+		m_vAt = vPos + (vLook * 10.f);
 	}
 	else
 	{
@@ -194,6 +186,7 @@ void CStaticCamera::Look_Taget(void)
 		_vec3 vPos;
 		m_pTransform_Target->Get_Info(INFO_POS, &vPos);
 
+		m_fFov = D3DXToRadian(60.f);
 		m_vEye += vPos;
 		m_vAt = vPos;
 	}

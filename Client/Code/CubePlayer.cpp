@@ -1,10 +1,14 @@
 #include "stdafx.h"
 #include "..\Header\CubePlayer.h"
+#include "Export_Function.h"
+#include "Weapon.h"
+#include "PlayerMapping.h"
 #include "PoolMgr.h"
 #include "Bullet.h"
 #include "Uzi.h"
 #include "Shotgun.h"
 #include "Sniper.h"
+#include "ShotParticle.h"
 #include "BulletParticle.h"
 
 CCubePlayer::CCubePlayer(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -44,8 +48,11 @@ HRESULT CCubePlayer::Ready_Object(void)
 _int CCubePlayer::Update_Object(const _float & fTimeDelta)
 {
 	m_fTimeDelta = fTimeDelta;
+	m_fBulletTime += fTimeDelta;
 
 	FAILED_CHECK_RETURN(Get_BodyTransform(), -1);
+
+	Update_NullCheck();
 
 	// 이동, 애니메이션 관련
 	Move();
@@ -57,6 +64,7 @@ _int CCubePlayer::Update_Object(const _float & fTimeDelta)
 	Assemble();
 
 	Player_Mapping();
+
 	//FAILED_CHECK_RETURN(CPoolMgr::GetInstance()->Reuse_Obj(m_pGraphicDev, &vPos, &m_vDirection), -1);
 
 	CGameObject::Update_Object(fTimeDelta);
@@ -73,8 +81,14 @@ void CCubePlayer::LateUpdate_Object(void)
 
 	TransAxis();	//	월드함수 갈아엎으려면 Update 이후에 작업해줘야함
 
-	Fire_Bullet();
-
+	if (m_Weapon)
+	{
+		if (m_Weapon->Get_Ability()->fBulletRate - m_fBulletTime <= 0.f)
+		{
+			Fire_Bullet();
+		}
+	}
+	
 	m_pCollision->Get_Item();
 
 	Gun_Check();
@@ -94,15 +108,25 @@ void CCubePlayer::Render_Object(void)
 	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 }
 
+void CCubePlayer::Update_NullCheck()
+{
+	if (!m_pShotParicle)
+		m_pShotParicle = dynamic_cast<CShotParticle*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"ShotParticle"));
+
+	if (!m_pBulletParicle)
+		m_pBulletParicle = dynamic_cast<CBulletParticle*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"BulletParticle"));
+
+}
+
 void CCubePlayer::Set_OnTerrain(void)
 {
-	m_pBodyWorld = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Character", L"BODY", L"Proto_TransformCom", ID_DYNAMIC));
+	m_pBodyWorld = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_CHARACTER, L"BODY", TRANSFORM_COMP, ID_DYNAMIC));
 	NULL_CHECK_RETURN(m_pBodyWorld, );
 
 	_vec3		vPos;
 	m_pBodyWorld->Get_BeforeInfo(INFO_POS, &vPos);
 
-	Engine::CTerrainTex*	pTerrainTexCom = dynamic_cast<Engine::CTerrainTex*>(Engine::Get_Component(L"Layer_Environment", L"Terrain", L"Proto_TerrainTexCom", ID_STATIC));
+	Engine::CTerrainTex*	pTerrainTexCom = dynamic_cast<Engine::CTerrainTex*>(Engine::Get_Component(STAGE_ENVIRONMENT, L"Terrain", TERRAINTEX_COMP, ID_STATIC));
 	NULL_CHECK(pTerrainTexCom);
 
 	_float fHeight = m_pCalculatorCom->HeightOnTerrain(&vPos, pTerrainTexCom->Get_VtxPos(), VTXCNTX, VTXCNTZ) + 0.6f;
@@ -177,19 +201,20 @@ void CCubePlayer::Animation(void)
 			m_fHandAngle -= m_fTimeDelta * 4;
 	}
 	if (	Get_DIMouseState(DIM_RB) || 
-			(m_Weapon == Engine::Get_GameObject(L"Layer_Gun", L"SHOTGUN")) ||
-			(m_Weapon == Engine::Get_GameObject(L"Layer_Gun", L"SNIPER"))	)
+			(m_Weapon == Engine::Get_GameObject(STAGE_GUN, L"SHOTGUN")) ||
+			(m_Weapon == Engine::Get_GameObject(STAGE_GUN, L"SNIPER"))	)
 	{
 		// 우지 견착
-		if ((m_Weapon == Engine::Get_GameObject(L"Layer_Gun", L"UZI1")))
+		if ((m_Weapon == Engine::Get_GameObject(STAGE_GUN, L"UZI1")))
 		{
 			m_fLeftArmAngle = D3DXToRadian(-90.f) + m_fDownAngle;
 			m_fRightArmAngle = D3DXToRadian(-90.f) + m_fDownAngle;
 			m_fHandAngle = 0.f;
+		
 		}
 		// 샷건 / 스나 견착
-		if ((m_Weapon == Engine::Get_GameObject(L"Layer_Gun", L"SHOTGUN")) ||
-			(m_Weapon == Engine::Get_GameObject(L"Layer_Gun", L"SNIPER")))
+		if ((m_Weapon == Engine::Get_GameObject(STAGE_GUN, L"SHOTGUN")) ||
+			(m_Weapon == Engine::Get_GameObject(STAGE_GUN, L"SNIPER")))
 		{
 			m_fLeftArmAngle = D3DXToRadian(-75.f) + m_fDownAngle;
 			m_fRightArmAngle = m_fDownAngle;
@@ -197,7 +222,7 @@ void CCubePlayer::Animation(void)
 		}
 	}
 
-	if (m_Weapon == Engine::Get_GameObject(L"Layer_Gun", L"SNIPER"))
+	if (m_Weapon == Engine::Get_GameObject(STAGE_GUN, L"SNIPER"))
 	{
 		if (Get_DIMouseState(DIM_RB))
 			m_bSinperZoom = true;
@@ -214,8 +239,8 @@ void CCubePlayer::Animation(void)
 		Get_DIMouseState(DIM_RB)))
 	{
 
-		if (!(m_Weapon == Engine::Get_GameObject(L"Layer_Gun", L"SHOTGUN")) &&
-			!(m_Weapon == Engine::Get_GameObject(L"Layer_Gun", L"SNIPER")))
+		if (!(m_Weapon == Engine::Get_GameObject(STAGE_GUN, L"SHOTGUN")) &&
+			!(m_Weapon == Engine::Get_GameObject(STAGE_GUN, L"SNIPER")))
 		{
 			if (m_fLeftArmAngle != 0.f)
 			{
@@ -394,8 +419,6 @@ void CCubePlayer::Move()
 		float fDot = D3DXVec3Dot(&vNormal, &vDir);
 		float fDiagonal = acosf(fDot);
 
-		cout << D3DXToDegree(fDiagonal) << endl;
-
 		if (iCollision == WALL_RIGHT || iCollision == WALL_LEFT || iCollision == WALL_BACK)
 		{
 			if (D3DXToDegree(fDiagonal) > 90.f)
@@ -448,8 +471,8 @@ void CCubePlayer::TransAxis(void)
 	m_pLeftArmWorld->Rotation_Axis_Animation(-0.1f, -0.15f, m_fLeftArmAngle, -m_fLookAngle);
 	m_pRightArmWorld->Rotation_Axis_Animation(-0.1f, 0.15f, m_fRightArmAngle, -m_fLookAngle);
 
-	if ((nullptr != m_Weapon) && Get_DIMouseState(DIM_RB) || (	(m_Weapon == Engine::Get_GameObject(L"Layer_Gun", L"SHOTGUN")) ||
-		(m_Weapon == Engine::Get_GameObject(L"Layer_Gun", L"SNIPER"))	)	)
+	if ((nullptr != m_Weapon) && Get_DIMouseState(DIM_RB) || (	(m_Weapon == Engine::Get_GameObject(STAGE_GUN, L"SHOTGUN")) ||
+		(m_Weapon == Engine::Get_GameObject(STAGE_GUN, L"SNIPER"))	)	)
 		m_pLeftHandWorld->Rotation_Axis_Special(-0.3f, -0.15f, m_fLeftArmAngle, -m_fLookAngle, -0.1f, -m_fHandAngle);
 	else
 		m_pLeftHandWorld->Rotation_Axis_Animation(-0.3f, -0.15f, m_fLeftArmAngle, -m_fLookAngle, -0.1f, m_fHandAngle);
@@ -476,7 +499,6 @@ void CCubePlayer::Look_Direction(void)
 
 	m_pBodyWorld->Rotation(ROT_Y, D3DXToRadian(MoveX / 10.f));
 	m_fLookAngle -= D3DXToRadian(MoveX / 10.f);
-
 	m_fDownAngle += D3DXToRadian(MoveY / 10.f);
 }
 
@@ -484,29 +506,19 @@ void CCubePlayer::Fire_Bullet(void)
 {
 	if (Get_DIMouseState(DIM_RB))
 	{
-		//FAILED_CHECK_RETURN(Get_BodyTransform(), );
-		//_vec3	vSrcPos;
-		//CTransform* pTargetTrans = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_GameLogic", L"TestPlayer0", L"Proto_TransformCom", ID_DYNAMIC));
-		//NULL_CHECK(pTargetTrans);
-		//CCubeTex* pTestPlayer = dynamic_cast<CCubeTex*>(Engine::Get_Component(L"Layer_GameLogic", L"TestPlayer0", L"Proto_CubeTexCom", ID_STATIC));
-		//NULL_CHECK(pTestPlayer);
-		//
-		//_vec3	vPos;
-		//m_pHeadWorld->Get_BeforeInfo(INFO_POS, &vPos);
-
-	
-
-
 		if (Get_DIMouseState(DIM_LB))
 		{
-			CGameObject* pGameObject = Engine::Get_GameObject(L"Layer_Environment", L"BulletParticle");
+			if (m_Weapon->Get_Ability()->fRemainBulletCnt > 0)
+			{
+				m_pBulletParicle->addParticle();
+				m_pShotParicle->addParticle();
 
-			dynamic_cast<CBulletParticle*>(pGameObject)->addParticle();
-
-			//if (m_pCalculatorCom->Peek_Cube_Target(g_hWnd, &_vec3(0, 0, 0), pTestPlayer, pTargetTrans))
-			//{
-			//	cout << "AAAAAAAAAAAAAAAAAA" << endl;
-			//}
+				_float fGunSound = 1.f;
+				PlaySoundGun(L"RifleShot.mp3", SOUND_EFFECT, fGunSound);
+				m_Weapon->Set_MinusBullet();
+				m_Weapon->Set_Shoot(true);
+				m_fBulletTime = 0.f;
+			}
 		}
 	}
 }
@@ -517,44 +529,38 @@ void CCubePlayer::Gun_Check(void)
 	// ex코드
 	if (m_bUzi == true)
 	{
-		dynamic_cast<CSniper*>(Engine::Get_GameObject(L"Layer_Gun", L"SNIPER"))->Off_Sniper();
-		dynamic_cast<CShotgun*>(Engine::Get_GameObject(L"Layer_Gun", L"SHOTGUN"))->Off_ShotGun();
-		dynamic_cast<CUzi*>(Engine::Get_GameObject(L"Layer_Gun", L"UZI1"))->Set_Uzi();
-		dynamic_cast<CUzi*>(Engine::Get_GameObject(L"Layer_Gun", L"UZI2"))->Set_Uzi();
+		dynamic_cast<CSniper*>(Engine::Get_GameObject(STAGE_GUN, L"SNIPER"))->Off_Sniper();
+		dynamic_cast<CShotgun*>(Engine::Get_GameObject(STAGE_GUN, L"SHOTGUN"))->Off_ShotGun();
+		dynamic_cast<CUzi*>(Engine::Get_GameObject(STAGE_GUN, L"UZI1"))->Set_Uzi();
+		dynamic_cast<CUzi*>(Engine::Get_GameObject(STAGE_GUN, L"UZI2"))->Set_Uzi();
 
-//		m_vecWeapon.push_back(dynamic_cast<CWeapon*>(Engine::Get_GameObject(L"Layer_Gun", L"UZI1")));
-		m_Weapon = dynamic_cast<CWeapon*>(Engine::Get_GameObject(L"Layer_Gun", L"UZI1"));
+		m_Weapon = dynamic_cast<CWeapon*>(Engine::Get_GameObject(STAGE_GUN, L"UZI1"));
 		m_vecWeapon.push_back(m_Weapon);
 		m_tAbility->iGunTexture = 0;
-
 		m_bUzi = false;
 	}
 	if (m_bShotgun == true)
 	{
-		dynamic_cast<CSniper*>(Engine::Get_GameObject(L"Layer_Gun", L"SNIPER"))->Off_Sniper();
-		dynamic_cast<CUzi*>(Engine::Get_GameObject(L"Layer_Gun", L"UZI1"))->Off_Uzi();
-		dynamic_cast<CUzi*>(Engine::Get_GameObject(L"Layer_Gun", L"UZI2"))->Off_Uzi();
-		dynamic_cast<CShotgun*>(Engine::Get_GameObject(L"Layer_Gun", L"SHOTGUN"))->Set_ShotGun();
+		dynamic_cast<CSniper*>(Engine::Get_GameObject(STAGE_GUN, L"SNIPER"))->Off_Sniper();
+		dynamic_cast<CUzi*>(Engine::Get_GameObject(STAGE_GUN, L"UZI1"))->Off_Uzi();
+		dynamic_cast<CUzi*>(Engine::Get_GameObject(STAGE_GUN, L"UZI2"))->Off_Uzi();
+		dynamic_cast<CShotgun*>(Engine::Get_GameObject(STAGE_GUN, L"SHOTGUN"))->Set_ShotGun();
 
-		//m_vecWeapon.push_back(dynamic_cast<CWeapon*>(Engine::Get_GameObject(L"Layer_Gun", L"SHOTGUN")));
-		m_Weapon = dynamic_cast<CWeapon*>(Engine::Get_GameObject(L"Layer_Gun", L"SHOTGUN"));
+		m_Weapon = dynamic_cast<CWeapon*>(Engine::Get_GameObject(STAGE_GUN, L"SHOTGUN"));
 		m_vecWeapon.push_back(m_Weapon);
 		m_tAbility->iGunTexture = 2;
-
 		m_bShotgun = false;
 	}
 	if (m_bSniper == true)
 	{
-		dynamic_cast<CUzi*>(Engine::Get_GameObject(L"Layer_Gun", L"UZI1"))->Off_Uzi();
-		dynamic_cast<CUzi*>(Engine::Get_GameObject(L"Layer_Gun", L"UZI2"))->Off_Uzi();
-		dynamic_cast<CShotgun*>(Engine::Get_GameObject(L"Layer_Gun", L"SHOTGUN"))->Off_ShotGun();
-		dynamic_cast<CSniper*>(Engine::Get_GameObject(L"Layer_Gun", L"SNIPER"))->Set_Sniper();
+		dynamic_cast<CUzi*>(Engine::Get_GameObject(STAGE_GUN, L"UZI1"))->Off_Uzi();
+		dynamic_cast<CUzi*>(Engine::Get_GameObject(STAGE_GUN, L"UZI2"))->Off_Uzi();
+		dynamic_cast<CShotgun*>(Engine::Get_GameObject(STAGE_GUN, L"SHOTGUN"))->Off_ShotGun();
+		dynamic_cast<CSniper*>(Engine::Get_GameObject(STAGE_GUN, L"SNIPER"))->Set_Sniper();
 
-		//m_vecWeapon.push_back(dynamic_cast<CWeapon*>(Engine::Get_GameObject(L"Layer_Gun", L"SNIPER")));
-		m_Weapon = dynamic_cast<CWeapon*>(Engine::Get_GameObject(L"Layer_Gun", L"SNIPER"));
+		m_Weapon = dynamic_cast<CWeapon*>(Engine::Get_GameObject(STAGE_GUN, L"SNIPER"));
 		m_vecWeapon.push_back(m_Weapon);
 		m_tAbility->iGunTexture = 4;
-
 		m_bSniper = false;
 	}
 
@@ -564,10 +570,10 @@ void CCubePlayer::Gun_Check(void)
 		{
 			if (m_vecWeapon[0] != nullptr)
 			{
-				dynamic_cast<CSniper*>(Engine::Get_GameObject(L"Layer_Gun", L"SNIPER"))->Off_Sniper();
-				dynamic_cast<CShotgun*>(Engine::Get_GameObject(L"Layer_Gun", L"SHOTGUN"))->Off_ShotGun();
-				dynamic_cast<CUzi*>(Engine::Get_GameObject(L"Layer_Gun", L"UZI1"))->Set_Uzi();
-				dynamic_cast<CUzi*>(Engine::Get_GameObject(L"Layer_Gun", L"UZI2"))->Set_Uzi();
+				dynamic_cast<CSniper*>(Engine::Get_GameObject(STAGE_GUN, L"SNIPER"))->Off_Sniper();
+				dynamic_cast<CShotgun*>(Engine::Get_GameObject(STAGE_GUN, L"SHOTGUN"))->Off_ShotGun();
+				dynamic_cast<CUzi*>(Engine::Get_GameObject(STAGE_GUN, L"UZI1"))->Set_Uzi();
+				dynamic_cast<CUzi*>(Engine::Get_GameObject(STAGE_GUN, L"UZI2"))->Set_Uzi();
 				m_Weapon = m_vecWeapon[0];
 				m_tAbility->iGunTexture = 0; // 혹여나 총 업그레이드해서 다른 총으로 보이게 된다면 이 숫자와 UI/Gun 에 들어있는 숫자와 비교해서 넣으면됨.
 			}
@@ -579,10 +585,10 @@ void CCubePlayer::Gun_Check(void)
 		{
 			if (m_vecWeapon[1] != nullptr)
 			{
-				dynamic_cast<CSniper*>(Engine::Get_GameObject(L"Layer_Gun", L"SNIPER"))->Off_Sniper();
-				dynamic_cast<CUzi*>(Engine::Get_GameObject(L"Layer_Gun", L"UZI1"))->Off_Uzi();
-				dynamic_cast<CUzi*>(Engine::Get_GameObject(L"Layer_Gun", L"UZI2"))->Off_Uzi();
-				dynamic_cast<CShotgun*>(Engine::Get_GameObject(L"Layer_Gun", L"SHOTGUN"))->Set_ShotGun();
+				dynamic_cast<CSniper*>(Engine::Get_GameObject(STAGE_GUN, L"SNIPER"))->Off_Sniper();
+				dynamic_cast<CUzi*>(Engine::Get_GameObject(STAGE_GUN, L"UZI1"))->Off_Uzi();
+				dynamic_cast<CUzi*>(Engine::Get_GameObject(STAGE_GUN, L"UZI2"))->Off_Uzi();
+				dynamic_cast<CShotgun*>(Engine::Get_GameObject(STAGE_GUN, L"SHOTGUN"))->Set_ShotGun();
 				m_Weapon = m_vecWeapon[1];
 				m_tAbility->iGunTexture = 2;
 			}
@@ -594,10 +600,10 @@ void CCubePlayer::Gun_Check(void)
 		{
 			if (m_vecWeapon[2] != nullptr)
 			{
-				dynamic_cast<CUzi*>(Engine::Get_GameObject(L"Layer_Gun", L"UZI1"))->Off_Uzi();
-				dynamic_cast<CUzi*>(Engine::Get_GameObject(L"Layer_Gun", L"UZI2"))->Off_Uzi();
-				dynamic_cast<CShotgun*>(Engine::Get_GameObject(L"Layer_Gun", L"SHOTGUN"))->Off_ShotGun();
-				dynamic_cast<CSniper*>(Engine::Get_GameObject(L"Layer_Gun", L"SNIPER"))->Set_Sniper();
+				dynamic_cast<CUzi*>(Engine::Get_GameObject(STAGE_GUN, L"UZI1"))->Off_Uzi();
+				dynamic_cast<CUzi*>(Engine::Get_GameObject(STAGE_GUN, L"UZI2"))->Off_Uzi();
+				dynamic_cast<CShotgun*>(Engine::Get_GameObject(STAGE_GUN, L"SHOTGUN"))->Off_ShotGun();
+				dynamic_cast<CSniper*>(Engine::Get_GameObject(STAGE_GUN, L"SNIPER"))->Set_Sniper();
 				m_Weapon = m_vecWeapon[2];
 				m_tAbility->iGunTexture = 4;
 			}
@@ -633,26 +639,26 @@ void CCubePlayer::Jump(void)
 
 HRESULT CCubePlayer::Get_BodyTransform(void)
 {
-	m_pHeadWorld = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Character", L"HEAD", L"Proto_TransformCom", ID_DYNAMIC));
+	m_pHeadWorld = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_CHARACTER, L"HEAD", TRANSFORM_COMP, ID_DYNAMIC));
 	NULL_CHECK_RETURN(m_pHeadWorld, E_FAIL);
-	m_pBodyWorld = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Character", L"BODY", L"Proto_TransformCom", ID_DYNAMIC));
+	m_pBodyWorld = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_CHARACTER, L"BODY", TRANSFORM_COMP, ID_DYNAMIC));
 	NULL_CHECK_RETURN(m_pBodyWorld, E_FAIL);
-	m_pLeftArmWorld = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Character", L"L_ARM", L"Proto_TransformCom", ID_DYNAMIC));
+	m_pLeftArmWorld = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_CHARACTER, L"L_ARM", TRANSFORM_COMP, ID_DYNAMIC));
 	NULL_CHECK_RETURN(m_pBodyWorld, E_FAIL);
-	m_pRightArmWorld = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Character", L"R_ARM", L"Proto_TransformCom", ID_DYNAMIC));
+	m_pRightArmWorld = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_CHARACTER, L"R_ARM", TRANSFORM_COMP, ID_DYNAMIC));
 	NULL_CHECK_RETURN(m_pBodyWorld, E_FAIL);
-	m_pLeftLegWorld = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Character", L"L_LEG", L"Proto_TransformCom", ID_DYNAMIC));
+	m_pLeftLegWorld = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_CHARACTER, L"L_LEG", TRANSFORM_COMP, ID_DYNAMIC));
 	NULL_CHECK_RETURN(m_pBodyWorld, E_FAIL);
-	m_pRightLegWorld = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Character", L"R_LEG", L"Proto_TransformCom", ID_DYNAMIC));
+	m_pRightLegWorld = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_CHARACTER, L"R_LEG", TRANSFORM_COMP, ID_DYNAMIC));
 	NULL_CHECK_RETURN(m_pBodyWorld, E_FAIL);
 
-	m_pLeftHandWorld = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Character", L"L_HAND", L"Proto_TransformCom", ID_DYNAMIC));
+	m_pLeftHandWorld = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_CHARACTER, L"L_HAND", TRANSFORM_COMP, ID_DYNAMIC));
 	NULL_CHECK_RETURN(m_pBodyWorld, E_FAIL);
-	m_pRightHandWorld = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Character", L"R_HAND", L"Proto_TransformCom", ID_DYNAMIC));
+	m_pRightHandWorld = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_CHARACTER, L"R_HAND", TRANSFORM_COMP, ID_DYNAMIC));
 	NULL_CHECK_RETURN(m_pBodyWorld, E_FAIL);
-	m_pLeftFootWorld = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Character", L"L_FOOT", L"Proto_TransformCom", ID_DYNAMIC));
+	m_pLeftFootWorld = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_CHARACTER, L"L_FOOT", TRANSFORM_COMP, ID_DYNAMIC));
 	NULL_CHECK_RETURN(m_pBodyWorld, E_FAIL);
-	m_pRightFootWorld = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Character", L"R_FOOT", L"Proto_TransformCom", ID_DYNAMIC));
+	m_pRightFootWorld = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_CHARACTER, L"R_FOOT", TRANSFORM_COMP, ID_DYNAMIC));
 	NULL_CHECK_RETURN(m_pBodyWorld, E_FAIL);
 
 	return S_OK;
@@ -665,10 +671,10 @@ HRESULT CCubePlayer::Player_Mapping(void)
 		CGameObject*	m_pMapMonster = CPlayerMapping::Create(m_pGraphicDev);
 		TCHAR* szCntName = new TCHAR[64];
 		wsprintf(szCntName, L"Map");
-		Engine::Add_GameObject(L"Layer_Mapping", m_pMapMonster, szCntName);
+		Engine::Add_GameObject(STAGE_MAPPING, m_pMapMonster, szCntName);
 		m_listMonsterCnt.push_back(szCntName);
 
-		m_pBaseMapping = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Mapping", szCntName, L"Proto_TransformCom", ID_DYNAMIC));
+		m_pBaseMapping = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_MAPPING, szCntName, TRANSFORM_COMP, ID_DYNAMIC));
 		NULL_CHECK_RETURN(m_pBaseMapping, E_FAIL);
 		m_MappingInit = true;
 	}
@@ -684,21 +690,21 @@ HRESULT CCubePlayer::Add_Component(void)
 {
 	CComponent* pInstance = nullptr;
 
-	pInstance = m_pTransform = dynamic_cast<CTransform*>(Engine::Clone_Proto(L"Proto_TransformCom"));
+	pInstance = m_pTransform = dynamic_cast<CTransform*>(Engine::Clone_Proto(TRANSFORM_COMP));
 	NULL_CHECK_RETURN(pInstance, E_FAIL);
-	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_TransformCom", pInstance });
+	m_mapComponent[ID_DYNAMIC].insert({ TRANSFORM_COMP, pInstance });
 
-	pInstance = m_pHitBox = dynamic_cast<CHitBox*>(Engine::Clone_Proto(L"Proto_HitboxCom"));
+	pInstance = m_pHitBox = dynamic_cast<CHitBox*>(Engine::Clone_Proto(HITBOX_COMP));
 	NULL_CHECK_RETURN(pInstance, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Proto_HitboxCom", pInstance });
+	m_mapComponent[ID_STATIC].insert({ HITBOX_COMP, pInstance });
 
-	pInstance = m_pCollision = dynamic_cast<CCollision*>(Engine::Clone_Proto(L"Proto_CollisionCom"));
+	pInstance = m_pCollision = dynamic_cast<CCollision*>(Engine::Clone_Proto(COLLISION_COMP));
 	NULL_CHECK_RETURN(pInstance, E_FAIL);
-	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_CollisionCom", pInstance });
+	m_mapComponent[ID_DYNAMIC].insert({ COLLISION_COMP, pInstance });
 
-	pInstance = m_pCalculatorCom = dynamic_cast<CCalculator*>(Engine::Clone_Proto(L"Proto_CalculatorCom"));
+	pInstance = m_pCalculatorCom = dynamic_cast<CCalculator*>(Engine::Clone_Proto(CALCULATOR_COMP));
 	NULL_CHECK_RETURN(pInstance, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Proto_CalculatorCom", pInstance });
+	m_mapComponent[ID_STATIC].insert({ CALCULATOR_COMP, pInstance });
 
 	return S_OK;
 }

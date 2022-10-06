@@ -24,14 +24,12 @@ private:
 	void		Key_Input(const _float& fTimeDelta);
 	void		Mouse_Move(void);
 	void		Mouse_Fix(void);
-	void		RightCamera(const _float& fTimeDelta);
 
 public:
 	void		Save_Position();
 	void		Load_Position();
 	void		SaveBtn() { m_bSave = !m_bSave; }
 	void		LoadBtn() { m_bLoad = !m_bLoad; }
-
 	void		Set_MainCam() { m_bMainCameraOn = !m_bMainCameraOn; }
 
 public:

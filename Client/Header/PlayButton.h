@@ -39,12 +39,9 @@ private:
 	CTexture*		m_CheckTextureCom = nullptr; 
 	CLoading*		m_pLoading = nullptr;
 
-
 private:
 	void		Begin_OrthoProj();
 	void		End_OrthoProj();
-
-
 
 public:
 	static CPlayButton*		Create(LPDIRECT3DDEVICE9 pGraphicDev);

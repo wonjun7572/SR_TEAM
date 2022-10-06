@@ -85,14 +85,11 @@ void CTestCube::Render_Object()
 
 	if (m_bWireFrame)
 		m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
-	
 		
 	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 	m_pHitBox->Render_Buffer();
 	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 	m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
-	m_pTransCom->Billboard_Transform(0.1f);
-
 }
 
 // 큐브를 선택 후 터레인 자리위에 올려 놓는 함수
@@ -101,7 +98,7 @@ void CTestCube::Set_TransformPositon()
 	CTerrainTex*	pTerrainBufferCom = dynamic_cast<CTerrainTex*>(Engine::Get_Component(L"Layer_Tool", L"TerrainByTool", L"Proto_TerrainTexCom", ID_STATIC));
 	NULL_CHECK_RETURN(pTerrainBufferCom, );
 
-	CTransform*		pTerrainTransformCom = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Tool", L"TerrainByTool", L"Proto_TransformCom", ID_DYNAMIC));
+	CTransform*		pTerrainTransformCom = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Tool", L"TerrainByTool", TRANSFORM_COMP, ID_DYNAMIC));
 	NULL_CHECK_RETURN(pTerrainTransformCom, );
 
 	_vec3 Temp = m_pCalculatorCom->Peek_Target_Vector(g_hWnd, &(_vec3(0.f,0.f,0.f)), pTerrainBufferCom, pTerrainTransformCom);
@@ -121,7 +118,7 @@ HRESULT CTestCube::Interact(void)
 {
 	CGameObject*		pGameObject = nullptr;
 
-	CTransform*		pPlayerTransformCom = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Character", L"BODY", L"Proto_TransformCom", ID_DYNAMIC));
+	CTransform*		pPlayerTransformCom = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_CHARACTER, L"BODY", TRANSFORM_COMP, ID_DYNAMIC));
 	NULL_CHECK_RETURN(pPlayerTransformCom, E_FAIL);
 	_vec3		vPlayerPos;
 	_vec3		vPos;
@@ -150,7 +147,7 @@ HRESULT CTestCube::Interact(void)
 
 		TCHAR* szCntName = new TCHAR[64];
 		wsprintf(szCntName, L"WallLetter");
-		Engine::Add_GameObject(L"Layer_Mapping", m_pLetterBox, szCntName);
+		Engine::Add_GameObject(STAGE_MAPPING, m_pLetterBox, szCntName);
 		m_listLetterCnt.push_back(szCntName);
 
 		++m_iLetterCnt;
@@ -195,17 +192,17 @@ HRESULT CTestCube::Add_Component()
 	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_CubePlayerTexture", pComponent });
 
-	pComponent = m_pTransCom = dynamic_cast<CTransform*>(Clone_Proto(L"Proto_TransformCom"));
+	pComponent = m_pTransCom = dynamic_cast<CTransform*>(Clone_Proto(TRANSFORM_COMP));
 	NULL_CHECK_RETURN(m_pTransCom, E_FAIL);
-	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_TransformCom", pComponent });
+	m_mapComponent[ID_DYNAMIC].insert({ TRANSFORM_COMP, pComponent });
 
-	pComponent = m_pCalculatorCom = dynamic_cast<CCalculator*>(Clone_Proto(L"Proto_CalculatorCom"));
+	pComponent = m_pCalculatorCom = dynamic_cast<CCalculator*>(Clone_Proto(CALCULATOR_COMP));
 	NULL_CHECK_RETURN(m_pCalculatorCom, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Proto_CalculatorCom", pComponent });
+	m_mapComponent[ID_STATIC].insert({ CALCULATOR_COMP, pComponent });
 
-	pComponent = m_pHitBox = dynamic_cast<CHitBox*>(Clone_Proto(L"Proto_HitboxCom"));
+	pComponent = m_pHitBox = dynamic_cast<CHitBox*>(Clone_Proto(HITBOX_COMP));
 	NULL_CHECK_RETURN(m_pCalculatorCom, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Proto_HitboxCom", pComponent });
+	m_mapComponent[ID_STATIC].insert({ HITBOX_COMP, pComponent });
 
 
 	return S_OK;
@@ -226,11 +223,11 @@ HRESULT CTestCube::Wall_Mapping(void)
 		wsprintf(szCntName, L"");
 		const _tchar*	szNumbering = L"MapWall_%d";
 		wsprintf(szCntName, szNumbering, m_iMappingCnt);
-		Engine::Add_GameObject(L"Layer_Mapping", m_pMapWall, szCntName);
+		Engine::Add_GameObject(STAGE_MAPPING, m_pMapWall, szCntName);
 		m_listWallCnt.push_back(szCntName);
 
 
-		m_pWallMapping = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Mapping", szCntName, L"Proto_TransformCom", ID_DYNAMIC));
+		m_pWallMapping = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_MAPPING, szCntName, TRANSFORM_COMP, ID_DYNAMIC));
 		NULL_CHECK_RETURN(m_pWallMapping, E_FAIL);
 		++m_iMappingCnt;
 	}

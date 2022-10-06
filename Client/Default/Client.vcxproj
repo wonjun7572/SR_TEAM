@@ -163,6 +163,7 @@
     <ClInclude Include="..\Header\BaseMapping.h" />
     <ClInclude Include="..\Header\Bullet.h" />
     <ClInclude Include="..\Header\BulletUI.h" />
+    <ClInclude Include="..\Header\BulletParticle.h" />
     <ClInclude Include="..\Header\CrossHeader.h" />
     <ClInclude Include="..\Header\CubeArm.h" />
     <ClInclude Include="..\Header\CubeBody.h" />
@@ -190,7 +191,7 @@
     <ClInclude Include="..\Header\LoadingScene.h" />
     <ClInclude Include="..\Header\Logo.h" />
     <ClInclude Include="..\Header\LogoCamera.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="..\Header\LogoUI.h" />
     <ClInclude Include="..\Header\MainApp.h" />
@@ -205,7 +206,6 @@
     <ClInclude Include="..\Header\PlayerMapping.h" />
     <ClInclude Include="..\Header\PlayerUI.h" />
     <ClInclude Include="..\Header\PoolMgr.h" />
-    <ClInclude Include="..\Header\RifleGun.h" />
     <ClInclude Include="..\Header\ShopCube.h" />
     <ClInclude Include="..\Header\Shotgun.h" />
     <ClInclude Include="..\Header\ShotgunPart1.h" />
@@ -220,6 +220,7 @@
     <ClInclude Include="..\Header\SniperPart4.h" />
     <ClInclude Include="..\Header\Stage.h" />
     <ClInclude Include="..\Header\StaticCamera.h" />
+    <ClInclude Include="..\Header\TargetCube.h" />
     <ClInclude Include="..\Header\Terrain.h" />
     <ClInclude Include="..\Header\TestCube.h" />
     <ClInclude Include="..\Header\TestGun.h" />
@@ -237,8 +238,9 @@
     <ClInclude Include="..\Header\WallMgr.h" />
     <ClInclude Include="..\Header\Weapon.h" />
     <ClInclude Include="..\Header\WeaponUI.h" />
-    <ClInclude Include="..\Header\BulletParticle.h" />
+    <ClInclude Include="..\Header\ShotParticle.h" />
     <ClInclude Include="Client.h" />
+    <ClInclude Include="Define.h" />
     <ClInclude Include="dirent.h" />
     <ClInclude Include="GraphEditor.h" />
     <ClInclude Include="imconfig.h" />
@@ -267,6 +269,7 @@
     <ClCompile Include="..\Code\BackGround.cpp" />
     <ClCompile Include="..\Code\BaseMapping.cpp" />
     <ClCompile Include="..\Code\Bullet.cpp" />
+    <ClCompile Include="..\Code\BulletParicle.cpp" />
     <ClCompile Include="..\Code\BulletUI.cpp" />
     <ClCompile Include="..\Code\CrossHeader.cpp" />
     <ClCompile Include="..\Code\CubeArm.cpp" />
@@ -295,7 +298,7 @@
     <ClCompile Include="..\Code\LoadingScene.cpp" />
     <ClCompile Include="..\Code\Logo.cpp" />
     <ClCompile Include="..\Code\LogoCamera.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\Code\LogoUI.cpp" />
     <ClCompile Include="..\Code\MainApp.cpp" />
@@ -310,7 +313,6 @@
     <ClCompile Include="..\Code\PlayerMapping.cpp" />
     <ClCompile Include="..\Code\PlayerUI.cpp" />
     <ClCompile Include="..\Code\PoolMgr.cpp" />
-    <ClCompile Include="..\Code\RifleGun.cpp" />
     <ClCompile Include="..\Code\ShopCube.cpp" />
     <ClCompile Include="..\Code\Shotgun.cpp" />
     <ClCompile Include="..\Code\ShotgunPart1.cpp" />
@@ -325,6 +327,7 @@
     <ClCompile Include="..\Code\SniperPart4.cpp" />
     <ClCompile Include="..\Code\Stage.cpp" />
     <ClCompile Include="..\Code\StaticCamera.cpp" />
+    <ClCompile Include="..\Code\TargetCube.cpp" />
     <ClCompile Include="..\Code\Terrain.cpp" />
     <ClCompile Include="..\Code\TestCube.cpp" />
     <ClCompile Include="..\Code\TestGun.cpp" />
@@ -342,7 +345,7 @@
     <ClCompile Include="..\Code\WallMgr.cpp" />
     <ClCompile Include="..\Code\Weapon.cpp" />
     <ClCompile Include="..\Code\WeaponUI.cpp" />
-    <ClCompile Include="..\Code\BulletParticle.cpp" />
+    <ClCompile Include="..\Code\ShotParticle.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="GraphEditor.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>

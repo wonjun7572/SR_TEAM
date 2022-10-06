@@ -23,7 +23,7 @@ HRESULT CSniperPart4::Ready_Object(void)
 
 _int CSniperPart4::Update_Object(const _float & fTimeDelta)
 {
-	if (dynamic_cast<CSniper*>(Engine::Get_GameObject(L"Layer_Gun", L"SNIPER"))->Get_State())
+	if (dynamic_cast<CSniper*>(Engine::Get_GameObject(STAGE_GUN, L"SNIPER"))->Get_State())
 	{
 		Add_RenderGroup(RENDER_NONALPHA, this);
 		CGameObject::Update_Object(fTimeDelta);
@@ -55,9 +55,9 @@ HRESULT CSniperPart4::Add_Component(void)
 	NULL_CHECK_RETURN(pInstance, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_CubePlayerTexture", pInstance });
 
-	pInstance = m_pTransform = dynamic_cast<CTransform*>(Engine::Clone_Proto(L"Proto_TransformCom"));
+	pInstance = m_pTransform = dynamic_cast<CTransform*>(Engine::Clone_Proto(TRANSFORM_COMP));
 	NULL_CHECK_RETURN(pInstance, E_FAIL);
-	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_TransformCom", pInstance });
+	m_mapComponent[ID_DYNAMIC].insert({ TRANSFORM_COMP, pInstance });
 
 
 	return S_OK;

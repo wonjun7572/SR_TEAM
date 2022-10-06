@@ -49,9 +49,9 @@ HRESULT CWall::Add_Component(void)
 {
 	CComponent* pComponent = nullptr;
 
-	pComponent = m_pTransform = dynamic_cast<CTransform*>(Engine::Clone_Proto(L"Proto_TransformCom"));
+	pComponent = m_pTransform = dynamic_cast<CTransform*>(Engine::Clone_Proto(TRANSFORM_COMP));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_TransformCom", pComponent });
+	m_mapComponent[ID_DYNAMIC].insert({ TRANSFORM_COMP, pComponent });
 
 	pComponent = m_pCubeTex = dynamic_cast<CCubeTex*>(Engine::Clone_Proto(L"Proto_CubeTexCom"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
@@ -77,11 +77,11 @@ HRESULT CWall::Wall_Mapping(void)
 		wsprintf(szCntName, L"");
 		const _tchar*	szNumbering = L"MapWall_%d";
 		wsprintf(szCntName, szNumbering, m_iCnt);
-		Engine::Add_GameObject(L"Layer_Wall", m_pMapWall, szCntName);
+		Engine::Add_GameObject(STAGE_WALL, m_pMapWall, szCntName);
 		m_listWallCnt.push_back(szCntName);
 
 
-		m_pWallMapping = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Wall", szCntName, L"Proto_TransformCom", ID_DYNAMIC));
+		m_pWallMapping = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_WALL, szCntName, TRANSFORM_COMP, ID_DYNAMIC));
 		NULL_CHECK_RETURN(m_pWallMapping, E_FAIL);
 		++m_iCnt;
 		m_MappingInit = true;

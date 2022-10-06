@@ -27,7 +27,7 @@ _int CGunUI::Update_Object(const _float & fTimeDelta)
 	_int iResult = CGameObject::Update_Object(fTimeDelta);
 	Add_RenderGroup(RENDER_UI, this);
 	if (m_pPlayer == nullptr)
-		m_pPlayer = Engine::Get_GameObject(L"Layer_Character", L"PLAYER");
+		m_pPlayer = Engine::Get_GameObject(STAGE_CHARACTER, L"PLAYER");
 
 	if (m_pPlayer != nullptr)
 	{
@@ -95,9 +95,9 @@ HRESULT CGunUI::Add_Component()
 	NULL_CHECK_RETURN(m_pBufferCom, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_RcTexCom", pComponent });
 
-	pComponent = m_pTransCom = dynamic_cast<CTransform*>(Clone_Proto(L"Proto_TransformCom"));
+	pComponent = m_pTransCom = dynamic_cast<CTransform*>(Clone_Proto(TRANSFORM_COMP));
 	NULL_CHECK_RETURN(m_pTransCom, E_FAIL);
-	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_TransformCom", pComponent });
+	m_mapComponent[ID_DYNAMIC].insert({ TRANSFORM_COMP, pComponent });
 
 	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Clone_Proto(L"Gun_UI"));
 	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);

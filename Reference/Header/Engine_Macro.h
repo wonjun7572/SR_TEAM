@@ -13,9 +13,6 @@ namespace Engine
 #define		MAPPOSY		300.f
 #define		PINGSIZE	5.f
 
-#define		NO_EVENT	0
-#define		CHANGE_EVENT 1
-
 #define		VTXCNTX		129
 #define		VTXCNTZ		129
 #define		VTXITV		1
