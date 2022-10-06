@@ -2,6 +2,7 @@
 #include "..\Header\StaticCamera.h"
 #include "CubePlayer.h"
 #include "Weapon.h"
+#include "Inventory.h"
 
 CStaticCamera::CStaticCamera(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CCamera(pGraphicDev)
@@ -76,15 +77,19 @@ void CStaticCamera::Key_Input(const _float& fTimeDelta)
 {
 	if (Key_Down(DIK_V))
 		m_bChangePOV = !m_bChangePOV;
+
 }
 
 void CStaticCamera::Mouse_Fix(void)
 {
-	POINT	pt{ WINCX >> 1 , WINCY >> 1 };
+	if (!(dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->Get_Switch()))
+	{
+		ShowCursor(false); 
+		POINT	pt{ WINCX >> 1 , WINCY >> 1 };
 
-	ClientToScreen(g_hWnd, &pt);
-	SetCursorPos(pt.x, pt.y);
-	ShowCursor(false);
+		ClientToScreen(g_hWnd, &pt);
+		SetCursorPos(pt.x, pt.y);		
+	}
 }
 
 void CStaticCamera::Look_Taget(void)
