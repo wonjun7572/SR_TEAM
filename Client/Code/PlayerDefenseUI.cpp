@@ -18,9 +18,9 @@ HRESULT CPlayerDefenseUI::Ready_Object(void)
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 	D3DXMatrixOrthoLH(&m_ProjMatrix, WINCX, WINCY, 0.f, 1.f);
 
-	m_fX = -492.f;
+	m_fX = -464.f;
 	m_fY = 386.f;
-	m_fSizeX = 115.8f;
+	m_fSizeX = 175.f;
 	m_fSizeY = 20.4f;
 
 	//FONT

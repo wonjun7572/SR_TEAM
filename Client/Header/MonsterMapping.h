@@ -1,5 +1,7 @@
 #pragma once
 #include "Export_Function.h"
+#include "BaseMapping.h"
+
 #include "GameObject.h"
 
 USING(Engine)
@@ -29,13 +31,13 @@ private:
 	CTexture*		m_pTexture = nullptr;
 	CCubeTex*		m_pCube = nullptr;
 	CRcTex*			m_pRcCom = nullptr;
+	CBaseMapping*	m_pBaseMapping = nullptr;
 	_matrix			m_matWorld;
 	_matrix			m_matView;
 	_matrix			m_matProj;
 	_int			m_iTextureIndex = 0;
 	_bool			m_bWorldMap = false;
-
-
+	_bool			m_bMinimap = false;
 
 public:
 	static CMonsterMapping*	Create(LPDIRECT3DDEVICE9 pGraphicDev);

@@ -19,10 +19,10 @@ HRESULT CSniper::Ready_Object(void)
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 	m_tAbility = new GUNABILITY;
 
-	m_tAbility->fBulletRate = 3.f;
+	m_tAbility->fBulletRate = 2.f;
 	m_tAbility->fRemainBulletCnt = 10.f;
 	m_tAbility->fBulletCount = 100.f;
-	m_tAbility->fBulletAttack = 80.f;
+	m_tAbility->fBulletAttack = 100.f;
 
 	m_bEquiped = false;
 

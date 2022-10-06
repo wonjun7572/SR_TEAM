@@ -174,7 +174,7 @@ HRESULT CTestCube::Interact(void)
 
 	if(m_bDoorOpen)
 	{ 
-		if(vPos.y < 15)
+		if(vPos.y > -15)
 		vPos.y -= 0.1f;
 		m_pTransCom->Set_Pos(vPos.x, vPos.y, vPos.z);
 	}

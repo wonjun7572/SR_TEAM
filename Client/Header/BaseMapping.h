@@ -17,7 +17,8 @@ public:
 	virtual _int	Update_Object(const _float& fTimeDelta) override;
 	virtual void	LateUpdate_Object(void) override;
 	virtual void	Render_Object(void) override;
-
+	_bool			Get_Worldmap(void) { return m_bWorldmap; }
+	_bool			Get_Minimap(void) { return m_bMinimap; }
 	void			Key_Input(void);
 private:
 	void			Begin_OrthoProj();
@@ -36,8 +37,9 @@ private:
 	_matrix			m_matProj;
 	_int			m_iTextureIndex = 0;
 
-	_bool			m_bWorldMap = false;
-
+	_bool			m_bWorldmap = false;
+	_bool			m_bMinimap = false;
+	_bool			m_bKeyDown = false;
 public:
 	static CBaseMapping*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
 	virtual void		Free(void);

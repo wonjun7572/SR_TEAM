@@ -13,6 +13,8 @@ public:
 	virtual void	LateUpdate_Object(void) override;
 	virtual void	Render_Object(void) override;
 
+	MONSTERABILITY* Get_MAbility() { return m_tAbility; }
+
 private:
 	HRESULT				Add_Component(void);
 	void				Hit_Check(void);
@@ -24,8 +26,11 @@ private:
 	CCalculator*		m_pCalculatorCom = nullptr;
 	CCollision*			m_pCollision = nullptr;
 
-	CHitBox*			m_pHitBox = nullptr;
+	CRcTex*				m_pBufferUICom = nullptr;
+	CTexture*			m_pTextureUICom = nullptr;
+	CTransform*			m_pTransUICom = nullptr;
 
+	CHitBox*			m_pHitBox = nullptr;
 	_float				m_fFrame = 0.f;
 	_bool				m_bReFresh = false;
 

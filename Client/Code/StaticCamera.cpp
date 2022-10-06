@@ -40,12 +40,14 @@ HRESULT CStaticCamera::Ready_Object(const _vec3* pEye,
 
 Engine::_int CStaticCamera::Update_Object(const _float& fTimeDelta)
 {
-	Key_Input(fTimeDelta);
-	
-	Look_Taget();
-	
-	Mouse_Fix();
+	if (!(dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->Get_Switch()))
+	{
+		Key_Input(fTimeDelta);
 
+		Look_Taget();
+		
+		Mouse_Fix();
+	}
 	_int	iExit = CCamera::Update_Object(fTimeDelta);
 
 	return iExit;
@@ -77,7 +79,6 @@ void CStaticCamera::Key_Input(const _float& fTimeDelta)
 {
 	if (Key_Down(DIK_V))
 		m_bChangePOV = !m_bChangePOV;
-
 }
 
 void CStaticCamera::Mouse_Fix(void)

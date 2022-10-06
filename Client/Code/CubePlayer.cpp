@@ -40,8 +40,6 @@ HRESULT CCubePlayer::Ready_Object(void)
 	m_bShotgun = false;
 	m_bSniper = false;
 
-	//ShowCursor(false);
-
 	return S_OK;
 }
 
@@ -50,20 +48,30 @@ _int CCubePlayer::Update_Object(const _float & fTimeDelta)
 	Update_NullCheck();
 	m_fTimeDelta = fTimeDelta;
 	m_fBulletTime += fTimeDelta;
-	Look_Direction();
-	Assemble();
-	Player_Mapping();
-	Engine::Add_RenderGroup(RENDER_NONALPHA, this);
-	CGameObject::Update_Object(fTimeDelta);
 
 	FAILED_CHECK_RETURN(Get_BodyTransform(), -1);
+
+	// 이동, 애니메이션 관련
 	if (!(dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->Get_Switch()))
 	{
-		// 이동, 애니메이션 관련
 		Move();
-		Animation();
-		//FAILED_CHECK_RETURN(CPoolMgr::GetInstance()->Reuse_Obj(m_pGraphicDev, &vPos, &m_vDirection), -1);
 	}
+
+	Look_Direction();
+	
+	if (!(dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->Get_Switch()))
+	{
+		Animation();
+	}
+
+	Assemble();
+
+	Player_Mapping();
+
+	CGameObject::Update_Object(fTimeDelta);
+
+	Engine::Add_RenderGroup(RENDER_NONALPHA, this);
+
 	return 0;
 }
 
@@ -78,7 +86,7 @@ void CCubePlayer::LateUpdate_Object(void)
 	{
 		if (m_Weapon->Get_Ability()->fBulletRate - m_fBulletTime <= 0.f)
 		{
-			Fire_Bullet();
+				Fire_Bullet();
 		}
 	}
 	
@@ -193,7 +201,7 @@ void CCubePlayer::Animation(void)
 		if (m_fHandAngle > -D3DX_PI / 2.f)
 			m_fHandAngle -= m_fTimeDelta * 4;
 	}
-	if (	Get_DIMouseState(DIM_RB) || 
+	if (Get_DIMouseState(DIM_RB) || 
 			(m_Weapon == Engine::Get_GameObject(STAGE_GUN, L"SHOTGUN")) ||
 			(m_Weapon == Engine::Get_GameObject(STAGE_GUN, L"SNIPER"))	)
 	{
@@ -464,11 +472,15 @@ void CCubePlayer::TransAxis(void)
 	m_pLeftArmWorld->Rotation_Axis_Animation(-0.1f, -0.15f, m_fLeftArmAngle, -m_fLookAngle);
 	m_pRightArmWorld->Rotation_Axis_Animation(-0.1f, 0.15f, m_fRightArmAngle, -m_fLookAngle);
 
-	if ((nullptr != m_Weapon) && Get_DIMouseState(DIM_RB) || (	(m_Weapon == Engine::Get_GameObject(STAGE_GUN, L"SHOTGUN")) ||
-		(m_Weapon == Engine::Get_GameObject(STAGE_GUN, L"SNIPER"))	)	)
+	if ((nullptr != m_Weapon) && Get_DIMouseState(DIM_RB) || ((m_Weapon == Engine::Get_GameObject(STAGE_GUN, L"SHOTGUN")) ||
+		(m_Weapon == Engine::Get_GameObject(STAGE_GUN, L"SNIPER"))))
+	{
 		m_pLeftHandWorld->Rotation_Axis_Special(-0.3f, -0.15f, m_fLeftArmAngle, -m_fLookAngle, -0.1f, -m_fHandAngle);
+	}
 	else
+	{
 		m_pLeftHandWorld->Rotation_Axis_Animation(-0.3f, -0.15f, m_fLeftArmAngle, -m_fLookAngle, -0.1f, m_fHandAngle);
+	}
 
 	m_pRightHandWorld->Rotation_Axis_Animation(-0.3f, 0.15f, m_fRightArmAngle, -m_fLookAngle, -0.1f, m_fHandAngle);
 

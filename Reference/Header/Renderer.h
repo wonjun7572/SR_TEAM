@@ -19,8 +19,8 @@ public:
 	void		Render_GameObject(LPDIRECT3DDEVICE9& pGraphicDev);
 	void		Clear_RenderGroup(void);
 
-	void		On_Minimap(void) { m_bMinimap = true; }
-	void		Off_Minimap(void) { m_bMinimap = false; }
+	void		Switch_Minimap(void) { m_bMinimap = !m_bMinimap; }
+	void		Switch_Worldmap(void) { m_bWorldmap = !m_bWorldmap; }
 	void      On_Shop(void) { m_bShopping = true; }
 	void      Off_Shop(void) { m_bShopping = false; }
 
@@ -32,6 +32,7 @@ public:
 private:
 	list<CGameObject*>			m_RenderGroup[RENDER_END];
 	_bool						m_bMinimap = false;
+	_bool						m_bWorldmap = false;
 	_bool						m_bShopping = false;
 
 private:
