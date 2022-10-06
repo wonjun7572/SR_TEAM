@@ -17,9 +17,10 @@ HRESULT CShotgun::Ready_Object(void)
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 	m_tAbility = new GUNABILITY;
 
-	m_tAbility->fBulletRate = 50.f;
+	m_tAbility->fBulletRate = 1.f;
 	m_tAbility->fRemainBulletCnt = 50.f;
 	m_tAbility->fBulletCount = 300.f;
+	m_tAbility->fBulletAttack = 30.f;
 
 	m_bEquiped = false;
 
@@ -62,13 +63,13 @@ HRESULT CShotgun::Add_Component(void)
 
 HRESULT CShotgun::Get_Parts(void)
 {
-	m_pPart1 = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Gun", L"Shotgun_Part_1", L"Proto_TransformCom", ID_DYNAMIC));
+	m_pPart1 = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_GUN, L"Shotgun_Part_1", TRANSFORM_COMP, ID_DYNAMIC));
 	NULL_CHECK_RETURN(m_pPart1, E_FAIL);
-	m_pPart2 = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Gun", L"Shotgun_Part_2", L"Proto_TransformCom", ID_DYNAMIC));
+	m_pPart2 = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_GUN, L"Shotgun_Part_2", TRANSFORM_COMP, ID_DYNAMIC));
 	NULL_CHECK_RETURN(m_pPart2, E_FAIL);
-	m_pPart3 = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Gun", L"Shotgun_Part_3", L"Proto_TransformCom", ID_DYNAMIC));
+	m_pPart3 = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_GUN, L"Shotgun_Part_3", TRANSFORM_COMP, ID_DYNAMIC));
 	NULL_CHECK_RETURN(m_pPart3, E_FAIL);
-	m_pPart4 = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Gun", L"Shotgun_Part_4", L"Proto_TransformCom", ID_DYNAMIC));
+	m_pPart4 = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_GUN, L"Shotgun_Part_4", TRANSFORM_COMP, ID_DYNAMIC));
 	NULL_CHECK_RETURN(m_pPart4, E_FAIL);
 	return S_OK;
 }
@@ -94,14 +95,14 @@ void CShotgun::Animation_Fire(void)
 
 void CShotgun::TransAxisShotgun(void)
 {
-	CCubePlayer* pPlayer = dynamic_cast<CCubePlayer*>(Engine::Get_GameObject(L"Layer_Character", L"PLAYER"));
+	CCubePlayer* pPlayer = dynamic_cast<CCubePlayer*>(Engine::Get_GameObject(STAGE_CHARACTER, L"PLAYER"));
 	_float fLookAngle, fLeftArmAngle, fRightArmAngle, fHandAngle;
 	pPlayer->Get_Angle(fLookAngle, fLeftArmAngle, fRightArmAngle, fHandAngle);
 
 	FAILED_CHECK_RETURN(Get_Parts(), );
 
 	CTransform*		m_pRightHandWorld = nullptr;
-	m_pRightHandWorld = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Character", L"R_HAND", L"Proto_TransformCom", ID_DYNAMIC));
+	m_pRightHandWorld = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_CHARACTER, L"R_HAND", TRANSFORM_COMP, ID_DYNAMIC));
 	NULL_CHECK_RETURN(m_pRightHandWorld, );
 
 	_vec3 vWeaponPos, vPos, vRight, vUp, vLook, vAngle, vScale;
@@ -154,7 +155,7 @@ void CShotgun::TransAxisShotgun(void)
 
 void CShotgun::Set_OnTerrain(void)
 {
-	/*m_pShotgunWorld = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Character", L"ShotgunPart5", L"Proto_TransformCom", ID_DYNAMIC));
+	/*m_pShotgunWorld = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_CHARACTER, L"ShotgunPart5", TRANSFORM_COMP, ID_DYNAMIC));
 	NULL_CHECK_RETURN(m_pShotgunWorld, );
 
 	_vec3		vPos;

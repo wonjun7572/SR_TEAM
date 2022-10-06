@@ -14,11 +14,9 @@ USING(Engine)
 
 class  CCubeMonster : public CGameObject
 {
-
-public:
+private:
 	explicit CCubeMonster(LPDIRECT3DDEVICE9 pGraphicDev);
 	virtual ~CCubeMonster();
-
 
 public:
 	virtual HRESULT Ready_Object(void) override;
@@ -36,10 +34,11 @@ public:
 	MONSTERABILITY*	Get_MAbility() { return m_MonsterState; }
 	
 	void		Set_Damage() { m_MonsterState->fCurrentHp -= 10; }
+
 private:
 	map<const _tchar*, CGameObject*>	m_mapMonsterBody;
-private:
 
+private:
 	void			Set_OnTerrain(void);
 	void			Assemble(void);
 	void			Axis(void);
@@ -48,7 +47,6 @@ private:
 	HRESULT			Monster_Mapping(void);
 private:
 	HRESULT  Add_Component(void);
-
 	//∏ÛΩ∫≈Õ 
 
 	CTransform*			m_pMTransform = nullptr;
@@ -71,20 +69,14 @@ private:
 
 	//test
 private:
-
 	_int		Attack(_float fTimeDelta);
 	_int		ComeBack(_float fTimeDelta);
 
-
 private:
-
-	
 	_float			m_fDetectRange;
 	_float			m_fAttackRange;
 	_float			m_fLengthRange;
 	_float			m_fMinLenghtRange;
-
-
 	_float			m_fSpeed;
 	_float			m_fTimeDelta;
 	_float			m_fAngle = 0;
@@ -92,8 +84,6 @@ private:
 	
 	CurrentState::MONSTERID		m_eCurrentState;
 	CurrentState::MONSTERID		m_ePreviousState;
-
-
 	_bool				m_bAttack;
 	_bool				m_bShoot;
 	_vec3	m_vEye, m_vAt;
@@ -116,10 +106,8 @@ private:
 	list<TCHAR*>		m_listMonsterCnt;
 	_bool				m_MappingInit = false;
 
-
 public:
 	static CCubeMonster*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
 	virtual void Free(void);
-
 };
 

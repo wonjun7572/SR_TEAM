@@ -7,7 +7,6 @@ CLogoUI::CLogoUI(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 }
 
-
 CLogoUI::~CLogoUI()
 {
 }
@@ -43,8 +42,6 @@ void CLogoUI::Render_Object(void)
 	End_OrthoProj();
 }
 
-
-
 void CLogoUI::Begin_OrthoProj()
 {
 	_matrix matWorld, matView, matProj, matOrtho;
@@ -59,11 +56,11 @@ void CLogoUI::Begin_OrthoProj()
 	D3DXMatrixIdentity(&matWorld);
 	D3DXMatrixIdentity(&matView);
 
-	matView.m[0][0] = 800; // 이미지 가로
+	matView.m[0][0] = 600.f; // 이미지 가로
 	matView.m[1][1] = 900.f; // 이미지 세로
 	matView.m[2][2] = 1.f;
-	matView.m[3][0] = m_pTransCom->m_vInfo[INFO_POS].x;
-	matView.m[3][1] = m_pTransCom->m_vInfo[INFO_POS].y - 335.f;
+	matView.m[3][0] = m_pTransCom->m_vInfo[INFO_POS].x + 600.f;
+	matView.m[3][1] = m_pTransCom->m_vInfo[INFO_POS].y;
 
 	D3DXMatrixOrthoLH(&matOrtho, WINCX, WINCY, 0.f, 1.f);
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, &matWorld);
@@ -82,26 +79,24 @@ HRESULT CLogoUI::Add_component()
 {
 	CComponent* pComponent = nullptr;
 
-
-	pComponent = m_pRcTexCom = dynamic_cast<CRcTex*>(Clone_Proto(L"Proto_RcTexCom"));
+	pComponent = m_pRcTexCom = dynamic_cast<CRcTex*>(Clone_Proto(RCTEX_COMP));
 	NULL_CHECK_RETURN(m_pRcTexCom, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Proto_RcTexCom", pComponent });
+	m_mapComponent[ID_STATIC].insert({ RCTEX_COMP, pComponent });
 
-	pComponent = m_pTransCom = dynamic_cast<CTransform*>(Clone_Proto(L"Proto_TransformCom"));
+	pComponent = m_pTransCom = dynamic_cast<CTransform*>(Clone_Proto(TRANSFORM_COMP));
 	NULL_CHECK_RETURN(m_pTransCom, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Proto_TransformCom", pComponent });
+	m_mapComponent[ID_STATIC].insert({ TRANSFORM_COMP, pComponent });
 
 	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Clone_Proto(L"Proto_LogoUITexture"));
 	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_LogoUITexture", pComponent });
-
 
 	return S_OK;
 }
 
 CLogoUI * CLogoUI::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
-	CLogoUI *	pInstance = new CLogoUI(pGraphicDev);
+	CLogoUI *   pInstance = new CLogoUI(pGraphicDev);
 
 	if (FAILED(pInstance->Ready_Object()))
 	{

@@ -8,20 +8,8 @@ static _int m_iCnt = 0;
 CCubeMonster::CCubeMonster(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
 {
-	//m_fDetectRange = 30.f;
-	//m_fMinLenghtRange = 5.f;
-	//m_fAttackRange = 1.f;
-	//m_MonsterState->fCurrentHp = 100.f;
-	//m_MonsterState->fMaxHp = 100.f;
-	//m_MonsterState->fCurrentHp = m_MonsterState->fMaxHp;
-	//m_MonsterState->iLevel = 1;
-	//m_MonsterState->fDamage = 1.f;
-	//m_eCurrentState = CurrentState::MONSTER_IDLE;
-	//m_ePreviousState = m_eCurrentState;
-	//m_fSpeed = 1.f;
-	//m_fTimeDelta = 0.1f;
-}
 
+}
 
 CCubeMonster::~CCubeMonster()
 {
@@ -50,7 +38,6 @@ HRESULT CCubeMonster::Ready_Object(void)
 
 _int CCubeMonster::Update_Object(const _float & fTimeDelta)
 {
-
 	FAILED_CHECK_RETURN(Get_BodyTransform(), -1);
 
 	CurrentMonster(fTimeDelta);
@@ -65,20 +52,10 @@ _int CCubeMonster::Update_Object(const _float & fTimeDelta)
 
 void CCubeMonster::LateUpdate_Object(void)
 {
-	CTransform*		pPlayerTransformCom = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Character", L"BODY", L"Proto_TransformCom", ID_DYNAMIC));
-	//NULL_CHECK(pPlayerTransformCom);
-
-
-	//_vec3		vPlayerPos;
-	//pPlayerTransformCom->Get_Info(INFO_POS, &vPlayerPos);
-
-	//m_pMTransform->Chase_Target(&vPlayerPos, 1.f, 0.1f);
+	CTransform*		pPlayerTransformCom = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_CHARACTER, L"BODY", TRANSFORM_COMP, ID_DYNAMIC));
 	CGameObject::LateUpdate_Object();
 
 	Assemble();
-
-	//Set_OnTerrain();
-
 }
 
 void CCubeMonster::Render_Object(void)
@@ -90,19 +67,19 @@ void CCubeMonster::Render_Object(void)
 //ÇöÀç ¸ó½ºÅÍ»óÅÂ 
 _int CCubeMonster::CurrentMonster(_float fTimeDelta)
 {
-	CTransform*		pPlayerTransformCom = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Character", L"BODY", L"Proto_TransformCom", ID_DYNAMIC));
+	CTransform*		pPlayerTransformCom = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_CHARACTER, L"BODY", TRANSFORM_COMP, ID_DYNAMIC));
 	NULL_CHECK_RETURN(pPlayerTransformCom, 0);
 	
 	//¸ö
-	m_pMbody = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Monster", L"M_Body", L"Proto_TransformCom", ID_STATIC));
+	m_pMbody = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Monster", L"M_Body", TRANSFORM_COMP, ID_STATIC));
 	NULL_CHECK_RETURN(m_pMbody, 0);
 	m_pMbody->Get_Info(INFO_POS, &m_vPos);
 
 	//¿ÞÆÈ
-	m_pMleftArm = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Monster", L"M_LeftArm", L"Proto_TransformCom", ID_DYNAMIC));
+	m_pMleftArm = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Monster", L"M_LeftArm", TRANSFORM_COMP, ID_DYNAMIC));
 	NULL_CHECK_RETURN(m_pMleftArm, 0);
 	//¿À¸¥ÆÈ
-	m_pMrightArm = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Monster", L"M_RighrArm", L"Proto_TransformCom", ID_DYNAMIC));
+	m_pMrightArm = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Monster", L"M_RighrArm", TRANSFORM_COMP, ID_DYNAMIC));
 	NULL_CHECK_RETURN(m_pMrightArm, 0);
 
 	pPlayerTransformCom->Get_Info(Engine::INFO_POS, &vPlayerPos);
@@ -120,19 +97,15 @@ _int CCubeMonster::CurrentMonster(_float fTimeDelta)
 	_vec3		vRight;
 	memcpy(&vRight, &pPlayerTransformCom->m_matWorld.m[0][0], sizeof(_vec3));
 
-
 	_matrix		matRot;
 	D3DXMatrixRotationAxis(&matRot, &vRight, m_fAngle);
+
 	//Å½Áö
 	if (m_fLengthRange >= m_fMinLenghtRange && m_fLengthRange <= m_fDetectRange)
 	{
 		Axis();
 
 		m_pMbody->Chase_Target(&vPlayerPos, m_fSpeed, m_fTimeDelta);
-		//m_pMhead->Chase_Target(&vPlayerPos, m_fSpeed, m_fTimeDelta);
-		//m_pMleftArm->Chase_Target(&vPlayerPos, m_fSpeed, m_fTimeDelta);
-		//m_pMrightArm->Chase_Target(&vPlayerPos, m_fSpeed, m_fTimeDelta);
-
 	}
 	else
 	{
@@ -142,12 +115,8 @@ _int CCubeMonster::CurrentMonster(_float fTimeDelta)
 	}
 
 	return 0;
-
-	
 }
 
-
-//»óÈ²ÀÌ ¹Ù²î´Â°ÍÀ» ÀÎÁö½ÃÄÑÁà¾ßÇÏÁö¾ÊÀ»±î
 void CCubeMonster::ChangeCurrent(CurrentState::MONSTERID Idstate)
 {
 	m_eCurrentState = Idstate;
@@ -155,35 +124,22 @@ void CCubeMonster::ChangeCurrent(CurrentState::MONSTERID Idstate)
 	{
 		m_ePreviousState = m_eCurrentState;
 	}
-
-	
 }
-
-
 
 HRESULT CCubeMonster::Add_Component(void)
 {
 	CComponent* pInsatnce = nullptr;
-	pInsatnce = m_pMTransform = dynamic_cast<CTransform*>(Clone_Proto(L"Proto_TransformCom"));
+	pInsatnce = m_pMTransform = dynamic_cast<CTransform*>(Clone_Proto(TRANSFORM_COMP));
 	NULL_CHECK_RETURN(m_pMTransform, E_FAIL);
-	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_TransformCom", 	pInsatnce });
-
-
+	m_mapComponent[ID_DYNAMIC].insert({ TRANSFORM_COMP, 	pInsatnce });
 
 	return 0;
 }
-
-
-
-
 
 void CCubeMonster::Set_OnTerrain(void)
 {
 	
 }
-
-
-
 
 void CCubeMonster::Assemble(void)
 {
@@ -199,22 +155,22 @@ void CCubeMonster::Axis(void)
 	m_pMleftArm->Get_BeforeInfo(INFO_LOOK, &vPlayerPos);
 }
 
-
-
 HRESULT CCubeMonster::Get_BodyTransform(void)
 {
 	//¿ÞÆÈ
-	m_pMleftArm = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Monster", L"M_LeftArm", L"Proto_TransformCom", ID_DYNAMIC));
+	m_pMleftArm = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Monster", L"M_LeftArm", TRANSFORM_COMP, ID_DYNAMIC));
 	NULL_CHECK_RETURN(m_pMleftArm, E_FAIL);
+	
 	//¿À¸¥ÆÈ
-	m_pMrightArm = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Monster", L"M_RighrArm", L"Proto_TransformCom", ID_DYNAMIC));
+	m_pMrightArm = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Monster", L"M_RighrArm", TRANSFORM_COMP, ID_DYNAMIC));
 	NULL_CHECK_RETURN(m_pMrightArm, E_FAIL);
+	
 	//¸ö
-	m_pMbody = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Monster", L"M_Body", L"Proto_TransformCom", ID_STATIC));
+	m_pMbody = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Monster", L"M_Body", TRANSFORM_COMP, ID_STATIC));
 	NULL_CHECK_RETURN(m_pMbody, E_FAIL);
 
 	//¸Ó¸®
-	m_pMhead = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Monster", L"M_Head", L"Proto_TransformCom", ID_DYNAMIC));
+	m_pMhead = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Monster", L"M_Head", TRANSFORM_COMP, ID_DYNAMIC));
 	NULL_CHECK_RETURN(m_pMhead, E_FAIL);
 
 	return S_OK;
@@ -231,11 +187,10 @@ HRESULT CCubeMonster::Monster_Mapping(void)
 		wsprintf(szCntName, L"");
 		const _tchar*	szNumbering = L"MapMonster_%d";
 		wsprintf(szCntName, szNumbering, m_iCnt);
-		Engine::Add_GameObject(L"Layer_Mapping", m_pMapMonster, szCntName);
+		Engine::Add_GameObject(STAGE_MAPPING, m_pMapMonster, szCntName);
 		m_listMonsterCnt.push_back(szCntName);
 
-
-		m_pMonsterMapping = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Mapping", szCntName, L"Proto_TransformCom", ID_DYNAMIC));
+		m_pMonsterMapping = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_MAPPING, szCntName, TRANSFORM_COMP, ID_DYNAMIC));
 		NULL_CHECK_RETURN(m_pMonsterMapping, E_FAIL);
 		++m_iCnt;
 		m_MappingInit = true;
@@ -246,8 +201,6 @@ HRESULT CCubeMonster::Monster_Mapping(void)
 	return S_OK;
 }
 
-
-
 _int CCubeMonster::Attack(_float fTimeDelta)
 {
 	return 0;
@@ -256,9 +209,7 @@ _int CCubeMonster::Attack(_float fTimeDelta)
 _int CCubeMonster::ComeBack(_float fTimeDelta)
 {
 	ChangeCurrent(CurrentState::MONSTER_COMEBACK);
-
-
-	return NO_EVENT;
+	return 0;
 }
 
 CCubeMonster * CCubeMonster::Create(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -282,5 +233,8 @@ void CCubeMonster::Free(void)
 	}
 
 	m_listMonsterCnt.clear();
+
+	Safe_Delete<MONSTERABILITY*>(m_MonsterState);
+
 	CGameObject::Free();
 }

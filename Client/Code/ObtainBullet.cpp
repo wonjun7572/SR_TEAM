@@ -7,12 +7,6 @@ CObtainBullet::CObtainBullet(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 }
 
-CObtainBullet::CObtainBullet(const CGameObject & rhs)
-	:CItem(m_pGraphicDev)
-{
-}
-
-
 CObtainBullet::~CObtainBullet()
 {
 
@@ -21,23 +15,27 @@ CObtainBullet::~CObtainBullet()
 HRESULT CObtainBullet::Ready_Object(const _vec3 & vPos)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
-	m_pTransCom->Set_Pos(vPos.x, vPos.y, vPos.z);
 	m_pTransCom->Set_Scale(1.f, 1.f, 1.f);
+	m_pTransCom->Set_Rotation(ROT_Z, D3DXToRadian(270.f));
+	m_pTransCom->Set_Pos(vPos.x, vPos.y, vPos.z);
 	m_pTransCom->Static_Update();
-	return S_OK;
 
+	m_pHitBoxTransCom->Set_Scale(0.5f, 0.5f, 0.5f);
+	m_pHitBoxTransCom->Set_Pos(vPos.x, vPos.y, vPos.z);
+	m_pHitBoxTransCom->Static_Update();
+	return S_OK;
 }
 
 _int CObtainBullet::Update_Object(const _float & fTimeDelta)
 {
 	if (m_bDead)
 	{
-		dynamic_cast<CUzi*>(Engine::Get_GameObject(L"Layer_Gun", L"UZI1"))->Get_Bullet();
+		dynamic_cast<CUzi*>(Engine::Get_GameObject(STAGE_GUN, L"UZI1"))->Get_Bullet();
 		return -1;
 	}
 
+	CItem::Move_Item(fTimeDelta);
 	CItem::Update_Object(fTimeDelta);
-	Add_RenderGroup(RENDER_NONALPHA, this);
 	return 0;
 }
 
@@ -50,12 +48,13 @@ void CObtainBullet::Render_Object()
 {
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransCom->Get_WorldMatrixPointer());
 	m_pTextureCom->Set_Texture(0);
-	m_pBufferCom->Render_Buffer();
+	m_pDBufferCom->Render_Buffer();
 
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DPMISCCAPS_CULLNONE);
 	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 
-	//m_pHitBox->Render_Buffer();
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pHitBoxTransCom->Get_WorldMatrixPointer());
+	m_pHitBox->Render_Buffer();
 
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DPMISCCAPS_CULLCCW);
 	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
@@ -65,26 +64,29 @@ HRESULT CObtainBullet::Add_Component(void)
 {
 	CComponent* pComponent = nullptr;
 
-	pComponent = m_pBufferCom = dynamic_cast<CSphereTex*>(Clone_Proto(L"Proto_SphereTexCom"));
-	NULL_CHECK_RETURN(m_pBufferCom, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Proto_SphereTexCom", pComponent });
+	pComponent = m_pDBufferCom = dynamic_cast<CDynamicBuffer*>(Clone_Proto(BULLET_ITEM_BUFFER));
+	NULL_CHECK_RETURN(m_pDBufferCom, E_FAIL);
+	m_mapComponent[ID_STATIC].insert({ BULLET_ITEM_BUFFER, pComponent });
 
-	pComponent = m_pHitBox = dynamic_cast<CHitBox*>(Clone_Proto(L"Proto_HitboxCom"));
-	NULL_CHECK_RETURN(m_pBufferCom, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Proto_HitboxCom", pComponent });
-
-	// 변경해줘야함
-	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Clone_Proto(L"Proto_PlayerTexture"));
+	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Clone_Proto(BULLET_ITEM_TEX));
 	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Proto_PlayerTexture", pComponent });
+	m_mapComponent[ID_STATIC].insert({ BULLET_ITEM_TEX, pComponent });
 
-	pComponent = m_pTransCom = dynamic_cast<CTransform*>(Clone_Proto(L"Proto_TransformCom"));
+	pComponent = m_pTransCom = dynamic_cast<CTransform*>(Clone_Proto(TRANSFORM_COMP));
 	NULL_CHECK_RETURN(m_pTransCom, E_FAIL);
-	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_TransformCom", pComponent });
+	m_mapComponent[ID_DYNAMIC].insert({ TRANSFORM_COMP, pComponent });
 
-	pComponent = m_pCalculatorCom = dynamic_cast<CCalculator*>(Clone_Proto(L"Proto_CalculatorCom"));
+	pComponent = m_pHitBox = dynamic_cast<CHitBox*>(Clone_Proto(HITBOX_COMP));
+	NULL_CHECK_RETURN(m_pHitBox, E_FAIL);
+	m_mapComponent[ID_STATIC].insert({ HITBOX_COMP, pComponent });
+
+	pComponent = m_pHitBoxTransCom = dynamic_cast<CTransform*>(Clone_Proto(ITEM_TRANSFORM_COMP));
+	NULL_CHECK_RETURN(m_pHitBoxTransCom, E_FAIL);
+	m_mapComponent[ID_DYNAMIC].insert({ ITEM_TRANSFORM_COMP, pComponent });
+
+	pComponent = m_pCalculatorCom = dynamic_cast<CCalculator*>(Clone_Proto(CALCULATOR_COMP));
 	NULL_CHECK_RETURN(m_pCalculatorCom, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Proto_CalculatorCom", pComponent });
+	m_mapComponent[ID_STATIC].insert({ CALCULATOR_COMP, pComponent });
 
 	return S_OK;
 }

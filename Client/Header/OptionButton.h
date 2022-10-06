@@ -34,8 +34,10 @@ private:
 	void		End_OrthoProj();
 
 
-private:
+public:
+	_bool	Get_MouseCheck(void) { return Mouse_check; }
 
+private:
 	_bool		PointMouse(void);
 	_bool		Mouse_check = false;
 	_bool		Checking = false;

@@ -4,6 +4,7 @@
 #include "Export_Function.h"
 #include "Wall.h"
 #include "ImguiMgr.h"
+#include "TestGun.h"
 
 CToolScene::CToolScene(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CScene(pGraphicDev)
@@ -23,7 +24,6 @@ HRESULT CToolScene::Ready_Scene(void)
 	FAILED_CHECK_RETURN(Ready_Proto(), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Light(), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Layer_Environment(L"Layer_Environment"), E_FAIL);
-	//FAILED_CHECK_RETURN(Ready_Layer_GameLogic(L"Layer_GameLogic"), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Layer_UI(L"Layer_UI"), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Layer_Wall(L"Layer_Wall"), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Layer_Tool(L"Layer_Tool"), E_FAIL);

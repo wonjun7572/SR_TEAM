@@ -224,7 +224,6 @@ _bool CPSystem::isDead()
 			return false;
 		}
 	}
-
 	return true;
 }
 

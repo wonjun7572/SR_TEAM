@@ -16,7 +16,12 @@ CGunUI::~CGunUI()
 HRESULT CGunUI::Ready_Object(void)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
+	D3DXMatrixOrthoLH(&m_ProjMatrix, WINCX, WINCY, 0.f, 1.f);
 
+	m_fX = 590.f;
+	m_fY = 280.f;
+	m_fSizeX = 146.8f;
+	m_fSizeY = 100.f;
 	m_iGunIndex = 0;
 
 	return S_OK;
@@ -24,10 +29,12 @@ HRESULT CGunUI::Ready_Object(void)
 
 _int CGunUI::Update_Object(const _float & fTimeDelta)
 {
+	m_pTransCom->Set_Scale(m_fSizeX, m_fSizeY, 1.f);
+	m_pTransCom->Set_Pos(m_fX, -m_fY, 0.f);
 	_int iResult = CGameObject::Update_Object(fTimeDelta);
 	Add_RenderGroup(RENDER_UI, this);
 	if (m_pPlayer == nullptr)
-		m_pPlayer = Engine::Get_GameObject(L"Layer_Character", L"PLAYER");
+		m_pPlayer = Engine::Get_GameObject(STAGE_CHARACTER, L"PLAYER");
 
 	if (m_pPlayer != nullptr)
 	{
@@ -43,48 +50,25 @@ void CGunUI::LateUpdate_Object(void)
 
 void CGunUI::Render_Object(void)
 {
-	Begin_OrthoProj();
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransCom->Get_WorldMatrixPointer());
+	_matrix      OldViewMatrix, OldProjMatrix;
 
+	m_pGraphicDev->GetTransform(D3DTS_VIEW, &OldViewMatrix);
+	m_pGraphicDev->GetTransform(D3DTS_PROJECTION, &OldProjMatrix);
+
+	_matrix      ViewMatrix;
+
+	ViewMatrix = *D3DXMatrixIdentity(&ViewMatrix);
+
+	m_pGraphicDev->SetTransform(D3DTS_VIEW, &ViewMatrix);
+	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &m_ProjMatrix);
 	if (dynamic_cast<CCubePlayer*>(m_pPlayer)->Get_Weapon() != nullptr)
 	{
 		m_pTextureCom->Set_Texture(m_iGunIndex);
 		m_pBufferCom->Render_Buffer();
 	}
-
-	End_OrthoProj();
-}
-
-void CGunUI::Begin_OrthoProj()
-{
-	_matrix matWorld, matView, matProj, matOrtho;
-	m_pGraphicDev->GetTransform(D3DTS_WORLD, &matWorld);
-	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
-	m_pGraphicDev->GetTransform(D3DTS_PROJECTION, &matProj);
-
-	memcpy(&m_matWorld, &matWorld, sizeof(_matrix));
-	memcpy(&m_matView, &matView, sizeof(_matrix));
-	memcpy(&m_matProj, &matProj, sizeof(_matrix));
-
-	D3DXMatrixIdentity(&matWorld);
-	D3DXMatrixIdentity(&matView);
-
-	matView.m[0][0] = 120.f; // 이미지 가로
-	matView.m[1][1] = 50.f; // 이미지 세로
-	matView.m[2][2] = 1.f;
-	matView.m[3][0] = m_pTransCom->m_vInfo[INFO_POS].x + 580.f;
-	matView.m[3][1] = m_pTransCom->m_vInfo[INFO_POS].y - 290.f;
-
-	D3DXMatrixOrthoLH(&matOrtho, WINCX, WINCY, 0.f, 1.f);
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, &matWorld);
-	m_pGraphicDev->SetTransform(D3DTS_VIEW, &matView);
-	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &matOrtho);
-}
-
-void CGunUI::End_OrthoProj()
-{
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, &m_matWorld);
-	m_pGraphicDev->SetTransform(D3DTS_VIEW, &m_matView);
-	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &m_matProj);
+	m_pGraphicDev->SetTransform(D3DTS_VIEW, &OldViewMatrix);
+	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &OldProjMatrix);
 }
 
 HRESULT CGunUI::Add_Component()
@@ -108,7 +92,7 @@ HRESULT CGunUI::Add_Component()
 
 CGunUI * CGunUI::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
-	CGunUI*	pInstance = new CGunUI(pGraphicDev);
+	CGunUI*   pInstance = new CGunUI(pGraphicDev);
 
 	if (FAILED(pInstance->Ready_Object()))
 	{

@@ -122,7 +122,10 @@ void SetChannelVolume(CHANNELID eID, float fVolume)
 {
 	CSoundMgr::GetInstance()->SetChannelVolume(eID, fVolume);
 }
-
+void PlaySoundGun(TCHAR* pSoundKey, CHANNELID eID, float fVolume)
+{
+	CSoundMgr::GetInstance()->PlaySoundGun(pSoundKey, eID, fVolume);
+}
 
 inline void			Release_Utility(void)
 {

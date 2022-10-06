@@ -163,6 +163,8 @@
     <ClInclude Include="..\Header\BaseMapping.h" />
     <ClInclude Include="..\Header\Bullet.h" />
     <ClInclude Include="..\Header\BulletUI.h" />
+    <ClInclude Include="..\Header\BulletParticle.h" />
+    <ClInclude Include="..\Header\CrossHeader.h" />
     <ClInclude Include="..\Header\CubeArm.h" />
     <ClInclude Include="..\Header\CubeBody.h" />
     <ClInclude Include="..\Header\CubeFoot.h" />
@@ -174,6 +176,7 @@
     <ClInclude Include="..\Header\CubeMonsterBody.h" />
     <ClInclude Include="..\Header\CubeMonsterHead.h" />
     <ClInclude Include="..\Header\CubePlayer.h" />
+    <ClInclude Include="..\Header\CubeShop.h" />
     <ClInclude Include="..\Header\DynamicCamera.h" />
     <ClInclude Include="..\Header\ExitButton.h" />
     <ClInclude Include="..\Header\GetShotgun.h" />
@@ -188,6 +191,10 @@
     <ClInclude Include="..\Header\Loading.h" />
     <ClInclude Include="..\Header\LoadingScene.h" />
     <ClInclude Include="..\Header\Logo.h" />
+    <ClInclude Include="..\Header\LogoBilboard.h" />
+    <ClInclude Include="..\Header\LogoCamera.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="..\Header\LogoUI.h" />
     <ClInclude Include="..\Header\MainApp.h" />
     <ClInclude Include="..\Header\MaxPlusHp.h" />
@@ -201,6 +208,7 @@
     <ClInclude Include="..\Header\PlayerMapping.h" />
     <ClInclude Include="..\Header\PlayerUI.h" />
     <ClInclude Include="..\Header\PoolMgr.h" />
+    <ClInclude Include="..\Header\Shop.h" />
     <ClInclude Include="..\Header\Shotgun.h" />
     <ClInclude Include="..\Header\ShotgunPart1.h" />
     <ClInclude Include="..\Header\ShotgunPart2.h" />
@@ -214,8 +222,10 @@
     <ClInclude Include="..\Header\SniperPart4.h" />
     <ClInclude Include="..\Header\Stage.h" />
     <ClInclude Include="..\Header\StaticCamera.h" />
+    <ClInclude Include="..\Header\TargetCube.h" />
     <ClInclude Include="..\Header\Terrain.h" />
     <ClInclude Include="..\Header\TestCube.h" />
+    <ClInclude Include="..\Header\TestGun.h" />
     <ClInclude Include="..\Header\TestMonster.h" />
     <ClInclude Include="..\Header\TestPlayer.h" />
     <ClInclude Include="..\Header\ToolScene.h" />
@@ -230,8 +240,9 @@
     <ClInclude Include="..\Header\WallMgr.h" />
     <ClInclude Include="..\Header\Weapon.h" />
     <ClInclude Include="..\Header\WeaponUI.h" />
-    <ClInclude Include="..\Header\BulletParticle.h" />
+    <ClInclude Include="..\Header\ShotParticle.h" />
     <ClInclude Include="Client.h" />
+    <ClInclude Include="Define.h" />
     <ClInclude Include="dirent.h" />
     <ClInclude Include="GraphEditor.h" />
     <ClInclude Include="imconfig.h" />
@@ -260,7 +271,9 @@
     <ClCompile Include="..\Code\BackGround.cpp" />
     <ClCompile Include="..\Code\BaseMapping.cpp" />
     <ClCompile Include="..\Code\Bullet.cpp" />
+    <ClCompile Include="..\Code\BulletParicle.cpp" />
     <ClCompile Include="..\Code\BulletUI.cpp" />
+    <ClCompile Include="..\Code\CrossHeader.cpp" />
     <ClCompile Include="..\Code\CubeArm.cpp" />
     <ClCompile Include="..\Code\CubeBody.cpp" />
     <ClCompile Include="..\Code\CubeFoot.cpp" />
@@ -272,6 +285,7 @@
     <ClCompile Include="..\Code\CubeMonsterBody.cpp" />
     <ClCompile Include="..\Code\CubeMonsterHead.cpp" />
     <ClCompile Include="..\Code\CubePlayer.cpp" />
+    <ClCompile Include="..\Code\CubeShop.cpp" />
     <ClCompile Include="..\Code\DynamicCamera.cpp" />
     <ClCompile Include="..\Code\ExitButton.cpp" />
     <ClCompile Include="..\Code\GetShotgun.cpp" />
@@ -286,6 +300,10 @@
     <ClCompile Include="..\Code\Loading.cpp" />
     <ClCompile Include="..\Code\LoadingScene.cpp" />
     <ClCompile Include="..\Code\Logo.cpp" />
+    <ClCompile Include="..\Code\LogoBilboard.cpp" />
+    <ClCompile Include="..\Code\LogoCamera.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\Code\LogoUI.cpp" />
     <ClCompile Include="..\Code\MainApp.cpp" />
     <ClCompile Include="..\Code\MaxPlusHp.cpp" />
@@ -299,6 +317,7 @@
     <ClCompile Include="..\Code\PlayerMapping.cpp" />
     <ClCompile Include="..\Code\PlayerUI.cpp" />
     <ClCompile Include="..\Code\PoolMgr.cpp" />
+    <ClCompile Include="..\Code\Shop.cpp" />
     <ClCompile Include="..\Code\Shotgun.cpp" />
     <ClCompile Include="..\Code\ShotgunPart1.cpp" />
     <ClCompile Include="..\Code\ShotgunPart2.cpp" />
@@ -312,8 +331,10 @@
     <ClCompile Include="..\Code\SniperPart4.cpp" />
     <ClCompile Include="..\Code\Stage.cpp" />
     <ClCompile Include="..\Code\StaticCamera.cpp" />
+    <ClCompile Include="..\Code\TargetCube.cpp" />
     <ClCompile Include="..\Code\Terrain.cpp" />
     <ClCompile Include="..\Code\TestCube.cpp" />
+    <ClCompile Include="..\Code\TestGun.cpp" />
     <ClCompile Include="..\Code\TestMonster.cpp" />
     <ClCompile Include="..\Code\TestPlayer.cpp" />
     <ClCompile Include="..\Code\ToolScene.cpp" />
@@ -328,7 +349,7 @@
     <ClCompile Include="..\Code\WallMgr.cpp" />
     <ClCompile Include="..\Code\Weapon.cpp" />
     <ClCompile Include="..\Code\WeaponUI.cpp" />
-    <ClCompile Include="..\Code\BulletParticle.cpp" />
+    <ClCompile Include="..\Code\ShotParticle.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="GraphEditor.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>

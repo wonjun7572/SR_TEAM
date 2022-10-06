@@ -40,7 +40,7 @@ void CPlayerMapping::LateUpdate_Object(void)
 	CGameObject::LateUpdate_Object();
 	if (nullptr == m_pTransformPlayer)
 	{
-		m_pTransformPlayer = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Character", L"BODY", L"Proto_TransformCom", ID_DYNAMIC));
+		m_pTransformPlayer = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_CHARACTER, L"BODY", TRANSFORM_COMP, ID_DYNAMIC));
 		NULL_CHECK(m_pTransformPlayer);
 	}
 	
@@ -129,9 +129,9 @@ HRESULT CPlayerMapping::Add_Component(void)
 	NULL_CHECK_RETURN(pInstance, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_CubePlayerTexture", pInstance });
 
-	pInstance = m_pTransform = dynamic_cast<CTransform*>(Engine::Clone_Proto(L"Proto_TransformCom"));
+	pInstance = m_pTransform = dynamic_cast<CTransform*>(Engine::Clone_Proto(TRANSFORM_COMP));
 	NULL_CHECK_RETURN(pInstance, E_FAIL);
-	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_TransformCom", pInstance });
+	m_mapComponent[ID_DYNAMIC].insert({ TRANSFORM_COMP, pInstance });
 	
 	pInstance = m_pBufferCom = dynamic_cast<CRcTex*>(Clone_Proto(L"Proto_RcTexCom"));
 	NULL_CHECK_RETURN(m_pBufferCom, E_FAIL);

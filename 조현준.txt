@@ -14,7 +14,7 @@ if (!m_bLetterboxInit&& m_iTexIndex == 37 && m_bSwitch)
 		wsprintf(szCntName, L"");
 		const _tchar*	szNumbering = L"WallLetter_%d";
 		wsprintf(szCntName, szNumbering, m_iLetterCnt);
-		Engine::Add_GameObject(L"Layer_Mapping", m_pLetterBox, szCntName);
+		Engine::Add_GameObject(STAGE_MAPPING, m_pLetterBox, szCntName);
 		m_listLetterCnt.push_back(szCntName);
 	
 		++m_iLetterCnt;
@@ -36,7 +36,7 @@ TCHAR* szWLN = new TCHAR[64];
 				if (!wcscmp(*iter, str.c_str()))
 				{
 					wstring str1 = *iter;
-					Delete_GameObject(L"Layer_Mapping", str1.c_str());
+					Delete_GameObject(STAGE_MAPPING, str1.c_str());
 					delete *iter;
 					iter = m_listLetterCnt.erase(iter);
 				}

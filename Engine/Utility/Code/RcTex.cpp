@@ -37,16 +37,16 @@ HRESULT CRcTex::Ready_Buffer(void)
 	// 3인자 : 배열에 저장된 첫 번째 버텍스의 주소를 얻어옴
 
 	// 오른쪽 위 삼각형
-	pVertex[0].vPos = { -1.f, 1.f, 0.f };
+	pVertex[0].vPos = { -0.5f, 0.5f, 0.f };
 	pVertex[0].vTexUV = {0.f, 0.f};
 
-	pVertex[1].vPos = { 1.f, 1.f, 0.f };
+	pVertex[1].vPos = { 0.5f, 0.5f, 0.f };
 	pVertex[1].vTexUV = {1.f, 0.f};
 
-	pVertex[2].vPos = { 1.f, -1.f, 0.f };
+	pVertex[2].vPos = { 0.5f, -0.5f, 0.f };
 	pVertex[2].vTexUV = {1.f, 1.f};
 
-	pVertex[3].vPos = { -1.f, -1.f, 0.f };
+	pVertex[3].vPos = { -0.5f, -0.5f, 0.f };
 	pVertex[3].vTexUV = {0.f, 1.f};
 
 	m_pVB->Unlock();
@@ -81,10 +81,10 @@ void CRcTex::Resize_Buffer(_float vX)
 
 	m_pVB->Lock(0, 0, (void**)&pVertex, 0);
 	
-	pVertex[1].vPos = { -1.f + (vX * 2.f), 1.f, 0.f };   //   -1 ~ 1임
+	pVertex[1].vPos = { -1.f + (vX * 2.f), 0.5f, 0.f };   //   -1 ~ 1임
 	pVertex[1].vTexUV = { (vX), 0.f };
 
-	pVertex[2].vPos = { -1.f + (vX * 2.f), -1.f, 0.f };
+	pVertex[2].vPos = { -1.f + (vX * 2.f), -0.5f, 0.f };
 	pVertex[2].vTexUV = { (vX), 1.f };
 
 	m_pVB->Unlock();
@@ -96,10 +96,10 @@ void CRcTex::Resize_Buffer_Reverse(_float vX)
 
 	m_pVB->Lock(0, 0, (void**)&pVertex, 0);
 
-	pVertex[0].vPos = { (-1.f + (2.f - (vX * 2.f))), 1.f, 0.f };   //   -1 ~ 1임
+	pVertex[0].vPos = { (-1.f + (2.f - (vX * 2.f))), 0.5f, 0.f };   //   -1 ~ 1임
 	pVertex[0].vTexUV = { (1 - vX) , 0.f };
 
-	pVertex[3].vPos = { (-1.f + (2.f - (vX * 2.f))), -1.f, 0.f };
+	pVertex[3].vPos = { (-1.f + (2.f - (vX * 2.f))), -0.5f, 0.f };
 	pVertex[3].vTexUV = { (1 - vX) , 1.f };
 
 	m_pVB->Unlock();

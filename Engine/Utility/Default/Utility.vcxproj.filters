@@ -85,6 +85,12 @@
     <Filter Include="01. GameObject\ParticleSystem">
       <UniqueIdentifier>{14bc8001-3b00-4ffe-b688-03d0fcc43c63}</UniqueIdentifier>
     </Filter>
+    <Filter Include="05. Image">
+      <UniqueIdentifier>{a59e04b0-9a56-4bb0-85fc-243550ac321a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00. Component\00. VIBuffer\08. DynamicBuffer">
+      <UniqueIdentifier>{ac1c36d9-2a32-4eb7-ac85-321c80f75de9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Header\TriCol.h">
@@ -168,6 +174,9 @@
     <ClInclude Include="..\..\Header\Export_Utility.h">
       <Filter>99. Export</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Header\DynamicBuffer.h">
+      <Filter>00. Component\00. VIBuffer\08. DynamicBuffer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\TriCol.cpp">
@@ -247,6 +256,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\PSystem.cpp">
       <Filter>01. GameObject\ParticleSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\DynamicBuffer.cpp">
+      <Filter>00. Component\00. VIBuffer\08. DynamicBuffer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

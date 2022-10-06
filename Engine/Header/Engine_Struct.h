@@ -32,6 +32,15 @@ namespace Engine
 
 	const _ulong	FVF_CUBE = D3DFVF_XYZ | D3DFVF_TEX1 | D3DFVF_TEXCOORDSIZE3(0);		// D3DFVF_TEXCOORDSIZE3 : 텍스처의 UV값이 FLOAT 형 3개의 크기만큼이며, 괄호산의 숫자 0의 의미는 본래 버텍스에 텍스처 UV 값이 여러개가 올 수 있는데 그중 0번째 것이 값을 지정하겠다는 의미이다.
 
+	typedef struct tagVertexCubeTex2
+	{
+		_vec3		vPos;
+		_vec2		vTexUV;
+
+	}VTXCUBE2;
+
+	const _ulong	FVF_CUBE2 = D3DFVF_XYZ | D3DFVF_TEX1;
+
 	typedef struct tagParticle 
 	{
 		_vec3	vPos;
@@ -78,14 +87,16 @@ namespace Engine
 
 	typedef struct tagGunAbility
 	{
+		_float		fBulletAttack;
 		_float		fBulletRate;	  // 총알 속도
 		_float		fRemainBulletCnt; // 남은 총알 개수 
 		_float		fBulletCount;	  // 총알 개수 제한용
+		_bool		bShoot;
 	}GUNABILITY;
 
 	typedef struct tagMonsterState
 	{
-		_int iLevel;
+		_int   iLevel;
 		_float fCurrentHp;
 		_float fMaxHp;
 		_float fDamage;

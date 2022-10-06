@@ -22,7 +22,11 @@ public:
 	virtual void	Render_Object(void) override;
 
 public:
-	GUNABILITY* Get_Ability() { return m_tAbility; }
+	GUNABILITY* Get_Ability()	  { return m_tAbility; }
+	void		Set_MinusBullet() { m_tAbility->fRemainBulletCnt--; }
+	_bool		Get_Shoot() { return m_tAbility->bShoot; }
+	void        Set_Shoot(_bool bShoot) { m_tAbility->bShoot = bShoot; }
+	CTransform* Get_Transform() { return m_pPart1; }
 
 public:
 	HRESULT			Ready_Weapon(LPDIRECT3DDEVICE9 pGraphicDev, const _uint& iIndex);
@@ -39,7 +43,6 @@ protected:
 
 protected:	
 	CTransform*		m_pTransform = nullptr;
-	CWeapon*		m_pWeapon = nullptr;
 
 	GUNABILITY*		m_tAbility = nullptr;
 
@@ -60,13 +63,13 @@ protected:
 	
 	list<TCHAR*>		m_liszFinalName;
 	
-	_float	m_fAtkSpeed;
-	_float	m_fReloadSpeed;
-	_float  m_fRebound;
-		
-	_int	m_iAtkDmg;
-	_int	m_iBulletMax;
-	_int	m_iScope;
+	_float		m_fAtkSpeed;
+	_float		m_fReloadSpeed;
+	_float		m_fRebound;
+
+	_int		m_iAtkDmg;
+	_int		m_iBulletMax;
+	_int		m_iScope;
 
 	_float		m_fUziSize = 1.f;
 	_float		m_fShotgunSize = 1.f;

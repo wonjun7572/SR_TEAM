@@ -112,6 +112,26 @@ void CSoundMgr::LoadSoundFile()
 
 
 
+void CSoundMgr::PlaySoundGun(TCHAR * pSoundKey, CHANNELID eID, float fVolume)
+{
+	map<TCHAR*, FMOD_SOUND*>::iterator iter;
+
+	iter = find_if(m_mapSound.begin(), m_mapSound.end(),
+		[&](auto& iter)->bool
+	{
+		return !lstrcmp(pSoundKey, iter.first);
+	});
+
+	if (iter == m_mapSound.end())
+		return;
+	
+	FMOD_System_PlaySound(m_pSystem, FMOD_CHANNEL_FREE, iter->second, FALSE, &m_pChannelArr[eID]);
+	
+	FMOD_Channel_SetVolume(m_pChannelArr[eID], fVolume);
+
+	FMOD_System_Update(m_pSystem);
+}
+
 void CSoundMgr::PlaySoundW(TCHAR * pSoundKey, CHANNELID eID, float fVolume)
 {
 	map<TCHAR*, FMOD_SOUND*>::iterator iter;

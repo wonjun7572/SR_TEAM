@@ -54,9 +54,9 @@ HRESULT CLoadBar::Add_Component(void)
 {
 	CComponent* pComponent = nullptr;
 
-	pComponent = m_pTransformCom = dynamic_cast<CTransform*>(Engine::Clone_Proto(L"Proto_TransformCom"));
+	pComponent = m_pTransformCom = dynamic_cast<CTransform*>(Engine::Clone_Proto(TRANSFORM_COMP));
 	NULL_CHECK_RETURN(m_pTransformCom, E_FAIL);
-	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_TransformCom", m_pTransformCom });
+	m_mapComponent[ID_DYNAMIC].insert({ TRANSFORM_COMP, m_pTransformCom });
 
 	pComponent = m_pRcTexCom = dynamic_cast<CRcTex*>(Engine::Clone_Proto(L"Proto_RcTexCom"));
 	NULL_CHECK_RETURN(m_pRcTexCom, E_FAIL);

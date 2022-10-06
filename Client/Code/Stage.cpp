@@ -47,7 +47,13 @@
 
 
 #include "LetterBox.h"
+#include "ShotParticle.h"
+
+#include "CrossHeader.h"
+#include "TargetCube.h"
 #include "BulletParticle.h"
+#include "Shop.h"
+#include "CubeShop.h"
 
 CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CScene(pGraphicDev)
@@ -70,20 +76,17 @@ HRESULT CStage::Ready_Scene(void)
 
 	FAILED_CHECK_RETURN(Ready_Light(), E_FAIL);
 
-	FAILED_CHECK_RETURN(Ready_Layer_Environment(L"Layer_Environment"), E_FAIL);
-	FAILED_CHECK_RETURN(Ready_Layer_GameLogic(L"Layer_GameLogic"), E_FAIL);
-	FAILED_CHECK_RETURN(Ready_Layer_UI(L"Layer_UI"), E_FAIL);
+	FAILED_CHECK_RETURN(Ready_Layer_Environment(STAGE_ENVIRONMENT), E_FAIL);
+	FAILED_CHECK_RETURN(Ready_Layer_GameLogic(STAGE_GAMELOGIC), E_FAIL);
+	FAILED_CHECK_RETURN(Ready_Layer_UI(STAGE_UI), E_FAIL);
+	FAILED_CHECK_RETURN(Ready_Layer_Character(STAGE_CHARACTER), E_FAIL);
+	FAILED_CHECK_RETURN(Ready_Layer_Monster(STAGE_MONSTER), E_FAIL);
+	FAILED_CHECK_RETURN(Ready_Layer_Mapping(STAGE_MAPPING), E_FAIL);
+	FAILED_CHECK_RETURN(Ready_Layer_Bullet(STAGE_BULLET), E_FAIL);
+	FAILED_CHECK_RETURN(Ready_Layer_Wall(STAGE_WALL), E_FAIL);
+	FAILED_CHECK_RETURN(Ready_Layer_Item(STAGE_ITEM), E_FAIL);
+	FAILED_CHECK_RETURN(Ready_Layer_Gun(STAGE_GUN), E_FAIL);
 
-	FAILED_CHECK_RETURN(Ready_Layer_Wall(L"Layer_Wall"), E_FAIL);
-	FAILED_CHECK_RETURN(Ready_Layer_Character(L"Layer_Character"), E_FAIL);
-	FAILED_CHECK_RETURN(Ready_Layer_Monster(L"Layer_Monster"), E_FAIL);
-	FAILED_CHECK_RETURN(Ready_Layer_Bullet(L"Layer_Bullet"), E_FAIL);
-	FAILED_CHECK_RETURN(Ready_Layer_Mapping(L"Layer_Mapping"), E_FAIL);
-
-	FAILED_CHECK_RETURN(Ready_Layer_Gun(L"Layer_Gun"), E_FAIL);
-
-	FAILED_CHECK_RETURN(Ready_Layer_Item(L"Layer_Item"), E_FAIL);
-	// 고치고있는중입니다.
 	return S_OK;
 }
 
@@ -123,6 +126,10 @@ HRESULT CStage::Ready_Layer_Environment(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"SkyBox", pGameObject), E_FAIL);
 
+	pGameObject = CShotParticle::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"ShotParticle", pGameObject), E_FAIL);
+
 	pGameObject = CBulletParticle::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"BulletParticle", pGameObject), E_FAIL);
@@ -138,15 +145,6 @@ HRESULT CStage::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pLayer, E_FAIL);
 
 	CGameObject*		pGameObject = nullptr;
-
-	// 충돌 테스트를 위한 테스트 플레이어
-	pGameObject = CTestPlayer::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"TestPlayer0", pGameObject), E_FAIL);
-
-	//pGameObject = CLetterBox::Create(m_pGraphicDev,L"Press [E] to Interact",sizeof(L"Press [E] to Interact"),0);
-	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"TestPlayer1", pGameObject), E_FAIL);
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
@@ -188,13 +186,24 @@ HRESULT CStage::Ready_Layer_UI(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"GunUI", pGameObject), E_FAIL);
 
-
-
 	//Monster
-	pGameObject = CMonsterUI::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"MonsterHpUI", pGameObject), E_FAIL);
+	//pGameObject = CMonsterUI::Create(m_pGraphicDev);
+	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"MonsterHpUI", pGameObject), E_FAIL);
 
+	// Shop
+	pGameObject = CShop::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Shop", pGameObject), E_FAIL);
+
+	//interactShop
+	pGameObject = CCubeShop::Create(m_pGraphicDev, _vec3(18, 1, 19));
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"InteractShop", pGameObject), E_FAIL);
+
+	pGameObject = CCrossHeader::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"CrossHeader", pGameObject), E_FAIL);
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
@@ -209,7 +218,7 @@ HRESULT CStage::Ready_Layer_Wall(const _tchar * pLayerTag)
 	CGameObject*		pGameObject = nullptr;
 
 	HANDLE      hFile = CreateFile(L"../../Data/Map1.dat",      // 파일의 경로와 이름
-		GENERIC_READ,         // 파일 접근 모드 (GENERIC_WRITE : 쓰기 전용, GENERIC_READ : 읽기 전용)
+		GENERIC_READ,									 // 파일 접근 모드 (GENERIC_WRITE : 쓰기 전용, GENERIC_READ : 읽기 전용)
 		NULL,               // 공유 방식(파일이 열려있는 상태에서 다른 프로세스가 오픈할 때 허용할 것인가)    
 		NULL,               // 보안 속성(NULL을 지정하면 기본값 상태)
 		OPEN_EXISTING,         // CREATE_ALWAYS : 파일이 없다면 생성, 있다면 덮어쓰기, OPEN_EXISTING  : 파일이 있을 경우에만 열기
@@ -249,7 +258,7 @@ HRESULT CStage::Ready_Layer_Wall(const _tchar * pLayerTag)
 		pGameObject->Set_DrawTexIndex(iDrawIndex);
 		++m_iIndex;
 
-		CTransform* Transcom = dynamic_cast<CTransform*>(pGameObject->Get_Component(L"Proto_TransformCom", ID_DYNAMIC));
+		CTransform* Transcom = dynamic_cast<CTransform*>(pGameObject->Get_Component(TRANSFORM_COMP, ID_DYNAMIC));
 
 		Transcom->Set_Info(INFO_RIGHT, &vRight);
 		Transcom->Set_Info(INFO_UP, &vUp);
@@ -333,26 +342,63 @@ HRESULT CStage::Ready_Layer_Monster(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pLayer, E_FAIL);
 
 	CGameObject*		pGameObject = nullptr;
+	
+	//pGameObject = CCubeMonsterArm::Create(m_pGraphicDev);
+	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"M_LeftArm", pGameObject), E_FAIL);
+	//
+	//pGameObject = CCubeMonsterArm::Create(m_pGraphicDev);
+	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"M_RighrArm", pGameObject), E_FAIL);
+	//
+	//pGameObject = CCubeMonsterBody::Create(m_pGraphicDev);
+	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"M_Body", pGameObject), E_FAIL);
+	//
+	//pGameObject = CCubeMonsterHead::Create(m_pGraphicDev);
+	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"M_Head", pGameObject), E_FAIL);
+	//
+	//pGameObject = CCubeMonster::Create(m_pGraphicDev);
+	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"CubeMonster", pGameObject), E_FAIL);
 
-	pGameObject = CCubeMonsterArm::Create(m_pGraphicDev);
+	pGameObject = CTargetCube::Create(m_pGraphicDev, _vec3(27.f, 0.6f, 20.f));
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"M_LeftArm", pGameObject), E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"TargetCube1", pGameObject), E_FAIL);
 
-	pGameObject = CCubeMonsterArm::Create(m_pGraphicDev);
+	pGameObject = CTargetCube::Create(m_pGraphicDev, _vec3(30.f, 0.6f, 20.f));
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"M_RighrArm", pGameObject), E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"TargetCube2", pGameObject), E_FAIL);
 
-	pGameObject = CCubeMonsterBody::Create(m_pGraphicDev);
+	pGameObject = CTargetCube::Create(m_pGraphicDev, _vec3(33.f, 0.6f, 20.f));
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"M_Body", pGameObject), E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"TargetCube3", pGameObject), E_FAIL);
 
-	pGameObject = CCubeMonsterHead::Create(m_pGraphicDev);
+	pGameObject = CTargetCube::Create(m_pGraphicDev, _vec3(27.f, 1.6f, 20.f));
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"M_Head", pGameObject), E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"TargetCube4", pGameObject), E_FAIL);
 
-	pGameObject = CCubeMonster::Create(m_pGraphicDev);
+	pGameObject = CTargetCube::Create(m_pGraphicDev, _vec3(30.f, 1.6f, 20.f));
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"CubeMonster", pGameObject), E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"TargetCube5", pGameObject), E_FAIL);
+
+	pGameObject = CTargetCube::Create(m_pGraphicDev, _vec3(33.f, 1.6f, 20.f));
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"TargetCube6", pGameObject), E_FAIL);
+
+	pGameObject = CTargetCube::Create(m_pGraphicDev, _vec3(27.f, 2.6f, 20.f));
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"TargetCube7", pGameObject), E_FAIL);
+
+	pGameObject = CTargetCube::Create(m_pGraphicDev, _vec3(30.f, 2.6f, 20.f));
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"TargetCube8", pGameObject), E_FAIL);
+
+	pGameObject = CTargetCube::Create(m_pGraphicDev, _vec3(33.f, 2.6f, 20.f));
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"TargetCube9", pGameObject), E_FAIL);
+
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
@@ -482,28 +528,6 @@ HRESULT CStage::Ready_Layer_Gun(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Sniper_Part_4", pGameObject), E_FAIL);
 
-	////////////////////////////////////파밍용무기///////////////////////////////////////
-	/*pGameObject = CUziPart1::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Uzi_Part_Floor_1", pGameObject), E_FAIL);
-
-	pGameObject = CUziPart2::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Uzi_Part_Floor_2", pGameObject), E_FAIL);
-
-	pGameObject = CUziPart3::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Uzi_Part_Floor_3", pGameObject), E_FAIL);
-
-	pGameObject = CUziPart4::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Uzi_Part_Floor_4", pGameObject), E_FAIL);
-
-	pGameObject = CUziPart5::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Uzi_Part_Floor_5", pGameObject), E_FAIL);*/
-	/////////////////////////////////////////////////////////////////////////////////////
-
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
 	return S_OK;
@@ -516,33 +540,31 @@ HRESULT CStage::Ready_Layer_Item(const _tchar * pLayerTag)
 
 	CGameObject*		pGameObject = nullptr;
 
-	pGameObject = CHealthPotion::Create(m_pGraphicDev, _vec3(15, 1, 15));
+	pGameObject = CHealthPotion::Create(m_pGraphicDev, _vec3(7.f, 0.6f, 20.f));
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"HealthPotion", pGameObject), E_FAIL);
 
-	pGameObject = CGetUzi::Create(m_pGraphicDev, _vec3(20, 1, 20));
+	pGameObject = CGetUzi::Create(m_pGraphicDev, _vec3(10.f, 0.6f, 20.f));
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"GetUzi", pGameObject), E_FAIL);
 
-	pGameObject = CGetShotgun::Create(m_pGraphicDev, _vec3(30, 1, 30));
+	pGameObject = CGetShotgun::Create(m_pGraphicDev, _vec3(13.f, 0.6f, 20.f));
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"GetShotgun", pGameObject), E_FAIL);
 
-	pGameObject = CGetSniper::Create(m_pGraphicDev, _vec3(30, 1, 20));
+	pGameObject = CGetSniper::Create(m_pGraphicDev, _vec3(16.f, 0.6f, 20.f));
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"GetSniper", pGameObject), E_FAIL);
-
-
-	pGameObject = CObtainBullet::Create(m_pGraphicDev, _vec3(25, 1, 25));
+	
+	pGameObject = CObtainBullet::Create(m_pGraphicDev, _vec3(19.f, 0.6f, 20.f));
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"OBTAINBULLET", pGameObject), E_FAIL);
-
-
-	pGameObject = CObtainDefense::Create(m_pGraphicDev, _vec3(19, 1, 19));
+	
+	pGameObject = CObtainDefense::Create(m_pGraphicDev, _vec3(21.f, 0.6f, 20.f));
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"OBTAINDEFENSE", pGameObject), E_FAIL);
-
-	pGameObject = CMaxPlusHp::Create(m_pGraphicDev, _vec3(23, 2, 23));
+	
+	pGameObject = CMaxPlusHp::Create(m_pGraphicDev, _vec3(24.f, 0.6f, 20.f));
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"MAXHP", pGameObject), E_FAIL);
 

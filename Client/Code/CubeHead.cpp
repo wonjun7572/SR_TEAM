@@ -37,8 +37,8 @@ void CCubeHead::LateUpdate_Object(void)
 
 void CCubeHead::Render_Object(void)
 {
+	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
-
 	m_pTexture->Set_Texture(102);
 	m_pCube->Render_Buffer();
 }
@@ -65,9 +65,9 @@ HRESULT CCubeHead::Add_Component(void)
 	NULL_CHECK_RETURN(pInstance, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_CubePlayerTexture", pInstance });
 
-	pInstance = m_pTransform = dynamic_cast<CTransform*>(Engine::Clone_Proto(L"Proto_TransformCom"));
+	pInstance = m_pTransform = dynamic_cast<CTransform*>(Engine::Clone_Proto(TRANSFORM_COMP));
 	NULL_CHECK_RETURN(pInstance, E_FAIL);
-	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_TransformCom", pInstance });
+	m_mapComponent[ID_DYNAMIC].insert({ TRANSFORM_COMP, pInstance });
 
 	return S_OK;
 }

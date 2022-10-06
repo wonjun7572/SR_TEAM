@@ -3,6 +3,7 @@
 
 #include "../../Client/Header/Uzi.h"
 #include "../../Client/Header/Item.h"
+#include "../../Client/Default/Define.h"
 
 USING(Engine)
 
@@ -27,11 +28,11 @@ HRESULT CCollision::Ready_Collision(void)
 
 _bool CCollision::Check_Collision(void)
 {
-	m_pSrc = dynamic_cast<CHitBox*>(Get_Component(L"Layer_Character", L"PLAYER", L"Proto_HitboxCom", ID_STATIC));
-	m_pDst = dynamic_cast<CHitBox*>(Get_Component(L"Layer_GameLogic", L"TestPlayer0", L"Proto_HitboxCom", ID_STATIC));
+	m_pSrc = dynamic_cast<CHitBox*>(Get_Component(STAGE_CHARACTER, L"PLAYER", HITBOX_COMP, ID_STATIC));
+	m_pDst = dynamic_cast<CHitBox*>(Get_Component(L"Layer_GameLogic", L"TestPlayer0", HITBOX_COMP, ID_STATIC));
 
-	CTransform*	pSrcTrans = dynamic_cast<CTransform*>(Get_Component(L"Layer_Character", L"PLAYER", L"Proto_TransformCom", ID_DYNAMIC));
-	CTransform*	pDstTrans = dynamic_cast<CTransform*>(Get_Component(L"Layer_GameLogic", L"TestPlayer0", L"Proto_TransformCom", ID_DYNAMIC));
+	CTransform*	pSrcTrans = dynamic_cast<CTransform*>(Get_Component(STAGE_CHARACTER, L"PLAYER", TRANSFORM_COMP, ID_DYNAMIC));
+	CTransform*	pDstTrans = dynamic_cast<CTransform*>(Get_Component(L"Layer_GameLogic", L"TestPlayer0", TRANSFORM_COMP, ID_DYNAMIC));
 
 	m_pSrc->Get_MinMax(&m_vMin1, &m_vMax1);
 	m_pDst->Get_MinMax(&m_vMin2, &m_vMax2);
@@ -54,22 +55,22 @@ _bool CCollision::Check_Collision(void)
 
 _int CCollision::Wall_Collision(_vec3* vNorm)
 {
-	CLayer* pLayer = Engine::Get_Layer(L"Layer_Wall");
+	CLayer* pLayer = Engine::Get_Layer(STAGE_WALL);
 	map<const _tchar*, CGameObject*> mapWall = pLayer->Get_GameObjectMap();
 
-	CTransform*	pPlayerTransform = dynamic_cast<CTransform*>(Get_Component(L"Layer_Character", L"PLAYER", L"Proto_TransformCom", ID_DYNAMIC));
-	CHitBox* pPlayerBox = dynamic_cast<CHitBox*>(Get_Component(L"Layer_Character", L"PLAYER", L"Proto_HitboxCom", ID_STATIC));
+	CTransform*	pPlayerTransform = dynamic_cast<CTransform*>(Get_Component(STAGE_CHARACTER, L"PLAYER", TRANSFORM_COMP, ID_DYNAMIC));
+	CHitBox* pPlayerBox = dynamic_cast<CHitBox*>(Get_Component(STAGE_CHARACTER, L"PLAYER", HITBOX_COMP, ID_STATIC));
 
-	CTransform* pPlayerBodyTransform = dynamic_cast<CTransform*>(Get_Component(L"Layer_Character", L"BODY", L"Proto_TransformCom", ID_DYNAMIC));
+	CTransform* pPlayerBodyTransform = dynamic_cast<CTransform*>(Get_Component(STAGE_CHARACTER, L"BODY", TRANSFORM_COMP, ID_DYNAMIC));
 
 	_vec3 vPlayerPos;
 	pPlayerTransform->Get_Info(INFO_POS, &vPlayerPos);
 
 	for (auto iter : mapWall)
 	{
-		CTransform* pWallTransform = dynamic_cast<CTransform*>(iter.second->Get_Component(L"Proto_TransformCom", ID_DYNAMIC));
+		CTransform* pWallTransform = dynamic_cast<CTransform*>(iter.second->Get_Component(TRANSFORM_COMP, ID_DYNAMIC));
 		NULL_CHECK_RETURN(pWallTransform, false);
-		CHitBox* pWallBox = dynamic_cast<CHitBox*>(iter.second->Get_Component(L"Proto_HitboxCom", ID_STATIC));
+		CHitBox* pWallBox = dynamic_cast<CHitBox*>(iter.second->Get_Component(HITBOX_COMP, ID_STATIC));
 		NULL_CHECK_RETURN(pWallBox, false);
 
 		pPlayerBox->Get_MinMax(&m_vMin1, &m_vMax1);
@@ -375,22 +376,22 @@ _int CCollision::Wall_Collision(_vec3* vNorm)
 
 _int CCollision::Wall_Collision_By_DotSliding(_vec3 * vChangeDir)
 {
-	CLayer* pLayer = Engine::Get_Layer(L"Layer_Wall");
+	CLayer* pLayer = Engine::Get_Layer(STAGE_WALL);
 	map<const _tchar*, CGameObject*> mapWall = pLayer->Get_GameObjectMap();
 
-	CTransform*	pPlayerTransform = dynamic_cast<CTransform*>(Get_Component(L"Layer_Character", L"PLAYER", L"Proto_TransformCom", ID_DYNAMIC));
-	CHitBox* pPlayerBox = dynamic_cast<CHitBox*>(Get_Component(L"Layer_Character", L"PLAYER", L"Proto_HitboxCom", ID_STATIC));
+	CTransform*	pPlayerTransform = dynamic_cast<CTransform*>(Get_Component(STAGE_CHARACTER, L"PLAYER", TRANSFORM_COMP, ID_DYNAMIC));
+	CHitBox* pPlayerBox = dynamic_cast<CHitBox*>(Get_Component(STAGE_CHARACTER, L"PLAYER", HITBOX_COMP, ID_STATIC));
 
-	CTransform* pPlayerBodyTransform = dynamic_cast<CTransform*>(Get_Component(L"Layer_Character", L"BODY", L"Proto_TransformCom", ID_DYNAMIC));
+	CTransform* pPlayerBodyTransform = dynamic_cast<CTransform*>(Get_Component(STAGE_CHARACTER, L"BODY", TRANSFORM_COMP, ID_DYNAMIC));
 
 	_vec3 vPlayerPos;
 	pPlayerTransform->Get_Info(INFO_POS, &vPlayerPos);
 
 	for (auto iter : mapWall)
 	{
-		CTransform* pWallTransform = dynamic_cast<CTransform*>(iter.second->Get_Component(L"Proto_TransformCom", ID_DYNAMIC));
+		CTransform* pWallTransform = dynamic_cast<CTransform*>(iter.second->Get_Component(TRANSFORM_COMP, ID_DYNAMIC));
 		NULL_CHECK_RETURN(pWallTransform, false);
-		CHitBox* pWallBox = dynamic_cast<CHitBox*>(iter.second->Get_Component(L"Proto_HitboxCom", ID_STATIC));
+		CHitBox* pWallBox = dynamic_cast<CHitBox*>(iter.second->Get_Component(HITBOX_COMP, ID_STATIC));
 		NULL_CHECK_RETURN(pWallTransform, false);
 
 		pPlayerBox->Get_MinMax(&m_vMin1, &m_vMax1);
@@ -501,25 +502,25 @@ _int CCollision::Wall_Collision_By_DotSliding(_vec3 * vChangeDir)
 
 void CCollision::Get_Item(void)
 {
-	CLayer* pLayer = Engine::Get_Layer(L"Layer_Item");
+	CLayer* pLayer = Engine::Get_Layer(STAGE_ITEM);
 	map<const _tchar*, CGameObject*> mapItem = pLayer->Get_GameObjectMap();
 
 	if (mapItem.empty())
 		return;
 
-	CTransform*	pPlayerTransform = dynamic_cast<CTransform*>(Get_Component(L"Layer_Character", L"PLAYER", L"Proto_TransformCom", ID_DYNAMIC));
-	CHitBox* pPlayerBox = dynamic_cast<CHitBox*>(Get_Component(L"Layer_Character", L"PLAYER", L"Proto_HitboxCom", ID_STATIC));
+	CTransform*	pPlayerTransform = dynamic_cast<CTransform*>(Get_Component(STAGE_CHARACTER, L"PLAYER", TRANSFORM_COMP, ID_DYNAMIC));
+	CHitBox* pPlayerBox = dynamic_cast<CHitBox*>(Get_Component(STAGE_CHARACTER, L"PLAYER", HITBOX_COMP, ID_STATIC));
 
-	CTransform* pPlayerBodyTransform = dynamic_cast<CTransform*>(Get_Component(L"Layer_Character", L"BODY", L"Proto_TransformCom", ID_DYNAMIC));
+	CTransform* pPlayerBodyTransform = dynamic_cast<CTransform*>(Get_Component(STAGE_CHARACTER, L"BODY", TRANSFORM_COMP, ID_DYNAMIC));
 
 	_vec3 vPlayerPos;
 	pPlayerTransform->Get_Info(INFO_POS, &vPlayerPos);
 
 	for (auto iter : mapItem)
 	{
-		CTransform* pItemTransform = dynamic_cast<CTransform*>(iter.second->Get_Component(L"Proto_TransformCom", ID_DYNAMIC));
+		CTransform* pItemTransform = dynamic_cast<CTransform*>(iter.second->Get_Component(ITEM_TRANSFORM_COMP, ID_DYNAMIC));
 		NULL_CHECK_RETURN(pItemTransform, );
-		CHitBox* pItemBox = dynamic_cast<CHitBox*>(iter.second->Get_Component(L"Proto_HitboxCom", ID_STATIC));
+		CHitBox* pItemBox = dynamic_cast<CHitBox*>(iter.second->Get_Component(HITBOX_COMP, ID_STATIC));
 		NULL_CHECK_RETURN(pItemBox, );
 
 		pPlayerBox->Get_MinMax(&m_vMin1, &m_vMax1);

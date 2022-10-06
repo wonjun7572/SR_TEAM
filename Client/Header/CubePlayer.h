@@ -1,10 +1,11 @@
 #pragma once
 #include "GameObject.h"
-#include "Export_Function.h"
-#include "Weapon.h"
-#include "PlayerMapping.h"
+
 USING(Engine)
 
+class CWeapon;
+class CShotParticle;
+class CBulletParticle;
 
 class CCubePlayer : public CGameObject
 {
@@ -44,6 +45,7 @@ private:
 	map<const _tchar*, CGameObject*>	m_mapPlayerBody;
 
 private:
+	void			Update_NullCheck();
 	HRESULT			Get_BodyTransform(void);
 	HRESULT			Player_Mapping(void);
 
@@ -61,6 +63,7 @@ private:
 	void			Fire_Bullet(void);
 
 	void			Gun_Check(void);
+
 
 private:
 	void			Jump(void);
@@ -87,8 +90,11 @@ private:
 	CCollision*		m_pCollision = nullptr;
 
 	CHitBox*		m_pHitBox = nullptr;
-
 	ABILITY*		m_tAbility = nullptr;
+
+private:
+	CBulletParticle* m_pBulletParicle = nullptr;
+	CShotParticle*	 m_pShotParicle = nullptr;
 
 private:
 	_float			m_fLookAngle = 0.f;
@@ -116,7 +122,12 @@ private:
 	_bool			m_bShotgun;
 	_bool			m_bSniper;
 
+	_bool			m_bSinperZoom = false;
+
 	vector<CWeapon*> m_vecWeapon;
+
+	// 총관련 변수
+	_float			m_fBulletTime = 0.f;
 
 	//맵핑관련 변수입니다.
 	_bool				m_MappingInit = false;
@@ -128,6 +139,7 @@ public:
 	void			Capture_Shotgun(void) { m_bShotgun = true; }
 	void			Capture_Sniper(void) { m_bSniper = true; }
 
+	_bool		Get_SniperZoom() { return m_bSinperZoom; }
 
 	//ITEM
 	void		Get_Defense() { m_tAbility->iDefence += 10; }
