@@ -19,9 +19,9 @@ HRESULT CBulletUI::Ready_Object(void)
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 	D3DXMatrixOrthoLH(&m_ProjMatrix, WINCX, WINCY, 0.f, 1.f);
 
-	m_fX = 607.f;
+	m_fX = 565.f;
 	m_fY = 416.f;
-	m_fSizeX = 172.f;
+	m_fSizeX = 255.f;
 	m_fSizeY = 48.f;
 
 	//FONT
@@ -37,6 +37,7 @@ _int CBulletUI::Update_Object(const _float & fTimeDelta)
 	m_pTransCom->Set_Pos(m_fX, -m_fY, 0.f);
 	_int iResult = CGameObject::Update_Object(fTimeDelta);
 	Add_RenderGroup(RENDER_UI, this);
+	
 	if (m_pPlayer == nullptr)
 		m_pPlayer = Engine::Get_GameObject(STAGE_CHARACTER, L"PLAYER");
 
@@ -77,7 +78,7 @@ void CBulletUI::Render_Object(void)
 
 	if (dynamic_cast<CCubePlayer*>(m_pPlayer)->Get_Weapon() != nullptr)
 	{
-		m_pTextureCom->Set_Texture(0);
+		m_pTextureCom->Set_Texture();
 		m_pBufferCom->Resize_Buffer_Reverse(m_fRemainBullet / m_fTotalBullet);
 		m_pBufferCom->Render_Buffer();
 	}
@@ -93,13 +94,13 @@ HRESULT CBulletUI::Add_Component()
 {
 	CComponent* pComponent = nullptr;
 
-	pComponent = m_pBufferCom = dynamic_cast<CRcTex*>(Clone_Proto(L"RcTex_Bullet"));
+	pComponent = m_pBufferCom = dynamic_cast<CRcTex*>(Clone_Proto(RCTEX_BULLET_COMP));
 	NULL_CHECK_RETURN(m_pBufferCom, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"RcTex_Bullet", pComponent });
+	m_mapComponent[ID_STATIC].insert({ RCTEX_BULLET_COMP, pComponent });
 
-	pComponent = m_pTransCom = dynamic_cast<CTransform*>(Clone_Proto(L"Proto_TransformCom"));
+	pComponent = m_pTransCom = dynamic_cast<CTransform*>(Clone_Proto(TRANSFORM_COMP));
 	NULL_CHECK_RETURN(m_pTransCom, E_FAIL);
-	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_TransformCom", pComponent });
+	m_mapComponent[ID_DYNAMIC].insert({ TRANSFORM_COMP, pComponent });
 
 	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Clone_Proto(L"BULLET_Gage"));
 	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
