@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "..\Header\TargetCube.h"
 #include "CubePlayer.h"
+#include "Weapon.h"
 
 CTargetCube::CTargetCube(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CGameObject(pGraphicDev)
@@ -81,17 +82,17 @@ HRESULT CTargetCube::Add_Component(void)
 	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_CubePlayerTexture", pComponent });
 
-	pComponent = m_pTransCom = dynamic_cast<CTransform*>(Clone_Proto(L"Proto_TransformCom"));
+	pComponent = m_pTransCom = dynamic_cast<CTransform*>(Clone_Proto(TRANSFORM_COMP));
 	NULL_CHECK_RETURN(m_pTransCom, E_FAIL);
-	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_TransformCom", pComponent });
+	m_mapComponent[ID_DYNAMIC].insert({ TRANSFORM_COMP, pComponent });
 
-	pComponent = m_pHitBox = dynamic_cast<CHitBox*>(Engine::Clone_Proto(L"Proto_HitboxCom"));
+	pComponent = m_pHitBox = dynamic_cast<CHitBox*>(Engine::Clone_Proto(HITBOX_COMP));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Proto_HitboxCom", pComponent });
+	m_mapComponent[ID_STATIC].insert({ HITBOX_COMP, pComponent });
 
-	pComponent = m_pCollision = dynamic_cast<CCollision*>(Engine::Clone_Proto(L"Proto_CollisionCom"));
+	pComponent = m_pCollision = dynamic_cast<CCollision*>(Engine::Clone_Proto(COLLISION_COMP));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Proto_CollisionCom", pComponent });
+	m_mapComponent[ID_STATIC].insert({ COLLISION_COMP, pComponent });
 
 	return S_OK;
 }
@@ -100,7 +101,7 @@ void CTargetCube::Hit_Check(void)
 {
 	m_pTransCom->Static_Update();
 
-	CCubePlayer* pPlayer = dynamic_cast<CCubePlayer*>(Engine::Get_GameObject(L"Layer_Character", L"PLAYER"));
+	CCubePlayer* pPlayer = dynamic_cast<CCubePlayer*>(Engine::Get_GameObject(STAGE_CHARACTER, L"PLAYER"));
 	CWeapon* pWeapon = pPlayer->Get_Weapon();
 	if (pWeapon)
 	{

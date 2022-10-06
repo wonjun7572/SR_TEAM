@@ -33,7 +33,7 @@ _int CTestMonster::Update_Object(const _float & fTimeDelta)
 
 void CTestMonster::LateUpdate_Object(void)
 {
-	CTransform*		pPlayerTransformCom = dynamic_cast<CTransform*>(Engine::Get_Component(L"Ready_Layer_Environment", L"TestPlayer", L"Proto_TransformCom", ID_DYNAMIC));
+	CTransform*		pPlayerTransformCom = dynamic_cast<CTransform*>(Engine::Get_Component(L"Ready_Layer_Environment", L"TestPlayer", TRANSFORM_COMP, ID_DYNAMIC));
 	NULL_CHECK(pPlayerTransformCom);
 
 	_vec3		vPlayerPos;
@@ -59,9 +59,9 @@ HRESULT CTestMonster::Add_Component(void)
 	NULL_CHECK_RETURN(m_pBufferCom, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_TriColCom", pComponent });
 
-	pComponent = m_pTransCom = dynamic_cast<CTransform*>(Clone_Proto(L"Proto_TransformCom"));
+	pComponent = m_pTransCom = dynamic_cast<CTransform*>(Clone_Proto(TRANSFORM_COMP));
 	NULL_CHECK_RETURN(m_pTransCom, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Proto_TransformCom", pComponent });
+	m_mapComponent[ID_STATIC].insert({ TRANSFORM_COMP, pComponent });
 
 
 	return S_OK;

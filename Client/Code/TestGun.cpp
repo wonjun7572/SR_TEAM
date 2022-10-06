@@ -46,9 +46,9 @@ HRESULT CTestGun::Add_Component(void)
 	NULL_CHECK_RETURN(m_pBufferCom, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"DynamicBuffer", pComponent });
 
-	pComponent = m_pTransCom = dynamic_cast<CTransform*>(Clone_Proto(L"Proto_TransformCom"));
+	pComponent = m_pTransCom = dynamic_cast<CTransform*>(Clone_Proto(TRANSFORM_COMP));
 	NULL_CHECK_RETURN(m_pTransCom, E_FAIL);
-	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_TransformCom", pComponent });
+	m_mapComponent[ID_DYNAMIC].insert({ TRANSFORM_COMP, pComponent });
 
 	pComponent = m_pTexture = dynamic_cast<CTexture*>(Clone_Proto(L"DynamicBuffer_Tex"));
 	NULL_CHECK_RETURN(m_pBufferCom, E_FAIL);

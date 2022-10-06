@@ -47,9 +47,9 @@ HRESULT CShopCube::Add_Component(void)
 	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_CubePlayerTexture", pComponent });
 
-	pComponent = m_pTransCom = dynamic_cast<CTransform*>(Clone_Proto(L"Proto_TransformCom"));
+	pComponent = m_pTransCom = dynamic_cast<CTransform*>(Clone_Proto(TRANSFORM_COMP));
 	NULL_CHECK_RETURN(m_pTransCom, E_FAIL);
-	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_TransformCom", pComponent });
+	m_mapComponent[ID_DYNAMIC].insert({ TRANSFORM_COMP, pComponent });
 
 	return S_OK;
 }

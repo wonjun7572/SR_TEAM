@@ -46,9 +46,9 @@ void CUzi::LateUpdate_Object(void)
 		FAILED_CHECK_RETURN(Get_Parts(), );
 		CGameObject::LateUpdate_Object();
 
-		if (Engine::Get_GameObject(L"Layer_Gun", L"UZI1") == this)
+		if (Engine::Get_GameObject(STAGE_GUN, L"UZI1") == this)
 			TransAxisUzi1();
-		else if (Engine::Get_GameObject(L"Layer_Gun", L"UZI2") == this)
+		else if (Engine::Get_GameObject(STAGE_GUN, L"UZI2") == this)
 			TransAxisUzi2();
 	}
 }
@@ -59,14 +59,14 @@ void CUzi::Render_Object(void)
 
 void CUzi::TransAxisUzi1(void)
 {
-	CCubePlayer* pPlayer = dynamic_cast<CCubePlayer*>(Engine::Get_GameObject(L"Layer_Character", L"PLAYER"));
+	CCubePlayer* pPlayer = dynamic_cast<CCubePlayer*>(Engine::Get_GameObject(STAGE_CHARACTER, L"PLAYER"));
 	_float fLookAngle, fLeftArmAngle, fRightArmAngle, fHandAngle;
 	pPlayer->Get_Angle(fLookAngle, fLeftArmAngle, fRightArmAngle, fHandAngle);
 
 	FAILED_CHECK_RETURN(Get_Parts(), );
 
 	CTransform*		m_pRightHandWorld = nullptr;
-	m_pRightHandWorld = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Character", L"R_HAND", L"Proto_TransformCom", ID_DYNAMIC));
+	m_pRightHandWorld = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_CHARACTER, L"R_HAND", TRANSFORM_COMP, ID_DYNAMIC));
 	NULL_CHECK_RETURN(m_pRightHandWorld, );
 
 	_vec3 vWeaponPos, vPos, vRight, vUp, vLook, vAngle, vScale;
@@ -119,14 +119,14 @@ void CUzi::TransAxisUzi1(void)
 
 void CUzi::TransAxisUzi2(void)
 {
-	CCubePlayer* pPlayer = dynamic_cast<CCubePlayer*>(Engine::Get_GameObject(L"Layer_Character", L"PLAYER"));
+	CCubePlayer* pPlayer = dynamic_cast<CCubePlayer*>(Engine::Get_GameObject(STAGE_CHARACTER, L"PLAYER"));
 	_float fLookAngle, fLeftArmAngle, fRightArmAngle, fHandAngle;
 	pPlayer->Get_Angle(fLookAngle, fLeftArmAngle, fRightArmAngle, fHandAngle);
 
 	FAILED_CHECK_RETURN(Get_Parts(), );
 
 	CTransform*		m_pLeftHandWorld = nullptr;
-	m_pLeftHandWorld = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Character", L"L_HAND", L"Proto_TransformCom", ID_DYNAMIC));
+	m_pLeftHandWorld = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_CHARACTER, L"L_HAND", TRANSFORM_COMP, ID_DYNAMIC));
 	NULL_CHECK_RETURN(m_pLeftHandWorld, );
 
 	_vec3 vWeaponPos, vPos, vRight, vUp, vLook, vAngle, vScale;
@@ -186,43 +186,43 @@ HRESULT CUzi::Add_Component(void)
 
 HRESULT CUzi::Get_Parts(void)
 {
-	if (Engine::Get_GameObject(L"Layer_Gun", L"UZI1") == this)
+	if (Engine::Get_GameObject(STAGE_GUN, L"UZI1") == this)
 	{
-		m_pPart1 = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Gun", L"Uzi_Part_1_1", L"Proto_TransformCom", ID_DYNAMIC));
+		m_pPart1 = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_GUN, L"Uzi_Part_1_1", TRANSFORM_COMP, ID_DYNAMIC));
 		NULL_CHECK_RETURN(m_pPart1, E_FAIL);
-		m_pPart2 = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Gun", L"Uzi_Part_1_2", L"Proto_TransformCom", ID_DYNAMIC));
+		m_pPart2 = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_GUN, L"Uzi_Part_1_2", TRANSFORM_COMP, ID_DYNAMIC));
 		NULL_CHECK_RETURN(m_pPart2, E_FAIL);
-		m_pPart3 = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Gun", L"Uzi_Part_1_3", L"Proto_TransformCom", ID_DYNAMIC));
+		m_pPart3 = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_GUN, L"Uzi_Part_1_3", TRANSFORM_COMP, ID_DYNAMIC));
 		NULL_CHECK_RETURN(m_pPart3, E_FAIL);
-		m_pPart4 = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Gun", L"Uzi_Part_1_4", L"Proto_TransformCom", ID_DYNAMIC));
+		m_pPart4 = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_GUN, L"Uzi_Part_1_4", TRANSFORM_COMP, ID_DYNAMIC));
 		NULL_CHECK_RETURN(m_pPart4, E_FAIL);
-		m_pPart5 = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Gun", L"Uzi_Part_1_5", L"Proto_TransformCom", ID_DYNAMIC));
+		m_pPart5 = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_GUN, L"Uzi_Part_1_5", TRANSFORM_COMP, ID_DYNAMIC));
 		NULL_CHECK_RETURN(m_pPart5, E_FAIL);
 	}
-	else if (Engine::Get_GameObject(L"Layer_Gun", L"UZI2") == this)
+	else if (Engine::Get_GameObject(STAGE_GUN, L"UZI2") == this)
 	{
-		m_pPart1 = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Gun", L"Uzi_Part_2_1", L"Proto_TransformCom", ID_DYNAMIC));
+		m_pPart1 = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_GUN, L"Uzi_Part_2_1", TRANSFORM_COMP, ID_DYNAMIC));
 		NULL_CHECK_RETURN(m_pPart1, E_FAIL);
-		m_pPart2 = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Gun", L"Uzi_Part_2_2", L"Proto_TransformCom", ID_DYNAMIC));
+		m_pPart2 = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_GUN, L"Uzi_Part_2_2", TRANSFORM_COMP, ID_DYNAMIC));
 		NULL_CHECK_RETURN(m_pPart2, E_FAIL);
-		m_pPart3 = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Gun", L"Uzi_Part_2_3", L"Proto_TransformCom", ID_DYNAMIC));
+		m_pPart3 = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_GUN, L"Uzi_Part_2_3", TRANSFORM_COMP, ID_DYNAMIC));
 		NULL_CHECK_RETURN(m_pPart3, E_FAIL);
-		m_pPart4 = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Gun", L"Uzi_Part_2_4", L"Proto_TransformCom", ID_DYNAMIC));
+		m_pPart4 = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_GUN, L"Uzi_Part_2_4", TRANSFORM_COMP, ID_DYNAMIC));
 		NULL_CHECK_RETURN(m_pPart4, E_FAIL);
-		m_pPart5 = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Gun", L"Uzi_Part_2_5", L"Proto_TransformCom", ID_DYNAMIC));
+		m_pPart5 = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_GUN, L"Uzi_Part_2_5", TRANSFORM_COMP, ID_DYNAMIC));
 		NULL_CHECK_RETURN(m_pPart5, E_FAIL);
 	}
-	else if (Engine::Get_GameObject(L"Layer_Gun", L"UZI_FLOOR") == this)
+	else if (Engine::Get_GameObject(STAGE_GUN, L"UZI_FLOOR") == this)
 	{
-		m_pPart1 = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Gun", L"Uzi_Part_Floor_1", L"Proto_TransformCom", ID_DYNAMIC));
+		m_pPart1 = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_GUN, L"Uzi_Part_Floor_1", TRANSFORM_COMP, ID_DYNAMIC));
 		NULL_CHECK_RETURN(m_pPart1, E_FAIL);
-		m_pPart2 = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Gun", L"Uzi_Part_Floor_2", L"Proto_TransformCom", ID_DYNAMIC));
+		m_pPart2 = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_GUN, L"Uzi_Part_Floor_2", TRANSFORM_COMP, ID_DYNAMIC));
 		NULL_CHECK_RETURN(m_pPart2, E_FAIL);
-		m_pPart3 = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Gun", L"Uzi_Part_Floor_3", L"Proto_TransformCom", ID_DYNAMIC));
+		m_pPart3 = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_GUN, L"Uzi_Part_Floor_3", TRANSFORM_COMP, ID_DYNAMIC));
 		NULL_CHECK_RETURN(m_pPart3, E_FAIL);
-		m_pPart4 = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Gun", L"Uzi_Part_Floor_4", L"Proto_TransformCom", ID_DYNAMIC));
+		m_pPart4 = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_GUN, L"Uzi_Part_Floor_4", TRANSFORM_COMP, ID_DYNAMIC));
 		NULL_CHECK_RETURN(m_pPart4, E_FAIL);
-		m_pPart5 = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Gun", L"Uzi_Part_Floor_5", L"Proto_TransformCom", ID_DYNAMIC));
+		m_pPart5 = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_GUN, L"Uzi_Part_Floor_5", TRANSFORM_COMP, ID_DYNAMIC));
 		NULL_CHECK_RETURN(m_pPart5, E_FAIL);
 	}
 	return S_OK;

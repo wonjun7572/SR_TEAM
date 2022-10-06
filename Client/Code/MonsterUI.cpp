@@ -23,7 +23,7 @@ HRESULT CMonsterUI::Ready_Object(void)
 _int CMonsterUI::Update_Object(const _float & fTimeDelta)
 {
 
-	CTransform*		pMonster = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Monster", L"M_Head", L"Proto_TransformCom", ID_DYNAMIC));
+	CTransform*		pMonster = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Monster", L"M_Head", TRANSFORM_COMP, ID_DYNAMIC));
 	_vec3 vMonster;
 	pMonster->Get_Info(INFO_POS, &vMonster);
 	
@@ -89,7 +89,7 @@ HRESULT CMonsterUI::Add_Component()
 	NULL_CHECK_RETURN(m_pBufferCom, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_RcTexCom", pComponent });
 
-	pComponent = m_pTransCom = dynamic_cast<CTransform*>(Clone_Proto(L"Proto_TransformCom"));
+	pComponent = m_pTransCom = dynamic_cast<CTransform*>(Clone_Proto(TRANSFORM_COMP));
 	NULL_CHECK_RETURN(m_pTransCom, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"RcTex_MonsterHp", pComponent });
 

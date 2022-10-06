@@ -1,10 +1,11 @@
 #pragma once
 #include "GameObject.h"
-#include "Export_Function.h"
-#include "Weapon.h"
-#include "PlayerMapping.h"
+
 USING(Engine)
 
+class CWeapon;
+class CShotParticle;
+class CBulletParticle;
 
 class CCubePlayer : public CGameObject
 {
@@ -44,6 +45,7 @@ private:
 	map<const _tchar*, CGameObject*>	m_mapPlayerBody;
 
 private:
+	void			Update_NullCheck();
 	HRESULT			Get_BodyTransform(void);
 	HRESULT			Player_Mapping(void);
 
@@ -61,6 +63,7 @@ private:
 	void			Fire_Bullet(void);
 
 	void			Gun_Check(void);
+
 
 private:
 	void			Jump(void);
@@ -87,8 +90,11 @@ private:
 	CCollision*		m_pCollision = nullptr;
 
 	CHitBox*		m_pHitBox = nullptr;
-
 	ABILITY*		m_tAbility = nullptr;
+
+private:
+	CBulletParticle* m_pBulletParicle = nullptr;
+	CShotParticle*	 m_pShotParicle = nullptr;
 
 private:
 	_float			m_fLookAngle = 0.f;

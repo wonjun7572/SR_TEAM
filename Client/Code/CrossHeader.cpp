@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "..\Header\CrossHeader.h"
 #include "CubePlayer.h"
+#include "Weapon.h"
 
 CCrossHeader::CCrossHeader(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
@@ -22,21 +23,21 @@ _int CCrossHeader::Update_Object(const _float & fTimeDelta)
 {
 	_int iResult = CGameObject::Update_Object(fTimeDelta);
 	CGameObject* pPlayer = nullptr;
-	pPlayer = Engine::Get_GameObject(L"Layer_Character", L"PLAYER");
+	pPlayer = Engine::Get_GameObject(STAGE_CHARACTER, L"PLAYER");
 	NULL_CHECK_RETURN(pPlayer, iResult);
 
 	if (dynamic_cast<CCubePlayer*>(pPlayer)->Get_Weapon() == nullptr)
 		return iResult;
 
-	if (dynamic_cast<CCubePlayer*>(pPlayer)->Get_Weapon() == Engine::Get_GameObject(L"Layer_Gun", L"UZI1"))
+	if (dynamic_cast<CCubePlayer*>(pPlayer)->Get_Weapon() == dynamic_cast<CWeapon*>(Engine::Get_GameObject(STAGE_GUN, L"UZI1")))
 	{
 		m_eGunID = GUN_RIFLE;
 	}
-	else if (dynamic_cast<CCubePlayer*>(pPlayer)->Get_Weapon() == Engine::Get_GameObject(L"Layer_Gun", L"SHOTGUN"))
+	else if (dynamic_cast<CCubePlayer*>(pPlayer)->Get_Weapon() == dynamic_cast<CWeapon*>(Engine::Get_GameObject(STAGE_GUN, L"SHOTGUN")))
 	{
 		m_eGunID = GUN_SHOTGUN;
 	}
-	else if (dynamic_cast<CCubePlayer*>(pPlayer)->Get_Weapon() == Engine::Get_GameObject(L"Layer_Gun", L"SNIPER"))
+	else if (dynamic_cast<CCubePlayer*>(pPlayer)->Get_Weapon() == dynamic_cast<CWeapon*>(Engine::Get_GameObject(STAGE_GUN, L"SNIPER")))
 	{
 		if(dynamic_cast<CCubePlayer*>(pPlayer)->Get_SniperZoom() == true)
 			m_eGunID = GUN_SNIPER_ZOOMIN;	
@@ -135,25 +136,25 @@ HRESULT CCrossHeader::Add_Component()
 {
 	CComponent* pComponent = nullptr;
 
-	pComponent = m_pBufferCom = dynamic_cast<CRcTex*>(Clone_Proto(L"Proto_RcTexCom"));
+	pComponent = m_pBufferCom = dynamic_cast<CRcTex*>(Clone_Proto(RCTEX_COMP));
 	NULL_CHECK_RETURN(m_pBufferCom, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({L"Proto_RcTexCom", pComponent});
+	m_mapComponent[ID_STATIC].insert({L"CCrossHeader_RcTexCom", pComponent});
 
-	pComponent = m_pRifleTextureCom = dynamic_cast<CTexture*>(Clone_Proto(L"Proto_CrossHeader_Rifle"));
+	pComponent = m_pRifleTextureCom = dynamic_cast<CTexture*>(Clone_Proto(CROSSHAIR_RIFLE_TEX));
 	NULL_CHECK_RETURN(m_pRifleTextureCom, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Proto_CrossHeader_Rifle", pComponent });
+	m_mapComponent[ID_STATIC].insert({ L"CCrossHeader_Rifle", pComponent });
 
-	pComponent = m_pShotGunTextureCom = dynamic_cast<CTexture*>(Clone_Proto(L"Proto_CrossHeader_ShotGun"));
+	pComponent = m_pShotGunTextureCom = dynamic_cast<CTexture*>(Clone_Proto(CROSSHAIR_SHOTGUN_TEX));
 	NULL_CHECK_RETURN(m_pShotGunTextureCom, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Proto_CrossHeader_ShotGun", pComponent });
+	m_mapComponent[ID_STATIC].insert({ L"CCrossHeader_ShotGun", pComponent });
 
-	pComponent = m_pSniperTextureCom = dynamic_cast<CTexture*>(Clone_Proto(L"Proto_CrossHeader_Sniper"));
+	pComponent = m_pSniperTextureCom = dynamic_cast<CTexture*>(Clone_Proto(CROSSHAIR_SNIPER_TEX));
 	NULL_CHECK_RETURN(m_pSniperTextureCom, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Proto_CrossHeader_Sniper", pComponent });
+	m_mapComponent[ID_STATIC].insert({ L"CCrossHeader_Sniper", pComponent });
 
-	pComponent = m_pTransCom = dynamic_cast<CTransform*>(Clone_Proto(L"Proto_TransformCom"));
+	pComponent = m_pTransCom = dynamic_cast<CTransform*>(Clone_Proto(TRANSFORM_COMP));
 	NULL_CHECK_RETURN(m_pTransCom, E_FAIL);
-	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_TransformCom", pComponent });
+	m_mapComponent[ID_DYNAMIC].insert({ TRANSFORM_COMP, pComponent });
 
 	return S_OK;
 }

@@ -69,11 +69,11 @@ HRESULT CLetterBox::Add_Component(void)
 
 	pComponent = m_pFontTexture = dynamic_cast<CTexture*>(Clone_Proto(L"Proto_ButtonPlayTexture"));
 	NULL_CHECK_RETURN(m_pFontTexture, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Layer_Mapping", pComponent });
+	m_mapComponent[ID_STATIC].insert({ STAGE_MAPPING, pComponent });
 
-	pComponent = m_TranformCom = dynamic_cast<CTransform*>(Clone_Proto(L"Proto_TransformCom"));
+	pComponent = m_TranformCom = dynamic_cast<CTransform*>(Clone_Proto(TRANSFORM_COMP));
 	NULL_CHECK_RETURN(m_TranformCom, E_FAIL);
-	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_TransformCom", pComponent });
+	m_mapComponent[ID_DYNAMIC].insert({ TRANSFORM_COMP, pComponent });
 	return S_OK;
 }
 

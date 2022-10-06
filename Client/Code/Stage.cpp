@@ -50,7 +50,6 @@
 #include "ShotParticle.h"
 #include "ShopCube.h"
 
-#include "RifleGun.h"
 #include "CrossHeader.h"
 #include "TargetCube.h"
 #include "BulletParticle.h"
@@ -76,20 +75,17 @@ HRESULT CStage::Ready_Scene(void)
 
 	FAILED_CHECK_RETURN(Ready_Light(), E_FAIL);
 
-	FAILED_CHECK_RETURN(Ready_Layer_Environment(L"Layer_Environment"), E_FAIL);
-	FAILED_CHECK_RETURN(Ready_Layer_GameLogic(L"Layer_GameLogic"), E_FAIL);
-	FAILED_CHECK_RETURN(Ready_Layer_UI(L"Layer_UI"), E_FAIL);
+	FAILED_CHECK_RETURN(Ready_Layer_Environment(STAGE_ENVIRONMENT), E_FAIL);
+	FAILED_CHECK_RETURN(Ready_Layer_GameLogic(STAGE_GAMELOGIC), E_FAIL);
+	FAILED_CHECK_RETURN(Ready_Layer_UI(STAGE_UI), E_FAIL);
+	FAILED_CHECK_RETURN(Ready_Layer_Character(STAGE_CHARACTER), E_FAIL);
+	FAILED_CHECK_RETURN(Ready_Layer_Monster(STAGE_MONSTER), E_FAIL);
+	FAILED_CHECK_RETURN(Ready_Layer_Mapping(STAGE_MAPPING), E_FAIL);
+	FAILED_CHECK_RETURN(Ready_Layer_Bullet(STAGE_BULLET), E_FAIL);
+	FAILED_CHECK_RETURN(Ready_Layer_Wall(STAGE_WALL), E_FAIL);
+	FAILED_CHECK_RETURN(Ready_Layer_Item(STAGE_ITEM), E_FAIL);
+	FAILED_CHECK_RETURN(Ready_Layer_Gun(STAGE_GUN), E_FAIL);
 
-	FAILED_CHECK_RETURN(Ready_Layer_Wall(L"Layer_Wall"), E_FAIL);
-	FAILED_CHECK_RETURN(Ready_Layer_Character(L"Layer_Character"), E_FAIL);
-	FAILED_CHECK_RETURN(Ready_Layer_Monster(L"Layer_Monster"), E_FAIL);
-	FAILED_CHECK_RETURN(Ready_Layer_Bullet(L"Layer_Bullet"), E_FAIL);
-	FAILED_CHECK_RETURN(Ready_Layer_Mapping(L"Layer_Mapping"), E_FAIL);
-
-	FAILED_CHECK_RETURN(Ready_Layer_Gun(L"Layer_Gun"), E_FAIL);
-
-	FAILED_CHECK_RETURN(Ready_Layer_Item(L"Layer_Item"), E_FAIL);
-	// 고치고있는중입니다.
 	return S_OK;
 }
 
@@ -152,15 +148,6 @@ HRESULT CStage::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pLayer, E_FAIL);
 
 	CGameObject*		pGameObject = nullptr;
-
-	// 충돌 테스트를 위한 테스트 플레이어
-	pGameObject = CTestPlayer::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"TestPlayer0", pGameObject), E_FAIL);
-
-	//pGameObject = CLetterBox::Create(m_pGraphicDev,L"Press [E] to Interact",sizeof(L"Press [E] to Interact"),0);
-	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"TestPlayer1", pGameObject), E_FAIL);
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
@@ -264,7 +251,7 @@ HRESULT CStage::Ready_Layer_Wall(const _tchar * pLayerTag)
 		pGameObject->Set_DrawTexIndex(iDrawIndex);
 		++m_iIndex;
 
-		CTransform* Transcom = dynamic_cast<CTransform*>(pGameObject->Get_Component(L"Proto_TransformCom", ID_DYNAMIC));
+		CTransform* Transcom = dynamic_cast<CTransform*>(pGameObject->Get_Component(TRANSFORM_COMP, ID_DYNAMIC));
 
 		Transcom->Set_Info(INFO_RIGHT, &vRight);
 		Transcom->Set_Info(INFO_UP, &vUp);
@@ -446,10 +433,6 @@ HRESULT CStage::Ready_Layer_Gun(const _tchar * pLayerTag)
 
 	CGameObject*		pGameObject = nullptr;
 
-	/*pGameObject = CRifleGun::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"RIFLE", pGameObject), E_FAIL);*/
-
 	pGameObject = CUzi::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"UZI1", pGameObject), E_FAIL);
@@ -537,28 +520,6 @@ HRESULT CStage::Ready_Layer_Gun(const _tchar * pLayerTag)
 	pGameObject = CSniperPart4::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Sniper_Part_4", pGameObject), E_FAIL);
-
-	////////////////////////////////////파밍용무기///////////////////////////////////////
-	/*pGameObject = CUziPart1::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Uzi_Part_Floor_1", pGameObject), E_FAIL);
-
-	pGameObject = CUziPart2::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Uzi_Part_Floor_2", pGameObject), E_FAIL);
-
-	pGameObject = CUziPart3::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Uzi_Part_Floor_3", pGameObject), E_FAIL);
-
-	pGameObject = CUziPart4::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Uzi_Part_Floor_4", pGameObject), E_FAIL);
-
-	pGameObject = CUziPart5::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Uzi_Part_Floor_5", pGameObject), E_FAIL);*/
-	/////////////////////////////////////////////////////////////////////////////////////
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 

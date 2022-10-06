@@ -30,7 +30,7 @@ Engine::_int CHealthPotion::Update_Object(const _float& fTimeDelta)
 {
 	if (m_bDead)
 	{
-		dynamic_cast<CCubePlayer*>(Engine::Get_GameObject(L"Layer_Character", L"PLAYER"))->Get_Hp();
+		dynamic_cast<CCubePlayer*>(Engine::Get_GameObject(STAGE_CHARACTER, L"PLAYER"))->Get_Hp();
 		return -1;
 	}
 
@@ -65,29 +65,29 @@ HRESULT CHealthPotion::Add_Component(void)
 {
 	CComponent* pComponent = nullptr;
 
-	pComponent = m_pDBufferCom = dynamic_cast<CDynamicBuffer*>(Clone_Proto(L"ADDHP_ITEM"));
+	pComponent = m_pDBufferCom = dynamic_cast<CDynamicBuffer*>(Clone_Proto(ADDHP_ITEM_BUFFER));
 	NULL_CHECK_RETURN(m_pDBufferCom, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"ADDHP_ITEM", pComponent });
+	m_mapComponent[ID_STATIC].insert({ ADDHP_ITEM_BUFFER, pComponent });
 
-	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Clone_Proto(L"ADDHP_ITEM_TEX"));
+	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Clone_Proto(ADDHP_ITEM_TEX));
 	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"ADDHP_ITEM_TEX", pComponent });
+	m_mapComponent[ID_STATIC].insert({ ADDHP_ITEM_TEX, pComponent });
 
-	pComponent = m_pTransCom = dynamic_cast<CTransform*>(Clone_Proto(L"Proto_TransformCom"));
+	pComponent = m_pTransCom = dynamic_cast<CTransform*>(Clone_Proto(TRANSFORM_COMP));
 	NULL_CHECK_RETURN(m_pTransCom, E_FAIL);
-	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_TransformCom", pComponent });
+	m_mapComponent[ID_DYNAMIC].insert({ TRANSFORM_COMP, pComponent });
 
-	pComponent = m_pHitBox = dynamic_cast<CHitBox*>(Clone_Proto(L"Proto_HitboxCom"));
+	pComponent = m_pHitBox = dynamic_cast<CHitBox*>(Clone_Proto(HITBOX_COMP));
 	NULL_CHECK_RETURN(m_pHitBox, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Proto_HitboxCom", pComponent });
+	m_mapComponent[ID_STATIC].insert({ HITBOX_COMP, pComponent });
 
-	pComponent = m_pHitBoxTransCom = dynamic_cast<CTransform*>(Clone_Proto(L"ITEM_HITBOX_TransformCom"));
+	pComponent = m_pHitBoxTransCom = dynamic_cast<CTransform*>(Clone_Proto(ITEM_TRANSFORM_COMP));
 	NULL_CHECK_RETURN(m_pHitBoxTransCom, E_FAIL);
-	m_mapComponent[ID_DYNAMIC].insert({ L"ITEM_HITBOX_TransformCom", pComponent });
+	m_mapComponent[ID_DYNAMIC].insert({ ITEM_TRANSFORM_COMP, pComponent });
 
-	pComponent = m_pCalculatorCom = dynamic_cast<CCalculator*>(Clone_Proto(L"Proto_CalculatorCom"));
+	pComponent = m_pCalculatorCom = dynamic_cast<CCalculator*>(Clone_Proto(CALCULATOR_COMP));
 	NULL_CHECK_RETURN(m_pCalculatorCom, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Proto_CalculatorCom", pComponent });
+	m_mapComponent[ID_STATIC].insert({ CALCULATOR_COMP, pComponent });
 
 	return S_OK;
 }

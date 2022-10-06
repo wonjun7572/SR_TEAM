@@ -2,6 +2,7 @@
 #include "BulletParticle.h"
 #include "StaticCamera.h"
 #include "CubePlayer.h"
+#include "Weapon.h"
 
 CBulletParticle::CBulletParticle(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CPSystem(pGraphicDev)
@@ -63,9 +64,9 @@ HRESULT CBulletParticle::Add_Component(void)
 {
 	CComponent* pComponent = nullptr;
 
-	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Clone_Proto(L"BULLETPARTICLE"));
+	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Clone_Proto(BULLETPARTICLE_TEX));
 	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"BULLETPARTICLE", pComponent });
+	m_mapComponent[ID_STATIC].insert({ BULLETPARTICLE_TEX, pComponent });
 
 	return S_OK;
 }
@@ -93,14 +94,14 @@ void CBulletParticle::resetParticle(ATTRIBUTE * attribute)
 	attribute->bAlive = true;
 
 	CGameObject* pPlayer = nullptr;
-	pPlayer = Engine::Get_GameObject(L"Layer_Character", L"PLAYER");
+	pPlayer = Engine::Get_GameObject(STAGE_CHARACTER, L"PLAYER");
 	NULL_CHECK_RETURN(pPlayer, );
 
 	CTransform* pTransform = nullptr;
 
-	if (dynamic_cast<CCubePlayer*>(pPlayer)->Get_Weapon() == Engine::Get_GameObject(L"Layer_Gun", L"UZI1"))
+	if (dynamic_cast<CCubePlayer*>(pPlayer)->Get_Weapon() == dynamic_cast<CWeapon*>(Engine::Get_GameObject(STAGE_GUN, L"UZI1")))
 	{
-		pTransform = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Gun", L"Uzi_Part_1_1", L"Proto_TransformCom", ID_DYNAMIC));
+		pTransform = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_GUN, L"Uzi_Part_1_1", TRANSFORM_COMP, ID_DYNAMIC));
 		NULL_CHECK_RETURN(pTransform, );
 		D3DXVECTOR3 vPos;
 		pTransform->Get_Info(INFO_POS, &vPos);
@@ -116,9 +117,9 @@ void CBulletParticle::resetParticle(ATTRIBUTE * attribute)
 		attribute->fAge = 0.0f;
 		attribute->fLifeTime = 1.f;
 	}
-	else if (dynamic_cast<CCubePlayer*>(pPlayer)->Get_Weapon() == Engine::Get_GameObject(L"Layer_Gun", L"SHOTGUN"))
+	else if (dynamic_cast<CCubePlayer*>(pPlayer)->Get_Weapon() == dynamic_cast<CWeapon*>(Engine::Get_GameObject(STAGE_GUN, L"SHOTGUN")))
 	{
-		pTransform = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Gun", L"Shotgun_Part_1", L"Proto_TransformCom", ID_DYNAMIC));
+		pTransform = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_GUN, L"Shotgun_Part_1", TRANSFORM_COMP, ID_DYNAMIC));
 		NULL_CHECK_RETURN(pTransform, );
 		D3DXVECTOR3 vPos;
 		pTransform->Get_Info(INFO_POS, &vPos);
@@ -134,9 +135,9 @@ void CBulletParticle::resetParticle(ATTRIBUTE * attribute)
 		attribute->fAge = 0.0f;
 		attribute->fLifeTime = 1.f;
 	}
-	else if (dynamic_cast<CCubePlayer*>(pPlayer)->Get_Weapon() == Engine::Get_GameObject(L"Layer_Gun", L"SNIPER"))
+	else if (dynamic_cast<CCubePlayer*>(pPlayer)->Get_Weapon() == dynamic_cast<CWeapon*>(Engine::Get_GameObject(STAGE_GUN, L"SNIPER")))
 	{
-		pTransform = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Gun", L"Sniper_Part_2", L"Proto_TransformCom", ID_DYNAMIC));
+		pTransform = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_GUN, L"Sniper_Part_2", TRANSFORM_COMP, ID_DYNAMIC));
 		NULL_CHECK_RETURN(pTransform, );
 		D3DXVECTOR3 vPos;
 		pTransform->Get_Info(INFO_POS, &vPos);

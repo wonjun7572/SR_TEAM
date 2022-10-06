@@ -355,7 +355,7 @@ void CImGuiMgr::CreateObject(LPDIRECT3DDEVICE9 pGrahicDev, CScene* pScene, CCame
 			{
 				if (dynamic_cast<CTestCube*>(iter->second)->Set_SelectGizmo())
 				{
-					pTranscom = dynamic_cast<CTransform*>(iter->second->Get_Component(L"Proto_TransformCom", ID_DYNAMIC));
+					pTranscom = dynamic_cast<CTransform*>(iter->second->Get_Component(TRANSFORM_COMP, ID_DYNAMIC));
 					m_CurrentSelectGameObjectObjKey = iter->first;
 				}
 			}
@@ -499,7 +499,7 @@ void CImGuiMgr::Save_Transform(CScene* pScene, wstring strDirectory)
 	for (auto iter = test.begin(); iter != test.end(); ++iter)
 	{
 
-		CTransform* Transcom = dynamic_cast<CTransform*>(iter->second->Get_Component(L"Proto_TransformCom", ID_DYNAMIC));
+		CTransform* Transcom = dynamic_cast<CTransform*>(iter->second->Get_Component(TRANSFORM_COMP, ID_DYNAMIC));
 
 		_vec3   vRight, vUp, vLook, vPos, vScale, vAngle;
 		_int	iDrawNum = 0;
@@ -571,7 +571,7 @@ void CImGuiMgr::Load_Transform(LPDIRECT3DDEVICE9 pGrahicDev, CScene *pScene, wst
 		pGameObject->Set_DrawTexIndex(iDrawIndex);
 		++m_iIndex;
 
-		CTransform* Transcom = dynamic_cast<CTransform*>(pGameObject->Get_Component(L"Proto_TransformCom", ID_DYNAMIC));
+		CTransform* Transcom = dynamic_cast<CTransform*>(pGameObject->Get_Component(TRANSFORM_COMP, ID_DYNAMIC));
 
 		Transcom->Set_Info(INFO_RIGHT, &vRight);
 		Transcom->Set_Info(INFO_UP, &vUp);
@@ -667,7 +667,7 @@ void CImGuiMgr::SwitchCamera(LPDIRECT3DDEVICE9 pGrahicDev, CScene * pScene, CLay
 
 		for (auto iter = mapCam.begin(); iter != mapCam.end(); ++iter)
 		{
-			pTranscom = dynamic_cast<CTransform*>(iter->second->Get_Component(L"Proto_TransformCom", ID_DYNAMIC));
+			pTranscom = dynamic_cast<CTransform*>(iter->second->Get_Component(TRANSFORM_COMP, ID_DYNAMIC));
 			m_CurrentSelectGameObjectObjKey = iter->first;
 		}
 	}

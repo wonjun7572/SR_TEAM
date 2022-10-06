@@ -103,13 +103,13 @@ HRESULT CSniper::Add_Parts()
 
 HRESULT CSniper::Get_Parts(void)
 {
-	m_pPart1 = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Gun", L"Sniper_Part_1", L"Proto_TransformCom", ID_DYNAMIC));
+	m_pPart1 = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_GUN, L"Sniper_Part_1", TRANSFORM_COMP, ID_DYNAMIC));
 	NULL_CHECK_RETURN(m_pPart1, E_FAIL);
-	m_pPart2 = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Gun", L"Sniper_Part_2", L"Proto_TransformCom", ID_DYNAMIC));
+	m_pPart2 = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_GUN, L"Sniper_Part_2", TRANSFORM_COMP, ID_DYNAMIC));
 	NULL_CHECK_RETURN(m_pPart2, E_FAIL);
-	m_pPart3 = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Gun", L"Sniper_Part_3", L"Proto_TransformCom", ID_DYNAMIC));
+	m_pPart3 = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_GUN, L"Sniper_Part_3", TRANSFORM_COMP, ID_DYNAMIC));
 	NULL_CHECK_RETURN(m_pPart3, E_FAIL);
-	m_pPart4 = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Gun", L"Sniper_Part_4", L"Proto_TransformCom", ID_DYNAMIC));
+	m_pPart4 = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_GUN, L"Sniper_Part_4", TRANSFORM_COMP, ID_DYNAMIC));
 	NULL_CHECK_RETURN(m_pPart4, E_FAIL);
 	return S_OK;
 }
@@ -134,14 +134,14 @@ void CSniper::Animation_Fire(void)
 
 void CSniper::TransAxis_Sniper(void)
 {
-	CCubePlayer* pPlayer = dynamic_cast<CCubePlayer*>(Engine::Get_GameObject(L"Layer_Character", L"PLAYER"));
+	CCubePlayer* pPlayer = dynamic_cast<CCubePlayer*>(Engine::Get_GameObject(STAGE_CHARACTER, L"PLAYER"));
 	_float fLookAngle, fLeftArmAngle, fRightArmAngle, fHandAngle;
 	pPlayer->Get_Angle(fLookAngle, fLeftArmAngle, fRightArmAngle, fHandAngle);
 
 	FAILED_CHECK_RETURN(Get_Parts(), );
 
 	CTransform*		m_pRightHandWorld = nullptr;
-	m_pRightHandWorld = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Character", L"R_HAND", L"Proto_TransformCom", ID_DYNAMIC));
+	m_pRightHandWorld = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_CHARACTER, L"R_HAND", TRANSFORM_COMP, ID_DYNAMIC));
 	NULL_CHECK_RETURN(m_pRightHandWorld, );
 
 	_vec3 vWeaponPos, vPos, vRight, vUp, vLook, vAngle, vScale;
@@ -190,7 +190,7 @@ void CSniper::TransAxis_Sniper(void)
 
 void CSniper::Set_OnTerrain(void)
 {
-	/*m_pSniperWorld = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Character", L"SniperPart5", L"Proto_TransformCom", ID_DYNAMIC));
+	/*m_pSniperWorld = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_CHARACTER, L"SniperPart5", TRANSFORM_COMP, ID_DYNAMIC));
 	NULL_CHECK_RETURN(m_pSniperWorld, );
 
 	_vec3		vPos;

@@ -15,15 +15,13 @@ public:
 	void LateUpdate_Object(void) override;
 	void Render_Object(void) override;
 
-
 private:
 	void		Begin_OrthoProj();
 	void		End_OrthoProj();
 
-
-
 private:
 	HRESULT		Add_component();
+
 private:
 	CRcTex*		m_pRcTexCom = nullptr;
 	CTransform*	m_pTransCom = nullptr;
@@ -33,11 +31,8 @@ private:
 	_matrix m_matView;
 	_matrix m_matProj;
 
-
 public:
 	static	CLogoUI* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 	void	Free(void) override;
-
-
 };
 

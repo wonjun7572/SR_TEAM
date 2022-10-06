@@ -76,21 +76,21 @@ HRESULT CTestPlayer::Add_Component(void)
 	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_CubePlayerTexture", pComponent });
 
-	pComponent = m_pTransCom = dynamic_cast<CTransform*>(Clone_Proto(L"Proto_TransformCom"));
+	pComponent = m_pTransCom = dynamic_cast<CTransform*>(Clone_Proto(TRANSFORM_COMP));
 	NULL_CHECK_RETURN(m_pTransCom, E_FAIL);
-	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_TransformCom", pComponent });
+	m_mapComponent[ID_DYNAMIC].insert({ TRANSFORM_COMP, pComponent });
 
-	pComponent = m_pCalculatorCom = dynamic_cast<CCalculator*>(Clone_Proto(L"Proto_CalculatorCom"));
+	pComponent = m_pCalculatorCom = dynamic_cast<CCalculator*>(Clone_Proto(CALCULATOR_COMP));
 	NULL_CHECK_RETURN(m_pTransCom, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Proto_CalculatorCom", pComponent });
+	m_mapComponent[ID_STATIC].insert({ CALCULATOR_COMP, pComponent });
 
-	pComponent = m_pHitBox = dynamic_cast<CHitBox*>(Engine::Clone_Proto(L"Proto_HitboxCom"));
+	pComponent = m_pHitBox = dynamic_cast<CHitBox*>(Engine::Clone_Proto(HITBOX_COMP));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Proto_HitboxCom", pComponent });
+	m_mapComponent[ID_STATIC].insert({ HITBOX_COMP, pComponent });
 
-	pComponent = m_pCollision = dynamic_cast<CCollision*>(Engine::Clone_Proto(L"Proto_CollisionCom"));
+	pComponent = m_pCollision = dynamic_cast<CCollision*>(Engine::Clone_Proto(COLLISION_COMP));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Proto_CollisionCom", pComponent });
+	m_mapComponent[ID_STATIC].insert({ COLLISION_COMP, pComponent });
 
 	return S_OK;
 }
@@ -160,7 +160,7 @@ void CTestPlayer::Create_Wall(const _uint& iCnt, const _uint& iTextureNum)
 	const _tchar*	szWallName = L"Wall_%d";
 	wsprintf(szFinalName, szWallName, iCnt);
 
-	Engine::Add_GameObject(L"Layer_Wall", pWall, szFinalName);
+	Engine::Add_GameObject(STAGE_WALL, pWall, szFinalName);
 	m_liszFinalName.push_back(szFinalName);
 }
 
@@ -175,7 +175,7 @@ _bool CTestPlayer::Hit_Check(void)
 {
 	_vec3 vSrcPos;
 	dynamic_cast<CTransform*>
-		(Engine::Get_Component(L"Layer_Gun", L"Uzi_Part_1_1", L"Proto_TransformCom", ID_DYNAMIC))->Get_Info(INFO_POS, &vSrcPos);
+		(Engine::Get_Component(STAGE_GUN, L"Uzi_Part_1_1", TRANSFORM_COMP, ID_DYNAMIC))->Get_Info(INFO_POS, &vSrcPos);
 	m_pTransCom->Static_Update();
 
 	_vec3 vDir;
@@ -201,7 +201,7 @@ _vec3 CTestPlayer::Mouse_Peeking(void)
 	CTerrainTex*	TerrainTex = dynamic_cast<CTerrainTex*>(Engine::Get_Component(L"Layer_Environment", L"Terrain", L"Proto_TerrainTexCom", ID_STATIC));
 	NULL_CHECK_RETURN(TerrainTex, vPos);
 
-	CTransform*		TerrainTransform = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Environment", L"Terrain", L"Proto_TransformCom", ID_DYNAMIC));
+	CTransform*		TerrainTransform = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Environment", L"Terrain", TRANSFORM_COMP, ID_DYNAMIC));
 	NULL_CHECK_RETURN(TerrainTransform, vPos);
 
 	/*if (m_pCalculatorCom->Peek_Target_Vector(g_hWnd, &_vec3(0, 0, 0), TerrainTex, TerrainTransform).x > 128 ||

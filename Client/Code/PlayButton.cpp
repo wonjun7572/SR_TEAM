@@ -15,7 +15,7 @@ CPlayButton::~CPlayButton()
 
 HRESULT CPlayButton::Ready_Object()
 {
-	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"PlayButtontFont", L"Roboto-Bold", 36, 30, FW_NORMAL), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"PlayButtontFont", ROBOTO_BOLD, 36, 30, FW_NORMAL), E_FAIL);
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 	m_TranformCom->Set_Scale(0.28f, 0.1f, 0.f);
 	m_TranformCom->Set_Pos(0.65f, 0.45f, 0.f);
@@ -67,22 +67,17 @@ HRESULT CPlayButton::Add_Component(void)
 {
 	CComponent* pComponent = nullptr;
 
-	pComponent = m_RcTexCom = dynamic_cast<CRcTex*>(Clone_Proto(L"Proto_RcTexCom"));
+	pComponent = m_RcTexCom = dynamic_cast<CRcTex*>(Clone_Proto(RCTEX_COMP));
 	NULL_CHECK_RETURN(m_RcTexCom, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Proto_RcTexCom", pComponent });
+	m_mapComponent[ID_STATIC].insert({ L"CPlayBtn_RcTexCom", pComponent });
 
-	pComponent = m_TextureCom = dynamic_cast<CTexture*>(Clone_Proto(L"Proto_ButtonPlayTexture"));
+	pComponent = m_TextureCom = dynamic_cast<CTexture*>(Clone_Proto(PLAY_BTN_TEX));
 	NULL_CHECK_RETURN(m_TextureCom, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Proto_ButtonPlayTexture", pComponent });
+	m_mapComponent[ID_STATIC].insert({ L"CPlayBtn_ButtonPlayTexture", pComponent });
 
-
-	//pComponent = m_CheckTextureCom = dynamic_cast<CTexture*>(Clone_Proto(L"Proto_CheckPlayTexture"));
-	//NULL_CHECK_RETURN(m_CheckTextureCom, E_FAIL);
-	//m_mapComponent[ID_STATIC].insert({ L"Proto_CheckPlayTexture", pComponent });
-
-	pComponent = m_TranformCom = dynamic_cast<CTransform*>(Clone_Proto(L"Proto_TransformCom"));
+	pComponent = m_TranformCom = dynamic_cast<CTransform*>(Clone_Proto(TRANSFORM_COMP));
 	NULL_CHECK_RETURN(m_TranformCom, E_FAIL);
-	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_TransformCom", pComponent });
+	m_mapComponent[ID_DYNAMIC].insert({ L"CPlayBtn_TransformCom", pComponent });
 
 	return S_OK;
 }
