@@ -19,9 +19,9 @@ HRESULT CPlayerHpUI::Ready_Object(void)
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 	D3DXMatrixOrthoLH(&m_ProjMatrix, WINCX, WINCY, 0.f, 1.f);
 
-	m_fX = -450.6f;
-	m_fY = 425.f;
-	m_fSizeX = 146.8f;
+	m_fX = -479.f;
+	m_fY = 428.f;
+	m_fSizeX = 139.8f;
 	m_fSizeY = 21.f;
 
 	//FONT
@@ -38,7 +38,7 @@ _int CPlayerHpUI::Update_Object(const _float & fTimeDelta)
 	_int iResult = CGameObject::Update_Object(fTimeDelta);
 	Add_RenderGroup(RENDER_UI, this);
 	if (m_pPlayer == nullptr)
-		m_pPlayer = Engine::Get_GameObject(L"Layer_Character", L"PLAYER");
+		m_pPlayer = Engine::Get_GameObject(STAGE_CHARACTER, L"PLAYER");
 
 	if (m_pPlayer != nullptr)
 	{
@@ -82,7 +82,7 @@ void CPlayerHpUI::Render_Object(void)
 	m_pGraphicDev->SetTransform(D3DTS_VIEW, &OldViewMatrix);
 	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &OldProjMatrix);
 
-	Render_Font(L"HP", m_strHp.c_str(), &(_vec2(192.5f, 868.f)), D3DXCOLOR(0.5f, 0.5f, 0.3f, 1.f));
+	Render_Font(L"HP", m_strHp.c_str(), &(_vec2(176.5f, 870.f)), D3DXCOLOR(0.5f, 0.5f, 0.3f, 1.f));
 }
 
 HRESULT CPlayerHpUI::Add_Component()
