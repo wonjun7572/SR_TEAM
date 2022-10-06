@@ -19,14 +19,12 @@ HRESULT CBulletUI::Ready_Object(void)
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 	D3DXMatrixOrthoLH(&m_ProjMatrix, WINCX, WINCY, 0.f, 1.f);
 
-	m_fX = 557.f;
+	m_fX = 607.f;
 	m_fY = 416.f;
-	m_fSizeX = 278.f;
+	m_fSizeX = 172.f;
 	m_fSizeY = 48.f;
 
-
 	//FONT
-
 	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"REMAINBULLET", L"Electronic Highway Sign", 8, 12, FW_NORMAL), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"TOTALBULLET", L"Electronic Highway Sign", 8, 12, FW_NORMAL), E_FAIL);
 
@@ -35,7 +33,6 @@ HRESULT CBulletUI::Ready_Object(void)
 
 _int CBulletUI::Update_Object(const _float & fTimeDelta)
 {
-
 	m_pTransCom->Set_Scale(m_fSizeX, m_fSizeY, 1.f);
 	m_pTransCom->Set_Pos(m_fX, -m_fY, 0.f);
 	_int iResult = CGameObject::Update_Object(fTimeDelta);
@@ -88,8 +85,8 @@ void CBulletUI::Render_Object(void)
 	m_pGraphicDev->SetTransform(D3DTS_VIEW, &OldViewMatrix);
 	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &OldProjMatrix);
 
-	Render_Font(L"REMAINBULLET", m_strReminaBullet.c_str(), &(_vec2(1520.f, 855.f)), D3DXCOLOR(0.5f, 0.5f, 0.3f, 1.f));
-	Render_Font(L"TOTALBULLET", m_strTotalBullet.c_str(), &(_vec2(1545.f, 855.f)), D3DXCOLOR(0.5f, 0.5f, 0.3f, 1.f));
+	Render_Font(L"REMAINBULLET", m_strReminaBullet.c_str(), &(_vec2(1520.f, 851.f)), D3DXCOLOR(0.5f, 0.5f, 0.3f, 1.f));
+	Render_Font(L"TOTALBULLET", m_strTotalBullet.c_str(), &(_vec2(1545.f, 851.f)), D3DXCOLOR(0.5f, 0.5f, 0.3f, 1.f));
 }
 
 HRESULT CBulletUI::Add_Component()
