@@ -26,42 +26,42 @@ HRESULT CShop::Ready_Object(void)
 	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"RAILGUN MODE", L"Roboto-Bold", 10, 10, FW_NORMAL), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"BURST MODE", L"Roboto-Bold", 10, 10, FW_NORMAL), E_FAIL);
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
-	
+
 	D3DXMatrixOrthoLH(&m_matProj, WINCX, WINCY, 0.f, 1.f);
 
 	//ShopView
-	{	fScale = 2.f;
-		_vec3 vPos = _vec3(610.f, 490.f, 0.f);
-		_float fWidth = (_float)m_pTextureform->Get_ImageInfo().Width;
-		_float fHeight = (_float)m_pTextureform->Get_ImageInfo().Height;
-		m_TranformCom->Set_Pos(vPos.x - WINCX * 0.5f, -vPos.y + WINCY * 0.5f, 0.f);
-		m_TranformCom->Set_Scale(fWidth * fScale, fHeight * fScale * 1.5f, 1.f);
+	{   fScale = 3.0f;
+	_vec3 vPos = _vec3(820.f, 380.f, 0.f);
+	_float fWidth = (_float)m_pTextureform->Get_ImageInfo().Width;
+	_float fHeight = (_float)m_pTextureform->Get_ImageInfo().Height;
+	m_TranformCom->Set_Pos(vPos.x - WINCX * 0.5f, -vPos.y + WINCY * 0.5f, 0.f);
+	m_TranformCom->Set_Scale(fWidth * fScale, fHeight * fScale, 1.f);
 	}
 
 	//UZI
 
-	{	fScale2 = 6.f;
-		_vec3 vPos = _vec3(400.f, 320.f, 0.f);
-		_float fWidth = (_float)m_pUziTextureform->Get_ImageInfo().Width;
-		_float fHeight = (_float)m_pUziTextureform->Get_ImageInfo().Height;
-		m_pUziTransformCom->Set_Pos(vPos.x - WINCX * 0.5f, -vPos.y + WINCY * 0.5f, 0.f);
-		m_pUziTransformCom->Set_Scale(fWidth *fScale2, fHeight * fScale2, 1.f);
+	{   fScale2 = 6.f;
+	_vec3 vPos = _vec3(425.f, 220.f, 0.f);
+	_float fWidth = (_float)m_pUziTextureform->Get_ImageInfo().Width;
+	_float fHeight = (_float)m_pUziTextureform->Get_ImageInfo().Height;
+	m_pUziTransformCom->Set_Pos(vPos.x - WINCX * 0.5f, -vPos.y + WINCY * 0.5f, 0.f);
+	m_pUziTransformCom->Set_Scale(fWidth *fScale2 * 1.3f, fHeight * fScale2, 1.f);
 	}
 
 	//ShotGun
 	{
 		fScale11 = 4.f;
-		_vec3 vPos = _vec3(400.f, 320.f, 0.f);
+		_vec3 vPos = _vec3(425.f, 220.f, 0.f);
 		_float fWidth = (_float)m_pShotGunTextureform->Get_ImageInfo().Width;
 		_float fHeight = (_float)m_pShotGunTextureform->Get_ImageInfo().Height;
 		m_pShotGunformCom->Set_Pos(vPos.x - WINCX * 0.5f, -vPos.y + WINCY * 0.5f, 0.f);
 		m_pShotGunformCom->Set_Scale(fWidth * fScale11, fHeight * fScale11, 1.f);
 	}
-	
+
 	//Sniper
 	{
-		fScale12 = 4.f;
-		_vec3 vPos = _vec3(400.f, 320.f, 0.f);
+		fScale12 = 3.5f;
+		_vec3 vPos = _vec3(415.f, 220.f, 0.f);
 		_float fWidth = (_float)m_pSniperTextureform->Get_ImageInfo().Width;
 		_float fHeight = (_float)m_pSniperTextureform->Get_ImageInfo().Height;
 		m_pSniperformCom->Set_Pos(vPos.x - WINCX * 0.5f, -vPos.y + WINCY * 0.5f, 0.f);
@@ -73,88 +73,88 @@ HRESULT CShop::Ready_Object(void)
 	if (m_pButtonOneform || m_eWeaponButton == BUTTON_ONE)
 	{
 		fScale3 = 2.f;
-		m_vPos_ButtonOne = _vec3(300.f, 135.f, 0.f);
+		m_vPos_ButtonOne = _vec3(300.f, 55.f, 0.f);
 		_float fWidth = (_float)m_pButtonOneform->Get_ImageInfo().Width;
 		_float fHeight = (_float)m_pButtonOneform->Get_ImageInfo().Height;
 		m_pButtonTransformCom->Set_Pos(m_vPos_ButtonOne.x - WINCX * 0.5f, -m_vPos_ButtonOne.y + WINCY * 0.5f, 0.f);
-		m_pButtonTransformCom->Set_Scale(fWidth * fScale3, fHeight * fScale3, 1.f);
+		m_pButtonTransformCom->Set_Scale(fWidth * fScale3 * 1.4f, fHeight * fScale3 * 1.2f, 1.f);
 	}
 
 	//button(shotgun)
 	if (m_pButtonTwoform || m_eWeaponButton == BUTTON_TWO)
 	{
 		fScale4 = 2.f;
-		m_vPos_ButtonTwo = _vec3(600.f, 135.f, 0.f);
+		m_vPos_ButtonTwo = _vec3(600.f, 55.f, 0.f);
 		_float fWidth = (_float)m_pButtonTwoform->Get_ImageInfo().Width;
 		_float fHeight = (_float)m_pButtonTwoform->Get_ImageInfo().Height;
 		m_pShotGunTransformCom->Set_Pos(m_vPos_ButtonTwo.x - WINCX * 0.5f, -m_vPos_ButtonTwo.y + WINCY * 0.5f, 0.f);
-		m_pShotGunTransformCom->Set_Scale(fWidth * fScale4, fHeight * fScale4, 1.f);
+		m_pShotGunTransformCom->Set_Scale(fWidth * fScale4* 1.4f, fHeight * fScale4* 1.2f, 1.f);
 	}
 	//button(Sniper)
 	if (m_pButtonThreeform || m_eWeaponButton == BUTTON_THREE)
 	{
 		fScale5 = 2.f;
-		m_vPos_ButtonThree = _vec3(900.f, 135.f, 0.f);
+		m_vPos_ButtonThree = _vec3(900.f, 55.f, 0.f);
 		_float fWidth = (_float)m_pButtonThreeform->Get_ImageInfo().Width;
 		_float fHeight = (_float)m_pButtonThreeform->Get_ImageInfo().Height;
 		m_pSniperTransformCom->Set_Pos(m_vPos_ButtonThree.x - WINCX * 0.5f, -m_vPos_ButtonThree.y + WINCY * 0.5f, 0.f);
-		m_pSniperTransformCom->Set_Scale(fWidth* fScale5, fHeight * fScale5, 1.f);
+		m_pSniperTransformCom->Set_Scale(fWidth* fScale5 * 1.4f, fHeight * fScale5 * 1.2f, 1.f);
 	}
 	//Upgrade(laser)
 	if (m_pLaserRaffle || m_eLevelUP == LEVEL_LASER)
 	{
 		fScale6 = 2.f;
-		m_vPos_ButtonFour = _vec3(940.f, 300.f, 0.f);
+		m_vPos_ButtonFour = _vec3(950.f, 230.f, 0.f);
 		_float fWidth = (_float)m_pLaserRaffle->Get_ImageInfo().Width;
 		_float fHeight = (_float)m_pLaserRaffle->Get_ImageInfo().Height;
 		m_pLaserTransformCom->Set_Pos(m_vPos_ButtonFour.x - WINCX * 0.5f, -m_vPos_ButtonFour.y + WINCY * 0.5f, 0.f);
-		m_pLaserTransformCom->Set_Scale(fWidth * fScale6, fHeight * fScale6, 1.f);
+		m_pLaserTransformCom->Set_Scale(fWidth * fScale6 * 1.4f, fHeight * fScale6 * 1.4f, 1.f);
 	}
 	//Upgrade(HeavyRaffle)
 	if (m_pHeavyRaffle || m_eLevelUP == LEVEL_HEAVY)
 	{
 		fScale7 = 2.f;
-		m_vPos_ButtonFive = _vec3(1200.f, 300.f, 0.f);
+		m_vPos_ButtonFive = _vec3(1210.f, 230.f, 0.f);
 		_float fWidth = (_float)m_pHeavyRaffle->Get_ImageInfo().Width;
 		_float fHeight = (_float)m_pHeavyRaffle->Get_ImageInfo().Height;
 		m_pHeavyTransformCom->Set_Pos(m_vPos_ButtonFive.x - WINCX * 0.5f, -m_vPos_ButtonFive.y + WINCY * 0.5f, 0.f);
-		m_pHeavyTransformCom->Set_Scale(fWidth * fScale7, fHeight * fScale7, 1.f);
+		m_pHeavyTransformCom->Set_Scale(fWidth * fScale7 * 1.4f, fHeight * fScale7 * 1.4f, 1.f);
 	}
 	//Upgrade(RailGun)
 	if (m_pRailGunScope || m_eLevelUP == LEVEL_RAIL)
 	{
 		fScale8 = 2.f;
-		m_vPos_ButtonSix = _vec3(940.f, 400.f, 0.f);
+		m_vPos_ButtonSix = _vec3(950.f, 330.f, 0.f);
 		_float fWidth = (_float)m_pRailGunScope->Get_ImageInfo().Width;
 		_float fHeight = (_float)m_pRailGunScope->Get_ImageInfo().Height;
 		m_pRailGunTransformCom->Set_Pos(m_vPos_ButtonSix.x - WINCX * 0.5f, -m_vPos_ButtonSix.y + WINCY * 0.5f, 0.f);
-		m_pRailGunTransformCom->Set_Scale(fWidth * fScale8, fHeight * fScale8, 1.f);
+		m_pRailGunTransformCom->Set_Scale(fWidth * fScale8 * 1.4f, fHeight * fScale8 * 1.4f, 1.f);
 	}
 
 	//Upgrade(BurstMode)
 	if (m_pBurstMode || m_eLevelUP == LEVEL_BURST)
 	{
 		fScale9 = 2.f;
-		m_vPos_ButtonSeven = _vec3(1200.f, 400.f, 0.f);
+		m_vPos_ButtonSeven = _vec3(1210.f, 330.f, 0.f);
 		_float fWidth = (_float)m_pBurstMode->Get_ImageInfo().Width;
 		_float fHeight = (_float)m_pBurstMode->Get_ImageInfo().Height;
 		m_pBurstModeTransformCom->Set_Pos(m_vPos_ButtonSeven.x - WINCX * 0.5f, -m_vPos_ButtonSeven.y + WINCY * 0.5f, 0.f);
-		m_pBurstModeTransformCom->Set_Scale(fWidth * fScale9, fHeight * fScale9, 1.f);
+		m_pBurstModeTransformCom->Set_Scale(fWidth * fScale9 * 1.4f, fHeight * fScale9 * 1.4f, 1.f);
 	}
 	//
 	if (m_pUpgradeString || m_eLevelUP == LEVEL_UPGRADETEXT)
 	{
 		fScale13 = 2.5f;
-		m_vPos_UpgradeTexture = _vec3(1060.f, 220.f, 0.f);
+		m_vPos_UpgradeTexture = _vec3(1090.f, 140.f, 0.f);
 		_float fWidth = (_float)m_pUpgradeString->Get_ImageInfo().Width;
 		_float fHeight = (_float)m_pUpgradeString->Get_ImageInfo().Height;
 		m_pUpgradeTransformCom->Set_Pos(m_vPos_UpgradeTexture.x - WINCX * 0.5f, -m_vPos_UpgradeTexture.y + WINCY * 0.5f, 0.f);
-		m_pUpgradeTransformCom->Set_Scale(fWidth * fScale13, fHeight * fScale13 * 1.2f, 1.f);
+		m_pUpgradeTransformCom->Set_Scale(fWidth * fScale13 * 1.1f, fHeight * fScale13 * 1.2f, 1.f);
 	}
 
 
 
-	
+
 	m_pUpgrade = L"UPGRADE";
 	m_pInformation = L"Press [Return] And Hold to Buy Upgrade";
 	m_pUziRaffle = L"UziRaffle";
@@ -164,7 +164,7 @@ HRESULT CShop::Ready_Object(void)
 	m_pHeavy = L"HEAVY MODE";
 	m_pRailGun = L"RAILGUN MODE";
 	m_pBurst = L"BURST MODE";
-	return S_OK; 
+	return S_OK;
 
 }
 
@@ -187,7 +187,7 @@ void CShop::LateUpdate_Object()
 
 void CShop::Render_Object()
 {
-	
+
 
 	if (m_bShop)
 	{
@@ -210,10 +210,10 @@ void CShop::Render_Object()
 		m_GunChecking = false;
 		if (Get_DIMouseState(DIM_LB) & 0x80)
 		{
-		
-		
-		Render_Ortho(m_pUziTransformCom, m_pUziTextureform, 0);
-		m_GunChecking = true;
+
+
+			Render_Ortho(m_pUziTransformCom, m_pUziTextureform, 0);
+			m_GunChecking = true;
 		}
 		m_bChecking = true;
 	}
@@ -225,7 +225,7 @@ void CShop::Render_Object()
 		{
 			Render_Ortho(m_pShotGunformCom, m_pShotGunTextureform, 0);
 			m_GunChecking = true;
-	
+
 		}
 		m_bChecking = true;
 	}
@@ -245,7 +245,7 @@ void CShop::Render_Object()
 	{
 		Render_Ortho(m_pLaserTransformCom, m_pLaserRaffle, 1);
 		if (Get_DIMouseState(DIM_LB) & 0x80)
-			{
+		{
 			if (m_pLaserRaffle || m_eLevelUP == LEVEL_LASER)
 			{
 				dynamic_cast<CUzi*>(Engine::Get_GameObject(STAGE_GUN, L"UZI1"))->Get_UziUpgrade();
@@ -270,15 +270,16 @@ void CShop::Render_Object()
 		m_bChecking = true;
 	}
 
-	Render_Font(L"Upgrade", m_pUpgrade.c_str(), &_vec2(1020.f, 215.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
-	Render_Font(L"Information", m_pInformation.c_str(), &_vec2(750.f, 560.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
-	Render_Font(L"UziRaffle", m_pUziRaffle.c_str(), &_vec2(260.f, 125.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
-	Render_Font(L"ShotGun", m_pShotGun.c_str(), &_vec2(560.f, 125.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
-	Render_Font(L"Sniper", m_pSniper.c_str(), &_vec2(880.f, 125.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
-	Render_Font(L"LASER MODE", m_pLaser.c_str(), &_vec2(920.f, 293.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
-	Render_Font(L"HEAVY MODE", m_pHeavy.c_str(), &_vec2(1190.f, 293.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
-	Render_Font(L"RAILGUN MODE", m_pRailGun.c_str(), &_vec2(910.f, 397.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
-	Render_Font(L"BURST MODE", m_pBurst.c_str(), &_vec2(1170.f, 397.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+	Render_Font(L"Upgrade", m_pUpgrade.c_str(), &_vec2(1000.f, 135.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+	Render_Font(L"Information", m_pInformation.c_str(), &_vec2(640.f, 460.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+
+	Render_Font(L"UziRaffle", m_pUziRaffle.c_str(), &_vec2(219.f, 47.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+	Render_Font(L"ShotGun", m_pShotGun.c_str(), &_vec2(522.f, 47.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+	Render_Font(L"Sniper", m_pSniper.c_str(), &_vec2(843.f, 47.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+	Render_Font(L"LASER MODE", m_pLaser.c_str(), &_vec2(890.f, 223.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+	Render_Font(L"HEAVY MODE", m_pHeavy.c_str(), &_vec2(1150.f, 223.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+	Render_Font(L"RAILGUN MODE", m_pRailGun.c_str(), &_vec2(875.f, 331.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+	Render_Font(L"BURST MODE", m_pBurst.c_str(), &_vec2(1148.f, 331.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
 }
 
 void CShop::Key_Input()
@@ -301,12 +302,12 @@ void CShop::Render_Ortho(CTransform * pTransform, CTexture * pTexture, _int iInd
 {
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, pTransform->Get_WorldMatrixPointer());
 
-	_matrix		OldViewMatrix, OldProjMatrix;
+	_matrix      OldViewMatrix, OldProjMatrix;
 
 	m_pGraphicDev->GetTransform(D3DTS_VIEW, &OldViewMatrix);
 	m_pGraphicDev->GetTransform(D3DTS_PROJECTION, &OldProjMatrix);
 
-	_matrix		ViewMatrix;
+	_matrix      ViewMatrix;
 
 	ViewMatrix = *D3DXMatrixIdentity(&ViewMatrix);
 
@@ -407,8 +408,8 @@ HRESULT CShop::Add_Component(void)
 	pComponent = m_pShotGunTransformCom = dynamic_cast<CTransform*>(Clone_Proto(L"Proto_TransformCom"));
 	NULL_CHECK_RETURN(m_pShotGunTransformCom, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"ButtonTwo_TransformCom", pComponent });
-	
-	
+
+
 	pComponent = m_pSniperTransformCom = dynamic_cast<CTransform*>(Clone_Proto(L"Proto_TransformCom"));
 	NULL_CHECK_RETURN(m_pSniperTransformCom, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"ButtonThree_TransformCom", pComponent });
@@ -428,11 +429,11 @@ HRESULT CShop::Add_Component(void)
 	pComponent = m_pBurstModeTransformCom = dynamic_cast<CTransform*>(Clone_Proto(L"Proto_TransformCom"));
 	NULL_CHECK_RETURN(m_pBurstModeTransformCom, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"ButtonSeven_TransformCom", pComponent });
-	
+
 	pComponent = m_pUpgradeTransformCom = dynamic_cast<CTransform*>(Clone_Proto(L"Proto_TransformCom"));
 	NULL_CHECK_RETURN(m_pUpgradeTransformCom, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"UpgradeTexture_TransformCom", pComponent });
-	
+
 	return S_OK;
 }
 
@@ -444,7 +445,7 @@ _bool CShop::PointMouse(const _vec3& vPos)
 
 	_long lLeft, lRight, lUp, lDown;
 
-	lLeft = _long((0.5 * WINCX) * (1 + m_TranformCom->m_vInfo[INFO_POS].x ) - (m_TranformCom->m_vScale.x  * (0.5 * WINCX)));
+	lLeft = _long((0.5 * WINCX) * (1 + m_TranformCom->m_vInfo[INFO_POS].x) - (m_TranformCom->m_vScale.x  * (0.5 * WINCX)));
 	lRight = _long((0.5 * WINCX) * (1 + m_TranformCom->m_vInfo[INFO_POS].x) + (m_TranformCom->m_vScale.x   * (0.5 * WINCX)));
 	lUp = _long((0.5 * WINCY) * (1 - m_TranformCom->m_vInfo[INFO_POS].y) - (m_TranformCom->m_vScale.y  * (WINCY * 0.5)));
 	lDown = _long((0.5 * WINCY) * (1 - m_TranformCom->m_vInfo[INFO_POS].y) + (m_TranformCom->m_vScale.y  * (WINCY * 0.5)));
@@ -465,10 +466,10 @@ _bool CShop::PointTest(const _vec3& vPos)
 	GetCursorPos(&rt);
 	ScreenToClient(g_hWnd, &rt);
 
-	RECT	rcUI = { _long((vPos.x) + 45.f  - (_float)m_pButtonOneform->Get_ImageInfo().Width * 1.5f),
-					_long((vPos.y)  - (_float)m_pButtonOneform->Get_ImageInfo().Height)  ,
-					_long((vPos.x ) + 45.f + (_float)m_pButtonOneform->Get_ImageInfo().Width * 1.5f)   ,
-					_long((vPos.y) + (_float)m_pButtonOneform->Get_ImageInfo().Height )  };
+	RECT   rcUI = { _long((vPos.x) - (_float)m_pButtonOneform->Get_ImageInfo().Width * 1.36f),
+		_long((vPos.y) - (_float)m_pButtonOneform->Get_ImageInfo().Height * 1.1f)  ,
+		_long((vPos.x) + (_float)m_pButtonOneform->Get_ImageInfo().Width * 1.37f)   ,
+		_long((vPos.y) + (_float)m_pButtonOneform->Get_ImageInfo().Height * 1.1f) };
 
 	if (PtInRect(&rcUI, rt))
 	{
