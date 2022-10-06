@@ -20,7 +20,7 @@ HRESULT CGunUI::Ready_Object(void)
 
 	m_fX = 590.f;
 	m_fY = 280.f;
-	m_fSizeX = 146.8f;
+	m_fSizeX = 188.8f;
 	m_fSizeY = 100.f;
 	m_iGunIndex = 0;
 

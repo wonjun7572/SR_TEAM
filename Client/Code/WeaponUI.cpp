@@ -17,9 +17,9 @@ HRESULT CWeaponUI::Ready_Object(void)
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 	D3DXMatrixOrthoLH(&m_ProjMatrix, WINCX, WINCY, 0.f, 1.f);
 
-	m_fX = 500.f;
+	m_fX = 580.f;
 	m_fY = 393.f;
-	m_fSizeX = 300.f;
+	m_fSizeX = 430.f;
 	m_fSizeY = 140.f;
 	return S_OK;
 }
@@ -45,8 +45,6 @@ void CWeaponUI::Render_Object(void)
 
 
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransCom->Get_WorldMatrixPointer());
-
-
 	_matrix      OldViewMatrix, OldProjMatrix;
 
 	m_pGraphicDev->GetTransform(D3DTS_VIEW, &OldViewMatrix);
@@ -69,9 +67,9 @@ HRESULT CWeaponUI::Add_Component()
 {
 	CComponent* pComponent = nullptr;
 
-	pComponent = m_pBufferCom = dynamic_cast<CRcTex*>(Clone_Proto(L"Proto_RcTexCom"));
+	pComponent = m_pBufferCom = dynamic_cast<CRcTex*>(Clone_Proto(RCTEX_COMP));
 	NULL_CHECK_RETURN(m_pBufferCom, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Proto_RcTexCom", pComponent });
+	m_mapComponent[ID_STATIC].insert({ RCTEX_COMP, pComponent });
 
 	pComponent = m_pTransCom = dynamic_cast<CTransform*>(Clone_Proto(L"Proto_TransformCom"));
 	NULL_CHECK_RETURN(m_pTransCom, E_FAIL);

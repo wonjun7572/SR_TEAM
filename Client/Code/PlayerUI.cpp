@@ -17,10 +17,10 @@ HRESULT CPlayerUI::Ready_Object(void)
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 	D3DXMatrixOrthoLH(&m_ProjMatrix, WINCX, WINCY, 0.f, 1.f);
 
-	m_fX = -620.f;
+	m_fX = -550.f;
 	m_fY = 329.f;
 	m_fSizeX = 500.f;
-	m_fSizeY = 260.f;
+	m_fSizeY = 270.f;
 
 	return S_OK;
 }
