@@ -27,7 +27,7 @@ _int CExitButton::Update_Object(const _float & fTimeDelta)
 {
 	if (PointMouse())
 	{
-			if (Get_DIMouseState(DIM_LB) & 0x80)
+		if (Get_DIMouseState(DIM_LB) & 0x80)
 			Mouse_check = true;
 	}
 
@@ -62,7 +62,7 @@ void CExitButton::Render_Object(void)
 	Render_Font(L"ExitFont", m_strEB.c_str(), &_vec2(1150.f, 530.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
 	End_OrthoProj();
 
-	
+
 }
 
 
@@ -78,9 +78,9 @@ HRESULT CExitButton::Add_Component(void)
 	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_ExitButton", pComponent });
 
-	pComponent = m_pTransformCom = dynamic_cast<CTransform*>(Clone_Proto(TRANSFORM_COMP));
+	pComponent = m_pTransformCom = dynamic_cast<CTransform*>(Clone_Proto(L"Proto_TransformCom"));
 	NULL_CHECK_RETURN(m_pTransformCom, E_FAIL);
-	m_mapComponent[ID_DYNAMIC].insert({ TRANSFORM_COMP, pComponent });
+	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_TransformCom", pComponent });
 
 	return S_OK;
 }
@@ -99,8 +99,8 @@ void CExitButton::Begin_OrthoProj()
 	D3DXMatrixIdentity(&matWorld);
 	D3DXMatrixIdentity(&matView);
 
-	matView.m[0][0] = 250.f; // 이미지 가로
-	matView.m[1][1] = 50.f; // 이미지 세로
+	matView.m[0][0] = 500.f; // 이미지 가로
+	matView.m[1][1] = 100.f; // 이미지 세로
 	matView.m[2][2] = 1.f;
 	matView.m[3][0] = m_pTransformCom->m_vInfo[INFO_POS].x + 550.f;
 	matView.m[3][1] = m_pTransformCom->m_vInfo[INFO_POS].y + -100.f;

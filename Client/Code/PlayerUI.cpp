@@ -15,12 +15,20 @@ CPlayerUI::~CPlayerUI()
 HRESULT CPlayerUI::Ready_Object(void)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
-	
+	D3DXMatrixOrthoLH(&m_ProjMatrix, WINCX, WINCY, 0.f, 1.f);
+
+	m_fX = -620.f;
+	m_fY = 329.f;
+	m_fSizeX = 500.f;
+	m_fSizeY = 260.f;
+
 	return S_OK;
 }
 
 Engine::_int CPlayerUI::Update_Object(const _float& fTimeDelta)
 {
+	m_pTransCom->Set_Scale(m_fSizeX, m_fSizeY, 1.f);
+	m_pTransCom->Set_Pos(m_fX, -m_fY, 0.f);
 	_int iResult = CGameObject::Update_Object(fTimeDelta);
 	Add_RenderGroup(RENDER_UI, this);
 	return iResult;
@@ -28,50 +36,32 @@ Engine::_int CPlayerUI::Update_Object(const _float& fTimeDelta)
 
 void CPlayerUI::LateUpdate_Object(void)
 {
+
 	CGameObject::LateUpdate_Object();
 }
 
 void CPlayerUI::Render_Object(void)
 {
-	Begin_OrthoProj();
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransCom->Get_WorldMatrixPointer());
+
+	_matrix      OldViewMatrix, OldProjMatrix;
+
+	m_pGraphicDev->GetTransform(D3DTS_VIEW, &OldViewMatrix);
+	m_pGraphicDev->GetTransform(D3DTS_PROJECTION, &OldProjMatrix);
+
+	_matrix      ViewMatrix;
+
+	ViewMatrix = *D3DXMatrixIdentity(&ViewMatrix);
+
+	m_pGraphicDev->SetTransform(D3DTS_VIEW, &ViewMatrix);
+	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &m_ProjMatrix);
 	m_pTextureCom->Set_Texture(0);
 	m_pBufferCom->Render_Buffer();
-	End_OrthoProj();
+
+	m_pGraphicDev->SetTransform(D3DTS_VIEW, &OldViewMatrix);
+	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &OldProjMatrix);
+
 }
-
-void CPlayerUI::Begin_OrthoProj()
-{
-	_matrix matWorld, matView, matProj, matOrtho;
-	m_pGraphicDev->GetTransform(D3DTS_WORLD, &matWorld);
-	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
-	m_pGraphicDev->GetTransform(D3DTS_PROJECTION, &matProj);
-
-	memcpy(&m_matWorld, &matWorld, sizeof(_matrix));
-	memcpy(&m_matView,	&matView, sizeof(_matrix));
-	memcpy(&m_matProj,	&matProj, sizeof(_matrix));
-
-	D3DXMatrixIdentity(&matWorld);
-	D3DXMatrixIdentity(&matView);
-
-	matView.m[0][0] = 250.f; // 이미지 가로
-	matView.m[1][1] = 125.f; // 이미지 세로
-	matView.m[2][2] = 1.f;
-	matView.m[3][0] = m_pTransCom->m_vInfo[INFO_POS].x - 550.f;
-	matView.m[3][1] = m_pTransCom->m_vInfo[INFO_POS].y - 335.f;
-
-	D3DXMatrixOrthoLH(&matOrtho, WINCX, WINCY, 0.f, 1.f);
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, &matWorld);
-	m_pGraphicDev->SetTransform(D3DTS_VIEW, &matView);
-	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &matOrtho);
-}
-
-void CPlayerUI::End_OrthoProj()
-{
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, &m_matWorld);
-	m_pGraphicDev->SetTransform(D3DTS_VIEW, &m_matView);
-	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &m_matProj);
-}
-
 
 HRESULT CPlayerUI::Add_Component()
 {
@@ -81,9 +71,9 @@ HRESULT CPlayerUI::Add_Component()
 	NULL_CHECK_RETURN(m_pBufferCom, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_RcTexCom", pComponent });
 
-	pComponent = m_pTransCom = dynamic_cast<CTransform*>(Clone_Proto(TRANSFORM_COMP));
+	pComponent = m_pTransCom = dynamic_cast<CTransform*>(Clone_Proto(L"Proto_TransformCom"));
 	NULL_CHECK_RETURN(m_pTransCom, E_FAIL);
-	m_mapComponent[ID_DYNAMIC].insert({ TRANSFORM_COMP, pComponent });
+	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_TransformCom", pComponent });
 
 	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Clone_Proto(L"theHUDui_7"));
 	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
@@ -94,7 +84,7 @@ HRESULT CPlayerUI::Add_Component()
 
 CPlayerUI * CPlayerUI::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
-	CPlayerUI *	pInstance = new CPlayerUI(pGraphicDev);
+	CPlayerUI *   pInstance = new CPlayerUI(pGraphicDev);
 
 	if (FAILED(pInstance->Ready_Object()))
 	{

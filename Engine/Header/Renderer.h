@@ -21,6 +21,8 @@ public:
 
 	void		On_Minimap(void) { m_bMinimap = true; }
 	void		Off_Minimap(void) { m_bMinimap = false; }
+	void      On_Shop(void) { m_bShopping = true; }
+	void      Off_Shop(void) { m_bShopping = false; }
 
 	list<CGameObject*>			Get_GameObjectGroup(RENDERID eId)
 	{
@@ -30,6 +32,7 @@ public:
 private:
 	list<CGameObject*>			m_RenderGroup[RENDER_END];
 	_bool						m_bMinimap = false;
+	_bool						m_bShopping = false;
 
 private:
 	virtual CComponent*	Clone(void) { return nullptr; }

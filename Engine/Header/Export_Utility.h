@@ -28,13 +28,9 @@
 #include "PSystem.h"
 #include "DynamicBuffer.h"
 
-//#include "ParticleBuffer.h"
-
 BEGIN(Engine)
 
 // Management
-
-
 inline HRESULT					Create_Management(LPDIRECT3DDEVICE9& pGraphicDev, CManagement** ppManagement);
 inline HRESULT					Set_Scene(CScene* pScene);
 inline _int						Update_Scene(const _float& fTimeDelta);
@@ -76,7 +72,6 @@ inline void SetChannelVolume(CHANNELID eID, float fVolume);
 inline void PlaySoundGun(TCHAR* pSoundKey, CHANNELID eID, float fVolume);
 
 inline void			Release_Utility(void);
-
 
 
 #include "Export_Utility.inl"

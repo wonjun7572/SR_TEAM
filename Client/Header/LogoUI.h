@@ -8,7 +8,6 @@ public:
 	explicit CLogoUI(LPDIRECT3DDEVICE9 pGraphicDev);
 	virtual ~CLogoUI();
 
-
 public:
 	HRESULT Ready_Object(void) override;
 	_int Update_Object(const _float& fTimeDelta) override;

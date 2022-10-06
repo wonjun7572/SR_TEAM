@@ -14,32 +14,29 @@ public:
 	void Render_Object(void) override;
 
 private:
-	void		Begin_OrthoProj();
-	void		End_OrthoProj();
-
-private:
 	HRESULT Add_Component();
 
 private:
 	CGameObject* m_pPlayer = nullptr;
 
-	CRcTex*		m_pBufferCom = nullptr;
+	CRcTex*      m_pBufferCom = nullptr;
 	CTransform* m_pTransCom = nullptr;
 
-	CTexture*	m_pTexture_100 = nullptr;
-	CTexture*	m_pTexture_75 = nullptr;
-	CTexture*	m_pTexture_50 = nullptr;
-	CTexture*	m_pTexture_25 = nullptr;
-	CTexture*	m_pTexture_0 = nullptr;
+	CTexture*   m_pTexture_100 = nullptr;
+	CTexture*   m_pTexture_75 = nullptr;
+	CTexture*   m_pTexture_50 = nullptr;
+	CTexture*   m_pTexture_25 = nullptr;
+	CTexture*   m_pTexture_0 = nullptr;
 
 	_matrix m_matWorld;
 	_matrix m_matView;
 	_matrix m_matProj;
 
 	_float m_fFrame = 0.f;
+	_matrix            m_ProjMatrix;
+	_float            m_fX, m_fY, m_fSizeX, m_fSizeY;
 
 public:
-	static CPlayerFaceUI*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CPlayerFaceUI*      Create(LPDIRECT3DDEVICE9 pGraphicDev);
 	void Free(void) override;
 };
-
