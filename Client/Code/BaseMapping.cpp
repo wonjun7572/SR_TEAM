@@ -21,13 +21,13 @@ HRESULT CBaseMapping::Ready_Object(void)
 
 _int CBaseMapping::Update_Object(const _float & fTimeDelta)
 {
-	if (!m_bWorldMap)
+	if (m_bWorldmap)
+	{
+		Add_RenderGroup(RENDER_WORLDMAP, this);
+	}
+	if (m_bMinimap)
 	{
 		Add_RenderGroup(RENDER_MINIMAP, this);
-	}
-	if (m_bWorldMap)
-	{
-		Add_RenderGroup(RENDER_MAPVIEW, this);
 	}
 	WorldMap();
 	Key_Input();
@@ -47,31 +47,28 @@ void CBaseMapping::Render_Object(void)
 
 	Begin_OrthoProj();
 	m_pTexture->Set_Texture(0);
-	if (!m_bWorldMap)
+	if (m_bMinimap)
 	{
+		m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+
 		m_pRcCom->Render_Buffer();
+		m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
+
 	}
 	End_OrthoProj();
-
-	if (m_bWorldMap)
-	{
+	if (m_bWorldmap)
 		m_pCube->Render_Buffer();
-	}
+	
 }
 
 
 void CBaseMapping::Key_Input(void)
 {
-	if (Get_DIKeyState(DIK_Y))
-	{
-		CRenderer::GetInstance()->On_Minimap();
-		m_bWorldMap = false;
+	if(Key_Down(DIK_M))
+	{		
+		CRenderer::GetInstance()->Switch_Minimap();
+		m_bMinimap = !m_bMinimap;
 	}
-	if (Get_DIKeyState(DIK_U))
-	{
-		CRenderer::GetInstance()->Off_Minimap();
-		m_bWorldMap = true;
-	}	
 }
 
 void CBaseMapping::Begin_OrthoProj()
@@ -91,10 +88,10 @@ void CBaseMapping::Begin_OrthoProj()
 	D3DXMatrixIdentity(&matWorld);
 	D3DXMatrixIdentity(&matView);
 
-	matView.m[0][0] = (float)MAPCX*1.2; // 이미지 가로
-	matView.m[1][1] = (float)MAPCY*1.4; // 이미지 세로
+	matView.m[0][0] = (float)MAPCX*2.7f; // 이미지 가로
+	matView.m[1][1] = (float)MAPCY*2.85f; // 이미지 세로
 	matView.m[2][2] = 1.f;
-	matView.m[3][0] = MAPPOSX;
+	matView.m[3][0] = MAPPOSX - 4.f;
 	matView.m[3][1] = MAPPOSY;
 	matView.m[3][2] = 0.002f;//m_pTransform->m_vInfo[INFO_POS].z;; //+0.1f;
 
