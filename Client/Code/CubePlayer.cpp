@@ -50,20 +50,28 @@ _int CCubePlayer::Update_Object(const _float & fTimeDelta)
 	Update_NullCheck();
 	m_fTimeDelta = fTimeDelta;
 	m_fBulletTime += fTimeDelta;
-	Look_Direction();
-	Assemble();
-	Player_Mapping();
-	Engine::Add_RenderGroup(RENDER_NONALPHA, this);
-	CGameObject::Update_Object(fTimeDelta);
 
 	FAILED_CHECK_RETURN(Get_BodyTransform(), -1);
+
+	// 이동, 애니메이션 관련
 	if (!(dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->Get_Switch()))
 	{
-		// 이동, 애니메이션 관련
 		Move();
-		Animation();
-		//FAILED_CHECK_RETURN(CPoolMgr::GetInstance()->Reuse_Obj(m_pGraphicDev, &vPos, &m_vDirection), -1);
 	}
+	Look_Direction();
+
+	if (!(dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->Get_Switch()))
+	{
+		Animation();
+	}
+	Assemble();
+
+	Player_Mapping();
+
+	CGameObject::Update_Object(fTimeDelta);
+
+	Engine::Add_RenderGroup(RENDER_NONALPHA, this);
+
 	return 0;
 }
 
