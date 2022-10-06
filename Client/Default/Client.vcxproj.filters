@@ -244,6 +244,12 @@
     <Filter Include="02. GameObject\00. For_Logo\01. BillBoard">
       <UniqueIdentifier>{86146145-ea8c-49af-a4a6-baaa3910d0b7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\09. UI\Inventory">
+      <UniqueIdentifier>{9a65f411-a1dc-4910-a709-4f8322b9c5f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\09. UI\Inventory\ItemIcon">
+      <UniqueIdentifier>{cd74d960-1e5b-4687-8e6a-ea9e80745077}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -561,6 +567,12 @@
     <ClInclude Include="..\Header\Shop.h">
       <Filter>02. GameObject\01. For_Stage\13. Shop</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\Inventory.h">
+      <Filter>02. GameObject\01. For_Stage\09. UI\Inventory</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ItemIcon.h">
+      <Filter>02. GameObject\01. For_Stage\09. UI\Inventory\ItemIcon</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -856,6 +868,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\Shop.cpp">
       <Filter>02. GameObject\01. For_Stage\13. Shop</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Inventory.cpp">
+      <Filter>02. GameObject\01. For_Stage\09. UI\Inventory</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ItemIcon.cpp">
+      <Filter>02. GameObject\01. For_Stage\09. UI\Inventory\ItemIcon</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

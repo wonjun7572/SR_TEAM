@@ -54,6 +54,7 @@
 #include "BulletParticle.h"
 #include "Shop.h"
 #include "CubeShop.h"
+#include "Inventory.h"
 
 CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CScene(pGraphicDev)
@@ -204,6 +205,13 @@ HRESULT CStage::Ready_Layer_UI(const _tchar * pLayerTag)
 	pGameObject = CCrossHeader::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"CrossHeader", pGameObject), E_FAIL);
+	
+	//Inventory
+	pGameObject = CInventory::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"InventoryUI", pGameObject), E_FAIL);
+	
+
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 

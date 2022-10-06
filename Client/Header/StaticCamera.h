@@ -4,6 +4,8 @@
 #include "Engine_Include.h"
 #include "Export_Function.h"
 
+class CInventory;
+
 class CStaticCamera : public Engine::CCamera
 {
 private:
@@ -35,6 +37,7 @@ private:
 	_float			m_fAngle = 0.f;
 
 	_bool			m_bChangePOV = false;
+	CInventory*		m_pInventory = nullptr;
 
 public:
 	static CStaticCamera*		Create(LPDIRECT3DDEVICE9 pGraphicDev,

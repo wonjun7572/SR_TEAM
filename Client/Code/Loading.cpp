@@ -85,7 +85,13 @@ _uint CLoading::Loading_ForStage(void)
 		// GUN
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Gun_UI", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/UI/Gun/Gun_%d.png", TEX_NORMAL, 6)), E_FAIL);
 	}
-	
+	//인벤토리
+	{
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_InventoryTexture", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/UI/Inventory/QuickSlot9.png", TEX_NORMAL)), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_ItemIconTexture", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/UI/Inventory/ammo_box_pistol.png", TEX_NORMAL)), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_InvCursorTexture", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/UI/Inventory/Cursor0.png", TEX_NORMAL)), E_FAIL);
+
+	}
 	//ITEM
 	{
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_Hp", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/UI/Sprite/Hp2.jpg", TEX_NORMAL)), E_FAIL);
