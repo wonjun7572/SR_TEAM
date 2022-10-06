@@ -20,15 +20,15 @@ HRESULT CPlayerMapping::Ready_Object(void)
 
 _int CPlayerMapping::Update_Object(const _float & fTimeDelta)
 {
-	if (!m_bWorldMap)
+	if (m_bWorldMap)
+	{
+		Add_RenderGroup(RENDER_WORLDMAP, this);
+	}
+
+	if (m_bMinimap)
 	{
 		Add_RenderGroup(RENDER_MINIMAP, this);
 	}
-	if (m_bWorldMap)
-	{
-		Add_RenderGroup(RENDER_MAPVIEW, this);
-	}
-
 	Key_Input();
 	CGameObject::Update_Object(fTimeDelta);
 
@@ -56,7 +56,7 @@ void CPlayerMapping::Render_Object(void)
 
 	Begin_OrthoProj();
 	m_pTexture->Set_Texture(60);
-	if(!m_bWorldMap)
+	if(m_bMinimap)
 		m_pBufferCom->Render_Buffer();
 	End_OrthoProj();
 	
@@ -105,7 +105,8 @@ void CPlayerMapping::End_OrthoProj()
 
 void CPlayerMapping::Key_Input(void)
 {
-
+	m_bWorldMap = dynamic_cast<CBaseMapping*>(Engine::Get_GameObject(STAGE_MAPPING, L"BaseMapping"))->Get_Worldmap();
+	m_bMinimap = dynamic_cast<CBaseMapping*>(Engine::Get_GameObject(STAGE_MAPPING, L"BaseMapping"))->Get_Minimap();
 }
 
 HRESULT CPlayerMapping::Add_Component(void)

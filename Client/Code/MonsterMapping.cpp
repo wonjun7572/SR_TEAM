@@ -20,13 +20,13 @@ HRESULT CMonsterMapping::Ready_Object(void)
 
 _int CMonsterMapping::Update_Object(const _float & fTimeDelta)
 {
-	if (!m_bWorldMap)
-	{
-		Add_RenderGroup(RENDER_MINIMAP, this);
-	}
 	if (m_bWorldMap)
 	{
-		Add_RenderGroup(RENDER_MAPVIEW, this);
+		Add_RenderGroup(RENDER_WORLDMAP, this);
+	}
+	if (m_bMinimap)
+	{
+		Add_RenderGroup(RENDER_MINIMAP, this);
 	}
 	Key_Input();
 
@@ -46,7 +46,7 @@ void CMonsterMapping::Render_Object(void)
 
 	Begin_OrthoProj();
 	m_pTexture->Set_Texture(43);
-	if(!m_bWorldMap)
+	if(m_bMinimap)
 		m_pRcCom->Render_Buffer();
 	End_OrthoProj();
 	if(m_bWorldMap)
@@ -71,8 +71,8 @@ void CMonsterMapping::Begin_OrthoProj()
 	D3DXMatrixIdentity(&matWorld);
 	D3DXMatrixIdentity(&matView);
 
-	matView.m[0][0] = 2.f * PINGSIZE*WINCX / WINCY* MAPCX / MAPCY; // 이미지 가로
-	matView.m[1][1] = 2.f * PINGSIZE*WINCX / WINCY* MAPCX / MAPCY; // 이미지 세로
+	matView.m[0][0] = PINGSIZE*WINCX / WINCY* MAPCX / MAPCY; // 이미지 가로
+	matView.m[1][1] = PINGSIZE*WINCX / WINCY* MAPCX / MAPCY; // 이미지 세로
 	matView.m[2][2] = 1.f;
 	matView.m[3][0] = MAPPOSX - (MAPCX) + vPos.x * ( ((float)MAPCX*2) / (float)VTXCNTX); //- PINGSIZE /2;
 	matView.m[3][1] = MAPPOSY - (MAPCY) + vPos.z * ( ((float)MAPCY*2) / (float)VTXCNTZ); //- PINGSIZE /2;
@@ -94,7 +94,11 @@ void CMonsterMapping::End_OrthoProj()
 
 void CMonsterMapping::Key_Input(void)
 {
+	m_bWorldMap = dynamic_cast<CBaseMapping*>(Engine::Get_GameObject(STAGE_MAPPING, L"BaseMapping"))->Get_Worldmap();
+	m_bMinimap = dynamic_cast<CBaseMapping*>(Engine::Get_GameObject(STAGE_MAPPING, L"BaseMapping"))->Get_Minimap();
 }
+
+
 
 HRESULT CMonsterMapping::Add_Component(void)
 {

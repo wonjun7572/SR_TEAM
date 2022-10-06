@@ -31,16 +31,7 @@ void CRenderer::Render_GameObject(LPDIRECT3DDEVICE9 & pGraphicDev)
 	}
 	m_RenderGroup[RENDER_PRIORITY].clear();
 
-	if (m_bMinimap)
-	{
-		for (auto& iter : m_RenderGroup[RENDER_MINIMAP])
-		{
-			iter->Render_Object();
-			Safe_Release(iter);
-		}
-		m_RenderGroup[RENDER_MINIMAP].clear();
-	}
-
+	
 	for (auto& iter : m_RenderGroup[RENDER_NONALPHA])
 	{
 		iter->Render_Object();
@@ -54,7 +45,15 @@ void CRenderer::Render_GameObject(LPDIRECT3DDEVICE9 & pGraphicDev)
 		Safe_Release(iter);
 	}
 	m_RenderGroup[RENDER_ALPHA].clear();
-
+	if (m_bMinimap)
+	{
+		for (auto& iter : m_RenderGroup[RENDER_MINIMAP])
+		{
+			iter->Render_Object();
+			Safe_Release(iter);
+		}
+		m_RenderGroup[RENDER_MINIMAP].clear();
+	}
 	for (auto& iter : m_RenderGroup[RENDER_UI])
 	{
 		pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
