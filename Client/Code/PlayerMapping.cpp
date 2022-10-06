@@ -105,16 +105,7 @@ void CPlayerMapping::End_OrthoProj()
 
 void CPlayerMapping::Key_Input(void)
 {
-	if (Get_DIKeyState(DIK_Y))
-	{
-		CRenderer::GetInstance()->On_Minimap();
-		m_bWorldMap = false;
-	}
-	if (Get_DIKeyState(DIK_U))
-	{
-		CRenderer::GetInstance()->Off_Minimap();
-		m_bWorldMap = true;
-	}
+
 }
 
 HRESULT CPlayerMapping::Add_Component(void)

@@ -74,7 +74,6 @@ HRESULT CStage::Ready_Scene(void)
 	CGameObject*		pGameObject = nullptr;
 
 	FAILED_CHECK_RETURN(Ready_Proto(), E_FAIL);
-
 	FAILED_CHECK_RETURN(Ready_Light(), E_FAIL);
 
 	FAILED_CHECK_RETURN(Ready_Layer_Environment(STAGE_ENVIRONMENT), E_FAIL);
@@ -210,8 +209,6 @@ HRESULT CStage::Ready_Layer_UI(const _tchar * pLayerTag)
 	pGameObject = CInventory::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"InventoryUI", pGameObject), E_FAIL);
-	
-
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 

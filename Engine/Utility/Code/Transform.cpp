@@ -534,7 +534,6 @@ const _matrix* Engine::CTransform::Compute_LookAtTarget(const _vec3* pTargetPos)
 void CTransform::Billboard_Transform(const _float & fTimeDelta)
 {
 	//	이거 쓸라면 Transform Component 속성 Static 이어야됨!
-
 	_matrix	matScale, matRotX, matRotY, matRotZ, matBill, matTrans;
 
 	D3DXMatrixScaling(&matScale, m_vScale.x, m_vScale.y, m_vScale.z);
@@ -546,10 +545,12 @@ void CTransform::Billboard_Transform(const _float & fTimeDelta)
 
 	_matrix matView;
 	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
+
 	matBill.m[0][0] = matView.m[0][0];
 	matBill.m[0][2] = matView.m[0][2];
 	matBill.m[2][0] = matView.m[2][0];
 	matBill.m[2][2] = matView.m[2][2];
+
 	D3DXMatrixInverse(&matBill, nullptr, &matBill);
 
 	D3DXMatrixTranslation(&matTrans, m_vInfo[INFO_POS].x, m_vInfo[INFO_POS].y, m_vInfo[INFO_POS].z);

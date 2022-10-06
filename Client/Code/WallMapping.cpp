@@ -72,14 +72,12 @@ void CWallMapping::Begin_OrthoProj()
 	D3DXMatrixIdentity(&matWorld);
 	D3DXMatrixIdentity(&matView);
 
-	matView.m[0][0] = vScale.x *WINCX / WINCY* MAPCX / MAPCY;// PINGSIZE; // 이미지 가로
-	matView.m[1][1] = vScale.z *WINCX/WINCY* MAPCX / MAPCY;// PINGSIZE; // 이미지 세로
+	matView.m[0][0] = 2.f * vScale.x *WINCX / WINCY* MAPCX / MAPCY;// PINGSIZE; // 이미지 가로
+	matView.m[1][1] = 2.f * vScale.z *WINCX/WINCY* MAPCX / MAPCY;// PINGSIZE; // 이미지 세로
 	matView.m[2][2] = 1.f;
 	matView.m[3][0] = MAPPOSX - (MAPCX)+vPos.x * (((float)MAPCX * 2) / (float)VTXCNTX); //- PINGSIZE /2;
 	matView.m[3][1] = MAPPOSY - (MAPCY)+vPos.z * (((float)MAPCY * 2) / (float)VTXCNTZ); //- PINGSIZE /2;
 																						//matView.m[3][2] = m_pTransCom->m_vInfo[INFO_POS].z+0.1f;
-
-
 	D3DXMatrixOrthoLH(&matOrtho, WINCX, WINCY, 0.f, 1.f);
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, &matWorld);
 	m_pGraphicDev->SetTransform(D3DTS_VIEW, &matView);
@@ -95,19 +93,8 @@ void CWallMapping::End_OrthoProj()
 
 void CWallMapping::Key_Input(void)
 {
-	if (Get_DIKeyState(DIK_Y))
-	{
-		CRenderer::GetInstance()->On_Minimap();
-		m_bWorldMap = false;
-	}
-	if (Get_DIKeyState(DIK_U))
-	{
-		CRenderer::GetInstance()->Off_Minimap();
-		m_bWorldMap = true;
-	}
+
 }
-
-
 
 HRESULT CWallMapping::Add_Component(void)
 {

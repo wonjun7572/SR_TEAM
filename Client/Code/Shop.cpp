@@ -152,9 +152,6 @@ HRESULT CShop::Ready_Object(void)
 		m_pUpgradeTransformCom->Set_Scale(fWidth * fScale13 * 1.1f, fHeight * fScale13 * 1.2f, 1.f);
 	}
 
-
-
-
 	m_pUpgrade = L"UPGRADE";
 	m_pInformation = L"Press [Return] And Hold to Buy Upgrade";
 	m_pUziRaffle = L"UziRaffle";
@@ -165,7 +162,6 @@ HRESULT CShop::Ready_Object(void)
 	m_pRailGun = L"RAILGUN MODE";
 	m_pBurst = L"BURST MODE";
 	return S_OK;
-
 }
 
 _int CShop::Update_Object(const _float & fTimeDelta)

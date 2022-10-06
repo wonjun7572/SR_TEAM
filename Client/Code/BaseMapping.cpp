@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "..\Header\BaseMapping.h"
 
-
 CBaseMapping::CBaseMapping(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
 {
@@ -47,10 +46,12 @@ void CBaseMapping::Render_Object(void)
 
 	Begin_OrthoProj();
 	m_pTexture->Set_Texture(0);
+
 	if (!m_bWorldMap)
 	{
 		m_pRcCom->Render_Buffer();
 	}
+	
 	End_OrthoProj();
 
 	if (m_bWorldMap)
@@ -59,19 +60,17 @@ void CBaseMapping::Render_Object(void)
 	}
 }
 
-
 void CBaseMapping::Key_Input(void)
 {
-	if (Get_DIKeyState(DIK_Y))
+	if (Key_Down(DIK_M))
 	{
-		CRenderer::GetInstance()->On_Minimap();
-		m_bWorldMap = false;
+		m_bWorldMap = !m_bWorldMap;
 	}
-	if (Get_DIKeyState(DIK_U))
-	{
+
+	if(m_bWorldMap)
+		CRenderer::GetInstance()->On_Minimap();
+	else
 		CRenderer::GetInstance()->Off_Minimap();
-		m_bWorldMap = true;
-	}	
 }
 
 void CBaseMapping::Begin_OrthoProj()
@@ -91,13 +90,12 @@ void CBaseMapping::Begin_OrthoProj()
 	D3DXMatrixIdentity(&matWorld);
 	D3DXMatrixIdentity(&matView);
 
-	matView.m[0][0] = (float)MAPCX*1.2; // 이미지 가로
-	matView.m[1][1] = (float)MAPCY*1.4; // 이미지 세로
+	matView.m[0][0] = (float)MAPCX*2.4; // 이미지 가로
+	matView.m[1][1] = (float)MAPCY*2.8; // 이미지 세로
 	matView.m[2][2] = 1.f;
 	matView.m[3][0] = MAPPOSX;
 	matView.m[3][1] = MAPPOSY;
 	matView.m[3][2] = 0.002f;//m_pTransform->m_vInfo[INFO_POS].z;; //+0.1f;
-
 
 	D3DXMatrixOrthoLH(&matOrtho, WINCX, WINCY, 0.f, 1.f);
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, &matWorld);
@@ -118,7 +116,6 @@ void CBaseMapping::WorldMap(void)
 }
 
 
-
 HRESULT CBaseMapping::Add_Component(void)
 {
 	CComponent* pInstance = nullptr;
@@ -131,10 +128,6 @@ HRESULT CBaseMapping::Add_Component(void)
 	NULL_CHECK_RETURN(pInstance, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Minimap", pInstance });
 
-	/*pInstance = m_pTexture = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Proto_CubePlayerTexture"));
-	NULL_CHECK_RETURN(pInstance, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Proto_CubePlayerTexture", pInstance });*/
-
 	pInstance = m_pTransform = dynamic_cast<CTransform*>(Engine::Clone_Proto(TRANSFORM_COMP));
 	NULL_CHECK_RETURN(pInstance, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ TRANSFORM_COMP, pInstance });
@@ -142,7 +135,6 @@ HRESULT CBaseMapping::Add_Component(void)
 	pInstance = m_pRcCom = dynamic_cast<CRcTex*>(Clone_Proto(L"Proto_RcTexCom"));
 	NULL_CHECK_RETURN(m_pRcCom, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_RcTexCom", pInstance });
-
 
 	return S_OK;
 }

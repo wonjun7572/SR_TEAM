@@ -17,7 +17,7 @@ HRESULT CTargetCube::Ready_Object(const _vec3& vPos)
 	m_tAbility = new MONSTERABILITY;
 	
 	m_tAbility->iLevel = 0;
-	m_tAbility->fMaxHp = 20.f;
+	m_tAbility->fMaxHp = 100.f;
 	m_tAbility->fCurrentHp = m_tAbility->fMaxHp;
 	m_tAbility->fDamage = 0.f;
 
@@ -26,6 +26,7 @@ HRESULT CTargetCube::Ready_Object(const _vec3& vPos)
 	m_pTransCom->Set_Scale(&_vec3(0.3f,0.3f,0.3f));
 	m_pTransCom->Set_Pos(vPos.x, vPos.y, vPos.z);
 
+	m_pTransUICom->Set_Scale(1.f, 0.1f, 0.f);
 	return S_OK;
 }
 
@@ -33,9 +34,13 @@ _int CTargetCube::Update_Object(const _float & fTimeDelta)
 {
 	m_fFrame += fTimeDelta;
 
+	_vec3 vUIPos;
+	m_pTransCom->Get_Info(INFO_POS, &vUIPos);
+	m_pTransUICom->Set_Pos(vUIPos.x, vUIPos.y + 0.5f, vUIPos.z);
+
 	if(m_bReFresh)
 	{
-		//m_tAbility->fCurrentHp = m_tAbility->fMaxHp;
+		m_tAbility->fCurrentHp = m_tAbility->fMaxHp;
 		m_fFrame = 0.f;
 		m_bReFresh = false;
 	}
@@ -43,9 +48,9 @@ _int CTargetCube::Update_Object(const _float & fTimeDelta)
 	if (m_fFrame >= 5.f)
 	{
 		Engine::CGameObject::Update_Object(fTimeDelta);
+		m_pTransUICom->Billboard_Transform(fTimeDelta);
 		Add_RenderGroup(RENDER_NONALPHA, this);
 		Hit_Check();
-
 	}
 	
 	return 0;
@@ -68,6 +73,11 @@ void CTargetCube::Render_Object(void)
 	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 	m_pHitBox->Render_Buffer();
 	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransUICom->Get_WorldMatrixPointer());
+	m_pTextureUICom->Set_Texture(0);
+	m_pBufferUICom->Resize_Buffer(m_tAbility->fCurrentHp / m_tAbility->fMaxHp);
+	m_pBufferUICom->Render_Buffer();
 }
 
 HRESULT CTargetCube::Add_Component(void)
@@ -94,6 +104,19 @@ HRESULT CTargetCube::Add_Component(void)
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ COLLISION_COMP, pComponent });
 
+	// FOR UI
+	pComponent = m_pTransUICom = dynamic_cast<CTransform*>(Clone_Proto(TRANSFORM_COMP));
+	NULL_CHECK_RETURN(m_pTransUICom, E_FAIL);
+	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_TransformUICom", pComponent });
+
+	pComponent = m_pBufferUICom = dynamic_cast<CRcTex*>(Clone_Proto(RCTEX_MONTER_HP_COMP));
+	NULL_CHECK_RETURN(m_pBufferUICom, E_FAIL);
+	m_mapComponent[ID_STATIC].insert({ RCTEX_MONTER_HP_COMP, pComponent });
+
+	pComponent = m_pTextureUICom = dynamic_cast<CTexture*>(Clone_Proto(L"Monster_HP"));
+	NULL_CHECK_RETURN(m_pTextureUICom, E_FAIL);
+	m_mapComponent[ID_STATIC].insert({ L"Monster_HP", pComponent });
+
 	return S_OK;
 }
 
@@ -118,7 +141,7 @@ void CTargetCube::Hit_Check(void)
 				pWeapon->Set_Shoot(false);
 			}
 
-			if (m_tAbility->fCurrentHp < 0.f)
+			if (m_tAbility->fCurrentHp <= 0.f)
 			{
 				m_tAbility->fCurrentHp = 0.f;
 				m_bReFresh = true;

@@ -35,7 +35,6 @@ private:
 	_matrix			m_matView;
 	_matrix			m_matProj;
 	_int			m_iTextureIndex = 0;
-
 	_bool			m_bWorldMap = false;
 
 public:

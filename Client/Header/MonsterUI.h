@@ -15,10 +15,6 @@ public:
 	void	Render_Object(void) override;
 
 private:
-	void		Begin_OrthoProj();
-	void		End_OrthoProj();
-
-private:
 	HRESULT Add_Component();
 
 private:
@@ -32,7 +28,8 @@ private:
 	//_matrix m_matProj;
 
 	CGameObject* m_pMonster = nullptr;
-	_int	m_iHp;
+	_float	m_fHp;
+	_float  m_fMaxHp;
 	wstring m_strHp;
 
 public:

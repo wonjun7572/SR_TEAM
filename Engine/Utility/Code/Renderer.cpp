@@ -40,6 +40,7 @@ void CRenderer::Render_GameObject(LPDIRECT3DDEVICE9 & pGraphicDev)
 		}
 		m_RenderGroup[RENDER_MINIMAP].clear();
 	}
+
 	for (auto& iter : m_RenderGroup[RENDER_NONALPHA])
 	{
 		iter->Render_Object();

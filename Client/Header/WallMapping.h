@@ -35,8 +35,6 @@ private:
 	_int			m_iTextureIndex = 0;
 	_bool			m_bWorldMap = false;
 
-
-
 public:
 	static CWallMapping*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
 	virtual void		Free(void);
