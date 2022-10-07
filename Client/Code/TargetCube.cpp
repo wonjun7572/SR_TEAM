@@ -6,6 +6,7 @@
 CTargetCube::CTargetCube(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CGameObject(pGraphicDev)
 {
+	m_tAbility = new MONSTERABILITY;
 }
 
 CTargetCube::~CTargetCube()
@@ -14,8 +15,6 @@ CTargetCube::~CTargetCube()
 
 HRESULT CTargetCube::Ready_Object(const _vec3& vPos)
 {
-	m_tAbility = new MONSTERABILITY;
-	
 	m_tAbility->iLevel = 0;
 	m_tAbility->fMaxHp = 100.f;
 	m_tAbility->fCurrentHp = m_tAbility->fMaxHp;

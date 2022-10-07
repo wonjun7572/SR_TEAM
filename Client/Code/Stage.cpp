@@ -36,9 +36,6 @@
 #include "GetShotgun.h"
 #include "GetSniper.h"
 
-//MonsterUI
-#include "MonsterUI.h"
-
 //Item
 #include "HealthPotion.h"
 #include "ObtainBullet.h"
@@ -55,6 +52,8 @@
 #include "Shop.h"
 #include "CubeShop.h"
 #include "Inventory.h"
+
+#include "Zombie.h"
 
 CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CScene(pGraphicDev)
@@ -186,20 +185,15 @@ HRESULT CStage::Ready_Layer_UI(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"GunUI", pGameObject), E_FAIL);
 
-	//Monster
-	//pGameObject = CMonsterUI::Create(m_pGraphicDev);
-	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"MonsterHpUI", pGameObject), E_FAIL);
-
 	// Shop
 	pGameObject = CShop::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Shop", pGameObject), E_FAIL);
 
 	//interactShop
-	pGameObject = CCubeShop::Create(m_pGraphicDev, _vec3(18, 1, 19));
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"InteractShop", pGameObject), E_FAIL);
+	//pGameObject = CCubeShop::Create(m_pGraphicDev, _vec3(18, 1, 19));
+	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"InteractShop", pGameObject), E_FAIL);
 
 	pGameObject = CCrossHeader::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
@@ -404,6 +398,14 @@ HRESULT CStage::Ready_Layer_Monster(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"TargetCube9", pGameObject), E_FAIL);
 
+	// 위랑 아래랑 같아야함 문자열, 몬스터 아이템 땜시
+	pGameObject = CZombie::Create(m_pGraphicDev, _vec3(33.f, 0.6f, 23.f), L"Monster");
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Monster", pGameObject), E_FAIL);
+
+	pGameObject = CZombie::Create(m_pGraphicDev, _vec3(33.f, 0.6f, 26.f), L"Monster_1");
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Monster_1", pGameObject), E_FAIL);
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 

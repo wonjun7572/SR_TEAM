@@ -37,7 +37,7 @@ _int CMainApp::Update_MainApp(const _float & fTimeDelta)
 	ImGui_ImplDX9_NewFrame();
 	ImGui_ImplWin32_NewFrame();
 	ImGui::NewFrame();
-	CImGuiMgr::LoggerWindow();
+	//CImGuiMgr::LoggerWindow();
 
 	m_pManagementClass->Update_Scene(fTimeDelta);
 
@@ -71,7 +71,6 @@ void CMainApp::Render_MainApp(void)
 	Engine::Render_End();
 
 	/////////
-
 
 	////D3DXCreateRenderToSurface 함수에 대한 설명은 msdn이나 Directx 문서에 잘 나와있으니 생략하고 일단 D3DXCreateRenderToSurface함수를 이용해서 텍스쳐에 그려주려면 일단
 	//LPD3DXRENDERTOSURFACE	g_pRenderToSurface;
@@ -107,10 +106,6 @@ void CMainApp::Render_MainApp(void)
 	//m_pGraphicDev->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, 0xff0000ff, 1.0f, 0);
 	//g_pRenderToSurface->EndScene(0);
 
-
-
-
-
 	////렌더러 텍스쳐 그리기
 
 	//m_pGraphicDev->SetRenderTarget(0, g_rendererTexture.g_pSurface);
@@ -119,7 +114,6 @@ void CMainApp::Render_MainApp(void)
 	//m_pGraphicDev->SetVertexShader(NULL);
 	//g_pMesh->DrawSubset(0);
 	//g_rendererTexture.g_pRenderToSurface->EndScene(D3DX_FILTER_NONE);
-
 
 	////렌드링
 
@@ -137,16 +131,6 @@ void CMainApp::Render_MainApp(void)
 
 	//m_pGraphicDev->EndScene();
 	//hr = m_pGraphicDev->Present(NULL, NULL, NULL, NULL);
-
-
-
-
-
-
-
-
-
-
 }
 
 HRESULT CMainApp::SetUp_DefaultSetting(LPDIRECT3DDEVICE9 * ppGraphicDev)

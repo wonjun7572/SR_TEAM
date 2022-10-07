@@ -96,6 +96,7 @@ namespace Engine
 
 	typedef struct tagMonsterState
 	{
+		std::wstring strObjName;
 		_int   iLevel;
 		_float fCurrentHp;
 		_float fMaxHp;

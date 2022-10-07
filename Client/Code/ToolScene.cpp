@@ -4,7 +4,6 @@
 #include "Export_Function.h"
 #include "Wall.h"
 #include "ImguiMgr.h"
-#include "TestGun.h"
 
 CToolScene::CToolScene(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CScene(pGraphicDev)

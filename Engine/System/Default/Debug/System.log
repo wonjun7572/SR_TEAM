@@ -1,4 +1,5 @@
-﻿     ../Bin\System.lib 라이브러리 및 ../Bin\System.exp 개체를 생성하고 있습니다.
+﻿FontMgr.obj : warning LNK4075: '/EDITANDCONTINUE'이(가) '/OPT:LBR' 사양으로 인해 무시됩니다.
+     ../Bin\System.lib 라이브러리 및 ../Bin\System.exp 개체를 생성하고 있습니다.
   System.vcxproj -> C:\Users\sam51\Desktop\SR_TEAM\Engine\System\Default\../Bin\System.dll
   System.vcxproj -> ../Bin\System.pdb (Full PDB)
           1개 파일이 복사되었습니다.
