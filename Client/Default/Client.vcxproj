@@ -200,6 +200,7 @@
     <ClInclude Include="..\Header\LogoUI.h" />
     <ClInclude Include="..\Header\MainApp.h" />
     <ClInclude Include="..\Header\MaxPlusHp.h" />
+    <ClInclude Include="..\Header\Monster.h" />
     <ClInclude Include="..\Header\MonsterMapping.h" />
     <ClInclude Include="..\Header\MonsterUI.h" />
     <ClInclude Include="..\Header\ObtainBullet.h" />
@@ -227,7 +228,6 @@
     <ClInclude Include="..\Header\TargetCube.h" />
     <ClInclude Include="..\Header\Terrain.h" />
     <ClInclude Include="..\Header\TestCube.h" />
-    <ClInclude Include="..\Header\TestGun.h" />
     <ClInclude Include="..\Header\TestMonster.h" />
     <ClInclude Include="..\Header\TestPlayer.h" />
     <ClInclude Include="..\Header\ToolScene.h" />
@@ -243,6 +243,7 @@
     <ClInclude Include="..\Header\Weapon.h" />
     <ClInclude Include="..\Header\WeaponUI.h" />
     <ClInclude Include="..\Header\ShotParticle.h" />
+    <ClInclude Include="..\Header\Zombie.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="Define.h" />
     <ClInclude Include="dirent.h" />
@@ -311,6 +312,7 @@
     <ClCompile Include="..\Code\LogoUI.cpp" />
     <ClCompile Include="..\Code\MainApp.cpp" />
     <ClCompile Include="..\Code\MaxPlusHp.cpp" />
+    <ClCompile Include="..\Code\Monster.cpp" />
     <ClCompile Include="..\Code\MonsterMapping.cpp" />
     <ClCompile Include="..\Code\MonsterUI.cpp" />
     <ClCompile Include="..\Code\ObtainBullet.cpp" />
@@ -338,7 +340,6 @@
     <ClCompile Include="..\Code\TargetCube.cpp" />
     <ClCompile Include="..\Code\Terrain.cpp" />
     <ClCompile Include="..\Code\TestCube.cpp" />
-    <ClCompile Include="..\Code\TestGun.cpp" />
     <ClCompile Include="..\Code\TestMonster.cpp" />
     <ClCompile Include="..\Code\TestPlayer.cpp" />
     <ClCompile Include="..\Code\ToolScene.cpp" />
@@ -354,6 +355,7 @@
     <ClCompile Include="..\Code\Weapon.cpp" />
     <ClCompile Include="..\Code\WeaponUI.cpp" />
     <ClCompile Include="..\Code\ShotParticle.cpp" />
+    <ClCompile Include="..\Code\Zombie.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="GraphEditor.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>

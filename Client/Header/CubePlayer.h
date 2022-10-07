@@ -138,12 +138,23 @@ public:
 	void			Capture_Uzi(void) { m_bUzi = true; }
 	void			Capture_Shotgun(void) { m_bShotgun = true; }
 	void			Capture_Sniper(void) { m_bSniper = true; }
-
-	_bool		Get_SniperZoom() { return m_bSinperZoom; }
+	_bool			Get_SniperZoom() { return m_bSinperZoom; }
 
 	//ITEM
-	void		Get_Defense() { m_tAbility->iDefence += 10; }
-	void		Get_Hp() { m_tAbility->iHp += 10; }
+	void		Get_Defense() 
+	{ 
+		if (m_tAbility->iDefence <= m_tAbility->iMaxDefence)
+			m_tAbility->iDefence += 10; 
+		if (m_tAbility->iDefence >= m_tAbility->iMaxDefence)
+			m_tAbility->iDefence = m_tAbility->iMaxDefence;
+	}
+	void		Get_Hp() 
+	{ 
+		if (m_tAbility->iHp < m_tAbility->iMaxHp)
+			m_tAbility->iMaxHp += 10;
+		else
+			m_tAbility->iHp += 10; 
+	}
 	void		Get_MaxHp() { m_tAbility->iMaxHp += 30; }
 
 public:
