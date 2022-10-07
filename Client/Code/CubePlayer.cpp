@@ -25,9 +25,10 @@ HRESULT CCubePlayer::Ready_Object(void)
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
 	m_tAbility = new ABILITY;
-	m_tAbility->iHp = 100;
 	m_tAbility->iMaxHp = 100;
-	m_tAbility->iDefence = 100;
+	m_tAbility->iHp = m_tAbility->iMaxHp;
+	m_tAbility->iMaxDefence = 100;
+	m_tAbility->iDefence = 50;
 	m_tAbility->iGunTexture = 5;
 
 	m_pTransform->Set_Scale(0.4f, 1.f, 0.4f);

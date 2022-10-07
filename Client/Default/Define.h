@@ -6,10 +6,12 @@
 #define TERRAINTEX_COMP L"Proto_TerrainTexCom"
 
 // Loading
-#define RCTEX_HP_COMP	    L"RcTex_HP"
-#define RCTEX_DEFENCE_COMP  L"RcTex_Defense"
-#define RCTEX_BULLET_COMP	L"RcTex_Bullet"
-#define RCTEX_MONTER_HP_COMP L"Proto_MonsterHpCom"
+#define RCTEX_HP_COMP			L"RcTex_HP"
+#define RCTEX_DEFENCE_COMP		L"RcTex_Defense"
+#define RCTEX_BULLET_COMP		L"RcTex_Bullet"
+#define RCTEX_MONTER_HP_COMP	L"Proto_MonsterHpCom"
+#define RCTEX_GENERAL_MONSTER_HP_COMP L"RcTex_MonsterHp"
+#define RCTEX_GENERAL_MONSTER_HUD_COMP L"RcTex_MonsterHUDHp"
 
 #define	TRANSFORM_COMP  L"Proto_TransformCom"
 #define ITEM_TRANSFORM_COMP L"ITEM_HITBOX_TransformCom"
@@ -106,3 +108,9 @@
 #define HP_50_FACE_PATH			L"../Bin/Resources/UI/Player/Face/HP50_%d.png" 
 #define HP_25_FACE_PATH			L"../Bin/Resources/UI/Player/Face/HP25_%d.png" 
 #define HP_0_FACE_PATH			L"../Bin/Resources/UI/Player/Face/HP0.png"
+
+// ∏ÛΩ∫≈Õ UI
+#define MONSTER_HP_TEX				L"Monster_Hp"
+#define MONSTER_HP_TEX_PATH			L"../Bin/Resources/UI/MonsterUI/Bar_monster_HP.png"
+#define	MONSTER_HP_HUD_TEX			L"Monster_Hud"
+#define MONSTER_HP_HUD_TEX_PATH		L"../Bin/Resources/UI/MonsterUI/HUD_bar_monster_HP.png"

@@ -244,6 +244,9 @@
     <Filter Include="02. GameObject\01. For_Stage\14. Crosshair">
       <UniqueIdentifier>{3f226a98-4f8f-4047-88ae-9e99d5ca4d7d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\09. UI\Monster">
+      <UniqueIdentifier>{bdd44947-81ab-4c33-9ac8-daa3f4a423ed}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -567,6 +570,9 @@
     <ClInclude Include="..\Header\Zombie.h">
       <Filter>99. Default\헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\MonsterUI.h">
+      <Filter>02. GameObject\01. For_Stage\09. UI\Monster</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -868,6 +874,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\Zombie.cpp">
       <Filter>99. Default\소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\MonsterUI.cpp">
+      <Filter>02. GameObject\01. For_Stage\09. UI\Monster</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

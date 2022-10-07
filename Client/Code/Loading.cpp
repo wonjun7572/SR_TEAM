@@ -38,6 +38,8 @@ _uint CLoading::Loading_ForStage(void)
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(RCTEX_DEFENCE_COMP, CRcTex::Create(m_pGraphicDev)), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(RCTEX_BULLET_COMP, CRcTex::Create(m_pGraphicDev)), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(RCTEX_MONTER_HP_COMP, CRcTex::Create(m_pGraphicDev)), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(RCTEX_GENERAL_MONSTER_HP_COMP, CRcTex::Create(m_pGraphicDev)), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(RCTEX_GENERAL_MONSTER_HUD_COMP, CRcTex::Create(m_pGraphicDev)), E_FAIL);
 	}
 	// ÆÄÆ¼Å¬
 	{
@@ -71,7 +73,11 @@ _uint CLoading::Loading_ForStage(void)
 	{
 		// HP
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"HP_Gage", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/UI/Player/Gage/theHUDui_10.png", TEX_NORMAL)), E_FAIL);
-		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Monster_HP", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Texture2D/Palette Texture.png", TEX_NORMAL)), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Monster_General_HP", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Texture2D/Palette Texture.png", TEX_NORMAL)), E_FAIL);
+
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(MONSTER_HP_TEX, CTexture::Create(m_pGraphicDev, MONSTER_HP_TEX_PATH, TEX_NORMAL)), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(MONSTER_HP_HUD_TEX, CTexture::Create(m_pGraphicDev, MONSTER_HP_HUD_TEX_PATH, TEX_NORMAL)), E_FAIL);
+
 		// DEFENSE
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"DEFENSE_Gage", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/UI/Player/Gage/theHUDui_9.png", TEX_NORMAL)), E_FAIL);
 	}

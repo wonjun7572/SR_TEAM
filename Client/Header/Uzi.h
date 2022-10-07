@@ -24,7 +24,16 @@ public:
 public:
 	void			Set_Uzi(void) { m_bEquiped = true; }
 	void			Off_Uzi(void) { m_bEquiped = false; }
-	void			Get_Bullet() { m_tAbility->fRemainBulletCnt += 10; }
+	void			Get_Bullet() 
+	{ 
+		if (m_tAbility->fBulletCount >= m_tAbility->fRemainBulletCnt)
+		{
+			m_tAbility->fRemainBulletCnt += 10; 
+			if (m_tAbility->fRemainBulletCnt >= m_tAbility->fBulletCount)
+				m_tAbility->fRemainBulletCnt = m_tAbility->fBulletCount;
+		}
+	}
+
 	_bool			Get_State(void) { return m_bEquiped; }
 	void			Get_UziUpgrade() { m_tAbility->fBulletAttack += 10; }
 

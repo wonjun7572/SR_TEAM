@@ -3,6 +3,8 @@
 #include "CubePlayer.h"
 #include "Weapon.h"
 #include "HealthPotion.h"
+#include "ObtainDefense.h"
+#include "ObtainBullet.h"
 
 CZombie::CZombie(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CMonster(pGraphicDev)
@@ -21,6 +23,7 @@ HRESULT CZombie::Ready_Object(const _vec3& vPos, wstring _strObjTag)
 	m_tAbility->fCurrentHp = m_tAbility->fMaxHp;
 	m_tAbility->fDamage = 0.f;
 	m_tAbility->strObjName = _strObjTag;
+	m_tAbility->strObjTag = L"Zombie";
 
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 	
@@ -38,11 +41,34 @@ _int CZombie::Update_Object(const _float & fTimeDelta)
 		CGameObject*		pGameObject = nullptr;
 		_vec3 vItemPos;
 		m_pTransCom->Get_Info(INFO_POS, &vItemPos);
-		pGameObject = CHealthPotion::Create(m_pGraphicDev, vItemPos);
-		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		wstring strHpItem;
-		strHpItem = m_tAbility->strObjName + L"HP";
-		Engine::Add_GameObject(STAGE_ITEM, pGameObject, strHpItem.c_str());
+
+		srand((unsigned int)time(NULL));
+		_int iRand = rand() % 3;
+
+		wstring strItemTag;
+		switch (iRand)
+		{
+		case ITEM_HP:
+			pGameObject = CHealthPotion::Create(m_pGraphicDev, vItemPos);
+			NULL_CHECK_RETURN(pGameObject, E_FAIL);
+			strItemTag = m_tAbility->strObjName + L"HP";
+			break;
+
+		case ITEM_DEFENCE:
+			pGameObject = CObtainDefense::Create(m_pGraphicDev, vItemPos);
+			NULL_CHECK_RETURN(pGameObject, E_FAIL);
+			strItemTag = m_tAbility->strObjName + L"DEFENCE";
+			break;
+
+		case ITEM_BULLET:
+			pGameObject = CObtainBullet::Create(m_pGraphicDev, vItemPos);
+			NULL_CHECK_RETURN(pGameObject, E_FAIL);
+			strItemTag = m_tAbility->strObjName + L"BULLET";
+			break;
+		}
+
+		Engine::Add_GameObject(STAGE_ITEM, pGameObject, strItemTag.c_str());
+
 		return -1;
 	}
 
@@ -70,7 +96,6 @@ void CZombie::Render_Object(void)
 	m_pBufferUICom->Resize_Buffer(m_tAbility->fCurrentHp / m_tAbility->fMaxHp);
 	m_pBufferUICom->Render_Buffer();
 }
-
 
 HRESULT CZombie::Add_Component(void)
 {
@@ -105,9 +130,9 @@ HRESULT CZombie::Add_Component(void)
 	NULL_CHECK_RETURN(m_pBufferUICom, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ RCTEX_MONTER_HP_COMP, pComponent });
 
-	pComponent = m_pTextureUICom = dynamic_cast<CTexture*>(Clone_Proto(L"Monster_HP"));
+	pComponent = m_pTextureUICom = dynamic_cast<CTexture*>(Clone_Proto(L"Monster_General_HP"));
 	NULL_CHECK_RETURN(m_pTextureUICom, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Monster_HP", pComponent });
+	m_mapComponent[ID_STATIC].insert({ L"Monster_General_HP", pComponent });
 
 	return S_OK;
 }

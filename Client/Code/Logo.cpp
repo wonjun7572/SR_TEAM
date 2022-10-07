@@ -58,15 +58,7 @@ void CLogo::LateUpdate_Scene(void)
 
 void CLogo::Render_Scene(void)
 {
-
-
-	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
-
-
-	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
-
-
-
+	
 }
 
 HRESULT CLogo::Ready_Layer_Environment(const _tchar * pLayerTag)

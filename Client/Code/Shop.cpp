@@ -30,13 +30,13 @@ HRESULT CShop::Ready_Object(void)
 	D3DXMatrixOrthoLH(&m_matProj, WINCX, WINCY, 0.f, 1.f);
 
 	//ShopView
-	{   
+	{
 		fScale = 3.0f;
-	_vec3 vPos = _vec3(820.f, 380.f, 0.f);
-	_float fWidth = (_float)m_pTextureform->Get_ImageInfo().Width;
-	_float fHeight = (_float)m_pTextureform->Get_ImageInfo().Height;
-	m_TranformCom->Set_Pos(vPos.x - WINCX * 0.5f, -vPos.y + WINCY * 0.5f, 0.f);
-	m_TranformCom->Set_Scale(fWidth * fScale, fHeight * fScale, 1.f);
+		_vec3 vPos = _vec3(820.f, 380.f, 0.f);
+		_float fWidth = (_float)m_pTextureform->Get_ImageInfo().Width;
+		_float fHeight = (_float)m_pTextureform->Get_ImageInfo().Height;
+		m_TranformCom->Set_Pos(vPos.x - WINCX * 0.5f, -vPos.y + WINCY * 0.5f, 0.f);
+		m_TranformCom->Set_Scale(fWidth * fScale, fHeight * fScale, 1.f);
 	}
 
 	//UZI

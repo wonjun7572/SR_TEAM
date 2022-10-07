@@ -202,6 +202,7 @@
     <ClInclude Include="..\Header\MaxPlusHp.h" />
     <ClInclude Include="..\Header\Monster.h" />
     <ClInclude Include="..\Header\MonsterMapping.h" />
+    <ClInclude Include="..\Header\MonsterUI.h" />
     <ClInclude Include="..\Header\ObtainBullet.h" />
     <ClInclude Include="..\Header\ObtainDefense.h" />
     <ClInclude Include="..\Header\OptionButton.h" />
@@ -313,6 +314,7 @@
     <ClCompile Include="..\Code\MaxPlusHp.cpp" />
     <ClCompile Include="..\Code\Monster.cpp" />
     <ClCompile Include="..\Code\MonsterMapping.cpp" />
+    <ClCompile Include="..\Code\MonsterUI.cpp" />
     <ClCompile Include="..\Code\ObtainBullet.cpp" />
     <ClCompile Include="..\Code\ObtainDefense.cpp" />
     <ClCompile Include="..\Code\OptionButton.cpp" />
