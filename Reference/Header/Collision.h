@@ -18,8 +18,9 @@ private:
 public:
 	HRESULT					Ready_Collision(void);
 	_bool					Check_Collision(void);
-	_int					Wall_Collision(_vec3* vNorm);
+	_bool					Sphere_Collision(CTransform* pTempTransform, CTransform* pSourTransform, _float fTemp, _float fSour);
 
+	_int					Wall_Collision(_vec3* vNorm);
 	_int					Wall_Collision_By_DotSliding(_vec3* vChangeDir);
 
 	void					Get_Item(void);

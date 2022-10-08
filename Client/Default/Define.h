@@ -4,6 +4,7 @@
 #define RCTEX_COMP	    L"Proto_RcTexCom"
 #define	CUBETEX_COMP	L"Proto_CubeTexCom"
 #define TERRAINTEX_COMP L"Proto_TerrainTexCom"
+#define SPHERECOL_COMP	L"Proto_SphereColCom"
 
 // Loading
 #define RCTEX_HP_COMP			L"RcTex_HP"

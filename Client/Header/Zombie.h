@@ -13,7 +13,6 @@ private:
 
 private:
 	HRESULT				Add_Component(void);
-
 	HRESULT				Create_Item();
 
 public:

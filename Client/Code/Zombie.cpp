@@ -35,6 +35,10 @@ HRESULT CZombie::Ready_Object(const _vec3& vPos)
 	m_pHitBoxTransCom->Set_Pos(vPos.x, vPos.y, vPos.z);
 	m_pHitBoxTransCom->Static_Update();
 
+	m_pSphereTransCom->Set_Scale(&_vec3(1.f, 1.f, 1.f));
+	m_pSphereTransCom->Set_Pos(vPos.x, vPos.y, vPos.z);
+	m_pSphereTransCom->Static_Update();
+
 	return S_OK;
 }
 
@@ -51,10 +55,10 @@ _int CZombie::Update_Object(const _float & fTimeDelta)
 	m_pPlayerTransCom->Get_Info(INFO_POS, &vPlayerPos);
 	m_pTransCom->Chase_Target(&vPlayerPos, 1.f, fTimeDelta);
 
-	_vec3 vItemPos;
-	m_pTransCom->Get_Info(INFO_POS, &vItemPos);
-	m_pHitBoxTransCom->Set_Pos(vItemPos.x, vItemPos.y, vItemPos.z);
-
+	_vec3 vMonsterPos;
+	m_pTransCom->Get_Info(INFO_POS, &vMonsterPos);
+	m_pHitBoxTransCom->Set_Pos(vMonsterPos.x, vMonsterPos.y, vMonsterPos.z);
+	m_pSphereTransCom->Set_Pos(vMonsterPos.x, vMonsterPos.y, vMonsterPos.z);
 	return 0;
 }
 
@@ -72,6 +76,9 @@ void CZombie::Render_Object(void)
 	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pHitBoxTransCom->Get_WorldMatrixPointer());
 	m_pHitBox->Render_Buffer();
+
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pSphereTransCom->Get_WorldMatrixPointer());
+	m_pSphereBufferCom->Render_Buffer();
 	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransUICom->Get_WorldMatrixPointer());
@@ -123,6 +130,15 @@ HRESULT CZombie::Add_Component(void)
 	NULL_CHECK_RETURN(m_pTextureUICom, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Monster_General_HP", pComponent });
 
+	// For Sphere
+	pComponent = m_pSphereBufferCom = dynamic_cast<CSphereTex*>(Clone_Proto(SPHERECOL_COMP));
+	NULL_CHECK_RETURN(m_pSphereBufferCom, E_FAIL);
+	m_mapComponent[ID_STATIC].insert({ SPHERECOL_COMP, pComponent });
+
+	pComponent = m_pSphereTransCom = dynamic_cast<CTransform*>(Clone_Proto(TRANSFORM_COMP));
+	NULL_CHECK_RETURN(m_pSphereBufferCom, E_FAIL);
+	m_mapComponent[ID_DYNAMIC].insert({ L"Sphere_TransCom", pComponent });
+
 	return S_OK;
 }
 
@@ -137,23 +153,23 @@ HRESULT CZombie::Create_Item()
 
 	switch (iRand)
 	{
-	case 0:
-		pGameObject = CHealthPotion::Create(m_pGraphicDev, vItemPos);
-		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		Get_Layer(STAGE_ITEM)->Add_GameList(pGameObject);
-		break;
+		case 0:
+			pGameObject = CHealthPotion::Create(m_pGraphicDev, vItemPos);
+			NULL_CHECK_RETURN(pGameObject, E_FAIL);
+			Get_Layer(STAGE_ITEM)->Add_GameList(pGameObject);
+			break;
 
-	case 1:
-		pGameObject = CObtainBullet::Create(m_pGraphicDev, vItemPos);
-		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		Get_Layer(STAGE_ITEM)->Add_GameList(pGameObject);
-		break;
+		case 1:
+			pGameObject = CObtainBullet::Create(m_pGraphicDev, vItemPos);
+			NULL_CHECK_RETURN(pGameObject, E_FAIL);
+			Get_Layer(STAGE_ITEM)->Add_GameList(pGameObject);
+			break;
 
-	case 2:
-		pGameObject = CObtainDefense::Create(m_pGraphicDev, vItemPos);
-		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		Get_Layer(STAGE_ITEM)->Add_GameList(pGameObject);
-		break;
+		case 2:
+			pGameObject = CObtainDefense::Create(m_pGraphicDev, vItemPos);
+			NULL_CHECK_RETURN(pGameObject, E_FAIL);
+			Get_Layer(STAGE_ITEM)->Add_GameList(pGameObject);
+			break;
 	}
 
 	return S_OK;

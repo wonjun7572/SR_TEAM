@@ -67,21 +67,6 @@
     <Filter Include="02. GameObject\01. For_Stage\04. Wall\Manager">
       <UniqueIdentifier>{6a4c3150-11d3-4219-972e-d372cfcd2e2c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\01. For_Stage\05. CubePlayer">
-      <UniqueIdentifier>{992b2236-4268-4746-9cf3-a44c72fad07c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\01. For_Stage\05. CubePlayer\Arm">
-      <UniqueIdentifier>{23f84953-e185-4e97-93d6-7b9a57d8473e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\01. For_Stage\05. CubePlayer\Leg">
-      <UniqueIdentifier>{fcfc542e-db5a-4db2-bfef-493af702a15f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\01. For_Stage\05. CubePlayer\Body">
-      <UniqueIdentifier>{96c1990b-c0ed-45fb-9623-a471fcb2eb2e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\01. For_Stage\05. CubePlayer\Head">
-      <UniqueIdentifier>{4c596655-6eef-4602-a3c1-423dfbe90103}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. GameObject\01. For_Stage\06. Bullet">
       <UniqueIdentifier>{e5424f61-e480-4334-a082-ad86a0d49d51}</UniqueIdentifier>
     </Filter>
@@ -96,12 +81,6 @@
     </Filter>
     <Filter Include="02. GameObject\01. For_Stage\99. TestCube">
       <UniqueIdentifier>{3233272e-e7a2-44ee-942e-403f08eaf1b1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\01. For_Stage\05. CubePlayer\Hand">
-      <UniqueIdentifier>{6ee794c0-aa33-465d-bf04-ae640cc2f219}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\01. For_Stage\05. CubePlayer\Foot">
-      <UniqueIdentifier>{ef04a8e1-ca29-494e-a23b-92df25412a57}</UniqueIdentifier>
     </Filter>
     <Filter Include="02. GameObject\01. For_Stage\07. Weapon">
       <UniqueIdentifier>{2866dcc5-758d-4213-81f5-49d4f574035c}</UniqueIdentifier>
@@ -249,6 +228,27 @@
     </Filter>
     <Filter Include="02. GameObject\01. For_Stage\08. Monster\02. Skeleton">
       <UniqueIdentifier>{675db7c6-f599-493e-bb7e-bd1f4af7ad93}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\05. CubePlayer">
+      <UniqueIdentifier>{992b2236-4268-4746-9cf3-a44c72fad07c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\05. CubePlayer\Arm">
+      <UniqueIdentifier>{23f84953-e185-4e97-93d6-7b9a57d8473e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\05. CubePlayer\Leg">
+      <UniqueIdentifier>{fcfc542e-db5a-4db2-bfef-493af702a15f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\05. CubePlayer\Body">
+      <UniqueIdentifier>{96c1990b-c0ed-45fb-9623-a471fcb2eb2e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\05. CubePlayer\Head">
+      <UniqueIdentifier>{4c596655-6eef-4602-a3c1-423dfbe90103}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\05. CubePlayer\Hand">
+      <UniqueIdentifier>{6ee794c0-aa33-465d-bf04-ae640cc2f219}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\05. CubePlayer\Foot">
+      <UniqueIdentifier>{ef04a8e1-ca29-494e-a23b-92df25412a57}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

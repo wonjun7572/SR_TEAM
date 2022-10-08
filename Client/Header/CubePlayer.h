@@ -92,6 +92,9 @@ private:
 	CHitBox*		m_pHitBox = nullptr;
 	ABILITY*		m_tAbility = nullptr;
 
+	CSphereTex*		m_pSphereBufferCom = nullptr;
+	CTransform*		m_pSphereTransCom = nullptr;
+
 private:
 	CBulletParticle* m_pBulletParicle = nullptr;
 	CShotParticle*	 m_pShotParicle = nullptr;

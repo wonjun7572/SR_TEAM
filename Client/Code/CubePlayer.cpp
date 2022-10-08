@@ -32,9 +32,13 @@ HRESULT CCubePlayer::Ready_Object(void)
 	m_tAbility->iDefence = 50;
 	m_tAbility->iGunTexture = 5;
 
-	m_pTransform->Set_Scale(0.4f, 1.f, 0.4f);
+	m_pTransform->Set_Scale(0.4f, 0.5f, 0.4f);
 	m_pTransform->Set_Pos(10.f, 10.f, 10.f);
 	m_pTransform->Static_Update();
+
+	m_pSphereTransCom->Set_Scale(0.7f, 0.7f, 0.7f);
+	m_pSphereTransCom->Set_Pos(10.f, 10.f, 10.f);
+	m_pSphereTransCom->Static_Update();
 
 	m_fSpeed = 10.f;
 
@@ -110,6 +114,15 @@ void CCubePlayer::Render_Object(void)
 
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pSphereTransCom->Get_WorldMatrixPointer());
+	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+
+	m_pSphereBufferCom->Render_Buffer();
+
+	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 }
 
 void CCubePlayer::Update_NullCheck()
@@ -146,6 +159,7 @@ void CCubePlayer::Assemble(void)
 	m_pBodyWorld->Get_Info(INFO_POS, &vBodyAfterPos);
 
 	m_pTransform->Set_Pos(vBodyPos.x, vBodyPos.y, vBodyPos.z);
+	m_pSphereTransCom->Set_Pos(vBodyPos.x, vBodyPos.y, vBodyPos.z);
 	m_pHeadWorld->Set_Pos(vBodyPos.x, vBodyPos.y + 0.3f, vBodyPos.z);
 	m_pLeftArmWorld->Set_Pos(vBodyPos.x - 0.15f, vBodyPos.y + 0.1f, vBodyPos.z);
 	m_pRightArmWorld->Set_Pos(vBodyPos.x + 0.15f, vBodyPos.y + 0.1f, vBodyPos.z);
@@ -711,6 +725,15 @@ HRESULT CCubePlayer::Add_Component(void)
 	pInstance = m_pCalculatorCom = dynamic_cast<CCalculator*>(Engine::Clone_Proto(CALCULATOR_COMP));
 	NULL_CHECK_RETURN(pInstance, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ CALCULATOR_COMP, pInstance });
+
+	// For Sphere
+	pInstance = m_pSphereBufferCom = dynamic_cast<CSphereTex*>(Clone_Proto(SPHERECOL_COMP));
+	NULL_CHECK_RETURN(m_pSphereBufferCom, E_FAIL);
+	m_mapComponent[ID_STATIC].insert({ SPHERECOL_COMP, pInstance });
+
+	pInstance = m_pSphereTransCom = dynamic_cast<CTransform*>(Clone_Proto(TRANSFORM_COMP));
+	NULL_CHECK_RETURN(m_pSphereBufferCom, E_FAIL);
+	m_mapComponent[ID_DYNAMIC].insert({ L"Sphere_TransCom", pInstance });
 
 	return S_OK;
 }
