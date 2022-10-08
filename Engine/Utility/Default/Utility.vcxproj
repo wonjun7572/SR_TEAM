@@ -175,6 +175,7 @@ call CopyUtility.bat</Command>
     <ClInclude Include="..\..\Header\CubeTex.h" />
     <ClInclude Include="..\..\Header\DynamicBuffer.h" />
     <ClInclude Include="..\..\Header\Export_Utility.h" />
+    <ClInclude Include="..\..\Header\FlexibleAxisCube.h" />
     <ClInclude Include="..\..\Header\GameObject.h" />
     <ClInclude Include="..\..\Header\Hitbox.h" />
     <ClInclude Include="..\..\Header\Layer.h" />
@@ -183,6 +184,7 @@ call CopyUtility.bat</Command>
     <ClInclude Include="..\..\Header\Management.h" />
     <ClInclude Include="..\..\Header\ProtoMgr.h" />
     <ClInclude Include="..\..\Header\PSystem.h" />
+    <ClInclude Include="..\..\Header\Quarternion.h" />
     <ClInclude Include="..\..\Header\RcCol.h" />
     <ClInclude Include="..\..\Header\RcRD.h" />
     <ClInclude Include="..\..\Header\RcTex.h" />
@@ -200,8 +202,10 @@ call CopyUtility.bat</Command>
   <ItemGroup>
     <ClCompile Include="..\Code\Collision.cpp" />
     <ClCompile Include="..\Code\DynamicBuffer.cpp" />
+    <ClCompile Include="..\Code\FlexibleAxisCube.cpp" />
     <ClCompile Include="..\Code\Interface.cpp" />
     <ClCompile Include="..\Code\PSystem.cpp" />
+    <ClCompile Include="..\Code\Quarternion.cpp" />
     <ClCompile Include="..\Code\RcRD.cpp" />
     <ClCompile Include="..\Code\Calculator.cpp" />
     <ClCompile Include="..\Code\Camera.cpp" />

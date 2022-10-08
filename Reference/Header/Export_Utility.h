@@ -17,6 +17,9 @@
 #include "Texture.h"
 #include "Light.h"
 
+#include "FlexibleAxisCube.h"
+#include "Quarternion.h"
+
 #include "Camera.h"
 
 #include "ProtoMgr.h"
