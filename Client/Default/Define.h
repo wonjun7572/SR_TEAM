@@ -4,7 +4,7 @@
 #define RCTEX_COMP	    L"Proto_RcTexCom"
 #define	CUBETEX_COMP	L"Proto_CubeTexCom"
 #define TERRAINTEX_COMP L"Proto_TerrainTexCom"
-#define SPHERECOL_COMP	L"Proto_SphereColCom"
+#define FLEXIBLEAXISCUBE_COMP L"Proto_FlexibleAxisCubeCom"
 
 // Loading
 #define RCTEX_HP_COMP			L"RcTex_HP"
@@ -21,6 +21,8 @@
 #define CALCULATOR_COMP L"Proto_CalculatorCom"
 
 #define HITBOX_COMP		L"Proto_HitboxCom"
+
+#define QUATERNION_COMP L"Proto_QuaternionCom"
 
 // FONT
 #define ROBOTO_BOLD		L"Roboto-Bold"
@@ -60,6 +62,7 @@
 #define STAGE_ITEM		   L"STAGE_ITEM_Layer"	
 #define STAGE_GUN		   L"STAGE_GUN_Layer"
 #define STAGE_GUNITEM	   L"STAGE_GUNITEM_Layer"
+#define STAGE_PLAYER	   L"STAGE_PLAYER_Layer"
 
 // Particle
 #define SHOTPARTICLE_TEX			L"SHOTPARTICLE_TEX"

@@ -6,6 +6,8 @@
 #include "Wall.h"
 #include "TestCube.h"
 
+#include "AnimationPlayer.h"
+
 #include "CubePlayer.h"
 #include "CubeHead.h"
 #include "CubeBody.h"
@@ -88,6 +90,7 @@ HRESULT CStage::Ready_Scene(void)
 	FAILED_CHECK_RETURN(Ready_Layer_Item(STAGE_ITEM), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Layer_Gun(STAGE_GUN), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Layer_GunItem(STAGE_GUNITEM), E_FAIL);
+	FAILED_CHECK_RETURN(Ready_Layer_Player(STAGE_PLAYER), E_FAIL);
 	return S_OK;
 }
 
@@ -290,6 +293,10 @@ HRESULT CStage::Ready_Layer_Character(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pLayer, E_FAIL);
 
 	CGameObject*		pGameObject = nullptr;
+
+	pGameObject = CAnimationPlayer::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"AnimationPlayer", pGameObject), E_FAIL);
 
 	//	¸Ó¸®
 	pGameObject = CCubeHead::Create(m_pGraphicDev);
@@ -550,6 +557,18 @@ HRESULT CStage::Ready_Layer_GunItem(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"GetSniper", pGameObject), E_FAIL);
 
+
+	m_mapLayer.insert({ pLayerTag, pLayer });
+
+	return S_OK;
+}
+
+HRESULT CStage::Ready_Layer_Player(const _tchar * pLayerTag)
+{
+	Engine::CLayer*		pLayer = Engine::CLayer::Create();
+	NULL_CHECK_RETURN(pLayer, E_FAIL);
+
+	CGameObject*		pGameObject = nullptr;
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
