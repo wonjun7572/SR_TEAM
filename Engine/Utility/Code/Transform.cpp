@@ -521,14 +521,14 @@ const _matrix* Engine::CTransform::Compute_LookAtTarget(const _vec3* pTargetPos)
 {
 	_vec3		vLook = *pTargetPos - m_vInfo[INFO_POS];
 
-	_vec3		vAxis, vUp;
+	_vec3		vAxis, vRight;
 	_matrix		matRot;
 	
 	// D3DXMatrixRotationAxis : 임의의 축회전 행렬을 만들어주는 함수
 	return D3DXMatrixRotationAxis(&matRot, 
-									D3DXVec3Cross(&vAxis, &m_vInfo[INFO_UP], &vLook),
+									D3DXVec3Cross(&vAxis, &m_vInfo[INFO_RIGHT], &vLook),
 									acosf(D3DXVec3Dot(D3DXVec3Normalize(&vLook, &vLook), 
-												D3DXVec3Normalize(&vUp, &m_vInfo[INFO_UP]))));
+												D3DXVec3Normalize(&vRight, &m_vInfo[INFO_RIGHT]))));
 }
 
 void CTransform::Billboard_Transform(const _float & fTimeDelta)

@@ -11,6 +11,7 @@
 #include "ShotParticle.h"
 #include "BulletParticle.h"
 #include "Inventory.h"
+
 CCubePlayer::CCubePlayer(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
 {
@@ -666,7 +667,6 @@ HRESULT CCubePlayer::Get_BodyTransform(void)
 	NULL_CHECK_RETURN(m_pBodyWorld, E_FAIL);
 	m_pRightFootWorld = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_CHARACTER, L"R_FOOT", TRANSFORM_COMP, ID_DYNAMIC));
 	NULL_CHECK_RETURN(m_pBodyWorld, E_FAIL);
-
 	return S_OK;
 }
 
@@ -727,6 +727,7 @@ CCubePlayer * CCubePlayer::Create(LPDIRECT3DDEVICE9 pGraphicDev)
      
 void CCubePlayer::Free(void)
 {
+	CGameObject::Free();
 	for (auto& iter : m_listMonsterCnt)
 	{
 		if (iter != nullptr)
@@ -736,5 +737,4 @@ void CCubePlayer::Free(void)
 	Safe_Delete<ABILITY*>(m_tAbility);
 
 	m_listMonsterCnt.clear();
-	CGameObject::Free();
 }
