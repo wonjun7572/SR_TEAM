@@ -37,6 +37,10 @@ private:
 	CGameObject*		m_pItemIcon = nullptr;
 	CItemIcon*			m_pIconGrab = nullptr;
 
+
+
+
+
 	CTransform*			m_pTransformCom = nullptr;
 	CTexture*			m_pTextureCom = nullptr;
 	CRcTex*				m_pRcTexCom = nullptr;

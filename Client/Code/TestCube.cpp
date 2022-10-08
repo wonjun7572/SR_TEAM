@@ -119,7 +119,7 @@ void CTestCube::Update_NullCheck()
 {
 	if (!m_pMonsterParticle)
 		m_pMonsterParticle = dynamic_cast<CMonsterParticle*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"MonsterParticle"));
-	m_pMonsterParticle->addParticle();
+	//m_pMonsterParticle->addParticle();
 }
 
 HRESULT CTestCube::Interact(void)

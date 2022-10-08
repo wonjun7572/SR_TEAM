@@ -43,6 +43,9 @@ private:
 	CTransform*		 m_pTransformCom = nullptr;
 	CTexture*		 m_pTextureCom = nullptr;
 	CTexture*		 m_pCursorTextureCom = nullptr;
+	CTexture*		 m_pUziTextureCom = nullptr;
+	CTexture*		 m_pShotGunTextureCom = nullptr;
+	CTexture*		 m_pSniperTextureCom = nullptr;
 
 	CRcTex*			 m_pRcTexCom = nullptr;	
 	CItemIcon*		 m_pDeleter = nullptr;
@@ -58,7 +61,8 @@ private:
 
 private:
 	_int			m_iIndex = 0;
-	_int			m_iTexIndex = 0;
+	_int			m_iNumber = 0;
+	_int			m_iTexIndex;
 	_bool			m_bInit = false;
 	_bool			m_bFix =  false;
 	_vec3			m_vBlockPos;

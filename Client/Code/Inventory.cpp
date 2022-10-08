@@ -150,11 +150,7 @@ void CInventory::Sorting()
 			m_iItemCnt++;
 			m_bSorting = true;
 			m_bNullSorting = true;
-			//제거
-			//dynamic_cast<CItemIcon*>(iter)->Kill_Obj();
-			//iter = nullptr;
-			//인덱스변경
-			//dynamic_cast<CItemIcon*>(iter)->Set_Texture(0);
+		
 		}
 	}
 	_vec3   vPos;
@@ -274,6 +270,11 @@ void CInventory::Mouse()
 							m_pIconGrab = nullptr;
 							m_iItemCnt--;
 
+
+
+							
+
+
 					
 						}
 					}
@@ -341,9 +342,13 @@ void CInventory::Mouse()
 							m_vecEquipments[0] = nullptr;
 							m_bNullSorting = true;
 							m_bSorting = true;
-
 							ReCall();
+				
+					
+
+
 						}
+						
 					}
 				}
 				if (1080 < pt.x && pt.x < 1125 && 160 < pt.y && pt.y < 225) // 0,0
@@ -431,13 +436,7 @@ void CInventory::Mouse()
 
 void CInventory::Equipment()
 {
-	if (m_vecEquipments[1] != nullptr)
-	{
-	//	cout << 1 << "," << dynamic_cast<CItemIcon*>(m_vecEquipments[1])->Get_Index() << endl;
 
-		//기능추가 
-
-	}
 }
 
 CInventory * CInventory::Create(LPDIRECT3DDEVICE9 pGraphicDev)

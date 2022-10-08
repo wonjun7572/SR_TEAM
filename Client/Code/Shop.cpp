@@ -267,16 +267,49 @@ void CShop::Render_Object()
 	if (PointTest(m_vPos_ButtonFive))
 	{
 		Render_Ortho(m_pHeavyTransformCom, m_pHeavyRaffle, 1);
+		if (Get_DIMouseState(DIM_LB) & 0x80 && !m_bLBDown)
+		{
+			m_bLBDown = true;
+
+			if (m_pHeavyRaffle || m_eLevelUP == LEVEL_HEAVY)
+			{
+			
+				m_bChecking = true;
+				dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->ItemCreate(5);
+			}
+		}
 		m_bChecking = true;
 	}
 	if (PointTest(m_vPos_ButtonSix))
 	{
 		Render_Ortho(m_pRailGunTransformCom, m_pRailGunScope, 1);
+		if (Get_DIMouseState(DIM_LB) & 0x80 && !m_bLBDown)
+		{
+			m_bLBDown = true;
+
+			if (m_pRailGunScope || m_eLevelUP == LEVEL_RAIL)
+			{
+
+				m_bChecking = true;
+				dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->ItemCreate(6);
+			}
+		}
 		m_bChecking = true;
 	}
 	if (PointTest(m_vPos_ButtonSeven))
 	{
 		Render_Ortho(m_pBurstModeTransformCom, m_pBurstMode, 1);
+		if (Get_DIMouseState(DIM_LB) & 0x80 && !m_bLBDown)
+		{
+			m_bLBDown = true;
+
+			if (m_pRailGunScope || m_eLevelUP == LEVEL_BURST)
+			{
+
+				m_bChecking = true;
+				dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->ItemCreate(7);
+			}
+		}
 		m_bChecking = true;
 	}
 

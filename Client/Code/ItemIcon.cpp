@@ -18,7 +18,7 @@ CItemIcon::~CItemIcon()
 HRESULT CItemIcon::Ready_Object(_int iIndex)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
-	m_iIndex = iIndex;
+	m_iNumber = iIndex;
 	wsprintf(szCntName, L"Contents_%d", iIconCnt);
 	iIconCnt++;
 
@@ -46,11 +46,12 @@ void CItemIcon::LateUpdate_Object(void)
 
 void CItemIcon::Render_Object(void)
 {
-	if (dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->Get_Switch() && m_iIndex != 0)
+	if (dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->Get_Switch() && m_iNumber != 0)
 	{
 		m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
 
 		m_pTextureCom->Set_Texture(m_iTexIndex);
+
 		Begin_OrthoProj();
 		m_pRcTexCom->Render_Buffer();
 		End_OrthoProj();
@@ -58,14 +59,13 @@ void CItemIcon::Render_Object(void)
 		m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
 
 	}
-	if (m_iIndex == 0)
+	if (m_iNumber == 0)
 	{
 		if (dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->Get_Switch() || dynamic_cast<CShop*>(Engine::Get_GameObject(STAGE_UI, L"Shop"))->Get_Switch())
 		{
 			m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
-
-		
-			m_pCursorTextureCom->Set_Texture(0);
+			//m_pCursorTextureCom->Set_Texture(0);
+			m_pTextureCom->Set_Texture(0);
 			Begin_OrthoProj();
 			m_pRcTexCom->Render_Buffer();
 			End_OrthoProj();
@@ -94,9 +94,9 @@ HRESULT CItemIcon::Add_Component()
 
 
 
-	pComponent = m_pCursorTextureCom = dynamic_cast<CTexture*>(Clone_Proto(L"Proto_InvCursorTexture"));
-	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Proto_InvCursorTexture", pComponent });
+	//pComponent = m_pCursorTextureCom = dynamic_cast<CTexture*>(Clone_Proto(L"Proto_InvCursorTexture"));
+	//NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
+	//m_mapComponent[ID_STATIC].insert({ L"Proto_InvCursorTexture", pComponent });
 
 
 
@@ -143,32 +143,64 @@ void CItemIcon::End_OrthoProj()
 
 void CItemIcon::Index()
 {
-	if (m_iIndex == 0)   //커서
+	if (m_iNumber == 0)   //커서
 	{
-		m_iTexIndex = 1;
+		m_iTexIndex = m_iNumber;
 		m_fImgX = 30.f;
 		m_fImgY = 50.f;
 		m_fImgZ = 0.f;
 	}
-	if (m_iIndex == 1)   //아이템
+	if (m_iNumber == 1)   //아이템
 	{
-		m_iTexIndex = 0;
+		m_iTexIndex = m_iNumber;
 		m_fImgX = 20.f;
 		m_fImgY = 60.f;
 	}
-	if (m_iIndex == 2)
+
+	if (m_iNumber == 2)				//uzi
 	{
-		m_iTexIndex = m_iIndex;
+		m_iTexIndex = m_iNumber;
 		m_fImgX = 20.f;
-		m_fImgY = 30.f;
-	}
-	if (m_iIndex == 3)
-	{
-		m_iTexIndex = m_iIndex;
-		m_fImgX = 20.f;
-		m_fImgY = 30.f;
+		m_fImgY = 60.f;
 
 	}
+	if (m_iNumber == 3)				//Shotgun
+	{
+		m_iTexIndex = m_iNumber;
+		m_fImgX = 20.f;
+		m_fImgY = 60.f;
+
+	}
+
+	if (m_iNumber == 4)				//Sniper
+	{
+		m_iTexIndex = m_iNumber;
+		m_fImgX = 20.f;
+		m_fImgY = 60.f;
+
+	}
+	if (m_iNumber == 5)			//두번째 버튼
+	{
+		m_iTexIndex = m_iNumber;
+		m_fImgX = 20.f;
+		m_fImgY = 60.f;
+
+	}
+	if(m_iNumber == 6)			//세번째 버튼
+	{
+		m_iTexIndex = m_iNumber;
+		m_fImgX = 20.f;
+		m_fImgY = 60.f;
+
+	}
+	if(m_iNumber == 7)			//네번쨰 버튼 
+	{
+		m_iTexIndex = m_iNumber;
+		m_fImgX = 20.f;
+		m_fImgY = 60.f;
+
+	}
+
 
 }
 
@@ -182,7 +214,7 @@ void CItemIcon::FixOnCursor()
 		m_vBlockPos.x = -WINCX / 2 + pt.x;//(double)( 1.75*(-450 +(pt.x*WINCY/WINCX)));
 		m_vBlockPos.y = WINCY / 2 - pt.y;// (double)(1.75 * (250 - (pt.y*WINCY / WINCX)));
 	}
-	if (m_iIndex == 0)
+	if (m_iNumber == 0)
 	{
 		m_vBlockPos.x = 15.f - WINCX / 2 + pt.x;//(double)( 1.75*(-450 +(pt.x*WINCY/WINCX)));
 		m_vBlockPos.y = -25.f + WINCY / 2 - pt.y;// (double)(1.75 * (250 - (pt.y*WINCY / WINCX)));
