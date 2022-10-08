@@ -7,6 +7,7 @@
 #include "StaticCamera.h"
 #include "DynamicCamera.h"
 #include "DynamicCamera.h"
+
 class CStage : public Engine::CScene
 {
 private:
