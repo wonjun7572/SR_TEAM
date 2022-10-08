@@ -250,6 +250,12 @@
     <Filter Include="02. GameObject\01. For_Stage\08. Monster\02. Skeleton">
       <UniqueIdentifier>{675db7c6-f599-493e-bb7e-bd1f4af7ad93}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\15. Animation_Player">
+      <UniqueIdentifier>{fe15b180-0961-47bb-ae3f-62ea9097c285}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\15. Animation_Player\TransAxisBox">
+      <UniqueIdentifier>{8f360f99-cec1-42a5-9a0a-89a33b07c286}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -579,6 +585,12 @@
     <ClInclude Include="..\Header\Skeleton.h">
       <Filter>02. GameObject\01. For_Stage\08. Monster\02. Skeleton</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\AnimationPlayer.h">
+      <Filter>02. GameObject\01. For_Stage\15. Animation_Player</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\TransAxisBox.h">
+      <Filter>02. GameObject\01. For_Stage\15. Animation_Player\TransAxisBox</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -886,6 +898,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\Skeleton.cpp">
       <Filter>02. GameObject\01. For_Stage\08. Monster\02. Skeleton</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\AnimationPlayer.cpp">
+      <Filter>02. GameObject\01. For_Stage\15. Animation_Player</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\TransAxisBox.cpp">
+      <Filter>02. GameObject\01. For_Stage\15. Animation_Player\TransAxisBox</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

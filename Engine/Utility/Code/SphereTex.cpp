@@ -24,10 +24,9 @@ CSphereTex::~CSphereTex()
 {
 }
 
-HRESULT CSphereTex::Ready_Buffer(void)
+HRESULT CSphereTex::Ready_Buffer(_float _radius)
 {
 	int number_of_vertices, number_of_faces;
-	float radius = 0.5f;
 	int slices = 20;
 	int stacks = 20;
 	float phi_step, phi_start;
@@ -82,8 +81,8 @@ HRESULT CSphereTex::Ready_Buffer(void)
 	stack = 0;
 
 	vertices[vertex].vPos.x = 0.0f;
-	vertices[vertex].vPos.y = 0.0f;
-	vertices[vertex].vPos.z = radius;
+	vertices[vertex].vPos.y = _radius;
+	vertices[vertex].vPos.z = 0.f;
 	vertices[vertex].vTexUV = _vec2(0.9f, 0.9f);
 
 	float deltaU = 1.f / static_cast<float>(slices);
@@ -99,10 +98,10 @@ HRESULT CSphereTex::Ready_Buffer(void)
 			vertices[vertex].vNormal.x = sin_theta * cosf(phi_start);
 			vertices[vertex].vNormal.y = sin_theta * sinf(phi_start);
 			vertices[vertex].vNormal.z = cos_theta;
-			vertices[vertex].vPos.x = radius * sin_theta * cosf(phi_start);
-			vertices[vertex].vPos.y = radius * sin_theta * sinf(phi_start);
-			vertices[vertex].vPos.z = radius * cos_theta;
-			vertices[vertex].vTexUV = _vec2(deltaU * slice * 2, deltaV * (stack+1)* 2);
+			vertices[vertex].vPos.x = _radius * sin_theta * cosf(phi_start);
+			vertices[vertex].vPos.y = _radius * cos_theta;
+			vertices[vertex].vPos.z = _radius * sin_theta * sinf(phi_start);
+			vertices[vertex].vTexUV = _vec2(deltaU * slice * 2, deltaV * (stack + 1) * 2);
 			vertex++;
 
 			phi_start += phi_step;
@@ -144,8 +143,8 @@ HRESULT CSphereTex::Ready_Buffer(void)
 	}
 
 	vertices[vertex].vPos.x = 0.0f;
-	vertices[vertex].vPos.y = 0.0f;
-	vertices[vertex].vPos.z = -radius;
+	vertices[vertex].vPos.y = -_radius;
+	vertices[vertex].vPos.z = 0.f;
 	vertices[vertex].vTexUV = _vec2(0.1f, 1.f);
 	vertices[vertex].vNormal.x = 0.0f;
 	vertices[vertex].vNormal.y = 0.0f;
@@ -171,11 +170,11 @@ void CSphereTex::Render_Buffer(void)
 	CVIBuffer::Render_Buffer();
 }
 
-CSphereTex * CSphereTex::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CSphereTex * CSphereTex::Create(LPDIRECT3DDEVICE9 pGraphicDev, _float _radius)
 {
-	CSphereTex*	pInstance = new CSphereTex(pGraphicDev);
+	CSphereTex*   pInstance = new CSphereTex(pGraphicDev);
 
-	if (FAILED(pInstance->Ready_Buffer()))
+	if (FAILED(pInstance->Ready_Buffer(_radius)))
 	{
 		Safe_Release(pInstance);
 		return nullptr;

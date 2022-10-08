@@ -11,11 +11,11 @@ private:
 	virtual ~CSphereTex();
 
 public:
-	virtual HRESULT Ready_Buffer(void) override;
+	virtual HRESULT Ready_Buffer(_float _radius);
 	virtual void Render_Buffer(void) override;
 
 public:
-	static CSphereTex*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CSphereTex*	Create(LPDIRECT3DDEVICE9 pGraphicDev, _float _radius);
 	CComponent*	Clone(void);
 	virtual void Free(void) override;
 };

@@ -50,6 +50,9 @@ public:
 	//void				Set_WorldMatrix(_matrix* pWorld) { m_matWorld = *pWorld; }
 	//트랜스폼 전 변환값/////////////////////////////////////////////////////////////////////////////////
 	void				Get_BeforeInfo(INFOID eID, _vec3* pInfo) { memcpy(pInfo, m_vInfo[eID], sizeof(_vec3)); }
+	////////////////////////////////////////
+	void				Worldspace_By_Quarternion(void);
+	D3DXQUATERNION		Quaternion;
 
 
 	const _matrix*		Get_WorldMatrixPointer()					 {	return &m_matWorld; }

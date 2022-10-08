@@ -113,6 +113,20 @@ void CTransform::Flexible_WorldSpace(_vec3 * vScale, _vec3 * vAngle, _vec3 * vTr
 	m_matWorld = matScale * matRotX * matRotY * matRotZ * matTrans;
 }
 
+void CTransform::Worldspace_By_Quarternion(void)
+{
+	_matrix matScale, matRotQuaternion, matTrans;
+
+	D3DXMatrixScaling(&matScale, m_vScale.x, m_vScale.y, m_vScale.z);
+
+	D3DXQuaternionRotationYawPitchRoll(&Quaternion, m_vAngle.x, m_vAngle.y, m_vAngle.z);
+	D3DXMatrixRotationQuaternion(&matRotQuaternion, &Quaternion);
+
+	D3DXMatrixTranslation(&matTrans, m_vInfo[INFO_POS].x, m_vInfo[INFO_POS].y, m_vInfo[INFO_POS].z);
+
+	m_matWorld = matScale * matRotQuaternion * matTrans;
+}
+
 void CTransform::Rotation_Axis_Animation(const _float & fXMove, const _float & fYMove, const _float & fXAngle, const _float & fYAngle, const _float& fExtraMove, const _float& fExtraAngle)
 {
 	_matrix matScale, matRotX, matRotY, matTrans;
