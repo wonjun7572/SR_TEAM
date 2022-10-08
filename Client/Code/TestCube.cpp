@@ -37,6 +37,7 @@ HRESULT CTestCube::Ready_Object(int PosX, int PosY)
 
 _int CTestCube::Update_Object(const _float& fTimeDelta)
 {
+	Update_NullCheck();
 	CGameObject::Update_Object(fTimeDelta);
 	Add_RenderGroup(RENDER_NONALPHA, this);
 	Wall_Mapping();
@@ -112,6 +113,13 @@ bool CTestCube::Set_SelectGizmo()
 		return true;
 
 	return false;
+}
+
+void CTestCube::Update_NullCheck()
+{
+	if (!m_pMonsterParticle)
+		m_pMonsterParticle = dynamic_cast<CMonsterParticle*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"MonsterParticle"));
+	m_pMonsterParticle->addParticle();
 }
 
 HRESULT CTestCube::Interact(void)

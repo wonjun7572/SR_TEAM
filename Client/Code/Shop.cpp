@@ -4,6 +4,7 @@
 #include "Uzi.h"
 #include "Shotgun.h"
 #include "CubePlayer.h"
+#include "Inventory.h"
 CShop::CShop(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
 {
@@ -152,6 +153,9 @@ HRESULT CShop::Ready_Object(void)
 		m_pUpgradeTransformCom->Set_Scale(fWidth * fScale13 * 1.1f, fHeight * fScale13 * 1.2f, 1.f);
 	}
 
+
+
+
 	m_pUpgrade = L"UPGRADE";
 	m_pInformation = L"Press [Return] And Hold to Buy Upgrade";
 	m_pUziRaffle = L"UziRaffle";
@@ -162,6 +166,7 @@ HRESULT CShop::Ready_Object(void)
 	m_pRailGun = L"RAILGUN MODE";
 	m_pBurst = L"BURST MODE";
 	return S_OK;
+
 }
 
 _int CShop::Update_Object(const _float & fTimeDelta)
@@ -204,9 +209,9 @@ void CShop::Render_Object()
 	{
 		Render_Ortho(m_pButtonTransformCom, m_pButtonOneform, 1);
 		m_GunChecking = false;
-		if (Get_DIMouseState(DIM_LB) & 0x80)
+		if (Get_DIMouseState(DIM_LB) & 0x80 && !m_bLBDown)
 		{
-
+			m_bLBDown = true;
 
 			Render_Ortho(m_pUziTransformCom, m_pUziTextureform, 0);
 			m_GunChecking = true;
@@ -217,8 +222,10 @@ void CShop::Render_Object()
 	{
 		Render_Ortho(m_pShotGunTransformCom, m_pButtonTwoform, 1);
 		m_GunChecking = false;
-		if (Get_DIMouseState(DIM_LB) & 0x80)
+		if (Get_DIMouseState(DIM_LB) & 0x80 && !m_bLBDown)
 		{
+			m_bLBDown = true;
+
 			Render_Ortho(m_pShotGunformCom, m_pShotGunTextureform, 0);
 			m_GunChecking = true;
 
@@ -229,8 +236,10 @@ void CShop::Render_Object()
 	{
 		Render_Ortho(m_pSniperTransformCom, m_pButtonThreeform, 1);
 		m_GunChecking = false;
-		if (Get_DIMouseState(DIM_LB) & 0x80)
+		if (Get_DIMouseState(DIM_LB) & 0x80 && !m_bLBDown)
 		{
+			m_bLBDown = true;
+
 			Render_Ortho(m_pSniperformCom, m_pSniperTextureform, 0);
 			m_GunChecking = true;
 
@@ -240,12 +249,16 @@ void CShop::Render_Object()
 	if (PointTest(m_vPos_ButtonFour))
 	{
 		Render_Ortho(m_pLaserTransformCom, m_pLaserRaffle, 1);
-		if (Get_DIMouseState(DIM_LB) & 0x80)
+		if (Get_DIMouseState(DIM_LB) & 0x80 && !m_bLBDown)
 		{
+			m_bLBDown = true;
+
 			if (m_pLaserRaffle || m_eLevelUP == LEVEL_LASER)
 			{
 				dynamic_cast<CUzi*>(Engine::Get_GameObject(STAGE_GUN, L"UZI1"))->Get_UziUpgrade();
 				m_bChecking = true;
+				cout << "dmg" << endl;
+				dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->ItemCreate(1);
 			}
 		}
 		m_bChecking = true;
@@ -283,6 +296,7 @@ void CShop::Key_Input()
 	if (Get_DIKeyState(DIK_K))
 	{
 		CRenderer::GetInstance()->On_Shop();
+		m_bShopState = false;
 		m_bShop = false;
 
 	}
@@ -290,7 +304,12 @@ void CShop::Key_Input()
 	{
 		CRenderer::GetInstance()->Off_Shop();
 		m_bShop = true;
+		m_bShopState = true;
+	}
 
+	if (!Get_DIMouseState(DIM_LB))
+	{
+		m_bLBDown = false;
 	}
 }
 

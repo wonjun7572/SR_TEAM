@@ -22,7 +22,7 @@ HRESULT CInventory::Ready_Object(void)
 		m_vecContents[i] = nullptr;
 	}
 	m_vecEquipments.reserve(5);
-	for (_int i = 0 ; i < 5; i++)
+	for (_int i = 0; i < 5; i++)
 	{
 		m_vecEquipments.push_back(nullptr);
 		m_vecEquipments[i] = nullptr;
@@ -43,7 +43,7 @@ _int CInventory::Update_Object(const _float & fTimeDelta)
 }
 
 void CInventory::LateUpdate_Object(void)
-{	
+{
 	if (!m_bInit)
 	{
 		m_bInit = true;
@@ -66,6 +66,16 @@ void CInventory::Render_Object(void)
 	}
 }
 
+void CInventory::ReCall()
+{
+	for (int i = 0; i < 5; ++i)
+	{
+		m_iItemCnt++;
+		m_vecContents.push_back(m_vecEquipments[i]);
+		m_vecEquipments[i] = nullptr;
+	}
+}
+
 HRESULT CInventory::Add_Component()
 {
 	CComponent* pComponent = nullptr;
@@ -81,7 +91,7 @@ HRESULT CInventory::Add_Component()
 	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Clone_Proto(L"Proto_InventoryTexture"));
 	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_InventoryTexture", pComponent });
-		
+
 	return S_OK;
 }
 
@@ -101,8 +111,8 @@ void CInventory::Begin_OrthoProj()
 	D3DXMatrixIdentity(&matWorld);
 	D3DXMatrixIdentity(&matView);
 
-	matView.m[0][0] = WINCX/3.f; // 이미지 가로
-	matView.m[1][1] = WINCY/1.75f;   // 이미지 세로
+	matView.m[0][0] = WINCX / 3.f; // 이미지 가로
+	matView.m[1][1] = WINCY / 1.75f;   // 이미지 세로
 	matView.m[2][2] = 1.f;
 	matView.m[3][0] = InvPosX; //* (WINCX / WINCY);
 	matView.m[3][1] = InvPosY; //* (WINCX / WINCY);
@@ -120,36 +130,41 @@ void CInventory::End_OrthoProj()
 	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &m_matProj);
 }
 
-
 void CInventory::Get_Item()
 {
+
+
 }
+
 void CInventory::Sorting()
 {
 	//m_vecContents.shrink_to_fit();
-	if (Get_DIKeyState(DIK_V) && m_iItemCnt<27)
+	if (Get_DIKeyState(DIK_V) || m_bItemCreate)
 	{
-		//생성
-		m_pItemIcon = CItemIcon::Create(m_pGraphicDev, 1);
-		m_vecContents.push_back(m_pItemIcon);
-		m_iItemCnt++;
-		m_bSorting = true;
-		m_bNullSorting = true;
-		//제거
-		//dynamic_cast<CItemIcon*>(iter)->Kill_Obj();
-		//iter = nullptr;
-		//인덱스변경
-		//dynamic_cast<CItemIcon*>(iter)->Set_Texture(0);
+		if (m_iItemCnt < 27)
+		{
+			m_bItemCreate = false;
+			//생성
+			m_pItemIcon = CItemIcon::Create(m_pGraphicDev, m_iItemIndex);
+			m_vecContents.push_back(m_pItemIcon);
+			m_iItemCnt++;
+			m_bSorting = true;
+			m_bNullSorting = true;
+			//제거
+			//dynamic_cast<CItemIcon*>(iter)->Kill_Obj();
+			//iter = nullptr;
+			//인덱스변경
+			//dynamic_cast<CItemIcon*>(iter)->Set_Texture(0);
+		}
 	}
-	
-	_vec3	vPos;
-	_int	iCnt = 0;
+	_vec3   vPos;
+	_int   iCnt = 0;
 	CGameObject* pGameObject = nullptr;
 	if (m_bSorting)
 	{
 		for (auto& iter : m_vecContents)
 		{
-			if (iter != nullptr ) // 위치 지정
+			if (iter != nullptr) // 위치 지정
 			{
 				_float fDefaultX = 175.f;
 				_float fDefaultY = 75.f;
@@ -157,7 +172,7 @@ void CInventory::Sorting()
 				_float fIntervalY = (67.5f) * (iCnt / 9);
 				dynamic_cast<CItemIcon*>(iter)->Set_block(fDefaultX + fIntervalX, fDefaultY - fIntervalY, 0.f);
 			}
-			
+
 			if (m_bNullSorting&& iter != m_vecContents.back() && iter == nullptr && m_vecContents.back() != nullptr) // 빈곳부터 채우기
 			{
 				iter = m_vecContents.back();
@@ -172,26 +187,19 @@ void CInventory::Sorting()
 	if (m_bNull)
 	{
 		m_vecContents.pop_back();
-		m_bNull = false;		
+		m_bNull = false;
 	}
 }
 
 
 void CInventory::Key_Input()
-{	
+{
 	if (Get_DIKeyState(DIK_I))
 	{
 		if (m_bKeyDown)
 		{
 			m_bKeyDown = false;
-			if (true == m_bInvSwitch)
-			{
-				m_bInvSwitch = false;				
-			}
-			else if (false == m_bInvSwitch)
-			{
-				m_bInvSwitch = true;
-			}
+			m_bInvSwitch = !m_bInvSwitch;
 		}
 	}
 	if (!(Get_DIKeyState(DIK_I)))
@@ -200,18 +208,18 @@ void CInventory::Key_Input()
 
 void CInventory::Mouse()
 {
-	
+
 	POINT pt;
 	GetCursorPos(&pt);
 	ScreenToClient(g_hWnd, &pt);
-	
+
 	_float DefaultX = 955.f;
 	_float DefaultY = 345.f;
 	_float SizeX = 45.f;
 	_float SizeY = 60.f;
 	_float IntervalX = 50.f;
 	_float IntervalY = 67.5f;
-	//1405,565	~	1450 630 << 나가기버튼
+	//1405,565   ~   1450 630 << 나가기버튼
 	if (1405 < pt.x && pt.x < 1450 && 565 < pt.y && pt.y < 630 && m_bInvSwitch && Get_DIMouseState(DIM_LB))
 	{
 		m_bInvSwitch = false;
@@ -231,12 +239,11 @@ void CInventory::Mouse()
 						{
 							if (m_vecContents.size() > 9 * i + j && iter == m_vecContents[9 * i + j] && iter != nullptr)
 							{
-
+								m_iItemCnt--;
 								m_bRBDown = false;
 								iter->Kill_Obj();
 								iter = nullptr;
 
-								m_iItemCnt--;
 							}
 						}
 						if (m_vecContents.size() > 9 * i + j && iter == m_vecContents[9 * i + j] && iter != nullptr)
@@ -266,6 +273,8 @@ void CInventory::Mouse()
 							iter = nullptr;
 							m_pIconGrab = nullptr;
 							m_iItemCnt--;
+
+					
 						}
 					}
 					if (1080 < pt.x && pt.x < 1125 && 160 < pt.y && pt.y < 225) // 0,0
@@ -332,6 +341,8 @@ void CInventory::Mouse()
 							m_vecEquipments[0] = nullptr;
 							m_bNullSorting = true;
 							m_bSorting = true;
+
+							ReCall();
 						}
 					}
 				}
@@ -350,7 +361,7 @@ void CInventory::Mouse()
 						}
 					}
 				}
-				if (1080 < pt.x && pt.x < 1125 && 265 < pt.y && pt.y < 330) // 0,1
+				if (1080 < pt.x && pt.x < 1125 && 265 < pt.y && pt.y < 330) // 1,0
 				{
 					if (m_vecEquipments[2] != nullptr && Get_DIMouseState(DIM_LB) && m_bLBDown)
 					{
@@ -365,7 +376,7 @@ void CInventory::Mouse()
 						}
 					}
 				}
-				if (1230 < pt.x && pt.x < 1275 && 160 < pt.y && pt.y < 225) // 1,0
+				if (1230 < pt.x && pt.x < 1275 && 160 < pt.y && pt.y < 225) // 0,1
 				{
 					if (m_vecEquipments[3] != nullptr && Get_DIMouseState(DIM_LB) && m_bLBDown)
 					{
@@ -399,11 +410,11 @@ void CInventory::Mouse()
 			}
 		}
 	}
-	
+
 	if (!Get_DIMouseState(DIM_RB))
 	{
-		m_bRBDown = true;		
-	}	
+		m_bRBDown = true;
+	}
 	if (!Get_DIMouseState(DIM_LB))
 	{
 		m_bLBDown = true;
@@ -419,12 +430,19 @@ void CInventory::Mouse()
 }
 
 void CInventory::Equipment()
-{	
+{
+	if (m_vecEquipments[1] != nullptr)
+	{
+	//	cout << 1 << "," << dynamic_cast<CItemIcon*>(m_vecEquipments[1])->Get_Index() << endl;
+
+		//기능추가 
+
+	}
 }
 
 CInventory * CInventory::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
-	CInventory*	pInstance = new CInventory(pGraphicDev);
+	CInventory*   pInstance = new CInventory(pGraphicDev);
 
 	if (FAILED(pInstance->Ready_Object()))
 	{
@@ -436,8 +454,8 @@ CInventory * CInventory::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 
 void CInventory::Free(void)
 {
-//	for_each(m_vecContents.begin(), m_vecContents.end(), CDeleteObj());
-//	m_vecContents.clear();
+	//   for_each(m_vecContents.begin(), m_vecContents.end(), CDeleteObj());
+	//   m_vecContents.clear();
 
 	CGameObject::Free();
 }

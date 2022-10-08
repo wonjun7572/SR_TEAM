@@ -17,7 +17,10 @@ public:
 	virtual void	LateUpdate_Object(void) override;
 	virtual void	Render_Object(void) override;
 	_bool			Get_Switch(void)  { return m_bInvSwitch; }
+	void         ItemCreate(_int iItemIndex) { m_bItemCreate = true; m_iItemIndex = iItemIndex; }
 
+
+	void		ReCall();
 private:
 	HRESULT		Add_Component();
 	void		Begin_OrthoProj();
@@ -56,8 +59,8 @@ private:
 	_bool				m_bNullSorting = false;
 	_int				m_iItemCnt = 0;
 	_int				iVectorNumb = 0;
-
-
+	_bool				m_bItemCreate = false;
+	_int				m_iItemIndex;
 public:
 	static CInventory*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
 	void				Free(void)	override;

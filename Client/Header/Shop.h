@@ -33,7 +33,7 @@ public:
 	void		Key_Input();
 	void		Render_Ortho(CTransform* pTransform, CTexture* pTexture, _int iIndex = 0);
 
-
+	_bool			Get_Switch(void) { return m_bInvSwitch; }
 private:
 	HRESULT			Add_Component(void);
 	_bool			PointMouse(const _vec3& vPos);		
@@ -136,7 +136,9 @@ private:
 	_bool		m_bMouseCheck = false;
 	_bool		m_bChecking = false;
 	_bool		m_GunChecking = false;
-
+	_bool		m_bShopState = false;
+	_bool				m_bInvSwitch = false;
+	_bool		m_bLBDown = false;
 	_float		fScale;
 	_float		fScale2;
 	//¹öÆ°
