@@ -54,6 +54,7 @@
 #include "Inventory.h"
 
 #include "Zombie.h"
+#include "Skeleton.h"
 #include "MonsterUI.h"
 
 CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -372,6 +373,13 @@ HRESULT CStage::Ready_Layer_Monster(const _tchar * pLayerTag)
 	for (int i = 0; i < 10; i++)
 	{
 		pGameObject = CZombie::Create(m_pGraphicDev, _vec3(_float(rand() % 10 + 10), 0.6f, _float(rand() % 10) + 10));
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+	}
+
+	for (int i = 0; i < 10; i++)
+	{
+		pGameObject = CSkeleton::Create(m_pGraphicDev, _vec3(_float(rand() % 10 + 20), 0.6f, _float(rand() % 10) + 20));
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
 	}

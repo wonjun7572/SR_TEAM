@@ -247,6 +247,9 @@
     <Filter Include="02. GameObject\01. For_Stage\09. UI\Monster">
       <UniqueIdentifier>{bdd44947-81ab-4c33-9ac8-daa3f4a423ed}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\08. Monster\02. Skeleton">
+      <UniqueIdentifier>{675db7c6-f599-493e-bb7e-bd1f4af7ad93}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -573,6 +576,9 @@
     <ClInclude Include="..\Header\Monster.h">
       <Filter>02. GameObject\01. For_Stage\08. Monster</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\Skeleton.h">
+      <Filter>02. GameObject\01. For_Stage\08. Monster\02. Skeleton</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -877,6 +883,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\Monster.cpp">
       <Filter>02. GameObject\01. For_Stage\08. Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Skeleton.cpp">
+      <Filter>02. GameObject\01. For_Stage\08. Monster\02. Skeleton</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

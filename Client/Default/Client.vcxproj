@@ -217,6 +217,7 @@
     <ClInclude Include="..\Header\ShotgunPart2.h" />
     <ClInclude Include="..\Header\ShotgunPart3.h" />
     <ClInclude Include="..\Header\ShotgunPart4.h" />
+    <ClInclude Include="..\Header\Skeleton.h" />
     <ClInclude Include="..\Header\SkyBox.h" />
     <ClInclude Include="..\Header\Sniper.h" />
     <ClInclude Include="..\Header\SniperPart1.h" />
@@ -329,6 +330,7 @@
     <ClCompile Include="..\Code\ShotgunPart2.cpp" />
     <ClCompile Include="..\Code\ShotgunPart3.cpp" />
     <ClCompile Include="..\Code\ShotgunPart4.cpp" />
+    <ClCompile Include="..\Code\Skeleton.cpp" />
     <ClCompile Include="..\Code\SkyBox.cpp" />
     <ClCompile Include="..\Code\Sniper.cpp" />
     <ClCompile Include="..\Code\SniperPart1.cpp" />
