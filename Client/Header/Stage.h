@@ -34,9 +34,11 @@ private:
 
 	HRESULT			Ready_Layer_Item(const _tchar* pLayerTag);
 
+	HRESULT			Ready_Layer_GunItem(const _tchar* pLayerTag);
+
 	HRESULT			Ready_Proto(void);
 	HRESULT			Ready_Light(void);
-
+	
 private:
 	////////////¸Ê ÆÄ½Ì
 	_int			m_iIndex = 0;

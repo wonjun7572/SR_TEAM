@@ -7,7 +7,7 @@
 CMonster::CMonster(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
 {
-	m_tAbility = new MONSTERABILITY;
+	
 }
 
 CMonster::~CMonster()
@@ -82,7 +82,7 @@ void CMonster::Hit_Check(_float _deltaTime)
 		else
 		{
 			m_fUISwitchTime += _deltaTime;
-			if (m_fUISwitchTime >= 2.f)
+			if (m_fUISwitchTime >= 5.f)
 			{
 				m_pMonsterUI->Off_Switch();
 				m_fUISwitchTime = 0.f;
@@ -93,6 +93,5 @@ void CMonster::Hit_Check(_float _deltaTime)
 
 void CMonster::Free(void)
 {
-	Safe_Delete<MONSTERABILITY*>(m_tAbility);
 	CGameObject::Free();
 }

@@ -15,14 +15,14 @@ CZombie::~CZombie()
 {
 }
 
-HRESULT CZombie::Ready_Object(const _vec3& vPos, wstring _strObjTag)
+HRESULT CZombie::Ready_Object(const _vec3& vPos)
 {
 	// 수치 값 넣어주기
+	m_tAbility = new MONSTERABILITY;
 	m_tAbility->iLevel = 0;
 	m_tAbility->fMaxHp = 100.f;
 	m_tAbility->fCurrentHp = m_tAbility->fMaxHp;
 	m_tAbility->fDamage = 0.f;
-	m_tAbility->strObjName = _strObjTag;
 	m_tAbility->strObjTag = L"Zombie";
 
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
@@ -38,41 +38,19 @@ _int CZombie::Update_Object(const _float & fTimeDelta)
 {
 	if (m_bDead)
 	{
-		CGameObject*		pGameObject = nullptr;
-		_vec3 vItemPos;
-		m_pTransCom->Get_Info(INFO_POS, &vItemPos);
+		m_fFrame += fTimeDelta;
+	}
+	else if (!m_bDead)
+	{
+		CMonster::Update_Object(fTimeDelta);
+	}
 
-		srand((unsigned int)time(NULL));
-		_int iRand = rand() % 3;
-
-		wstring strItemTag;
-		switch (iRand)
-		{
-		case ITEM_HP:
-			pGameObject = CHealthPotion::Create(m_pGraphicDev, vItemPos);
-			NULL_CHECK_RETURN(pGameObject, E_FAIL);
-			strItemTag = m_tAbility->strObjName + L"HP";
-			break;
-
-		case ITEM_DEFENCE:
-			pGameObject = CObtainDefense::Create(m_pGraphicDev, vItemPos);
-			NULL_CHECK_RETURN(pGameObject, E_FAIL);
-			strItemTag = m_tAbility->strObjName + L"DEFENCE";
-			break;
-
-		case ITEM_BULLET:
-			pGameObject = CObtainBullet::Create(m_pGraphicDev, vItemPos);
-			NULL_CHECK_RETURN(pGameObject, E_FAIL);
-			strItemTag = m_tAbility->strObjName + L"BULLET";
-			break;
-		}
-
-		Engine::Add_GameObject(STAGE_ITEM, pGameObject, strItemTag.c_str());
-
+	if (m_fFrame >= 1.5f)
+	{
+		Create_Item();
 		return -1;
 	}
 
-	CMonster::Update_Object(fTimeDelta);
 	return 0;
 }
 
@@ -92,6 +70,7 @@ void CZombie::Render_Object(void)
 	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransUICom->Get_WorldMatrixPointer());
+
 	m_pTextureUICom->Set_Texture(0);
 	m_pBufferUICom->Resize_Buffer(m_tAbility->fCurrentHp / m_tAbility->fMaxHp);
 	m_pBufferUICom->Render_Buffer();
@@ -137,11 +116,44 @@ HRESULT CZombie::Add_Component(void)
 	return S_OK;
 }
 
-CZombie * CZombie::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3 & vPos, wstring _strObjTag)
+HRESULT CZombie::Create_Item()
+{
+	CGameObject*		pGameObject = nullptr;
+	_vec3 vItemPos;
+	m_pTransCom->Get_Info(INFO_POS, &vItemPos);
+
+	srand((unsigned int)time(NULL));
+	_int iRand = rand() % 3;
+
+	switch (iRand)
+	{
+		case 0:
+			pGameObject = CHealthPotion::Create(m_pGraphicDev, vItemPos);
+			NULL_CHECK_RETURN(pGameObject, E_FAIL);
+			Get_Layer(STAGE_ITEM)->Add_GameList(pGameObject);
+			break;
+
+		case 1:
+			pGameObject = CObtainBullet::Create(m_pGraphicDev, vItemPos);
+			NULL_CHECK_RETURN(pGameObject, E_FAIL);
+			Get_Layer(STAGE_ITEM)->Add_GameList(pGameObject);
+			break;
+
+		case 2:
+			pGameObject = CObtainDefense::Create(m_pGraphicDev, vItemPos);
+			NULL_CHECK_RETURN(pGameObject, E_FAIL);
+			Get_Layer(STAGE_ITEM)->Add_GameList(pGameObject);
+			break;
+	}
+
+	return S_OK;
+}
+
+CZombie * CZombie::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3 & vPos)
 {
 	CZombie *	pInstance = new CZombie(pGraphicDev);
 
-	if (FAILED(pInstance->Ready_Object(vPos, _strObjTag)))
+	if (FAILED(pInstance->Ready_Object(vPos)))
 	{
 		Safe_Release(pInstance);
 		return nullptr;
@@ -153,4 +165,5 @@ CZombie * CZombie::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3 & vPos, wst
 void CZombie::Free(void)
 {
 	CMonster::Free();
+	Safe_Delete<MONSTERABILITY*>(m_tAbility);
 }

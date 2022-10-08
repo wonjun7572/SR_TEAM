@@ -58,6 +58,7 @@
 #define STAGE_WALL		   L"STAGE_WALL_Layer"
 #define STAGE_ITEM		   L"STAGE_ITEM_Layer"	
 #define STAGE_GUN		   L"STAGE_GUN_Layer"
+#define STAGE_GUNITEM	   L"STAGE_GUNITEM_Layer"
 
 // Particle
 #define SHOTPARTICLE_TEX			L"SHOTPARTICLE_TEX"

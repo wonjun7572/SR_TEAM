@@ -92,6 +92,7 @@ void CCubePlayer::LateUpdate_Object(void)
 	}
 	
 	m_pCollision->Get_Item();
+	m_pCollision->Get_GunItem();
 
 	Gun_Check();
 
