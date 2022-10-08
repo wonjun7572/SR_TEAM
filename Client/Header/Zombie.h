@@ -15,6 +15,8 @@ private:
 	HRESULT				Add_Component(void);
 	HRESULT				Create_Item();
 
+	_float				m_fFrame = 0.f;
+
 public:
 	static CZombie*	Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3& vPos);
 	virtual void	Free(void);
