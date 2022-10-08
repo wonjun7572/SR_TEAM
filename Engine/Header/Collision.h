@@ -23,6 +23,7 @@ public:
 	_int					Wall_Collision_By_DotSliding(_vec3* vChangeDir);
 
 	void					Get_Item(void);
+	void					Get_GunItem();
 
 	_bool					HitScan(HWND hWnd, _vec3 * SrcPos, const CCubeTex * pCubeTex, const CTransform * pTransform, _vec3* vReturn);
 

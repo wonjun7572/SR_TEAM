@@ -82,6 +82,7 @@ namespace Engine
 		_int		iHp;		// 체력을 위한
 		_int		iMaxHp;
 		_int		iDefence;		// 방어력을 위한
+		_int		iMaxDefence;
 		_int		iGunTexture;			// 총 UI 변경을 위한
 	}ABILITY;
 
@@ -96,6 +97,7 @@ namespace Engine
 
 	typedef struct tagMonsterState
 	{
+		std::wstring strObjTag;	// UI 에서 몬스터 이름 찾아주려고
 		_int   iLevel;
 		_float fCurrentHp;
 		_float fMaxHp;

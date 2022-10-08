@@ -42,6 +42,7 @@ _int CPlayerHpUI::Update_Object(const _float & fTimeDelta)
 	if (m_pPlayer != nullptr)
 	{
 		m_iHp = dynamic_cast<CCubePlayer*>(m_pPlayer)->Get_Ability()->iHp;
+		m_iMaxHp = dynamic_cast<CCubePlayer*>(m_pPlayer)->Get_Ability()->iMaxHp;
 		m_strHp = to_wstring(m_iHp);
 	}
 
@@ -74,7 +75,7 @@ void CPlayerHpUI::Render_Object(void)
 	m_pGraphicDev->SetTransform(D3DTS_VIEW, &ViewMatrix);
 	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &m_ProjMatrix);
 	m_pTextureCom->Set_Texture(0);
-	m_pBufferCom->Resize_Buffer(m_iHp * 0.01f);
+	m_pBufferCom->Resize_Buffer(_float(m_iHp / m_iMaxHp));
 	m_pBufferCom->Render_Buffer();
 
 

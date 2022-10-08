@@ -11,6 +11,7 @@
 #include "ShotParticle.h"
 #include "BulletParticle.h"
 #include "Inventory.h"
+
 CCubePlayer::CCubePlayer(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
 {
@@ -25,9 +26,10 @@ HRESULT CCubePlayer::Ready_Object(void)
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
 	m_tAbility = new ABILITY;
-	m_tAbility->iHp = 100;
 	m_tAbility->iMaxHp = 100;
-	m_tAbility->iDefence = 100;
+	m_tAbility->iHp = m_tAbility->iMaxHp;
+	m_tAbility->iMaxDefence = 100;
+	m_tAbility->iDefence = 50;
 	m_tAbility->iGunTexture = 5;
 
 	m_pTransform->Set_Scale(0.4f, 1.f, 0.4f);
@@ -91,6 +93,7 @@ void CCubePlayer::LateUpdate_Object(void)
 	}
 	
 	m_pCollision->Get_Item();
+	m_pCollision->Get_GunItem();
 
 	Gun_Check();
 
@@ -103,7 +106,7 @@ void CCubePlayer::Render_Object(void)
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 
-	//m_pHitBox->Render_Buffer();
+	m_pHitBox->Render_Buffer();
 
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
@@ -116,7 +119,6 @@ void CCubePlayer::Update_NullCheck()
 
 	if (!m_pBulletParicle)
 		m_pBulletParicle = dynamic_cast<CBulletParticle*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"BulletParticle"));
-
 }
 
 void CCubePlayer::Set_OnTerrain(void)
@@ -665,7 +667,6 @@ HRESULT CCubePlayer::Get_BodyTransform(void)
 	NULL_CHECK_RETURN(m_pBodyWorld, E_FAIL);
 	m_pRightFootWorld = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_CHARACTER, L"R_FOOT", TRANSFORM_COMP, ID_DYNAMIC));
 	NULL_CHECK_RETURN(m_pBodyWorld, E_FAIL);
-
 	return S_OK;
 }
 
@@ -726,6 +727,7 @@ CCubePlayer * CCubePlayer::Create(LPDIRECT3DDEVICE9 pGraphicDev)
      
 void CCubePlayer::Free(void)
 {
+	CGameObject::Free();
 	for (auto& iter : m_listMonsterCnt)
 	{
 		if (iter != nullptr)
@@ -735,5 +737,4 @@ void CCubePlayer::Free(void)
 	Safe_Delete<ABILITY*>(m_tAbility);
 
 	m_listMonsterCnt.clear();
-	CGameObject::Free();
 }

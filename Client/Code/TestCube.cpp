@@ -186,6 +186,8 @@ HRESULT CTestCube::Interact(void)
 		vPos.y -= 0.1f;
 		m_pTransCom->Set_Pos(vPos.x, vPos.y, vPos.z);
 	}
+
+	return S_OK;
 }
 
 HRESULT CTestCube::Add_Component()

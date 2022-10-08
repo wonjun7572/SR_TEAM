@@ -200,6 +200,7 @@
     <ClInclude Include="..\Header\LogoUI.h" />
     <ClInclude Include="..\Header\MainApp.h" />
     <ClInclude Include="..\Header\MaxPlusHp.h" />
+    <ClInclude Include="..\Header\Monster.h" />
     <ClInclude Include="..\Header\MonsterMapping.h" />
     <ClInclude Include="..\Header\MonsterParticle.h" />
     <ClInclude Include="..\Header\MonsterUI.h" />
@@ -217,6 +218,7 @@
     <ClInclude Include="..\Header\ShotgunPart2.h" />
     <ClInclude Include="..\Header\ShotgunPart3.h" />
     <ClInclude Include="..\Header\ShotgunPart4.h" />
+    <ClInclude Include="..\Header\Skeleton.h" />
     <ClInclude Include="..\Header\SkyBox.h" />
     <ClInclude Include="..\Header\Sniper.h" />
     <ClInclude Include="..\Header\SniperPart1.h" />
@@ -228,7 +230,6 @@
     <ClInclude Include="..\Header\TargetCube.h" />
     <ClInclude Include="..\Header\Terrain.h" />
     <ClInclude Include="..\Header\TestCube.h" />
-    <ClInclude Include="..\Header\TestGun.h" />
     <ClInclude Include="..\Header\TestMonster.h" />
     <ClInclude Include="..\Header\TestPlayer.h" />
     <ClInclude Include="..\Header\ToolScene.h" />
@@ -244,6 +245,7 @@
     <ClInclude Include="..\Header\Weapon.h" />
     <ClInclude Include="..\Header\WeaponUI.h" />
     <ClInclude Include="..\Header\ShotParticle.h" />
+    <ClInclude Include="..\Header\Zombie.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="Define.h" />
     <ClInclude Include="dirent.h" />
@@ -312,6 +314,7 @@
     <ClCompile Include="..\Code\LogoUI.cpp" />
     <ClCompile Include="..\Code\MainApp.cpp" />
     <ClCompile Include="..\Code\MaxPlusHp.cpp" />
+    <ClCompile Include="..\Code\Monster.cpp" />
     <ClCompile Include="..\Code\MonsterMapping.cpp" />
     <ClCompile Include="..\Code\MonsterParticle.cpp" />
     <ClCompile Include="..\Code\MonsterUI.cpp" />
@@ -329,6 +332,7 @@
     <ClCompile Include="..\Code\ShotgunPart2.cpp" />
     <ClCompile Include="..\Code\ShotgunPart3.cpp" />
     <ClCompile Include="..\Code\ShotgunPart4.cpp" />
+    <ClCompile Include="..\Code\Skeleton.cpp" />
     <ClCompile Include="..\Code\SkyBox.cpp" />
     <ClCompile Include="..\Code\Sniper.cpp" />
     <ClCompile Include="..\Code\SniperPart1.cpp" />
@@ -340,7 +344,6 @@
     <ClCompile Include="..\Code\TargetCube.cpp" />
     <ClCompile Include="..\Code\Terrain.cpp" />
     <ClCompile Include="..\Code\TestCube.cpp" />
-    <ClCompile Include="..\Code\TestGun.cpp" />
     <ClCompile Include="..\Code\TestMonster.cpp" />
     <ClCompile Include="..\Code\TestPlayer.cpp" />
     <ClCompile Include="..\Code\ToolScene.cpp" />
@@ -356,6 +359,7 @@
     <ClCompile Include="..\Code\Weapon.cpp" />
     <ClCompile Include="..\Code\WeaponUI.cpp" />
     <ClCompile Include="..\Code\ShotParticle.cpp" />
+    <ClCompile Include="..\Code\Zombie.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="GraphEditor.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>

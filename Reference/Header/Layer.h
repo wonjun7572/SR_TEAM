@@ -16,6 +16,7 @@ public:
 	CGameObject*			Get_GameObject(const _tchar* pObjTag);
 
 	map<const _tchar*, CGameObject*>	Get_GameObjectMap()	{return m_mapObject;}
+	list<CGameObject*>			Get_GameList() { return m_ObjectList; }
 
 public:
 	HRESULT			Add_GameObject(const _tchar* pObjTag, CGameObject* pInstance);
