@@ -35,6 +35,10 @@ HRESULT CSkeleton::Ready_Object(const _vec3& vPos)
 	m_pHitBoxTransCom->Set_Pos(vPos.x, vPos.y, vPos.z);
 	m_pHitBoxTransCom->Static_Update();
 
+	m_pSphereTransCom->Set_Scale(&_vec3(5.f, 5.f, 5.f));
+	m_pSphereTransCom->Set_Pos(vPos.x, vPos.y, vPos.z);
+	m_pSphereTransCom->Static_Update();
+
 	return S_OK;
 }
 
@@ -49,12 +53,20 @@ _int CSkeleton::Update_Object(const _float & fTimeDelta)
 	CMonster::Update_Object(fTimeDelta);
 	_vec3 vPlayerPos;
 	m_pPlayerTransCom->Get_Info(INFO_POS, &vPlayerPos);
-	m_pTransCom->Chase_Target(&vPlayerPos, 1.f, fTimeDelta);
+	_vec3 vPlayerScale;
+	m_pPlayerTransCom->Get_Scale(&vPlayerScale);
+	_vec3 vScale;
+	m_pSphereTransCom->Get_Scale(&vScale);
 
-	_vec3 vItemPos;
-	m_pTransCom->Get_Info(INFO_POS, &vItemPos);
-	m_pHitBoxTransCom->Set_Pos(vItemPos.x, vItemPos.y, vItemPos.z);
+	if (m_pCollision->Sphere_Collision(this->m_pSphereTransCom, m_pPlayerTransCom, vPlayerScale.x, vScale.x))
+	{
+		m_pTransCom->Chase_Target(&vPlayerPos, 1.f, fTimeDelta);
+	}
 
+	_vec3 vMonsterPos;
+	m_pTransCom->Get_Info(INFO_POS, &vMonsterPos);
+	m_pHitBoxTransCom->Set_Pos(vMonsterPos.x, vMonsterPos.y, vMonsterPos.z);
+	m_pSphereTransCom->Set_Pos(vMonsterPos.x, vMonsterPos.y, vMonsterPos.z);
 	return 0;
 }
 
@@ -122,6 +134,15 @@ HRESULT CSkeleton::Add_Component(void)
 	pComponent = m_pTextureUICom = dynamic_cast<CTexture*>(Clone_Proto(L"Monster_General_HP"));
 	NULL_CHECK_RETURN(m_pTextureUICom, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Monster_General_HP", pComponent });
+
+	// For Sphere
+	pComponent = m_pSphereBufferCom = dynamic_cast<CSphereTex*>(Clone_Proto(SPHERECOL_COMP));
+	NULL_CHECK_RETURN(m_pSphereBufferCom, E_FAIL);
+	m_mapComponent[ID_STATIC].insert({ SPHERECOL_COMP, pComponent });
+
+	pComponent = m_pSphereTransCom = dynamic_cast<CTransform*>(Clone_Proto(TRANSFORM_COMP));
+	NULL_CHECK_RETURN(m_pSphereBufferCom, E_FAIL);
+	m_mapComponent[ID_DYNAMIC].insert({ L"Sphere_TransCom", pComponent });
 
 	return S_OK;
 }

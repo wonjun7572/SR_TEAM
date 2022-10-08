@@ -85,6 +85,7 @@ _int CLayer::Update_Layer(const _float & fTimeDelta)
 			iResult = (*iter)->Update_Object(fTimeDelta);
 			if (iResult & 0x80000000)
 			{
+				Safe_Release(*iter);
 				iter = m_ObjectList.erase(iter);
 			}
 			else
