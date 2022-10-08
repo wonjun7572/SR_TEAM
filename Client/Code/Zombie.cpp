@@ -5,6 +5,7 @@
 #include "HealthPotion.h"
 #include "ObtainDefense.h"
 #include "ObtainBullet.h"
+#include "PoolMgr.h"
 
 CZombie::CZombie(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CMonster(pGraphicDev)
@@ -35,7 +36,7 @@ HRESULT CZombie::Ready_Object(const _vec3& vPos)
 	m_pHitBoxTransCom->Set_Pos(vPos.x, vPos.y, vPos.z);
 	m_pHitBoxTransCom->Static_Update();
 
-	m_pSphereTransCom->Set_Scale(&_vec3(5.f, 5.f, 5.f));
+	m_pSphereTransCom->Set_Scale(&_vec3(10.f, 10.f, 10.f));
 	m_pSphereTransCom->Set_Pos(vPos.x, vPos.y, vPos.z);
 	m_pSphereTransCom->Static_Update();
 
@@ -58,10 +59,19 @@ _int CZombie::Update_Object(const _float & fTimeDelta)
 	m_pPlayerTransCom->Get_Scale(&vPlayerScale);
 	_vec3 vScale;
 	m_pSphereTransCom->Get_Scale(&vScale);
+	_vec3 vPos;
+	m_pTransCom->Get_Info(INFO_POS, &vPos);
 
 	if (m_pCollision->Sphere_Collision(this->m_pSphereTransCom, m_pPlayerTransCom, vPlayerScale.x, vScale.x))
 	{
 		m_pTransCom->Chase_Target(&vPlayerPos, 1.f, fTimeDelta);
+		m_fFrame += fTimeDelta;
+		if (m_fFrame >= 2.f)
+		{
+			_vec3 vDir = vPlayerPos - vPos;
+			CPoolMgr::GetInstance()->Reuse_Obj(m_pGraphicDev, &vPos, &vDir);
+			m_fFrame = 0.f;
+		}
 	}
 	
 	_vec3 vMonsterPos;

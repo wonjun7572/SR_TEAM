@@ -34,7 +34,7 @@ private:
 	CTexture*			m_pTextureCom = nullptr;
 	CCubeTex*			m_pCubetexCom = nullptr;
 	_vec3				m_vDirection = _vec3(0.f, 0.f, 0.f);
-	_float				m_fSpeed = 50.f;
+	_float				m_fSpeed = 1.f;
 	_float				m_fTimeDelta = 0.f;
 
 
