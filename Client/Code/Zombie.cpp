@@ -26,11 +26,15 @@ HRESULT CZombie::Ready_Object(const _vec3& vPos)
 	m_tAbility->strObjTag = L"Zombie";
 
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
-	
+
 	m_pTransCom->Set_Scale(&_vec3(0.3f, 0.3f, 0.3f));
 	m_pTransCom->Set_Pos(vPos.x, vPos.y, vPos.z);
 	m_pTransUICom->Set_Scale(1.f, 0.1f, 0.f);
-	
+
+	m_pHitBoxTransCom->Set_Scale(&_vec3(0.3f, 0.3f, 0.3f));
+	m_pHitBoxTransCom->Set_Pos(vPos.x, vPos.y, vPos.z);
+	m_pHitBoxTransCom->Static_Update();
+
 	return S_OK;
 }
 
@@ -38,18 +42,18 @@ _int CZombie::Update_Object(const _float & fTimeDelta)
 {
 	if (m_bDead)
 	{
-		m_fFrame += fTimeDelta;
-	}
-	else if (!m_bDead)
-	{
-		CMonster::Update_Object(fTimeDelta);
-	}
-
-	if (m_fFrame >= 1.5f)
-	{
 		Create_Item();
 		return -1;
 	}
+
+	CMonster::Update_Object(fTimeDelta);
+	_vec3 vPlayerPos;
+	m_pPlayerTransCom->Get_Info(INFO_POS, &vPlayerPos);
+	m_pTransCom->Chase_Target(&vPlayerPos, 1.f, fTimeDelta);
+
+	_vec3 vItemPos;
+	m_pTransCom->Get_Info(INFO_POS, &vItemPos);
+	m_pHitBoxTransCom->Set_Pos(vItemPos.x, vItemPos.y, vItemPos.z);
 
 	return 0;
 }
@@ -66,6 +70,7 @@ void CZombie::Render_Object(void)
 	m_pBufferCom->Render_Buffer();
 
 	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pHitBoxTransCom->Get_WorldMatrixPointer());
 	m_pHitBox->Render_Buffer();
 	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 
@@ -92,6 +97,7 @@ HRESULT CZombie::Add_Component(void)
 	NULL_CHECK_RETURN(m_pTransCom, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ TRANSFORM_COMP, pComponent });
 
+	// FOR HITBOX
 	pComponent = m_pHitBox = dynamic_cast<CHitBox*>(Engine::Clone_Proto(HITBOX_COMP));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ HITBOX_COMP, pComponent });
@@ -99,6 +105,10 @@ HRESULT CZombie::Add_Component(void)
 	pComponent = m_pCollision = dynamic_cast<CCollision*>(Engine::Clone_Proto(COLLISION_COMP));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ COLLISION_COMP, pComponent });
+
+	pComponent = m_pHitBoxTransCom = dynamic_cast<CTransform*>(Clone_Proto(TRANSFORM_COMP));
+	NULL_CHECK_RETURN(m_pTransCom, E_FAIL);
+	m_mapComponent[ID_DYNAMIC].insert({ L"HitBox_Transform", pComponent });
 
 	// FOR UI
 	pComponent = m_pTransUICom = dynamic_cast<CTransform*>(Clone_Proto(TRANSFORM_COMP));
@@ -127,23 +137,23 @@ HRESULT CZombie::Create_Item()
 
 	switch (iRand)
 	{
-		case 0:
-			pGameObject = CHealthPotion::Create(m_pGraphicDev, vItemPos);
-			NULL_CHECK_RETURN(pGameObject, E_FAIL);
-			Get_Layer(STAGE_ITEM)->Add_GameList(pGameObject);
-			break;
+	case 0:
+		pGameObject = CHealthPotion::Create(m_pGraphicDev, vItemPos);
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		Get_Layer(STAGE_ITEM)->Add_GameList(pGameObject);
+		break;
 
-		case 1:
-			pGameObject = CObtainBullet::Create(m_pGraphicDev, vItemPos);
-			NULL_CHECK_RETURN(pGameObject, E_FAIL);
-			Get_Layer(STAGE_ITEM)->Add_GameList(pGameObject);
-			break;
+	case 1:
+		pGameObject = CObtainBullet::Create(m_pGraphicDev, vItemPos);
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		Get_Layer(STAGE_ITEM)->Add_GameList(pGameObject);
+		break;
 
-		case 2:
-			pGameObject = CObtainDefense::Create(m_pGraphicDev, vItemPos);
-			NULL_CHECK_RETURN(pGameObject, E_FAIL);
-			Get_Layer(STAGE_ITEM)->Add_GameList(pGameObject);
-			break;
+	case 2:
+		pGameObject = CObtainDefense::Create(m_pGraphicDev, vItemPos);
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		Get_Layer(STAGE_ITEM)->Add_GameList(pGameObject);
+		break;
 	}
 
 	return S_OK;
