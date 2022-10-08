@@ -77,7 +77,6 @@ _bool CCollision::Sphere_Collision(CTransform* pTempTransform, CTransform* pSour
 		return false;
 	else
 		return true;
-
 }
 
 _int CCollision::Wall_Collision(_vec3* vNorm)

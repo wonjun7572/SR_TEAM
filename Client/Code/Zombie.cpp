@@ -35,7 +35,7 @@ HRESULT CZombie::Ready_Object(const _vec3& vPos)
 	m_pHitBoxTransCom->Set_Pos(vPos.x, vPos.y, vPos.z);
 	m_pHitBoxTransCom->Static_Update();
 
-	m_pSphereTransCom->Set_Scale(&_vec3(1.f, 1.f, 1.f));
+	m_pSphereTransCom->Set_Scale(&_vec3(5.f, 5.f, 5.f));
 	m_pSphereTransCom->Set_Pos(vPos.x, vPos.y, vPos.z);
 	m_pSphereTransCom->Static_Update();
 
@@ -51,10 +51,19 @@ _int CZombie::Update_Object(const _float & fTimeDelta)
 	}
 
 	CMonster::Update_Object(fTimeDelta);
+
 	_vec3 vPlayerPos;
 	m_pPlayerTransCom->Get_Info(INFO_POS, &vPlayerPos);
-	m_pTransCom->Chase_Target(&vPlayerPos, 1.f, fTimeDelta);
+	_vec3 vPlayerScale;
+	m_pPlayerTransCom->Get_Scale(&vPlayerScale);
+	_vec3 vScale;
+	m_pSphereTransCom->Get_Scale(&vScale);
 
+	if (m_pCollision->Sphere_Collision(this->m_pSphereTransCom, m_pPlayerTransCom, vPlayerScale.x, vScale.x))
+	{
+		m_pTransCom->Chase_Target(&vPlayerPos, 1.f, fTimeDelta);
+	}
+	
 	_vec3 vMonsterPos;
 	m_pTransCom->Get_Info(INFO_POS, &vMonsterPos);
 	m_pHitBoxTransCom->Set_Pos(vMonsterPos.x, vMonsterPos.y, vMonsterPos.z);

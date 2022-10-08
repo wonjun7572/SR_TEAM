@@ -36,7 +36,7 @@ HRESULT CCubePlayer::Ready_Object(void)
 	m_pTransform->Set_Pos(10.f, 10.f, 10.f);
 	m_pTransform->Static_Update();
 
-	m_pSphereTransCom->Set_Scale(0.7f, 0.7f, 0.7f);
+	m_pSphereTransCom->Set_Scale(0.5f, 0.5f, 0.5f);
 	m_pSphereTransCom->Set_Pos(10.f, 10.f, 10.f);
 	m_pSphereTransCom->Static_Update();
 
