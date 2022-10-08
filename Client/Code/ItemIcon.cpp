@@ -150,13 +150,13 @@ void CItemIcon::FixOnCursor()
 	ScreenToClient(g_hWnd, &pt);
 	if (m_bFix)
 	{		
-		m_vBlockPos.x = -WINCX/2 + pt.x;//(double)( 1.75*(-450 +(pt.x*WINCY/WINCX)));
-		m_vBlockPos.y = WINCY/2 - pt.y;// (double)(1.75 * (250 - (pt.y*WINCY / WINCX)));
+		m_vBlockPos.x = _float(-WINCX/2 + pt.x);//(double)( 1.75*(-450 +(pt.x*WINCY/WINCX)));
+		m_vBlockPos.y = _float(WINCY/2 - pt.y);// (double)(1.75 * (250 - (pt.y*WINCY / WINCX)));
 	}
 	if (m_iIndex == 0)
 	{
-		m_vBlockPos.x = 15.f -WINCX / 2 + pt.x;//(double)( 1.75*(-450 +(pt.x*WINCY/WINCX)));
-		m_vBlockPos.y = -25.f + WINCY / 2 - pt.y;// (double)(1.75 * (250 - (pt.y*WINCY / WINCX)));
+		m_vBlockPos.x = _float(15.f -WINCX / 2 + pt.x);//(double)( 1.75*(-450 +(pt.x*WINCY/WINCX)));
+		m_vBlockPos.y = _float(-25.f + WINCY / 2 - pt.y);// (double)(1.75 * (250 - (pt.y*WINCY / WINCX)));
 	}
 }
 

@@ -6,7 +6,7 @@ private:
 	explicit CZombie(LPDIRECT3DDEVICE9 pGraphicDev);
 	virtual ~CZombie();
 
-	virtual	HRESULT Ready_Object(const _vec3& vPos, wstring _strObjTag);
+	virtual	HRESULT Ready_Object(const _vec3& vPos);
 	virtual _int	Update_Object(const _float& fTimeDelta) override;
 	virtual void	LateUpdate_Object(void) override;
 	virtual void	Render_Object(void) override;
@@ -14,8 +14,12 @@ private:
 private:
 	HRESULT				Add_Component(void);
 
+	HRESULT				Create_Item();
+
+	_float				  m_fFrame = 0.f;
+
 public:
-	static CZombie*	Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3& vPos, wstring _strObjTag);
+	static CZombie*	Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3& vPos);
 	virtual void	Free(void);
 };
 

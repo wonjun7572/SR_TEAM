@@ -91,7 +91,6 @@ _int CCollision::Wall_Collision(_vec3* vNorm)
 			const _vec3*	pCubtVtx = pWallBox->Get_VtxPos();
 			_vec3	vNormal(0,0,0);
 			_ulong	dwVtxIdx[3]{};
-			_float	fU, fV, fDist;
 
 			if ((vPlayerPos.x > vWallPos.x) && (m_vMin1.z > m_vMin2.z) && (m_vMax1.z < m_vMax2.z))
 			{
@@ -503,14 +502,53 @@ _int CCollision::Wall_Collision_By_DotSliding(_vec3 * vChangeDir)
 void CCollision::Get_Item(void)
 {
 	CLayer* pLayer = Engine::Get_Layer(STAGE_ITEM);
-	map<const _tchar*, CGameObject*> mapItem = pLayer->Get_GameObjectMap();
+	list<CGameObject*> ItemList = pLayer->Get_GameList();
+	
+	CTransform*	pPlayerTransform = dynamic_cast<CTransform*>(Get_Component(STAGE_CHARACTER, L"PLAYER", TRANSFORM_COMP, ID_DYNAMIC));
+	CHitBox* pPlayerBox = dynamic_cast<CHitBox*>(Get_Component(STAGE_CHARACTER, L"PLAYER", HITBOX_COMP, ID_STATIC));
+	CTransform* pPlayerBodyTransform = dynamic_cast<CTransform*>(Get_Component(STAGE_CHARACTER, L"BODY", TRANSFORM_COMP, ID_DYNAMIC));
 
-	if (mapItem.empty())
+	if (ItemList.empty())
 		return;
+
+	_vec3 vPlayerPos;
+	pPlayerTransform->Get_Info(INFO_POS, &vPlayerPos);
+
+	for (auto iter : ItemList)
+	{
+		CTransform* pItemTransform = dynamic_cast<CTransform*>(iter->Get_Component(ITEM_TRANSFORM_COMP, ID_DYNAMIC));
+		NULL_CHECK_RETURN(pItemTransform, );
+		CHitBox* pItemBox = dynamic_cast<CHitBox*>(iter->Get_Component(HITBOX_COMP, ID_STATIC));
+		NULL_CHECK_RETURN(pItemBox, );
+
+		pPlayerBox->Get_MinMax(&m_vMin1, &m_vMax1);
+		pItemBox->Get_MinMax(&m_vMin2, &m_vMax2);
+
+		D3DXVec3TransformCoord(&m_vMin1, &m_vMin1, pPlayerTransform->Get_WorldMatrixPointer());
+		D3DXVec3TransformCoord(&m_vMax1, &m_vMax1, pPlayerTransform->Get_WorldMatrixPointer());
+		D3DXVec3TransformCoord(&m_vMin2, &m_vMin2, pItemTransform->Get_WorldMatrixPointer());
+		D3DXVec3TransformCoord(&m_vMax2, &m_vMax2, pItemTransform->Get_WorldMatrixPointer());
+
+		if (m_vMin1.x <= m_vMax2.x && m_vMax1.x >= m_vMin2.x &&
+			m_vMin1.y <= m_vMax2.y && m_vMax1.y >= m_vMin2.y &&
+			m_vMin1.z <= m_vMax2.z && m_vMax1.z >= m_vMin2.z)
+		{
+			iter->Kill_Obj();
+		}
+	}
+}
+
+void CCollision::Get_GunItem()
+{
+	CLayer* pLayer = Engine::Get_Layer(STAGE_GUNITEM);
+	map<const _tchar*, CGameObject*> mapItem = pLayer->Get_GameObjectMap();
 
 	CTransform*	pPlayerTransform = dynamic_cast<CTransform*>(Get_Component(STAGE_CHARACTER, L"PLAYER", TRANSFORM_COMP, ID_DYNAMIC));
 	CHitBox* pPlayerBox = dynamic_cast<CHitBox*>(Get_Component(STAGE_CHARACTER, L"PLAYER", HITBOX_COMP, ID_STATIC));
 	CTransform* pPlayerBodyTransform = dynamic_cast<CTransform*>(Get_Component(STAGE_CHARACTER, L"BODY", TRANSFORM_COMP, ID_DYNAMIC));
+
+	if (mapItem.empty())
+		return;
 
 	_vec3 vPlayerPos;
 	pPlayerTransform->Get_Info(INFO_POS, &vPlayerPos);

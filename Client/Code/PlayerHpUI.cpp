@@ -75,7 +75,7 @@ void CPlayerHpUI::Render_Object(void)
 	m_pGraphicDev->SetTransform(D3DTS_VIEW, &ViewMatrix);
 	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &m_ProjMatrix);
 	m_pTextureCom->Set_Texture(0);
-	m_pBufferCom->Resize_Buffer(m_iHp / m_iMaxHp);
+	m_pBufferCom->Resize_Buffer(_float(m_iHp / m_iMaxHp));
 	m_pBufferCom->Render_Buffer();
 
 

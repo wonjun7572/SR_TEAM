@@ -564,14 +564,14 @@
     <ClInclude Include="..\Header\TargetCube.h">
       <Filter>02. GameObject\01. For_Stage\08. Monster</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\Monster.h">
-      <Filter>99. Default\헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\Zombie.h">
-      <Filter>99. Default\헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\MonsterUI.h">
       <Filter>02. GameObject\01. For_Stage\09. UI\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Zombie.h">
+      <Filter>02. GameObject\01. For_Stage\08. Monster\01. Zombie</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Monster.h">
+      <Filter>02. GameObject\01. For_Stage\08. Monster</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -869,14 +869,14 @@
     <ClCompile Include="..\Code\TargetCube.cpp">
       <Filter>02. GameObject\01. For_Stage\08. Monster</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\Monster.cpp">
-      <Filter>99. Default\소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\Zombie.cpp">
-      <Filter>99. Default\소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\MonsterUI.cpp">
       <Filter>02. GameObject\01. For_Stage\09. UI\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Zombie.cpp">
+      <Filter>02. GameObject\01. For_Stage\08. Monster\01. Zombie</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Monster.cpp">
+      <Filter>02. GameObject\01. For_Stage\08. Monster</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
