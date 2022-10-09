@@ -77,6 +77,9 @@ _uint CLoading::Loading_ForStage(void)
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"HP_50_Face", CTexture::Create(m_pGraphicDev, HP_50_FACE_PATH, TEX_NORMAL, 5)), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"HP_25_Face", CTexture::Create(m_pGraphicDev, HP_25_FACE_PATH, TEX_NORMAL, 5)), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"HP_0_Face", CTexture::Create(m_pGraphicDev, HP_0_FACE_PATH, TEX_NORMAL)), E_FAIL);
+
+		// HITBAR
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(HITBAR_TEX, CTexture::Create(m_pGraphicDev, HITBAR_TEX_PATH, TEX_NORMAL)), E_FAIL);
 	}
 
 	{

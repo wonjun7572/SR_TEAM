@@ -1,36 +1,4 @@
-﻿  VIBuffer.cpp
-  TriCol.cpp
-  Transform.cpp
-  Texture.cpp
-  TerrainTex.cpp
-  SphereTex.cpp
-  SoundMgr.cpp
-  Scene.cpp
-  Renderer.cpp
-  RcTex.cpp
-  RcCol.cpp
-  ProtoMgr.cpp
-  Management.cpp
-  LightMgr.cpp
-  Light.cpp
-  Layer.cpp
-  Hitbox.cpp
-  GameObject.cpp
-  CubeTex.cpp
-  Component.cpp
-  코드를 생성하고 있습니다...
-  컴파일하고 있습니다...
-  Camera.cpp
-  Calculator.cpp
-  RcRD.cpp
-  Quarternion.cpp
-  PSystem.cpp
-  Interface.cpp
-  FlexibleAxisCube.cpp
-  DynamicBuffer.cpp
-  Collision.cpp
-  코드를 생성하고 있습니다...
-     ../Bin\Utility.lib 라이브러리 및 ../Bin\Utility.exp 개체를 생성하고 있습니다.
+﻿  Transform.cpp
   Utility.vcxproj -> C:\Users\sam51\Desktop\SR_TEAM\Engine\Utility\Default\../Bin\Utility.dll
   Utility.vcxproj -> ../Bin\Utility.pdb (Full PDB)
           1개 파일이 복사되었습니다.

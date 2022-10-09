@@ -120,3 +120,6 @@
 #define MONSTER_HP_TEX_PATH			L"../Bin/Resources/UI/MonsterUI/Bar_monster_HP.png"
 #define	MONSTER_HP_HUD_TEX			L"Monster_Hud"
 #define MONSTER_HP_HUD_TEX_PATH		L"../Bin/Resources/UI/MonsterUI/HUD_bar_monster_HP.png"
+
+#define HITBAR_TEX				L"HITBAR_TEX"
+#define	HITBAR_TEX_PATH			L"../Bin/Resources/UI/Player/hitbar.png"
