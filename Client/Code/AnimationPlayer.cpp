@@ -18,8 +18,14 @@ HRESULT CAnimationPlayer::Ready_Object(void)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
-	//	히트박스 관리
-	m_pTransform->Set_Pos(10.f, 0.6f, 10.f);
+	m_pRotationTrans->Set_Pos(10.f, 0.6f, 10.f);
+	m_pRotationTrans->Set_Scale(0.1f, 0.1f, 0.1f);
+	m_pRotationTrans->Static_Update();
+
+	_vec3 vPos;
+	m_pRotationTrans->Get_Info(INFO_POS, &vPos);
+
+	m_pTransform->Set_Pos(vPos.x, vPos.y, vPos.z);
 	m_pTransform->Set_Scale(1.f, 1.f, 1.f);
 	m_pTransform->Static_Update();
 
@@ -48,17 +54,25 @@ _int CAnimationPlayer::Update_Object(const _float & fTimeDelta)
 void CAnimationPlayer::LateUpdate_Object(void)
 {
 	Key_Input();
+	Look_Direction();
+
+	_vec3 vPos;
+	m_pRotationTrans->Get_Info(INFO_POS, &vPos);
+	m_pTransform->Set_Pos(vPos.x, vPos.y, vPos.z);
 
 	CGameObject::LateUpdate_Object();
 }
 
 void CAnimationPlayer::Render_Object(void)
 {
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DPMISCCAPS_CULLNONE);
 	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
 	m_pHitbox->Render_Buffer();
+
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pRotationTrans->Get_WorldMatrixPointer());
+	m_pCubeCol->Render_Buffer();
 
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DPMISCCAPS_CULLCCW);
 	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
@@ -70,9 +84,9 @@ void CAnimationPlayer::Key_Input(void)
 	{
 		// 이동은 히트박스가 진행
 		m_STOP = PLAYERSTOP_1;
-		m_pTransform->Get_Info(INFO_LOOK, &vDir);
+		m_pRotationTrans->Get_Info(INFO_LOOK, &vDir);
 		D3DXVec3Normalize(&vDir, &vDir);
-		m_pTransform->Move_Pos(&(vDir * 5.f * m_fTimeDelta));
+		m_pRotationTrans->Move_Pos(&(vDir * 5.f * m_fTimeDelta));
 		// 애니메이션 실행 (용도에 따라 함수 추가로 생성)
 		Walk_Animation_Run();
 		m_STATE = PLAYER_WALK;
@@ -80,9 +94,9 @@ void CAnimationPlayer::Key_Input(void)
 	else if (Get_DIKeyState(DIK_DOWN) & 0x8000)
 	{
 		m_STOP = PLAYERSTOP_1;
-		m_pTransform->Get_Info(INFO_LOOK, &vDir);
+		m_pRotationTrans->Get_Info(INFO_LOOK, &vDir);
 		D3DXVec3Normalize(&vDir, &vDir);
-		m_pTransform->Move_Pos(&(vDir * -5.f * m_fTimeDelta));
+		m_pRotationTrans->Move_Pos(&(vDir * -5.f * m_fTimeDelta));
 		Walk_Animation_Run();
 		m_STATE = PLAYER_WALK;
 	}
@@ -175,8 +189,12 @@ HRESULT CAnimationPlayer::Build(void)	//	모델 불러오는 함수
 		_vec3		vHitPos;
 		m_pTransform->Get_Info(INFO_POS, &vHitPos);
 
+		_vec3		vPlayerPos;
+		m_pRotationTrans->Get_Info(INFO_POS, &vPlayerPos);
+
+
 		if (0 == _tcscmp(LoadOrder.front(), L"A_ROOT"))	//	루트 이름은 항상 고정이므로 이렇게 지정해둠, 루트를 몸통으로 사용해도 좋고 아주 작게 만들어서 바닥으로 해도 좋고? 근데 거기까진 안해봤습니다ㅎ
-			Transcom->Set_Pos(vPos.x + vHitPos.x, vPos.y + vHitPos.y, vPos.z + vHitPos.z);
+			Transcom->Set_Pos(vPos.x + vPlayerPos.x, vPos.y + vPlayerPos.y, vPos.z + vPlayerPos.z);
 		else
 			Transcom->Set_Pos(vPos.x, vPos.y, vPos.z);
 
@@ -231,6 +249,36 @@ HRESULT CAnimationPlayer::Build(void)	//	모델 불러오는 함수
 	return S_OK;
 }
 
+void CAnimationPlayer::Look_Direction(void)
+{
+	_long MoveX = Get_DIMouseMove(DIMS_X);
+	_long MoveY = Get_DIMouseMove(DIMS_Y);
+	_long MoveZ = Get_DIMouseMove(DIMS_Z);
+
+	m_pRotationTrans->Rotation(ROT_Y, D3DXToRadian(MoveX / 10.f));
+	//m_pRotationTrans->Rotation(ROT_X, D3DXToRadian(MoveY / 10.f));
+
+	CLayer* pLayer = Engine::Get_Layer(STAGE_PLAYER);
+	list<pair<const _tchar*, CGameObject*>> ListBox = *(pLayer->Get_GamePairPtr());
+
+	for (auto& iter : ListBox)
+	{
+		if (0 == _tcscmp(iter.first, L"A_ROOT"))
+		{
+			_vec3 vAngle;
+			CTransform* Transform = dynamic_cast<CTransform*>(iter.second->Get_Component(L"Proto_TransformCom", ID_STATIC));
+			Transform->Get_Angle(&vAngle);
+
+			_vec3 vCubeAngle;
+			m_pRotationTrans->Get_Angle(&vCubeAngle);
+
+			//	yaw pitch roll 순서!!
+			_vec3 vCubeFinal(vCubeAngle.y, vCubeAngle.x, vCubeAngle.z);
+			Transform->Set_Angle(&vCubeFinal);
+		}
+	}
+}
+
 HRESULT CAnimationPlayer::Add_Component(void)
 {
 	CComponent* pComponent = nullptr;
@@ -250,6 +298,14 @@ HRESULT CAnimationPlayer::Add_Component(void)
 	pComponent = m_pCollision = dynamic_cast<CCollision*>(Engine::Clone_Proto(L"Proto_CollisionCom"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_CollisionCom", pComponent });
+
+	pComponent = m_pCubeCol = dynamic_cast<CCubeCol*>(Engine::Clone_Proto(CUBECOL_COMP));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[ID_STATIC].insert({ CUBECOL_COMP, pComponent });
+
+	pComponent = m_pRotationTrans = dynamic_cast<CTransform*>(Engine::Clone_Proto(L"Proto_TransformCom"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[ID_DYNAMIC].insert({ L"m_pRotationTrans", pComponent });
 
 	return S_OK;
 }
@@ -379,16 +435,17 @@ void CAnimationPlayer::Run_Animation(const _float& AnimationSpeed)	//	불러와진 �
 		D3DXMatrixTranslation(&matNewTrans, vTransLerp.x, vTransLerp.y, vTransLerp.z);
 		matNewWorld = matNewScale * matNewRot * matNewTrans;
 
-		_vec3		vHitPos;
-		m_pTransform->Get_Info(INFO_POS, &vHitPos);
-
 		CTransform*	BoxTransform = dynamic_cast<CTransform*>(iter.second->Get_Component(L"Proto_TransformCom", ID_STATIC));
 		_matrix matWorld;
 		BoxTransform->Set_WorldMatrix(&matNewWorld);
 		BoxTransform->Set_Scale(&vScaleLerp);
 		BoxTransform->Set_Angle(&_vec3(yaw, pitch, roll));
+
+		_vec3		vPlayerPos;
+		m_pRotationTrans->Get_Info(INFO_POS, &vPlayerPos);
+
 		if (0 == _tcscmp(iter.first, L"A_ROOT"))
-			BoxTransform->Set_Pos(vTransLerp.x + vHitPos.x, vTransLerp.y + vHitPos.y, vTransLerp.z + vHitPos.z);
+			BoxTransform->Set_Pos(vTransLerp.x + vPlayerPos.x, vTransLerp.y + vPlayerPos.y, vTransLerp.z + vPlayerPos.z);
 		else
 			BoxTransform->Set_Pos(vTransLerp.x, vTransLerp.y, vTransLerp.z);
 	}
