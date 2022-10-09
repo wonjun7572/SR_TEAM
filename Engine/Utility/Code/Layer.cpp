@@ -83,12 +83,38 @@ _int CLayer::Update_Layer(const _float & fTimeDelta)
 		for (iter = m_ObjectList.begin(); iter != m_ObjectList.end();)
 		{
 			iResult = (*iter)->Update_Object(fTimeDelta);
+	
 			if (iResult & 0x80000000)
 			{
-				iter = m_ObjectList.erase(iter);
+				if (this == Get_Layer(L"STAGE_BULLET_Layer"))
+				{
+					iter = m_ObjectList.erase(iter);
+				}
+				else
+				{
+					Safe_Release(*iter);
+					iter = m_ObjectList.erase(iter);
+				}
 			}
 			else
 				++(iter);
+		}
+	}
+	else if (!m_ObjectPairList.empty())
+	{
+		list<pair<const _tchar*, CGameObject*>>::iterator iter;
+
+		for (iter = m_ObjectPairList.begin(); iter != m_ObjectPairList.end();)
+		{
+			iResult = iter->second->Update_Object(fTimeDelta);
+
+			if (iResult & 0x80000000)
+			{
+				Safe_Release(iter->second);
+				m_ObjectPairList.erase(iter++);
+			}
+			else
+				++iter;
 		}
 	}
 	else
@@ -119,11 +145,65 @@ void CLayer::LateUpdate_Layer(void)
 		for (auto& iter : m_ObjectList)
 			iter->LateUpdate_Object();
 	}
+	else if (!m_ObjectPairList.empty())
+	{
+		for (auto& iter : m_ObjectPairList)
+			iter.second->LateUpdate_Object();
+	}
 	else
 	{
 		for (auto& iter : m_mapObject)
 			iter.second->LateUpdate_Object();
 	}
+}
+
+HRESULT CLayer::Add_GamePair(const _tchar * pObjTag, CGameObject * pInstance)
+{
+	if (nullptr == pInstance)
+		return E_FAIL;
+
+	m_ObjectPairList.push_back({ pObjTag, pInstance });
+
+	return S_OK;
+}
+
+HRESULT CLayer::Delete_GamePair(const _tchar * pObjTag)
+{
+	auto	iter = find_if(m_ObjectPairList.begin(), m_ObjectPairList.end(), CTag_Finder(pObjTag));
+
+	if (iter == m_ObjectPairList.end())
+		return E_FAIL;
+
+	CGameObject * pInstance = iter->second;
+
+	Safe_Release<CGameObject*>(pInstance);
+
+	iter = m_ObjectPairList.erase(iter);
+
+	return S_OK;
+}
+
+CGameObject * CLayer::Find_GamePair(const _tchar * pObjTag)
+{
+	auto	iter = find_if(m_ObjectPairList.begin(), m_ObjectPairList.end(), CTag_Finder(pObjTag));
+
+	if (iter == m_ObjectPairList.end())
+	{
+		MSG_BOX("There is no Pair");
+		return nullptr;
+	}
+
+	return iter->second;
+}
+
+CComponent * CLayer::Get_PairComponent(const _tchar * pObjTag, const _tchar * pComponentTag, COMPONENTID eID)
+{
+	auto	iter = find_if(m_ObjectPairList.begin(), m_ObjectPairList.end(), CTag_Finder(pObjTag));
+
+	if (iter == m_ObjectPairList.end())
+		return nullptr;
+
+	return iter->second->Get_Component(pComponentTag, eID);
 }
 
 CLayer* CLayer::Create(void)
@@ -143,4 +223,7 @@ void CLayer::Free(void)
 
 	for_each(m_mapObject.begin(), m_mapObject.end(), CDeleteMap());
 	m_mapObject.clear();
+
+	for_each(m_ObjectPairList.begin(), m_ObjectPairList.end(), CDeleteMap());
+	m_ObjectPairList.clear();
 }

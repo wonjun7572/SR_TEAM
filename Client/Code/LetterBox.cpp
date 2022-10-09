@@ -26,7 +26,7 @@ HRESULT CLetterBox::Ready_Object(_tchar* tDialogue, _int iSize, _int iIndex)
 	m_iTextAmount = iSize - 3;
 
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, m_strLetterName, L"Roboto-Bold", m_fFontSize, 40, FW_HEAVY), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, m_strLetterName, L"Roboto-Bold", _uint(m_fFontSize), 40, FW_HEAVY), E_FAIL);
 	iLetterBoxCnt++;
 
 	return S_OK;

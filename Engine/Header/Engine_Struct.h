@@ -97,7 +97,6 @@ namespace Engine
 
 	typedef struct tagMonsterState
 	{
-		std::wstring strObjName;
 		std::wstring strObjTag;	// UI 에서 몬스터 이름 찾아주려고
 		_int   iLevel;
 		_float fCurrentHp;

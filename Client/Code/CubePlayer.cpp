@@ -11,6 +11,7 @@
 #include "ShotParticle.h"
 #include "BulletParticle.h"
 #include "Inventory.h"
+
 CCubePlayer::CCubePlayer(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
 {
@@ -31,9 +32,13 @@ HRESULT CCubePlayer::Ready_Object(void)
 	m_tAbility->iDefence = 50;
 	m_tAbility->iGunTexture = 5;
 
-	m_pTransform->Set_Scale(0.4f, 1.f, 0.4f);
+	m_pTransform->Set_Scale(0.4f, 0.5f, 0.4f);
 	m_pTransform->Set_Pos(10.f, 10.f, 10.f);
 	m_pTransform->Static_Update();
+
+	m_pSphereTransCom->Set_Scale(0.5f, 0.5f, 0.5f);
+	m_pSphereTransCom->Set_Pos(10.f, 10.f, 10.f);
+	m_pSphereTransCom->Static_Update();
 
 	m_fSpeed = 10.f;
 
@@ -55,6 +60,7 @@ _int CCubePlayer::Update_Object(const _float & fTimeDelta)
 	// 이동, 애니메이션 관련
 	if (!(dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->Get_Switch()))
 	{
+
 		Move();
 	}
 
@@ -92,6 +98,7 @@ void CCubePlayer::LateUpdate_Object(void)
 	}
 	
 	m_pCollision->Get_Item();
+	m_pCollision->Get_GunItem();
 
 	Gun_Check();
 
@@ -105,6 +112,15 @@ void CCubePlayer::Render_Object(void)
 	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 
 	m_pHitBox->Render_Buffer();
+
+	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pSphereTransCom->Get_WorldMatrixPointer());
+	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+
+	m_pSphereBufferCom->Render_Buffer();
 
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
@@ -144,6 +160,7 @@ void CCubePlayer::Assemble(void)
 	m_pBodyWorld->Get_Info(INFO_POS, &vBodyAfterPos);
 
 	m_pTransform->Set_Pos(vBodyPos.x, vBodyPos.y, vBodyPos.z);
+	m_pSphereTransCom->Set_Pos(vBodyPos.x, vBodyPos.y, vBodyPos.z);
 	m_pHeadWorld->Set_Pos(vBodyPos.x, vBodyPos.y + 0.3f, vBodyPos.z);
 	m_pLeftArmWorld->Set_Pos(vBodyPos.x - 0.15f, vBodyPos.y + 0.1f, vBodyPos.z);
 	m_pRightArmWorld->Set_Pos(vBodyPos.x + 0.15f, vBodyPos.y + 0.1f, vBodyPos.z);
@@ -656,7 +673,6 @@ HRESULT CCubePlayer::Get_BodyTransform(void)
 	NULL_CHECK_RETURN(m_pBodyWorld, E_FAIL);
 	m_pRightLegWorld = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_CHARACTER, L"R_LEG", TRANSFORM_COMP, ID_DYNAMIC));
 	NULL_CHECK_RETURN(m_pBodyWorld, E_FAIL);
-
 	m_pLeftHandWorld = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_CHARACTER, L"L_HAND", TRANSFORM_COMP, ID_DYNAMIC));
 	NULL_CHECK_RETURN(m_pBodyWorld, E_FAIL);
 	m_pRightHandWorld = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_CHARACTER, L"R_HAND", TRANSFORM_COMP, ID_DYNAMIC));
@@ -665,7 +681,6 @@ HRESULT CCubePlayer::Get_BodyTransform(void)
 	NULL_CHECK_RETURN(m_pBodyWorld, E_FAIL);
 	m_pRightFootWorld = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_CHARACTER, L"R_FOOT", TRANSFORM_COMP, ID_DYNAMIC));
 	NULL_CHECK_RETURN(m_pBodyWorld, E_FAIL);
-
 	return S_OK;
 }
 
@@ -711,6 +726,15 @@ HRESULT CCubePlayer::Add_Component(void)
 	NULL_CHECK_RETURN(pInstance, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ CALCULATOR_COMP, pInstance });
 
+	// For Sphere
+	pInstance = m_pSphereBufferCom = dynamic_cast<CSphereTex*>(Clone_Proto(SPHERECOL_COMP));
+	NULL_CHECK_RETURN(m_pSphereBufferCom, E_FAIL);
+	m_mapComponent[ID_STATIC].insert({ SPHERECOL_COMP, pInstance });
+
+	pInstance = m_pSphereTransCom = dynamic_cast<CTransform*>(Clone_Proto(TRANSFORM_COMP));
+	NULL_CHECK_RETURN(m_pSphereBufferCom, E_FAIL);
+	m_mapComponent[ID_DYNAMIC].insert({ L"Sphere_TransCom", pInstance });
+
 	return S_OK;
 }
 
@@ -726,6 +750,7 @@ CCubePlayer * CCubePlayer::Create(LPDIRECT3DDEVICE9 pGraphicDev)
      
 void CCubePlayer::Free(void)
 {
+	CGameObject::Free();
 	for (auto& iter : m_listMonsterCnt)
 	{
 		if (iter != nullptr)
@@ -735,5 +760,4 @@ void CCubePlayer::Free(void)
 	Safe_Delete<ABILITY*>(m_tAbility);
 
 	m_listMonsterCnt.clear();
-	CGameObject::Free();
 }

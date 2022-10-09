@@ -12,17 +12,15 @@ class CRcTex;
 
 class CShop : public CGameObject
 {
-
 	enum WEAPONBUTTON {BUTTON_ONE, BUTTON_TWO, BUTTON_THREE, BUTTON_END };
 
 	enum UPGRADE {UPGRADE_UZI, UPGRADE_SHOTGUN, UPGRADE_SNIPER, UPGRADE_END};
 
 	enum LEVLEUP {LEVEL_LASER, LEVEL_HEAVY, LEVEL_RAIL, LEVEL_BURST, LEVEL_UPGRADETEXT, LEVEL_END };
+
 public:
 	explicit CShop(LPDIRECT3DDEVICE9 pGraphicDev);
 	virtual ~CShop();
-
-
 
 public:
 	HRESULT Ready_Object(void) override;
@@ -33,7 +31,7 @@ public:
 	void		Key_Input();
 	void		Render_Ortho(CTransform* pTransform, CTexture* pTexture, _int iIndex = 0);
 
-
+	_bool			Get_Switch(void) { return m_bShopSwitch; }
 private:
 	HRESULT			Add_Component(void);
 	_bool			PointMouse(const _vec3& vPos);		
@@ -70,11 +68,8 @@ private:
 	 _matrix	m_matRailGunView;
 	 _matrix	m_matBurstView;
 	 _matrix	m_matUpgradeString;
-	
 
 	 _vec2		m_Pos;
-	 
-
 
 	 _int		m_iIndex;
 
@@ -120,7 +115,6 @@ private:
 	Engine::CTexture*	m_pShotGunTextureform = nullptr;
 	Engine::CTexture*	m_pSniperTextureform = nullptr;
 
-
 	//Upgrade
 	Engine::CTexture*	m_pLaserRaffle = nullptr;
 	Engine::CTexture*	m_pHeavyRaffle = nullptr;
@@ -131,12 +125,11 @@ private:
 	CGameObject* m_pPlayer = nullptr;
 
 	_int		m_iGunIndex;
-	_bool		m_bShop = false;
 	_bool		m_bCheckUzi = false;
 	_bool		m_bMouseCheck = false;
 	_bool		m_bChecking = false;
 	_bool		m_GunChecking = false;
-
+	_bool		m_bLBDown = false;
 	_float		fScale;
 	_float		fScale2;
 	//¹öÆ°
@@ -152,6 +145,9 @@ private:
 	_float		fScale11;
 	_float		fScale12;
 	_float		fScale13;
+
+	_bool		m_bShopSwitch = false;
+
 public:
 	static CShop*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
 

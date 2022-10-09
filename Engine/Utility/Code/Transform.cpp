@@ -113,6 +113,20 @@ void CTransform::Flexible_WorldSpace(_vec3 * vScale, _vec3 * vAngle, _vec3 * vTr
 	m_matWorld = matScale * matRotX * matRotY * matRotZ * matTrans;
 }
 
+void CTransform::Worldspace_By_Quarternion(void)
+{
+	_matrix matScale, matRotQuaternion, matTrans;
+
+	D3DXMatrixScaling(&matScale, m_vScale.x, m_vScale.y, m_vScale.z);
+
+	D3DXQuaternionRotationYawPitchRoll(&Quaternion, m_vAngle.x, m_vAngle.y, m_vAngle.z);
+	D3DXMatrixRotationQuaternion(&matRotQuaternion, &Quaternion);
+
+	D3DXMatrixTranslation(&matTrans, m_vInfo[INFO_POS].x, m_vInfo[INFO_POS].y, m_vInfo[INFO_POS].z);
+
+	m_matWorld = matScale * matRotQuaternion * matTrans;
+}
+
 void CTransform::Rotation_Axis_Animation(const _float & fXMove, const _float & fYMove, const _float & fXAngle, const _float & fYAngle, const _float& fExtraMove, const _float& fExtraAngle)
 {
 	_matrix matScale, matRotX, matRotY, matTrans;
@@ -521,14 +535,14 @@ const _matrix* Engine::CTransform::Compute_LookAtTarget(const _vec3* pTargetPos)
 {
 	_vec3		vLook = *pTargetPos - m_vInfo[INFO_POS];
 
-	_vec3		vAxis, vUp;
+	_vec3		vAxis, vRight;
 	_matrix		matRot;
 	
 	// D3DXMatrixRotationAxis : 임의의 축회전 행렬을 만들어주는 함수
 	return D3DXMatrixRotationAxis(&matRot, 
-									D3DXVec3Cross(&vAxis, &m_vInfo[INFO_UP], &vLook),
+									D3DXVec3Cross(&vAxis, &m_vInfo[INFO_RIGHT], &vLook),
 									acosf(D3DXVec3Dot(D3DXVec3Normalize(&vLook, &vLook), 
-												D3DXVec3Normalize(&vUp, &m_vInfo[INFO_UP]))));
+												D3DXVec3Normalize(&vRight, &m_vInfo[INFO_RIGHT]))));
 }
 
 void CTransform::Billboard_Transform(const _float & fTimeDelta)

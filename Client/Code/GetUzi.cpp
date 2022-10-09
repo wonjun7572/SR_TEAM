@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "..\Header\GetUzi.h"
 #include "CubePlayer.h"
-
+#include "Inventory.h"
 CGetUzi::CGetUzi(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CItem(pGraphicDev)
 {
@@ -32,6 +32,7 @@ _int CGetUzi::Update_Object(const _float & fTimeDelta)
 	if (m_bDead)
 	{ 
 		dynamic_cast<CCubePlayer*>(Engine::Get_GameObject(STAGE_CHARACTER, L"PLAYER"))->Capture_Uzi();
+		dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->ItemCreate(2);
 		return -1;
 	}
 	
@@ -51,15 +52,6 @@ void CGetUzi::Render_Object()
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransCom->Get_WorldMatrixPointer());
 	m_pTextureCom->Set_Texture(0);
 	m_pDBufferCom->Render_Buffer();
-
-	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DPMISCCAPS_CULLNONE);
-	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
-
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pHitBoxTransCom->Get_WorldMatrixPointer());
-	m_pHitBox->Render_Buffer();
-
-	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DPMISCCAPS_CULLCCW);
-	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 }
 
 HRESULT CGetUzi::Add_Component(void)

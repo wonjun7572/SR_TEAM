@@ -32,8 +32,14 @@ protected:
 	CTransform*			m_pTransUICom = nullptr;
 
 	CHitBox*			m_pHitBox = nullptr;
+	CTransform*			m_pHitBoxTransCom = nullptr;
 
 	CMonsterUI*			m_pMonsterUI = nullptr;
+
+	CTransform*			m_pPlayerTransCom = nullptr;
+
+	CSphereTex*			m_pSphereBufferCom = nullptr;
+	CTransform*			m_pSphereTransCom = nullptr;
 
 	MONSTERABILITY*		m_tAbility;
 	

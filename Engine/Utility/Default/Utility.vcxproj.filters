@@ -64,9 +64,6 @@
     <Filter Include="04. Manager\03. Light\Manager">
       <UniqueIdentifier>{7ccae5e5-f0cd-4591-96dd-fce74168f2c5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="00. Component\00. VIBuffer\05. SphereTex">
-      <UniqueIdentifier>{99e74802-0e99-4b46-b63c-2f61523bfc87}</UniqueIdentifier>
-    </Filter>
     <Filter Include="04. Manager\04. SoundMgr">
       <UniqueIdentifier>{f3b6f7c7-f618-479c-9eb8-2afb6900a6e1}</UniqueIdentifier>
     </Filter>
@@ -90,6 +87,15 @@
     </Filter>
     <Filter Include="00. Component\00. VIBuffer\08. DynamicBuffer">
       <UniqueIdentifier>{ac1c36d9-2a32-4eb7-ac85-321c80f75de9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00. Component\00. VIBuffer\05. SphereTex">
+      <UniqueIdentifier>{99e74802-0e99-4b46-b63c-2f61523bfc87}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00. Component\00. VIBuffer\09. FlexibleAxisCube">
+      <UniqueIdentifier>{0e23f2f7-5058-456b-90be-83277283b6ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00. Component\05. Quaternion">
+      <UniqueIdentifier>{2500e5bd-d067-49c6-9b48-a76c7a0fdc06}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -177,6 +183,12 @@
     <ClInclude Include="..\..\Header\DynamicBuffer.h">
       <Filter>00. Component\00. VIBuffer\08. DynamicBuffer</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Header\FlexibleAxisCube.h">
+      <Filter>00. Component\00. VIBuffer\09. FlexibleAxisCube</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Header\Quarternion.h">
+      <Filter>00. Component\05. Quaternion</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\TriCol.cpp">
@@ -259,6 +271,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\DynamicBuffer.cpp">
       <Filter>00. Component\00. VIBuffer\08. DynamicBuffer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\FlexibleAxisCube.cpp">
+      <Filter>00. Component\00. VIBuffer\09. FlexibleAxisCube</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Quarternion.cpp">
+      <Filter>00. Component\05. Quaternion</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

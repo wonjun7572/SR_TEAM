@@ -174,8 +174,7 @@ void CTestPlayer::Fire_Bullet(const _vec3* pDir)
 _bool CTestPlayer::Hit_Check(void)
 {
 	_vec3 vSrcPos;
-	dynamic_cast<CTransform*>
-		(Engine::Get_Component(STAGE_GUN, L"Uzi_Part_1_1", TRANSFORM_COMP, ID_DYNAMIC))->Get_Info(INFO_POS, &vSrcPos);
+	dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_GUN, L"Uzi_Part_1_1", TRANSFORM_COMP, ID_DYNAMIC))->Get_Info(INFO_POS, &vSrcPos);
 	m_pTransCom->Static_Update();
 
 	_vec3 vDir;

@@ -3,6 +3,7 @@
 #include "CubePlayer.h"
 #include "Weapon.h"
 #include "Inventory.h"
+#include "Shop.h"
 
 CStaticCamera::CStaticCamera(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CCamera(pGraphicDev)
@@ -40,8 +41,8 @@ HRESULT CStaticCamera::Ready_Object(const _vec3* pEye,
 
 Engine::_int CStaticCamera::Update_Object(const _float& fTimeDelta)
 {
-	if (!(dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->Get_Switch()))
-	{
+	if (!(dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->Get_Switch()) || !(dynamic_cast<CShop*>(Engine::Get_GameObject(STAGE_UI, L"Shop"))->Get_Switch()))
+	{	
 		Key_Input(fTimeDelta);
 
 		Look_Taget();
@@ -83,7 +84,7 @@ void CStaticCamera::Key_Input(const _float& fTimeDelta)
 
 void CStaticCamera::Mouse_Fix(void)
 {
-	if (!(dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->Get_Switch()))
+	if (!(dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->Get_Switch()) && !(dynamic_cast<CShop*>(Engine::Get_GameObject(STAGE_UI, L"Shop"))->Get_Switch()))
 	{
 		ShowCursor(false); 
 		POINT	pt{ WINCX >> 1 , WINCY >> 1 };

@@ -7,7 +7,7 @@
 CMonster::CMonster(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
 {
-	m_tAbility = new MONSTERABILITY;
+	
 }
 
 CMonster::~CMonster()
@@ -24,6 +24,9 @@ _int CMonster::Update_Object(const _float & fTimeDelta)
 	if(m_pMonsterUI == nullptr)
 		m_pMonsterUI = dynamic_cast<CMonsterUI*>(Engine::Get_GameObject(STAGE_UI, L"MonsterUI"));
 	
+	if (m_pPlayerTransCom == nullptr)
+		m_pPlayerTransCom = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_CHARACTER, L"PLAYER", TRANSFORM_COMP, ID_DYNAMIC));
+
 	_vec3 vUIPos;
 	m_pTransCom->Get_Info(INFO_POS, &vUIPos);
 	m_pTransUICom->Set_Pos(vUIPos.x, vUIPos.y + 0.5f, vUIPos.z);
@@ -82,7 +85,7 @@ void CMonster::Hit_Check(_float _deltaTime)
 		else
 		{
 			m_fUISwitchTime += _deltaTime;
-			if (m_fUISwitchTime >= 2.f)
+			if (m_fUISwitchTime >= 5.f)
 			{
 				m_pMonsterUI->Off_Switch();
 				m_fUISwitchTime = 0.f;
@@ -93,6 +96,5 @@ void CMonster::Hit_Check(_float _deltaTime)
 
 void CMonster::Free(void)
 {
-	Safe_Delete<MONSTERABILITY*>(m_tAbility);
 	CGameObject::Free();
 }

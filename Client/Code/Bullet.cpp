@@ -29,24 +29,16 @@ _int CBullet::Update_Object(const _float & fTimeDelta)
 	_vec3 vPos;
 	m_fTimeDelta += fTimeDelta;
 	m_pTransCom->Get_Info(INFO_POS, &vPos);
-
-	//if (vPos.x >= 50.f || vPos.y >= 50.f || vPos.z >= 50.f
-	//	|| vPos.x <= -50.f || vPos.y <= -50.f || vPos.z <= -50.f)
+	
 	if (m_fTimeDelta >= 3.f)
 	{
 		CPoolMgr::GetInstance()->Collect_Obj(this);
 		m_fTimeDelta = 0.f;
-		//Engine::Add_RenderGroup(RENDER_NONALPHA, this);
 		return -1;
 	}
 	Engine::CGameObject::Update_Object(fTimeDelta);
-	//	Engine::CGameObject::Update_Object(fTimeDelta);
 
 	m_pTransCom->Move_Pos(&(m_vDirection * fTimeDelta * m_fSpeed));
-
-	//Engine::Add_RenderGroup(RENDER_BULLET, this);
-
-	//m_pTransCom->Set_Info(INFO_LOOK, &m_vDirection);
 
 	return 0;
 }

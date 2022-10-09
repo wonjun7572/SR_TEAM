@@ -18,11 +18,14 @@ private:
 public:
 	HRESULT					Ready_Collision(void);
 	_bool					Check_Collision(void);
+	_bool					Sphere_Collision(CTransform* pTempTransform, CTransform* pSourTransform, _float fTemp, _float fSour);
+	
 	_int					Wall_Collision(_vec3* vNorm);
 
 	_int					Wall_Collision_By_DotSliding(_vec3* vChangeDir);
 
 	void					Get_Item(void);
+	void					Get_GunItem();
 
 	_bool					HitScan(HWND hWnd, _vec3 * SrcPos, const CCubeTex * pCubeTex, const CTransform * pTransform, _vec3* vReturn);
 

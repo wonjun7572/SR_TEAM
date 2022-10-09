@@ -159,6 +159,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Header\AnimationPlayer.h" />
     <ClInclude Include="..\Header\BackGround.h" />
     <ClInclude Include="..\Header\BaseMapping.h" />
     <ClInclude Include="..\Header\Bullet.h" />
@@ -203,6 +204,7 @@
     <ClInclude Include="..\Header\MaxPlusHp.h" />
     <ClInclude Include="..\Header\Monster.h" />
     <ClInclude Include="..\Header\MonsterMapping.h" />
+    <ClInclude Include="..\Header\MonsterParticle.h" />
     <ClInclude Include="..\Header\MonsterUI.h" />
     <ClInclude Include="..\Header\ObtainBullet.h" />
     <ClInclude Include="..\Header\ObtainDefense.h" />
@@ -218,6 +220,7 @@
     <ClInclude Include="..\Header\ShotgunPart2.h" />
     <ClInclude Include="..\Header\ShotgunPart3.h" />
     <ClInclude Include="..\Header\ShotgunPart4.h" />
+    <ClInclude Include="..\Header\Skeleton.h" />
     <ClInclude Include="..\Header\SkyBox.h" />
     <ClInclude Include="..\Header\Sniper.h" />
     <ClInclude Include="..\Header\SniperPart1.h" />
@@ -232,6 +235,7 @@
     <ClInclude Include="..\Header\TestMonster.h" />
     <ClInclude Include="..\Header\TestPlayer.h" />
     <ClInclude Include="..\Header\ToolScene.h" />
+    <ClInclude Include="..\Header\TransAxisBox.h" />
     <ClInclude Include="..\Header\Uzi.h" />
     <ClInclude Include="..\Header\UziPart1.h" />
     <ClInclude Include="..\Header\UziPart2.h" />
@@ -272,6 +276,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Code\AnimationPlayer.cpp" />
     <ClCompile Include="..\Code\BackGround.cpp" />
     <ClCompile Include="..\Code\BaseMapping.cpp" />
     <ClCompile Include="..\Code\Bullet.cpp" />
@@ -316,6 +321,7 @@
     <ClCompile Include="..\Code\MaxPlusHp.cpp" />
     <ClCompile Include="..\Code\Monster.cpp" />
     <ClCompile Include="..\Code\MonsterMapping.cpp" />
+    <ClCompile Include="..\Code\MonsterParticle.cpp" />
     <ClCompile Include="..\Code\MonsterUI.cpp" />
     <ClCompile Include="..\Code\ObtainBullet.cpp" />
     <ClCompile Include="..\Code\ObtainDefense.cpp" />
@@ -331,6 +337,7 @@
     <ClCompile Include="..\Code\ShotgunPart2.cpp" />
     <ClCompile Include="..\Code\ShotgunPart3.cpp" />
     <ClCompile Include="..\Code\ShotgunPart4.cpp" />
+    <ClCompile Include="..\Code\Skeleton.cpp" />
     <ClCompile Include="..\Code\SkyBox.cpp" />
     <ClCompile Include="..\Code\Sniper.cpp" />
     <ClCompile Include="..\Code\SniperPart1.cpp" />
@@ -345,6 +352,7 @@
     <ClCompile Include="..\Code\TestMonster.cpp" />
     <ClCompile Include="..\Code\TestPlayer.cpp" />
     <ClCompile Include="..\Code\ToolScene.cpp" />
+    <ClCompile Include="..\Code\TransAxisBox.cpp" />
     <ClCompile Include="..\Code\Uzi.cpp" />
     <ClCompile Include="..\Code\UziPart1.cpp" />
     <ClCompile Include="..\Code\UziPart2.cpp" />
