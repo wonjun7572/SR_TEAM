@@ -36,7 +36,6 @@ Engine::_int CPlayerUI::Update_Object(const _float& fTimeDelta)
 
 void CPlayerUI::LateUpdate_Object(void)
 {
-
 	CGameObject::LateUpdate_Object();
 }
 
