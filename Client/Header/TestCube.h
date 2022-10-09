@@ -1,6 +1,6 @@
 #pragma once
 #include "GameObject.h"
-
+#include "MonsterParticle.h"
 BEGIN(Engine)
 
 class CTexture;
@@ -28,7 +28,7 @@ public:
 
 	_bool*				Get_WireFrame() { return &m_bWireFrame; }
 	void				Set_WireFrame(_bool bWireFrame) { m_bWireFrame = bWireFrame; }
-	
+	void				Update_NullCheck();
 	
 	HRESULT				Interact(void);
 
@@ -63,7 +63,7 @@ private: // 문 상호작용 관련
 	wstring				m_strPress;
 	CGameObject*		m_pLetterBox = nullptr;
 
-
+	CMonsterParticle* m_pMonsterParticle = nullptr;
 
 public:
 	static CTestCube*		Create(LPDIRECT3DDEVICE9 pGraphicDev, int Posx = 0, int Posy = 0);

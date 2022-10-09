@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "..\Header\GetShotgun.h"
 #include "CubePlayer.h"
-
+#include "Inventory.h"
 CGetShotgun::CGetShotgun(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CItem(pGraphicDev)
 {
@@ -31,6 +31,7 @@ _int CGetShotgun::Update_Object(const _float & fTimeDelta)
 	if (m_bDead)
 	{
 		dynamic_cast<CCubePlayer*>(Engine::Get_GameObject(STAGE_CHARACTER, L"PLAYER"))->Capture_Shotgun();
+		dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->ItemCreate(3);
 		return -1;
 	}
 	
