@@ -4,8 +4,7 @@
 #include "Weapon.h"
 USING(Engine)
 
-class CInventory :
-	public CGameObject
+class CInventory : public CGameObject
 {
 private:
 	explicit CInventory(LPDIRECT3DDEVICE9 pGraphicDev);
@@ -17,20 +16,24 @@ public:
 	virtual void	LateUpdate_Object(void) override;
 	virtual void	Render_Object(void) override;
 	_bool			Get_Switch(void)  { return m_bInvSwitch; }
-	void         ItemCreate(_int iItemIndex) { m_bItemCreate = true; m_iItemIndex = iItemIndex; }
+	
+	vector<CGameObject*> Get_vecEquipments() { return m_vecEquipments; }
 
+	void         ItemCreate(_int iItemIndex) 
+	{ 
+		m_bItemCreate = true; 
+		m_iItemIndex = iItemIndex; 
+	}
 
-	void		ReCall();
 private:
 	HRESULT		Add_Component();
 	void		Begin_OrthoProj();
 	void		End_OrthoProj();	
 	void		Key_Input();
 	void		Mouse();
-
 	void		Sorting();
 	void		Get_Item();
-
+	void		Gun_Change();
 
 private:
 	CGameObject*		m_pPlayer = nullptr;
@@ -45,16 +48,13 @@ private:
 	_matrix				m_matView;
 	_matrix				m_matProj;	
 
-	list<CGameObject*>	  m_listEqiupments;
 	vector<CGameObject*>  m_vecContents;
 	vector<CGameObject*>  m_vecEquipments;
+
 private:
 	_bool				m_bInit = false;
 	_bool				m_bNull = false;
 	_bool				m_bInvSwitch = false;
-	_bool				m_bKeyDown = false;
-	_bool				m_bRBDown = false;
-	_bool				m_bLBDown = false;
 	_bool				m_bSorting = false;
 	_bool				m_bNullSorting = false;
 

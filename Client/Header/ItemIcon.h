@@ -17,7 +17,7 @@ public:
 	virtual void	LateUpdate_Object(void) override;
 	virtual void	Render_Object(void) override;
 
-	
+	int		Get_iTemIdx() { return m_iNumber; }
 
 public:
 	void		Maker(CItemIcon* pInstance)
@@ -38,8 +38,8 @@ private:
 	void		End_OrthoProj();
 	void		Index();
 	void		FixOnCursor();
+
 private:
-	
 	CGameObject*	 m_pPlayer = nullptr;
 	CTransform*		 m_pTransformCom = nullptr;
 	CTexture*		 m_pTextureCom = nullptr;
@@ -57,8 +57,6 @@ private:
 
 	list<TCHAR*>	 m_listItemIcon;
 	_tchar			 szCntName[64];
-
-
 
 private:
 	_int			m_iIndex = 0;

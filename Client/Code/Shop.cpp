@@ -154,9 +154,6 @@ HRESULT CShop::Ready_Object(void)
 		m_pUpgradeTransformCom->Set_Scale(fWidth * fScale13 * 1.1f, fHeight * fScale13 * 1.2f, 1.f);
 	}
 
-
-
-
 	m_pUpgrade = L"UPGRADE";
 	m_pInformation = L"Press [Return] And Hold to Buy Upgrade";
 	m_pUziRaffle = L"UziRaffle";
@@ -172,7 +169,7 @@ HRESULT CShop::Ready_Object(void)
 
 _int CShop::Update_Object(const _float & fTimeDelta)
 {
-	if (m_bShop)
+	if (m_bShopSwitch)
 	{
 		Add_RenderGroup(RENDER_UI, this);
 	}
@@ -189,13 +186,8 @@ void CShop::LateUpdate_Object()
 
 void CShop::Render_Object()
 {
-
-
-	if (m_bShop)
 	{
 		Render_Ortho(m_TranformCom, m_pTextureform);
-	}
-	{
 		Render_Ortho(m_pButtonTransformCom, m_pButtonOneform, 0);
 		Render_Ortho(m_pShotGunTransformCom, m_pButtonTwoform, 0);
 		Render_Ortho(m_pSniperTransformCom, m_pButtonThreeform, 0);
@@ -327,18 +319,9 @@ void CShop::Render_Object()
 
 void CShop::Key_Input()
 {
-	if (Get_DIKeyState(DIK_K))
+	if (Key_Down(DIK_O))
 	{
-		CRenderer::GetInstance()->On_Shop();
-		m_bShopState = false;
-		m_bShop = false;
-
-	}
-	if (Get_DIKeyState(DIK_L))
-	{
-		CRenderer::GetInstance()->Off_Shop();
-		m_bShop = true;
-		m_bShopState = true;
+		m_bShopSwitch = !m_bShopSwitch;
 	}
 
 	if (!Get_DIMouseState(DIM_LB))
@@ -372,7 +355,6 @@ void CShop::Render_Ortho(CTransform * pTransform, CTexture * pTexture, _int iInd
 
 HRESULT CShop::Add_Component(void)
 {
-
 	CComponent * pComponent = nullptr;
 
 	pComponent = m_pBufferCom = dynamic_cast<CRcTex*>(Clone_Proto(L"Proto_RcTexCom"));
