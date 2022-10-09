@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "..\Header\ObtainBullet.h"
-#include "Uzi.h"
+#include "CubePlayer.h"
+#include "Weapon.h"
 
 CObtainBullet::CObtainBullet(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CItem(pGraphicDev)
@@ -30,7 +31,7 @@ _int CObtainBullet::Update_Object(const _float & fTimeDelta)
 {
 	if (m_bDead)
 	{
-		dynamic_cast<CUzi*>(Engine::Get_GameObject(STAGE_GUN, L"UZI1"))->Get_Bullet();
+		dynamic_cast<CCubePlayer*>(Engine::Get_GameObject(STAGE_CHARACTER, L"PLAYER"))->Get_Weapon()->Get_Bullet();
 		return -1;
 	}
 

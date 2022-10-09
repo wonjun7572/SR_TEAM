@@ -30,7 +30,20 @@ public:
 
 public:
 	ABILITY*      Get_Ability() { return m_tAbility; }
-	void         Set_Damaged(_int iDamage) { m_tAbility->iHp -= iDamage; }
+	void          Set_Damaged(_float iDamage) 
+	{ 
+		if (m_tAbility->fDefence > 0.f)
+		{
+			m_tAbility->fDefence -= iDamage;
+			m_tAbility->fDefence = 0.f;
+		}
+		else
+		{
+			m_tAbility->fHp -= iDamage; 
+			if (m_tAbility->fHp <= 0.f)
+			m_tAbility->fHp = 0.f;
+		}
+	}
 
 public:
 	virtual HRESULT Ready_Object(void) override;
@@ -57,13 +70,9 @@ private:
 	void			TransAxis(void);
 
 	void			Move(void);
-
 	void			Look_Direction(void);
-
 	void			Fire_Bullet(void);
-
 	void			Gun_Check(void);
-
 
 private:
 	void			Jump(void);
@@ -146,19 +155,20 @@ public:
 	//ITEM
 	void		Get_Defense() 
 	{ 
-		if (m_tAbility->iDefence <= m_tAbility->iMaxDefence)
-			m_tAbility->iDefence += 10; 
-		if (m_tAbility->iDefence >= m_tAbility->iMaxDefence)
-			m_tAbility->iDefence = m_tAbility->iMaxDefence;
+		if (m_tAbility->fDefence <= m_tAbility->fMaxDefence)
+			m_tAbility->fDefence += 10.f;
+		if (m_tAbility->fDefence >= m_tAbility->fMaxDefence)
+			m_tAbility->fDefence = m_tAbility->fMaxDefence;
 	}
 	void		Get_Hp() 
 	{ 
-		if (m_tAbility->iHp < m_tAbility->iMaxHp)
-			m_tAbility->iMaxHp += 10;
-		else
-			m_tAbility->iHp += 10; 
+		if (m_tAbility->fHp <= m_tAbility->fMaxHp)
+			m_tAbility->fHp += 10.f;
+		if (m_tAbility->fHp >= m_tAbility->fMaxHp)
+			m_tAbility->fHp = m_tAbility->fMaxHp;
 	}
-	void		Get_MaxHp() { m_tAbility->iMaxHp += 30; }
+
+	void		Get_MaxHp() { m_tAbility->fMaxHp += 30.f; }
 
 public:
 	static CCubePlayer*	Create(LPDIRECT3DDEVICE9 pGraphicDev);

@@ -83,7 +83,7 @@ HRESULT CSphereTex::Ready_Buffer(_float _radius)
 	vertices[vertex].vPos.x = 0.0f;
 	vertices[vertex].vPos.y = _radius;
 	vertices[vertex].vPos.z = 0.f;
-	vertices[vertex].vTexUV = _vec2(0.9f, 0.9f);
+	vertices[vertex].vTexUV = _vec2(0.5f, 1.f);
 
 	float deltaU = 1.f / static_cast<float>(slices);
 	float deltaV = 1.f / static_cast<float>(stacks);
@@ -101,7 +101,7 @@ HRESULT CSphereTex::Ready_Buffer(_float _radius)
 			vertices[vertex].vPos.x = _radius * sin_theta * cosf(phi_start);
 			vertices[vertex].vPos.y = _radius * cos_theta;
 			vertices[vertex].vPos.z = _radius * sin_theta * sinf(phi_start);
-			vertices[vertex].vTexUV = _vec2(deltaU * slice * 2, deltaV * (stack + 1) * 2);
+			vertices[vertex].vTexUV = _vec2(deltaU * slice, deltaV * (stack + 1));
 			vertex++;
 
 			phi_start += phi_step;
@@ -145,7 +145,7 @@ HRESULT CSphereTex::Ready_Buffer(_float _radius)
 	vertices[vertex].vPos.x = 0.0f;
 	vertices[vertex].vPos.y = -_radius;
 	vertices[vertex].vPos.z = 0.f;
-	vertices[vertex].vTexUV = _vec2(0.1f, 1.f);
+	vertices[vertex].vTexUV = _vec2(0.5f, 1.f);
 	vertices[vertex].vNormal.x = 0.0f;
 	vertices[vertex].vNormal.y = 0.0f;
 	vertices[vertex].vNormal.z = -1.0f;
