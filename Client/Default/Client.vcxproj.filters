@@ -573,6 +573,9 @@
     <ClInclude Include="..\Header\MonsterUI.h">
       <Filter>02. GameObject\01. For_Stage\09. UI\Monster</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\ItemParticle.h">
+      <Filter>02. GameObject\01. For_Stage\12. Particle</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -877,6 +880,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\MonsterUI.cpp">
       <Filter>02. GameObject\01. For_Stage\09. UI\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ItemParticle.cpp">
+      <Filter>02. GameObject\01. For_Stage\12. Particle</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
