@@ -1,7 +1,7 @@
 #pragma once
 #include "ItemIcon.h"
 #include "GameObject.h"
-
+#include "Weapon.h"
 USING(Engine)
 
 class CInventory :
@@ -27,7 +27,7 @@ private:
 	void		End_OrthoProj();	
 	void		Key_Input();
 	void		Mouse();
-	void		Equipment();
+
 	void		Sorting();
 	void		Get_Item();
 
@@ -36,15 +36,11 @@ private:
 	CGameObject*		m_pPlayer = nullptr;
 	CGameObject*		m_pItemIcon = nullptr;
 	CItemIcon*			m_pIconGrab = nullptr;
-
-
-
-
-
+	CItemIcon*			m_pGrapping = nullptr;
 	CTransform*			m_pTransformCom = nullptr;
 	CTexture*			m_pTextureCom = nullptr;
 	CRcTex*				m_pRcTexCom = nullptr;
-
+	CWeapon*			m_pWeapon = nullptr;
 	_matrix		 		m_matWorld;
 	_matrix				m_matView;
 	_matrix				m_matProj;	
@@ -61,6 +57,7 @@ private:
 	_bool				m_bLBDown = false;
 	_bool				m_bSorting = false;
 	_bool				m_bNullSorting = false;
+
 	_int				m_iItemCnt = 0;
 	_int				iVectorNumb = 0;
 	_bool				m_bItemCreate = false;

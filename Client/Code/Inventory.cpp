@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "..\Header\Inventory.h"
-
+#include "Uzi.h"
+#include "ShotGun.h"
+#include "Sniper.h"
 
 CInventory::CInventory(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
@@ -15,8 +17,8 @@ HRESULT CInventory::Ready_Object(void)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 	m_iItemCnt = 0;
-	m_vecContents.reserve(25);
-	for (_int i = 0; i < 25; i++)
+	m_vecContents.reserve(26);
+	for (_int i = 0; i < 26; i++)
 	{
 		m_vecContents.push_back(nullptr);
 		m_vecContents[i] = nullptr;
@@ -38,7 +40,7 @@ _int CInventory::Update_Object(const _float & fTimeDelta)
 	Sorting();
 	Mouse();
 	Key_Input();
-	Equipment();
+
 	return 0;
 }
 
@@ -68,12 +70,36 @@ void CInventory::Render_Object(void)
 
 void CInventory::ReCall()
 {
-	for (int i = 0; i < 5; ++i)
+	_int   iCnt = 0;
+	
+	for(auto& iter : m_vecContents)
 	{
-		m_iItemCnt++;
-		m_vecContents.push_back(m_vecEquipments[i]);
-		m_vecEquipments[i] = nullptr;
+		for (int i = 0; i < 5; ++i)
+		{
+
+			if (m_vecEquipments[i] != nullptr)
+			{
+
+				m_iItemCnt++;
+				m_vecContents[i] = m_vecEquipments[i];
+		//		m_vecEquipments[i] = nullptr;
+				/*	m_bSorting = true;*/
+				m_vecEquipments[i] = nullptr;
+				m_bNullSorting = true;
+				//여기서 다시 뺏을때 마우스 클릭제외하고 다시 나머디 equipment쪽이 전부 정렬이 되게m_veccontens쪽에서 정렬이 되게 만들어야한다.
+				//m_veccontens.back을 이용하면 될거같은데?
+				//실패
+
+			}
+		/*	if (m_bNullSorting&& iter != m_vecContents.back() && iter == nullptr && m_vecContents.back() != nullptr)
+			{
+				iter = m_vecContents.back();
+			}*/
+		}
+
 	}
+
+
 }
 
 HRESULT CInventory::Add_Component()
@@ -118,6 +144,7 @@ void CInventory::Begin_OrthoProj()
 	matView.m[3][1] = InvPosY; //* (WINCX / WINCY);
 	matView.m[3][2] = 0.003f;
 	D3DXMatrixOrthoLH(&matOrtho, WINCX, WINCY, 0.f, 1.f);
+	
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, &matWorld);
 	m_pGraphicDev->SetTransform(D3DTS_VIEW, &matView);
 	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &matOrtho);
@@ -171,6 +198,7 @@ void CInventory::Sorting()
 
 			if (m_bNullSorting&& iter != m_vecContents.back() && iter == nullptr && m_vecContents.back() != nullptr) // 빈곳부터 채우기
 			{
+			
 				iter = m_vecContents.back();
 				m_bNull = true;
 				m_bNullSorting = false;
@@ -185,6 +213,10 @@ void CInventory::Sorting()
 		m_vecContents.pop_back();
 		m_bNull = false;
 	}
+
+
+
+
 }
 
 
@@ -256,7 +288,7 @@ void CInventory::Mouse()
 					}
 				}
 
-				if (iter != nullptr&& iter == m_vecContents[iVectorNumb] && m_pIconGrab != nullptr && Get_DIMouseState(DIM_LB) && m_bLBDown)
+				if (iter != nullptr&& iter == m_vecContents[iVectorNumb]  && m_pIconGrab != nullptr && Get_DIMouseState(DIM_LB) && m_bLBDown)
 				{
 					m_bLBDown = false;
 					m_pIconGrab->Cursor_free();
@@ -269,13 +301,7 @@ void CInventory::Mouse()
 							iter = nullptr;
 							m_pIconGrab = nullptr;
 							m_iItemCnt--;
-
-
-
-							
-
-
-					
+							m_bSorting = true;
 						}
 					}
 					if (1080 < pt.x && pt.x < 1125 && 160 < pt.y && pt.y < 225) // 0,0
@@ -287,6 +313,7 @@ void CInventory::Mouse()
 							iter = nullptr;
 							m_pIconGrab = nullptr;
 							m_iItemCnt--;
+							m_bSorting = true;
 						}
 					}
 					if (1080 < pt.x && pt.x < 1125 && 265 < pt.y && pt.y < 330) // 0,1
@@ -298,6 +325,7 @@ void CInventory::Mouse()
 							iter = nullptr;
 							m_pIconGrab = nullptr;
 							m_iItemCnt--;
+							m_bSorting = true;
 						}
 					}
 					if (1230 < pt.x && pt.x < 1275 && 160 < pt.y && pt.y < 225) // 1,0
@@ -309,6 +337,7 @@ void CInventory::Mouse()
 							iter = nullptr;
 							m_pIconGrab = nullptr;
 							m_iItemCnt--;
+					
 						}
 					}
 					if (1230 < pt.x && pt.x < 1275 && 265 < pt.y && pt.y < 330) // 1,1
@@ -337,106 +366,115 @@ void CInventory::Mouse()
 						m_bLBDown = false;
 						if (m_vecEquipments[0] != nullptr)
 						{
+					
 							m_iItemCnt++;
 							m_vecContents.push_back(m_vecEquipments[0]);
+
 							m_vecEquipments[0] = nullptr;
 							m_bNullSorting = true;
 							m_bSorting = true;
 							ReCall();
-				
+						}
+
 					
+					
+					}
+					if (1080 < pt.x && pt.x < 1125 && 160 < pt.y && pt.y < 225) // 0,0
+					{
+						if (m_vecEquipments[1] != nullptr && Get_DIMouseState(DIM_LB) && m_bLBDown)
+						{
+							m_bLBDown = false;
+							if (m_vecEquipments[1] != nullptr)
+							{
+								m_iItemCnt++;
+								m_vecContents.push_back(m_vecEquipments[1]);
+								m_vecEquipments[1] = nullptr;
+								m_bNullSorting = true;
+								m_bSorting = true;
+						
 
-
+							}
 						}
 						
 					}
-				}
-				if (1080 < pt.x && pt.x < 1125 && 160 < pt.y && pt.y < 225) // 0,0
-				{
-					if (m_vecEquipments[1] != nullptr && Get_DIMouseState(DIM_LB) && m_bLBDown)
+					if (1080 < pt.x && pt.x < 1125 && 265 < pt.y && pt.y < 330) // 1,0
 					{
-						m_bLBDown = false;
-						if (m_vecEquipments[1] != nullptr)
+						if (m_vecEquipments[2] != nullptr && Get_DIMouseState(DIM_LB) && m_bLBDown)
 						{
-							m_iItemCnt++;
-							m_vecContents.push_back(m_vecEquipments[1]);
-							m_vecEquipments[1] = nullptr;
-							m_bNullSorting = true;
-							m_bSorting = true;
-						}
-					}
-				}
-				if (1080 < pt.x && pt.x < 1125 && 265 < pt.y && pt.y < 330) // 1,0
-				{
-					if (m_vecEquipments[2] != nullptr && Get_DIMouseState(DIM_LB) && m_bLBDown)
-					{
-						m_bLBDown = false;
-						if (m_vecEquipments[2] != nullptr)
-						{
-							m_iItemCnt++;
-							m_vecContents.push_back(m_vecEquipments[2]);
-							m_vecEquipments[2] = nullptr;
-							m_bNullSorting = true;
-							m_bSorting = true;
-						}
-					}
-				}
-				if (1230 < pt.x && pt.x < 1275 && 160 < pt.y && pt.y < 225) // 0,1
-				{
-					if (m_vecEquipments[3] != nullptr && Get_DIMouseState(DIM_LB) && m_bLBDown)
-					{
-						m_bLBDown = false;
-						if (m_vecEquipments[3] != nullptr)
-						{
-							m_iItemCnt++;
-							m_vecContents.push_back(m_vecEquipments[3]);
-							m_vecEquipments[3] = nullptr;
-							m_bNullSorting = true;
-							m_bSorting = true;
-						}
-					}
-				}
-				if (1230 < pt.x && pt.x < 1275 && 265 < pt.y && pt.y < 330) // 1,1
-				{
-					if (m_vecEquipments[4] != nullptr && Get_DIMouseState(DIM_LB) && m_bLBDown)
-					{
-						m_bLBDown = false;
-						if (m_vecEquipments[4] != nullptr)
-						{
-							m_iItemCnt++;
-							m_vecContents.push_back(m_vecEquipments[4]);
-							m_vecEquipments[4] = nullptr;
-							m_bNullSorting = true;
-							m_bSorting = true;
+							m_bLBDown = false;
+							if (m_vecEquipments[2] != nullptr)
+							{
+								m_iItemCnt++;
+								m_vecContents.push_back(m_vecEquipments[2]);
+								m_vecEquipments[2] = nullptr;
+								m_bNullSorting = true;
+								m_bSorting = true;
+						
 
+							}
+						}
+					}
+					if (1230 < pt.x && pt.x < 1275 && 160 < pt.y && pt.y < 225) // 0,1
+					{
+						if (m_vecEquipments[3] != nullptr && Get_DIMouseState(DIM_LB) && m_bLBDown)
+						{
+							m_bLBDown = false;
+							if (m_vecEquipments[3] != nullptr)
+							{
+								m_iItemCnt++;
+								m_vecContents.push_back(m_vecEquipments[3]);
+								m_vecEquipments[3] = nullptr;
+								m_bNullSorting = true;
+								m_bSorting = true;
+						
+
+							}
+						}
+					}
+					if (1230 < pt.x && pt.x < 1275 && 265 < pt.y && pt.y < 330) // 1,1
+					{
+						if (m_vecEquipments[4] != nullptr && Get_DIMouseState(DIM_LB) && m_bLBDown)
+						{
+							m_bLBDown = false;
+							if (m_vecEquipments[4] != nullptr)
+							{
+								m_iItemCnt++;
+								m_vecContents.push_back(m_vecEquipments[4]);
+								m_vecEquipments[4] = nullptr;
+								m_bNullSorting = true;
+								m_bSorting = true;
+						
+
+
+							}
 						}
 					}
 				}
 			}
+		
+		}
+
+		if (!Get_DIMouseState(DIM_RB))
+		{
+			m_bRBDown = true;
+		}
+		if (!Get_DIMouseState(DIM_LB))
+		{
+			m_bLBDown = true;
+		}
+		if (m_bRBDown && Get_DIMouseState(DIM_RB))
+		{
+			m_bRBDown = false;
+		}
+		if (m_bLBDown && Get_DIMouseState(DIM_LB))
+		{
+			m_bLBDown = false;
 		}
 	}
 
-	if (!Get_DIMouseState(DIM_RB))
-	{
-		m_bRBDown = true;
-	}
-	if (!Get_DIMouseState(DIM_LB))
-	{
-		m_bLBDown = true;
-	}
-	if (m_bRBDown && Get_DIMouseState(DIM_RB))
-	{
-		m_bRBDown = false;
-	}
-	if (m_bLBDown && Get_DIMouseState(DIM_LB))
-	{
-		m_bLBDown = false;
-	}
-}
 
-void CInventory::Equipment()
-{
-
+	//if (dynamic_cast<CItemIcon*>(m_vecEquipments[0]) != nullptr)
+	//	cout << dynamic_cast<CItemIcon*>(m_vecEquipments[0])->Get_Name() << endl;
 }
 
 CInventory * CInventory::Create(LPDIRECT3DDEVICE9 pGraphicDev)

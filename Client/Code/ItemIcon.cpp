@@ -64,8 +64,9 @@ void CItemIcon::Render_Object(void)
 		if (dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->Get_Switch() || dynamic_cast<CShop*>(Engine::Get_GameObject(STAGE_UI, L"Shop"))->Get_Switch())
 		{
 			m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
-			//m_pCursorTextureCom->Set_Texture(0);
-			m_pTextureCom->Set_Texture(0);
+
+			if (m_iNumber == 0)
+				m_pTextureCom->Set_Texture(0);
 			Begin_OrthoProj();
 			m_pRcTexCom->Render_Buffer();
 			End_OrthoProj();
@@ -74,6 +75,7 @@ void CItemIcon::Render_Object(void)
 		}
 	}
 }
+
 
 HRESULT CItemIcon::Add_Component()
 {
@@ -149,6 +151,7 @@ void CItemIcon::Index()
 		m_fImgX = 30.f;
 		m_fImgY = 50.f;
 		m_fImgZ = 0.f;
+		cout << iIconCnt << " " << endl;
 	}
 	if (m_iNumber == 1)   //¾ÆÀÌÅÛ
 	{
@@ -198,7 +201,6 @@ void CItemIcon::Index()
 		m_iTexIndex = m_iNumber;
 		m_fImgX = 20.f;
 		m_fImgY = 60.f;
-
 	}
 
 
