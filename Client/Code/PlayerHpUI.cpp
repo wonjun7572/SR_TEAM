@@ -41,9 +41,9 @@ _int CPlayerHpUI::Update_Object(const _float & fTimeDelta)
 
 	if (m_pPlayer != nullptr)
 	{
-		m_iHp = dynamic_cast<CCubePlayer*>(m_pPlayer)->Get_Ability()->iHp;
-		m_iMaxHp = dynamic_cast<CCubePlayer*>(m_pPlayer)->Get_Ability()->iMaxHp;
-		m_strHp = to_wstring(m_iHp);
+		m_fHp = dynamic_cast<CCubePlayer*>(m_pPlayer)->Get_Ability()->fHp;
+		m_fMaxHp = dynamic_cast<CCubePlayer*>(m_pPlayer)->Get_Ability()->fMaxHp;
+		m_strHp = to_wstring(_uint(m_fHp));
 	}
 
 	return iResult;
@@ -75,7 +75,7 @@ void CPlayerHpUI::Render_Object(void)
 	m_pGraphicDev->SetTransform(D3DTS_VIEW, &ViewMatrix);
 	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &m_ProjMatrix);
 	m_pTextureCom->Set_Texture(0);
-	m_pBufferCom->Resize_Buffer(_float(m_iHp / m_iMaxHp));
+	m_pBufferCom->Resize_Buffer(m_fHp / m_fMaxHp);
 	m_pBufferCom->Render_Buffer();
 
 
@@ -89,9 +89,9 @@ HRESULT CPlayerHpUI::Add_Component()
 {
 	CComponent* pComponent = nullptr;
 
-	pComponent = m_pBufferCom = dynamic_cast<CRcTex*>(Clone_Proto(L"RcTex_HP"));
+	pComponent = m_pBufferCom = dynamic_cast<CRcTex*>(Clone_Proto(RCTEX_HP_COMP));
 	NULL_CHECK_RETURN(m_pBufferCom, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"RcTex_HP", pComponent });
+	m_mapComponent[ID_STATIC].insert({ RCTEX_HP_COMP, pComponent });
 
 	pComponent = m_pTransCom = dynamic_cast<CTransform*>(Clone_Proto(L"Proto_TransformCom"));
 	NULL_CHECK_RETURN(m_pTransCom, E_FAIL);

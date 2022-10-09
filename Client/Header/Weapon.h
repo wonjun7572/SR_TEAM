@@ -26,6 +26,16 @@ public:
 	void		Set_MinusBullet() { m_tAbility->fRemainBulletCnt--; }
 	_bool		Get_Shoot() { return m_tAbility->bShoot; }
 	void        Set_Shoot(_bool bShoot) { m_tAbility->bShoot = bShoot; }
+	
+	void			Get_Bullet()
+	{
+		if (m_tAbility->fBulletCount >= m_tAbility->fRemainBulletCnt)
+		{
+			m_tAbility->fRemainBulletCnt += 10;
+			if (m_tAbility->fRemainBulletCnt >= m_tAbility->fBulletCount)
+				m_tAbility->fRemainBulletCnt = m_tAbility->fBulletCount;
+		}
+	}
 	CTransform* Get_Transform() { return m_pPart1; }
 
 public:

@@ -26,7 +26,8 @@ private:
 	_matrix m_matProj;
 
 	CGameObject*		m_pPlayer = nullptr;
-	_int				m_iDefense;
+	_float				m_fDefence;
+	_float				m_fMaxDefence;
 	wstring				m_strDefense;
 	_matrix				m_ProjMatrix;
 	_float				m_fX, m_fY, m_fSizeX, m_fSizeY;

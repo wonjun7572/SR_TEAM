@@ -72,26 +72,26 @@ void CPlayerFaceUI::Render_Object(void)
 	m_pGraphicDev->SetTransform(D3DTS_VIEW, &ViewMatrix);
 	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &m_ProjMatrix);
 
-	if (dynamic_cast<CCubePlayer*>(m_pPlayer)->Get_Ability()->iHp > 75)
+	if (dynamic_cast<CCubePlayer*>(m_pPlayer)->Get_Ability()->fHp > 75.f)
 	{
 		m_pTexture_100->Set_Texture((_ulong)m_fFrame);
 	}
-	else if (dynamic_cast<CCubePlayer*>(m_pPlayer)->Get_Ability()->iHp <= 75 &&
-		dynamic_cast<CCubePlayer*>(m_pPlayer)->Get_Ability()->iHp > 50)
+	else if (dynamic_cast<CCubePlayer*>(m_pPlayer)->Get_Ability()->fHp <= 75.f &&
+		dynamic_cast<CCubePlayer*>(m_pPlayer)->Get_Ability()->fHp > 50.f)
 	{
 		m_pTexture_75->Set_Texture((_ulong)m_fFrame);
 	}
-	else if (dynamic_cast<CCubePlayer*>(m_pPlayer)->Get_Ability()->iHp <= 50 &&
-		dynamic_cast<CCubePlayer*>(m_pPlayer)->Get_Ability()->iHp > 25)
+	else if (dynamic_cast<CCubePlayer*>(m_pPlayer)->Get_Ability()->fHp <= 50.f &&
+		dynamic_cast<CCubePlayer*>(m_pPlayer)->Get_Ability()->fHp > 25.f)
 	{
 		m_pTexture_50->Set_Texture((_ulong)m_fFrame);
 	}
-	else if (dynamic_cast<CCubePlayer*>(m_pPlayer)->Get_Ability()->iHp <= 25 &&
-		dynamic_cast<CCubePlayer*>(m_pPlayer)->Get_Ability()->iHp > 1)
+	else if (dynamic_cast<CCubePlayer*>(m_pPlayer)->Get_Ability()->fHp <= 25.f &&
+		dynamic_cast<CCubePlayer*>(m_pPlayer)->Get_Ability()->fHp > 1.f)
 	{
 		m_pTexture_25->Set_Texture((_ulong)m_fFrame);
 	}
-	else if (dynamic_cast<CCubePlayer*>(m_pPlayer)->Get_Ability()->iHp <= 0)
+	else if (dynamic_cast<CCubePlayer*>(m_pPlayer)->Get_Ability()->fHp <= 0.f)
 	{
 		m_pTexture_0->Set_Texture(0);
 	}
