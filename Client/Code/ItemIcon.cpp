@@ -94,14 +94,6 @@ HRESULT CItemIcon::Add_Component()
 	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_ItemIconTexture", pComponent });
 
-
-
-	//pComponent = m_pCursorTextureCom = dynamic_cast<CTexture*>(Clone_Proto(L"Proto_InvCursorTexture"));
-	//NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
-	//m_mapComponent[ID_STATIC].insert({ L"Proto_InvCursorTexture", pComponent });
-
-
-
 	return S_OK;
 }
 
@@ -145,7 +137,7 @@ void CItemIcon::End_OrthoProj()
 
 void CItemIcon::Index()
 {
-	if (m_iNumber == 0)   //커서
+	if (m_iNumber == 0)				//커서
 	{
 		m_iTexIndex = m_iNumber;
 		m_fImgX = 30.f;
@@ -153,7 +145,7 @@ void CItemIcon::Index()
 		m_fImgZ = 0.f;
 		cout << iIconCnt << " " << endl;
 	}
-	if (m_iNumber == 1)   //아이템
+	if (m_iNumber == 1)				 //아이템
 	{
 		m_iTexIndex = m_iNumber;
 		m_fImgX = 20.f;
@@ -165,14 +157,12 @@ void CItemIcon::Index()
 		m_iTexIndex = m_iNumber;
 		m_fImgX = 20.f;
 		m_fImgY = 60.f;
-
 	}
 	if (m_iNumber == 3)				//Shotgun
 	{
 		m_iTexIndex = m_iNumber;
 		m_fImgX = 20.f;
 		m_fImgY = 60.f;
-
 	}
 
 	if (m_iNumber == 4)				//Sniper
@@ -180,7 +170,6 @@ void CItemIcon::Index()
 		m_iTexIndex = m_iNumber;
 		m_fImgX = 20.f;
 		m_fImgY = 60.f;
-
 	}
 	if (m_iNumber == 5)			//두번째 버튼
 	{
@@ -194,7 +183,6 @@ void CItemIcon::Index()
 		m_iTexIndex = m_iNumber;
 		m_fImgX = 20.f;
 		m_fImgY = 60.f;
-
 	}
 	if(m_iNumber == 7)			//네번쨰 버튼 
 	{
@@ -202,8 +190,6 @@ void CItemIcon::Index()
 		m_fImgX = 20.f;
 		m_fImgY = 60.f;
 	}
-
-
 }
 
 void CItemIcon::FixOnCursor()
