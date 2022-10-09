@@ -83,9 +83,18 @@ _int CLayer::Update_Layer(const _float & fTimeDelta)
 		for (iter = m_ObjectList.begin(); iter != m_ObjectList.end();)
 		{
 			iResult = (*iter)->Update_Object(fTimeDelta);
+	
 			if (iResult & 0x80000000)
 			{
-				iter = m_ObjectList.erase(iter);
+				if (this == Get_Layer(L"STAGE_BULLET_Layer"))
+				{
+					iter = m_ObjectList.erase(iter);
+				}
+				else
+				{
+					Safe_Release(*iter);
+					iter = m_ObjectList.erase(iter);
+				}
 			}
 			else
 				++(iter);

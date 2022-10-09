@@ -38,6 +38,9 @@ protected:
 
 	CTransform*			m_pPlayerTransCom = nullptr;
 
+	CSphereTex*			m_pSphereBufferCom = nullptr;
+	CTransform*			m_pSphereTransCom = nullptr;
+
 	MONSTERABILITY*		m_tAbility;
 	
 	_float				m_fUISwitchTime = 0.f;

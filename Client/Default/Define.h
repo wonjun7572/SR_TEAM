@@ -4,6 +4,7 @@
 #define RCTEX_COMP	    L"Proto_RcTexCom"
 #define	CUBETEX_COMP	L"Proto_CubeTexCom"
 #define TERRAINTEX_COMP L"Proto_TerrainTexCom"
+#define SPHERECOL_COMP	L"Proto_SphereColCom"
 #define FLEXIBLEAXISCUBE_COMP L"Proto_FlexibleAxisCubeCom"
 #define CUBECOL_COMP		L"Proto_CubeColCom"
 
