@@ -12,6 +12,7 @@ public:
 	void	LateUpdate_Object() override;
 	void	Render_Object() override;
 
+
 private:
 	HRESULT			Add_Component(void);
 

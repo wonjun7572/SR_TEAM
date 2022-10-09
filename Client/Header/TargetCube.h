@@ -12,9 +12,9 @@ public:
 	virtual _int	Update_Object(const _float& fTimeDelta) override;
 	virtual void	LateUpdate_Object(void) override;
 	virtual void	Render_Object(void) override;
-
+	void         Set_Damaged(_int iDamage) { m_tAbility->fCurrentHp -= iDamage; }
 	MONSTERABILITY* Get_MAbility() { return m_tAbility; }
-
+	void				Update_NullCheck();
 private:
 	HRESULT				Add_Component(void);
 	void				Hit_Check(void);

@@ -60,6 +60,7 @@ _int CCubePlayer::Update_Object(const _float & fTimeDelta)
 	// 이동, 애니메이션 관련
 	if (!(dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->Get_Switch()))
 	{
+
 		Move();
 	}
 
