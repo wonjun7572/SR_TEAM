@@ -78,6 +78,9 @@ HRESULT CStage::Ready_Scene(void)
 
 	CGameObject*		pGameObject = nullptr;
 
+	_float fBGMSound = 1.f;
+	PlayBGM(L"Track_01.mp3", fBGMSound);
+
 	FAILED_CHECK_RETURN(Ready_Proto(), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Light(), E_FAIL);
 

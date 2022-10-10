@@ -42,7 +42,7 @@ c:\users\sam51\desktop\sr_team\client\default\debug\staticcamera.obj
 c:\users\sam51\desktop\sr_team\client\default\debug\targetcube.obj
 c:\users\sam51\desktop\sr_team\client\default\debug\terrain.obj
 c:\users\sam51\desktop\sr_team\client\default\debug\testcube.obj
-c:\users\sam51\desktop\sr_team\client\default\debug\itemicon.obj
+c:\users\sam51\desktop\sr_team\client\default\debug\itemparticle.obj
 c:\users\sam51\desktop\sr_team\client\default\debug\letterbox.obj
 c:\users\sam51\desktop\sr_team\client\default\debug\loadbar.obj
 c:\users\sam51\desktop\sr_team\client\default\debug\loading.obj
@@ -62,7 +62,6 @@ c:\users\sam51\desktop\sr_team\client\default\debug\optionbutton.obj
 c:\users\sam51\desktop\sr_team\client\default\debug\playbutton.obj
 c:\users\sam51\desktop\sr_team\client\default\debug\playerhpui.obj
 c:\users\sam51\desktop\sr_team\client\default\debug\playermapping.obj
-c:\users\sam51\desktop\sr_team\client\default\debug\cubehand.obj
 c:\users\sam51\desktop\sr_team\client\default\debug\cubehead.obj
 c:\users\sam51\desktop\sr_team\client\default\debug\cubeleg.obj
 c:\users\sam51\desktop\sr_team\client\default\debug\cubemonster.obj
@@ -78,9 +77,11 @@ c:\users\sam51\desktop\sr_team\client\default\debug\getsniper.obj
 c:\users\sam51\desktop\sr_team\client\default\debug\getuzi.obj
 c:\users\sam51\desktop\sr_team\client\default\debug\gunui.obj
 c:\users\sam51\desktop\sr_team\client\default\debug\healthpotion.obj
+c:\users\sam51\desktop\sr_team\client\default\debug\hitbarui.obj
 c:\users\sam51\desktop\sr_team\client\default\debug\imguimgr.obj
 c:\users\sam51\desktop\sr_team\client\default\debug\inventory.obj
 c:\users\sam51\desktop\sr_team\client\default\debug\item.obj
+c:\users\sam51\desktop\sr_team\client\default\debug\itemicon.obj
 c:\users\sam51\desktop\sr_team\client\default\debug\animationplayer.obj
 c:\users\sam51\desktop\sr_team\client\default\debug\background.obj
 c:\users\sam51\desktop\sr_team\client\default\debug\basemapping.obj
@@ -91,7 +92,7 @@ c:\users\sam51\desktop\sr_team\client\default\debug\crossheader.obj
 c:\users\sam51\desktop\sr_team\client\default\debug\cubearm.obj
 c:\users\sam51\desktop\sr_team\client\default\debug\cubebody.obj
 c:\users\sam51\desktop\sr_team\client\default\debug\cubefoot.obj
-c:\users\sam51\desktop\sr_team\client\default\debug\hitbarui.obj
+c:\users\sam51\desktop\sr_team\client\default\debug\cubehand.obj
 c:\users\sam51\desktop\sr_team\client\default\debug\logocamera.obj
 c:\users\sam51\desktop\sr_team\client\default\debug\grapheditor.obj
 c:\users\sam51\desktop\sr_team\client\default\debug\imcurveedit.obj
