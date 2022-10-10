@@ -1,4 +1,5 @@
 #pragma once
+#include "ItemParticle.h"
 #include "Item.h"
 class CObtainBullet : public CItem
 {
@@ -14,9 +15,12 @@ public:
 
 private:
 	HRESULT			Add_Component(void);
-
+	void			Dead_Effect(void);
 public:
 	static CObtainBullet* Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3& vPos);
+
+private:
+	CItemParticle* m_pItemParicle = nullptr;
 
 protected:
 	void Free() override;

@@ -35,6 +35,7 @@ private:
 
 private:
 	list<pair<const _tchar*, CGameObject*>>		m_ObjectPairList;
+
 public:
 	HRESULT										Add_GamePair(const _tchar* pObjTag, CGameObject* pInstance);
 	HRESULT										Delete_GamePair(const _tchar* pObjTag);

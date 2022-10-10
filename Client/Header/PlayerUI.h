@@ -21,9 +21,6 @@ private:
 	CTransform* m_pTransCom = nullptr;
 	CTexture* m_pTextureCom = nullptr;
 
-	_matrix m_matWorld;
-	_matrix m_matView;
-	_matrix m_matProj;
 	_matrix            m_ProjMatrix;
 	_float            m_fX, m_fY, m_fSizeX, m_fSizeY;
 public:

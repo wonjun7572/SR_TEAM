@@ -23,7 +23,7 @@ HRESULT CZombie::Ready_Object(const _vec3& vPos)
 	m_tAbility->iLevel = 0;
 	m_tAbility->fMaxHp = 100.f;
 	m_tAbility->fCurrentHp = m_tAbility->fMaxHp;
-	m_tAbility->fDamage = 0.f;
+	m_tAbility->fDamage = 10.f;
 	m_tAbility->strObjTag = L"Zombie";
 
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
@@ -69,7 +69,7 @@ _int CZombie::Update_Object(const _float & fTimeDelta)
 		if (m_fFrame >= 2.f)
 		{
 			_vec3 vDir = vPlayerPos - vPos;
-			CPoolMgr::GetInstance()->Reuse_Obj(m_pGraphicDev, &vPos, &vDir);
+			CPoolMgr::GetInstance()->Reuse_Obj(m_pGraphicDev, &vPos, &vDir , m_tAbility->fDamage);
 			m_fFrame = 0.f;
 		}
 	}
@@ -150,9 +150,9 @@ HRESULT CZombie::Add_Component(void)
 	m_mapComponent[ID_STATIC].insert({ L"Monster_General_HP", pComponent });
 
 	// For Sphere
-	pComponent = m_pSphereBufferCom = dynamic_cast<CSphereTex*>(Clone_Proto(SPHERECOL_COMP));
+	pComponent = m_pSphereBufferCom = dynamic_cast<CSphereTex*>(Clone_Proto(SPHERETEX_COMP));
 	NULL_CHECK_RETURN(m_pSphereBufferCom, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ SPHERECOL_COMP, pComponent });
+	m_mapComponent[ID_STATIC].insert({ SPHERETEX_COMP, pComponent });
 
 	pComponent = m_pSphereTransCom = dynamic_cast<CTransform*>(Clone_Proto(TRANSFORM_COMP));
 	NULL_CHECK_RETURN(m_pSphereBufferCom, E_FAIL);

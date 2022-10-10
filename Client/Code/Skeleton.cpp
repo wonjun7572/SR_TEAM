@@ -6,6 +6,7 @@
 #include "ObtainDefense.h"
 #include "ObtainBullet.h"
 #include "PoolMgr.h"
+
 CSkeleton::CSkeleton(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CMonster(pGraphicDev)
 {
@@ -22,7 +23,7 @@ HRESULT CSkeleton::Ready_Object(const _vec3& vPos)
 	m_tAbility->iLevel = 0;
 	m_tAbility->fMaxHp = 100.f;
 	m_tAbility->fCurrentHp = m_tAbility->fMaxHp;
-	m_tAbility->fDamage = 0.f;
+	m_tAbility->fDamage = 10.f;
 	m_tAbility->strObjTag = L"Skeleton";
 
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
@@ -51,7 +52,6 @@ _int CSkeleton::Update_Object(const _float & fTimeDelta)
 	}
 
 	CMonster::Update_Object(fTimeDelta);
-
 	_vec3 vPlayerPos;
 	m_pPlayerTransCom->Get_Info(INFO_POS, &vPlayerPos);
 	_vec3 vPlayerScale;
@@ -60,29 +60,28 @@ _int CSkeleton::Update_Object(const _float & fTimeDelta)
 	m_pSphereTransCom->Get_Scale(&vScale);
 	_vec3 vPos;
 	m_pTransCom->Get_Info(INFO_POS, &vPos);
-	_vec3 vDir, vDirection;
-
-
-	//
-	//vDir = vPlayerPos - vPos;			//플레이어의 방향 
-	//vDirection = { sinf(vDir.x) * D3DXToRadian(370) , 0.f, sinf(vDir.z) * D3DXToRadian(370) };
-	//D3DXVec3Length(&vDirection);
-
-	//D3DXVec3Normalize(&vDirection, &vDirection);
-	
+	D3DXVECTOR3		vDir{ 1.f, 0.f, 0.f };
 	if (m_pCollision->Sphere_Collision(this->m_pSphereTransCom, m_pPlayerTransCom, vPlayerScale.x, vScale.x))
 	{
+		m_pTransCom->Chase_Target(&vPlayerPos, 1.f, fTimeDelta);
 		m_fFrame += fTimeDelta;
-	//	m_pTransCom->Chase_Target(&vPlayerPos, 1.f, fTimeDelta);
-		if (m_fFrame >= 0.1f)
+		_matrix matRotY, matTrans, matWorld;
+
+		if (m_fFrame >= 2.f)
 		{
+			for (m_fFireAngle = 0.f; m_fFireAngle < 360.f; ++m_fFireAngle)
+			{
+				D3DXMatrixRotationY(&matRotY, D3DXToRadian(-m_fFireAngle));
+				D3DXMatrixTranslation(&matTrans, vPos.x, 0.f, vPos.y);
 
+				m_pTransCom->Get_WorldMatrix(&matWorld);
+				matWorld = matRotY * matTrans;
 
-		_vec3 vDir = vPos;
-		_vec3 vDirection = { ((cosf(vDir.x) * asinf(vDir.x)) * D3DXToRadian(180.f)), 0.f ,vDir.z};
+				D3DXVec3TransformNormal(&vDir, &vDir, &matWorld);
 
-		CPoolMgr::GetInstance()->Reuse_Obj(m_pGraphicDev, &vPos, &(vDirection));
-		m_fFrame = 0.f;
+				CPoolMgr::GetInstance()->Reuse_Obj(m_pGraphicDev, &vPos, &vDir, m_tAbility->fDamage);
+			}
+			m_fFrame = 0.f;
 		}
 	}
 
@@ -103,7 +102,7 @@ void CSkeleton::Render_Object(void)
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransCom->Get_WorldMatrixPointer());
 	m_pTextureCom->Set_Texture(99);
 	m_pBufferCom->Render_Buffer();
-	
+
 	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pHitBoxTransCom->Get_WorldMatrixPointer());
 	m_pHitBox->Render_Buffer();
@@ -163,9 +162,9 @@ HRESULT CSkeleton::Add_Component(void)
 	m_mapComponent[ID_STATIC].insert({ L"Monster_General_HP", pComponent });
 
 	// For Sphere
-	pComponent = m_pSphereBufferCom = dynamic_cast<CSphereTex*>(Clone_Proto(SPHERECOL_COMP));
+	pComponent = m_pSphereBufferCom = dynamic_cast<CSphereTex*>(Clone_Proto(SPHERETEX_COMP));
 	NULL_CHECK_RETURN(m_pSphereBufferCom, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ SPHERECOL_COMP, pComponent });
+	m_mapComponent[ID_STATIC].insert({ SPHERETEX_COMP, pComponent });
 
 	pComponent = m_pSphereTransCom = dynamic_cast<CTransform*>(Clone_Proto(TRANSFORM_COMP));
 	NULL_CHECK_RETURN(m_pSphereBufferCom, E_FAIL);

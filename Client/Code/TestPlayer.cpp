@@ -168,7 +168,7 @@ void CTestPlayer::Fire_Bullet(const _vec3* pDir)
 {
 	_vec3		vPos;
 	m_pTransCom->Get_Info(INFO_POS, &vPos);
-	FAILED_CHECK_RETURN(CPoolMgr::GetInstance()->Reuse_Obj(m_pGraphicDev, &vPos, pDir), );
+	FAILED_CHECK_RETURN(CPoolMgr::GetInstance()->Reuse_Obj(m_pGraphicDev, &vPos, pDir , 10.f), );
 }
 
 _bool CTestPlayer::Hit_Check(void)

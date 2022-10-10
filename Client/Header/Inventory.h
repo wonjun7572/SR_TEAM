@@ -4,8 +4,7 @@
 #include "Weapon.h"
 USING(Engine)
 
-class CInventory :
-	public CGameObject
+class CInventory : public CGameObject
 {
 private:
 	explicit CInventory(LPDIRECT3DDEVICE9 pGraphicDev);
@@ -17,20 +16,29 @@ public:
 	virtual void	LateUpdate_Object(void) override;
 	virtual void	Render_Object(void) override;
 	_bool			Get_Switch(void)  { return m_bInvSwitch; }
-	void         ItemCreate(_int iItemIndex) { m_bItemCreate = true; m_iItemIndex = iItemIndex; }
+	//vector<CGameObject*> Get_vecEquipments() { return m_vecEquipments; }
 
+	void         ItemCreate(_int iItemIndex) 
+	{ 
+		m_bItemCreate = true; 
+		m_iItemIndex = iItemIndex; 
+	}
+	void         WeaponCreate(_int iItemIndex)
+	{
+		m_bWeaponCreate = true;
+		m_iItemIndex = iItemIndex;
+	}
 
-	void		ReCall();
 private:
 	HRESULT		Add_Component();
 	void		Begin_OrthoProj();
 	void		End_OrthoProj();	
 	void		Key_Input();
 	void		Mouse();
-
 	void		Sorting();
+	void		Weapon_Sorting();
 	void		Get_Item();
-
+	//void		Gun_Change();
 
 private:
 	CGameObject*		m_pPlayer = nullptr;
@@ -45,24 +53,28 @@ private:
 	_matrix				m_matView;
 	_matrix				m_matProj;	
 
-
 	vector<CGameObject*>  m_vecContents;
 	vector<CGameObject*>  m_vecEquipments;
-	vector<CGameObject*> m_vecSortingContents;
+	vector<CGameObject*>  m_vecWeapon;
+	vector<CGameObject*>  m_vecParts;
 private:
 	_bool				m_bInit = false;
 	_bool				m_bNull = false;
 	_bool				m_bInvSwitch = false;
-	_bool				m_bKeyDown = false;
-	_bool				m_bRBDown = false;
-	_bool				m_bLBDown = false;
 	_bool				m_bSorting = false;
 	_bool				m_bNullSorting = false;
-
-	_int				m_iItemCnt = 0;
-	_int				iVectorNumb = 0;
 	_bool				m_bItemCreate = false;
-	_int				m_iItemIndex;
+	_bool				m_bWeaponCreate = false;
+	_int				m_iItemCnt = 0;
+	_int				m_iWeaponCnt = 0;
+
+	_int				iVectorNumb = 0;
+	_int				iWeaponNumb = 0;
+	_int				m_iItemIndex = 1;
+	_float				m_fInvPosX = 0.f;
+	_float				m_fInvPosY = 0.f;
+	// m_fInvPosX + WINCX / 2  인벤토리 원점의 위치
+
 public:
 	static CInventory*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
 	void				Free(void)	override;

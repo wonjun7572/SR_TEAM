@@ -172,6 +172,7 @@ call CopyUtility.bat</Command>
     <ClInclude Include="..\..\Header\Camera.h" />
     <ClInclude Include="..\..\Header\Collision.h" />
     <ClInclude Include="..\..\Header\Component.h" />
+    <ClInclude Include="..\..\Header\CubeCol.h" />
     <ClInclude Include="..\..\Header\CubeTex.h" />
     <ClInclude Include="..\..\Header\DynamicBuffer.h" />
     <ClInclude Include="..\..\Header\Export_Utility.h" />
@@ -201,6 +202,7 @@ call CopyUtility.bat</Command>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\Collision.cpp" />
+    <ClCompile Include="..\Code\CubeCol.cpp" />
     <ClCompile Include="..\Code\DynamicBuffer.cpp" />
     <ClCompile Include="..\Code\FlexibleAxisCube.cpp" />
     <ClCompile Include="..\Code\Interface.cpp" />

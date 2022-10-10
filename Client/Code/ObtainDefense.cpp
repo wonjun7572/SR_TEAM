@@ -31,10 +31,10 @@ _int CObtainDefense::Update_Object(const _float & fTimeDelta)
 {
 	if (m_bDead)
 	{
+		Dead_Effect();
 		dynamic_cast<CCubePlayer*>(Engine::Get_GameObject(STAGE_CHARACTER, L"PLAYER"))->Get_Defense();
 		return -1;
 	}
-
 	CItem::Move_Item(fTimeDelta);
 	CItem::Update_Object(fTimeDelta);
 
@@ -82,6 +82,19 @@ HRESULT CObtainDefense::Add_Component(void)
 	m_mapComponent[ID_STATIC].insert({ CALCULATOR_COMP, pComponent });
 
 	return S_OK;
+}
+
+void CObtainDefense::Dead_Effect(void)
+{
+	_vec3 vPos;
+	m_pTransCom->Get_Info(INFO_POS, &vPos);
+	if (!m_pItemParicle)
+		m_pItemParicle = dynamic_cast<CItemParticle*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"ItemParticle"));
+	m_pItemParicle->Set_PclePos(vPos);
+	for (_int i = 0; i < 150; ++i)
+	{
+		m_pItemParicle->addParticle();
+	}
 }
 
 CObtainDefense * CObtainDefense::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3 & vPos)

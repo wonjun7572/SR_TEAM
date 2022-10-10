@@ -94,14 +94,6 @@ HRESULT CItemIcon::Add_Component()
 	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_ItemIconTexture", pComponent });
 
-
-
-	//pComponent = m_pCursorTextureCom = dynamic_cast<CTexture*>(Clone_Proto(L"Proto_InvCursorTexture"));
-	//NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
-	//m_mapComponent[ID_STATIC].insert({ L"Proto_InvCursorTexture", pComponent });
-
-
-
 	return S_OK;
 }
 
@@ -125,7 +117,7 @@ void CItemIcon::Begin_OrthoProj()
 	matView.m[0][0] = m_fImgX * WINCX / WINCY; // 이미지 가로
 	matView.m[1][1] = m_fImgY * WINCY / WINCY;   // 이미지 세로
 	matView.m[2][2] = 1.f;
-	matView.m[3][0] = m_vBlockPos.x * (WINCX / WINCY);
+	matView.m[3][0] = m_fImgX/8 + m_vBlockPos.x * (WINCX / WINCY);
 	matView.m[3][1] = m_vBlockPos.y * (WINCX / WINCY);
 	matView.m[3][2] = m_fImgZ;
 
@@ -145,15 +137,15 @@ void CItemIcon::End_OrthoProj()
 
 void CItemIcon::Index()
 {
-	if (m_iNumber == 0)   //커서
+	if (m_iNumber == 0)				//커서
 	{
 		m_iTexIndex = m_iNumber;
 		m_fImgX = 30.f;
 		m_fImgY = 50.f;
 		m_fImgZ = 0.f;
-		cout << iIconCnt << " " << endl;
+		//cout << iIconCnt << " " << endl;
 	}
-	if (m_iNumber == 1)   //아이템
+	if (m_iNumber == 1)				 //아이템
 	{
 		m_iTexIndex = m_iNumber;
 		m_fImgX = 20.f;
@@ -163,16 +155,14 @@ void CItemIcon::Index()
 	if (m_iNumber == 2)				//uzi
 	{
 		m_iTexIndex = m_iNumber;
-		m_fImgX = 20.f;
-		m_fImgY = 60.f;
-
+		m_fImgX = 30.f;
+		m_fImgY = 70.f;
 	}
 	if (m_iNumber == 3)				//Shotgun
 	{
 		m_iTexIndex = m_iNumber;
 		m_fImgX = 20.f;
 		m_fImgY = 60.f;
-
 	}
 
 	if (m_iNumber == 4)				//Sniper
@@ -180,7 +170,6 @@ void CItemIcon::Index()
 		m_iTexIndex = m_iNumber;
 		m_fImgX = 20.f;
 		m_fImgY = 60.f;
-
 	}
 	if (m_iNumber == 5)			//두번째 버튼
 	{
@@ -194,7 +183,6 @@ void CItemIcon::Index()
 		m_iTexIndex = m_iNumber;
 		m_fImgX = 20.f;
 		m_fImgY = 60.f;
-
 	}
 	if(m_iNumber == 7)			//네번쨰 버튼 
 	{
@@ -202,8 +190,12 @@ void CItemIcon::Index()
 		m_fImgX = 20.f;
 		m_fImgY = 60.f;
 	}
-
-
+	if (m_iNumber == 8)			//네번쨰 버튼 
+	{
+		m_iTexIndex = m_iNumber;
+		m_fImgX = 20.f;
+		m_fImgY = 60.f;
+	}
 }
 
 void CItemIcon::FixOnCursor()
@@ -214,7 +206,7 @@ void CItemIcon::FixOnCursor()
 	if (m_bFix)
 	{
 		m_vBlockPos.x = -WINCX / 2 + pt.x;//(double)( 1.75*(-450 +(pt.x*WINCY/WINCX)));
-		m_vBlockPos.y = WINCY / 2 - pt.y;// (double)(1.75 * (250 - (pt.y*WINCY / WINCX)));
+		m_vBlockPos.y = +WINCY / 2 - pt.y;// (double)(1.75 * (250 - (pt.y*WINCY / WINCX)));
 	}
 	if (m_iNumber == 0)
 	{

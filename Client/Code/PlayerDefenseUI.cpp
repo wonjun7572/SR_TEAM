@@ -39,8 +39,9 @@ _int CPlayerDefenseUI::Update_Object(const _float & fTimeDelta)
 
 	if (m_pPlayer != nullptr)
 	{
-		m_iDefense = dynamic_cast<CCubePlayer*>(m_pPlayer)->Get_Ability()->iDefence;
-		m_strDefense = to_wstring(m_iDefense);
+		m_fDefence = dynamic_cast<CCubePlayer*>(m_pPlayer)->Get_Ability()->fDefence;
+		m_fMaxDefence = dynamic_cast<CCubePlayer*>(m_pPlayer)->Get_Ability()->fMaxDefence;
+		m_strDefense = to_wstring(_uint(m_fDefence));
 	}
 
 	return iResult;
@@ -67,7 +68,7 @@ void CPlayerDefenseUI::Render_Object(void)
 	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &m_ProjMatrix);
 
 	m_pTextureCom->Set_Texture(0);
-	m_pBufferCom->Resize_Buffer(m_iDefense * 0.01f);
+	m_pBufferCom->Resize_Buffer(m_fDefence/m_fMaxDefence);
 	m_pBufferCom->Render_Buffer();
 
 	m_pGraphicDev->SetTransform(D3DTS_VIEW, &OldViewMatrix);
@@ -75,7 +76,6 @@ void CPlayerDefenseUI::Render_Object(void)
 
 	Render_Font(L"HP", m_strDefense.c_str(), &(_vec2(176.5f, 827.2f)), D3DXCOLOR(0.5f, 0.5f, 0.3f, 1.f));
 }
-
 
 
 HRESULT CPlayerDefenseUI::Add_Component()

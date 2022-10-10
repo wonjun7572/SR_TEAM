@@ -185,10 +185,12 @@
     <ClInclude Include="..\Header\GetUzi.h" />
     <ClInclude Include="..\Header\GunUI.h" />
     <ClInclude Include="..\Header\HealthPotion.h" />
+    <ClInclude Include="..\Header\HitBarUI.h" />
     <ClInclude Include="..\Header\ImguiMgr.h" />
     <ClInclude Include="..\Header\Inventory.h" />
     <ClInclude Include="..\Header\Item.h" />
     <ClInclude Include="..\Header\ItemIcon.h" />
+    <ClInclude Include="..\Header\ItemParticle.h" />
     <ClInclude Include="..\Header\LetterBox.h" />
     <ClInclude Include="..\Header\LoadBar.h" />
     <ClInclude Include="..\Header\Loading.h" />
@@ -301,10 +303,12 @@
     <ClCompile Include="..\Code\GetUzi.cpp" />
     <ClCompile Include="..\Code\GunUI.cpp" />
     <ClCompile Include="..\Code\HealthPotion.cpp" />
+    <ClCompile Include="..\Code\HitBarUI.cpp" />
     <ClCompile Include="..\Code\ImguiMgr.cpp" />
     <ClCompile Include="..\Code\Inventory.cpp" />
     <ClCompile Include="..\Code\Item.cpp" />
     <ClCompile Include="..\Code\ItemIcon.cpp" />
+    <ClCompile Include="..\Code\ItemParticle.cpp" />
     <ClCompile Include="..\Code\LetterBox.cpp" />
     <ClCompile Include="..\Code\LoadBar.cpp" />
     <ClCompile Include="..\Code\Loading.cpp" />

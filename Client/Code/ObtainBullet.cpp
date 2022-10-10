@@ -30,6 +30,7 @@ _int CObtainBullet::Update_Object(const _float & fTimeDelta)
 {
 	if (m_bDead)
 	{
+		Dead_Effect();
 		dynamic_cast<CUzi*>(Engine::Get_GameObject(STAGE_GUN, L"UZI1"))->Get_Bullet();
 		return -1;
 	}
@@ -80,6 +81,19 @@ HRESULT CObtainBullet::Add_Component(void)
 	m_mapComponent[ID_STATIC].insert({ CALCULATOR_COMP, pComponent });
 
 	return S_OK;
+}
+
+void CObtainBullet::Dead_Effect(void)
+{
+	_vec3 vPos;
+	m_pTransCom->Get_Info(INFO_POS, &vPos);
+	if (!m_pItemParicle)
+		m_pItemParicle = dynamic_cast<CItemParticle*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"ItemParticle"));
+	m_pItemParicle->Set_PclePos(vPos);
+	for (_int i = 0; i < 150; ++i)
+	{
+		m_pItemParicle->addParticle();
+	}
 }
 
 CObtainBullet * CObtainBullet::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3 & vPos)
