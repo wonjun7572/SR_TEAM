@@ -120,7 +120,7 @@ void CPSystem::render()
 {
 		// 렌더 상태 지정
 		preRender();
-
+		
 		m_pGraphicDev->SetFVF(FVF_PARTICLE);
 		m_pGraphicDev->SetStreamSource(0, m_vb, 0, sizeof(PARTICLE));
 

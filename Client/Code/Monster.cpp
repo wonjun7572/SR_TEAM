@@ -2,6 +2,7 @@
 #include "..\Header\Monster.h"
 #include "CubePlayer.h"
 #include "Weapon.h"
+#include "MonsterParticle.h"
 #include "MonsterUI.h"
 
 CMonster::CMonster(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -52,6 +53,17 @@ void CMonster::Render_Object(void)
 {
 }
 
+void CMonster::Hit_Effect()
+{
+	_vec3 vPos;
+	m_pTransCom->Get_Info(INFO_POS, &vPos);
+	if (!m_pHitParicle)
+		m_pHitParicle = dynamic_cast<CMonsterParticle*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"MonsterParticle"));
+
+	m_pHitParicle->Set_PclePos(vPos);
+	m_pHitParicle->addParticle();
+}
+
 void CMonster::Hit_Check(_float _deltaTime)
 {
 	m_pTransCom->Static_Update();
@@ -74,6 +86,7 @@ void CMonster::Hit_Check(_float _deltaTime)
 			if (pWeapon->Get_Shoot() == true)
 			{
 				m_tAbility->fCurrentHp -= pWeapon->Get_Ability()->fBulletAttack;
+				Hit_Effect();
 				pWeapon->Set_Shoot(false);
 			}
 
