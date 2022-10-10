@@ -36,6 +36,7 @@ private:
 	void		Key_Input();
 	void		Mouse();
 	void		Sorting();
+	void		Equipment_Sorting();
 	void		Weapon_Sorting();
 	void		Get_Item();
 	//void		Gun_Change();
@@ -44,7 +45,6 @@ private:
 	CGameObject*		m_pPlayer = nullptr;
 	CGameObject*		m_pItemIcon = nullptr;
 	CItemIcon*			m_pIconGrab = nullptr;
-	CItemIcon*			m_pGrapping = nullptr;
 	CTransform*			m_pTransformCom = nullptr;
 	CTexture*			m_pTextureCom = nullptr;
 	CRcTex*				m_pRcTexCom = nullptr;

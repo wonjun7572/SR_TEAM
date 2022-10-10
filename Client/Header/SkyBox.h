@@ -25,7 +25,7 @@ private:
 	HRESULT				Add_Component(void);
 
 private:
-	CCubeTex*			m_pBufferCom = nullptr;
+	CSphereTex*			m_pBufferCom = nullptr;
 	CTransform*			m_pTransCom = nullptr;
 	CTexture*			m_pTextureCom = nullptr;
 

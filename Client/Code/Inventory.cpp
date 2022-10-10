@@ -20,9 +20,8 @@ HRESULT CInventory::Ready_Object(void)
 	m_iItemCnt = 0;
 	m_vecContents.resize(26);
 	m_vecEquipments.resize(5);
-	m_vecWeapon.resize(9);
-
-	
+	m_vecWeapon.resize(9);	
+	m_vecParts.resize(12);
 	m_fInvPosX = 400.f;
 	m_fInvPosY = 50.f;
 	return S_OK;
@@ -35,8 +34,8 @@ _int CInventory::Update_Object(const _float & fTimeDelta)
 
 	CGameObject::Update_Object(fTimeDelta);
 	Add_RenderGroup(RENDER_UI, this);
-	//Gun_Change();
 	Sorting();
+	Equipment_Sorting();
 	Weapon_Sorting();
 	Mouse();
 	Key_Input();
@@ -126,63 +125,6 @@ void CInventory::Get_Item()
 
 }
 
-//void CInventory::Gun_Change()
-//{
-//	if (m_pWeapon != dynamic_cast<CCubePlayer*>(m_pPlayer)->Get_Weapon())
-//	{
-//		for (int i = 0; i < 5; i++)
-//		{
-//			if (m_vecEquipments[i] != nullptr)
-//			{
-//				m_iItemCnt++;
-//				m_vecContents.push_back(m_vecEquipments[i]);
-//				m_vecEquipments[i] = nullptr;
-//				Sorting();
-//				m_bNullSorting = true;
-//				m_bSorting = true;
-//			}
-//		}
-//
-//		for (auto& iter : m_vecContents)
-//		{
-//			if (iter != nullptr && dynamic_cast<CItemIcon*>(iter)->Get_iTemIdx() == 2 && dynamic_cast<CCubePlayer*>(m_pPlayer)->Get_Weapon() == dynamic_cast<CWeapon*>(Engine::Get_GameObject(STAGE_GUN, L"UZI1")))
-//			{
-//				dynamic_cast<CItemIcon*>(iter)->Set_block(435.f *WINCY / WINCX, 365.f * WINCY / WINCX, 0.1f);
-//				m_vecEquipments[0] = iter;
-//				iter = nullptr;
-//				Sorting();
-//				m_iItemCnt--;
-//				m_bSorting = true;
-//				m_bNullSorting = true;
-//			}
-//			if (iter != nullptr && dynamic_cast<CItemIcon*>(iter)->Get_iTemIdx() == 3 && dynamic_cast<CCubePlayer*>(m_pPlayer)->Get_Weapon() == dynamic_cast<CWeapon*>(Engine::Get_GameObject(STAGE_GUN, L"SHOTGUN")))
-//			{
-//				dynamic_cast<CItemIcon*>(iter)->Set_block(435.f *WINCY / WINCX, 365.f * WINCY / WINCX, 0.1f);
-//				m_vecEquipments[0] = iter;
-//				iter = nullptr;
-//				Sorting();
-//				m_iItemCnt--;
-//				m_bSorting = true;
-//				m_bNullSorting = true;
-//			}
-//			if (iter != nullptr && dynamic_cast<CItemIcon*>(iter)->Get_iTemIdx() == 4 && dynamic_cast<CCubePlayer*>(m_pPlayer)->Get_Weapon() == dynamic_cast<CWeapon*>(Engine::Get_GameObject(STAGE_GUN, L"SNIPER")))
-//			{
-//				dynamic_cast<CItemIcon*>(iter)->Set_block(435.f *WINCY / WINCX, 365.f * WINCY / WINCX, 0.1f);
-//				m_vecEquipments[0] = iter;
-//				iter = nullptr;
-//				Sorting();
-//				m_iItemCnt--;
-//				m_bSorting = true;
-//				m_bNullSorting = true;
-//			}
-//		}
-//	}
-//	else
-//	{
-//		m_pWeapon = dynamic_cast<CCubePlayer*>(m_pPlayer)->Get_Weapon();
-//	}
-//}
-
 
 void CInventory::Sorting()
 {
@@ -234,6 +176,60 @@ void CInventory::Sorting()
 	}
 }
 
+void CInventory::Equipment_Sorting()
+{
+	if (m_vecEquipments[0] != nullptr)
+	{
+		dynamic_cast<CItemIcon*>(m_vecEquipments[0])->Set_block(435.f *WINCY / WINCX, 365.f * WINCY / WINCX, 0.1f);
+	}
+	if (m_vecEquipments[1] != nullptr)
+	{
+		dynamic_cast<CItemIcon*>(m_vecEquipments[1])->Set_block(535.f * WINCY / WINCX, 455.f * WINCY / WINCX, 0.1f);
+	}
+	if (m_vecEquipments[2] != nullptr)
+	{
+		dynamic_cast<CItemIcon*>(m_vecEquipments[2])->Set_block(535.f *WINCY / WINCX, 275.f*WINCY / WINCX, 0.1f);
+	}
+	if (m_vecEquipments[3] != nullptr)
+	{
+		dynamic_cast<CItemIcon*>(m_vecEquipments[3])->Set_block(800.f *WINCY / WINCX, 455.f * WINCY / WINCX, 0.1f);
+	}
+	if (m_vecEquipments[4] != nullptr)
+	{
+		dynamic_cast<CItemIcon*>(m_vecEquipments[4])->Set_block(800.f *WINCY / WINCX, 275.f * WINCY / WINCX, 0.1f);
+	}
+
+
+	// 플레이어 총 든 상태랑 연동하고 싶을 경우, if문 추가 후 아래를 묶으면 됨
+	/*if (m_vecEquipments[0] != nullptr)
+	{
+		for (_int i = 1; i < 5; i++)
+		{
+			if (m_vecEquipments[i] != nullptr)
+			{
+				m_vecParts[(((dynamic_cast<CItemIcon*>(m_vecEquipments[0])->Get_iTemIdx()) - 2) * 4) + (i - 1)] = m_vecEquipments[i];
+				m_vecEquipments[i] = nullptr;
+			}
+		}
+		m_vecWeapon[dynamic_cast<CItemIcon*>(m_vecEquipments[0])->Get_iTemIdx() - 2] = m_vecEquipments[0];
+		m_vecEquipments[0] = nullptr;
+	}
+	if (m_vecEquipments[0] == nullptr)
+	{
+		m_vecEquipments[0] = m_vecWeapon[0]; // m_vecWeapon 벡터위치 수정
+		m_vecWeapon[0] = nullptr; // 벡터위치 수정
+		for (_int i = 0; i < 4; ++i)
+		{
+			if (m_vecParts[4 * 0 + i] != nullptr)
+			{
+				m_vecEquipments[i + 1] = m_vecParts[4 * 0 + i];
+				m_vecParts[4 * 0 + i] = nullptr;
+				dynamic_cast<CItemIcon*>(m_vecEquipments[i + 1])->Off_WeaponPart();
+			}
+		}
+	}*/
+}
+
 void CInventory::Weapon_Sorting()
 {
 	_int   iCnt = 0;
@@ -263,6 +259,12 @@ void CInventory::Weapon_Sorting()
 		if(m_vecWeapon[i] != nullptr)
 			dynamic_cast<CItemIcon*>(m_vecWeapon[i])->Set_block(fDefaultX + (fIntervalX *i), fDefaultY, 0.f);
 	}
+
+	for (auto& iter : m_vecParts)
+	{
+		if (iter != nullptr)
+		dynamic_cast<CItemIcon*>(iter)->On_WeaponPart();
+	}
 }
 
 void CInventory::Key_Input()
@@ -279,8 +281,8 @@ void CInventory::Mouse()
 	GetCursorPos(&pt);
 	ScreenToClient(g_hWnd, &pt);
 
-	cout << 400 - pt.x +WINCX/2<< endl;
-	cout << pt.y << endl;
+	//cout << 400 - pt.x +WINCX/2<< endl;
+	//cout << pt.y << endl;
 	_float DefaultX = 955.f;
 	_float DefaultY = 345.f;
 	_float SizeX = 45.f;
@@ -293,7 +295,7 @@ void CInventory::Mouse()
 		m_bInvSwitch = false;
 	}
 
-	//우클릭 기능
+	//인벤토리 기능
 	for (_int i = 0; i < 9; ++i)
 	{
 		for (_int j = 0; j < 9; ++j)
@@ -326,7 +328,7 @@ void CInventory::Mouse()
 			}
 		}
 	}
-	//우클릭 기능
+	//무기창 기능
 	for (_int i = 0; i < 9; ++i)
 	{
 		for (auto& iter : m_vecWeapon)
@@ -339,7 +341,7 @@ void CInventory::Mouse()
 					{
 						if (m_pIconGrab == nullptr && Mouse_Down(DIM_LB))
 						{
-							iVectorNumb = i;
+							iWeaponNumb = i;
 
 							m_pIconGrab = dynamic_cast<CItemIcon*>(iter);
 							m_pIconGrab->Cursor_fix();
@@ -353,6 +355,11 @@ void CInventory::Mouse()
 			}
 		}
 	}
+	//좌클릭 기능 
+	//좌클릭 장비 장착
+	
+
+	cout << iWeaponNumb << endl;
 	for (auto& iter : m_vecWeapon)
 	{
 		if (iter != nullptr&& iter == m_vecWeapon[iWeaponNumb] && m_pIconGrab != nullptr && Mouse_Down(DIM_LB))
@@ -360,29 +367,51 @@ void CInventory::Mouse()
 			m_pIconGrab->Cursor_free();
 			if (1025 < pt.x && pt.x < 1075 && 215 < pt.y && pt.y < 280) // 맨왼쪽인벤토리
 			{
+				if (m_vecEquipments[0] != nullptr)
+				{
+					for (_int i = 1; i < 5; i++)
+					{
+						if (m_vecEquipments[i] != nullptr)
+						{
+							m_vecParts[(((dynamic_cast<CItemIcon*>(m_vecEquipments[0])->Get_iTemIdx()) - 2) * 4) + (i - 1)] = m_vecEquipments[i];
+							m_vecEquipments[i] = nullptr;
+						}
+					}
+					m_vecWeapon[dynamic_cast<CItemIcon*>(m_vecEquipments[0])->Get_iTemIdx() - 2] = m_vecEquipments[0];
+					m_vecEquipments[0] = nullptr;
+				}
 				if (m_vecEquipments[0] == nullptr)
 				{
-					if (m_pIconGrab->Get_iTemIdx() == 2 || m_pIconGrab->Get_iTemIdx() == 3 || m_pIconGrab->Get_iTemIdx() == 4)
+					if (2<=m_pIconGrab->Get_iTemIdx() && m_pIconGrab->Get_iTemIdx()<=4)
 					{
 						m_pIconGrab->Set_block(435.f *WINCY / WINCX, 365.f * WINCY / WINCX, 0.1f);
 						m_vecEquipments[0] = m_pIconGrab;
-						//iter = nullptr;
+						for (_int i = 0; i < 4; ++i)
+						{
+							if (m_vecParts[4 * iWeaponNumb + i] != nullptr)
+							{
+								m_vecEquipments[i + 1] = m_vecParts[4 * iWeaponNumb + i];
+								m_vecParts[4 * iWeaponNumb + i] = nullptr;
+								dynamic_cast<CItemIcon*>(m_vecEquipments[i + 1])->Off_WeaponPart();						
+							}
+						}
+						iter = nullptr;
 						m_pIconGrab = nullptr;
 						//break;
 					}				
 				}
 			}
+			m_pIconGrab = nullptr;
+
 		}
 	}
-	//좌클릭 기능 
-	//좌클릭 장비 장착
 	for (auto& iter : m_vecContents)
 	{
-		if (iter != nullptr&& iter == m_vecContents[iVectorNumb] && m_pIconGrab != nullptr && Mouse_Down(DIM_LB))
+		if (iter != nullptr&& iter == m_vecContents[iVectorNumb] && m_vecEquipments[0] != nullptr&& m_pIconGrab != nullptr && Mouse_Down(DIM_LB))
 		{
 			m_pIconGrab->Cursor_free();
 			
-			if (!(m_pIconGrab->Get_iTemIdx() == 2 || m_pIconGrab->Get_iTemIdx() == 3 || m_pIconGrab->Get_iTemIdx() == 4))
+			if (!(2 <= m_pIconGrab->Get_iTemIdx() && m_pIconGrab->Get_iTemIdx() <= 4))
 			{
 				if (1080 < pt.x && pt.x < 1125 && 160 < pt.y && pt.y < 225) // 0,0
 				{
@@ -460,12 +489,20 @@ void CInventory::Mouse()
 				}
 			}
 		}
-			if (m_vecEquipments[0] != nullptr && Mouse_Down(DIM_LB))
+		if (m_vecEquipments[0] != nullptr && Mouse_Down(DIM_LB))
+		{
+			
+			for (_int i = 1; i < 5; i++)
 			{
-				m_vecWeapon[dynamic_cast<CItemIcon*>(m_vecEquipments[0])->Get_iTemIdx() - 2] = m_vecEquipments[0];
-				m_vecEquipments[0] = nullptr;
-				
+				if (m_vecEquipments[i] != nullptr)
+				{
+					m_vecParts[(((dynamic_cast<CItemIcon*>(m_vecEquipments[0])->Get_iTemIdx())-2)*4)+(i-1)]  = m_vecEquipments[i];
+					m_vecEquipments[i] = nullptr;
+				}
 			}
+			m_vecWeapon[dynamic_cast<CItemIcon*>(m_vecEquipments[0])->Get_iTemIdx() - 2] = m_vecEquipments[0];
+			m_vecEquipments[0] = nullptr;
+		}
 
 	}
 	if (m_iItemCnt < 27)

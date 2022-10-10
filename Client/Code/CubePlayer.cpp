@@ -584,7 +584,6 @@ void CCubePlayer::Gun_Check(void)
 		m_tAbility->iGunTexture = 4;
 		m_bSniper = false;
 	}
-
 	if (Get_DIKeyState(DIK_1) & 0x80)
 	{
 		if (!m_vecWeapon.empty())

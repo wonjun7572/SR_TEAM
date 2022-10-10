@@ -46,7 +46,7 @@ void CItemIcon::LateUpdate_Object(void)
 
 void CItemIcon::Render_Object(void)
 {
-	if (dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->Get_Switch() && m_iNumber != 0)
+	if (dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->Get_Switch() && m_iNumber != 0 && !m_bWeaponPart)
 	{
 		m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
 
@@ -212,7 +212,7 @@ void CItemIcon::FixOnCursor()
 	{
 		m_vBlockPos.x = 15.f - WINCX / 2 + pt.x;//(double)( 1.75*(-450 +(pt.x*WINCY/WINCX)));
 		m_vBlockPos.y = -25.f + WINCY / 2 - pt.y;// (double)(1.75 * (250 - (pt.y*WINCY / WINCX)));
-	}
+	}	
 }
 
 CItemIcon * CItemIcon::Create(LPDIRECT3DDEVICE9 pGraphicDev, _int iIndex)
