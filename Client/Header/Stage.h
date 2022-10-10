@@ -41,7 +41,7 @@ private:
 	HRESULT			Ready_Layer_Player(const _tchar* pLayerTag);
 
 	HRESULT			Ready_Layer_Slime(const _tchar* pLayerTag);
-	HRESULT			Ready_Layer_Zombie(const _tchar* pLayerTag);
+
 
 	HRESULT			Ready_Proto(void);
 	HRESULT			Ready_Light(void);

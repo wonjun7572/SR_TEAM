@@ -418,6 +418,18 @@ HRESULT CStage::Ready_Layer_Monster(const _tchar * pLayerTag)
 		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
 	}
 
+	for (int i = 0; i < 5; i++)
+	{
+		_tchar* szName = new _tchar[256]{};
+		wstring wName = L"Zombie_%d";
+		wsprintfW(szName, wName.c_str(), i);
+		NameList.push_back(szName);
+
+		pGameObject = CZombie::Create(m_pGraphicDev, _vec3(_float(rand() % 5 + 5 ), 0.6f, _float(rand() % 5 + 5)), szName);
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+	}
+
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
 	return S_OK;
