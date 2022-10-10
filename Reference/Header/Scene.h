@@ -24,6 +24,13 @@ public:
 		m_mapLayer.insert({ LayerName,pLayer });
 	}
 
+	void New_Layer(_tchar* LayerName)
+	{
+		Engine::CLayer*		pLayer = Engine::CLayer::Create();
+		NULL_CHECK_RETURN(pLayer, );
+		m_mapLayer.insert({ LayerName,pLayer });
+	}
+
 public:
 	virtual		HRESULT		Ready_Scene(void);
 	virtual		_int Update_Scene(const _float& fTimeDelta);

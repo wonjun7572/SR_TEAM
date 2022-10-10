@@ -53,6 +53,11 @@ HRESULT CManagement::Delete_GameObject(const _tchar * pLayerTag, const _tchar * 
 	return S_OK;
 }
 
+CScene * CManagement::Get_Scene(void)
+{
+	return m_pScene;
+}
+
 HRESULT CManagement::Set_Scene(CScene * pScene)
 {
 	Safe_Release(m_pScene);	 // 기존 scene을 삭제
