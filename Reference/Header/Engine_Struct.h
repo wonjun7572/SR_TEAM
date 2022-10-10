@@ -79,10 +79,10 @@ namespace Engine
 
 	typedef struct tagAbility
 	{
-		_int		iHp;		// 체력을 위한
-		_int		iMaxHp;
-		_int		iDefence;		// 방어력을 위한
-		_int		iMaxDefence;
+		_float		fHp;				// 체력을 위한
+		_float		fMaxHp;
+		_float		fDefence;				// 방어력을 위한
+		_float		fMaxDefence;
 		_int		iGunTexture;			// 총 UI 변경을 위한
 	}ABILITY;
 

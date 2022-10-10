@@ -20,6 +20,7 @@ public:
 	////////////////////////////////캐릭터회전///////////////////////////////////////////////////////////
 	void				Rotation_Axis_X(const _float& fMovement, const _float& fAngle);
 	void				Rotation_Axis_Y(const _float& fMovement, const _float& fAngle);
+	void				Rotation_Revolution_Z(const _float& fAngle);
 	void				Rotation_Axis_Animation(const _float& fXMove, const _float& fYMove, 
 												const _float& fXAngle, const _float& fYAngle,
 												const _float& fExtraMove = 0.f, const _float& fExtraAngle = 0.f);
@@ -58,6 +59,8 @@ public:
 	const _matrix*		Get_WorldMatrixPointer()					 {	return &m_matWorld; }
 	void				Move_Pos(const _vec3* const pDir)			 {	m_vInfo[INFO_POS] += *pDir; }
 	void				Rotation(ROTATIONID eID, const _float& fAngle){	*(((_float*)&m_vAngle) + eID) += fAngle;	}
+	void				Rotation_Fix(ROTATIONID eID, const _float& fAngle) { *(((_float*)&m_vAngle) + eID) = fAngle; }
+
 	void				Get_Info(INFOID eID, _vec3* pInfo) {	memcpy(pInfo, &m_matWorld.m[eID][0], sizeof(_vec3));}
 	void				Set_Scale(_float fX, _float fY, _float fZ){	m_vScale = { fX, fY, fZ }; }
 	void				Set_Pos(const _float& fX, const _float& fY, const _float& fZ)

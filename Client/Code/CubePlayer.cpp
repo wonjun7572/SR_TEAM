@@ -26,10 +26,10 @@ HRESULT CCubePlayer::Ready_Object(void)
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
 	m_tAbility = new ABILITY;
-	m_tAbility->iMaxHp = 100;
-	m_tAbility->iHp = m_tAbility->iMaxHp;
-	m_tAbility->iMaxDefence = 100;
-	m_tAbility->iDefence = 50;
+	m_tAbility->fMaxHp = 100;
+	m_tAbility->fHp = m_tAbility->fMaxHp;
+	m_tAbility->fMaxDefence = 100;
+	m_tAbility->fDefence = 50;
 	m_tAbility->iGunTexture = 5;
 
 	m_pTransform->Set_Scale(0.4f, 0.5f, 0.4f);
@@ -726,9 +726,9 @@ HRESULT CCubePlayer::Add_Component(void)
 	m_mapComponent[ID_STATIC].insert({ CALCULATOR_COMP, pInstance });
 
 	// For Sphere
-	pInstance = m_pSphereBufferCom = dynamic_cast<CSphereTex*>(Clone_Proto(SPHERECOL_COMP));
+	pInstance = m_pSphereBufferCom = dynamic_cast<CSphereTex*>(Clone_Proto(SPHERETEX_COMP));
 	NULL_CHECK_RETURN(m_pSphereBufferCom, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ SPHERECOL_COMP, pInstance });
+	m_mapComponent[ID_STATIC].insert({ SPHERETEX_COMP, pInstance });
 
 	pInstance = m_pSphereTransCom = dynamic_cast<CTransform*>(Clone_Proto(TRANSFORM_COMP));
 	NULL_CHECK_RETURN(m_pSphereBufferCom, E_FAIL);

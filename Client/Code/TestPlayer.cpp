@@ -168,14 +168,13 @@ void CTestPlayer::Fire_Bullet(const _vec3* pDir)
 {
 	_vec3		vPos;
 	m_pTransCom->Get_Info(INFO_POS, &vPos);
-	FAILED_CHECK_RETURN(CPoolMgr::GetInstance()->Reuse_Obj(m_pGraphicDev, &vPos, pDir), );
+	FAILED_CHECK_RETURN(CPoolMgr::GetInstance()->Reuse_Obj(m_pGraphicDev, &vPos, pDir , 10.f), );
 }
 
 _bool CTestPlayer::Hit_Check(void)
 {
 	_vec3 vSrcPos;
-	dynamic_cast<CTransform*>
-		(Engine::Get_Component(STAGE_GUN, L"Uzi_Part_1_1", TRANSFORM_COMP, ID_DYNAMIC))->Get_Info(INFO_POS, &vSrcPos);
+	dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_GUN, L"Uzi_Part_1_1", TRANSFORM_COMP, ID_DYNAMIC))->Get_Info(INFO_POS, &vSrcPos);
 	m_pTransCom->Static_Update();
 
 	_vec3 vDir;

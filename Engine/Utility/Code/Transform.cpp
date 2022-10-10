@@ -21,9 +21,6 @@ Engine::CTransform::CTransform(const CTransform& rhs)
 		memcpy(m_vInfo[i], rhs.m_vInfo[i], sizeof(_vec3));
 
 	memcpy(m_matWorld, rhs.m_matWorld, sizeof(_matrix));
-	
-
-
 }
 
 CTransform::~CTransform()
@@ -58,13 +55,28 @@ void CTransform::Rotation_Axis_Y(const _float & fMovement, const _float & fAngle
 
 	D3DXMatrixScaling(&matScale, m_vScale.x, m_vScale.y, m_vScale.z);
 	D3DXMatrixRotationY(&matRot, fAngle);
-
 	D3DXMatrixTranslation(&matTrans, m_vInfo[INFO_POS].x, m_vInfo[INFO_POS].y, m_vInfo[INFO_POS].z);
 
 	D3DXMatrixTranslation(&matMove, fMovement, 0.f, 0.f);
 	D3DXMatrixTranslation(&matOriginalPos, -(fMovement), 0.f, 0.f);
 
 	m_matWorld = matScale * matMove * matRot * matOriginalPos * matTrans;
+}
+
+void	CTransform::Rotation_Revolution_Z(const _float& fAngle)
+{
+	_matrix matScale, matRot, matTrans;
+
+	D3DXMatrixScaling(&matScale, m_vScale.x, m_vScale.y, m_vScale.z);
+	D3DXMatrixRotationZ(&matRot, fAngle);
+	D3DXMatrixTranslation(&matTrans, m_vInfo[INFO_POS].x, m_vInfo[INFO_POS].y, m_vInfo[INFO_POS].z);
+
+	//_matrix matParent;
+	//D3DXMatrixScaling(&matScale, 1.f, 1.f, 1.f);
+	//D3DXMatrixRotationZ(&matRot, fAngle);
+	//D3DXMatrixTranslation(&matTrans, 0.f, 0.f, 1.f);
+
+	m_matWorld = matScale * matRot * matTrans /** matParent*/;
 }
 
 void CTransform::Rotation_Axis_Gun(	const _float & fXMove, const _float & fXAngle,
@@ -587,7 +599,6 @@ _int CTransform::Update_Component(const _float & fTimeDelta)
 	D3DXMatrixIdentity(&m_matWorld);
 
 	// Å©±â
-
 	for (_uint i = 0; i < INFO_POS; ++i)
 	{
 		memcpy(&m_vInfo[i], &m_matWorld.m[i][0], sizeof(_vec3));

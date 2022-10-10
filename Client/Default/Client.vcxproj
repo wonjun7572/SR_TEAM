@@ -185,6 +185,7 @@
     <ClInclude Include="..\Header\GetUzi.h" />
     <ClInclude Include="..\Header\GunUI.h" />
     <ClInclude Include="..\Header\HealthPotion.h" />
+    <ClInclude Include="..\Header\HitBarUI.h" />
     <ClInclude Include="..\Header\ImguiMgr.h" />
     <ClInclude Include="..\Header\Inventory.h" />
     <ClInclude Include="..\Header\Item.h" />
@@ -203,6 +204,7 @@
     <ClInclude Include="..\Header\MaxPlusHp.h" />
     <ClInclude Include="..\Header\Monster.h" />
     <ClInclude Include="..\Header\MonsterMapping.h" />
+    <ClInclude Include="..\Header\MonsterParticle.h" />
     <ClInclude Include="..\Header\MonsterUI.h" />
     <ClInclude Include="..\Header\ObtainBullet.h" />
     <ClInclude Include="..\Header\ObtainDefense.h" />
@@ -300,6 +302,7 @@
     <ClCompile Include="..\Code\GetUzi.cpp" />
     <ClCompile Include="..\Code\GunUI.cpp" />
     <ClCompile Include="..\Code\HealthPotion.cpp" />
+    <ClCompile Include="..\Code\HitBarUI.cpp" />
     <ClCompile Include="..\Code\ImguiMgr.cpp" />
     <ClCompile Include="..\Code\Inventory.cpp" />
     <ClCompile Include="..\Code\Item.cpp" />
@@ -318,6 +321,7 @@
     <ClCompile Include="..\Code\MaxPlusHp.cpp" />
     <ClCompile Include="..\Code\Monster.cpp" />
     <ClCompile Include="..\Code\MonsterMapping.cpp" />
+    <ClCompile Include="..\Code\MonsterParticle.cpp" />
     <ClCompile Include="..\Code\MonsterUI.cpp" />
     <ClCompile Include="..\Code\ObtainBullet.cpp" />
     <ClCompile Include="..\Code\ObtainDefense.cpp" />

@@ -28,8 +28,8 @@ private:
 	_matrix m_matProj;
 	_matrix            m_ProjMatrix;
 	CGameObject* m_pPlayer = nullptr;
-	_int   m_iHp;
-	_int   m_iMaxHp;
+	_float   m_fHp;
+	_float   m_fMaxHp;
 	wstring m_strHp;
 
 	_float testCX = 0.f;

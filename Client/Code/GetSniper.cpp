@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "..\Header\GetSniper.h"
 #include "CubePlayer.h"
-
+#include "Inventory.h"
 CGetSniper::CGetSniper(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CItem(pGraphicDev)
 {
@@ -31,6 +31,7 @@ _int CGetSniper::Update_Object(const _float & fTimeDelta)
 	if (m_bDead)
 	{
 		dynamic_cast<CCubePlayer*>(Engine::Get_GameObject(STAGE_CHARACTER, L"PLAYER"))->Capture_Sniper();
+		dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->ItemCreate(4);
 		return -1;
 	}
 	CItem::Move_Item(fTimeDelta);
