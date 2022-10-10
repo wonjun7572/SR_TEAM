@@ -36,6 +36,7 @@ private:	//	애니메이션 관련
 	void					Load_Animation(wstring FileName);
 	void					Run_Animation(const _float& AnimationSpeed);
 	void					Jump_Animation_Run(void);
+	void					Look_Direction(void);
 
 	_float					m_fTimeDelta = 0.f;
 	_bool					m_bFirst = true;

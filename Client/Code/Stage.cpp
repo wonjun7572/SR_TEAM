@@ -392,13 +392,18 @@ HRESULT CStage::Ready_Layer_Monster(const _tchar * pLayerTag)
 
 	// 위랑 아래랑 같아야함 문자열, 몬스터 아이템 땜시
 	
-	/*for (int i = 0; i < 10; i++)
+	for (int i = 0; i < 5; i++)
 	{
-		pGameObject = CZombie::Create(m_pGraphicDev, _vec3(_float(rand() % 10 + 10), 0.6f, _float(rand() % 10) + 10));
+		_tchar* szName = new _tchar[256]{};
+		wstring wName = L"Zombie_%d";
+		wsprintfW(szName, wName.c_str(), i);
+		NameList.push_back(szName);
+
+		pGameObject = CZombie::Create(m_pGraphicDev, _vec3(_float(rand() % 5 + 5), 0.6f, _float(rand() % 5 + 5)), szName);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
 	}
-
+	/*
 	for (int i = 0; i < 10; i++)
 	{
 		pGameObject = CSkeleton::Create(m_pGraphicDev, _vec3(_float(rand() % 10 + 20), 0.6f, _float(rand() % 10) + 20));
@@ -406,7 +411,7 @@ HRESULT CStage::Ready_Layer_Monster(const _tchar * pLayerTag)
 		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
 	}*/
 
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < 2; i++)
 	{
 		_tchar* szName = new _tchar[256]{};
 		wstring wName = L"Slime_%d";
