@@ -17,8 +17,8 @@ public:
 	HRESULT			Add_Component(void);
 	void Set_Pos(const _vec3& vPos);
 	void MoveToDir(const _vec3& vDir);
-
-	void			Set_Dir(const _vec3& vDir) { m_vDirection = vDir; }
+	void Before_Update();
+	void Set_Dir(const _vec3& vDir) { m_vDirection = vDir; }
 
 private:
 	CTransform*			m_pTransCom = nullptr;
@@ -29,6 +29,8 @@ private:
 
 	CGameObject*		m_pPlayer = nullptr;
 	CTransform*			m_pPlayerTransCom = nullptr;
+
+	CGameObject*		m_pHitBarUI = nullptr;
 
 	_vec3				m_vDirection = _vec3(0.f, 0.f, 0.f);
 	_float				m_fSpeed = 2.f;

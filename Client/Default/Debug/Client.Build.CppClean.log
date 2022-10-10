@@ -62,7 +62,6 @@ c:\users\sam51\desktop\sr_team\client\default\debug\optionbutton.obj
 c:\users\sam51\desktop\sr_team\client\default\debug\playbutton.obj
 c:\users\sam51\desktop\sr_team\client\default\debug\playerhpui.obj
 c:\users\sam51\desktop\sr_team\client\default\debug\playermapping.obj
-c:\users\sam51\desktop\sr_team\client\default\debug\cubefoot.obj
 c:\users\sam51\desktop\sr_team\client\default\debug\cubehand.obj
 c:\users\sam51\desktop\sr_team\client\default\debug\cubehead.obj
 c:\users\sam51\desktop\sr_team\client\default\debug\cubeleg.obj
@@ -91,6 +90,8 @@ c:\users\sam51\desktop\sr_team\client\default\debug\bulletui.obj
 c:\users\sam51\desktop\sr_team\client\default\debug\crossheader.obj
 c:\users\sam51\desktop\sr_team\client\default\debug\cubearm.obj
 c:\users\sam51\desktop\sr_team\client\default\debug\cubebody.obj
+c:\users\sam51\desktop\sr_team\client\default\debug\cubefoot.obj
+c:\users\sam51\desktop\sr_team\client\default\debug\hitbarui.obj
 c:\users\sam51\desktop\sr_team\client\default\debug\logocamera.obj
 c:\users\sam51\desktop\sr_team\client\default\debug\grapheditor.obj
 c:\users\sam51\desktop\sr_team\client\default\debug\imcurveedit.obj
@@ -106,7 +107,6 @@ c:\users\sam51\desktop\sr_team\client\default\debug\imgui_impl_win32.obj
 c:\users\sam51\desktop\sr_team\client\default\debug\imgui_tables.obj
 c:\users\sam51\desktop\sr_team\client\default\debug\imgui_widgets.obj
 c:\users\sam51\desktop\sr_team\client\default\debug\imsequencer.obj
-c:\users\sam51\desktop\sr_team\client\default\debug\hitbarui.obj
 c:\users\sam51\desktop\sr_team\client\bin\client.lib
 c:\users\sam51\desktop\sr_team\client\bin\client.exp
 c:\users\sam51\desktop\sr_team\client\bin\client.ilk
