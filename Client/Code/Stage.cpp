@@ -93,6 +93,7 @@ HRESULT CStage::Ready_Scene(void)
 	FAILED_CHECK_RETURN(Ready_Layer_Gun(STAGE_GUN), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Layer_GunItem(STAGE_GUNITEM), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Layer_Player(STAGE_PLAYER), E_FAIL);
+	FAILED_CHECK_RETURN(Ready_Layer_Zombie(STAGE_ZOMBIE), E_FAIL);
 	return S_OK;
 }
 
@@ -428,6 +429,18 @@ HRESULT CStage::Ready_Layer_Mapping(const _tchar * pLayerTag)
 	pGameObject = CBaseMapping::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"BaseMapping", pGameObject), E_FAIL);
+
+	m_mapLayer.insert({ pLayerTag, pLayer });
+
+	return S_OK;
+}
+
+HRESULT CStage::Ready_Layer_Zombie(const _tchar * pLayerTag)
+{
+	Engine::CLayer*		pLayer = Engine::CLayer::Create();
+	NULL_CHECK_RETURN(pLayer, E_FAIL);
+
+	CGameObject*		pGameObject = nullptr;
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
