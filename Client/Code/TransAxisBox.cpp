@@ -150,7 +150,5 @@ CTransAxisBox * CTransAxisBox::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 
 void CTransAxisBox::Free(void)
 {
-
-
 	CGameObject::Free();
 }

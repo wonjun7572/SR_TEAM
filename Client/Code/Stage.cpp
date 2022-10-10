@@ -56,6 +56,7 @@
 #include "CubeShop.h"
 #include "Inventory.h"
 
+#include "Slime.h"
 #include "Zombie.h"
 #include "Skeleton.h"
 #include "MonsterUI.h"
@@ -89,7 +90,7 @@ HRESULT CStage::Ready_Scene(void)
 	FAILED_CHECK_RETURN(Ready_Layer_GameLogic(STAGE_GAMELOGIC), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Layer_UI(STAGE_UI), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Layer_Character(STAGE_CHARACTER), E_FAIL);
-	FAILED_CHECK_RETURN(Ready_Layer_Monster(STAGE_MONSTER), E_FAIL);
+	FAILED_CHECK_RETURN(Ready_Layer_Monster(STAGE_MONSTER), E_FAIL);		//	몬스터 본체 관리 레이어
 	FAILED_CHECK_RETURN(Ready_Layer_Mapping(STAGE_MAPPING), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Layer_Bullet(STAGE_BULLET), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Layer_Wall(STAGE_WALL), E_FAIL);
@@ -97,6 +98,7 @@ HRESULT CStage::Ready_Scene(void)
 	FAILED_CHECK_RETURN(Ready_Layer_Gun(STAGE_GUN), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Layer_GunItem(STAGE_GUNITEM), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Layer_Player(STAGE_PLAYER), E_FAIL);
+
 	return S_OK;
 }
 
@@ -395,16 +397,33 @@ HRESULT CStage::Ready_Layer_Monster(const _tchar * pLayerTag)
 
 	// 위랑 아래랑 같아야함 문자열, 몬스터 아이템 땜시
 	
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < 5; i++)
 	{
-		pGameObject = CZombie::Create(m_pGraphicDev, _vec3(_float(rand() % 10 + 10), 0.6f, _float(rand() % 10) + 10));
+		_tchar* szName = new _tchar[256]{};
+		wstring wName = L"Zombie_%d";
+		wsprintfW(szName, wName.c_str(), i);
+		NameList.push_back(szName);
+
+		pGameObject = CZombie::Create(m_pGraphicDev, _vec3(_float(rand() % 5 + 5), 0.6f, _float(rand() % 5 + 5)), szName);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
 	}
-
+	/*
 	for (int i = 0; i < 10; i++)
 	{
 		pGameObject = CSkeleton::Create(m_pGraphicDev, _vec3(_float(rand() % 10 + 20), 0.6f, _float(rand() % 10) + 20));
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+	}*/
+
+	for (int i = 0; i < 2; i++)
+	{
+		_tchar* szName = new _tchar[256]{};
+		wstring wName = L"Slime_%d";
+		wsprintfW(szName, wName.c_str(), i);
+		NameList.push_back(szName);
+
+		pGameObject = CSlime::Create(m_pGraphicDev, _vec3(_float(rand() % 10 + 20), 0.6f, _float(rand() % 10) + 20), szName);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
 	}
@@ -582,6 +601,30 @@ HRESULT CStage::Ready_Layer_GunItem(const _tchar * pLayerTag)
 }
 
 HRESULT CStage::Ready_Layer_Player(const _tchar * pLayerTag)
+{
+	Engine::CLayer*		pLayer = Engine::CLayer::Create();
+	NULL_CHECK_RETURN(pLayer, E_FAIL);
+
+	CGameObject*		pGameObject = nullptr;
+
+	m_mapLayer.insert({ pLayerTag, pLayer });
+
+	return S_OK;
+}
+
+HRESULT CStage::Ready_Layer_Slime(const _tchar * pLayerTag)
+{
+	Engine::CLayer*		pLayer = Engine::CLayer::Create();
+	NULL_CHECK_RETURN(pLayer, E_FAIL);
+
+	CGameObject*		pGameObject = nullptr;
+
+	m_mapLayer.insert({ pLayerTag, pLayer });
+
+	return S_OK;
+}
+
+HRESULT CStage::Ready_Layer_Zombie(const _tchar * pLayerTag)
 {
 	Engine::CLayer*		pLayer = Engine::CLayer::Create();
 	NULL_CHECK_RETURN(pLayer, E_FAIL);

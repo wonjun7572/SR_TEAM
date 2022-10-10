@@ -136,7 +136,7 @@ void CTargetCube::Hit_Check(void)
 			if (pWeapon->Get_Shoot() == true)
 			{
 				m_tAbility->fCurrentHp -= pWeapon->Get_Ability()->fBulletAttack;
-				cout << "HP: " << m_tAbility->fCurrentHp << "\n";
+				//cout << "HP: " << m_tAbility->fCurrentHp << "\n";
 				pWeapon->Set_Shoot(false);
 			}
 
