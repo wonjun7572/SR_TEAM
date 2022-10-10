@@ -24,6 +24,7 @@ public:
 	virtual void	Render_Object()override;
 
 	virtual void    Move_Item(const _float& fTimeDelta);
+	virtual _vec3	Get_ItemPos(void) { return m_vItemPos;}
 
 protected:
 	CDynamicBuffer* m_pDBufferCom = nullptr;
@@ -39,6 +40,8 @@ protected:
 	_float		 m_fYSpeed = 0.f;
 	_int		 m_iReverseDir = 1;
 	_float		 m_fFrame = 0.f;
+	_vec3		 m_vItemPos = { 0.f,0.f,0.f};
+
 
 protected:
 	virtual void Free()override;
