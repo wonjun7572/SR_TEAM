@@ -23,13 +23,13 @@ void CPoolMgr::Collect_Obj(CGameObject * pObj)
 	m_ObjectPool.push_back(pObj);
 }
 
-HRESULT CPoolMgr::Reuse_Obj(LPDIRECT3DDEVICE9& pGraphicDev, const _vec3* vPos, const _vec3* vDir)
+HRESULT CPoolMgr::Reuse_Obj(LPDIRECT3DDEVICE9& pGraphicDev, const _vec3* vPos, const _vec3* vDir, _float _fDamage)
 {
 	CGameObject* pObj = nullptr;
 
 	if (m_ObjectPool.empty())
 	{
-		pObj = CBullet::Create(pGraphicDev, vPos, vDir);
+		pObj = CBullet::Create(pGraphicDev, vPos, vDir, _fDamage);
 		NULL_CHECK_RETURN(pObj, E_FAIL);
 
 		Engine::Get_Layer(STAGE_BULLET)->Add_GameList(pObj);

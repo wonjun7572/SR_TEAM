@@ -4,7 +4,7 @@
 #define RCTEX_COMP	    L"Proto_RcTexCom"
 #define	CUBETEX_COMP	L"Proto_CubeTexCom"
 #define TERRAINTEX_COMP L"Proto_TerrainTexCom"
-#define SPHERECOL_COMP	L"Proto_SphereColCom"
+#define SPHERETEX_COMP	L"Proto_SphereTexCom"
 #define FLEXIBLEAXISCUBE_COMP L"Proto_FlexibleAxisCubeCom"
 
 // Loading
@@ -120,3 +120,6 @@
 #define MONSTER_HP_TEX_PATH			L"../Bin/Resources/UI/MonsterUI/Bar_monster_HP.png"
 #define	MONSTER_HP_HUD_TEX			L"Monster_Hud"
 #define MONSTER_HP_HUD_TEX_PATH		L"../Bin/Resources/UI/MonsterUI/HUD_bar_monster_HP.png"
+
+#define HITBAR_TEX				L"HITBAR_TEX"
+#define	HITBAR_TEX_PATH			L"../Bin/Resources/UI/Player/hitbar.png"

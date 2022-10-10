@@ -40,7 +40,7 @@ _uint CLoading::Loading_ForStage(void)
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(RCTEX_MONTER_HP_COMP, CRcTex::Create(m_pGraphicDev)), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(RCTEX_GENERAL_MONSTER_HP_COMP, CRcTex::Create(m_pGraphicDev)), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(RCTEX_GENERAL_MONSTER_HUD_COMP, CRcTex::Create(m_pGraphicDev)), E_FAIL);
-		FAILED_CHECK_RETURN(Engine::Ready_Proto(SPHERECOL_COMP, CSphereTex::Create(m_pGraphicDev, 1.f)), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(SPHERETEX_COMP, CSphereTex::Create(m_pGraphicDev, 1.f)), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(FLEXIBLEAXISCUBE_COMP, CFlexibleAxisCube::Create(m_pGraphicDev)), E_FAIL);
 	}
 	// ÆÄÆ¼Å¬
@@ -77,6 +77,9 @@ _uint CLoading::Loading_ForStage(void)
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"HP_50_Face", CTexture::Create(m_pGraphicDev, HP_50_FACE_PATH, TEX_NORMAL, 5)), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"HP_25_Face", CTexture::Create(m_pGraphicDev, HP_25_FACE_PATH, TEX_NORMAL, 5)), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"HP_0_Face", CTexture::Create(m_pGraphicDev, HP_0_FACE_PATH, TEX_NORMAL)), E_FAIL);
+
+		// HITBAR
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(HITBAR_TEX, CTexture::Create(m_pGraphicDev, HITBAR_TEX_PATH, TEX_NORMAL)), E_FAIL);
 	}
 
 	{

@@ -59,6 +59,7 @@
 #include "Zombie.h"
 #include "Skeleton.h"
 #include "MonsterUI.h"
+#include "HitBarUI.h"
 
 CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CScene(pGraphicDev)
@@ -198,6 +199,10 @@ HRESULT CStage::Ready_Layer_UI(const _tchar * pLayerTag)
 	pGameObject = CMonsterUI::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"MonsterUI", pGameObject), E_FAIL);
+
+	pGameObject = CHitBarUI::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"HitBarUI", pGameObject), E_FAIL);
 
 	// Shop
 	pGameObject = CShop::Create(m_pGraphicDev);
