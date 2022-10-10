@@ -27,11 +27,13 @@ HRESULT CHitBarUI::Ready_Object(void)
 
 _int CHitBarUI::Update_Object(const _float & fTimeDelta)
 {
-	m_pTransCom->Rotation_Revolution_Z(D3DXToRadian(90.f));
-	
-	_int iResult = CGameObject::Update_Object(fTimeDelta);
-	Add_RenderGroup(RENDER_UI, this);
-	return iResult;
+	if (m_bSwitch)
+	{
+		CGameObject::Update_Object(fTimeDelta);
+		m_pTransCom->Rotation_Revolution_Z(-m_fAngle);
+		Add_RenderGroup(RENDER_UI, this);
+	}
+	return 0;
 }
 
 void CHitBarUI::LateUpdate_Object(void)
