@@ -67,9 +67,9 @@ _int CSkeleton::Update_Object(const _float & fTimeDelta)
 		m_fFrame += fTimeDelta;
 		_matrix matRotY, matTrans, matWorld;
 
-		if (m_fFrame >= 2.f)
+		if (m_fFrame >= 5.f)
 		{
-			for (m_fFireAngle = 0.f; m_fFireAngle < 360.f; ++m_fFireAngle)
+			for (m_fFireAngle = 0.f; m_fFireAngle < 360.f; m_fFireAngle += 2)
 			{
 				D3DXMatrixRotationY(&matRotY, D3DXToRadian(-m_fFireAngle));
 				D3DXMatrixTranslation(&matTrans, vPos.x, 0.f, vPos.y);

@@ -47,6 +47,7 @@
 
 #include "LetterBox.h"
 #include "ShotParticle.h"
+#include "ItemParticle.h"
 
 #include "CrossHeader.h"
 #include "TargetCube.h"
@@ -77,6 +78,9 @@ HRESULT CStage::Ready_Scene(void)
 		return E_FAIL;
 
 	CGameObject*		pGameObject = nullptr;
+
+	_float fBGMSound = 1.f;
+	PlayBGM(L"Track_01.mp3", fBGMSound);
 
 	FAILED_CHECK_RETURN(Ready_Proto(), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Light(), E_FAIL);
@@ -140,6 +144,10 @@ HRESULT CStage::Ready_Layer_Environment(const _tchar * pLayerTag)
 	pGameObject = CBulletParticle::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"BulletParticle", pGameObject), E_FAIL);
+	
+	pGameObject = CItemParticle::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"ItemParticle", pGameObject), E_FAIL);
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 

@@ -46,7 +46,7 @@ void CItemIcon::LateUpdate_Object(void)
 
 void CItemIcon::Render_Object(void)
 {
-	if (dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->Get_Switch() && m_iNumber != 0)
+	if (dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->Get_Switch() && m_iNumber != 0 && !m_bWeaponPart)
 	{
 		m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
 
@@ -117,7 +117,7 @@ void CItemIcon::Begin_OrthoProj()
 	matView.m[0][0] = m_fImgX * WINCX / WINCY; // 이미지 가로
 	matView.m[1][1] = m_fImgY * WINCY / WINCY;   // 이미지 세로
 	matView.m[2][2] = 1.f;
-	matView.m[3][0] = m_vBlockPos.x * (WINCX / WINCY);
+	matView.m[3][0] = m_fImgX/8 + m_vBlockPos.x * (WINCX / WINCY);
 	matView.m[3][1] = m_vBlockPos.y * (WINCX / WINCY);
 	matView.m[3][2] = m_fImgZ;
 
@@ -155,8 +155,8 @@ void CItemIcon::Index()
 	if (m_iNumber == 2)				//uzi
 	{
 		m_iTexIndex = m_iNumber;
-		m_fImgX = 20.f;
-		m_fImgY = 60.f;
+		m_fImgX = 30.f;
+		m_fImgY = 70.f;
 	}
 	if (m_iNumber == 3)				//Shotgun
 	{
@@ -190,6 +190,12 @@ void CItemIcon::Index()
 		m_fImgX = 20.f;
 		m_fImgY = 60.f;
 	}
+	if (m_iNumber == 8)			//네번쨰 버튼 
+	{
+		m_iTexIndex = m_iNumber;
+		m_fImgX = 20.f;
+		m_fImgY = 60.f;
+	}
 }
 
 void CItemIcon::FixOnCursor()
@@ -200,13 +206,13 @@ void CItemIcon::FixOnCursor()
 	if (m_bFix)
 	{
 		m_vBlockPos.x = -WINCX / 2 + pt.x;//(double)( 1.75*(-450 +(pt.x*WINCY/WINCX)));
-		m_vBlockPos.y = WINCY / 2 - pt.y;// (double)(1.75 * (250 - (pt.y*WINCY / WINCX)));
+		m_vBlockPos.y = +WINCY / 2 - pt.y;// (double)(1.75 * (250 - (pt.y*WINCY / WINCX)));
 	}
 	if (m_iNumber == 0)
 	{
 		m_vBlockPos.x = 15.f - WINCX / 2 + pt.x;//(double)( 1.75*(-450 +(pt.x*WINCY/WINCX)));
 		m_vBlockPos.y = -25.f + WINCY / 2 - pt.y;// (double)(1.75 * (250 - (pt.y*WINCY / WINCX)));
-	}
+	}	
 }
 
 CItemIcon * CItemIcon::Create(LPDIRECT3DDEVICE9 pGraphicDev, _int iIndex)

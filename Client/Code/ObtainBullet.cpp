@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "..\Header\ObtainBullet.h"
-#include "CubePlayer.h"
-#include "Weapon.h"
+#include "Uzi.h"
 
 CObtainBullet::CObtainBullet(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CItem(pGraphicDev)
@@ -31,7 +30,8 @@ _int CObtainBullet::Update_Object(const _float & fTimeDelta)
 {
 	if (m_bDead)
 	{
-		dynamic_cast<CCubePlayer*>(Engine::Get_GameObject(STAGE_CHARACTER, L"PLAYER"))->Get_Weapon()->Get_Bullet();
+		Dead_Effect();
+		dynamic_cast<CUzi*>(Engine::Get_GameObject(STAGE_GUN, L"UZI1"))->Get_Bullet();
 		return -1;
 	}
 
@@ -81,6 +81,19 @@ HRESULT CObtainBullet::Add_Component(void)
 	m_mapComponent[ID_STATIC].insert({ CALCULATOR_COMP, pComponent });
 
 	return S_OK;
+}
+
+void CObtainBullet::Dead_Effect(void)
+{
+	_vec3 vPos;
+	m_pTransCom->Get_Info(INFO_POS, &vPos);
+	if (!m_pItemParicle)
+		m_pItemParicle = dynamic_cast<CItemParticle*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"ItemParticle"));
+	m_pItemParicle->Set_PclePos(vPos);
+	for (_int i = 0; i < 150; ++i)
+	{
+		m_pItemParicle->addParticle();
+	}
 }
 
 CObtainBullet * CObtainBullet::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3 & vPos)

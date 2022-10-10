@@ -66,16 +66,11 @@ _int CBullet::Update_Object(const _float & fTimeDelta)
 
 			_float fAngle = acosf(D3DXVec3Dot(&vPlayerLook, &vDir));
 
-			//cout << fAngle << endl;
-
-			if (vPlayerPos.x > vPos.x)
+			if (vPlayerPos.x < vPos.x || vPlayerPos.z < vPos.z)
 			{
-				//fAngle *= -1;
 				fAngle = D3DX_PI * 2.f - fAngle;
 			}
-
-			cout << D3DXToDegree(fAngle) << endl;
-
+			
 			dynamic_cast<CHitBarUI*>(m_pHitBarUI)->OnSwitch(fAngle);
 		}
 
@@ -101,7 +96,7 @@ void CBullet::Render_Object(void)
 
 	m_pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
 
-	m_pTextureCom->Set_Texture(3);
+	m_pTextureCom->Set_Texture();
 
 	m_pBufferCom->Render_Buffer();
 
@@ -112,9 +107,9 @@ HRESULT CBullet::Add_Component(void)
 {
 	CComponent* pComponent = nullptr;
 
-	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Clone_Proto(L"Proto_CubePlayerTexture"));
+	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Clone_Proto(L"BULLET_TEX"));
 	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Proto_CubePlayerTexture", pComponent });
+	m_mapComponent[ID_STATIC].insert({ L"BULLET_TEX", pComponent });
 
 	pComponent = m_pTransCom = dynamic_cast<CTransform*>(Clone_Proto(TRANSFORM_COMP));
 	NULL_CHECK_RETURN(m_pTransCom, E_FAIL);
@@ -127,7 +122,6 @@ HRESULT CBullet::Add_Component(void)
 	pComponent = m_pCollision = dynamic_cast<CCollision*>(Engine::Clone_Proto(COLLISION_COMP));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ COLLISION_COMP, pComponent });
-
 
 	return S_OK;
 }

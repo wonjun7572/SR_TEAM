@@ -156,14 +156,14 @@ HRESULT CLogo::Ready_Proto(void)
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(TRANSFORM_COMP, CTransform::Create(m_pGraphicDev)), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(CUBETEX_COMP, CCubeTex::Create(m_pGraphicDev)), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(TERRAINTEX_COMP, CTerrainTex::Create(m_pGraphicDev, VTXCNTX, VTXCNTZ, VTXITV)), E_FAIL);
-
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(SPHERETEX_COMP, CSphereTex::Create(m_pGraphicDev, 1.f)), E_FAIL);
 	}
 	{
 		//Texture
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_TerrainTexture_Stage_1", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Texture2D/tex_stone_3.png", TEX_NORMAL)), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_TerrainTexture", CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Terrain/Grass_%d.tga", TEX_NORMAL)), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_CubeTexture", CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/SkyBox/burger%d.dds", TEX_CUBE, 4)), E_FAIL);
-
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"SkyBox_TEX", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Sky01.jpg", TEX_NORMAL)), E_FAIL);
 
 
 	}

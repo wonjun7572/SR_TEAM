@@ -40,7 +40,7 @@ _uint CLoading::Loading_ForStage(void)
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(RCTEX_MONTER_HP_COMP, CRcTex::Create(m_pGraphicDev)), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(RCTEX_GENERAL_MONSTER_HP_COMP, CRcTex::Create(m_pGraphicDev)), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(RCTEX_GENERAL_MONSTER_HUD_COMP, CRcTex::Create(m_pGraphicDev)), E_FAIL);
-		FAILED_CHECK_RETURN(Engine::Ready_Proto(SPHERETEX_COMP, CSphereTex::Create(m_pGraphicDev, 1.f)), E_FAIL);
+	
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(FLEXIBLEAXISCUBE_COMP, CFlexibleAxisCube::Create(m_pGraphicDev)), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(CUBECOL_COMP, CCubeCol::Create(m_pGraphicDev)), E_FAIL);
 	}
@@ -91,7 +91,7 @@ _uint CLoading::Loading_ForStage(void)
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(MONSTER_HP_TEX, CTexture::Create(m_pGraphicDev, MONSTER_HP_TEX_PATH, TEX_NORMAL)), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(MONSTER_HP_HUD_TEX, CTexture::Create(m_pGraphicDev, MONSTER_HP_HUD_TEX_PATH, TEX_NORMAL)), E_FAIL);
 
-		// DEFENSE
+		// DEFENCE
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"DEFENSE_Gage", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/UI/Player/Gage/theHUDui_9.png", TEX_NORMAL)), E_FAIL);
 	}
 
@@ -103,12 +103,14 @@ _uint CLoading::Loading_ForStage(void)
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"BULLET_Gage", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/UI/Weapon/theHUDui_12.png", TEX_NORMAL)), E_FAIL);
 		// GUN
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Gun_UI", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/UI/Gun/Gun_%d.png", TEX_NORMAL, 6)), E_FAIL);
+	
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"BULLET_TEX", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Texture2D/Bullet.png", TEX_NORMAL)), E_FAIL);
 	}
 
 	//인벤토리
 	{
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_InventoryTexture", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/UI/Inventory/QuickSlot9.png", TEX_NORMAL)), E_FAIL);
-		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_ItemIconTexture", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/UI/Inventory/Icon%d.png", TEX_NORMAL, 8)), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_ItemIconTexture", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/UI/Inventory/Icon%d.png", TEX_NORMAL, 9)), E_FAIL);
 	
 	}
 
