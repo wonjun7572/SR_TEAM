@@ -133,8 +133,8 @@ private:
 	_bool			m_bUzi;
 	_bool			m_bShotgun;
 	_bool			m_bSniper;
-
 	_bool			m_bSinperZoom = false;
+	
 
 	vector<CWeapon*> m_vecWeapon;
 
