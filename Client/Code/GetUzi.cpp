@@ -32,7 +32,7 @@ _int CGetUzi::Update_Object(const _float & fTimeDelta)
 	if (m_bDead)
 	{ 
 		dynamic_cast<CCubePlayer*>(Engine::Get_GameObject(STAGE_CHARACTER, L"PLAYER"))->Capture_Uzi();
-		dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->ItemCreate(2);
+		dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->WeaponCreate(2);
 		return -1;
 	}
 	

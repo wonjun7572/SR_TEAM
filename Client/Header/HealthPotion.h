@@ -1,4 +1,5 @@
 #pragma once
+#include "ItemParticle.h"
 #include "Item.h"
 
 class CHealthPotion : public CItem
@@ -15,6 +16,9 @@ public:
 
 private:
 	HRESULT			Add_Component(void);
+	void			Dead_Effect(void);
+private:
+	CItemParticle* m_pItemParicle = nullptr;
 
 public:
 	static CHealthPotion* Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3& vPos);

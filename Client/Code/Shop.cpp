@@ -250,8 +250,7 @@ void CShop::Render_Object()
 			{
 				dynamic_cast<CUzi*>(Engine::Get_GameObject(STAGE_GUN, L"UZI1"))->Get_UziUpgrade();
 				m_bChecking = true;
-				cout << "dmg" << endl;
-				dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->ItemCreate(1);
+				dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->ItemCreate(5);
 			}
 		}
 		m_bChecking = true;
@@ -267,7 +266,7 @@ void CShop::Render_Object()
 			{
 			
 				m_bChecking = true;
-				dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->ItemCreate(5);
+				dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->ItemCreate(6);
 			}
 		}
 		m_bChecking = true;
@@ -283,7 +282,7 @@ void CShop::Render_Object()
 			{
 
 				m_bChecking = true;
-				dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->ItemCreate(6);
+				dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->ItemCreate(7);
 			}
 		}
 		m_bChecking = true;
@@ -299,7 +298,7 @@ void CShop::Render_Object()
 			{
 
 				m_bChecking = true;
-				dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->ItemCreate(7);
+				dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->ItemCreate(8);
 			}
 		}
 		m_bChecking = true;

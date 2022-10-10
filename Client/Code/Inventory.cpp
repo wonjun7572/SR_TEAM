@@ -20,6 +20,11 @@ HRESULT CInventory::Ready_Object(void)
 	m_iItemCnt = 0;
 	m_vecContents.resize(26);
 	m_vecEquipments.resize(5);
+	m_vecWeapon.resize(9);
+
+	
+	m_fInvPosX = 400.f;
+	m_fInvPosY = 50.f;
 	return S_OK;
 }
 
@@ -32,9 +37,9 @@ _int CInventory::Update_Object(const _float & fTimeDelta)
 	Add_RenderGroup(RENDER_UI, this);
 	//Gun_Change();
 	Sorting();
+	Weapon_Sorting();
 	Mouse();
 	Key_Input();
-
 
 	return 0;
 }
@@ -83,8 +88,7 @@ HRESULT CInventory::Add_Component()
 
 void CInventory::Begin_OrthoProj()
 {
-	_float InvPosX = 400.f;
-	_float InvPosY = 50.f;
+	
 	_matrix matWorld, matView, matProj, matOrtho;
 	m_pGraphicDev->GetTransform(D3DTS_WORLD, &matWorld);
 	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
@@ -100,8 +104,8 @@ void CInventory::Begin_OrthoProj()
 	matView.m[0][0] = WINCX / 3.f; // 이미지 가로
 	matView.m[1][1] = WINCY / 1.75f;   // 이미지 세로
 	matView.m[2][2] = 1.f;
-	matView.m[3][0] = InvPosX; //* (WINCX / WINCY);
-	matView.m[3][1] = InvPosY; //* (WINCX / WINCY);
+	matView.m[3][0] = m_fInvPosX; //* (WINCX / WINCY);
+	matView.m[3][1] = m_fInvPosY; //* (WINCX / WINCY);
 	matView.m[3][2] = 0.003f;
 	D3DXMatrixOrthoLH(&matOrtho, WINCX, WINCY, 0.f, 1.f);
 
@@ -184,15 +188,15 @@ void CInventory::Sorting()
 {
 	if (m_bItemCreate)
 	{
+		m_bItemCreate = false;
 		if (m_iItemCnt < 27)
 		{
-			m_bItemCreate = false;
 			//생성
+			m_bSorting = true;
+			m_bNullSorting = true;
 			m_pItemIcon = CItemIcon::Create(m_pGraphicDev, m_iItemIndex);
 			m_vecContents.push_back(m_pItemIcon);
 			m_iItemCnt++;
-			m_bSorting = true;
-			m_bNullSorting = true;
 		}
 	}
 
@@ -230,6 +234,37 @@ void CInventory::Sorting()
 	}
 }
 
+void CInventory::Weapon_Sorting()
+{
+	_int   iCnt = 0;
+
+	_float fDefaultX = 175;//175.f;
+	_float fDefaultY = -145.5f;//-125.5f;
+	_float fIntervalX = 50.f;		
+	
+
+	//생성(1.우지 2.샷건 3. 스나)
+	if (m_bWeaponCreate)
+	{
+		m_bWeaponCreate = false;
+		if (m_iWeaponCnt < 9)
+		{	
+			m_pItemIcon = CItemIcon::Create(m_pGraphicDev, m_iItemIndex);		
+			m_vecWeapon.push_back(m_pItemIcon);
+			m_vecWeapon[dynamic_cast<CItemIcon*>(m_pItemIcon)->Get_iTemIdx()-2] = m_pItemIcon;
+			m_pItemIcon = nullptr;
+			
+			m_iWeaponCnt++;		
+		}
+	}
+	//정렬	
+	for (_int i = 0; i < 9; ++i)
+	{
+		if(m_vecWeapon[i] != nullptr)
+			dynamic_cast<CItemIcon*>(m_vecWeapon[i])->Set_block(fDefaultX + (fIntervalX *i), fDefaultY, 0.f);
+	}
+}
+
 void CInventory::Key_Input()
 {
 	if (Key_Down(DIK_I))
@@ -244,6 +279,8 @@ void CInventory::Mouse()
 	GetCursorPos(&pt);
 	ScreenToClient(g_hWnd, &pt);
 
+	cout << 400 - pt.x +WINCX/2<< endl;
+	cout << pt.y << endl;
 	_float DefaultX = 955.f;
 	_float DefaultY = 345.f;
 	_float SizeX = 45.f;
@@ -251,12 +288,12 @@ void CInventory::Mouse()
 	_float IntervalX = 50.f;
 	_float IntervalY = 67.5f;
 	//1405,565   ~   1450 630 << 나가기버튼
-
 	if (1405 < pt.x && pt.x < 1450 && 565 < pt.y && pt.y < 630 && m_bInvSwitch && Mouse_Down(DIM_LB))
 	{
 		m_bInvSwitch = false;
 	}
 
+	//우클릭 기능
 	for (_int i = 0; i < 9; ++i)
 	{
 		for (_int j = 0; j < 9; ++j)
@@ -269,13 +306,6 @@ void CInventory::Mouse()
 					{
 						if (m_vecContents.size() > 9 * i + j && iter == m_vecContents[9 * i + j] && iter != nullptr)
 						{
-							if (Mouse_Down(DIM_RB))
-							{
-								m_iItemCnt--;
-								iter->Kill_Obj();
-								iter = nullptr;
-							}
-
 							if (m_pIconGrab == nullptr && Mouse_Down(DIM_LB))
 							{
 								iVectorNumb = 9 * i + j;
@@ -283,30 +313,77 @@ void CInventory::Mouse()
 								m_pIconGrab = dynamic_cast<CItemIcon*>(iter);
 								m_pIconGrab->Cursor_fix();
 							}
+							if (Mouse_Down(DIM_RB) && m_pIconGrab == nullptr)
+							{
+								m_iItemCnt--;
+								iter->Kill_Obj();
+								iter = nullptr;
+							}
+
 						}
 					}
 				}
 			}
 		}
 	}
-
-	for (auto& iter : m_vecContents)
+	//우클릭 기능
+	for (_int i = 0; i < 9; ++i)
+	{
+		for (auto& iter : m_vecWeapon)
 		{
-			if (iter != nullptr&& iter == m_vecContents[iVectorNumb] && m_pIconGrab != nullptr && Mouse_Down(DIM_LB))
+			if (DefaultX + IntervalX * i < pt.x && pt.x < DefaultX + SizeX + IntervalX * i)
 			{
-				m_pIconGrab->Cursor_free();
-				if (1025 < pt.x && pt.x < 1075 && 215 < pt.y && pt.y < 280) // 맨왼쪽인벤토리
+				if (DefaultY + 220.5f < pt.y && pt.y < DefaultY + 220.5f + SizeY)
 				{
-					if (m_vecEquipments[0] == nullptr)
+					if (iter == m_vecWeapon[i] && iter != nullptr)
+					{
+						if (m_pIconGrab == nullptr && Mouse_Down(DIM_LB))
+						{
+							iVectorNumb = i;
+
+							m_pIconGrab = dynamic_cast<CItemIcon*>(iter);
+							m_pIconGrab->Cursor_fix();
+						}
+						if (Mouse_Down(DIM_RB) && m_pIconGrab == nullptr)
+						{
+
+						}
+					}
+				}
+			}
+		}
+	}
+	for (auto& iter : m_vecWeapon)
+	{
+		if (iter != nullptr&& iter == m_vecWeapon[iWeaponNumb] && m_pIconGrab != nullptr && Mouse_Down(DIM_LB))
+		{
+			m_pIconGrab->Cursor_free();
+			if (1025 < pt.x && pt.x < 1075 && 215 < pt.y && pt.y < 280) // 맨왼쪽인벤토리
+			{
+				if (m_vecEquipments[0] == nullptr)
+				{
+					if (m_pIconGrab->Get_iTemIdx() == 2 || m_pIconGrab->Get_iTemIdx() == 3 || m_pIconGrab->Get_iTemIdx() == 4)
 					{
 						m_pIconGrab->Set_block(435.f *WINCY / WINCX, 365.f * WINCY / WINCX, 0.1f);
 						m_vecEquipments[0] = m_pIconGrab;
-						iter = nullptr;
+						//iter = nullptr;
 						m_pIconGrab = nullptr;
-						m_iItemCnt--;
-						m_bSorting = true;
-					}
+						//break;
+					}				
 				}
+			}
+		}
+	}
+	//좌클릭 기능 
+	//좌클릭 장비 장착
+	for (auto& iter : m_vecContents)
+	{
+		if (iter != nullptr&& iter == m_vecContents[iVectorNumb] && m_pIconGrab != nullptr && Mouse_Down(DIM_LB))
+		{
+			m_pIconGrab->Cursor_free();
+			
+			if (!(m_pIconGrab->Get_iTemIdx() == 2 || m_pIconGrab->Get_iTemIdx() == 3 || m_pIconGrab->Get_iTemIdx() == 4))
+			{
 				if (1080 < pt.x && pt.x < 1125 && 160 < pt.y && pt.y < 225) // 0,0
 				{
 					if (m_vecEquipments[1] == nullptr)
@@ -335,7 +412,7 @@ void CInventory::Mouse()
 				{
 					if (m_vecEquipments[3] == nullptr)
 					{
-						m_pIconGrab->Set_block(800.f *WINCY / WINCX, 465.f * WINCY / WINCX, 0.1f);
+						m_pIconGrab->Set_block(800.f *WINCY / WINCX, 455.f * WINCY / WINCX, 0.1f);
 						m_vecEquipments[3] = m_pIconGrab;
 						iter = nullptr;
 						m_pIconGrab = nullptr;
@@ -354,32 +431,45 @@ void CInventory::Mouse()
 						m_iItemCnt--;
 					}
 				}
-				m_pIconGrab = nullptr;
-				m_bNullSorting = false;
-				m_bSorting = true;
 			}
-		}
+			m_pIconGrab = nullptr;
+			m_bNullSorting = false;
+			m_bSorting = true;
 
-	if (m_iItemCnt < 27)
+		}
+	}
+	
+	//파츠 장착해제 관련
+	if (1025 < pt.x && pt.x < 1075 && 215 < pt.y && pt.y < 280) // 맨왼쪽인벤토리
 	{
-		if (1025 < pt.x && pt.x < 1075 && 215 < pt.y && pt.y < 280) // 맨왼쪽인벤토리
+		if (Mouse_Down(DIM_RB))
 		{
-			if (Mouse_Down(DIM_LB))
+			for (int i = 1; i < 5; i++)
 			{
-				for (int i = 0; i < 5; i++)
+				if (m_vecEquipments[i] != nullptr)
 				{
-					if (m_vecEquipments[i] != nullptr)
+					if (m_iItemCnt < 27)
 					{
 						m_iItemCnt++;
 						m_vecContents.push_back(m_vecEquipments[i]);
-						m_vecEquipments[i] = nullptr;
-						Sorting();
 						m_bNullSorting = true;
-						m_bSorting = true;
+						Sorting();
+						m_vecEquipments[i] = nullptr;
+						//m_bSorting = true;			
 					}
 				}
 			}
 		}
+			if (m_vecEquipments[0] != nullptr && Mouse_Down(DIM_LB))
+			{
+				m_vecWeapon[dynamic_cast<CItemIcon*>(m_vecEquipments[0])->Get_iTemIdx() - 2] = m_vecEquipments[0];
+				m_vecEquipments[0] = nullptr;
+				
+			}
+
+	}
+	if (m_iItemCnt < 27)
+	{
 		if (1080 < pt.x && pt.x < 1125 && 160 < pt.y && pt.y < 225) // 0,0
 		{
 			if (m_vecEquipments[1] != nullptr && Mouse_Down(DIM_LB))

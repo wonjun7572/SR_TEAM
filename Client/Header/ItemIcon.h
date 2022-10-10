@@ -26,8 +26,7 @@ public:
 	}
 	void		Set_block(_vec3 vBlockPos) { m_vBlockPos = vBlockPos; }
 	void		Set_block(_float vBlockPosX, _float vBlockPosY, _float vBlockPosZ) { m_vBlockPos.x = vBlockPosX, m_vBlockPos.y = vBlockPosY, m_vBlockPos.z = vBlockPosZ; }
-	void 		Set_Texture(_int iTexIndex) { m_iTexIndex = iTexIndex; }
-	void		Get_Texture(_int iTexIndex) { m_iTexIndex = iTexIndex; }
+	//void 		Set_Texture(_int iTexIndex) { m_iTexIndex = iTexIndex; }
 	void		Cursor_fix(void) { m_bFix = true; }
 	void		Cursor_free(void) { m_bFix = false; }
 	_tchar*		Get_Name() { return szCntName; }
