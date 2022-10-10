@@ -30,10 +30,8 @@ _int CHitBarUI::Update_Object(const _float & fTimeDelta)
 	if (m_bSwitch)
 	{
 		CGameObject::Update_Object(fTimeDelta);
-		m_pTransCom->Rotation_Revolution_Z(D3DXToRadian(-m_fAngle));
+		m_pTransCom->Rotation_Revolution_Z(-m_fAngle);
 		Add_RenderGroup(RENDER_UI, this);
-
-		cout << m_fAngle << "\n";
 	}
 	return 0;
 }

@@ -47,23 +47,34 @@ _int CBullet::Update_Object(const _float & fTimeDelta)
 	m_pPlayerTransCom->Get_Scale(&vPlayerScale);
 	_vec3 vScale;
 	m_pTransCom->Get_Scale(&vScale);
-	_vec3 vPlayerRight;
-	m_pPlayerTransCom->Get_Info(INFO_RIGHT, &vPlayerRight);
+	_vec3 vPlayerLook;
+	m_pPlayerTransCom->Get_Info(INFO_RIGHT, &vPlayerLook);
 	_vec3 vDir;
 	vDir = vPos - vPlayerPos;
 
 	if (m_pCollision->Sphere_Collision(this->m_pTransCom, m_pPlayerTransCom, vPlayerScale.x, vScale.x))
 	{
-		if(!m_bDamage)
+		if (!m_bDamage)
+		{
 			dynamic_cast<CCubePlayer*>(m_pPlayer)->Set_Damaged(m_fDamage);
 	
-		vDir.y = 0.f;
-		vPlayerRight.y = 0.f;
+			vDir.y = 0.f;
+			vPlayerLook.y = 0.f;
+			D3DXVec3Normalize(&vDir, &vDir);
+			D3DXVec3Normalize(&vPlayerLook, &vPlayerLook);
 
-		_float fRadian = D3DXVec3Dot(&vPlayerRight, &vDir);
-		dynamic_cast<CHitBarUI*>(m_pHitBarUI)->OnSwitch(acosf(fRadian));
+			_float fAngle = acosf(D3DXVec3Dot(&vPlayerLook, &vDir));
+			
+			if (vPlayerPos.x > vPos.x)
+			{
+				//fAngle *= -1;
+				fAngle += D3DX_PI * 2;
+			}
+
+			cout << fAngle << endl;
 		
-		cout << acosf(fRadian) << endl;
+			dynamic_cast<CHitBarUI*>(m_pHitBarUI)->OnSwitch(fAngle);
+		}
 
 		m_bDamage = true;
 	}
