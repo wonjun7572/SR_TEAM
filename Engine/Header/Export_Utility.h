@@ -19,6 +19,7 @@
 
 #include "FlexibleAxisCube.h"
 #include "Quarternion.h"
+#include "CubeCol.h"
 
 #include "Camera.h"
 

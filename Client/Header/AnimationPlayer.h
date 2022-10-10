@@ -18,6 +18,7 @@ class CHitBox;
 class CTransform;
 class CCalculator;
 class CCollision;
+class CCubeCol;
 
 END
 
@@ -36,6 +37,7 @@ public:
 private:
 	void					Key_Input(void);					//	키보드 입력
 	HRESULT					Build(void);						//	처음 시작시 불러올 모델
+	void					Look_Direction(void);
 
 private:
 	HRESULT					Add_Component(void);
@@ -44,6 +46,9 @@ private:
 	CTransform*				m_pTransform = nullptr;
 	CCalculator*			m_pCalculator = nullptr;
 	CCollision*				m_pCollision = nullptr;
+
+	CCubeCol*				m_pCubeCol = nullptr;
+	CTransform*				m_pRotationTrans = nullptr;
 
 private:
 	_vec3					vDir = { 0.f ,0.f ,0.f };
