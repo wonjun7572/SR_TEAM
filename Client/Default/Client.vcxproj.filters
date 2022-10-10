@@ -256,6 +256,9 @@
     <Filter Include="02. GameObject\01. For_Stage\15. Animation_Player\TransAxisBox">
       <UniqueIdentifier>{8f360f99-cec1-42a5-9a0a-89a33b07c286}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\08. Monster\03. Slime">
+      <UniqueIdentifier>{3b9f308a-2def-437a-afb5-386e8628de3b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -597,6 +600,9 @@
     <ClInclude Include="..\Header\HitBarUI.h">
       <Filter>02. GameObject\01. For_Stage\09. UI\Player</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\Slime.h">
+      <Filter>02. GameObject\01. For_Stage\08. Monster\03. Slime</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -916,6 +922,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\HitBarUI.cpp">
       <Filter>02. GameObject\01. For_Stage\09. UI\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Slime.cpp">
+      <Filter>02. GameObject\01. For_Stage\08. Monster\03. Slime</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

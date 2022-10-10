@@ -76,7 +76,7 @@ void	CTransform::Rotation_Revolution_Z(const _float& fAngle)
 	//D3DXMatrixRotationZ(&matRot, fAngle);
 	//D3DXMatrixTranslation(&matTrans, 0.f, 0.f, 1.f);
 
-	m_matWorld = matScale * matRot * matTrans /** matParent*/;
+	m_matWorld = matScale * matTrans * matRot /** matParent*/;
 }
 
 void CTransform::Rotation_Axis_Gun(	const _float & fXMove, const _float & fXAngle,

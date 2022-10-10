@@ -27,6 +27,8 @@ public:
 	HRESULT					Add_GameObject(const _tchar* pLayerTag, CGameObject* pGameObject, const _tchar* pObjTag);
 	HRESULT					Delete_GameObject(const _tchar* pLayerTag, const _tchar* pObjTag);
 
+	CScene*					Get_Scene(void);
+
 public:
 	HRESULT		Set_Scene(CScene* pScene);
 	_int		Update_Scene(const _float& fTimeDelta);

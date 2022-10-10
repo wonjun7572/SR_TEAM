@@ -250,7 +250,7 @@ void CShop::Render_Object()
 			{
 				dynamic_cast<CUzi*>(Engine::Get_GameObject(STAGE_GUN, L"UZI1"))->Get_UziUpgrade();
 				m_bChecking = true;
-				cout << "dmg" << endl;
+				//cout << "dmg" << endl;
 				dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->ItemCreate(1);
 			}
 		}

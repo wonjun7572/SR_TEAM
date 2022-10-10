@@ -143,7 +143,7 @@ void CItemIcon::Index()
 		m_fImgX = 30.f;
 		m_fImgY = 50.f;
 		m_fImgZ = 0.f;
-		cout << iIconCnt << " " << endl;
+		//cout << iIconCnt << " " << endl;
 	}
 	if (m_iNumber == 1)				 //¾ÆÀÌÅÛ
 	{
