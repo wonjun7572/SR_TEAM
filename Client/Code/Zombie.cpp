@@ -28,14 +28,19 @@ HRESULT CZombie::Ready_Object(const _vec3& vPos)
 
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
+	// 리얼 움직이는거고
 	m_pTransCom->Set_Scale(&_vec3(0.3f, 0.3f, 0.3f));
 	m_pTransCom->Set_Pos(vPos.x, vPos.y, vPos.z);
+	
+	// UI
 	m_pTransUICom->Set_Scale(1.f, 0.1f, 0.f);
 
+	// 플레이어 총알 맞으려고있는 히트박스고
 	m_pHitBoxTransCom->Set_Scale(&_vec3(0.3f, 0.3f, 0.3f));
 	m_pHitBoxTransCom->Set_Pos(vPos.x, vPos.y, vPos.z);
 	m_pHitBoxTransCom->Static_Update();
 
+	// ChaseTarget 범위 지정
 	m_pSphereTransCom->Set_Scale(&_vec3(10.f, 10.f, 10.f));
 	m_pSphereTransCom->Set_Pos(vPos.x, vPos.y, vPos.z);
 	m_pSphereTransCom->Static_Update();
