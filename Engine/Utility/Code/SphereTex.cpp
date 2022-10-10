@@ -26,140 +26,125 @@ CSphereTex::~CSphereTex()
 
 HRESULT CSphereTex::Ready_Buffer(_float _radius)
 {
-	int number_of_vertices, number_of_faces;
-	int slices = 20;
-	int stacks = 20;
-	float phi_step, phi_start;
-	float theta_step, theta, sin_theta, cos_theta;
-	int vertex, face;
-	int slice, stack;
-	number_of_vertices = 2 + slices * (stacks - 1);
-	number_of_faces = 2 * slices + (stacks - 2) * (2 * slices);
-
-	m_dwVtxCnt = number_of_vertices;
-	m_dwTriCnt = number_of_faces;
+	m_dwVtxCnt = 0;
+	m_dwTriCnt = 0;
 	m_dwVtxSize = sizeof(VTXTEX);
 	m_dwFVF = FVF_TEX;
+	
+	m_dwIdxSize = sizeof(INDEX32);
+	m_IdxFmt = D3DFMT_INDEX32;
 
-	m_dwIdxSize = sizeof(INDEX16);
-	m_IdxFmt = D3DFMT_INDEX16;
+	float radius = _radius; // 구의 반지름
+	unsigned __int32 stackCount = 20; // 가로 분할
+	unsigned __int32 sliceCount = 20; // 세로 분할
 
-	m_pGraphicDev->CreateVertexBuffer(
-		sizeof(VTXTEX)*number_of_vertices,
-		D3DUSAGE_WRITEONLY,
-		m_dwFVF,
-		D3DPOOL_DEFAULT,
-		&m_pVB,
-		NULL);
+	vector<VTXTEX> vecVtxSphere;
 
-	m_pGraphicDev->CreateIndexBuffer(sizeof(int) * number_of_faces * 3,
-		D3DUSAGE_WRITEONLY,
-		D3DFMT_INDEX16,
-		D3DPOOL_DEFAULT,
-		&m_pIB,
-		NULL);
+	VTXTEX v;
 
-	VTXTEX *vertices;
-	HRESULT hRes = m_pVB->Lock(0, 0, (void**)&vertices, 0);
+	v.vPos = _vec3(0.0f, radius, 0.0f);
+	v.vTexUV = _vec2(0.5f, 0.0f);
+	v.vNormal = v.vPos;
+	D3DXVec3Normalize(&(v.vNormal), &(v.vNormal));
+	vecVtxSphere.push_back(v);
+	m_dwVtxCnt++;
 
+	float stackAngle = D3DX_PI / stackCount;
+	float sliceAngle = (D3DX_PI * 2.f) / sliceCount;
 
-	WORD *faces;
-	HRESULT hRes2 = m_pIB->Lock(0, 0, (void**)&faces, 0);
+	float deltaU = 1.f / static_cast<float>(sliceCount);
+	float deltaV = 1.f / static_cast<float>(stackCount);
 
-	if (FAILED(hRes2)) {
-		return E_FAIL;
-	}
+	for (unsigned __int32 y = 1; y <= stackCount - 1; ++y)
+	{
+		float phi = y * stackAngle;
 
-	phi_step = -2 * D3DX_PI / slices;
-	phi_start = D3DX_PI / 2;
+		// 고리에 위치한 정점
+		for (unsigned __int32 x = 0; x <= sliceCount; ++x)
+		{
+			float theta = x * sliceAngle;
 
-	theta_step = D3DX_PI / stacks;
-	theta = theta_step;
+			v.vPos.x = radius * sinf(phi) * cosf(theta);
+			v.vPos.y = radius * cosf(phi);
+			v.vPos.z = radius * sinf(phi) * sinf(theta);
 
-	vertex = 0;
-	face = 0;
-	stack = 0;
+			v.vTexUV = _vec2(deltaU * x, deltaV * y);
 
-	vertices[vertex].vPos.x = 0.0f;
-	vertices[vertex].vPos.y = _radius;
-	vertices[vertex].vPos.z = 0.f;
-	vertices[vertex].vTexUV = _vec2(0.5f, 1.f);
+			v.vNormal = v.vPos;
+			D3DXVec3Normalize(&(v.vNormal), &(v.vNormal));
 
-	float deltaU = 1.f / static_cast<float>(slices);
-	float deltaV = 1.f / static_cast<float>(stacks);
+			vecVtxSphere.push_back(v);
 
-	vertex++;
-
-	for (stack = 0; stack < stacks - 1; stack++) {
-		sin_theta = sinf(theta);
-		cos_theta = cosf(theta);
-
-		for (slice = 0; slice < slices; slice++) {
-			vertices[vertex].vNormal.x = sin_theta * cosf(phi_start);
-			vertices[vertex].vNormal.y = sin_theta * sinf(phi_start);
-			vertices[vertex].vNormal.z = cos_theta;
-			vertices[vertex].vPos.x = _radius * sin_theta * cosf(phi_start);
-			vertices[vertex].vPos.y = _radius * cos_theta;
-			vertices[vertex].vPos.z = _radius * sin_theta * sinf(phi_start);
-			vertices[vertex].vTexUV = _vec2(deltaU * slice, deltaV * (stack + 1));
-			vertex++;
-
-			phi_start += phi_step;
-
-			if (slice > 0) {
-				if (stack == 0) {
-					faces[face++] = 0;
-					faces[face++] = slice + 1;
-					faces[face++] = slice;
-				}
-				else {
-					faces[face++] = sphere_vertex(slices, slice - 1, stack - 1);
-					faces[face++] = sphere_vertex(slices, slice, stack - 1);
-					faces[face++] = sphere_vertex(slices, slice - 1, stack);
-
-					faces[face++] = sphere_vertex(slices, slice, stack - 1);
-					faces[face++] = sphere_vertex(slices, slice, stack);
-					faces[face++] = sphere_vertex(slices, slice - 1, stack);
-				}
-			}
-		}
-
-		theta += theta_step;
-
-		if (stack == 0) {
-			faces[face++] = 0;
-			faces[face++] = 1;
-			faces[face++] = slice;
-		}
-		else {
-			faces[face++] = sphere_vertex(slices, slice - 1, stack - 1);
-			faces[face++] = sphere_vertex(slices, 0, stack - 1);
-			faces[face++] = sphere_vertex(slices, slice - 1, stack);
-
-			faces[face++] = sphere_vertex(slices, 0, stack - 1);
-			faces[face++] = sphere_vertex(slices, 0, stack);
-			faces[face++] = sphere_vertex(slices, slice - 1, stack);
+			m_dwVtxCnt++;
 		}
 	}
 
-	vertices[vertex].vPos.x = 0.0f;
-	vertices[vertex].vPos.y = -_radius;
-	vertices[vertex].vPos.z = 0.f;
-	vertices[vertex].vTexUV = _vec2(0.5f, 1.f);
-	vertices[vertex].vNormal.x = 0.0f;
-	vertices[vertex].vNormal.y = 0.0f;
-	vertices[vertex].vNormal.z = -1.0f;
+	v.vPos = _vec3(0.0f, -radius, 0.0f);
+	v.vTexUV = _vec2(0.5f, 1.0f);
+	v.vNormal = v.vPos;
+	D3DXVec3Normalize(&(v.vNormal), &(v.vNormal));
+	vecVtxSphere.push_back(v);
+	m_dwVtxCnt++;
 
-	for (slice = 1; slice < slices; slice++) {
-		faces[face++] = sphere_vertex(slices, slice - 1, stack - 1);
-		faces[face++] = sphere_vertex(slices, slice, stack - 1);
-		faces[face++] = vertex;
+	vector<INDEX32>  vecIdx;
+
+	// 북극 인덱스
+	for (unsigned __int32 i = 0; i <= sliceCount; ++i)
+	{
+		//  [0]
+		//   |  \
+		//  [i+1]-[i+2]
+		vecIdx.push_back({0, i+2, i+1});
+		m_dwTriCnt++;
 	}
 
-	faces[face++] = sphere_vertex(slices, slice - 1, stack - 1);
-	faces[face++] = sphere_vertex(slices, 0, stack - 1);
-	faces[face++] = vertex;
+	unsigned __int32 ringVertexCount = sliceCount + 1;
+	for (unsigned __int32 y = 0; y < stackCount - 2; ++y)
+	{
+		for (unsigned __int32 x = 0; x < sliceCount; ++x)
+		{
+			//  [y, x]-[y, x+1]
+			//  |		/
+			//  [y+1, x]
+			vecIdx.push_back({  1 + (y) * ringVertexCount + (x), 
+								1 + (y) * ringVertexCount + (x + 1), 
+								1 + (y + 1) * ringVertexCount + (x) });
+			//		 [y, x+1]
+			//		 /	  |
+			//  [y+1, x]-[y+1, x+1]
+			vecIdx.push_back({  1 + (y + 1) * ringVertexCount + (x),
+								1 + (y) * ringVertexCount + (x + 1),
+								1 + (y + 1) * ringVertexCount + (x + 1) });
+
+			m_dwTriCnt+= 2;
+		}
+	}
+
+	unsigned __int32 bottomIndex = static_cast<unsigned __int32>(vecVtxSphere.size()) - 1;
+	unsigned __int32 lastRingStartIndex = bottomIndex - ringVertexCount;
+	for (unsigned __int32 i = 0; i < sliceCount; ++i)
+	{
+		//  [last+i]-[last+i+1]
+		//  |      /
+		//  [bottom]
+		vecIdx.push_back({ bottomIndex,
+							lastRingStartIndex + i ,
+							lastRingStartIndex + i + 1 });
+
+		m_dwTriCnt++;
+	}
+
+	FAILED_CHECK_RETURN(CVIBuffer::Ready_Buffer(), E_FAIL);
+
+	VTXTEX* pVertex = nullptr;
+	INDEX32* pIndex = nullptr;
+
+	m_pVB->Lock(0, 0, (void**)&pVertex, 0);
+	memcpy(pVertex, vecVtxSphere.data(), sizeof(VTXTEX) * vecVtxSphere.size());
 	m_pVB->Unlock();
+
+	m_pIB->Lock(0, 0, (void**)&pIndex, 0);
+	memcpy(pIndex, vecIdx.data(), sizeof(INDEX32) * vecIdx.size());
 	m_pIB->Unlock();
 
 	return S_OK;
