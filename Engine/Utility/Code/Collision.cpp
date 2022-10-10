@@ -496,7 +496,7 @@ _int CCollision::Wall_Collision_By_DotSliding(_vec3 * vChangeDir)
 
 				*vChangeDir = vSliding;
 
-				cout << "전" << endl;
+				//cout << "전" << endl;
 
 				return WALL_FRONT;
 			}
@@ -517,7 +517,7 @@ _int CCollision::Wall_Collision_By_DotSliding(_vec3 * vChangeDir)
 
 				*vChangeDir = vSliding;
 
-				cout << "후" << endl;
+				//cout << "후" << endl;
 
 				return WALL_BACK;
 			}
@@ -914,7 +914,7 @@ _bool CCollision::Hit_In_ViewPort(HWND hWnd, const CCubeTex * pCubeTex, const CT
 		D3DXVec3TransformCoord(&pt[i], &vChangeVtx[i], &matVP);
 	}
 
-	cout << pt[0].x << " " << pt[0].y << endl;
+//	cout << pt[0].x << " " << pt[0].y << endl;
 
 
 
