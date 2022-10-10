@@ -98,6 +98,7 @@ void CStaticCamera::Look_Taget(void)
 {
 	if (nullptr == m_pTransform_Target)
 	{
+		//m_pTransform_Target = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_CHARACTER, L"AnimationPlayer", L"m_pRotationTrans", ID_DYNAMIC));
 		m_pTransform_Target = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_CHARACTER, L"HEAD", TRANSFORM_COMP, ID_DYNAMIC));
 		NULL_CHECK(m_pTransform_Target);
 	}

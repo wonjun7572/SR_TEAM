@@ -107,6 +107,8 @@ _int CCollision::Wall_Collision(_vec3* vNorm)
 		D3DXVec3TransformCoord(&m_vMin2, &m_vMin2, pWallTransform->Get_WorldMatrixPointer());
 		D3DXVec3TransformCoord(&m_vMax2, &m_vMax2, pWallTransform->Get_WorldMatrixPointer());
 
+		int iCollisionCnt = 0;
+
 		if (m_vMin1.x <= m_vMax2.x && m_vMax1.x >= m_vMin2.x &&
 			m_vMin1.y <= m_vMax2.y && m_vMax1.y >= m_vMin2.y &&
 			m_vMin1.z <= m_vMax2.z && m_vMax1.z >= m_vMin2.z)

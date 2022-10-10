@@ -4,6 +4,7 @@
 #include "Export_Function.h"
 #include "CubePlayer.h"
 #include "PoolMgr.h"
+#include "HitBarUI.h"
 
 CBullet::CBullet(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CGameObject(pGraphicDev)
@@ -26,36 +27,56 @@ HRESULT CBullet::Ready_Object(const _vec3* pPos, const _vec3* pDir, _float _fDam
 
 _int CBullet::Update_Object(const _float & fTimeDelta)
 {
-	_vec3 vPos;
 	m_fTimeDelta += fTimeDelta;
-	m_pTransCom->Get_Info(INFO_POS, &vPos);
-	
+	Before_Update();
+
 	if (m_fTimeDelta >= 5.f)
 	{
 		m_bDamage = false;
+		dynamic_cast<CHitBarUI*>(m_pHitBarUI)->OffSwitch();
 		CPoolMgr::GetInstance()->Collect_Obj(this);
 		m_fTimeDelta = 0.f;
 		return -1;
 	}
 
-	if (m_pPlayer == nullptr)
-		m_pPlayer = Engine::Get_GameObject(STAGE_CHARACTER, L"PLAYER");
-
-	if (m_pPlayerTransCom == nullptr)
-		m_pPlayerTransCom = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_CHARACTER, L"PLAYER", TRANSFORM_COMP, ID_DYNAMIC));
-
+	_vec3 vPos;
+	m_pTransCom->Get_Info(INFO_POS, &vPos);
 	_vec3 vPlayerPos;
 	m_pPlayerTransCom->Get_Info(INFO_POS, &vPlayerPos);
 	_vec3 vPlayerScale;
 	m_pPlayerTransCom->Get_Scale(&vPlayerScale);
 	_vec3 vScale;
 	m_pTransCom->Get_Scale(&vScale);
+	_vec3 vPlayerLook;
+	m_pPlayerTransCom->Get_Info(INFO_LOOK, &vPlayerLook);
 
 	if (m_pCollision->Sphere_Collision(this->m_pTransCom, m_pPlayerTransCom, vPlayerScale.x, vScale.x))
 	{
-		if(!m_bDamage)
+		if (!m_bDamage)
+		{
+			_vec3 vDir;
+			vDir = vPos - vPlayerPos;
+
 			dynamic_cast<CCubePlayer*>(m_pPlayer)->Set_Damaged(m_fDamage);
-	
+
+			vDir.y = 0.f;
+			vPlayerLook.y = 0.f;
+			D3DXVec3Normalize(&vDir, &vDir);
+			D3DXVec3Normalize(&vPlayerLook, &vPlayerLook);
+
+			_float fAngle = acosf(D3DXVec3Dot(&vPlayerLook, &vDir));
+
+			if (vPlayerPos.x < vPos.x || vPlayerPos.z < vPos.z)
+			{
+				fAngle = D3DX_PI * 2.f - fAngle;
+			}
+			
+
+			cout << D3DXToDegree(fAngle) << endl;
+
+			dynamic_cast<CHitBarUI*>(m_pHitBarUI)->OnSwitch(fAngle);
+		}
+
 		m_bDamage = true;
 	}
 
@@ -105,7 +126,6 @@ HRESULT CBullet::Add_Component(void)
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ COLLISION_COMP, pComponent });
 
-
 	return S_OK;
 }
 
@@ -119,11 +139,23 @@ void CBullet::MoveToDir(const _vec3 & vDir)
 	m_pTransCom->m_vInfo[INFO_POS] += vDir * m_fTimeDelta * m_fSpeed;
 }
 
+void CBullet::Before_Update()
+{
+	if (m_pPlayer == nullptr)
+		m_pPlayer = Engine::Get_GameObject(STAGE_CHARACTER, L"PLAYER");
+
+	if (m_pPlayerTransCom == nullptr)
+		m_pPlayerTransCom = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_CHARACTER, L"BODY", TRANSFORM_COMP, ID_DYNAMIC));
+
+	if (m_pHitBarUI == nullptr)
+		m_pHitBarUI = Engine::Get_GameObject(STAGE_UI, L"HitBarUI");
+}
+
 CBullet * CBullet::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3* pPos, const _vec3* pDir, _float _fDamage)
 {
-	CBullet *	pInstance = new CBullet(pGraphicDev);
+	CBullet *   pInstance = new CBullet(pGraphicDev);
 
-	if (FAILED(pInstance->Ready_Object(pPos, pDir , _fDamage)))
+	if (FAILED(pInstance->Ready_Object(pPos, pDir, _fDamage)))
 	{
 		Safe_Release(pInstance);
 		return nullptr;
