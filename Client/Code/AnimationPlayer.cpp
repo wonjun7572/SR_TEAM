@@ -111,7 +111,7 @@ void CAnimationPlayer::Key_Input(void)
 HRESULT CAnimationPlayer::Build(void)	//	모델 불러오는 함수
 {
 	//HANDLE      hFile = CreateFile(L"../../Data/PLAYER_DEFAULT.dat",      // 파일의 경로와 이름
-	HANDLE      hFile = CreateFile(L"../../Data/PLAYER_SMALL.dat",      // 파일의 경로와 이름	
+	HANDLE      hFile = CreateFile(L"../../Data/Player/PLAYER_REAL.dat",      // 파일의 경로와 이름	
 		GENERIC_READ,         // 파일 접근 모드 (GENERIC_WRITE : 쓰기 전용, GENERIC_READ : 읽기 전용)
 		NULL,               // 공유 방식(파일이 열려있는 상태에서 다른 프로세스가 오픈할 때 허용할 것인가)    
 		NULL,               // 보안 속성(NULL을 지정하면 기본값 상태)
@@ -491,17 +491,17 @@ void CAnimationPlayer::Walk_Animation_Run(void)	//	걷기 애니메이션 실행
 	//	bool/열거체 값에 따라 어떤 애니메이션을 불러올 것인지 결정
 	if (m_WALK == PLAYERWALK_START)
 	{
-		Load_Animation(L"../../Data/SMALL_WALK_START.dat");
+		Load_Animation(L"../../Data/Player/Animation_Walk_Start.dat");
 		Run_Animation(2.f);	//	애니메이션의 동작 시간, 캡처는 1초를 원칙으로 하나 해당 부분에서 입력되는 숫자의 값만큼 애니메이션이 느려짐
 	}
 	else if (m_WALK == PLAYERWALK_1)
 	{
-		Load_Animation(L"../../Data/SMALL_WALK_1.dat");
+		Load_Animation(L"../../Data/Player/Animation_Walk_1.dat");
 		Run_Animation(4.f);
 	}
 	else if (m_WALK == PLAYERWALK_2)
 	{
-		Load_Animation(L"../../Data/SMALL_WALK_2.dat");
+		Load_Animation(L"../../Data/Player/Animation_Walk_2.dat");
 		Run_Animation(4.f);
 	}
 }
@@ -533,9 +533,16 @@ void CAnimationPlayer::Stop_Animation_Run(void)
 		}
 
 		// 현재 걷기는 두개의 캡쳐밖에 없으므로 bool타입을 활용했지만, 3개 이상의 캡쳐가 필요한 애니메이션의 경우 열거체 만들어서 활용
-		if (m_STOP == PLAYERSTOP_1)
+		/*if (m_STOP == PLAYERSTOP_1)
 			m_STOP = PLAYERSTOP_2;
 		else if (m_STOP == PLAYERSTOP_2)
+			m_STOP = PLAYERSTOP_END;*/
+
+		if (m_WALK == PLAYERWALK_1)
+			m_STOP = PLAYERSTOP_1;
+		else if (m_WALK == PLAYERWALK_2)
+			m_STOP = PLAYERSTOP_2;
+		else
 			m_STOP = PLAYERSTOP_END;
 
 		m_AnimationTime = 0.f;
@@ -544,12 +551,12 @@ void CAnimationPlayer::Stop_Animation_Run(void)
 	//	bool/열거체 값에 따라 어떤 애니메이션을 불러올 것인지 결정
 	if (m_STOP == PLAYERSTOP_1)
 	{
-		Load_Animation(L"../../Data/SMALL_STOP_1.dat");
+		Load_Animation(L"../../Data/Player/Animation_Walk_1_Stop.dat");
 		Run_Animation(2.f);	//	애니메이션의 동작 시간, 캡처는 1초를 원칙으로 하나 해당 부분에서 입력되는 숫자의 값만큼 애니메이션이 느려짐
 	}
 	else if (m_STOP == PLAYERSTOP_2)
 	{
-		Load_Animation(L"../../Data/SMALL_STOP_2.dat");
+		Load_Animation(L"../../Data/Player/Animation_Walk_2_Stop.dat");
 		Run_Animation(2.f);
 	}
 }
