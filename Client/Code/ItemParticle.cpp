@@ -29,7 +29,6 @@ _int CItemParticle::Update_Object(const _float & fTimeDelta)
 {
 	for (list<ATTRIBUTE>::iterator iter = m_particles.begin(); iter != m_particles.end(); iter++)
 	{
-		cout << vItemParticlePos.x << endl;
 		//_float fX;	//¾ÆÀÌÅÛ xÁÂÇ¥
 		//_float fY;	//¾ÆÀÌÅÛ yÁÂÇ¥
 		//_float fZ;	//¾ÆÀÌÅÛ zÁÂÇ¥
@@ -117,8 +116,8 @@ void CItemParticle::resetParticle(ATTRIBUTE * attribute)
 	_vec3 min = _vec3(-1.0f, -1.0f, -1.0f);
 	_vec3 max = _vec3(1.0f, 1.0f, 1.0f);
 	GetRandomVector(&attribute-> vVelocity, &min, &max);
-	attribute->vPos = vItemParticlePos + attribute ->vVelocity/10.f;
-	attribute->vVelocity *= 0.5f;
+	attribute->vPos = vItemParticlePos + attribute ->vVelocity/20.f;
+	attribute->vVelocity *= .7f;
 	attribute->dwColor = D3DXCOLOR(GetRandomFloat(0.0f, 1.0f), GetRandomFloat(0.0f, 1.0f), GetRandomFloat(0.0f, 1.0f), 1.0f);
 	
 
@@ -129,7 +128,7 @@ void CItemParticle::resetParticle(ATTRIBUTE * attribute)
 		//attribute->dwColor = D3DXCOLOR(1.f, 1.f, 0.5f, 1.0f);
 
 		attribute->fAge = 0.0f;
-		attribute->fLifeTime = 2.f;
+		attribute->fLifeTime = 1.f;
 
 	
 }

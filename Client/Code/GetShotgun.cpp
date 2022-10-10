@@ -31,7 +31,7 @@ _int CGetShotgun::Update_Object(const _float & fTimeDelta)
 	if (m_bDead)
 	{
 		dynamic_cast<CCubePlayer*>(Engine::Get_GameObject(STAGE_CHARACTER, L"PLAYER"))->Capture_Shotgun();
-		dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->ItemCreate(3);
+		dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->WeaponCreate(3);
 		return -1;
 	}
 	

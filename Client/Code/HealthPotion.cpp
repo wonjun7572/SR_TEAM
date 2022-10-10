@@ -91,7 +91,7 @@ void CHealthPotion::Dead_Effect(void)
 	if (!m_pItemParicle)
 		m_pItemParicle = dynamic_cast<CItemParticle*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"ItemParticle"));
 	m_pItemParicle->Set_PclePos(vPos);
-	for (_int i = 0; i < 50; ++i)
+	for (_int i = 0; i < 150; ++i)
 	{
 		m_pItemParicle->addParticle();
 	}

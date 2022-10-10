@@ -594,6 +594,9 @@
     <ClInclude Include="..\Header\ItemIcon.h">
       <Filter>02. GameObject\01. For_Stage\09. UI\Inventory\ItemIcon</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\ItemParticle.h">
+      <Filter>02. GameObject\01. For_Stage\12. Particle</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -910,6 +913,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\MonsterParticle.cpp">
       <Filter>99. Default\소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ItemParticle.cpp">
+      <Filter>02. GameObject\01. For_Stage\12. Particle</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

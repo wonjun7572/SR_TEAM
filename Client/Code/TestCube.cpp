@@ -159,7 +159,7 @@ HRESULT CTestCube::Interact(void)
 		m_listLetterCnt.push_back(szCntName);
 
 		++m_iLetterCnt;
-		cout << m_iLetterCnt << endl;
+		//cout << m_iLetterCnt << endl;
 		Safe_Delete_Array(szCntName);
 
 	}
