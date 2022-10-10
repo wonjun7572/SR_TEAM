@@ -45,9 +45,10 @@ private:
 	_matrix				m_matView;
 	_matrix				m_matProj;	
 
-	list<CGameObject*>	  m_listEqiupments;
+
 	vector<CGameObject*>  m_vecContents;
 	vector<CGameObject*>  m_vecEquipments;
+	vector<CGameObject*> m_vecSortingContents;
 private:
 	_bool				m_bInit = false;
 	_bool				m_bNull = false;

@@ -17,12 +17,12 @@ HRESULT CInventory::Ready_Object(void)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 	m_iItemCnt = 0;
-	m_vecContents.reserve(26);
+	/*m_vecContents.reserve(26);
 	for (_int i = 0; i < 26; i++)
 	{
 		m_vecContents.push_back(nullptr);
 		m_vecContents[i] = nullptr;
-	}
+	}*/
 	m_vecEquipments.reserve(5);
 	for (_int i = 0; i < 5; i++)
 	{
@@ -80,21 +80,14 @@ void CInventory::ReCall()
 			if (m_vecEquipments[i] != nullptr)
 			{
 
-				m_iItemCnt++;
-				m_vecContents[i] = m_vecEquipments[i];
-		//		m_vecEquipments[i] = nullptr;
-				/*	m_bSorting = true;*/
+	
+				m_vecContents.push_back(m_vecEquipments[i]);
 				m_vecEquipments[i] = nullptr;
-				m_bNullSorting = true;
-				//여기서 다시 뺏을때 마우스 클릭제외하고 다시 나머디 equipment쪽이 전부 정렬이 되게m_veccontens쪽에서 정렬이 되게 만들어야한다.
-				//m_veccontens.back을 이용하면 될거같은데?
-				//실패
+				
+
 
 			}
-		/*	if (m_bNullSorting&& iter != m_vecContents.back() && iter == nullptr && m_vecContents.back() != nullptr)
-			{
-				iter = m_vecContents.back();
-			}*/
+		
 		}
 
 	}
@@ -165,7 +158,7 @@ void CInventory::Get_Item()
 
 void CInventory::Sorting()
 {
-	//m_vecContents.shrink_to_fit();
+	m_vecContents.shrink_to_fit();
 	if (Get_DIKeyState(DIK_V) || m_bItemCreate)
 	{
 		if (m_iItemCnt < 27)
@@ -173,7 +166,6 @@ void CInventory::Sorting()
 			m_bItemCreate = false;
 			//생성
 			m_pItemIcon = CItemIcon::Create(m_pGraphicDev, m_iItemIndex);
-			m_vecContents.push_back(m_pItemIcon);
 			m_iItemCnt++;
 			m_bSorting = true;
 			m_bNullSorting = true;
@@ -196,10 +188,17 @@ void CInventory::Sorting()
 				dynamic_cast<CItemIcon*>(iter)->Set_block(fDefaultX + fIntervalX, fDefaultY - fIntervalY, 0.f);
 			}
 
+			//if (m_bNullSorting &&  iter != nullptr)
+			//{
+			//	m_vecSortingContents.push_back(iter);
+
+			//}
+
+
 			if (m_bNullSorting&& iter != m_vecContents.back() && iter == nullptr && m_vecContents.back() != nullptr) // 빈곳부터 채우기
 			{
-			
-				iter = m_vecContents.back();
+
+				m_vecContents.push_back(m_vecEquipments[1]);
 				m_bNull = true;
 				m_bNullSorting = false;
 				break;
@@ -210,7 +209,6 @@ void CInventory::Sorting()
 	}
 	if (m_bNull)
 	{
-		m_vecContents.pop_back();
 		m_bNull = false;
 	}
 
@@ -369,11 +367,10 @@ void CInventory::Mouse()
 					
 							m_iItemCnt++;
 							m_vecContents.push_back(m_vecEquipments[0]);
-
 							m_vecEquipments[0] = nullptr;
+							ReCall();
 							m_bNullSorting = true;
 							m_bSorting = true;
-							ReCall();
 						}
 
 					
@@ -473,8 +470,7 @@ void CInventory::Mouse()
 	}
 
 
-	//if (dynamic_cast<CItemIcon*>(m_vecEquipments[0]) != nullptr)
-	//	cout << dynamic_cast<CItemIcon*>(m_vecEquipments[0])->Get_Name() << endl;
+	
 }
 
 CInventory * CInventory::Create(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -491,8 +487,6 @@ CInventory * CInventory::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 
 void CInventory::Free(void)
 {
-	//   for_each(m_vecContents.begin(), m_vecContents.end(), CDeleteObj());
-	//   m_vecContents.clear();
-
+	
 	CGameObject::Free();
 }

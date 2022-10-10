@@ -5,7 +5,7 @@
 #include "HealthPotion.h"
 #include "ObtainDefense.h"
 #include "ObtainBullet.h"
-
+#include "PoolMgr.h"
 CSkeleton::CSkeleton(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CMonster(pGraphicDev)
 {
@@ -51,16 +51,39 @@ _int CSkeleton::Update_Object(const _float & fTimeDelta)
 	}
 
 	CMonster::Update_Object(fTimeDelta);
+
 	_vec3 vPlayerPos;
 	m_pPlayerTransCom->Get_Info(INFO_POS, &vPlayerPos);
 	_vec3 vPlayerScale;
 	m_pPlayerTransCom->Get_Scale(&vPlayerScale);
 	_vec3 vScale;
 	m_pSphereTransCom->Get_Scale(&vScale);
+	_vec3 vPos;
+	m_pTransCom->Get_Info(INFO_POS, &vPos);
+	_vec3 vDir, vDirection;
 
+
+	//
+	//vDir = vPlayerPos - vPos;			//플레이어의 방향 
+	//vDirection = { sinf(vDir.x) * D3DXToRadian(370) , 0.f, sinf(vDir.z) * D3DXToRadian(370) };
+	//D3DXVec3Length(&vDirection);
+
+	//D3DXVec3Normalize(&vDirection, &vDirection);
+	
 	if (m_pCollision->Sphere_Collision(this->m_pSphereTransCom, m_pPlayerTransCom, vPlayerScale.x, vScale.x))
 	{
-		m_pTransCom->Chase_Target(&vPlayerPos, 1.f, fTimeDelta);
+		m_fFrame += fTimeDelta;
+	//	m_pTransCom->Chase_Target(&vPlayerPos, 1.f, fTimeDelta);
+		if (m_fFrame >= 0.1f)
+		{
+
+
+		_vec3 vDir = vPos;
+		_vec3 vDirection = { ((cosf(vDir.x) * asinf(vDir.x)) * D3DXToRadian(180.f)), 0.f ,vDir.z};
+
+		CPoolMgr::GetInstance()->Reuse_Obj(m_pGraphicDev, &vPos, &(vDirection));
+		m_fFrame = 0.f;
+		}
 	}
 
 	_vec3 vMonsterPos;
@@ -80,7 +103,7 @@ void CSkeleton::Render_Object(void)
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransCom->Get_WorldMatrixPointer());
 	m_pTextureCom->Set_Texture(99);
 	m_pBufferCom->Render_Buffer();
-
+	
 	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pHitBoxTransCom->Get_WorldMatrixPointer());
 	m_pHitBox->Render_Buffer();
