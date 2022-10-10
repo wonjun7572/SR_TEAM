@@ -36,7 +36,7 @@ HRESULT CSlime::Ready_Object(const _vec3& vPos, _tchar* Name)
 
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
-	m_pTransCom->Set_Scale(0.1f, 0.1f, 0.1f);
+	m_pTransCom->Set_Scale(0.3f, 0.3f, 0.3f);
 	m_pTransCom->Set_Pos(vPos.x, vPos.y, vPos.z);
 	m_pTransCom->Static_Update();
 
@@ -102,6 +102,7 @@ void CSlime::LateUpdate_Object(void)
 	if (!m_bFirst)
 	{
 		Jump_Animation_Run();
+		Look_Direction();
 	}
 
 	CMonster::LateUpdate_Object();
@@ -509,6 +510,39 @@ void CSlime::Jump_Animation_Run(void)
 	{
 		Load_Animation(L"../../Data/Slime/Slime_Down_2.dat");
 		Run_Animation(1.f);
+	}
+}
+
+void CSlime::Look_Direction(void)
+{
+	_matrix matWorld;
+	m_pTransCom->Get_WorldMatrix(&matWorld);
+	
+	D3DXQUATERNION qRot;
+	D3DXMatrixDecompose(&_vec3(), &qRot, &_vec3(), &matWorld);
+
+	_float pitch, yaw, roll;
+
+	FLOAT sqw = qRot.w * qRot.w;
+	FLOAT sqx = qRot.x * qRot.x;
+	FLOAT sqy = qRot.y * qRot.y;
+	FLOAT sqz = qRot.z * qRot.z;
+
+	pitch = asinf(2.f * (qRot.w * qRot.x - qRot.y * qRot.z));
+	yaw = atan2f(2.0f * (qRot.x * qRot.z + qRot.w * qRot.y), (-sqx - sqy + sqz + sqw));
+	roll = atan2f(2.0f * (qRot.x * qRot.y + qRot.w * qRot.z), (-sqx + sqy - sqz + sqw));
+
+
+	list<pair<const _tchar*, CGameObject*>> ListBox = *(pMyLayer->Get_GamePairPtr());
+
+	for (auto& iter : ListBox)
+	{
+		if (0 == _tcscmp(iter.first, L"A_ROOT"))
+		{
+			_vec3 vAngle;
+			CTransform* Transform = dynamic_cast<CTransform*>(iter.second->Get_Component(L"Proto_TransformCom", ID_STATIC));
+			Transform->Set_Angle(&_vec3(yaw, pitch, roll));
+		}
 	}
 }
 

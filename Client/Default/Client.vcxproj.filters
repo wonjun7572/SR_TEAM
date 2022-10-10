@@ -256,6 +256,9 @@
     <Filter Include="02. GameObject\01. For_Stage\15. Animation_Player\TransAxisBox">
       <UniqueIdentifier>{8f360f99-cec1-42a5-9a0a-89a33b07c286}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\08. Monster\03. Slime">
+      <UniqueIdentifier>{d0361cb4-3c75-4b1a-b540-30d86aaedbdd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -600,6 +603,9 @@
     <ClInclude Include="..\Header\CubePlayer.h">
       <Filter>02. GameObject\01. For_Stage\05. CubePlayer</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\Slime.h">
+      <Filter>02. GameObject\01. For_Stage\08. Monster\03. Slime</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -922,6 +928,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\ItemParticle.cpp">
       <Filter>99. Default\소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Slime.cpp">
+      <Filter>02. GameObject\01. For_Stage\08. Monster\03. Slime</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
