@@ -1,4 +1,7 @@
-﻿  Bullet.cpp
+﻿  Loading.cpp
+c:\users\sam51\desktop\sr_team\client\code\loading.cpp(126): warning C4129: 'T': 문자 이스케이프 시퀀스를 인식할 수 없습니다.
+  Bullet.cpp
+  코드를 생성하고 있습니다...
      ../Bin\Client.lib 라이브러리 및 ../Bin\Client.exp 개체를 생성하고 있습니다.
   Client.vcxproj -> C:\Users\sam51\Desktop\SR_TEAM\Client\Default\../Bin\Client.exe
   Client.vcxproj -> ../Bin\Client.pdb (Full PDB)
