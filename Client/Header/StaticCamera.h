@@ -4,8 +4,6 @@
 #include "Engine_Include.h"
 #include "Export_Function.h"
 
-class CInventory;
-
 class CStaticCamera : public Engine::CCamera
 {
 private:
@@ -20,24 +18,28 @@ public:
 		const _float& fFar);
 
 	virtual _int Update_Object(const _float& fTimeDelta) override;
-
 	virtual void LateUpdate_Object(void) override;
 	const _matrix* GetViewmatrix()  { return &m_matView; }
 	const _matrix* GetProjmatrix()  { return &m_matProj; }
 
+	void		HitPlayer() { m_bPlayerHit = true; }
+
 private:
 	void		Key_Input(const _float& fTimeDelta);
 	void		Mouse_Fix();
-	void		Look_Taget(void);
+	void		Look_Target(const _float& _fTimeDelta);
+	void		Camera_Shaking(const _float& _fTimeDelta);
 
 private:
 	CTransform*		m_pTransform_Target = nullptr;
 	_float			m_fDistance;
 	_float			m_fSpeed = 10.f;
 	_float			m_fAngle = 0.f;
-
 	_bool			m_bChangePOV = false;
-	CInventory*		m_pInventory = nullptr;
+
+	_int			m_iReverse = 1;
+	_float			m_fFrame = 0.f;
+	_bool			m_bPlayerHit = false;
 
 public:
 	static CStaticCamera*		Create(LPDIRECT3DDEVICE9 pGraphicDev,

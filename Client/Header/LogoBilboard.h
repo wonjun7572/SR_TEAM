@@ -1,7 +1,6 @@
 #pragma once
 #include "GameObject.h"
-class CLogoBilboard :
-	public CGameObject
+class CLogoBilboard : public CGameObject
 {
 public:
 	explicit CLogoBilboard(LPDIRECT3DDEVICE9 pGraphicDev);
@@ -12,10 +11,6 @@ public:
 	_int	Update_Object(const _float& fTimeDelta) override;
 	void	LateUpdate_Object(void) override;
 	void	Render_Object(void) override;
-
-private:
-	void		Begin_OrthoProj();
-	void		End_OrthoProj();
 
 private:
 	HRESULT Add_Component();

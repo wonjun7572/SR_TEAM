@@ -32,8 +32,6 @@ _uint CLoading::Loading_ForStage(void)
 {
 	// 버퍼 컴포넌트들
 	{
-	  //FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_TerrainTexCom", CTerrainTex::Create(m_pGraphicDev, VTXCNTX, VTXCNTZ, VTXITV)), E_FAIL);
-      //FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_CubeTexCom", CCubeTex::Create(m_pGraphicDev)), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(RCTEX_HP_COMP, CRcTex::Create(m_pGraphicDev)), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(RCTEX_DEFENCE_COMP, CRcTex::Create(m_pGraphicDev)), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(RCTEX_BULLET_COMP, CRcTex::Create(m_pGraphicDev)), E_FAIL);

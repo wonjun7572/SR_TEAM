@@ -37,35 +37,14 @@
     <Filter Include="02. GameObject\00. For_Logo">
       <UniqueIdentifier>{30025f09-0432-46d7-a330-4c3f8a541dc2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\00. For_Logo\00. BackGround">
-      <UniqueIdentifier>{67ae8269-0e3e-4e1d-bb00-6cef0314eebe}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. GameObject\01. For_Stage">
       <UniqueIdentifier>{2bfecef8-7bb9-4ef2-9936-4e2cc1d897db}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\01. For_Stage\00. TestPlayer">
-      <UniqueIdentifier>{45cc29ae-58d3-4a6b-92d4-677245185c83}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\01. For_Stage\01. TestMonster">
-      <UniqueIdentifier>{b604cd30-23f9-4741-8ce6-5615f06904d7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\01. For_Stage\02. Terrain">
-      <UniqueIdentifier>{40f1ba94-ad87-43ef-9cff-3cb75eb5c6eb}</UniqueIdentifier>
     </Filter>
     <Filter Include="02. GameObject\02. For_Public">
       <UniqueIdentifier>{98c8ba54-2e7c-4c81-ad80-68e242cf8c19}</UniqueIdentifier>
     </Filter>
     <Filter Include="02. GameObject\02. For_Public\01. StaticCamera">
       <UniqueIdentifier>{16f0def3-4911-4ea3-8331-aff0318350a1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\01. For_Stage\03. SkyBox">
-      <UniqueIdentifier>{b2c3ebcc-394f-4a53-873c-908db73434b4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\01. For_Stage\04. Wall">
-      <UniqueIdentifier>{139b70e2-b611-4471-8714-9c310caac6a9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\01. For_Stage\04. Wall\Manager">
-      <UniqueIdentifier>{6a4c3150-11d3-4219-972e-d372cfcd2e2c}</UniqueIdentifier>
     </Filter>
     <Filter Include="02. GameObject\01. For_Stage\05. CubePlayer">
       <UniqueIdentifier>{992b2236-4268-4746-9cf3-a44c72fad07c}</UniqueIdentifier>
@@ -133,9 +112,6 @@
     <Filter Include="01. Scene\02. LoadingScene">
       <UniqueIdentifier>{6dd69e23-a69e-4895-8e30-88c0cb658400}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01. Scene\02. LoadingScene\00. LoadBar">
-      <UniqueIdentifier>{413f4fa0-0045-42df-99b2-c204e204deac}</UniqueIdentifier>
-    </Filter>
     <Filter Include="01. Scene\00. Logo\00. Button">
       <UniqueIdentifier>{bceb9e91-bd89-4069-9875-fc5c830589eb}</UniqueIdentifier>
     </Filter>
@@ -147,9 +123,6 @@
     </Filter>
     <Filter Include="02. GameObject\01. For_Stage\08. Monster">
       <UniqueIdentifier>{e8cd7a20-be14-4ffc-82a6-921f105af27a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01. Scene\02. LoadingScene\01. LoadingScene">
-      <UniqueIdentifier>{7246b6e0-970c-49e8-9662-685760f5d99f}</UniqueIdentifier>
     </Filter>
     <Filter Include="02. GameObject\01. For_Stage\09. UI">
       <UniqueIdentifier>{5a2321ba-4038-4880-aa2b-daee61f71bac}</UniqueIdentifier>
@@ -217,9 +190,6 @@
     <Filter Include="02. GameObject\01. For_Stage\09. UI\LetterBox">
       <UniqueIdentifier>{3690129c-7dca-40ce-965a-b361c928a598}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\00. For_Logo\01. BillBoard">
-      <UniqueIdentifier>{86146145-ea8c-49af-a4a6-baaa3910d0b7}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. GameObject\01. For_Stage\09. UI\Inventory">
       <UniqueIdentifier>{9a65f411-a1dc-4910-a709-4f8322b9c5f4}</UniqueIdentifier>
     </Filter>
@@ -262,8 +232,17 @@
     <Filter Include="02. GameObject\01. For_Stage\08. Monster\04. Fireman">
       <UniqueIdentifier>{1e901fdb-4bfa-4af2-83fb-1fc754d2c808}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\02. For_Public\02. SkillCamera">
-      <UniqueIdentifier>{ef84c55b-c763-4a96-aa78-34314377b900}</UniqueIdentifier>
+    <Filter Include="02. GameObject\00. For_Logo\00. BillBoard">
+      <UniqueIdentifier>{86146145-ea8c-49af-a4a6-baaa3910d0b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\00. Terrain">
+      <UniqueIdentifier>{40f1ba94-ad87-43ef-9cff-3cb75eb5c6eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\01. SkyBox">
+      <UniqueIdentifier>{b2c3ebcc-394f-4a53-873c-908db73434b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\02 Wall">
+      <UniqueIdentifier>{139b70e2-b611-4471-8714-9c310caac6a9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -285,15 +264,6 @@
     <ClInclude Include="..\Header\Logo.h">
       <Filter>01. Scene\00. Logo</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\BackGround.h">
-      <Filter>02. GameObject\00. For_Logo\00. BackGround</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\TestPlayer.h">
-      <Filter>02. GameObject\01. For_Stage\00. TestPlayer</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\TestMonster.h">
-      <Filter>02. GameObject\01. For_Stage\01. TestMonster</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\Stage.h">
       <Filter>01. Scene\01. Stage</Filter>
     </ClInclude>
@@ -301,7 +271,7 @@
       <Filter>01. Scene\99. Loading</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Terrain.h">
-      <Filter>02. GameObject\01. For_Stage\02. Terrain</Filter>
+      <Filter>02. GameObject\01. For_Stage\00. Terrain</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\DynamicCamera.h">
       <Filter>02. GameObject\02. For_Public\00. DynamicCamera</Filter>
@@ -310,13 +280,10 @@
       <Filter>02. GameObject\02. For_Public\01. StaticCamera</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\SkyBox.h">
-      <Filter>02. GameObject\01. For_Stage\03. SkyBox</Filter>
+      <Filter>02. GameObject\01. For_Stage\01. SkyBox</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Wall.h">
-      <Filter>02. GameObject\01. For_Stage\04. Wall</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\WallMgr.h">
-      <Filter>02. GameObject\01. For_Stage\04. Wall\Manager</Filter>
+      <Filter>02. GameObject\01. For_Stage\02 Wall</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CubeArm.h">
       <Filter>02. GameObject\01. For_Stage\05. CubePlayer\Arm</Filter>
@@ -468,17 +435,11 @@
     <ClInclude Include="..\Header\CubeMonsterHead.h">
       <Filter>02. GameObject\01. For_Stage\08. Monster\00. CubeMonster\02. CubeMonsterHead</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\LoadBar.h">
-      <Filter>01. Scene\02. LoadingScene\00. LoadBar</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\PlayButton.h">
       <Filter>01. Scene\00. Logo\00. Button\01. PlayButton</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\OptionButton.h">
       <Filter>01. Scene\00. Logo\00. Button\02. OptionButton</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\LoadingScene.h">
-      <Filter>01. Scene\02. LoadingScene\01. LoadingScene</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Item.h">
       <Filter>02. GameObject\01. For_Stage\10. Item</Filter>
@@ -562,7 +523,7 @@
       <Filter>99. Default\헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\LogoBilboard.h">
-      <Filter>02. GameObject\00. For_Logo\01. BillBoard</Filter>
+      <Filter>02. GameObject\00. For_Logo\00. BillBoard</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CubeShop.h">
       <Filter>02. GameObject\01. For_Stage\13. Shop</Filter>
@@ -594,17 +555,11 @@
     <ClInclude Include="..\Header\TransAxisBox.h">
       <Filter>02. GameObject\01. For_Stage\15. Animation_Player\TransAxisBox</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\MonsterParticle.h">
-      <Filter>99. Default\헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\ItemIcon.h">
       <Filter>02. GameObject\01. For_Stage\09. UI\Inventory\ItemIcon</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\HitBarUI.h">
       <Filter>02. GameObject\01. For_Stage\09. UI\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\ItemParticle.h">
-      <Filter>99. Default\헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CubePlayer.h">
       <Filter>02. GameObject\01. For_Stage\05. CubePlayer</Filter>
@@ -615,11 +570,11 @@
     <ClInclude Include="..\Header\FireMan.h">
       <Filter>02. GameObject\01. For_Stage\08. Monster\04. Fireman</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\ProjectileParticle.h">
+    <ClInclude Include="..\Header\MonsterParticle.h">
       <Filter>02. GameObject\01. For_Stage\12. Particle</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\SkillCamera.h">
-      <Filter>02. GameObject\02. For_Public\02. SkillCamera</Filter>
+    <ClInclude Include="..\Header\ItemParticle.h">
+      <Filter>02. GameObject\01. For_Stage\12. Particle</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -635,15 +590,6 @@
     <ClCompile Include="..\Code\Logo.cpp">
       <Filter>01. Scene\00. Logo</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\BackGround.cpp">
-      <Filter>02. GameObject\00. For_Logo\00. BackGround</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\TestPlayer.cpp">
-      <Filter>02. GameObject\01. For_Stage\00. TestPlayer</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\TestMonster.cpp">
-      <Filter>02. GameObject\01. For_Stage\01. TestMonster</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\Stage.cpp">
       <Filter>01. Scene\01. Stage</Filter>
     </ClCompile>
@@ -651,7 +597,7 @@
       <Filter>01. Scene\99. Loading</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Terrain.cpp">
-      <Filter>02. GameObject\01. For_Stage\02. Terrain</Filter>
+      <Filter>02. GameObject\01. For_Stage\00. Terrain</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\DynamicCamera.cpp">
       <Filter>02. GameObject\02. For_Public\00. DynamicCamera</Filter>
@@ -660,13 +606,10 @@
       <Filter>02. GameObject\02. For_Public\01. StaticCamera</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\SkyBox.cpp">
-      <Filter>02. GameObject\01. For_Stage\03. SkyBox</Filter>
+      <Filter>02. GameObject\01. For_Stage\01. SkyBox</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Wall.cpp">
-      <Filter>02. GameObject\01. For_Stage\04. Wall</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\WallMgr.cpp">
-      <Filter>02. GameObject\01. For_Stage\04. Wall\Manager</Filter>
+      <Filter>02. GameObject\01. For_Stage\02 Wall</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CubePlayer.cpp">
       <Filter>02. GameObject\01. For_Stage\05. CubePlayer</Filter>
@@ -809,17 +752,11 @@
     <ClCompile Include="..\Code\CubeMonsterHead.cpp">
       <Filter>02. GameObject\01. For_Stage\08. Monster\00. CubeMonster\02. CubeMonsterHead</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\LoadBar.cpp">
-      <Filter>01. Scene\02. LoadingScene\00. LoadBar</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\PlayButton.cpp">
       <Filter>01. Scene\00. Logo\00. Button\01. PlayButton</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\OptionButton.cpp">
       <Filter>01. Scene\00. Logo\00. Button\02. OptionButton</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\LoadingScene.cpp">
-      <Filter>01. Scene\02. LoadingScene\01. LoadingScene</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Item.cpp">
       <Filter>02. GameObject\01. For_Stage\10. Item</Filter>
@@ -900,7 +837,7 @@
       <Filter>02. GameObject\01. For_Stage\09. UI\LetterBox</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\LogoBilboard.cpp">
-      <Filter>02. GameObject\00. For_Logo\01. BillBoard</Filter>
+      <Filter>02. GameObject\00. For_Logo\00. BillBoard</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CubeShop.cpp">
       <Filter>02. GameObject\01. For_Stage\13. Shop</Filter>
@@ -935,14 +872,8 @@
     <ClCompile Include="..\Code\TransAxisBox.cpp">
       <Filter>02. GameObject\01. For_Stage\15. Animation_Player\TransAxisBox</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\MonsterParticle.cpp">
-      <Filter>99. Default\소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\HitBarUI.cpp">
       <Filter>02. GameObject\01. For_Stage\09. UI\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\ItemParticle.cpp">
-      <Filter>99. Default\소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Slime.cpp">
       <Filter>02. GameObject\01. For_Stage\08. Monster\03. Slime</Filter>
@@ -950,11 +881,11 @@
     <ClCompile Include="..\Code\FireMan.cpp">
       <Filter>02. GameObject\01. For_Stage\08. Monster\04. Fireman</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\ProjectileParticle.cpp">
+    <ClCompile Include="..\Code\MonsterParticle.cpp">
       <Filter>02. GameObject\01. For_Stage\12. Particle</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\SkillCamera.cpp">
-      <Filter>02. GameObject\02. For_Public\02. SkillCamera</Filter>
+    <ClCompile Include="..\Code\ItemParticle.cpp">
+      <Filter>02. GameObject\01. For_Stage\12. Particle</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

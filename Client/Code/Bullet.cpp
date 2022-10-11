@@ -5,6 +5,7 @@
 #include "CubePlayer.h"
 #include "PoolMgr.h"
 #include "HitBarUI.h"
+#include "StaticCamera.h"
 
 CBullet::CBullet(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CGameObject(pGraphicDev)
@@ -58,7 +59,7 @@ _int CBullet::Update_Object(const _float & fTimeDelta)
 			vDir = vPos - vPlayerPos;
 
 			dynamic_cast<CCubePlayer*>(m_pPlayer)->Set_Damaged(m_fDamage);
-
+			m_pStaticCam->HitPlayer();
 			vDir.y = 0.f;
 			vPlayerLook.y = 0.f;
 			D3DXVec3Normalize(&vDir, &vDir);
@@ -146,6 +147,9 @@ void CBullet::Before_Update()
 
 	if (m_pHitBarUI == nullptr)
 		m_pHitBarUI = Engine::Get_GameObject(STAGE_UI, L"HitBarUI");
+
+	if(m_pStaticCam == nullptr)
+		m_pStaticCam = dynamic_cast<CStaticCamera*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"StaticCamera"));
 }
 
 CBullet * CBullet::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3* pPos, const _vec3* pDir, _float _fDamage)

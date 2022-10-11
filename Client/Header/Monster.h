@@ -2,6 +2,7 @@
 #include "GameObject.h"
 
 class CMonsterUI;
+class CMonsterParticle;
 
 class CMonster : public CGameObject
 {
@@ -16,6 +17,8 @@ protected:
 	virtual void		Render_Object(void) override;
 
 	MONSTERABILITY*		Get_MAbility() { return m_tAbility; }
+
+	void				Hit_Effect();
 
 protected:
 	void				Hit_Check(_float _deltaTime);
@@ -42,6 +45,8 @@ protected:
 	CTransform*			m_pSphereTransCom = nullptr;
 
 	MONSTERABILITY*		m_tAbility;
+
+	CMonsterParticle*	 m_pHitParicle = nullptr;
 	
 	_float				m_fUISwitchTime = 0.f;
 

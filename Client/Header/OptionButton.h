@@ -1,13 +1,6 @@
 #pragma once
 #include "GameObject.h"
 
-BEGIN(Engine)
-
-class CRcTex;
-class CTransform;
-class CTexture;
-END
-
 class COptionButton : public CGameObject
 {
 public:
@@ -27,12 +20,8 @@ private:
 
 private:
 	HRESULT		Add_Component(void);
-
-private:
-
 	void		Begin_OrthoProj();
 	void		End_OrthoProj();
-
 
 public:
 	_bool	Get_MouseCheck(void) { return Mouse_check; }

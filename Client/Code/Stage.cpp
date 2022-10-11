@@ -48,7 +48,6 @@
 #include "LetterBox.h"
 #include "ShotParticle.h"
 #include "ItemParticle.h"
-#include "ProjectileParticle.h"
 
 #include "CrossHeader.h"
 #include "TargetCube.h"
@@ -63,6 +62,7 @@
 #include "Skeleton.h"
 #include "MonsterUI.h"
 #include "HitBarUI.h"
+#include "MonsterParticle.h"
 
 CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CScene(pGraphicDev)
@@ -151,9 +151,9 @@ HRESULT CStage::Ready_Layer_Environment(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"ItemParticle", pGameObject), E_FAIL);
 
-	pGameObject = CProjectileParticle::Create(m_pGraphicDev);
+	pGameObject = CMonsterParticle::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"ProjectileParticle", pGameObject), E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"MonsterParticle", pGameObject), E_FAIL);
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
@@ -376,26 +376,6 @@ HRESULT CStage::Ready_Layer_Monster(const _tchar * pLayerTag)
 
 	CGameObject*		pGameObject = nullptr;
 	
-	//pGameObject = CCubeMonsterArm::Create(m_pGraphicDev);
-	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"M_LeftArm", pGameObject), E_FAIL);
-	//
-	//pGameObject = CCubeMonsterArm::Create(m_pGraphicDev);
-	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"M_RighrArm", pGameObject), E_FAIL);
-	//
-	//pGameObject = CCubeMonsterBody::Create(m_pGraphicDev);
-	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"M_Body", pGameObject), E_FAIL);
-	//
-	//pGameObject = CCubeMonsterHead::Create(m_pGraphicDev);
-	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"M_Head", pGameObject), E_FAIL);
-	//
-	//pGameObject = CCubeMonster::Create(m_pGraphicDev);
-	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"CubeMonster", pGameObject), E_FAIL);
-
 	// 위랑 아래랑 같아야함 문자열, 몬스터 아이템 땜시
 	
 	for (int i = 0; i < 5; i++)
@@ -569,7 +549,6 @@ HRESULT CStage::Ready_Layer_Gun(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Sniper_Part_4", pGameObject), E_FAIL);
 
-
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
 	return S_OK;
@@ -606,7 +585,6 @@ HRESULT CStage::Ready_Layer_GunItem(const _tchar * pLayerTag)
 	pGameObject = CGetSniper::Create(m_pGraphicDev, _vec3(16.f, 0.6f, 20.f));
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"GetSniper", pGameObject), E_FAIL);
-
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
