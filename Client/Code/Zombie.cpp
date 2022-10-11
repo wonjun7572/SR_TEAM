@@ -590,7 +590,6 @@ CZombie * CZombie::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3 & vPos, _tc
 
 void CZombie::Free(void)
 {
-
 	for (auto& iter : *(pMyLayer->Get_GamePairPtr()))
 	{
 		iter.second->Kill_Obj();

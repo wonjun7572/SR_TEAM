@@ -20,6 +20,7 @@ public:
 	_bool			Get_Worldmap(void) { return m_bWorldmap; }
 	_bool			Get_Minimap(void) { return m_bMinimap; }
 	void			Key_Input(void);
+
 private:
 	void			Begin_OrthoProj();
 	void			End_OrthoProj();
