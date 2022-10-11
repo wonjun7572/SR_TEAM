@@ -48,8 +48,6 @@ Engine::_int CStaticCamera::Update_Object(const _float& fTimeDelta)
 		Look_Taget(fTimeDelta);
 		
 		Mouse_Fix();
-
-		Shaking_Camera(10.f, 2.f, fTimeDelta);
 	}
 
 	_int	iExit = CCamera::Update_Object(fTimeDelta);
@@ -112,82 +110,16 @@ void CStaticCamera::Look_Taget(const _float& _fTimeDelta)
 	if (!m_bChangePOV && (dynamic_cast<CCubePlayer*>(pPlayer)->Get_Weapon() == dynamic_cast<CWeapon*>(Engine::Get_GameObject(STAGE_GUN, L"UZI1"))||
 		dynamic_cast<CCubePlayer*>(pPlayer)->Get_Weapon() == dynamic_cast<CWeapon*>(Engine::Get_GameObject(STAGE_GUN, L"SHOTGUN"))))
 	{
-		_vec3 vLook;
-		m_pTransform_Target->Get_Info(INFO_LOOK, &vLook);
-
-		_vec3 vRight;
-		m_pTransform_Target->Get_Info(INFO_RIGHT, &vRight);
-
-		_vec3 vUp;
-		m_pTransform_Target->Get_Info(INFO_UP, &vUp);
-
-		m_vEye = (vLook * -1.f);
-		D3DXVec3Normalize(&m_vEye, &m_vEye);
-		m_vEye *= 0.1f;
-
-		_vec3 vPos;
-		m_pTransform_Target->Get_Info(INFO_POS, &vPos);
-
-		m_fFov = D3DXToRadian(60.f);
-		m_vEye.x += vPos.x;
-		m_vEye.y += vPos.y;
-		m_vEye.z += vPos.z;
-		m_vAt = vPos;
+		ChangeFOV(60.f, 0.1f, 0.f, 0.f);
 	}
 	else if(m_bChangePOV && (dynamic_cast<CCubePlayer*>(pPlayer)->Get_Weapon() == dynamic_cast<CWeapon*>(Engine::Get_GameObject(STAGE_GUN, L"UZI1")) ||
 		dynamic_cast<CCubePlayer*>(pPlayer)->Get_Weapon() == dynamic_cast<CWeapon*>(Engine::Get_GameObject(STAGE_GUN, L"SHOTGUN"))))
 	{
-		_vec3 vLook;
-		m_pTransform_Target->Get_Info(INFO_LOOK, &vLook);
-
-		_vec3 vRight;
-		m_pTransform_Target->Get_Info(INFO_RIGHT, &vRight);
-
-		_vec3 vUp;
-		m_pTransform_Target->Get_Info(INFO_UP, &vUp);
-
-		m_vEye = (vLook * -1.f);
-		D3DXVec3Normalize(&m_vEye, &m_vEye);
-		m_vEye *= 1.5f;
-
-		_vec3 vPos;
-		m_pTransform_Target->Get_Info(INFO_POS, &vPos);
-
-		D3DXVec3Normalize(&vRight, &vRight);
-
-		m_fFov = D3DXToRadian(60.f);
-		m_vEye.x += vPos.x;
-		m_vEye.y += vPos.y;
-		m_vEye.z += vPos.z;
-		m_vAt = vPos + (vRight * 0.5f);
+		ChangeFOV(60.f, 1.5f, 0.f, 3.f);
 	}
 	else if (dynamic_cast<CCubePlayer*>(pPlayer)->Get_SniperZoom() == true)
 	{
-		_vec3 vLook;
-		m_pTransform_Target->Get_Info(INFO_LOOK, &vLook);
-
-		_vec3 vRight;
-		m_pTransform_Target->Get_Info(INFO_RIGHT, &vRight);
-
-		_vec3 vUp;
-		m_pTransform_Target->Get_Info(INFO_UP, &vUp);
-
-		m_vEye = (vLook * -1.f);
-
-		_vec3 vPos;
-		m_pTransform_Target->Get_Info(INFO_POS, &vPos);
-
-		D3DXVec3Normalize(&vLook, &vLook);
-		
-		m_fFov = D3DXToRadian(15.f);
-		m_vEye.x += vPos.x;
-		m_vEye.y += vPos.y;
-		m_vEye.z += vPos.z;
-		m_vAt = vPos + (vLook * 10.f);
-	}
-	else if (m_bPlayerHit)
-	{
-		Shaking_Camera(0.02f, 0.2f, _fTimeDelta);
+		ChangeFOV(15.f, 1.f, 10.f, 0.f);
 	}
 	else
 	{
@@ -229,4 +161,29 @@ void CStaticCamera::Shaking_Camera(const _float& _fPower, const _float& _fLimitT
 		m_vEye = vOldEye;
 		m_bPlayerHit = false;
 	}
+}
+
+void CStaticCamera::ChangeFOV(const _float & _fFOV, const _float & _fDistance, const _float& _fLook, const _float& _fRight)
+{
+	_vec3 vLook;
+	m_pTransform_Target->Get_Info(INFO_LOOK, &vLook);
+
+	_vec3 vRight;
+	m_pTransform_Target->Get_Info(INFO_RIGHT, &vRight);
+
+	_vec3 vUp;
+	m_pTransform_Target->Get_Info(INFO_UP, &vUp);
+
+	m_vEye = (vLook * -1.f);
+	D3DXVec3Normalize(&m_vEye, &m_vEye);
+	m_vEye *= _fDistance;
+
+	_vec3 vPos;
+	m_pTransform_Target->Get_Info(INFO_POS, &vPos);
+
+	m_fFov = D3DXToRadian(_fFOV);
+	m_vEye.x += vPos.x;
+	m_vEye.y += vPos.y;
+	m_vEye.z += vPos.z;
+	m_vAt = vPos + (vLook * _fLook) + (vRight * _fRight);
 }

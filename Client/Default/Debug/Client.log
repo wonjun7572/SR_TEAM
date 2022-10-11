@@ -1,4 +1,18 @@
 ﻿  StaticCamera.cpp
+  코드를 생성하고 있습니다...
+  건너뛰고 있습니다... (관련된 변경 내용 없음)
+  WallMgr.cpp
+  ToolScene.cpp
+  Stage.cpp
+  ShotParticle.cpp
+  PlayButton.cpp
+  OptionButton.cpp
+  MainApp.cpp
+  Logo.cpp
+  LoadingScene.cpp
+  ItemParticle.cpp
+  ImguiMgr.cpp
+  BulletParicle.cpp
      ../Bin\Client.lib 라이브러리 및 ../Bin\Client.exp 개체를 생성하고 있습니다.
   Client.vcxproj -> C:\Users\sam51\Desktop\SR_TEAM\Client\Default\../Bin\Client.exe
   Client.vcxproj -> ../Bin\Client.pdb (Full PDB)

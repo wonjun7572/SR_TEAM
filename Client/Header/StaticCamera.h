@@ -27,12 +27,14 @@ private:
 	void		Mouse_Fix();
 	void		Look_Taget(const _float& _fTimeDelta);
 	void		Shaking_Camera(const _float& _fPower, const _float& _fLimitTime, const _float& _fTimeDelta);
+	void		ChangeFOV(const _float& _fFOV, const _float& _fDistance, const _float& _fLook, const _float& _fRight);
 
 private:
 	CTransform*		m_pTransform_Target = nullptr;
 	_float			m_fDistance;
 	_float			m_fSpeed = 10.f;
 	_float			m_fAngle = 0.f;
+
 
 	_bool			m_bChangePOV = false;
 
