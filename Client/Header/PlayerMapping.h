@@ -42,9 +42,7 @@ private:
 	_bool	m_bWorldMap = false;
 	_bool	m_bMinimap = false;
 
-	_bool	m_bInit = false;
-
-	_float m_fSpeed = 5.f;
+	_float m_fSpeed = 15.f;
 
 	_matrix m_matWorld;
 	_matrix m_matView;

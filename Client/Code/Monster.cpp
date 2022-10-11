@@ -4,11 +4,10 @@
 #include "Weapon.h"
 #include "MonsterParticle.h"
 #include "MonsterUI.h"
+#include "ComboUI.h"
 #include "MonsterMapping.h"
 
 static _int m_iCnt = 0;
-
-
 
 CMonster::CMonster(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
@@ -32,6 +31,9 @@ _int CMonster::Update_Object(const _float & fTimeDelta)
 	
 	if (m_pPlayerTransCom == nullptr)
 		m_pPlayerTransCom = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_CHARACTER, L"PLAYER", TRANSFORM_COMP, ID_DYNAMIC));
+
+	if (m_pComboUI == nullptr)
+		m_pComboUI = dynamic_cast<CComboUI*>(Engine::Get_GameObject(STAGE_UI, L"ComboUI"));
 
 	_vec3 vUIPos;
 	m_pTransCom->Get_Info(INFO_POS, &vUIPos);
@@ -122,6 +124,8 @@ void CMonster::Hit_Check(_float _deltaTime)
 			if (pWeapon->Get_Shoot() == true)
 			{
 				m_tAbility->fCurrentHp -= pWeapon->Get_Ability()->fBulletAttack;
+				m_pComboUI->On_Switch();
+				m_pComboUI->ComboCntPlus();
 				Hit_Effect();
 				pWeapon->Set_Shoot(false);
 			}
