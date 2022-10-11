@@ -8,7 +8,7 @@
 CItemParticle::CItemParticle(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CPSystem(pGraphicDev)
 {
-	m_fSize = 0.05f;
+	m_fSize = 0.1f;
 	m_vbSize = 2048;
 	m_vbOffset = 0;
 	m_vbBatchSize = 512;
