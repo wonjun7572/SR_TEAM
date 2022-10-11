@@ -287,6 +287,8 @@ _int CZombie::Update_Object(const _float & fTimeDelta)
 	if (m_bDead)
 	{
 		Create_Item();
+		Monster_DeleteMapping();
+
 		return -1;
 	}
 	if (m_bFirst)	//	1회만 모델을 불러오기 위함
@@ -332,6 +334,7 @@ _int CZombie::Update_Object(const _float & fTimeDelta)
 
 void CZombie::LateUpdate_Object(void)
 {
+	Monster_Mapping();
 	if (!m_bFirst)
 	{
 		Walk_Animation_Run();

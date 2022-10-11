@@ -61,6 +61,8 @@ _int CSlime::Update_Object(const _float & fTimeDelta)
 	if (m_bDead)
 	{
 		Create_Item();
+		Monster_DeleteMapping();
+
 		return -1;
 	}
 
@@ -95,10 +97,12 @@ _int CSlime::Update_Object(const _float & fTimeDelta)
 	m_pHitBoxTransCom->Set_Pos(vMonsterPos.x, vMonsterPos.y, vMonsterPos.z);
 	m_pSphereTransCom->Set_Pos(vMonsterPos.x, vMonsterPos.y, vMonsterPos.z);
 	return 0;
+
 }
 
 void CSlime::LateUpdate_Object(void)
 {
+	Monster_Mapping();
 	if (!m_bFirst)
 	{
 		Jump_Animation_Run();
