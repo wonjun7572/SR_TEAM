@@ -26,7 +26,7 @@ public:
 	virtual void	resetParticle(ATTRIBUTE* attribute) = 0;	// 한 파티클의 속성을 리셋
 	virtual void	addParticle();								// 파티클을 추가
 
-protected:
+public:
 	virtual void	preRender();		// 렌더링에 앞서 지정할 초기 렌더 상태
 	virtual void	render();			// 렌더링
 	virtual void	postRender();		// 특정 파티클 시스템이 지정했을 수 있는 렌더 상태를 복구할때 이용

@@ -45,10 +45,13 @@ Engine::_int CStaticCamera::Update_Object(const _float& fTimeDelta)
 	{	
 		Key_Input(fTimeDelta);
 
-		Look_Taget();
+		Look_Taget(fTimeDelta);
 		
 		Mouse_Fix();
+
+		Shaking_Camera(10.f, 2.f, fTimeDelta);
 	}
+
 	_int	iExit = CCamera::Update_Object(fTimeDelta);
 
 	return iExit;
@@ -94,7 +97,7 @@ void CStaticCamera::Mouse_Fix(void)
 	}
 }
 
-void CStaticCamera::Look_Taget(void)
+void CStaticCamera::Look_Taget(const _float& _fTimeDelta)
 {
 	if (nullptr == m_pTransform_Target)
 	{
@@ -126,7 +129,9 @@ void CStaticCamera::Look_Taget(void)
 		m_pTransform_Target->Get_Info(INFO_POS, &vPos);
 
 		m_fFov = D3DXToRadian(60.f);
-		m_vEye += vPos;
+		m_vEye.x += vPos.x;
+		m_vEye.y += vPos.y;
+		m_vEye.z += vPos.z;
 		m_vAt = vPos;
 	}
 	else if(m_bChangePOV && (dynamic_cast<CCubePlayer*>(pPlayer)->Get_Weapon() == dynamic_cast<CWeapon*>(Engine::Get_GameObject(STAGE_GUN, L"UZI1")) ||
@@ -151,7 +156,9 @@ void CStaticCamera::Look_Taget(void)
 		D3DXVec3Normalize(&vRight, &vRight);
 
 		m_fFov = D3DXToRadian(60.f);
-		m_vEye += vPos + (vRight * 0.5f);
+		m_vEye.x += vPos.x;
+		m_vEye.y += vPos.y;
+		m_vEye.z += vPos.z;
 		m_vAt = vPos + (vRight * 0.5f);
 	}
 	else if (dynamic_cast<CCubePlayer*>(pPlayer)->Get_SniperZoom() == true)
@@ -173,8 +180,14 @@ void CStaticCamera::Look_Taget(void)
 		D3DXVec3Normalize(&vLook, &vLook);
 		
 		m_fFov = D3DXToRadian(15.f);
-		m_vEye += vPos;
+		m_vEye.x += vPos.x;
+		m_vEye.y += vPos.y;
+		m_vEye.z += vPos.z;
 		m_vAt = vPos + (vLook * 10.f);
+	}
+	else if (m_bPlayerHit)
+	{
+		Shaking_Camera(0.02f, 0.2f, _fTimeDelta);
 	}
 	else
 	{
@@ -186,8 +199,8 @@ void CStaticCamera::Look_Taget(void)
 
 		_vec3 vUp;
 		m_pTransform_Target->Get_Info(INFO_UP, &vUp);
-
 		m_vEye = (vLook * -1.f);
+
 		D3DXVec3Normalize(&m_vEye, &m_vEye);
 		m_vEye *= 0.1f;
 
@@ -195,7 +208,25 @@ void CStaticCamera::Look_Taget(void)
 		m_pTransform_Target->Get_Info(INFO_POS, &vPos);
 
 		m_fFov = D3DXToRadian(60.f);
-		m_vEye += vPos;
+		m_vEye.x += vPos.x;
+		m_vEye.y += vPos.y;
+		m_vEye.z += vPos.z;
 		m_vAt = vPos;
+	}
+}
+
+void CStaticCamera::Shaking_Camera(const _float& _fPower, const _float& _fLimitTime, const _float& _fTimeDelta)
+{
+	_vec3 vOldEye = m_vEye;
+
+	m_fFrame += _fTimeDelta;
+	m_iReverse *= -1;
+	m_vEye.y = m_vEye.y + (_float(m_iReverse) * _fPower * _fTimeDelta);
+
+	if (m_fFrame >= _fLimitTime)
+	{
+		m_fFrame = 0.f;
+		m_vEye = vOldEye;
+		m_bPlayerHit = false;
 	}
 }
