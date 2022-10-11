@@ -28,12 +28,9 @@ _int CPlayButton::Update_Object(const _float & fTimeDelta)
 {
 	if (PointMouse())
 	{
-
-
-		if (Get_DIMouseState(DIM_LB) & 0x80)
+		if (Engine::Mouse_Down(DIM_LB))
 			Mouse_check = true;
 	}
-
 	Engine::CGameObject::Update_Object(fTimeDelta);
 	Add_RenderGroup(RENDER_UI, this);
 	return 0;
@@ -49,15 +46,12 @@ void CPlayButton::Render_Object(void)
 	Begin_OrthoProj();
 	m_iIndex = 0;
 	m_TextureCom->Set_Texture(m_iIndex);
-
 	if (PointMouse())
 	{
+		if (Checking = true)
 		{
-			if (Checking = true)
-			{
-				m_iIndex = 1;
-				m_TextureCom->Set_Texture(m_iIndex);
-			}
+			m_iIndex = 1;
+			m_TextureCom->Set_Texture(m_iIndex);
 		}
 	}
 	m_RcTexCom->Render_Buffer();

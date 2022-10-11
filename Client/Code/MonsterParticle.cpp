@@ -6,13 +6,11 @@
 CMonsterParticle::CMonsterParticle(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CPSystem(pGraphicDev)
 {
-
-	m_fSize = 0.1f;
+	m_fSize = 1.f;
 	m_vbSize = 2048;
 	m_vbOffset = 0;
 	m_vbBatchSize = 512;
 }
-
 
 CMonsterParticle::~CMonsterParticle()
 {
@@ -29,8 +27,6 @@ _int CMonsterParticle::Update_Object(const _float & fTimeDelta)
 {
 	for (list<ATTRIBUTE>::iterator iter = m_particles.begin(); iter != m_particles.end(); iter++)
 	{
-		iter->vPos += iter->vVelocity * fTimeDelta;
-
 		iter->fAge += fTimeDelta;
 
 		if (iter->fAge > iter->fLifeTime)
@@ -39,7 +35,7 @@ _int CMonsterParticle::Update_Object(const _float & fTimeDelta)
 
 	removeDeadParticles();
 
-	Add_RenderGroup(RENDER_PRIORITY, this);
+	Add_RenderGroup(RENDER_UI, this);
 
 	return 0;
 }
@@ -93,27 +89,11 @@ void CMonsterParticle::Free(void)
 void CMonsterParticle::resetParticle(ATTRIBUTE * attribute)
 {
 	attribute->bAlive = true;
-	CGameObject* pMonster = nullptr;
-	pMonster = Engine::Get_GameObject(STAGE_MONSTER, L"TargetCube1");
-	NULL_CHECK_RETURN(pMonster, );
 
-	CTransform* pTransform = nullptr;
+	attribute->vPos = m_vHitPatriclePos;
 
-	if (dynamic_cast<CTargetCube*>(pMonster)->Get_MAbility()->fCurrentHp <= 90)
-	{
-		pTransform = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_MONSTER, L"TargetCube1", TRANSFORM_COMP, ID_DYNAMIC));
-		NULL_CHECK_RETURN(pTransform, );
-		D3DXVECTOR3 vPos;
-		pTransform->Get_Info(INFO_POS, &vPos);
+	attribute->dwColor = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
 
-		D3DXVECTOR3 vDir;
-		pTransform->Get_Info(INFO_LOOK, &vDir);
-
-		attribute->vPos = vPos;
-
-		attribute->dwColor = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
-
-		attribute->fAge = 0.0f;
-		attribute->fLifeTime = 5.f;
-	}
+	attribute->fAge = 0.0f;
+	attribute->fLifeTime = 0.5f;
 }

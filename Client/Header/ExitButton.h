@@ -2,13 +2,6 @@
 #include "GameObject.h"
 #include "Engine_Include.h"
 
-BEGIN(Engine)
-
-class CRcTex;
-class CTransform;
-class CTexture;
-
-
 class CExitButton :	public CGameObject
 {
 public:
@@ -16,7 +9,6 @@ public:
 	virtual ~CExitButton();
 
 public:
-
 	virtual HRESULT Ready_Object()	override;
 	virtual _int	Update_Object(const _float& fTimeDelta) override;
 	virtual void	LateUpdate_Object(void)	override;
@@ -29,21 +21,17 @@ private:
 
 private:
 	HRESULT		Add_Component(void);
-
-
 	void		Begin_OrthoProj();
 	void		End_OrthoProj();
-
-
-
-	_matrix m_matWorld;
-	_matrix m_matView;
-	_matrix m_matProj;
 
 private:
 	_bool		Mouse_check = false;
 	_bool		Checking = false;
 	_bool		PointMouse(void);
+
+	_matrix m_matWorld;
+	_matrix m_matView;
+	_matrix m_matProj;
 
 	wstring		m_strEB;
 	_int		m_iIndex = 0;
@@ -53,9 +41,4 @@ public:
 
 private:
 	virtual void Free(void);
-
-
-
 };
-
-END

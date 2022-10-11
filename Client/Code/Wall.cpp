@@ -80,7 +80,6 @@ HRESULT CWall::Wall_Mapping(void)
 		Engine::Add_GameObject(STAGE_WALL, m_pMapWall, szCntName);
 		m_listWallCnt.push_back(szCntName);
 
-
 		m_pWallMapping = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_WALL, szCntName, TRANSFORM_COMP, ID_DYNAMIC));
 		NULL_CHECK_RETURN(m_pWallMapping, E_FAIL);
 		++m_iCnt;

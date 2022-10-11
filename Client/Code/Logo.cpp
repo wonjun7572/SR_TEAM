@@ -2,12 +2,15 @@
 #include "..\Header\Logo.h"
 
 #include "Export_Function.h"
-#include "TestPlayer.h"
-#include "TestMonster.h"
 #include "Stage.h"
 #include "ToolScene.h"
 #include "LogoBilBoard.h"
 #include "LogoCamera.h"
+#include "Loading.h"
+#include "PlayButton.h"
+#include "OptionButton.h"
+#include "LogoUI.h"
+#include "ExitButton.h"
 
 CLogo::CLogo(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CScene(pGraphicDev)
@@ -68,15 +71,9 @@ HRESULT CLogo::Ready_Layer_Environment(const _tchar * pLayerTag)
 
 	CGameObject*      pGameObject = nullptr;
 
-	// backGround
-	pGameObject = CBackGround::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"BackGround", pGameObject), E_FAIL);
-
 	pGameObject = CLogoCamera::Create(m_pGraphicDev, &_vec3(0.f, 10.f, -20.f), &_vec3(0.f, 10.f, 0.f), &_vec3(0.f, 1.f, 0.f));
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"DynamicCamera", pGameObject), E_FAIL);
-
 
 	//Terrian 
 	pGameObject = CTerrain::Create(m_pGraphicDev);

@@ -15,7 +15,6 @@ CLogoBilboard::~CLogoBilboard()
 HRESULT CLogoBilboard::Ready_Object(const _vec3& vPos)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
-
 	m_pTransCom->Set_Scale(2.3f, 5.6f, 0.f);
 	m_pTransCom->Set_Pos(vPos.x, vPos.y, vPos.z);
 
@@ -24,11 +23,9 @@ HRESULT CLogoBilboard::Ready_Object(const _vec3& vPos)
 
 _int CLogoBilboard::Update_Object(const _float & fTimeDelta)
 {
-	m_pTransCom->Billboard_Transform(fTimeDelta);
-
 	Engine::CGameObject::Update_Object(fTimeDelta);
+	m_pTransCom->Billboard_Transform(fTimeDelta);
 	Add_RenderGroup(RENDER_NONALPHA, this);
-
 	return 0;
 }
 

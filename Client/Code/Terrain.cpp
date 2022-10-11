@@ -8,7 +8,6 @@ CTerrain::CTerrain(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 }
 
-
 CTerrain::~CTerrain()
 {
 }
@@ -51,7 +50,6 @@ void CTerrain::Render_Object(void)
 	//////////////////////////////////	클라이언트<->툴 변경작업 ///////////////////////////////////////////////////////
 
 	FAILED_CHECK_RETURN(Set_Material(), );
-//	==	FAILED_CHECK(Set_Material());
 
 	m_pBufferCom->Render_Buffer();
 
