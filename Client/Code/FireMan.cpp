@@ -64,6 +64,8 @@ _int CFireMan::Update_Object(const _float & fTimeDelta)
 	if (m_bDead)
 	{
 		Create_Item();
+		Monster_DeleteMapping();
+
 		return -1;
 	}
 
@@ -103,6 +105,7 @@ _int CFireMan::Update_Object(const _float & fTimeDelta)
 		if (m_AnimationTime >= 1.f)
 		{
 			CPoolMgr::GetInstance()->Reuse_Obj(m_pGraphicDev, &vPos, &vDir, m_tAbility->fDamage);
+		
 			m_fFrame = 0.f;
 		}
 	}
@@ -112,16 +115,17 @@ _int CFireMan::Update_Object(const _float & fTimeDelta)
 		m_STATE = FIREMAN_IDLE;
 	}
 
-
 	_vec3 vMonsterPos;
 	m_pTransCom->Get_Info(INFO_POS, &vMonsterPos);
 	m_pHitBoxTransCom->Set_Pos(vMonsterPos.x, vMonsterPos.y, vMonsterPos.z);
 	m_pSphereTransCom->Set_Pos(vMonsterPos.x, vMonsterPos.y, vMonsterPos.z);
 	return 0;
+
 }
 
 void CFireMan::LateUpdate_Object(void)
 {
+	Monster_Mapping();
 	if (!m_bFirst && (m_STATE == FIREMAN_WALK))
 	{
 		Walk_Animation_Run();

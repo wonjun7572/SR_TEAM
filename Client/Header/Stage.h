@@ -3,9 +3,7 @@
 #include "Scene.h"
 #include "SkyBox.h"
 #include "Terrain.h"
-#include "TestPlayer.h"
 #include "StaticCamera.h"
-#include "DynamicCamera.h"
 #include "DynamicCamera.h"
 
 class CStage : public Engine::CScene

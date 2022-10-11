@@ -1,6 +1,8 @@
 #pragma once
 #include "GameObject.h"
 
+class CStaticCamera;
+
 class CBullet : public CGameObject
 {
 public:
@@ -26,6 +28,8 @@ private:
 	CSphereTex*			m_pBufferCom = nullptr;
 
 	CCollision*			m_pCollision = nullptr;
+
+	CStaticCamera*		m_pStaticCam = nullptr;
 
 	CGameObject*		m_pPlayer = nullptr;
 	CTransform*			m_pPlayerTransCom = nullptr;

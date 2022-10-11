@@ -6,6 +6,7 @@ USING(Engine)
 class CWeapon;
 class CShotParticle;
 class CBulletParticle;
+class CProjectileParticle;
 
 class CCubePlayer : public CGameObject
 {
@@ -107,7 +108,7 @@ private:
 private:
 	CBulletParticle* m_pBulletParicle = nullptr;
 	CShotParticle*	 m_pShotParicle = nullptr;
-
+	CProjectileParticle* m_pProjectileParicle = nullptr;
 private:
 	_float			m_fLookAngle = 0.f;
 	_float			m_fDownAngle = 0.f;

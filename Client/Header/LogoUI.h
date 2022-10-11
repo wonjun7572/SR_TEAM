@@ -1,8 +1,7 @@
 #pragma once
 #include "GameObject.h"
-#include "PlayButton.h"
-class CLogoUI :
-	public CGameObject
+
+class CLogoUI :	public CGameObject
 {
 public:
 	explicit CLogoUI(LPDIRECT3DDEVICE9 pGraphicDev);

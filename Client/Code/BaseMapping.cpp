@@ -21,14 +21,9 @@ HRESULT CBaseMapping::Ready_Object(void)
 
 _int CBaseMapping::Update_Object(const _float & fTimeDelta)
 {
-	if (m_bWorldmap)
-	{
-		Add_RenderGroup(RENDER_WORLDMAP, this);
-	}
-	if (m_bMinimap)
-	{
-		Add_RenderGroup(RENDER_MINIMAP, this);
-	}
+
+	Add_RenderGroup(RENDER_ALPHA, this);
+	
 	WorldMap();
 	Key_Input();
 	CGameObject::Update_Object(fTimeDelta);
@@ -43,22 +38,50 @@ void CBaseMapping::LateUpdate_Object(void)
 
 void CBaseMapping::Render_Object(void)
 {
+		m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+		if (m_bWorldmap)
+		{
+			//	m_pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_DESTALPHA);
+		//	m_pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ZERO);
+
+
+			//빛표현 블랜딩
+			//	m_pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ONE);
+			//	m_pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+
+			//간단한 그림자
+			//m_pGraphicDev->SetRenderState(D3DRS_BLENDOP, D3DBLENDOP_REVSUBTRACT);
+			//m_pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+			//m_pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+
+			//곱셈합성 스킬뷰에 쓰면 좋을듯
+			//m_pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_SRCCOLOR);
+			//m_pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_ZERO);
+
+			//제곱합성 밝은색은 그대로, 어두운색은 더 어둡게 ( 보스전 방 꾸미는 데 쓰면 좋을듯)
+			m_pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_DESTCOLOR);
+			//m_pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_ZERO);
+
+			//네거티브, 포지티브 합성 (검<->흰)
+			//m_pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ZERO);
+			//m_pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_INVDESTCOLOR);
+		}
+
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
 
 	Begin_OrthoProj();
 	m_pTexture->Set_Texture(0);
 	if (m_bMinimap)
 	{
-		m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
 
 		m_pRcCom->Render_Buffer();
-		m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
 
 	}
 	End_OrthoProj();
 	if (m_bWorldmap)
 		m_pCube->Render_Buffer();
 	
+		m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
 }
 
 
@@ -66,8 +89,11 @@ void CBaseMapping::Key_Input(void)
 {
 	if(Key_Down(DIK_M))
 	{		
-		CRenderer::GetInstance()->Switch_Minimap();
 		m_bMinimap = !m_bMinimap;
+	}
+	if (Key_Down(DIK_F))
+	{
+		m_bWorldmap = !m_bWorldmap;		
 	}
 }
 

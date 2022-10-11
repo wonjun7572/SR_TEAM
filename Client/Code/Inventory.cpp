@@ -281,8 +281,6 @@ void CInventory::Mouse()
 	GetCursorPos(&pt);
 	ScreenToClient(g_hWnd, &pt);
 
-	//cout << 400 - pt.x +WINCX/2<< endl;
-	//cout << pt.y << endl;
 	_float DefaultX = 955.f;
 	_float DefaultY = 345.f;
 	_float SizeX = 45.f;
@@ -359,7 +357,6 @@ void CInventory::Mouse()
 	//ÁÂÅ¬¸¯ Àåºñ ÀåÂø
 	
 
-	cout << iWeaponNumb << endl;
 	for (auto& iter : m_vecWeapon)
 	{
 		if (iter != nullptr&& iter == m_vecWeapon[iWeaponNumb] && m_pIconGrab != nullptr && Mouse_Down(DIM_LB))

@@ -1,15 +1,6 @@
 #pragma once
 #include "GameObject.h"
 
-
-
-namespace Engine
-{
-	class CTransform;
-	class CTerrainTex;
-	class CTexture;
-}
-
 class CTerrain : public CGameObject
 {
 private:

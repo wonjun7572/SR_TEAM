@@ -8,7 +8,7 @@
 CItemParticle::CItemParticle(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CPSystem(pGraphicDev)
 {
-	m_fSize = 0.05f;
+	m_fSize = 0.1f;
 	m_vbSize = 2048;
 	m_vbOffset = 0;
 	m_vbBatchSize = 512;
@@ -116,19 +116,15 @@ void CItemParticle::resetParticle(ATTRIBUTE * attribute)
 	_vec3 min = _vec3(-1.0f, -1.0f, -1.0f);
 	_vec3 max = _vec3(1.0f, 1.0f, 1.0f);
 	GetRandomVector(&attribute-> vVelocity, &min, &max);
-	attribute->vPos = vItemParticlePos + attribute ->vVelocity/20.f;
+	attribute->vPos = vItemParticlePos + attribute->vVelocity / 20.f;
 	attribute->vVelocity *= .7f;
 	attribute->dwColor = D3DXCOLOR(GetRandomFloat(0.0f, 1.0f), GetRandomFloat(0.0f, 1.0f), GetRandomFloat(0.0f, 1.0f), 1.0f);
-	
-
 		
-		//attribute->vPos.z = vItemParticlePos.z + 0.5f;
-		//attribute->vVelocity = vDir * 5000.f;
+	//attribute->vPos.z = vItemParticlePos.z + 0.5f;
+	//attribute->vVelocity = vDir * 5000.f;
 
-		//attribute->dwColor = D3DXCOLOR(1.f, 1.f, 0.5f, 1.0f);
+	//attribute->dwColor = D3DXCOLOR(1.f, 1.f, 0.5f, 1.0f);
 
-		attribute->fAge = 0.0f;
-		attribute->fLifeTime = 1.f;
-
-	
+	attribute->fAge = 0.0f;
+	attribute->fLifeTime = 1.f;
 }

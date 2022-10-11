@@ -72,7 +72,8 @@
 #define	SHOTPARTICLE_TEX_PATH		L"../Bin/Resources/Particle/fireball_hit_big0.png"
 #define BULLETPARTICLE_TEX			L"BULLETPARTICLE_TEX"
 #define BULLETPARTICLE_TEX_PATH		L"../Bin/Resources/Particle/BulletParticle.png"
-
+#define PROJECTILEPARTICLE_TEX		L"PROJECTILEPARTICLE_TEX"
+#define PROJECTILEPARTICLE_TEX_PATH	L"../Bin/Resources/Particle/BulletParticle.png"
 // CrossHair
 #define CROSSHAIR_RIFLE_TEX			 L"Proto_CrossHeader_Rifle"
 #define CROSSHAIR_RIFLE_TEX_PATH	 L"../Bin/Resources/UI/Sprite/CrossHair_Rifle.png"

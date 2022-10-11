@@ -62,7 +62,8 @@
 #include "Skeleton.h"
 #include "MonsterUI.h"
 #include "HitBarUI.h"
-#include "Illusioner.h"
+#include "MonsterParticle.h"
+
 CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CScene(pGraphicDev)
 {
@@ -149,6 +150,10 @@ HRESULT CStage::Ready_Layer_Environment(const _tchar * pLayerTag)
 	pGameObject = CItemParticle::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"ItemParticle", pGameObject), E_FAIL);
+
+	pGameObject = CMonsterParticle::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"MonsterParticle", pGameObject), E_FAIL);
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
@@ -371,28 +376,19 @@ HRESULT CStage::Ready_Layer_Monster(const _tchar * pLayerTag)
 
 	CGameObject*		pGameObject = nullptr;
 	
-	//pGameObject = CCubeMonsterArm::Create(m_pGraphicDev);
-	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"M_LeftArm", pGameObject), E_FAIL);
-	//
-	//pGameObject = CCubeMonsterArm::Create(m_pGraphicDev);
-	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"M_RighrArm", pGameObject), E_FAIL);
-	//
-	//pGameObject = CCubeMonsterBody::Create(m_pGraphicDev);
-	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"M_Body", pGameObject), E_FAIL);
-	//
-	//pGameObject = CCubeMonsterHead::Create(m_pGraphicDev);
-	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"M_Head", pGameObject), E_FAIL);
-	//
-	//pGameObject = CCubeMonster::Create(m_pGraphicDev);
-	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"CubeMonster", pGameObject), E_FAIL);
-
 	// 위랑 아래랑 같아야함 문자열, 몬스터 아이템 땜시
+	
+	for (int i = 0; i < 5; i++)
+	{
+		_tchar* szName = new _tchar[256]{};
+		wstring wName = L"Zombie_%d";
+		wsprintfW(szName, wName.c_str(), i);
+		NameList.push_back(szName);
 
+		pGameObject = CZombie::Create(m_pGraphicDev, _vec3(_float(rand() % 5 + 5), 0.6f, _float(rand() % 5 + 5)), szName);
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+	}
 	/*
 	for (int i = 0; i < 10; i++)
 	{
@@ -401,7 +397,7 @@ HRESULT CStage::Ready_Layer_Monster(const _tchar * pLayerTag)
 		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
 	}*/
 
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < 2; i++)
 	{
 		_tchar* szName = new _tchar[256]{};
 		wstring wName = L"Fireman_%d";
@@ -425,37 +421,7 @@ HRESULT CStage::Ready_Layer_Monster(const _tchar * pLayerTag)
 		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
 	}
 
-
-	for (int i = 0; i < 5; i++)
-	{
-		_tchar* szName = new _tchar[256]{};
-		wstring wName = L"Zombie_%d";
-		wsprintfW(szName, wName.c_str(), i);
-		NameList.push_back(szName);
-
-		pGameObject = CZombie::Create(m_pGraphicDev, _vec3(_float(rand() % 5 + 10), 0.6f, _float(rand() % 5 + 24)), szName);
-		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
-	}
-
-	for (int i = 0; i < 3; i++)
-	{
-		_tchar* szName = new _tchar[256]{};
-		wstring wName = L"Illusioner_%d";
-		wsprintfW(szName, wName.c_str(), i);
-		NameList.push_back(szName);
-
-		pGameObject = CIllusioner::Create(m_pGraphicDev, _vec3(_float(rand() % 3 + 24.f), 0.6f, _float(rand() % 3 + 10.f)), szName);
-		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
-	}
-
-
 	m_mapLayer.insert({ pLayerTag, pLayer });
-
-
-
-	
 
 	return S_OK;
 }
@@ -583,7 +549,6 @@ HRESULT CStage::Ready_Layer_Gun(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Sniper_Part_4", pGameObject), E_FAIL);
 
-
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
 	return S_OK;
@@ -620,7 +585,6 @@ HRESULT CStage::Ready_Layer_GunItem(const _tchar * pLayerTag)
 	pGameObject = CGetSniper::Create(m_pGraphicDev, _vec3(16.f, 0.6f, 20.f));
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"GetSniper", pGameObject), E_FAIL);
-
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 

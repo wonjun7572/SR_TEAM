@@ -27,7 +27,7 @@ _int CExitButton::Update_Object(const _float & fTimeDelta)
 {
 	if (PointMouse())
 	{
-		if (Get_DIMouseState(DIM_LB) & 0x80)
+		if (Mouse_Down(DIM_LB))
 			Mouse_check = true;
 	}
 
@@ -50,19 +50,15 @@ void CExitButton::Render_Object(void)
 
 	if (PointMouse())
 	{
+		if (Checking = true)
 		{
-			if (Checking = true)
-			{
-				m_iIndex = 1;
-				m_pTextureCom->Set_Texture(m_iIndex);
-			}
+			m_iIndex = 1;
+			m_pTextureCom->Set_Texture(m_iIndex);
 		}
 	}
 	m_pRcTexCom->Render_Buffer();
 	Render_Font(L"ExitFont", m_strEB.c_str(), &_vec2(1150.f, 530.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
 	End_OrthoProj();
-
-
 }
 
 

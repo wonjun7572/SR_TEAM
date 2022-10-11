@@ -1,13 +1,12 @@
 #pragma once
 
 #include "Scene.h"
-#include "Loading.h"
-#include "BackGround.h"
-#include "PlayButton.h"
-#include "OptionButton.h"
-#include "LoadingScene.h"
-#include "LogoUI.h"
-#include "ExitButton.h"
+
+class CLoading;
+class CPlayButton;
+class COptionButton;
+class CExitButton;
+class CLogoUI;
 
 class CLogo : public Engine::CScene
 {
