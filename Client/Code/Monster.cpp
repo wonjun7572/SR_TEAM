@@ -4,6 +4,11 @@
 #include "Weapon.h"
 #include "MonsterParticle.h"
 #include "MonsterUI.h"
+#include "MonsterMapping.h"
+
+static _int m_iCnt = 0;
+
+
 
 CMonster::CMonster(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
@@ -51,6 +56,37 @@ void CMonster::LateUpdate_Object(void)
 
 void CMonster::Render_Object(void)
 {
+}
+
+HRESULT CMonster::Monster_Mapping(void)
+{
+	_vec3		vPos;
+	m_pHitBoxTransCom->Get_Info(INFO_POS, &vPos);
+	if (!m_MappingInit)
+	{
+		CGameObject*	m_pMapMonster = CMonsterMapping::Create(m_pGraphicDev);
+		wsprintf(m_szCntName, L"");
+		const _tchar*	szNumbering = L"MapMonster_%d";
+		wsprintf(m_szCntName, szNumbering, m_iCnt);
+		Engine::Add_GameObject(STAGE_MAPPING, m_pMapMonster, m_szCntName);
+		m_listMonsterCnt.push_back(m_szCntName);
+
+		m_pMonsterMapping = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_MAPPING, m_szCntName, TRANSFORM_COMP, ID_DYNAMIC));
+		NULL_CHECK_RETURN(m_pMonsterMapping, E_FAIL);
+		++m_iCnt;
+		m_MappingInit = true;
+		
+	}
+	m_pMonsterMapping->Set_Pos(vPos.x, vPos.y, vPos.z);	
+	return S_OK;
+	
+}
+
+HRESULT CMonster::Monster_DeleteMapping(void)
+{
+	Delete_GameObject(STAGE_MAPPING, m_szCntName);
+	
+	return S_OK;
 }
 
 void CMonster::Hit_Effect()
@@ -109,5 +145,12 @@ void CMonster::Hit_Check(_float _deltaTime)
 
 void CMonster::Free(void)
 {
+	for (auto& iter : m_listMonsterCnt)
+	{
+		if (iter != nullptr)
+			delete iter;
+	}
+
+	m_listMonsterCnt.clear();
 	CGameObject::Free();
 }

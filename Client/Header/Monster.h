@@ -17,6 +17,9 @@ protected:
 	virtual void		Render_Object(void) override;
 
 	MONSTERABILITY*		Get_MAbility() { return m_tAbility; }
+	HRESULT				Monster_Mapping(void);
+	HRESULT				Monster_DeleteMapping(void);
+
 
 	void				Hit_Effect();
 
@@ -49,6 +52,13 @@ protected:
 	CMonsterParticle*	 m_pHitParicle = nullptr;
 	
 	_float				m_fUISwitchTime = 0.f;
+
+
+	_bool				m_MappingInit = false;
+	list<TCHAR*>		m_listMonsterCnt;
+	TCHAR*				m_szCntName = new TCHAR[64];
+
+	CTransform*			m_pMonsterMapping = nullptr;
 
 protected:
 	virtual void	Free(void)override;

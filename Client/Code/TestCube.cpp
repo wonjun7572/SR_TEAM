@@ -176,6 +176,7 @@ HRESULT CTestCube::Interact(void)
 			if (vPos.y < 15)
 			{
 				m_bDoorOpen = true;
+
 			}
 	}	
 
@@ -193,6 +194,7 @@ HRESULT CTestCube::Interact(void)
 		if(vPos.y > -15)
 		vPos.y -= 0.1f;
 		m_pTransCom->Set_Pos(vPos.x, vPos.y, vPos.z);
+		
 	}
 
 	return S_OK;
@@ -237,8 +239,9 @@ HRESULT CTestCube::Wall_Mapping(void)
 		m_bMappingInit = true;
 
 		CGameObject*	m_pMapWall = CWallMapping::Create(m_pGraphicDev);
-		if (m_pMapWall != nullptr && m_iTexIndex==37)
+		if (m_pMapWall != nullptr && m_iTexIndex == 37 || m_iTexIndex == 45 || m_iTexIndex == 99)
 		{
+			
 			dynamic_cast<CWallMapping*>(m_pMapWall)->Set_Texture(37);
 		}
 		TCHAR* szCntName = new TCHAR[64];
