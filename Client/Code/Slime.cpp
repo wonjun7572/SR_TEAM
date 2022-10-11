@@ -8,6 +8,7 @@
 #include "PoolMgr.h"
 
 #include "TransAxisBox.h"
+#include "ComboUI.h"
 
 USING(Engine)
 
@@ -60,9 +61,9 @@ _int CSlime::Update_Object(const _float & fTimeDelta)
 {
 	if (m_bDead)
 	{
+		m_pComboUI->KillCntPlus();
 		Create_Item();
 		Monster_DeleteMapping();
-
 		return -1;
 	}
 

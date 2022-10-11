@@ -6,6 +6,7 @@
 #include "ObtainDefense.h"
 #include "ObtainBullet.h"
 #include "PoolMgr.h"
+#include "ComboUI.h"
 
 #include "TransAxisBox.h"
 
@@ -63,6 +64,7 @@ _int CFireMan::Update_Object(const _float & fTimeDelta)
 {
 	if (m_bDead)
 	{
+		m_pComboUI->KillCntPlus();
 		Create_Item();
 		Monster_DeleteMapping();
 

@@ -49,6 +49,14 @@ Engine::_int CLogo::Update_Scene(const _float& fTimeDelta)
 			FAILED_CHECK_RETURN(Engine::Set_Scene(pScene), E_FAIL);
 			return 0;
 		}
+
+		if (m_OptionButton->Get_MouseCheck())
+		{
+			CScene*      pScene = CToolScene::Create(m_pGraphicDev);
+			NULL_CHECK_RETURN(pScene, E_FAIL);
+			FAILED_CHECK_RETURN(Engine::Set_Scene(pScene), E_FAIL);
+			return 0;
+		}
 	}
 
 	return iResult;
@@ -161,7 +169,7 @@ HRESULT CLogo::Ready_Proto(void)
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_TerrainTexture", CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Terrain/Grass_%d.tga", TEX_NORMAL)), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_CubeTexture", CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/SkyBox/burger%d.dds", TEX_CUBE, 4)), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"SkyBox_TEX", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Sky01.jpg", TEX_NORMAL)), E_FAIL);
-
+	
 
 	}
 	{      //MENUUI

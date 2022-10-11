@@ -1,7 +1,3 @@
-#pragma region
-
-#pragma endregion
-
 #include "stdafx.h"
 #include "..\Header\Zombie.h"
 #include "CubePlayer.h"
@@ -10,6 +6,7 @@
 #include "ObtainDefense.h"
 #include "ObtainBullet.h"
 #include "PoolMgr.h"
+#include "ComboUI.h"
 
 #include "TransAxisBox.h"
 
@@ -69,67 +66,70 @@ HRESULT CZombie::Ready_Object(const _vec3& vPos, _tchar* Name)
 
 _int CZombie::Update_Object(const _float & fTimeDelta)
 {
-		if (m_bDead)
+	if (m_bDead)
+	{
+		Create_Item();
+		m_pComboUI->KillCntPlus();
+		Monster_DeleteMapping();
+		return -1;
+	}
+
+	if (m_bFirst)
+	{
+		m_bFirst = false;
+		Engine::Get_Scene()->New_Layer(m_MonsterName);
+		pMyLayer = Engine::Get_Layer(m_MonsterName);
+		FAILED_CHECK_RETURN(Build(), -1);
+	}
+
+	m_fTimeDelta = fTimeDelta;
+
+	CMonster::Update_Object(fTimeDelta);
+
+	_vec3 vPlayerPos;
+	m_pPlayerTransCom->Get_Info(INFO_POS, &vPlayerPos);
+	_vec3 vPlayerScale;
+	m_pPlayerTransCom->Get_Scale(&vPlayerScale);
+	_vec3 vScale;
+	m_pSphereTransCom->Get_Scale(&vScale);
+	_vec3 vPos;
+	m_pTransCom->Get_Info(INFO_POS, &vPos);
+	m_fFrame += fTimeDelta;
+	if (m_pCollision->Sphere_Collision(this->m_pSphereTransCom, m_pPlayerTransCom, vPlayerScale.x, vScale.x) && m_fFrame < 2.f)
+	{
+		m_pTransCom->Chase_Target(&vPlayerPos, 1.f, fTimeDelta);
+		m_STATE = MONSTER_WALK;
+	}
+
+	else if (m_pCollision->Sphere_Collision(this->m_pSphereTransCom, m_pPlayerTransCom, vPlayerScale.x, vScale.x) && m_fFrame >= 2.f)
+	{
+		m_pTransCom->Chase_Target(&vPlayerPos, 0.f, fTimeDelta);
+		m_STATE = MONSTER_ATTACK;
+		_vec3 vDir = vPlayerPos - vPos;
+		if (m_AnimationTime >= 1.f)
 		{
-			Create_Item();
-			return -1;
+			CPoolMgr::GetInstance()->Reuse_Obj(m_pGraphicDev, &vPos, &vDir, m_tAbility->fDamage);
+
+			m_fFrame = 0.f;
 		}
+	}
+	else
+	{
+		m_pTransCom->Chase_Target(&vPlayerPos, 0.f, fTimeDelta);
+		m_STATE = MONSTER_IDLE;
+	}
 
-		if (m_bFirst)
-		{
-			m_bFirst = false;
-			Engine::Get_Scene()->New_Layer(m_MonsterName);
-			pMyLayer = Engine::Get_Layer(m_MonsterName);
-			FAILED_CHECK_RETURN(Build(), -1);
-		}
+	_vec3 vMonsterPos;
+	m_pTransCom->Get_Info(INFO_POS, &vMonsterPos);
+	m_pHitBoxTransCom->Set_Pos(vMonsterPos.x, vMonsterPos.y, vMonsterPos.z);
+	m_pSphereTransCom->Set_Pos(vMonsterPos.x, vMonsterPos.y, vMonsterPos.z);
 
-		m_fTimeDelta = fTimeDelta;
-
-		CMonster::Update_Object(fTimeDelta);
-
-		_vec3 vPlayerPos;
-		m_pPlayerTransCom->Get_Info(INFO_POS, &vPlayerPos);
-		_vec3 vPlayerScale;
-		m_pPlayerTransCom->Get_Scale(&vPlayerScale);
-		_vec3 vScale;
-		m_pSphereTransCom->Get_Scale(&vScale);
-		_vec3 vPos;
-		m_pTransCom->Get_Info(INFO_POS, &vPos);
-		m_fFrame += fTimeDelta;
-		if (m_pCollision->Sphere_Collision(this->m_pSphereTransCom, m_pPlayerTransCom, vPlayerScale.x, vScale.x) && m_fFrame < 2.f)
-		{
-			m_pTransCom->Chase_Target(&vPlayerPos, 1.f, fTimeDelta);
-			m_STATE = MONSTER_WALK;
-		}
-
-		else if (m_pCollision->Sphere_Collision(this->m_pSphereTransCom, m_pPlayerTransCom, vPlayerScale.x, vScale.x) && m_fFrame >= 2.f)
-		{
-			m_pTransCom->Chase_Target(&vPlayerPos, 0.f, fTimeDelta);
-			m_STATE = MONSTER_ATTACK;
-				_vec3 vDir = vPlayerPos - vPos;
-			if (m_AnimationTime >= 1.f)
-			{
-				CPoolMgr::GetInstance()->Reuse_Obj(m_pGraphicDev, &vPos, &vDir, m_tAbility->fDamage);
-
-				m_fFrame = 0.f;
-			}
-		}
-		else
-		{
-			m_pTransCom->Chase_Target(&vPlayerPos, 0.f, fTimeDelta);
-			m_STATE = MONSTER_IDLE;
-		}
-
-		_vec3 vMonsterPos;
-		m_pTransCom->Get_Info(INFO_POS, &vMonsterPos);
-		m_pHitBoxTransCom->Set_Pos(vMonsterPos.x, vMonsterPos.y, vMonsterPos.z);
-		m_pSphereTransCom->Set_Pos(vMonsterPos.x, vMonsterPos.y, vMonsterPos.z);
-		
-		return 0;
+	return 0;
 }
 
 void CZombie::LateUpdate_Object(void)
 {
+	Monster_Mapping();
 	if (!m_bFirst && (m_STATE == MONSTER_WALK))
 	{
 		Walk_Animation_Run();
@@ -739,7 +739,6 @@ CZombie * CZombie::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3 & vPos, _tc
 
 void CZombie::Free(void)
 {
-
 	for (auto& iter : *(pMyLayer->Get_GamePairPtr()))
 	{
 		iter.second->Kill_Obj();

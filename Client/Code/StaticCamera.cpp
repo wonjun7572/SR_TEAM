@@ -4,6 +4,7 @@
 #include "Weapon.h"
 #include "Inventory.h"
 #include "Shop.h"
+#include "PlayerMapping.h"
 
 CStaticCamera::CStaticCamera(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CCamera(pGraphicDev)
@@ -52,6 +53,7 @@ Engine::_int CStaticCamera::Update_Object(const _float& fTimeDelta)
 	
 		Mouse_Fix();
 	}
+
 	_int   iExit = CCamera::Update_Object(fTimeDelta);
 
 	return iExit;
@@ -106,11 +108,21 @@ void CStaticCamera::Look_Target(const _float& _fTimeDelta)
 		NULL_CHECK(m_pTransform_Target);
 	}
 
+	if (nullptr == m_pBombTransform)
+	{
+		m_pBombTransform = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_MAPPING, L"Map", L"Bomb_TransCom", ID_DYNAMIC));
+		NULL_CHECK(m_pBombTransform);
+	}
+
 	CGameObject* pPlayer = nullptr;
 	pPlayer = Engine::Get_GameObject(STAGE_CHARACTER, L"PLAYER");
 
+	CGameObject* pBomb = nullptr;
+	pBomb = Engine::Get_GameObject(STAGE_MAPPING, L"Map");
+
 	if (!m_bChangePOV && (dynamic_cast<CCubePlayer*>(pPlayer)->Get_Weapon() == dynamic_cast<CWeapon*>(Engine::Get_GameObject(STAGE_GUN, L"UZI1")) ||
-		dynamic_cast<CCubePlayer*>(pPlayer)->Get_Weapon() == dynamic_cast<CWeapon*>(Engine::Get_GameObject(STAGE_GUN, L"SHOTGUN"))))
+		dynamic_cast<CCubePlayer*>(pPlayer)->Get_Weapon() == dynamic_cast<CWeapon*>(Engine::Get_GameObject(STAGE_GUN, L"SHOTGUN"))) 
+		&& dynamic_cast<CPlayerMapping*>(pBomb)->Get_WorldMap() == false)
 	{
 		_vec3 vLook;
 		m_pTransform_Target->Get_Info(INFO_LOOK, &vLook);
@@ -133,7 +145,8 @@ void CStaticCamera::Look_Target(const _float& _fTimeDelta)
 		m_vAt = vPos;
 	}
 	else if (m_bChangePOV && (dynamic_cast<CCubePlayer*>(pPlayer)->Get_Weapon() == dynamic_cast<CWeapon*>(Engine::Get_GameObject(STAGE_GUN, L"UZI1")) ||
-		dynamic_cast<CCubePlayer*>(pPlayer)->Get_Weapon() == dynamic_cast<CWeapon*>(Engine::Get_GameObject(STAGE_GUN, L"SHOTGUN"))))
+		dynamic_cast<CCubePlayer*>(pPlayer)->Get_Weapon() == dynamic_cast<CWeapon*>(Engine::Get_GameObject(STAGE_GUN, L"SHOTGUN")))
+		&& dynamic_cast<CPlayerMapping*>(pBomb)->Get_WorldMap() == false)
 	{
 		_vec3 vLook;
 		m_pTransform_Target->Get_Info(INFO_LOOK, &vLook);
@@ -157,7 +170,8 @@ void CStaticCamera::Look_Target(const _float& _fTimeDelta)
 		m_vEye += vPos + (vRight * 0.5f);
 		m_vAt = vPos + (vRight * 0.5f);
 	}
-	else if (dynamic_cast<CCubePlayer*>(pPlayer)->Get_SniperZoom() == true)
+	else if (dynamic_cast<CCubePlayer*>(pPlayer)->Get_SniperZoom() == true
+		&& dynamic_cast<CPlayerMapping*>(pBomb)->Get_WorldMap() == false)
 	{
 		_vec3 vLook;
 		m_pTransform_Target->Get_Info(INFO_LOOK, &vLook);
@@ -178,6 +192,28 @@ void CStaticCamera::Look_Target(const _float& _fTimeDelta)
 		m_fFov = D3DXToRadian(15.f);
 		m_vEye += vPos;
 		m_vAt = vPos + (vLook * 10.f);
+	}
+	else if (dynamic_cast<CPlayerMapping*>(pBomb)->Get_WorldMap() == true)
+	{
+		_vec3 vLook;
+		m_pBombTransform->Get_Info(INFO_LOOK, &vLook);
+
+		_vec3 vRight;
+		m_pBombTransform->Get_Info(INFO_RIGHT, &vRight);
+
+		_vec3 vUp;
+		m_pBombTransform->Get_Info(INFO_UP, &vUp);
+
+		m_vEye = (vLook * -1.f);
+		D3DXVec3Normalize(&m_vEye, &m_vEye);
+		m_vEye *= 15.f;
+
+		_vec3 vPos;
+		m_pBombTransform->Get_Info(INFO_POS, &vPos);
+
+		m_fFov = D3DXToRadian(60.f);
+		m_vEye += vPos + (vUp * 20.f);
+		m_vAt = vPos;
 	}
 	else
 	{

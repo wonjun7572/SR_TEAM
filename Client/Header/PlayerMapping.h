@@ -20,21 +20,29 @@ public:
 	virtual void	LateUpdate_Object(void) override;
 	virtual void	Render_Object(void) override;
 
+	_bool		Get_WorldMap() { return m_bWorldMap; }
+
 private:
 	HRESULT			Add_Component(void);
-	void		Begin_OrthoProj();
-	void		End_OrthoProj();
-	void		Key_Input(void);
+	void			Begin_OrthoProj();
+	void			End_OrthoProj();
+	void			Key_Input(const _float& fTimeDelta);
 private:
 	CTransform*		m_pTransformPlayer = nullptr;
 	CTransform*		m_pTransform = nullptr;
 	CTexture*		m_pTexture = nullptr;
-	CCubeTex*		m_pCube = nullptr;
+	CSphereTex*		m_pSphereTex = nullptr;
 	CRcTex*			m_pBufferCom = nullptr;
 	CBaseMapping*	m_pBaseMapping = nullptr;
 
+	CTexture*		m_pBombTexure = nullptr;
+
+	CTransform*		m_pBombTransform = nullptr;
+
 	_bool	m_bWorldMap = false;
 	_bool	m_bMinimap = false;
+
+	_float m_fSpeed = 15.f;
 
 	_matrix m_matWorld;
 	_matrix m_matView;

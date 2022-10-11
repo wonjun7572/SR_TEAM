@@ -21,9 +21,7 @@ HRESULT CBaseMapping::Ready_Object(void)
 
 _int CBaseMapping::Update_Object(const _float & fTimeDelta)
 {
-
 	Add_RenderGroup(RENDER_ALPHA, this);
-	
 	WorldMap();
 	Key_Input();
 	CGameObject::Update_Object(fTimeDelta);
@@ -73,15 +71,14 @@ void CBaseMapping::Render_Object(void)
 	m_pTexture->Set_Texture(0);
 	if (m_bMinimap)
 	{
-
 		m_pRcCom->Render_Buffer();
-
 	}
 	End_OrthoProj();
+
 	if (m_bWorldmap)
 		m_pCube->Render_Buffer();
 	
-		m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
+	m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
 }
 
 
@@ -91,6 +88,7 @@ void CBaseMapping::Key_Input(void)
 	{		
 		m_bMinimap = !m_bMinimap;
 	}
+
 	if (Key_Down(DIK_F))
 	{
 		m_bWorldmap = !m_bWorldmap;		
@@ -139,8 +137,6 @@ void CBaseMapping::WorldMap(void)
 {
 
 }
-
-
 
 HRESULT CBaseMapping::Add_Component(void)
 {
