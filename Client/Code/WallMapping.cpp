@@ -15,19 +15,16 @@ HRESULT CWallMapping::Ready_Object(void)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 	m_pTransform->Set_Scale(0.5f, 0.5f, 0.5f);
+	
 	return S_OK;
 }
 
 _int CWallMapping::Update_Object(const _float & fTimeDelta)
 {
-	if (m_bWorldMap)
-	{
-		Add_RenderGroup(RENDER_WORLDMAP, this);
-	}
-	if (m_bMinimap)
-	{
-		Add_RenderGroup(RENDER_MINIMAP, this);
-	}
+
+	
+		Add_RenderGroup(RENDER_ALPHA, this);
+	
 	Key_Input();
 
 	CGameObject::Update_Object(fTimeDelta);
@@ -42,15 +39,48 @@ void CWallMapping::LateUpdate_Object(void)
 
 void CWallMapping::Render_Object(void)
 {
+	if (m_bWorldMap)
+	{
+		m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+
+		//빛표현 블랜딩
+		//		m_pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ONE);
+		//		m_pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+
+		//간단한 그림자
+		//m_pGraphicDev->SetRenderState(D3DRS_BLENDOP, D3DBLENDOP_REVSUBTRACT);
+		//m_pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+		//m_pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+
+		//곱셈합성 스킬뷰에 쓰면 좋을듯
+		//m_pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_SRCCOLOR);
+		//m_pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_ZERO);
+
+		//제곱합성 밝은색은 그대로, 어두운색은 더 어둡게 ( 보스전 방 꾸미는 데 쓰면 좋을듯)
+		m_pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_DESTCOLOR);
+		//m_pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_ZERO);
+
+		//네거티브, 포지티브 합성 (검<->흰)
+		//m_pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ZERO);
+		//m_pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_INVDESTCOLOR);
+	}
+
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
 
 	Begin_OrthoProj();
-	m_pTexture->Set_Texture(57);
 	if (m_bMinimap)
+	{
+		m_pTexture->Set_Texture(m_iTextureIndex);
 		m_pRcCom->Render_Buffer();
+	}
 	End_OrthoProj();
 	if (m_bWorldMap)
+	{
+		m_pTexture->Set_Texture(46);
 		m_pCube->Render_Buffer();
+	}
+	m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
+
 }
 
 

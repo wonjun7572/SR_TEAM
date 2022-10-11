@@ -262,6 +262,9 @@
     <Filter Include="02. GameObject\01. For_Stage\08. Monster\04. Fireman">
       <UniqueIdentifier>{1e901fdb-4bfa-4af2-83fb-1fc754d2c808}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\02. For_Public\02. SkillCamera">
+      <UniqueIdentifier>{ef84c55b-c763-4a96-aa78-34314377b900}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -612,6 +615,12 @@
     <ClInclude Include="..\Header\FireMan.h">
       <Filter>02. GameObject\01. For_Stage\08. Monster\04. Fireman</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\ProjectileParticle.h">
+      <Filter>02. GameObject\01. For_Stage\12. Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\SkillCamera.h">
+      <Filter>02. GameObject\02. For_Public\02. SkillCamera</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -940,6 +949,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\FireMan.cpp">
       <Filter>02. GameObject\01. For_Stage\08. Monster\04. Fireman</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ProjectileParticle.cpp">
+      <Filter>02. GameObject\01. For_Stage\12. Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SkillCamera.cpp">
+      <Filter>02. GameObject\02. For_Public\02. SkillCamera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -18,6 +18,7 @@ public:
 	virtual _int	Update_Object(const _float& fTimeDelta) override;
 	virtual void	LateUpdate_Object(void) override;
 	virtual void	Render_Object(void) override;
+	void			Set_Texture(_int _iTexIndex) { m_iTextureIndex = _iTexIndex; }
 private:
 	void			Begin_OrthoProj();
 	void			End_OrthoProj();
@@ -35,7 +36,7 @@ private:
 	_matrix			m_matWorld;
 	_matrix			m_matView;
 	_matrix			m_matProj;
-	_int			m_iTextureIndex = 0;
+	_int			m_iTextureIndex = 71;
 	_bool			m_bWorldMap = false;
 	_bool			m_bMinimap = false;
 

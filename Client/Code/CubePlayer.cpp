@@ -10,6 +10,7 @@
 #include "Sniper.h"
 #include "ShotParticle.h"
 #include "BulletParticle.h"
+#include "ProjectileParticle.h"
 #include "Inventory.h"
 
 CCubePlayer::CCubePlayer(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -132,6 +133,9 @@ void CCubePlayer::Update_NullCheck()
 
 	if (!m_pBulletParicle)
 		m_pBulletParicle = dynamic_cast<CBulletParticle*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"BulletParticle"));
+
+	if (!m_pProjectileParicle)
+		m_pProjectileParicle = dynamic_cast<CProjectileParticle*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"ProjectileParticle"));
 }
 
 void CCubePlayer::Set_OnTerrain(void)
@@ -418,6 +422,16 @@ void CCubePlayer::Move()
 		m_pBodyWorld->Get_Info(INFO_RIGHT, &vDir);
 		D3DXVec3Normalize(&vDir, &vDir);
 	}
+	//else if (Key_Down(DIK_F))
+	//{
+	//	//알파블랜딩 키는 키 할당되어있음
+	//}
+	if (Key_Down(DIK_G))
+	{
+		m_pProjectileParicle->addParticle();
+	}
+
+	
 
 	if (Get_DIKeyState(DIK_SPACE))
 	{

@@ -39,7 +39,10 @@ _int CTestCube::Update_Object(const _float& fTimeDelta)
 {
 	Update_NullCheck();
 	CGameObject::Update_Object(fTimeDelta);
-	Add_RenderGroup(RENDER_NONALPHA, this);
+	if (!(dynamic_cast<CBaseMapping*>(Engine::Get_GameObject(STAGE_MAPPING, L"BaseMapping"))->Get_Worldmap()))
+	{
+		Add_RenderGroup(RENDER_NONALPHA, this);
+	}
 	Wall_Mapping();
 	Interact();
 		
@@ -48,7 +51,6 @@ _int CTestCube::Update_Object(const _float& fTimeDelta)
 
 void CTestCube::Render_Object()
 {
-	m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
 	
 
 	//빛표현 블랜딩
@@ -75,22 +77,24 @@ void CTestCube::Render_Object()
 	//불투명
 	//m_pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ZERO);
 	//m_pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_ONE);
+	if(! (dynamic_cast<CBaseMapping*>(Engine::Get_GameObject(STAGE_MAPPING, L"BaseMapping"))->Get_Worldmap()))
+	{
+	//m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+		if (m_bWireFrame)
+			m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 
+		m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransCom->Get_WorldMatrixPointer());
+		m_pTextureCom->Set_Texture(m_iTexIndex);
+		m_pBufferCom->Render_Buffer();
 
-	if (m_bWireFrame)
+		if (m_bWireFrame)
+			m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+
 		m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
-
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransCom->Get_WorldMatrixPointer());
-	m_pTextureCom->Set_Texture(m_iTexIndex);
-	m_pBufferCom->Render_Buffer();
-
-	if (m_bWireFrame)
+		m_pHitBox->Render_Buffer();
 		m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
-		
-	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
-	m_pHitBox->Render_Buffer();
-	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
-	m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
+	//	m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
+	}
 }
 
 // 큐브를 선택 후 터레인 자리위에 올려 놓는 함수
@@ -147,28 +151,32 @@ HRESULT CTestCube::Interact(void)
 		m_bSwitch = false;
 	}
 
-	if (!m_bLetterboxInit&& m_iTexIndex == 37 && m_bSwitch)
+	if (!m_bLetterboxInit&& m_bSwitch)
 	{
-		m_bLetterboxInit = true;
+		if (m_iTexIndex == 37 || m_iTexIndex == 45 || m_iTexIndex == 99)
+		{
+			m_bLetterboxInit = true;
 
-		m_pLetterBox = CLetterBox::Create(m_pGraphicDev, L"Press [E] to Interact", sizeof(L"Press [E] to Interact"), 0);
+			m_pLetterBox = CLetterBox::Create(m_pGraphicDev, L"Press [E] to Interact", sizeof(L"Press [E] to Interact"), 0);
 
-		TCHAR* szCntName = new TCHAR[64];
-		wsprintf(szCntName, L"WallLetter");
-		Engine::Add_GameObject(STAGE_MAPPING, m_pLetterBox, szCntName);
-		m_listLetterCnt.push_back(szCntName);
+			TCHAR* szCntName = new TCHAR[64];
+			wsprintf(szCntName, L"WallLetter");
+			Engine::Add_GameObject(STAGE_MAPPING, m_pLetterBox, szCntName);
+			m_listLetterCnt.push_back(szCntName);
 
-		++m_iLetterCnt;
-		//cout << m_iLetterCnt << endl;
-		Safe_Delete_Array(szCntName);
-
+			++m_iLetterCnt;
+			//cout << m_iLetterCnt << endl;
+			Safe_Delete_Array(szCntName);
+		}
 	}
 
 	if (m_bSwitch && Get_DIKeyState(DIK_E))
 	{
-		if (m_iTexIndex == 37) //초록색문
+		if (m_iTexIndex == 37 || m_iTexIndex == 45 || m_iTexIndex == 99) //초록색문
 			if (vPos.y < 15)
-				m_bDoorOpen = true;			
+			{
+				m_bDoorOpen = true;
+			}
 	}	
 
 	if (m_bSwitch && m_pLetterBox != nullptr)
@@ -229,6 +237,10 @@ HRESULT CTestCube::Wall_Mapping(void)
 		m_bMappingInit = true;
 
 		CGameObject*	m_pMapWall = CWallMapping::Create(m_pGraphicDev);
+		if (m_pMapWall != nullptr && m_iTexIndex==37)
+		{
+			dynamic_cast<CWallMapping*>(m_pMapWall)->Set_Texture(37);
+		}
 		TCHAR* szCntName = new TCHAR[64];
 		wsprintf(szCntName, L"");
 		const _tchar*	szNumbering = L"MapWall_%d";
@@ -236,15 +248,16 @@ HRESULT CTestCube::Wall_Mapping(void)
 		Engine::Add_GameObject(STAGE_MAPPING, m_pMapWall, szCntName);
 		m_listWallCnt.push_back(szCntName);
 
-
+		
 		m_pWallMapping = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_MAPPING, szCntName, TRANSFORM_COMP, ID_DYNAMIC));
 		NULL_CHECK_RETURN(m_pWallMapping, E_FAIL);
 		++m_iMappingCnt;
+		
 	}
 
 	m_pWallMapping->Set_Pos(vPos.x, vPos.y, vPos.z);
 	m_pWallMapping->Set_Scale(vSize.x, vSize.y, vSize.z);
-
+	
 	return S_OK;
 }
 CTestCube* CTestCube::Create(LPDIRECT3DDEVICE9 pGraphicDev, int Posx, int Posy)
@@ -267,9 +280,8 @@ void CTestCube::Free()
 			delete iter;
 	}
 
-	m_listWallCnt.clear();
-
-
+	m_listWallCnt.clear();	
+	m_listLetterCnt.clear();
 	CGameObject::Free();
 }
 

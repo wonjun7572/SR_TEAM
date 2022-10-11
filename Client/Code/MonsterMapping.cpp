@@ -20,14 +20,9 @@ HRESULT CMonsterMapping::Ready_Object(void)
 
 _int CMonsterMapping::Update_Object(const _float & fTimeDelta)
 {
-	if (m_bWorldMap)
-	{
-		Add_RenderGroup(RENDER_WORLDMAP, this);
-	}
-	if (m_bMinimap)
-	{
-		Add_RenderGroup(RENDER_MINIMAP, this);
-	}
+	
+		Add_RenderGroup(RENDER_ALPHA, this);
+	
 	Key_Input();
 
 	CGameObject::Update_Object(fTimeDelta);

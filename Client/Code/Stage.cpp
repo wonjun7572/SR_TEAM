@@ -48,6 +48,7 @@
 #include "LetterBox.h"
 #include "ShotParticle.h"
 #include "ItemParticle.h"
+#include "ProjectileParticle.h"
 
 #include "CrossHeader.h"
 #include "TargetCube.h"
@@ -149,6 +150,10 @@ HRESULT CStage::Ready_Layer_Environment(const _tchar * pLayerTag)
 	pGameObject = CItemParticle::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"ItemParticle", pGameObject), E_FAIL);
+
+	pGameObject = CProjectileParticle::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"ProjectileParticle", pGameObject), E_FAIL);
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
