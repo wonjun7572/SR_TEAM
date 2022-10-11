@@ -433,7 +433,7 @@ HRESULT CStage::Ready_Layer_Monster(const _tchar * pLayerTag)
 		wsprintfW(szName, wName.c_str(), i);
 		NameList.push_back(szName);
 
-		pGameObject = CZombie::Create(m_pGraphicDev, _vec3(_float(rand() % 5 + 5), 0.6f, _float(rand() % 5 + 5)), szName);
+		pGameObject = CZombie::Create(m_pGraphicDev, _vec3(_float(rand() % 5 + 10), 0.6f, _float(rand() % 5 + 24)), szName);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
 	}
@@ -445,7 +445,7 @@ HRESULT CStage::Ready_Layer_Monster(const _tchar * pLayerTag)
 		wsprintfW(szName, wName.c_str(), i);
 		NameList.push_back(szName);
 
-		pGameObject = CIllusioner::Create(m_pGraphicDev, _vec3(_float(rand() % 3 + 7.f), 0.6f, _float(rand() % 3 + 7.f)), szName);
+		pGameObject = CIllusioner::Create(m_pGraphicDev, _vec3(_float(rand() % 3 + 24.f), 0.6f, _float(rand() % 3 + 10.f)), szName);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
 	}
