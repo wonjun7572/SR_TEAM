@@ -3,6 +3,7 @@
 
 class CMonsterUI;
 class CMonsterParticle;
+class CComboUI;
 
 class CMonster : public CGameObject
 {
@@ -47,6 +48,7 @@ protected:
 	MONSTERABILITY*		m_tAbility;
 
 	CMonsterParticle*	 m_pHitParicle = nullptr;
+	CComboUI*			m_pComboUI = nullptr;
 	
 	_float				m_fUISwitchTime = 0.f;
 

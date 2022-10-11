@@ -49,6 +49,14 @@ Engine::_int CLogo::Update_Scene(const _float& fTimeDelta)
 			FAILED_CHECK_RETURN(Engine::Set_Scene(pScene), E_FAIL);
 			return 0;
 		}
+
+		if (m_OptionButton->Get_MouseCheck())
+		{
+			CScene*      pScene = CToolScene::Create(m_pGraphicDev);
+			NULL_CHECK_RETURN(pScene, E_FAIL);
+			FAILED_CHECK_RETURN(Engine::Set_Scene(pScene), E_FAIL);
+			return 0;
+		}
 	}
 
 	return iResult;

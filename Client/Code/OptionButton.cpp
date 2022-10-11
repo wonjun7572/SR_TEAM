@@ -29,7 +29,6 @@ _int COptionButton::Update_Object(const _float & fTimeDelta)
 		if (Mouse_Down(DIM_LB))
 		{
 			Mouse_check = true;
-			return 0;
 		}
 	}
 

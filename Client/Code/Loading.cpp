@@ -38,7 +38,9 @@ _uint CLoading::Loading_ForStage(void)
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(RCTEX_MONTER_HP_COMP, CRcTex::Create(m_pGraphicDev)), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(RCTEX_GENERAL_MONSTER_HP_COMP, CRcTex::Create(m_pGraphicDev)), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(RCTEX_GENERAL_MONSTER_HUD_COMP, CRcTex::Create(m_pGraphicDev)), E_FAIL);
-	
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(RCTEX_COMBO_COMP, CRcTex::Create(m_pGraphicDev)), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(RCTEX_COMBOBAR_HUD_COMP, CRcTex::Create(m_pGraphicDev)), E_FAIL);
+
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(FLEXIBLEAXISCUBE_COMP, CFlexibleAxisCube::Create(m_pGraphicDev)), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(CUBECOL_COMP, CCubeCol::Create(m_pGraphicDev)), E_FAIL);
 	}
@@ -88,6 +90,11 @@ _uint CLoading::Loading_ForStage(void)
 
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(MONSTER_HP_TEX, CTexture::Create(m_pGraphicDev, MONSTER_HP_TEX_PATH, TEX_NORMAL)), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(MONSTER_HP_HUD_TEX, CTexture::Create(m_pGraphicDev, MONSTER_HP_HUD_TEX_PATH, TEX_NORMAL)), E_FAIL);
+
+
+		// COMBO
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(COMBOBAR_TEX, CTexture::Create(m_pGraphicDev, COMBOBAR_TEX_PATH, TEX_NORMAL)), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(COMBOBAR_HUD_TEX, CTexture::Create(m_pGraphicDev, COMBOBAR_HUD_TEX_PATH, TEX_NORMAL)), E_FAIL);
 
 		// DEFENCE
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"DEFENSE_Gage", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/UI/Player/Gage/theHUDui_9.png", TEX_NORMAL)), E_FAIL);
