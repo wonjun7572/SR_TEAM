@@ -4,7 +4,11 @@
 #include "Weapon.h"
 #include "MonsterParticle.h"
 #include "MonsterUI.h"
-#include "ComboUI.h"
+#include "MonsterMapping.h"
+
+static _int m_iCnt = 0;
+
+
 
 CMonster::CMonster(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
@@ -29,9 +33,6 @@ _int CMonster::Update_Object(const _float & fTimeDelta)
 	if (m_pPlayerTransCom == nullptr)
 		m_pPlayerTransCom = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_CHARACTER, L"PLAYER", TRANSFORM_COMP, ID_DYNAMIC));
 
-	if (m_pComboUI == nullptr)
-		m_pComboUI = dynamic_cast<CComboUI*>(Engine::Get_GameObject(STAGE_UI, L"ComboUI"));
-
 	_vec3 vUIPos;
 	m_pTransCom->Get_Info(INFO_POS, &vUIPos);
 	m_pTransUICom->Set_Pos(vUIPos.x, vUIPos.y + 0.5f, vUIPos.z);
@@ -55,6 +56,37 @@ void CMonster::LateUpdate_Object(void)
 
 void CMonster::Render_Object(void)
 {
+}
+
+HRESULT CMonster::Monster_Mapping(void)
+{
+	_vec3		vPos;
+	m_pHitBoxTransCom->Get_Info(INFO_POS, &vPos);
+	if (!m_MappingInit)
+	{
+		CGameObject*	m_pMapMonster = CMonsterMapping::Create(m_pGraphicDev);
+		wsprintf(m_szCntName, L"");
+		const _tchar*	szNumbering = L"MapMonster_%d";
+		wsprintf(m_szCntName, szNumbering, m_iCnt);
+		Engine::Add_GameObject(STAGE_MAPPING, m_pMapMonster, m_szCntName);
+		m_listMonsterCnt.push_back(m_szCntName);
+
+		m_pMonsterMapping = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_MAPPING, m_szCntName, TRANSFORM_COMP, ID_DYNAMIC));
+		NULL_CHECK_RETURN(m_pMonsterMapping, E_FAIL);
+		++m_iCnt;
+		m_MappingInit = true;
+		
+	}
+	m_pMonsterMapping->Set_Pos(vPos.x, vPos.y, vPos.z);	
+	return S_OK;
+	
+}
+
+HRESULT CMonster::Monster_DeleteMapping(void)
+{
+	Delete_GameObject(STAGE_MAPPING, m_szCntName);
+	
+	return S_OK;
 }
 
 void CMonster::Hit_Effect()
@@ -90,8 +122,6 @@ void CMonster::Hit_Check(_float _deltaTime)
 			if (pWeapon->Get_Shoot() == true)
 			{
 				m_tAbility->fCurrentHp -= pWeapon->Get_Ability()->fBulletAttack;
-				m_pComboUI->On_Switch();
-				m_pComboUI->ComboCntPlus();
 				Hit_Effect();
 				pWeapon->Set_Shoot(false);
 			}
@@ -115,5 +145,12 @@ void CMonster::Hit_Check(_float _deltaTime)
 
 void CMonster::Free(void)
 {
+	for (auto& iter : m_listMonsterCnt)
+	{
+		if (iter != nullptr)
+			delete iter;
+	}
+
+	m_listMonsterCnt.clear();
 	CGameObject::Free();
 }

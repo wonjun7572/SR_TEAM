@@ -3,7 +3,6 @@
 #include "Export_Function.h"
 #include "Texture.h"
 
-static _int m_iCnt = 0;
 
 CCubeMonster::CCubeMonster(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)

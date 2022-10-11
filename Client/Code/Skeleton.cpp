@@ -15,6 +15,7 @@ CSkeleton::CSkeleton(LPDIRECT3DDEVICE9 pGraphicDev)
 
 CSkeleton::~CSkeleton()
 {
+	
 }
 
 HRESULT CSkeleton::Ready_Object(const _vec3& vPos)
@@ -50,6 +51,8 @@ _int CSkeleton::Update_Object(const _float & fTimeDelta)
 	{
 		m_pComboUI->KillCntPlus();
 		Create_Item();
+		Monster_DeleteMapping();
+
 		return -1;
 	}
 
@@ -96,6 +99,7 @@ _int CSkeleton::Update_Object(const _float & fTimeDelta)
 
 void CSkeleton::LateUpdate_Object(void)
 {
+	Monster_Mapping();
 	CMonster::LateUpdate_Object();
 }
 
