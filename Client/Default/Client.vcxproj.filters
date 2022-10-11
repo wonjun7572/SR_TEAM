@@ -259,6 +259,9 @@
     <Filter Include="02. GameObject\01. For_Stage\08. Monster\03. Slime">
       <UniqueIdentifier>{d0361cb4-3c75-4b1a-b540-30d86aaedbdd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\08. Monster\04. Illusioner">
+      <UniqueIdentifier>{2b972baa-c940-4d98-8071-75a3c4dc5e72}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -606,6 +609,9 @@
     <ClInclude Include="..\Header\Slime.h">
       <Filter>02. GameObject\01. For_Stage\08. Monster\03. Slime</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\Illusioner.h">
+      <Filter>02. GameObject\01. For_Stage\08. Monster\04. Illusioner</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -931,6 +937,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\Slime.cpp">
       <Filter>02. GameObject\01. For_Stage\08. Monster\03. Slime</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Illusioner.cpp">
+      <Filter>02. GameObject\01. For_Stage\08. Monster\04. Illusioner</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

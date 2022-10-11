@@ -186,6 +186,7 @@
     <ClInclude Include="..\Header\GunUI.h" />
     <ClInclude Include="..\Header\HealthPotion.h" />
     <ClInclude Include="..\Header\HitBarUI.h" />
+    <ClInclude Include="..\Header\Illusioner.h" />
     <ClInclude Include="..\Header\ImguiMgr.h" />
     <ClInclude Include="..\Header\Inventory.h" />
     <ClInclude Include="..\Header\Item.h" />
@@ -305,6 +306,7 @@
     <ClCompile Include="..\Code\GunUI.cpp" />
     <ClCompile Include="..\Code\HealthPotion.cpp" />
     <ClCompile Include="..\Code\HitBarUI.cpp" />
+    <ClCompile Include="..\Code\Illusioner.cpp" />
     <ClCompile Include="..\Code\ImguiMgr.cpp" />
     <ClCompile Include="..\Code\Inventory.cpp" />
     <ClCompile Include="..\Code\Item.cpp" />
