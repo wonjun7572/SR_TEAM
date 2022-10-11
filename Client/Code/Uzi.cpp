@@ -303,8 +303,6 @@ void CUzi::Assemble(void)
 		if (Get_DIKeyState(DIK_DOWN))
 			D2 -= 0.01f;
 	}
-	
-	//cout << A1 << " " << A2 << " " << B1 << " " << B2 << " " << C1 << " " << C2 << " " << D1 << " " << D2 << endl;
 }
 
 void CUzi::Animation_Fire(void)

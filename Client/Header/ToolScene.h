@@ -4,7 +4,6 @@
 #include "Scene.h"
 
 #include "Terrain.h"
-#include "TestPlayer.h"
 #include "SkyBox.h"
 #include "StaticCamera.h"
 #include "DynamicCamera.h"
@@ -30,7 +29,6 @@ private:
 
 	HRESULT			Ready_Layer_Wall(const _tchar* pLayerTag);
 
-	// 툴을 위한 레이어
 	HRESULT			Ready_Layer_Tool(const _tchar* pLayerTag);
 
 	HRESULT			Ready_Proto(void);

@@ -160,7 +160,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\AnimationPlayer.h" />
-    <ClInclude Include="..\Header\BackGround.h" />
     <ClInclude Include="..\Header\BaseMapping.h" />
     <ClInclude Include="..\Header\Bullet.h" />
     <ClInclude Include="..\Header\BulletUI.h" />
@@ -193,9 +192,7 @@
     <ClInclude Include="..\Header\ItemIcon.h" />
     <ClInclude Include="..\Header\ItemParticle.h" />
     <ClInclude Include="..\Header\LetterBox.h" />
-    <ClInclude Include="..\Header\LoadBar.h" />
     <ClInclude Include="..\Header\Loading.h" />
-    <ClInclude Include="..\Header\LoadingScene.h" />
     <ClInclude Include="..\Header\Logo.h" />
     <ClInclude Include="..\Header\LogoBilboard.h" />
     <ClInclude Include="..\Header\LogoCamera.h">
@@ -235,8 +232,6 @@
     <ClInclude Include="..\Header\TargetCube.h" />
     <ClInclude Include="..\Header\Terrain.h" />
     <ClInclude Include="..\Header\TestCube.h" />
-    <ClInclude Include="..\Header\TestMonster.h" />
-    <ClInclude Include="..\Header\TestPlayer.h" />
     <ClInclude Include="..\Header\ToolScene.h" />
     <ClInclude Include="..\Header\TransAxisBox.h" />
     <ClInclude Include="..\Header\Uzi.h" />
@@ -247,7 +242,6 @@
     <ClInclude Include="..\Header\UziPart5.h" />
     <ClInclude Include="..\Header\Wall.h" />
     <ClInclude Include="..\Header\WallMapping.h" />
-    <ClInclude Include="..\Header\WallMgr.h" />
     <ClInclude Include="..\Header\Weapon.h" />
     <ClInclude Include="..\Header\WeaponUI.h" />
     <ClInclude Include="..\Header\ShotParticle.h" />
@@ -280,7 +274,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\AnimationPlayer.cpp" />
-    <ClCompile Include="..\Code\BackGround.cpp" />
     <ClCompile Include="..\Code\BaseMapping.cpp" />
     <ClCompile Include="..\Code\Bullet.cpp" />
     <ClCompile Include="..\Code\BulletParicle.cpp" />
@@ -313,9 +306,7 @@
     <ClCompile Include="..\Code\ItemIcon.cpp" />
     <ClCompile Include="..\Code\ItemParticle.cpp" />
     <ClCompile Include="..\Code\LetterBox.cpp" />
-    <ClCompile Include="..\Code\LoadBar.cpp" />
     <ClCompile Include="..\Code\Loading.cpp" />
-    <ClCompile Include="..\Code\LoadingScene.cpp" />
     <ClCompile Include="..\Code\Logo.cpp" />
     <ClCompile Include="..\Code\LogoBilboard.cpp" />
     <ClCompile Include="..\Code\LogoCamera.cpp">
@@ -355,8 +346,6 @@
     <ClCompile Include="..\Code\TargetCube.cpp" />
     <ClCompile Include="..\Code\Terrain.cpp" />
     <ClCompile Include="..\Code\TestCube.cpp" />
-    <ClCompile Include="..\Code\TestMonster.cpp" />
-    <ClCompile Include="..\Code\TestPlayer.cpp" />
     <ClCompile Include="..\Code\ToolScene.cpp" />
     <ClCompile Include="..\Code\TransAxisBox.cpp" />
     <ClCompile Include="..\Code\Uzi.cpp" />
@@ -367,7 +356,6 @@
     <ClCompile Include="..\Code\UziPart5.cpp" />
     <ClCompile Include="..\Code\Wall.cpp" />
     <ClCompile Include="..\Code\WallMapping.cpp" />
-    <ClCompile Include="..\Code\WallMgr.cpp" />
     <ClCompile Include="..\Code\Weapon.cpp" />
     <ClCompile Include="..\Code\WeaponUI.cpp" />
     <ClCompile Include="..\Code\ShotParticle.cpp" />

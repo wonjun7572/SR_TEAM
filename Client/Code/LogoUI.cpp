@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "..\Header\LogoUI.h"
-
+#include "PlayButton.h"
 
 CLogoUI::CLogoUI(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
@@ -13,7 +13,6 @@ CLogoUI::~CLogoUI()
 
 HRESULT CLogoUI::Ready_Object(void)
 {
-
 	FAILED_CHECK_RETURN(Add_component(), E_FAIL);
 
 	return S_OK;
@@ -35,7 +34,6 @@ void CLogoUI::LateUpdate_Object(void)
 
 void CLogoUI::Render_Object(void)
 {
-
 	Begin_OrthoProj();
 	m_pTextureCom->Set_Texture(0);
 	m_pRcTexCom->Render_Buffer();

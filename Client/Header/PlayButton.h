@@ -1,18 +1,8 @@
 #pragma once
 #include "GameObject.h"
 #include "Engine_Include.h"
-
 #include "Scene.h"
 #include "Loading.h"
-
-BEGIN(Engine)
-
-class CRcTex;
-class CTexture;
-class CTransform;
-class CScene;
-
-END
 
 class CPlayButton :	public CGameObject
 {
@@ -56,6 +46,7 @@ private:
 	//텍스처 인덱스 번
 	_int	m_iIndex = 0;
 	wstring m_strPB;
+
 private:
 	virtual void Free(void);
 };

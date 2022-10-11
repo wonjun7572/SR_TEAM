@@ -103,6 +103,7 @@ _int CFireMan::Update_Object(const _float & fTimeDelta)
 		if (m_AnimationTime >= 1.f)
 		{
 			CPoolMgr::GetInstance()->Reuse_Obj(m_pGraphicDev, &vPos, &vDir, m_tAbility->fDamage);
+		
 			m_fFrame = 0.f;
 		}
 	}

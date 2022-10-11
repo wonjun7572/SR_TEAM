@@ -26,10 +26,8 @@ _int COptionButton::Update_Object(const _float & fTimeDelta)
 {
 	if (PointMouse())
 	{
-		if (Get_DIMouseState(DIM_LB) & 0x80)
+		if (Mouse_Down(DIM_LB))
 		{
-
-
 			Mouse_check = true;
 			return 0;
 		}
@@ -55,12 +53,10 @@ void COptionButton::Render_Object(void)
 
 	if (PointMouse())
 	{
+		if (Checking = true)
 		{
-			if (Checking = true)
-			{
-				m_iIndex = 1;
-				m_pTextureCom->Set_Texture(m_iIndex);
-			}
+			m_iIndex = 1;
+			m_pTextureCom->Set_Texture(m_iIndex);
 		}
 	}
 
