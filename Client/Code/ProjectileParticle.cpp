@@ -30,7 +30,7 @@ _int CProjectileParticle::Update_Object(const _float & fTimeDelta)
 	for (list<ATTRIBUTE>::iterator iter = m_particles.begin(); iter != m_particles.end(); iter++)
 	{
 		iter->vPos += (iter->vVelocity) * fTimeDelta;
-		iter->vPos.y -= 0.01* (Gravity*iter->fAge)*(Gravity* iter->fAge) * fTimeDelta;
+		iter->vPos.y -= 0.01f* (Gravity*iter->fAge)*(Gravity* iter->fAge) * fTimeDelta;
 		iter->fAge += fTimeDelta;
 
 		if ((iter->fAge > iter->fLifeTime)|| iter->vPos.y<0.5f)

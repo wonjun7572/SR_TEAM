@@ -19,8 +19,20 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
+    <Filter Include="01. Scene">
+      <UniqueIdentifier>{51abecec-9fb8-4a32-b8b8-3291df53ea13}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Scene\00. Logo">
+      <UniqueIdentifier>{019cda08-d1b3-446a-a55c-95aea3c45ddf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Scene\01. Stage">
+      <UniqueIdentifier>{89694268-cdb2-4de5-8f07-5d50beb56bc6}</UniqueIdentifier>
+    </Filter>
     <Filter Include="02. GameObject">
       <UniqueIdentifier>{92c612f7-c35f-43df-8932-e63aa606626c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Scene\99. Loading">
+      <UniqueIdentifier>{9a8454ca-ef75-40a4-b8b4-2356079cbdbf}</UniqueIdentifier>
     </Filter>
     <Filter Include="02. GameObject\00. For_Logo">
       <UniqueIdentifier>{30025f09-0432-46d7-a330-4c3f8a541dc2}</UniqueIdentifier>
@@ -94,6 +106,21 @@
     <Filter Include="02. GameObject\01. For_Stage\07. Weapon\00. Parts\03.Sniper">
       <UniqueIdentifier>{9a373401-ba49-4161-ba8f-118863a55ea5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. Scene\10. ToolScene">
+      <UniqueIdentifier>{6425a67f-06c3-46ca-8288-402e1f0d0a5b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Scene\02. LoadingScene">
+      <UniqueIdentifier>{6dd69e23-a69e-4895-8e30-88c0cb658400}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Scene\00. Logo\00. Button">
+      <UniqueIdentifier>{bceb9e91-bd89-4069-9875-fc5c830589eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Scene\00. Logo\00. Button\01. PlayButton">
+      <UniqueIdentifier>{7d1aa7b9-a602-4129-b2b5-d517ac165347}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Scene\00. Logo\00. Button\02. OptionButton">
+      <UniqueIdentifier>{71a91927-dfba-407f-8ca8-820d5a779386}</UniqueIdentifier>
+    </Filter>
     <Filter Include="02. GameObject\01. For_Stage\08. Monster">
       <UniqueIdentifier>{e8cd7a20-be14-4ffc-82a6-921f105af27a}</UniqueIdentifier>
     </Filter>
@@ -111,6 +138,12 @@
     </Filter>
     <Filter Include="02. GameObject\01. For_Stage\09. UI\Weapon">
       <UniqueIdentifier>{802bd0cb-abc7-469c-96e0-39c939f1749c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Scene\00. Logo\00. Button\03. ExitButton">
+      <UniqueIdentifier>{79a36800-b911-45d9-a6b4-4eed3862e843}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Scene\00. Logo\00.LogoUI">
+      <UniqueIdentifier>{33ae2b03-193e-4f1d-8ce0-e17e5b2ab5a5}</UniqueIdentifier>
     </Filter>
     <Filter Include="02. GameObject\01. For_Stage\11. Map">
       <UniqueIdentifier>{18b81755-5e70-4ea3-9fd4-4b9c17357ca3}</UniqueIdentifier>
@@ -211,38 +244,8 @@
     <Filter Include="02. GameObject\01. For_Stage\02 Wall">
       <UniqueIdentifier>{139b70e2-b611-4471-8714-9c310caac6a9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01. Scene">
-      <UniqueIdentifier>{51abecec-9fb8-4a32-b8b8-3291df53ea13}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01. Scene\00. Logo">
-      <UniqueIdentifier>{019cda08-d1b3-446a-a55c-95aea3c45ddf}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01. Scene\00. Logo\00. Button">
-      <UniqueIdentifier>{bceb9e91-bd89-4069-9875-fc5c830589eb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01. Scene\00. Logo\00. Button\01. PlayButton">
-      <UniqueIdentifier>{7d1aa7b9-a602-4129-b2b5-d517ac165347}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01. Scene\00. Logo\00. Button\02. OptionButton">
-      <UniqueIdentifier>{71a91927-dfba-407f-8ca8-820d5a779386}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01. Scene\00. Logo\00. Button\03. ExitButton">
-      <UniqueIdentifier>{79a36800-b911-45d9-a6b4-4eed3862e843}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01. Scene\01. Stage">
-      <UniqueIdentifier>{89694268-cdb2-4de5-8f07-5d50beb56bc6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01. Scene\99. Loading">
-      <UniqueIdentifier>{9a8454ca-ef75-40a4-b8b4-2356079cbdbf}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01. Scene\10. ToolScene">
-      <UniqueIdentifier>{6425a67f-06c3-46ca-8288-402e1f0d0a5b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01. Scene\02. LoadingScene">
-      <UniqueIdentifier>{6dd69e23-a69e-4895-8e30-88c0cb658400}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01. Scene\00. Logo\00. LogoUI">
-      <UniqueIdentifier>{33ae2b03-193e-4f1d-8ce0-e17e5b2ab5a5}</UniqueIdentifier>
+    <Filter Include="02. GameObject\01. For_Stage\08. Monster\05.Illusioner">
+      <UniqueIdentifier>{19cb1c5a-db84-437d-8e2d-d73850d02be6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -463,7 +466,7 @@
       <Filter>01. Scene\00. Logo\00. Button\03. ExitButton</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\LogoUI.h">
-      <Filter>01. Scene\00. Logo\00. LogoUI</Filter>
+      <Filter>01. Scene\00. Logo\00.LogoUI</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\BaseMapping.h">
       <Filter>02. GameObject\01. For_Stage\11. Map\Mapping</Filter>
@@ -576,8 +579,14 @@
     <ClInclude Include="..\Header\ItemParticle.h">
       <Filter>02. GameObject\01. For_Stage\12. Particle</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\ComboUI.h">
+    <ClInclude Include="..\Header\ProjectileParticle.h">
       <Filter>99. Default\헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\SkillCamera.h">
+      <Filter>99. Default\헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Illusioner.h">
+      <Filter>02. GameObject\01. For_Stage\08. Monster\05.Illusioner</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -783,7 +792,7 @@
       <Filter>01. Scene\00. Logo\00. Button\03. ExitButton</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\LogoUI.cpp">
-      <Filter>01. Scene\00. Logo\00. LogoUI</Filter>
+      <Filter>01. Scene\00. Logo\00.LogoUI</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\BaseMapping.cpp">
       <Filter>02. GameObject\01. For_Stage\11. Map\Mapping</Filter>
@@ -890,8 +899,14 @@
     <ClCompile Include="..\Code\ItemParticle.cpp">
       <Filter>02. GameObject\01. For_Stage\12. Particle</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\ComboUI.cpp">
+    <ClCompile Include="..\Code\ProjectileParticle.cpp">
       <Filter>99. Default\소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SkillCamera.cpp">
+      <Filter>99. Default\소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Illusioner.cpp">
+      <Filter>02. GameObject\01. For_Stage\08. Monster\05.Illusioner</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

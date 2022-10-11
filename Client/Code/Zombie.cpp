@@ -1,3 +1,7 @@
+#pragma region
+
+#pragma endregion
+
 #include "stdafx.h"
 #include "..\Header\Zombie.h"
 #include "CubePlayer.h"
@@ -6,7 +10,6 @@
 #include "ObtainDefense.h"
 #include "ObtainBullet.h"
 #include "PoolMgr.h"
-#include "ComboUI.h"
 
 #include "TransAxisBox.h"
 
@@ -29,7 +32,12 @@ HRESULT CZombie::Ready_Object(const _vec3& vPos, _tchar* Name)
 	m_tAbility->fDamage = 10.f;
 	m_tAbility->strObjTag = L"Zombie";
 
+	m_STATE = MONSTER_IDLE;
+	m_BeforeState = MONSTER_IDLE;
 	m_WALK = MONSTERWALK_START;
+	m_IDLE = MONSTERIDLE_1;
+	m_ATTACK = MONSTERATTACK_1;
+
 
 	m_MonsterName = Name;
 
@@ -61,60 +69,80 @@ HRESULT CZombie::Ready_Object(const _vec3& vPos, _tchar* Name)
 
 _int CZombie::Update_Object(const _float & fTimeDelta)
 {
-	if (m_bDead)
-	{
-		Create_Item();
-		m_pComboUI->KillCntPlus();
-		Monster_DeleteMapping();
-
-		return -1;
-	}
-	if (m_bFirst)	//	1회만 모델을 불러오기 위함
-	{
-		m_bFirst = false;
-		Engine::Get_Scene()->New_Layer(m_MonsterName);
-		pMyLayer = Engine::Get_Layer(m_MonsterName);
-		FAILED_CHECK_RETURN(Build(), E_FAIL);
-	}
-
-	m_fTimeDelta = fTimeDelta;
-
-	CMonster::Update_Object(fTimeDelta);
-
-	_vec3 vPlayerPos;
-	m_pPlayerTransCom->Get_Info(INFO_POS, &vPlayerPos);
-	_vec3 vPlayerScale;
-	m_pPlayerTransCom->Get_Scale(&vPlayerScale);
-	_vec3 vScale;
-	m_pSphereTransCom->Get_Scale(&vScale);
-	_vec3 vPos;
-	m_pTransCom->Get_Info(INFO_POS, &vPos);
-
-	if (m_pCollision->Sphere_Collision(this->m_pSphereTransCom, m_pPlayerTransCom, vPlayerScale.x, vScale.x))
-	{
-		m_pTransCom->Chase_Target(&vPlayerPos, 1.f, fTimeDelta);
-		m_fFrame += fTimeDelta;
-		if (m_fFrame >= 2.f)
+		if (m_bDead)
 		{
-			_vec3 vDir = vPlayerPos - vPos;
-			CPoolMgr::GetInstance()->Reuse_Obj(m_pGraphicDev, &vPos, &vDir, m_tAbility->fDamage);
-			m_fFrame = 0.f;
+			Create_Item();
+			return -1;
 		}
-	}
 
-	_vec3 vMonsterPos;
-	m_pTransCom->Get_Info(INFO_POS, &vMonsterPos);
-	m_pHitBoxTransCom->Set_Pos(vMonsterPos.x, vMonsterPos.y, vMonsterPos.z);
-	m_pSphereTransCom->Set_Pos(vMonsterPos.x, vMonsterPos.y, vMonsterPos.z);
-	return 0;
+		if (m_bFirst)
+		{
+			m_bFirst = false;
+			Engine::Get_Scene()->New_Layer(m_MonsterName);
+			pMyLayer = Engine::Get_Layer(m_MonsterName);
+			FAILED_CHECK_RETURN(Build(), -1);
+		}
+
+		m_fTimeDelta = fTimeDelta;
+
+		CMonster::Update_Object(fTimeDelta);
+
+		_vec3 vPlayerPos;
+		m_pPlayerTransCom->Get_Info(INFO_POS, &vPlayerPos);
+		_vec3 vPlayerScale;
+		m_pPlayerTransCom->Get_Scale(&vPlayerScale);
+		_vec3 vScale;
+		m_pSphereTransCom->Get_Scale(&vScale);
+		_vec3 vPos;
+		m_pTransCom->Get_Info(INFO_POS, &vPos);
+		m_fFrame += fTimeDelta;
+		if (m_pCollision->Sphere_Collision(this->m_pSphereTransCom, m_pPlayerTransCom, vPlayerScale.x, vScale.x) && m_fFrame < 2.f)
+		{
+			m_pTransCom->Chase_Target(&vPlayerPos, 1.f, fTimeDelta);
+			m_STATE = MONSTER_WALK;
+		}
+
+		else if (m_pCollision->Sphere_Collision(this->m_pSphereTransCom, m_pPlayerTransCom, vPlayerScale.x, vScale.x) && m_fFrame >= 2.f)
+		{
+			m_pTransCom->Chase_Target(&vPlayerPos, 0.f, fTimeDelta);
+			m_STATE = MONSTER_ATTACK;
+				_vec3 vDir = vPlayerPos - vPos;
+			if (m_AnimationTime >= 1.f)
+			{
+				CPoolMgr::GetInstance()->Reuse_Obj(m_pGraphicDev, &vPos, &vDir, m_tAbility->fDamage);
+
+				m_fFrame = 0.f;
+			}
+		}
+		else
+		{
+			m_pTransCom->Chase_Target(&vPlayerPos, 0.f, fTimeDelta);
+			m_STATE = MONSTER_IDLE;
+		}
+
+		_vec3 vMonsterPos;
+		m_pTransCom->Get_Info(INFO_POS, &vMonsterPos);
+		m_pHitBoxTransCom->Set_Pos(vMonsterPos.x, vMonsterPos.y, vMonsterPos.z);
+		m_pSphereTransCom->Set_Pos(vMonsterPos.x, vMonsterPos.y, vMonsterPos.z);
+		
+		return 0;
 }
 
 void CZombie::LateUpdate_Object(void)
 {
-	Monster_Mapping();
-	if (!m_bFirst)
+	if (!m_bFirst && (m_STATE == MONSTER_WALK))
 	{
 		Walk_Animation_Run();
+		Look_Direction();
+	}
+	else if (!m_bFirst && (m_STATE == MONSTER_IDLE))
+	{
+		Idle_Animation_Run();
+		Look_Direction();
+	}
+	else if (!m_bFirst && (m_STATE == MONSTER_ATTACK))
+	{
+		Attack_Animation_Run();
 		Look_Direction();
 	}
 
@@ -143,8 +171,6 @@ void CZombie::Render_Object(void)
 
 void CZombie::Load_Animation(wstring FileName)
 {
-
-
 	HANDLE      hFile = CreateFile(FileName.c_str(),      // 파일의 경로와 이름
 		GENERIC_READ,         // 파일 접근 모드 (GENERIC_WRITE : 쓰기 전용, GENERIC_READ : 읽기 전용)
 		NULL,               // 공유 방식(파일이 열려있는 상태에서 다른 프로세스가 오픈할 때 허용할 것인가)    
@@ -207,7 +233,6 @@ void CZombie::Load_Animation(wstring FileName)
 
 void CZombie::Run_Animation(const _float & AnimationSpeed)
 {
-
 	list<pair<const _tchar*, CGameObject*>> ListBox = *(pMyLayer->Get_GamePairPtr());
 
 	for (auto& iter : ListBox)
@@ -266,21 +291,21 @@ void CZombie::Run_Animation(const _float & AnimationSpeed)
 
 void CZombie::Walk_Animation_Run(void)
 {
-	//if (m_STATE == MONSTER_STOP)
-	//{
+	if (m_BeforeState != m_STATE)
+	{
+		list<pair<const _tchar*, CGameObject*>> ListBox = *(pMyLayer->Get_GamePairPtr());
 
-	//	list<pair<const _tchar*, CGameObject*>> ListBox = *(MyLayer->Get_GamePairPtr());
+		for (auto& iter : ListBox)	//	모든 쿼터니언(애니메이션) 객체들에 대해 기존의 애니메이션 값을 전부 지워줌
+		{
+			CQuarternion* Qtan = dynamic_cast<CQuarternion*>(iter.second->Get_Component(L"Proto_QuaternionCom", ID_STATIC));
+			Qtan->Delete_WorldVector();
+		}
 
-	//	for (auto& iter : ListBox)	//	모든 쿼터니언(애니메이션) 객체들에 대해 기존의 애니메이션 값을 전부 지워줌
-	//	{
-	//		CQuarternion* Qtan = dynamic_cast<CQuarternion*>(iter.second->Get_Component(L"Proto_QuaternionCom", ID_STATIC));
-	//		Qtan->Delete_WorldVector();
-	//	}
-	//}
+		m_BeforeState = m_STATE;
+	}
 
 	if (m_AnimationTime >= 1.f)
 	{
-
 		list<pair<const _tchar*, CGameObject*>> ListBox = *(pMyLayer->Get_GamePairPtr());
 
 		for (auto& iter : ListBox)
@@ -288,6 +313,7 @@ void CZombie::Walk_Animation_Run(void)
 			CQuarternion* Qtan = dynamic_cast<CQuarternion*>(iter.second->Get_Component(L"Proto_QuaternionCom", ID_STATIC));
 			Qtan->Delete_WorldVector();
 		}
+
 
 		if (m_WALK == MONSTERWALK_START)
 			m_WALK = MONSTERWALK_1;
@@ -301,18 +327,18 @@ void CZombie::Walk_Animation_Run(void)
 
 	if (m_WALK == MONSTERWALK_START)
 	{
-		Load_Animation(L"../../Data/Monster/ZOMBIE WALKING.dat");
-		Run_Animation(20.f);
+		Load_Animation(L"../../Data/Monster/ZOMBIE_WALKING12.dat");
+		Run_Animation(1.f);
 	}
 	else if (m_WALK == MONSTERWALK_1)
 	{
-		Load_Animation(L"../../Data/Monster/ZOMBIE WALKING.dat");
-		Run_Animation(4.f);
+		Load_Animation(L"../../Data/Monster/ZOMBIE_WALKING13.dat");
+		Run_Animation(3.f);
 	}
 	else if (m_WALK == MONSTERWALK_2)
 	{
-		Load_Animation(L"../../Data/Monster/ZOMBIE WALKING.dat");
-		Run_Animation(4.f);
+		Load_Animation(L"../../Data/Monster/ZOMBIE_WALKING14.dat");
+		Run_Animation(3.f);
 	}
 }
 
@@ -344,13 +370,137 @@ void CZombie::Look_Direction(void)
 		{
 			_vec3 vAngle;
 			CTransform* Transform = dynamic_cast<CTransform*>(iter.second->Get_Component(L"Proto_TransformCom", ID_STATIC));
-			Transform->Set_Angle(&_vec3(yaw, pitch, roll));
+			Transform->Get_Angle(&vAngle);
+			Transform->Set_Angle(&_vec3(yaw, vAngle.y, roll));
 		}
 	}
 }
 
+void CZombie::Idle_Animation_Run(void)
+{
+	if (m_BeforeState != m_STATE)
+	{
+		list<pair<const _tchar*, CGameObject*>> ListBox = *(pMyLayer->Get_GamePairPtr());
+
+		for (auto& iter : ListBox)	//	모든 쿼터니언(애니메이션) 객체들에 대해 기존의 애니메이션 값을 전부 지워줌
+		{
+			CQuarternion* Qtan = dynamic_cast<CQuarternion*>(iter.second->Get_Component(L"Proto_QuaternionCom", ID_STATIC));
+			Qtan->Delete_WorldVector();
+		}
+
+		m_BeforeState = m_STATE;
+	}
+
+	if (m_AnimationTime >= 1.f)
+	{
+		list<pair<const _tchar*, CGameObject*>> ListBox = *(pMyLayer->Get_GamePairPtr());
+
+		for (auto& iter : ListBox)
+		{
+			CQuarternion* Qtan = dynamic_cast<CQuarternion*>(iter.second->Get_Component(L"Proto_QuaternionCom", ID_STATIC));
+			Qtan->Delete_WorldVector();
+		}
+
+		if (m_IDLE == MONSTERIDLE_1)
+			m_IDLE = MONSTERIDLE_2;
+		else if (m_IDLE == MONSTERIDLE_1)
+			m_IDLE = MONSTERIDLE_2;
+
+		m_AnimationTime = 0.f;
+	}
+
+	//	bool/열거체 값에 따라 어떤 애니메이션을 불러올 것인지 결정
+	if (m_IDLE == MONSTERIDLE_1)
+	{
+		Load_Animation(L"../../Data/Monster/ZOMBIE11_STOP.dat");
+		Run_Animation(5.f);
+	}
+	else if (m_IDLE == MONSTERIDLE_2)
+	{
+		Load_Animation(L"../../Data/Monster/ZOMBIE11_STOP2.dat");
+		Run_Animation(5.f);
+	}
+}
+
+void CZombie::Attack_Animation_Run(void)
+{
+	if (m_BeforeState != m_STATE)
+	{
+		list<pair<const _tchar*, CGameObject*>> ListBox = *(pMyLayer->Get_GamePairPtr());
+
+		for (auto& iter : ListBox)	//	모든 쿼터니언(애니메이션) 객체들에 대해 기존의 애니메이션 값을 전부 지워줌
+		{
+			CQuarternion* Qtan = dynamic_cast<CQuarternion*>(iter.second->Get_Component(L"Proto_QuaternionCom", ID_STATIC));
+			Qtan->Delete_WorldVector();
+		}
+
+		m_BeforeState = m_STATE;
+	}
+
+	if (m_AnimationTime >= 1.f)
+	{
+		list<pair<const _tchar*, CGameObject*>> ListBox = *(pMyLayer->Get_GamePairPtr());
+
+		for (auto& iter : ListBox)
+		{
+			CQuarternion* Qtan = dynamic_cast<CQuarternion*>(iter.second->Get_Component(L"Proto_QuaternionCom", ID_STATIC));
+			Qtan->Delete_WorldVector();
+		}
+
+		m_AnimationTime = 0.f;
+	}
+	//	bool/열거체 값에 따라 어떤 애니메이션을 불러올 것인지 결정
+	if (m_ATTACK == MONSTERATTACK_1)
+	{
+		Load_Animation(L"../../Data/Monster/ZOMBIE_ATTACKING12.dat");
+		Run_Animation(10.f);
+	}
+}
+
+//void CZombie::Dead_Animation_Run(void)
+//{
+//	if (m_BeforeState != m_STATE)
+//	{
+//		list<pair<const _tchar*, CGameObject*>> ListBox = *(pMyLayer->Get_GamePairPtr());
+//
+//		for (auto& iter : ListBox)	//	모든 쿼터니언(애니메이션) 객체들에 대해 기존의 애니메이션 값을 전부 지워줌
+//		{
+//			CQuarternion* Qtan = dynamic_cast<CQuarternion*>(iter.second->Get_Component(L"Proto_QuaternionCom", ID_STATIC));
+//			Qtan->Delete_WorldVector();
+//		}
+//
+//		m_BeforeState = m_STATE;
+//	}
+//
+//	if (m_AnimationTime >= 1.f)
+//	{
+//		list<pair<const _tchar*, CGameObject*>> ListBox = *(pMyLayer->Get_GamePairPtr());
+//
+//		for (auto& iter : ListBox)
+//		{
+//			CQuarternion* Qtan = dynamic_cast<CQuarternion*>(iter.second->Get_Component(L"Proto_QuaternionCom", ID_STATIC));
+//			Qtan->Delete_WorldVector();
+//		}
+//
+//		m_bDead = true;
+//		
+//		m_AnimationTime = 0.f;
+//	}
+//
+//	//	bool/열거체 값에 따라 어떤 애니메이션을 불러올 것인지 결정
+//	if (m_DEAD == MONSTERDEAD_1)
+//	{
+//		Load_Animation(L"../../Data/Monster/ZOMBIE_DEAD.dat");
+//		Run_Animation(10.f);
+//		
+//	}
+//
+//
+//}
+
 HRESULT CZombie::Add_Component(void)
 {
+
 	CComponent* pComponent = nullptr;
 
 	pComponent = m_pBufferCom = dynamic_cast<CCubeTex*>(Clone_Proto(L"Proto_CubeTexCom"));
@@ -400,10 +550,10 @@ HRESULT CZombie::Add_Component(void)
 	NULL_CHECK_RETURN(m_pSphereBufferCom, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Sphere_TransCom", pComponent });
 
+	// 추가
 	pComponent = m_pAnimationBox = dynamic_cast<CCubeCol*>(Clone_Proto(CUBECOL_COMP));
 	NULL_CHECK_RETURN(m_pSphereBufferCom, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ CUBECOL_COMP, pComponent });
-
 
 	return S_OK;
 }
@@ -443,7 +593,7 @@ HRESULT CZombie::Create_Item()
 
 HRESULT CZombie::Build(void)
 {
-	//HANDLE      hFile = CreateFile(L"../../Data/PLAYER_DEFAULT.dat",      // 파일의 경로와 이름
+
 	HANDLE      hFile = CreateFile(L"../../Data/Monster/ZOMBIE11.dat",      // 파일의 경로와 이름	
 		GENERIC_READ,         // 파일 접근 모드 (GENERIC_WRITE : 쓰기 전용, GENERIC_READ : 읽기 전용)
 		NULL,               // 공유 방식(파일이 열려있는 상태에서 다른 프로세스가 오픈할 때 허용할 것인가)    
@@ -464,7 +614,6 @@ HRESULT CZombie::Build(void)
 	_float	fAxisX = 0.f, fAxisY = 0.f, fAxisZ = 0.f;
 	_int	iChildCnt = 0;
 	_int	iParentCnt = 0;
-
 
 	int iSize = 0;
 	ReadFile(hFile, &iSize, sizeof(int), &dwByte, nullptr);
@@ -518,9 +667,8 @@ HRESULT CZombie::Build(void)
 		_vec3	vPos;
 		Transcom->Get_Info(INFO_POS, &vPos);
 
-		_vec3		vPlayerPos;
+		_vec3	vPlayerPos;
 		m_pTransCom->Get_Info(INFO_POS, &vPlayerPos);
-
 
 		if (0 == _tcscmp(LoadOrder.front(), L"A_ROOT"))	//	루트 이름은 항상 고정이므로 이렇게 지정해둠, 루트를 몸통으로 사용해도 좋고 아주 작게 만들어서 바닥으로 해도 좋고? 근데 거기까진 안해봤습니다ㅎ
 			Transcom->Set_Pos(vPos.x + vPlayerPos.x, vPos.y + vPlayerPos.y, vPos.z + vPlayerPos.z);
@@ -562,7 +710,7 @@ HRESULT CZombie::Build(void)
 			break;
 	}
 
-	for (auto& iter : *(pMyLayer->Get_GamePairPtr()))
+	for (auto& iter : *(pMyLayer->Get_GamePairPtr()))		//	List 개꿀
 	{
 		for (auto& List : dynamic_cast<CTransAxisBox*>(iter.second)->m_ParentKey)
 		{
@@ -573,8 +721,6 @@ HRESULT CZombie::Build(void)
 	}
 
 	CloseHandle(hFile);
-
-
 	return S_OK;
 }
 
@@ -593,6 +739,7 @@ CZombie * CZombie::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3 & vPos, _tc
 
 void CZombie::Free(void)
 {
+
 	for (auto& iter : *(pMyLayer->Get_GamePairPtr()))
 	{
 		iter.second->Kill_Obj();

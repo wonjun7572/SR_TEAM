@@ -62,10 +62,8 @@
 #include "Skeleton.h"
 #include "MonsterUI.h"
 #include "HitBarUI.h"
-#include "ComboUI.h"
 #include "MonsterParticle.h"
-#include "ProjectileParticle.h"
-
+#include "Illusioner.h"
 CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CScene(pGraphicDev)
 {
@@ -157,10 +155,6 @@ HRESULT CStage::Ready_Layer_Environment(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"MonsterParticle", pGameObject), E_FAIL);
 
-	pGameObject = CProjectileParticle::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"ProjectileParticle", pGameObject), E_FAIL);
-
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
 	return S_OK;
@@ -220,10 +214,6 @@ HRESULT CStage::Ready_Layer_UI(const _tchar * pLayerTag)
 	pGameObject = CHitBarUI::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"HitBarUI", pGameObject), E_FAIL);
-
-	pGameObject = CComboUI::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"ComboUI", pGameObject), E_FAIL);
 
 	// Shop
 	pGameObject = CShop::Create(m_pGraphicDev);
@@ -388,14 +378,14 @@ HRESULT CStage::Ready_Layer_Monster(const _tchar * pLayerTag)
 	
 	// 위랑 아래랑 같아야함 문자열, 몬스터 아이템 땜시
 	
-	for (int i = 0; i < 5; i++)
+	for (int i = 0; i < 4; i++)
 	{
 		_tchar* szName = new _tchar[256]{};
 		wstring wName = L"Zombie_%d";
 		wsprintfW(szName, wName.c_str(), i);
 		NameList.push_back(szName);
 
-		pGameObject = CZombie::Create(m_pGraphicDev, _vec3(_float(rand() % 5 + 5), 0.6f, _float(rand() % 5 + 5)), szName);
+		pGameObject = CZombie::Create(m_pGraphicDev, _vec3(_float(rand() % 4 + 27), 0.6f, _float(rand() % 4 + 10)), szName);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
 	}
@@ -430,6 +420,18 @@ HRESULT CStage::Ready_Layer_Monster(const _tchar * pLayerTag)
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
 	}
+
+	for (int i = 0; i < 4; i++)
+	{
+		_tchar* szName = new _tchar[256]{};
+		wstring wName = L"Illusioner%d";
+		wsprintfW(szName, wName.c_str(), i);
+		NameList.push_back(szName);
+		pGameObject = CIllusioner::Create(m_pGraphicDev, _vec3(_float(rand() % 4 + 10), 0.6f, _float(rand() % 4) + 27), szName);
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+	}
+
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 

@@ -67,6 +67,7 @@
 #define STAGE_GUN		   L"STAGE_GUN_Layer"
 #define STAGE_GUNITEM	   L"STAGE_GUNITEM_Layer"
 #define STAGE_PLAYER	   L"STAGE_PLAYER_Layer"
+#define	STAGE_ZOMBIE		L"STAGE_ZOMBIE_Layer"
 
 // Particle
 #define SHOTPARTICLE_TEX			L"SHOTPARTICLE_TEX"

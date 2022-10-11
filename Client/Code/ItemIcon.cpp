@@ -204,8 +204,8 @@ void CItemIcon::FixOnCursor()
 	ScreenToClient(g_hWnd, &pt);
 	if (m_bFix)
 	{
-		m_vBlockPos.x = -WINCX / 2 + pt.x;//(double)( 1.75*(-450 +(pt.x*WINCY/WINCX)));
-		m_vBlockPos.y = +WINCY / 2 - pt.y;// (double)(1.75 * (250 - (pt.y*WINCY / WINCX)));
+		m_vBlockPos.x = -WINCX / 2.f + pt.x;//(double)( 1.75*(-450 +(pt.x*WINCY/WINCX)));
+		m_vBlockPos.y = +WINCY / 2.f - pt.y;// (double)(1.75 * (250 - (pt.y*WINCY / WINCX)));
 	}
 	if (m_iNumber == 0)
 	{
