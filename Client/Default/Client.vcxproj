@@ -180,6 +180,7 @@
     <ClInclude Include="..\Header\CubeShop.h" />
     <ClInclude Include="..\Header\DynamicCamera.h" />
     <ClInclude Include="..\Header\ExitButton.h" />
+    <ClInclude Include="..\Header\FireMan.h" />
     <ClInclude Include="..\Header\GetShotgun.h" />
     <ClInclude Include="..\Header\GetSniper.h" />
     <ClInclude Include="..\Header\GetUzi.h" />
@@ -299,6 +300,7 @@
     <ClCompile Include="..\Code\CubeShop.cpp" />
     <ClCompile Include="..\Code\DynamicCamera.cpp" />
     <ClCompile Include="..\Code\ExitButton.cpp" />
+    <ClCompile Include="..\Code\FireMan.cpp" />
     <ClCompile Include="..\Code\GetShotgun.cpp" />
     <ClCompile Include="..\Code\GetSniper.cpp" />
     <ClCompile Include="..\Code\GetUzi.cpp" />
