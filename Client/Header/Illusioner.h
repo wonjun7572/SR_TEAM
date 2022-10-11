@@ -1,9 +1,6 @@
 #pragma once
 #include "Monster.h"
 
-
-
-
 BEGIN(Engine)
 
 class CHitBox;
@@ -14,13 +11,11 @@ class CCubeCol;
 
 END
 
-class CIllusioner :
-	public CMonster
+class CIllusioner :	public CMonster
 {
 public:
 	CIllusioner(LPDIRECT3DDEVICE9 pGraphicDev);
 	virtual ~CIllusioner();
-
 
 public:
 	virtual		HRESULT		Ready_Object(const _vec3& vPos, _tchar* Name);
@@ -29,8 +24,6 @@ public:
 	virtual		void		Render_Object(void);
 
 private:
-
-
 	HRESULT				Add_Component(void);
 	HRESULT				Create_Item();
 

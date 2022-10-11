@@ -64,7 +64,6 @@ _int CSlime::Update_Object(const _float & fTimeDelta)
 		m_pComboUI->KillCntPlus();
 		Create_Item();
 		Monster_DeleteMapping();
-
 		return -1;
 	}
 
