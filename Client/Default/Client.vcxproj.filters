@@ -259,6 +259,9 @@
     <Filter Include="02. GameObject\01. For_Stage\08. Monster\03. Slime">
       <UniqueIdentifier>{d0361cb4-3c75-4b1a-b540-30d86aaedbdd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\08. Monster\04. Fireman">
+      <UniqueIdentifier>{1e901fdb-4bfa-4af2-83fb-1fc754d2c808}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -588,11 +591,17 @@
     <ClInclude Include="..\Header\TransAxisBox.h">
       <Filter>02. GameObject\01. For_Stage\15. Animation_Player\TransAxisBox</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\MonsterParticle.h">
+      <Filter>99. Default\헤더 파일</Filter>
+    </ClInclude>
     <ClInclude Include="..\Header\ItemIcon.h">
       <Filter>02. GameObject\01. For_Stage\09. UI\Inventory\ItemIcon</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\HitBarUI.h">
       <Filter>02. GameObject\01. For_Stage\09. UI\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ItemParticle.h">
+      <Filter>99. Default\헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CubePlayer.h">
       <Filter>02. GameObject\01. For_Stage\05. CubePlayer</Filter>
@@ -600,11 +609,8 @@
     <ClInclude Include="..\Header\Slime.h">
       <Filter>02. GameObject\01. For_Stage\08. Monster\03. Slime</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\MonsterParticle.h">
-      <Filter>02. GameObject\01. For_Stage\12. Particle</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\ItemParticle.h">
-      <Filter>02. GameObject\01. For_Stage\12. Particle</Filter>
+    <ClInclude Include="..\Header\FireMan.h">
+      <Filter>02. GameObject\01. For_Stage\08. Monster\04. Fireman</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -920,17 +926,20 @@
     <ClCompile Include="..\Code\TransAxisBox.cpp">
       <Filter>02. GameObject\01. For_Stage\15. Animation_Player\TransAxisBox</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\MonsterParticle.cpp">
+      <Filter>99. Default\소스 파일</Filter>
+    </ClCompile>
     <ClCompile Include="..\Code\HitBarUI.cpp">
       <Filter>02. GameObject\01. For_Stage\09. UI\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ItemParticle.cpp">
+      <Filter>99. Default\소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Slime.cpp">
       <Filter>02. GameObject\01. For_Stage\08. Monster\03. Slime</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\ItemParticle.cpp">
-      <Filter>02. GameObject\01. For_Stage\12. Particle</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\MonsterParticle.cpp">
-      <Filter>02. GameObject\01. For_Stage\12. Particle</Filter>
+    <ClCompile Include="..\Code\FireMan.cpp">
+      <Filter>02. GameObject\01. For_Stage\08. Monster\04. Fireman</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
