@@ -262,6 +262,9 @@
     <Filter Include="02. GameObject\01. For_Stage\08. Monster\04. Fireman">
       <UniqueIdentifier>{1e901fdb-4bfa-4af2-83fb-1fc754d2c808}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\08. Monster\05.ILLUSIONER">
+      <UniqueIdentifier>{b39eb846-d32e-4b3b-9ef9-4bd2131ccd13}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -612,6 +615,9 @@
     <ClInclude Include="..\Header\FireMan.h">
       <Filter>02. GameObject\01. For_Stage\08. Monster\04. Fireman</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\Illusioner.h">
+      <Filter>02. GameObject\01. For_Stage\08. Monster\05.ILLUSIONER</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -940,6 +946,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\FireMan.cpp">
       <Filter>02. GameObject\01. For_Stage\08. Monster\04. Fireman</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Illusioner.cpp">
+      <Filter>02. GameObject\01. For_Stage\08. Monster\05.ILLUSIONER</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
