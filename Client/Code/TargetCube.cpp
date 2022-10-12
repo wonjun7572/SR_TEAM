@@ -2,55 +2,67 @@
 #include "..\Header\TargetCube.h"
 #include "CubePlayer.h"
 #include "Weapon.h"
+#include "MonsterUI.h"
 
 CTargetCube::CTargetCube(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CGameObject(pGraphicDev)
 {
-	m_tAbility = new MONSTERABILITY;
 }
 
 CTargetCube::~CTargetCube()
 {
 }
 
-HRESULT CTargetCube::Ready_Object(const _vec3& vPos)
+HRESULT CTargetCube::Ready_Object(const _vec3& vPos, const _vec3& vDir, const _vec3& vScale, const _int& iIndex)
 {
+	m_tAbility = new MONSTERABILITY;
 	m_tAbility->iLevel = 0;
-	m_tAbility->fMaxHp = 20.f;
+	m_tAbility->fMaxHp = 25.f;
 	m_tAbility->fCurrentHp = m_tAbility->fMaxHp;
 	m_tAbility->fDamage = 0.f;
+	m_tAbility->strObjTag = L"WALL";
 
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
-	m_pTransCom->Set_Scale(&_vec3(0.3f,0.3f,0.3f));
+	m_vScale = vScale;
+	m_pTransCom->Set_Scale(&m_vScale);
 	m_pTransCom->Set_Pos(vPos.x, vPos.y, vPos.z);
+	m_iTexIndex = iIndex;
+	m_vDir = vDir;
 
 	m_pTransUICom->Set_Scale(1.f, 0.1f, 0.f);
+
 	return S_OK;
 }
 
 _int CTargetCube::Update_Object(const _float & fTimeDelta)
 {
+	if (m_pMonsterUI == nullptr)
+		m_pMonsterUI = dynamic_cast<CMonsterUI*>(Engine::Get_GameObject(STAGE_UI, L"MonsterUI"));
+
+	_vec3 vCenter;
+	_vec3 vPos;
+	m_pTransCom->Get_Info(INFO_POS,&vPos);
+	vCenter.y = vPos.y - m_vScale.y;
+
+	if(vCenter.y < 0.f)
+		m_pTransCom->Move_Pos(&(m_vDir * fTimeDelta));
+
+	if (m_bDead)
+	{
+		// 파티클 추가?
+		return -1;
+	}
+
 	m_fFrame += fTimeDelta;
 
 	_vec3 vUIPos;
 	m_pTransCom->Get_Info(INFO_POS, &vUIPos);
 	m_pTransUICom->Set_Pos(vUIPos.x, vUIPos.y + 0.5f, vUIPos.z);
-
-	if(m_bReFresh)
-	{
-		m_tAbility->fCurrentHp = m_tAbility->fMaxHp;
-		m_fFrame = 0.f;
-		m_bReFresh = false;
-	}
-
-	if (m_fFrame >= 5.f)
-	{
-		Engine::CGameObject::Update_Object(fTimeDelta);
-		m_pTransUICom->Billboard_Transform(fTimeDelta);
-		Add_RenderGroup(RENDER_NONALPHA, this);
-		Hit_Check();
-	}
+	Engine::CGameObject::Update_Object(fTimeDelta);
+	m_pTransUICom->Billboard_Transform(fTimeDelta);
+	Add_RenderGroup(RENDER_NONALPHA, this);
+	Hit_Check(fTimeDelta);
 	
 	return 0;
 }
@@ -59,6 +71,7 @@ void CTargetCube::LateUpdate_Object(void)
 {
 	if (m_tAbility->fCurrentHp <= 0.f)
 	{
+		m_pMonsterUI->Off_Switch();
 		this->Kill_Obj();
 	}
 }
@@ -66,7 +79,7 @@ void CTargetCube::LateUpdate_Object(void)
 void CTargetCube::Render_Object(void)
 {
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransCom->Get_WorldMatrixPointer());
-	m_pTextureCom->Set_Texture(13);
+	m_pTextureCom->Set_Texture(m_iTexIndex);
 	m_pBufferCom->Render_Buffer();
 
 	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
@@ -74,7 +87,7 @@ void CTargetCube::Render_Object(void)
 	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransUICom->Get_WorldMatrixPointer());
-	m_pTextureUICom->Set_Texture(0);
+	m_pTextureUICom->Set_Texture();
 	m_pBufferUICom->Resize_Buffer(m_tAbility->fCurrentHp / m_tAbility->fMaxHp);
 	m_pBufferUICom->Render_Buffer();
 }
@@ -84,15 +97,15 @@ HRESULT CTargetCube::Add_Component(void)
 	CComponent* pComponent = nullptr;
 
 	pComponent = m_pBufferCom = dynamic_cast<CCubeTex*>(Clone_Proto(L"Proto_CubeTexCom"));
-	NULL_CHECK_RETURN(m_pBufferCom, E_FAIL);
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_CubeTexCom", pComponent });
 
 	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Clone_Proto(L"Proto_CubePlayerTexture"));
-	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_CubePlayerTexture", pComponent });
 
 	pComponent = m_pTransCom = dynamic_cast<CTransform*>(Clone_Proto(TRANSFORM_COMP));
-	NULL_CHECK_RETURN(m_pTransCom, E_FAIL);
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ TRANSFORM_COMP, pComponent });
 
 	pComponent = m_pHitBox = dynamic_cast<CHitBox*>(Engine::Clone_Proto(HITBOX_COMP));
@@ -105,21 +118,21 @@ HRESULT CTargetCube::Add_Component(void)
 
 	// FOR UI
 	pComponent = m_pTransUICom = dynamic_cast<CTransform*>(Clone_Proto(TRANSFORM_COMP));
-	NULL_CHECK_RETURN(m_pTransUICom, E_FAIL);
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_TransformUICom", pComponent });
 
 	pComponent = m_pBufferUICom = dynamic_cast<CRcTex*>(Clone_Proto(RCTEX_MONTER_HP_COMP));
-	NULL_CHECK_RETURN(m_pBufferUICom, E_FAIL);
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ RCTEX_MONTER_HP_COMP, pComponent });
 
-	pComponent = m_pTextureUICom = dynamic_cast<CTexture*>(Clone_Proto(L"Monster_HP"));
-	NULL_CHECK_RETURN(m_pTextureUICom, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Monster_HP", pComponent });
+	pComponent = m_pTextureUICom = dynamic_cast<CTexture*>(Clone_Proto(L"Monster_General_HP"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[ID_STATIC].insert({ L"Monster_General_HP", pComponent });
 
 	return S_OK;
 }
 
-void CTargetCube::Hit_Check(void)
+void CTargetCube::Hit_Check(const _float& fTimeDelta)
 {
 	m_pTransCom->Static_Update();
 
@@ -133,6 +146,10 @@ void CTargetCube::Hit_Check(void)
 		_vec3 vDir;
 		if (m_pCollision->HitScan(g_hWnd, &vSrcPos, this->m_pBufferCom, this->m_pTransCom, &vDir))
 		{
+			m_pMonsterUI->Set_Name(m_tAbility->strObjTag);
+			m_pMonsterUI->Set_Hp(m_tAbility->fCurrentHp);
+			m_pMonsterUI->Set_MaxHp(m_tAbility->fMaxHp);
+			m_pMonsterUI->On_Switch();
 			if (pWeapon->Get_Shoot() == true)
 			{
 				m_tAbility->fCurrentHp -= pWeapon->Get_Ability()->fBulletAttack;
@@ -142,17 +159,25 @@ void CTargetCube::Hit_Check(void)
 			if (m_tAbility->fCurrentHp <= 0.f)
 			{
 				m_tAbility->fCurrentHp = 0.f;
-				m_bReFresh = true;
+			}
+		}
+		else
+		{
+			m_fUISwitchTime += fTimeDelta;
+			if (m_fUISwitchTime >= 5.f)
+			{
+				m_pMonsterUI->Off_Switch();
+				m_fUISwitchTime = 0.f;
 			}
 		}
 	}
 }
 
-CTargetCube * CTargetCube::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3& vPos)
+CTargetCube * CTargetCube::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3& vPos, const _vec3& vDir, const _vec3& vScale, const _int& iIndex)
 {
 	CTargetCube *	pInstance = new CTargetCube(pGraphicDev);
 
-	if (FAILED(pInstance->Ready_Object(vPos)))
+	if (FAILED(pInstance->Ready_Object(vPos,vDir,vScale, iIndex)))
 	{
 		Safe_Release(pInstance);
 		return nullptr;
