@@ -15,6 +15,8 @@
 #define RCTEX_MONTER_HP_COMP	L"Proto_MonsterHpCom"
 #define RCTEX_GENERAL_MONSTER_HP_COMP L"RcTex_MonsterHp"
 #define RCTEX_GENERAL_MONSTER_HUD_COMP L"RcTex_MonsterHUDHp"
+#define RCTEX_COMBO_COMP				L"RcTex_ComboBar"
+#define RCTEX_COMBOBAR_HUD_COMP			 L"RcTex_ComboBarHUD"
 
 #define	TRANSFORM_COMP  L"Proto_TransformCom"
 #define ITEM_TRANSFORM_COMP L"ITEM_HITBOX_TransformCom"
@@ -126,3 +128,8 @@
 
 #define HITBAR_TEX				L"HITBAR_TEX"
 #define	HITBAR_TEX_PATH			L"../Bin/Resources/UI/Player/hitbar.png"
+
+#define COMBOBAR_TEX				L"ComboBar"
+#define COMBOBAR_TEX_PATH			L"../Bin/Resources/UI/Player/Gage/comboBar.png"
+#define	COMBOBAR_HUD_TEX			L"ComboBar_Hud"
+#define COMBOBAR_HUD_TEX_PATH		L"../Bin/Resources/UI/Player/Gage/comboHUD.png"

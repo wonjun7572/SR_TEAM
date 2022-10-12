@@ -53,27 +53,29 @@ HRESULT CCubePlayer::Ready_Object(void)
 _int CCubePlayer::Update_Object(const _float & fTimeDelta)
 {
 	Update_NullCheck();
+	
 	m_fTimeDelta = fTimeDelta;
 	m_fBulletTime += fTimeDelta;
 
 	FAILED_CHECK_RETURN(Get_BodyTransform(), -1);
 
-	// 이동, 애니메이션 관련
-	if (!(dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->Get_Switch()))
-	{
-		Move();
-	}
+		// 이동, 애니메이션 관련
+		if (!(dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->Get_Switch()))
+		{
+			if (m_pBomb->Get_WorldMap() == false)
+			{
+				Move();
+			}
+		}
 
-	Look_Direction();
-	
-	if (!(dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->Get_Switch()))
-	{
-		Animation();
-	}
+		Look_Direction();
+		
+		if (!(dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->Get_Switch()))
+		{
+			Animation();
+		}
 
-	Assemble();
-
-	Player_Mapping();
+		Assemble();
 
 	CGameObject::Update_Object(fTimeDelta);
 
@@ -136,6 +138,11 @@ void CCubePlayer::Update_NullCheck()
 
 	if (!m_pProjectileParicle)
 		m_pProjectileParicle = dynamic_cast<CProjectileParticle*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"ProjectileParticle"));
+
+	Player_Mapping();
+
+	if (m_pBomb == nullptr)
+		m_pBomb = dynamic_cast<CPlayerMapping*>(Engine::Get_GameObject(STAGE_MAPPING, L"Map"));
 }
 
 void CCubePlayer::Set_OnTerrain(void)
@@ -422,16 +429,11 @@ void CCubePlayer::Move()
 		m_pBodyWorld->Get_Info(INFO_RIGHT, &vDir);
 		D3DXVec3Normalize(&vDir, &vDir);
 	}
-	//else if (Key_Down(DIK_F))
-	//{
-	//	//알파블랜딩 키는 키 할당되어있음
-	//}
+
 	if (Key_Down(DIK_G))
 	{
 		m_pProjectileParicle->addParticle();
 	}
-
-	
 
 	if (Get_DIKeyState(DIK_SPACE))
 	{

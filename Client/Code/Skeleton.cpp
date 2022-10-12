@@ -6,6 +6,7 @@
 #include "ObtainDefense.h"
 #include "ObtainBullet.h"
 #include "PoolMgr.h"
+#include "ComboUI.h"
 
 CSkeleton::CSkeleton(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CMonster(pGraphicDev)
@@ -48,6 +49,7 @@ _int CSkeleton::Update_Object(const _float & fTimeDelta)
 {
 	if (m_bDead)
 	{
+		m_pComboUI->KillCntPlus();
 		Create_Item();
 		Monster_DeleteMapping();
 

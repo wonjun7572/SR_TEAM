@@ -426,7 +426,7 @@ void CAnimationPlayer::Run_Animation(const _float& AnimationSpeed)	//	ºÒ·¯¿ÍÁø ¾
 		FLOAT sqz = qSLerp.z * qSLerp.z;
 
 		pitch = asinf(2.f * (qSLerp.w * qSLerp.x - qSLerp.y * qSLerp.z));
-		yaw = atan2f(2.0f * (qSLerp.x * qSLerp.z + qSLerp.w * qSLerp.y), (-sqx - sqy + sqz + sqw));
+		yaw =  atan2f(2.0f * (qSLerp.x * qSLerp.z + qSLerp.w * qSLerp.y), (-sqx - sqy + sqz + sqw));
 		roll = atan2f(2.0f * (qSLerp.x * qSLerp.y + qSLerp.w * qSLerp.z), (-sqx + sqy - sqz + sqw));
 
 		_matrix matNewWorld, matNewScale, matNewRot, matNewTrans;

@@ -62,7 +62,9 @@
 #include "Skeleton.h"
 #include "MonsterUI.h"
 #include "HitBarUI.h"
+#include "ComboUI.h"
 #include "MonsterParticle.h"
+#include "ProjectileParticle.h"
 #include "Illusioner.h"
 CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CScene(pGraphicDev)
@@ -155,6 +157,10 @@ HRESULT CStage::Ready_Layer_Environment(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"MonsterParticle", pGameObject), E_FAIL);
 
+	pGameObject = CProjectileParticle::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"ProjectileParticle", pGameObject), E_FAIL);
+
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
 	return S_OK;
@@ -214,6 +220,10 @@ HRESULT CStage::Ready_Layer_UI(const _tchar * pLayerTag)
 	pGameObject = CHitBarUI::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"HitBarUI", pGameObject), E_FAIL);
+
+	pGameObject = CComboUI::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"ComboUI", pGameObject), E_FAIL);
 
 	// Shop
 	pGameObject = CShop::Create(m_pGraphicDev);

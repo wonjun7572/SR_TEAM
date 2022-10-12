@@ -22,7 +22,6 @@ private:
 
 	void					Idle_Animation_Run(void);
 	void					Attack_Animation_Run(void);
-	//void					Dead_Animation_Run(void);
 
 private:
 	HRESULT				Add_Component(void);
@@ -32,15 +31,16 @@ private:
 	_bool				m_bFirst = true;
 	_float				m_fTimeDelta = 0.f;
 	_float				m_AnimationTime = 0.f;
+
 private:
 	list<char*>							m_CharList;
 	list<_tchar*>						m_TcharList;
 	CLayer* pMyLayer = nullptr;
-	_tchar*					m_MonsterName;
+	_tchar*								m_MonsterName;
 
 	MONSTERSTATEID			m_STATE;
-	MONSTERSTATEID			m_BeforeState;
 	MONSTERWALKID			m_WALK;
+	MONSTERSTATEID			m_BeforeState;
 	MONSTERIDLEID			m_IDLE;
 	MONSTERATTACKID			m_ATTACK;
 	MONSTERDEADID			m_DEAD;

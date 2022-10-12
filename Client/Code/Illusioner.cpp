@@ -4,15 +4,16 @@
 #include "ObtainBullet.h"
 #include "ObtainDefense.h"
 #include "PoolMgr.h"
+#include "ComboUI.h"
 
 #include "TransAxisBox.h"
 
 USING(Engine)
+
 CIllusioner::CIllusioner(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CMonster(pGraphicDev)
 {
 }
-
 
 CIllusioner::~CIllusioner()
 {
@@ -61,7 +62,9 @@ _int CIllusioner::Update_Object(const _float & fTimeDelta)
 {
 	if (m_bDead)
 	{
+		m_pComboUI->KillCntPlus();
 		Create_Item();
+		Monster_DeleteMapping();
 		return -1;
 	}
 
@@ -121,6 +124,7 @@ _int CIllusioner::Update_Object(const _float & fTimeDelta)
 
 void CIllusioner::LateUpdate_Object(void)
 {
+	Monster_Mapping();
 	if (!m_bFirst && (m_STATE == ILLUSION_WALK))
 	{
 		Walk_Animation_Run();

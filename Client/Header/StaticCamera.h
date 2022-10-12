@@ -17,8 +17,10 @@ public:
 		const _float& fNear,
 		const _float& fFar);
 
+
 	virtual _int Update_Object(const _float& fTimeDelta) override;
 	virtual void LateUpdate_Object(void) override;
+
 	const _matrix* GetViewmatrix()  { return &m_matView; }
 	const _matrix* GetProjmatrix()  { return &m_matProj; }
 
@@ -32,6 +34,8 @@ private:
 
 private:
 	CTransform*		m_pTransform_Target = nullptr;
+	CTransform*		m_pBombTransform	= nullptr;
+
 	_float			m_fDistance;
 	_float			m_fSpeed = 10.f;
 	_float			m_fAngle = 0.f;
