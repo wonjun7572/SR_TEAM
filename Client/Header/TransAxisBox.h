@@ -28,6 +28,7 @@ public:
 	CTransform*		Get_Parent(void) { return m_pParentTransform; }
 	void			Set_Parent(CTransform* pTransform) { m_pParentTransform = pTransform; }
 	void			ParentSettingStart(void) { bParentSetting = true; }
+	void			Get_Final(_matrix* mat) { *mat = m_FinalWorldMatrix; }
 
 public:
 	void			Set_Axis(_float& fX, _float fY, _float fZ) { m_fX = fX, m_fY = fY, m_fZ = fZ; }
