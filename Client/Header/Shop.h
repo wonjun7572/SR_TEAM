@@ -28,10 +28,12 @@ public:
 	void	LateUpdate_Object() override;
 	void	Render_Object() override;
 
-	void		Key_Input();
 	void		Render_Ortho(CTransform* pTransform, CTexture* pTexture, _int iIndex = 0);
 
-	_bool			Get_Switch(void) { return m_bShopSwitch; }
+	void		Set_Switch() { m_bShopSwitch = !m_bShopSwitch; }
+
+	_bool		Get_Switch(void) { return m_bShopSwitch; }
+
 private:
 	HRESULT			Add_Component(void);
 	_bool			PointMouse(const _vec3& vPos);		

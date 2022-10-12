@@ -12,6 +12,7 @@
 #include "BulletParticle.h"
 #include "ProjectileParticle.h"
 #include "Inventory.h"
+#include "Shop.h"
 
 CCubePlayer::CCubePlayer(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
@@ -60,7 +61,8 @@ _int CCubePlayer::Update_Object(const _float & fTimeDelta)
 	FAILED_CHECK_RETURN(Get_BodyTransform(), -1);
 
 		// 이동, 애니메이션 관련
-		if (!(dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->Get_Switch()))
+		if (!(dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->Get_Switch())
+			&& !(dynamic_cast<CShop*>(Engine::Get_GameObject(STAGE_UI, L"Shop"))->Get_Switch()))
 		{
 			if (m_pBomb->Get_WorldMap() == false)
 			{
@@ -70,7 +72,8 @@ _int CCubePlayer::Update_Object(const _float & fTimeDelta)
 
 		Look_Direction();
 		
-		if (!(dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->Get_Switch()))
+		if (!(dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->Get_Switch())
+			&& !(dynamic_cast<CShop*>(Engine::Get_GameObject(STAGE_UI, L"Shop"))->Get_Switch()))
 		{
 			Animation();
 		}
@@ -460,12 +463,10 @@ void CCubePlayer::Move()
 				m_pCollision->Wall_Collision_By_DotSliding(&vSliding);
 
 				m_pBodyWorld->Move_Pos(&(vSliding * m_fSpeed * m_fTimeDelta));
-				//FAILED_CHECK_RETURN(CPoolMgr::GetInstance()->Reuse_Obj(m_pGraphicDev, &vPos, &vSliding), );
 			}
 			else
 			{
 				m_pBodyWorld->Move_Pos(&(vDir * m_fSpeed * m_fTimeDelta));
-				//FAILED_CHECK_RETURN(CPoolMgr::GetInstance()->Reuse_Obj(m_pGraphicDev, &vPos, &vDir), );
 			}
 		}
 		if (iCollision == WALL_FRONT)
@@ -476,19 +477,16 @@ void CCubePlayer::Move()
 				m_pCollision->Wall_Collision_By_DotSliding(&vSliding);
 
 				m_pBodyWorld->Move_Pos(&(vSliding * m_fSpeed * m_fTimeDelta));
-				//FAILED_CHECK_RETURN(CPoolMgr::GetInstance()->Reuse_Obj(m_pGraphicDev, &vPos, &vSliding), );
 			}
 			else
 			{
 				m_pBodyWorld->Move_Pos(&(vDir * m_fSpeed * m_fTimeDelta));
-				//FAILED_CHECK_RETURN(CPoolMgr::GetInstance()->Reuse_Obj(m_pGraphicDev, &vPos, &vDir), );
 			}
 		}
 	}
 	else	//	충돌하지 않았으며 충돌한 방향과 반대 방향으로 진행하는 이동 처리
 	{
 		m_pBodyWorld->Move_Pos(&(vDir * m_fSpeed * m_fTimeDelta));
-		//FAILED_CHECK_RETURN(CPoolMgr::GetInstance()->Reuse_Obj(m_pGraphicDev, &vPos, &vDir), );
 	}
 }
 

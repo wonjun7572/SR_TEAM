@@ -135,8 +135,8 @@ _uint CLoading::Loading_ForStage(void)
 
 	// Map
 	{
-		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Minimap", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/\Texture2D/hud_minimap_bg.png", TEX_NORMAL)), E_FAIL);
-		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Bomb_TEX", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Bomb.png", TEX_NORMAL)), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Minimap", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Texture2D/hud_minimap_bg.png", TEX_NORMAL)), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Bomb_TEX", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/TargetAim.png", TEX_NORMAL)), E_FAIL);
 	}
 
 	// PNGtoCube
@@ -176,7 +176,6 @@ _uint CLoading::Loading_ForStage(void)
 	{
 		//Shop
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_ShopTextureCom", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/UI/Sprite/UI upgrade system - sheet_2.png", TEX_NORMAL)), E_FAIL);
-		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_InteractShop", CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/CubeTile/CubeTile_%d.dds", TEX_NORMAL)), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_UziTextureCom", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/UI/Gun/Gun_0.png", TEX_NORMAL)), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_ShotGunTextureCom", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/UI/Gun/Gun_2.png", TEX_NORMAL)), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_SniperTextureCom", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/UI/Gun/Gun_4.png", TEX_NORMAL)), E_FAIL);
@@ -188,6 +187,11 @@ _uint CLoading::Loading_ForStage(void)
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_RailGunCom", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/UI/ShopUI/RailGun.png", TEX_NORMAL)), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_BurstModeCom", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/UI/ShopUI/RailGun.png", TEX_NORMAL)), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_UpgradeStringCom", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/UI/ShopUI/UIupgrade.png", TEX_NORMAL)), E_FAIL);
+	}
+
+	{
+		// Skiil
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Lava_Tex", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Lava.png", TEX_NORMAL)), E_FAIL);
 	}
 
 	m_bFinish = true;

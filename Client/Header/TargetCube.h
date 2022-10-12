@@ -1,6 +1,8 @@
 #pragma once
 #include "GameObject.h"
 
+class CMonsterUI;
+
 class CTargetCube :	public CGameObject
 {
 private:
@@ -8,16 +10,16 @@ private:
 	virtual ~CTargetCube();
 
 public:
-	virtual HRESULT Ready_Object(const _vec3& vPos);
-	virtual _int	Update_Object(const _float& fTimeDelta) override;
-	virtual void	LateUpdate_Object(void) override;
-	virtual void	Render_Object(void) override;
-	void         Set_Damaged(_int iDamage) { m_tAbility->fCurrentHp -= iDamage; }
-	MONSTERABILITY* Get_MAbility() { return m_tAbility; }
-	void				Update_NullCheck();
+	virtual HRESULT		Ready_Object(const _vec3& vPos, const _vec3& vDir, const _vec3& vScale, const _int& m_iIndex);
+	virtual _int		Update_Object(const _float& fTimeDelta) override;
+	virtual void		LateUpdate_Object(void) override;
+	virtual void		Render_Object(void) override;
+	void				Set_Damaged(_int iDamage) { m_tAbility->fCurrentHp -= iDamage; }
+	MONSTERABILITY*		Get_MAbility() { return m_tAbility; }
+
 private:
 	HRESULT				Add_Component(void);
-	void				Hit_Check(void);
+	void				Hit_Check(const _float& fTimeDelta);
 
 private:
 	CCubeTex*			m_pBufferCom = nullptr;
@@ -30,15 +32,21 @@ private:
 	CTexture*			m_pTextureUICom = nullptr;
 	CTransform*			m_pTransUICom = nullptr;
 
+	CMonsterUI*			m_pMonsterUI = nullptr;
+
+	_float				m_fUISwitchTime = 0.f;
+
 	CHitBox*			m_pHitBox = nullptr;
 	_float				m_fFrame = 0.f;
-	_bool				m_bReFresh = false;
+
+	_vec3				m_vDir = _vec3(0.f, 0.f, 0.f);
+	_vec3				m_vScale = _vec3(0.f, 0.f, 0.f);
 
 private:
 	MONSTERABILITY*		m_tAbility;
 
 public:
-	static CTargetCube*		Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3& vPos);
+	static CTargetCube*		Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3& vPos , const _vec3& vDir, const _vec3& vScale, const _int& iIndex);
 	virtual void	Free(void);
 };
 

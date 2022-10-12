@@ -91,6 +91,63 @@ HRESULT CMonster::Monster_DeleteMapping(void)
 	return S_OK;
 }
 
+_bool CMonster::Collision_Wall(const _float& fTimeDelta)
+{
+	_vec3 vPos;
+	m_pTransCom->Get_Info(INFO_POS, &vPos);
+
+	_vec3	vDir(0, 0, 0);
+	_vec3	vNormal(0, 0, 0);
+
+	_int iCollision = m_pCollision->Wall_Collision_For_Monster(&vNormal,this->m_pTransCom,this->m_pHitBox);
+
+	if (-1 != iCollision)
+	{
+		float fDot = D3DXVec3Dot(&vNormal, &vDir);
+		float fDiagonal = acosf(fDot);
+
+		if (iCollision == WALL_RIGHT || iCollision == WALL_LEFT || iCollision == WALL_BACK)
+		{
+			if (D3DXToDegree(fDiagonal) > 90.f)
+			{
+				_vec3 vSliding = vDir;
+				m_pCollision->Wall_Collision_By_DotSliding_For_Monster(&vSliding,this->m_pTransCom,this->m_pHitBox);
+
+				m_pTransCom->Move_Pos(&(vSliding * m_fSpeed * fTimeDelta));
+			}
+			else
+			{
+				vDir = _vec3 (1, 0, 0);
+				m_pTransCom->Move_Pos(&(vDir * m_fSpeed * fTimeDelta));
+			}
+			return true;
+		}
+		if (iCollision == WALL_FRONT)
+		{
+			if (D3DXToDegree(fDiagonal) < 90.f)
+			{
+				_vec3 vSliding = vDir;
+				m_pCollision->Wall_Collision_By_DotSliding_For_Monster(&vSliding, this->m_pTransCom, this->m_pHitBox);
+
+				m_pTransCom->Move_Pos(&(vSliding * m_fSpeed * fTimeDelta));
+			}
+			else
+			{
+				vDir = _vec3(-1, 0, 0);
+				m_pTransCom->Move_Pos(&(vDir * m_fSpeed * fTimeDelta));
+			}
+			return true;
+		}
+	}
+	else	
+	{
+		m_pTransCom->Move_Pos(&(vDir * m_fSpeed * fTimeDelta));
+		return false;
+	}
+
+	return false;
+}
+
 void CMonster::Hit_Effect()
 {
 	_vec3 vPos;

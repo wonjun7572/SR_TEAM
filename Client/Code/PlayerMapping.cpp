@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "..\Header\PlayerMapping.h"
-
+#include "Meteor.h"
 
 CPlayerMapping::CPlayerMapping(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
@@ -15,6 +15,10 @@ HRESULT CPlayerMapping::Ready_Object(void)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 	m_pTransform->Set_Scale(0.5f, 0.5f, 0.5f);
+
+	m_pBombTransform->Set_Scale(8.f, 8.f, 1.f);
+	m_pBombTransform->Rotation(ROT_X,D3DXToRadian(90.f));
+
 	return S_OK;
 }
 
@@ -25,6 +29,25 @@ _int CPlayerMapping::Update_Object(const _float & fTimeDelta)
 	CGameObject::Update_Object(fTimeDelta);
 	
 	Add_RenderGroup(RENDER_ALPHA, this);
+
+	if (m_bBombard)
+	{
+		m_fFrame += fTimeDelta;
+		m_fSkillFrame += fTimeDelta;
+
+		if (m_fFrame >= 0.2f)
+		{
+			Bombard(fTimeDelta);
+			m_fFrame = 0.f;
+		}
+
+		if (m_fSkillFrame >= 10.f)
+		{
+			m_fFrame = 0.f;
+			m_fSkillFrame = 0.f;
+			m_bBombard = false;
+		}
+	}
 
 	return 0;
 }
@@ -94,8 +117,14 @@ void CPlayerMapping::Render_Object(void)
 	
 	if (m_bWorldMap)
 	{
+		m_pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+		m_pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+		m_pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
+		m_pGraphicDev->SetRenderState(D3DRS_ALPHAREF, 0xcc);
+		m_pGraphicDev->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
 		m_pBombTexure->Set_Texture();
-		m_pSphereTex->Render_Buffer();
+		m_pBombBuffer->Render_Buffer();
+		m_pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
 	}
 	
 	m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
@@ -151,56 +180,56 @@ void CPlayerMapping::Key_Input(const _float& fTimeDelta)
 
 	if (Get_DIKeyState(DIK_W) && Get_DIKeyState(DIK_A))
 	{
-		_vec3 vLook, vRight;
-		m_pBombTransform->Get_Info(INFO_LOOK, &vLook);
+		_vec3 vUp, vRight;
+		m_pBombTransform->Get_Info(INFO_UP, &vUp);
 		m_pBombTransform->Get_Info(INFO_RIGHT, &vRight);
 		vRight *= -1.f;
 
-		vDir = vLook + vRight;
+		vDir = vUp + vRight;
 
 		D3DXVec3Normalize(&vDir, &vDir);
 	}
 	else if (Get_DIKeyState(DIK_W) && Get_DIKeyState(DIK_D))
 	{
-		_vec3 vLook, vRight;
-		m_pBombTransform->Get_Info(INFO_LOOK, &vLook);
+		_vec3 vUp, vRight;
+		m_pBombTransform->Get_Info(INFO_UP, &vUp);
 		m_pBombTransform->Get_Info(INFO_RIGHT, &vRight);
-
-		vDir = vLook + vRight;
+		
+		vDir = vUp + vRight;
 
 		D3DXVec3Normalize(&vDir, &vDir);
 	}
 	else if (Get_DIKeyState(DIK_S) && Get_DIKeyState(DIK_D))
 	{
-		_vec3 vLook, vRight;
-		m_pBombTransform->Get_Info(INFO_LOOK, &vLook);
+		_vec3 vUp, vRight;
+		m_pBombTransform->Get_Info(INFO_UP, &vUp);
 		m_pBombTransform->Get_Info(INFO_RIGHT, &vRight);
-		vLook *= -1.f;
+		vUp *= -1.f;
 
-		vDir = vLook + vRight;
+		vDir = vUp + vRight;
 
 		D3DXVec3Normalize(&vDir, &vDir);
 	}
 	else if (Get_DIKeyState(DIK_S) && Get_DIKeyState(DIK_A))
 	{
-		_vec3 vLook, vRight;
-		m_pBombTransform->Get_Info(INFO_LOOK, &vLook);
+		_vec3 vUp, vRight;
+		m_pBombTransform->Get_Info(INFO_UP, &vUp);
 		m_pBombTransform->Get_Info(INFO_RIGHT, &vRight);
-		vLook *= -1.f;
+		vUp *= -1.f;
 		vRight *= -1.f;
 
-		vDir = vLook + vRight;
+		vDir = vUp + vRight;
 
 		D3DXVec3Normalize(&vDir, &vDir);
 	}
 	else if (Get_DIKeyState(DIK_W))
 	{
-		m_pBombTransform->Get_Info(INFO_LOOK, &vDir);
+		m_pBombTransform->Get_Info(INFO_UP, &vDir);
 		D3DXVec3Normalize(&vDir, &vDir);
 	}
 	else if (Get_DIKeyState(DIK_S))
 	{
-		m_pBombTransform->Get_Info(INFO_LOOK, &vDir);
+		m_pBombTransform->Get_Info(INFO_UP, &vDir);
 		D3DXVec3Normalize(&vDir, &vDir);
 		vDir = -vDir;
 	}
@@ -223,15 +252,48 @@ void CPlayerMapping::Key_Input(const _float& fTimeDelta)
 	_long MoveZ = Get_DIMouseMove(DIMS_Z);
 
 	m_pBombTransform->Rotation(ROT_Y, D3DXToRadian(MoveX / 10.f));
+
+	if (Mouse_Down(DIM_LB) && m_bWorldMap)
+	{
+		m_bBombard = true;
+	}
+}
+
+HRESULT CPlayerMapping::Bombard(const _float& fTimeDelta)
+{
+	_vec3 vPos;
+	m_pBombTransform->Get_Info(INFO_POS, &vPos);
+	
+	srand((unsigned int)time(NULL));
+	int iDir = rand() % 4;
+	int iRand = rand() % 4;
+
+	_vec3 vRand;
+
+	if(iDir == 0)
+		vRand = _vec3(vPos.x + iRand, vPos.y, vPos.z + iRand);
+	else if(iDir == 1)
+		vRand = _vec3(vPos.x + iRand, vPos.y, vPos.z - iRand);
+	else if(iDir == 2)
+		vRand = _vec3(vPos.x - iRand, vPos.y, vPos.z + iRand);
+	else if(iDir == 3)
+		vRand = _vec3(vPos.x - iRand, vPos.y, vPos.z - iRand);
+
+	CGameObject* pGameObject = CMeteor::Create(m_pGraphicDev, vRand);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	CLayer* pLayer = Get_Layer(STAGE_SKILL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+
+	return S_OK;
 }
 
 HRESULT CPlayerMapping::Add_Component(void)
 {
 	CComponent* pInstance = nullptr;
 
-	pInstance = m_pSphereTex = dynamic_cast<CSphereTex*>(Engine::Clone_Proto(SPHERETEX_COMP));
+	pInstance = m_pBombBuffer = dynamic_cast<CRcTex*>(Engine::Clone_Proto(RCTEX_COMP));
 	NULL_CHECK_RETURN(pInstance, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ SPHERETEX_COMP, pInstance });
+	m_mapComponent[ID_STATIC].insert({ L"Bomb_RcTexCom", pInstance });
 
 	pInstance = m_pTexture = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Proto_CubePlayerTexture"));
 	NULL_CHECK_RETURN(pInstance, E_FAIL);

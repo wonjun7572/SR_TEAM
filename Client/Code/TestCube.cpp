@@ -30,7 +30,6 @@ HRESULT CTestCube::Ready_Object(int PosX, int PosY)
 	_vec3 vScale = { 0.5f,0.5f,0.5f };
 	m_pTransCom->Set_Scale(&vScale);
 	
-	
 	return S_OK;
 }
 
@@ -51,8 +50,6 @@ _int CTestCube::Update_Object(const _float& fTimeDelta)
 
 void CTestCube::Render_Object()
 {
-	
-
 	//빛표현 블랜딩
 	//		m_pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ONE);
 	//		m_pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
@@ -79,7 +76,6 @@ void CTestCube::Render_Object()
 	//m_pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_ONE);
 	if(! (dynamic_cast<CBaseMapping*>(Engine::Get_GameObject(STAGE_MAPPING, L"BaseMapping"))->Get_Worldmap()))
 	{
-	//m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
 		if (m_bWireFrame)
 			m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 
@@ -89,11 +85,6 @@ void CTestCube::Render_Object()
 
 		if (m_bWireFrame)
 			m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
-
-		m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
-		m_pHitBox->Render_Buffer();
-		m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
-	//	m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
 	}
 }
 
@@ -123,7 +114,6 @@ void CTestCube::Update_NullCheck()
 {
 	if (!m_pMonsterParticle)
 		m_pMonsterParticle = dynamic_cast<CMonsterParticle*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"MonsterParticle"));
-	//m_pMonsterParticle->addParticle();
 }
 
 HRESULT CTestCube::Interact(void)
@@ -140,7 +130,6 @@ HRESULT CTestCube::Interact(void)
 	pPlayerTransformCom->Get_Info(Engine::INFO_POS, &vPlayerPos);
 	vDir = vPos - vPlayerPos;
 	fDistance = D3DXVec3Length(&vDir);
-	
 	
 	if (fDistance <= 15.f)
 	{
@@ -160,13 +149,13 @@ HRESULT CTestCube::Interact(void)
 			m_pLetterBox = CLetterBox::Create(m_pGraphicDev, L"Press [E] to Interact", sizeof(L"Press [E] to Interact"), 0);
 
 			TCHAR* szCntName = new TCHAR[64];
-			wsprintf(szCntName, L"WallLetter");
+			wsprintf(szCntName, L"");
+			const _tchar*	szNumbering = L"WallLetter_%d";
+			wsprintf(szCntName, szNumbering, m_iLetterCnt);
 			Engine::Add_GameObject(STAGE_MAPPING, m_pLetterBox, szCntName);
-			m_listLetterCnt.push_back(szCntName);
+			m_listWallCnt.push_back(szCntName);
 
 			++m_iLetterCnt;
-			//cout << m_iLetterCnt << endl;
-			Safe_Delete_Array(szCntName);
 		}
 	}
 
@@ -176,7 +165,6 @@ HRESULT CTestCube::Interact(void)
 			if (vPos.y < 15)
 			{
 				m_bDoorOpen = true;
-
 			}
 	}	
 
@@ -194,7 +182,6 @@ HRESULT CTestCube::Interact(void)
 		if(vPos.y > -15)
 		vPos.y -= 0.1f;
 		m_pTransCom->Set_Pos(vPos.x, vPos.y, vPos.z);
-		
 	}
 
 	return S_OK;
@@ -205,23 +192,23 @@ HRESULT CTestCube::Add_Component()
 	CComponent* pComponent = nullptr;
 
 	pComponent = m_pBufferCom = dynamic_cast<CCubeTex*>(Clone_Proto(L"Proto_CubeTexCom"));
-	NULL_CHECK_RETURN(m_pBufferCom, E_FAIL);
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_CubeTexCom", pComponent });
 
 	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Clone_Proto(L"Proto_CubePlayerTexture"));
-	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_CubePlayerTexture", pComponent });
 
 	pComponent = m_pTransCom = dynamic_cast<CTransform*>(Clone_Proto(TRANSFORM_COMP));
-	NULL_CHECK_RETURN(m_pTransCom, E_FAIL);
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ TRANSFORM_COMP, pComponent });
 
 	pComponent = m_pCalculatorCom = dynamic_cast<CCalculator*>(Clone_Proto(CALCULATOR_COMP));
-	NULL_CHECK_RETURN(m_pCalculatorCom, E_FAIL);
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ CALCULATOR_COMP, pComponent });
 
 	pComponent = m_pHitBox = dynamic_cast<CHitBox*>(Clone_Proto(HITBOX_COMP));
-	NULL_CHECK_RETURN(m_pCalculatorCom, E_FAIL);
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ HITBOX_COMP, pComponent });
 
 

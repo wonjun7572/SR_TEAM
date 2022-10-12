@@ -27,6 +27,15 @@ public:
 private:
 	vector<D3DXMATRIX>		m_vecWorld;
 
+
+// 저장 애니메이션 테스트
+private:
+	vector<D3DXMATRIX>		AnimationSlot[50];
+
+public:
+	void					Change_Animation(_uint Slot) { m_vecWorld = AnimationSlot[Slot]; }
+	void					Fill_Animation(_matrix* matWorld, _uint Slot) { AnimationSlot[Slot].push_back(*matWorld); }
+
 public:
 	static CQuarternion*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
 	virtual CComponent*		Clone(void);
