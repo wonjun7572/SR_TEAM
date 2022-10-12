@@ -44,13 +44,13 @@ private:
 
 	_tchar*					m_MonsterName;
 
-	ILLUSIONSTATEID		m_BeforeState;
-	ILLUSIONSTATEID		m_STATE;
-	ILLUSIONWALKID		m_WALK;
-	ILLUSIONIDLEID		m_IDLE;
-	ILLUSIONATTACKID	m_ATTACK;
+	ILLUSIONSTATEID			m_BeforeState;
+	ILLUSIONSTATEID			m_STATE;
+	ILLUSIONWALKID			m_WALK;
+	ILLUSIONIDLEID			m_IDLE;
+	ILLUSIONATTACKID		m_ATTACK;
 
-	CLayer*				pMyLayer;
+	CLayer*					pMyLayer;
 	list<char*>				m_CharList;
 	list<_tchar*>			m_TcharList;
 

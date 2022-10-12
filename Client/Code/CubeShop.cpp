@@ -20,12 +20,15 @@ HRESULT CCubeShop::Ready_Object(const _vec3& vPos)
 	FAILED_CHECK_RETURN(Add_component(), E_FAIL);
 
 	m_pTransform->Set_Scale(0.5f, 0.5f, 0.5f);
-	m_pTransform->Set_Pos(vPos.x, vPos.y, vPos.z);
+	m_pTransform->Set_Pos(vPos.x, vPos.y + 0.5f, vPos.z);
 	return S_OK;
 }
 
 _int CCubeShop::Update_Object(const _float & fTimeDelta)
 {
+	if (m_pShop == nullptr)
+		m_pShop = dynamic_cast<CShop*>(Engine::Get_GameObject(STAGE_UI, L"Shop"));
+
 	Interact();
 	Add_RenderGroup(RENDER_NONALPHA, this);
 	CGameObject::Update_Object(fTimeDelta);
@@ -35,13 +38,13 @@ _int CCubeShop::Update_Object(const _float & fTimeDelta)
 
 void CCubeShop::LateUpdate_Object(void)
 {
-
+	CGameObject::LateUpdate_Object();
 }
 
 void CCubeShop::Render_Object(void)
 {
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
-	m_pTexture->Set_Texture(0);
+	m_pTexture->Set_Texture(99);
 	m_pCubeTexture->Render_Buffer();
 }
 
@@ -49,18 +52,22 @@ HRESULT CCubeShop::Add_component(void)
 {
 	CComponent* pComponent = nullptr;
 
-	pComponent = m_pTexture = dynamic_cast<CTexture*>(Clone_Proto(L"Proto_InteractShop"));
-	NULL_CHECK_RETURN(m_pTexture, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Proto_InteractShop", pComponent });
+	pComponent = m_pTexture = dynamic_cast<CTexture*>(Clone_Proto(L"Proto_CubePlayerTexture"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[ID_STATIC].insert({ L"Proto_CubePlayerTexture", pComponent });
 
 	pComponent = m_pCubeTexture = dynamic_cast<CCubeTex*>(Clone_Proto(CUBETEX_COMP));
-	NULL_CHECK_RETURN(m_pCubeTexture, E_FAIL);
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ CUBETEX_COMP, pComponent });
 
 	pComponent = m_pTransform = dynamic_cast<CTransform*>(Clone_Proto(TRANSFORM_COMP));
-	NULL_CHECK_RETURN(m_pTransform, E_FAIL);
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ TRANSFORM_COMP, pComponent });
-	
+
+	pComponent = m_pHitBox = dynamic_cast<CHitBox*>(Clone_Proto(HITBOX_COMP));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[ID_STATIC].insert({ HITBOX_COMP, pComponent });
+
 	return S_OK;
 }
 
@@ -79,25 +86,34 @@ HRESULT CCubeShop::Interact()
 	vDir = vPos - vPlayerPos;
 	fDistance = D3DXVec3Length(&vDir);
 
-	if (fDistance <= 15.f)
+	if (fDistance <= 5.f)
 	{
 		m_bSwitch = true;
-		m_bApproaching = true;
 	}
-	if (fDistance >= 15.f)
+	if (fDistance >= 5.f)
 	{
-		m_bApproaching = false;
+		m_bSwitch = false;
 	}
 
-	if (!m_bDialogInit && m_iTexIndex == 0 && m_bApproaching)
+	if (!m_bDialogInit && m_bSwitch)
 	{
 		m_bDialogInit = true;
+
+		m_pDialogBox = CLetterBox::Create(m_pGraphicDev, L"Press [E] to Interact", sizeof(L"Press [E] to Interact"), 0);
+	
+		TCHAR* szCntName = new TCHAR[64];
+		wsprintf(szCntName, L"");
+		const _tchar*	szNumbering = L"ShopLetter_%d";
+		wsprintf(szCntName, szNumbering, m_iDialogCnt);
+		Engine::Add_GameObject(STAGE_MAPPING, m_pDialogBox, szCntName);
+		m_listDialogCnt.push_back(szCntName);
+
+		++m_iDialogCnt;
 	}
 
-	if (m_bSwitch && Get_DIKeyState(DIK_E))
+	if (m_bSwitch && Key_Down(DIK_E))
 	{
-		CTransform* m_pShop = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_UI, L"Shop", TRANSFORM_COMP, ID_DYNAMIC));
-		NULL_CHECK_RETURN(m_pShop, E_FAIL);
+		dynamic_cast<CShop*>(m_pShop)->Set_Switch();
 	}
 
 	if (m_bSwitch && m_pDialogBox != nullptr)

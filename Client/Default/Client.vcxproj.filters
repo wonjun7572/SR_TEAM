@@ -579,14 +579,17 @@
     <ClInclude Include="..\Header\ItemParticle.h">
       <Filter>02. GameObject\01. For_Stage\12. Particle</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\ProjectileParticle.h">
-      <Filter>99. Default\헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\SkillCamera.h">
       <Filter>99. Default\헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Illusioner.h">
       <Filter>02. GameObject\01. For_Stage\08. Monster\05.Illusioner</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ComboUI.h">
+      <Filter>02. GameObject\01. For_Stage\09. UI\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ProjectileParticle.h">
+      <Filter>02. GameObject\01. For_Stage\12. Particle</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -899,14 +902,17 @@
     <ClCompile Include="..\Code\ItemParticle.cpp">
       <Filter>02. GameObject\01. For_Stage\12. Particle</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\ProjectileParticle.cpp">
-      <Filter>99. Default\소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\SkillCamera.cpp">
       <Filter>99. Default\소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Illusioner.cpp">
       <Filter>02. GameObject\01. For_Stage\08. Monster\05.Illusioner</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ComboUI.cpp">
+      <Filter>02. GameObject\01. For_Stage\09. UI\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ProjectileParticle.cpp">
+      <Filter>02. GameObject\01. For_Stage\12. Particle</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

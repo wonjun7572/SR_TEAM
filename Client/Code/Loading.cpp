@@ -169,7 +169,6 @@ _uint CLoading::Loading_ForStage(void)
 	{
 		//Shop
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_ShopTextureCom", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/UI/Sprite/UI upgrade system - sheet_2.png", TEX_NORMAL)), E_FAIL);
-		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_InteractShop", CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/CubeTile/CubeTile_%d.dds", TEX_NORMAL)), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_UziTextureCom", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/UI/Gun/Gun_0.png", TEX_NORMAL)), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_ShotGunTextureCom", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/UI/Gun/Gun_2.png", TEX_NORMAL)), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_SniperTextureCom", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/UI/Gun/Gun_4.png", TEX_NORMAL)), E_FAIL);

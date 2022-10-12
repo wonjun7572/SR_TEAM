@@ -42,7 +42,8 @@ HRESULT CStaticCamera::Ready_Object(const _vec3* pEye,
 
 Engine::_int CStaticCamera::Update_Object(const _float& fTimeDelta)
 {
-	if (!(dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->Get_Switch()) || !(dynamic_cast<CShop*>(Engine::Get_GameObject(STAGE_UI, L"Shop"))->Get_Switch()))
+	if (!(dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->Get_Switch()) 
+		&& !(dynamic_cast<CShop*>(Engine::Get_GameObject(STAGE_UI, L"Shop"))->Get_Switch()))
 	{
 		Key_Input(fTimeDelta);
 
@@ -242,7 +243,7 @@ void CStaticCamera::Look_Target(const _float& _fTimeDelta)
 void CStaticCamera::Camera_Shaking(const _float& _fTimeDelta)
 {
 	m_fFrame += 0.2f * _fTimeDelta;
-	m_iReverse *= -1.f;
+	m_iReverse *= -1;
 	m_vEye.y = m_vEye.y + (_float(m_iReverse) * 0.1f * _fTimeDelta);
 
 	if (m_fFrame >= 0.2f)

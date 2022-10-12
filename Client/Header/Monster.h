@@ -21,6 +21,7 @@ protected:
 	HRESULT				Monster_Mapping(void);
 	HRESULT				Monster_DeleteMapping(void);
 
+	_bool				Collision_Wall(const _float& fTimeDelta);
 
 	void				Hit_Effect();
 
@@ -50,17 +51,18 @@ protected:
 
 	MONSTERABILITY*		m_tAbility;
 
-	CMonsterParticle*	 m_pHitParicle = nullptr;
+	CMonsterParticle*	m_pHitParicle = nullptr;
 	CComboUI*			m_pComboUI = nullptr;
 	
 	_float				m_fUISwitchTime = 0.f;
-
 
 	_bool				m_MappingInit = false;
 	list<TCHAR*>		m_listMonsterCnt;
 	TCHAR*				m_szCntName = new TCHAR[64];
 
 	CTransform*			m_pMonsterMapping = nullptr;
+
+	_float				m_fSpeed = 1.f;
 
 protected:
 	virtual void	Free(void)override;

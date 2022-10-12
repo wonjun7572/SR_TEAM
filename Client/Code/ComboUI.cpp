@@ -18,7 +18,7 @@ HRESULT CComboUI::Ready_Object(void)
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 	D3DXMatrixOrthoLH(&m_matProj, WINCX, WINCY, 0.f, 1.f);
 
-	m_fX = 500.f;
+	m_fX = 420.f;
 	m_fY = -225.f;
 	m_fSizeX = 240.f;
 	m_fSizeY = 18.f;
@@ -105,8 +105,8 @@ void CComboUI::Render_Object(void)
 	m_pGraphicDev->SetTransform(D3DTS_VIEW, &OldViewMatrix);
 	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &OldProjMatrix);
 
-	Render_Font(L"Combo", m_strCombo.c_str(), &_vec2(1175.f, 170.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
-	Render_Font(L"Kill", m_strKill.c_str(), &_vec2(1200.f,250.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+	Render_Font(L"Combo", m_strCombo.c_str(), &_vec2(1095.f, 170.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+	Render_Font(L"Kill", m_strKill.c_str(), &_vec2(1120.f,250.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
 }
 
 HRESULT CComboUI::Add_Component()
