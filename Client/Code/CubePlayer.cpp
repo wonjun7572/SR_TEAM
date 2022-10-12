@@ -12,6 +12,7 @@
 #include "BulletParticle.h"
 #include "ProjectileParticle.h"
 #include "Inventory.h"
+#include "Shop.h"
 
 CCubePlayer::CCubePlayer(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
@@ -53,27 +54,31 @@ HRESULT CCubePlayer::Ready_Object(void)
 _int CCubePlayer::Update_Object(const _float & fTimeDelta)
 {
 	Update_NullCheck();
+	
 	m_fTimeDelta = fTimeDelta;
 	m_fBulletTime += fTimeDelta;
 
 	FAILED_CHECK_RETURN(Get_BodyTransform(), -1);
 
-	// 이동, 애니메이션 관련
-	if (!(dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->Get_Switch()))
-	{
-		Move();
-	}
+		// 이동, 애니메이션 관련
+		if (!(dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->Get_Switch())
+			&& !(dynamic_cast<CShop*>(Engine::Get_GameObject(STAGE_UI, L"Shop"))->Get_Switch()))
+		{
+			if (m_pBomb->Get_WorldMap() == false)
+			{
+				Move();
+			}
+		}
 
-	Look_Direction();
-	
-	if (!(dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->Get_Switch()))
-	{
-		Animation();
-	}
+		Look_Direction();
+		
+		if (!(dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->Get_Switch())
+			&& !(dynamic_cast<CShop*>(Engine::Get_GameObject(STAGE_UI, L"Shop"))->Get_Switch()))
+		{
+			Animation();
+		}
 
-	Assemble();
-
-	Player_Mapping();
+		Assemble();
 
 	CGameObject::Update_Object(fTimeDelta);
 
@@ -136,6 +141,11 @@ void CCubePlayer::Update_NullCheck()
 
 	if (!m_pProjectileParicle)
 		m_pProjectileParicle = dynamic_cast<CProjectileParticle*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"ProjectileParticle"));
+
+	Player_Mapping();
+
+	if (m_pBomb == nullptr)
+		m_pBomb = dynamic_cast<CPlayerMapping*>(Engine::Get_GameObject(STAGE_MAPPING, L"Map"));
 }
 
 void CCubePlayer::Set_OnTerrain(void)
@@ -422,16 +432,11 @@ void CCubePlayer::Move()
 		m_pBodyWorld->Get_Info(INFO_RIGHT, &vDir);
 		D3DXVec3Normalize(&vDir, &vDir);
 	}
-	//else if (Key_Down(DIK_F))
-	//{
-	//	//알파블랜딩 키는 키 할당되어있음
-	//}
+
 	if (Key_Down(DIK_G))
 	{
 		m_pProjectileParicle->addParticle();
 	}
-
-	
 
 	if (Get_DIKeyState(DIK_SPACE))
 	{
@@ -458,12 +463,10 @@ void CCubePlayer::Move()
 				m_pCollision->Wall_Collision_By_DotSliding(&vSliding);
 
 				m_pBodyWorld->Move_Pos(&(vSliding * m_fSpeed * m_fTimeDelta));
-				//FAILED_CHECK_RETURN(CPoolMgr::GetInstance()->Reuse_Obj(m_pGraphicDev, &vPos, &vSliding), );
 			}
 			else
 			{
 				m_pBodyWorld->Move_Pos(&(vDir * m_fSpeed * m_fTimeDelta));
-				//FAILED_CHECK_RETURN(CPoolMgr::GetInstance()->Reuse_Obj(m_pGraphicDev, &vPos, &vDir), );
 			}
 		}
 		if (iCollision == WALL_FRONT)
@@ -474,19 +477,16 @@ void CCubePlayer::Move()
 				m_pCollision->Wall_Collision_By_DotSliding(&vSliding);
 
 				m_pBodyWorld->Move_Pos(&(vSliding * m_fSpeed * m_fTimeDelta));
-				//FAILED_CHECK_RETURN(CPoolMgr::GetInstance()->Reuse_Obj(m_pGraphicDev, &vPos, &vSliding), );
 			}
 			else
 			{
 				m_pBodyWorld->Move_Pos(&(vDir * m_fSpeed * m_fTimeDelta));
-				//FAILED_CHECK_RETURN(CPoolMgr::GetInstance()->Reuse_Obj(m_pGraphicDev, &vPos, &vDir), );
 			}
 		}
 	}
 	else	//	충돌하지 않았으며 충돌한 방향과 반대 방향으로 진행하는 이동 처리
 	{
 		m_pBodyWorld->Move_Pos(&(vDir * m_fSpeed * m_fTimeDelta));
-		//FAILED_CHECK_RETURN(CPoolMgr::GetInstance()->Reuse_Obj(m_pGraphicDev, &vPos, &vDir), );
 	}
 }
 

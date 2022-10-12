@@ -15,6 +15,8 @@
 #define RCTEX_MONTER_HP_COMP	L"Proto_MonsterHpCom"
 #define RCTEX_GENERAL_MONSTER_HP_COMP L"RcTex_MonsterHp"
 #define RCTEX_GENERAL_MONSTER_HUD_COMP L"RcTex_MonsterHUDHp"
+#define RCTEX_COMBO_COMP				L"RcTex_ComboBar"
+#define RCTEX_COMBOBAR_HUD_COMP			 L"RcTex_ComboBarHUD"
 
 #define	TRANSFORM_COMP  L"Proto_TransformCom"
 #define ITEM_TRANSFORM_COMP L"ITEM_HITBOX_TransformCom"
@@ -65,9 +67,9 @@
 #define STAGE_GUN		   L"STAGE_GUN_Layer"
 #define STAGE_GUNITEM	   L"STAGE_GUNITEM_Layer"
 #define STAGE_PLAYER	   L"STAGE_PLAYER_Layer"
-#define STAGE_TRAP		   L"STAGE_TRAP_Layer"
-#define STAGE_SUPPORTER	   L"STAGE_SUPPORTER_Layer"
-#define STAGE_BULLETPLAYER L"STAGE_PLAYERBULLET_Layer"
+#define	STAGE_ZOMBIE		L"STAGE_ZOMBIE_Layer"
+#define STAGE_DESTORYWALL	 L"STAGE_DESTROYWALL_Layer"
+#define STAGE_SKILL			L"STAGE_SKILL_Layer"
 
 // Particle
 #define SHOTPARTICLE_TEX			L"SHOTPARTICLE_TEX"
@@ -128,3 +130,8 @@
 
 #define HITBAR_TEX				L"HITBAR_TEX"
 #define	HITBAR_TEX_PATH			L"../Bin/Resources/UI/Player/hitbar.png"
+
+#define COMBOBAR_TEX				L"ComboBar"
+#define COMBOBAR_TEX_PATH			L"../Bin/Resources/UI/Player/Gage/comboBar.png"
+#define	COMBOBAR_HUD_TEX			L"ComboBar_Hud"
+#define COMBOBAR_HUD_TEX_PATH		L"../Bin/Resources/UI/Player/Gage/comboHUD.png"

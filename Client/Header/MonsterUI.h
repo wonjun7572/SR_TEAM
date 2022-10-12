@@ -33,8 +33,6 @@ private:
 	CTransform* m_pHUDTransCom = nullptr;
 	CTexture*	m_pHUDTextureCom = nullptr;
 
-	_matrix m_matWorld;
-	_matrix m_matView;
 	_matrix m_matProj;
 
 	CGameObject* m_pPlayer = nullptr;

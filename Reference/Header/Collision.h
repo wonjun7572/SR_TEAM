@@ -16,20 +16,21 @@ private:
 	virtual ~CCollision();
 
 public:
-	HRESULT					Ready_Collision(void);
-	_bool					Check_Collision(void);
-	_bool					Sphere_Collision(CTransform* pTempTransform, CTransform* pSourTransform, _float fTemp, _float fSour);
+	HRESULT		Ready_Collision(void);
 	
-	_int					Wall_Collision(_vec3* vNorm);
+	_bool		Sphere_Collision(CTransform* pTempTransform, CTransform* pSourTransform, _float fTemp, _float fSour);
+	_int		Wall_Collision(_vec3* vNorm);
+	_int		Wall_Collision_By_DotSliding(_vec3* vChangeDir);
 
-	_int					Wall_Collision_By_DotSliding(_vec3* vChangeDir);
+	_int		Wall_Collision_For_Monster(_vec3* vNorm, CTransform* pTransform, CHitBox* pHitBox);
+	_int		Wall_Collision_By_DotSliding_For_Monster(_vec3* vChangeDir, CTransform* pTransform, CHitBox* pHitBox);
 
-	void					Get_Item(void);
-	void					Get_GunItem();
+	void		Get_Item(void);
+	void		Get_GunItem();
 
-	_bool					HitScan(HWND hWnd, _vec3 * SrcPos, const CCubeTex * pCubeTex, const CTransform * pTransform, _vec3* vReturn);
+	_bool		HitScan(HWND hWnd, _vec3 * SrcPos, const CCubeTex * pCubeTex, const CTransform * pTransform, _vec3* vReturn);
 
-	_bool					Hit_In_ViewPort(HWND hWnd, const CCubeTex * pCubeTex, const CTransform * pTransform);
+	_bool		Hit_In_ViewPort(HWND hWnd, const CCubeTex * pCubeTex, const CTransform * pTransform);
 
 private:
 	_vec3	m_vMin1 = { 0, 0, 0 };

@@ -62,14 +62,10 @@
 #include "Skeleton.h"
 #include "MonsterUI.h"
 #include "HitBarUI.h"
+#include "ComboUI.h"
 #include "MonsterParticle.h"
-
-#include "Thorn.h"
-#include "Magma.h"
-#include "ItemBox.h"
-
-#include "Supporter_Uzi.h"
-
+#include "ProjectileParticle.h"
+#include "Illusioner.h"
 CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CScene(pGraphicDev)
 {
@@ -87,8 +83,8 @@ HRESULT CStage::Ready_Scene(void)
 
 	CGameObject*		pGameObject = nullptr;
 
-	_float fBGMSound = 1.f;
-	PlayBGM(L"Track_01.mp3", fBGMSound);
+	//_float fBGMSound = 1.f;
+	//PlayBGM(L"Track_01.mp3", fBGMSound);
 
 	FAILED_CHECK_RETURN(Ready_Proto(), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Light(), E_FAIL);
@@ -105,9 +101,8 @@ HRESULT CStage::Ready_Scene(void)
 	FAILED_CHECK_RETURN(Ready_Layer_Gun(STAGE_GUN), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Layer_GunItem(STAGE_GUNITEM), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Layer_Player(STAGE_PLAYER), E_FAIL);
-	FAILED_CHECK_RETURN(Ready_Layer_Trap(STAGE_TRAP), E_FAIL);
-	FAILED_CHECK_RETURN(Ready_Layer_Supporter(STAGE_SUPPORTER), E_FAIL);
-	FAILED_CHECK_RETURN(Ready_Layer_PlayerBullet(STAGE_BULLETPLAYER), E_FAIL);
+	FAILED_CHECK_RETURN(Ready_Layer_DestroyWall(STAGE_DESTORYWALL), E_FAIL);
+	FAILED_CHECK_RETURN(Ready_Layer_Skill(STAGE_SKILL), E_FAIL);
 
 	return S_OK;
 }
@@ -163,6 +158,11 @@ HRESULT CStage::Ready_Layer_Environment(const _tchar * pLayerTag)
 	pGameObject = CMonsterParticle::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"MonsterParticle", pGameObject), E_FAIL);
+
+	pGameObject = CProjectileParticle::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"ProjectileParticle", pGameObject), E_FAIL);
+
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
@@ -224,15 +224,14 @@ HRESULT CStage::Ready_Layer_UI(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"HitBarUI", pGameObject), E_FAIL);
 
+	pGameObject = CComboUI::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"ComboUI", pGameObject), E_FAIL);
+
 	// Shop
 	pGameObject = CShop::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Shop", pGameObject), E_FAIL);
-
-	//interactShop
-	//pGameObject = CCubeShop::Create(m_pGraphicDev, _vec3(18, 1, 19));
-	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"InteractShop", pGameObject), E_FAIL);
 
 	pGameObject = CCrossHeader::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
@@ -312,6 +311,10 @@ HRESULT CStage::Ready_Layer_Wall(const _tchar * pLayerTag)
 	}
 	CloseHandle(hFile);
 
+	pGameObject = CCubeShop::Create(m_pGraphicDev, _vec3(15.f, 0.f, 10.f));
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"CubeShop1", pGameObject), E_FAIL);
+
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
 	return S_OK;
@@ -386,15 +389,15 @@ HRESULT CStage::Ready_Layer_Monster(const _tchar * pLayerTag)
 	CGameObject*		pGameObject = nullptr;
 	
 	// 위랑 아래랑 같아야함 문자열, 몬스터 아이템 땜시
-	
-	for (int i = 0; i < 5; i++)
+	srand((unsigned int)time(NULL));
+	for (int i = 0; i < 4; i++)
 	{
 		_tchar* szName = new _tchar[256]{};
 		wstring wName = L"Zombie_%d";
 		wsprintfW(szName, wName.c_str(), i);
 		NameList.push_back(szName);
 
-		pGameObject = CZombie::Create(m_pGraphicDev, _vec3(_float(rand() % 5 + 5), 0.6f, _float(rand() % 5 + 5)), szName);
+		pGameObject = CZombie::Create(m_pGraphicDev, _vec3(_float(rand() % 4 + 27), 0.6f, _float(rand() % 4 + 10)), szName);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
 	}
@@ -430,24 +433,24 @@ HRESULT CStage::Ready_Layer_Monster(const _tchar * pLayerTag)
 		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
 	}
 
+	for (int i = 0; i < 4; i++)
+	{
+		_tchar* szName = new _tchar[256]{};
+		wstring wName = L"Illusioner%d";
+		wsprintfW(szName, wName.c_str(), i);
+		NameList.push_back(szName);
+		pGameObject = CIllusioner::Create(m_pGraphicDev, _vec3(_float(rand() % 4 + 10), 0.6f, _float(rand() % 4) + 27), szName);
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+	}
+
+
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
 	return S_OK;
 }
 
 HRESULT	CStage::Ready_Layer_Bullet(const _tchar* pLayerTag)
-{
-	Engine::CLayer*		pLayer = Engine::CLayer::Create();
-	NULL_CHECK_RETURN(pLayer, E_FAIL);
-
-	CGameObject*		pGameObject = nullptr;
-
-	m_mapLayer.insert({ pLayerTag, pLayer });
-
-	return S_OK;
-}
-
-HRESULT CStage::Ready_Layer_PlayerBullet(const _tchar * pLayerTag)
 {
 	Engine::CLayer*		pLayer = Engine::CLayer::Create();
 	NULL_CHECK_RETURN(pLayer, E_FAIL);
@@ -582,7 +585,6 @@ HRESULT CStage::Ready_Layer_Item(const _tchar * pLayerTag)
 
 	CGameObject*		pGameObject = nullptr;
 	
-	
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
 	return S_OK;
@@ -606,6 +608,30 @@ HRESULT CStage::Ready_Layer_GunItem(const _tchar * pLayerTag)
 	pGameObject = CGetSniper::Create(m_pGraphicDev, _vec3(16.f, 0.6f, 20.f));
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"GetSniper", pGameObject), E_FAIL);
+
+	m_mapLayer.insert({ pLayerTag, pLayer });
+
+	return S_OK;
+}
+
+HRESULT CStage::Ready_Layer_DestroyWall(const _tchar * pLayerTag)
+{
+	Engine::CLayer*		pLayer = Engine::CLayer::Create();
+	NULL_CHECK_RETURN(pLayer, E_FAIL);
+
+	CGameObject*		pGameObject = nullptr;
+
+	m_mapLayer.insert({ pLayerTag, pLayer });
+
+	return S_OK;
+}
+
+HRESULT CStage::Ready_Layer_Skill(const _tchar * pLayerTag)
+{
+	Engine::CLayer*		pLayer = Engine::CLayer::Create();
+	NULL_CHECK_RETURN(pLayer, E_FAIL);
+
+	CGameObject*		pGameObject = nullptr;
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
@@ -642,67 +668,6 @@ HRESULT CStage::Ready_Layer_Zombie(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pLayer, E_FAIL);
 
 	CGameObject*		pGameObject = nullptr;
-
-	m_mapLayer.insert({ pLayerTag, pLayer });
-
-	return S_OK;
-}
-
-HRESULT CStage::Ready_Layer_Trap(const _tchar * pLayerTag)
-{
-	Engine::CLayer*		pLayer = Engine::CLayer::Create();
-	NULL_CHECK_RETURN(pLayer, E_FAIL);
-
-	CGameObject*		pGameObject = nullptr;
-
-	/*_tchar* szName = new _tchar[256]{};
-	wstring wName = L"Slime_%d";
-	wsprintfW(szName, wName.c_str(), i);
-	NameList.push_back(szName);*/
-
-	pGameObject = CThorn::Create(m_pGraphicDev, _vec3(15.f, 0.f, 15.f), L"Thorn1");
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
-
-	pGameObject = CThorn::Create(m_pGraphicDev, _vec3(16.f, 0.f, 15.f), L"Thorn2");
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
-
-	pGameObject = CThorn::Create(m_pGraphicDev, _vec3(17.f, 0.f, 15.f), L"Thorn3");
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
-
-	pGameObject = CThorn::Create(m_pGraphicDev, _vec3(18.f, 0.f, 15.f), L"Thorn4");
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
-
-	pGameObject = CThorn::Create(m_pGraphicDev, _vec3(19.f, 0.f, 15.f), L"Thorn5");
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
-
-	pGameObject = CMagma::Create(m_pGraphicDev, _vec3(20.f, 0.f, 20.f), L"MAGMA1");
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
-
-	pGameObject = CItemBox::Create(m_pGraphicDev, _vec3(30.f, 0.5f, 20.f), L"ITEMBOX1");
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
-
-	m_mapLayer.insert({ pLayerTag, pLayer });
-
-	return S_OK;
-}
-
-HRESULT CStage::Ready_Layer_Supporter(const _tchar * pLayerTag)
-{
-	Engine::CLayer*		pLayer = Engine::CLayer::Create();
-	NULL_CHECK_RETURN(pLayer, E_FAIL);
-
-	CGameObject*		pGameObject = nullptr;
-
-	pGameObject = CSupporter_Uzi::Create(m_pGraphicDev, _vec3(20.f, 0.5f, 20.f), L"SUPPORT_UZI");
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 

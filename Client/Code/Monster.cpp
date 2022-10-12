@@ -4,11 +4,10 @@
 #include "Weapon.h"
 #include "MonsterParticle.h"
 #include "MonsterUI.h"
+#include "ComboUI.h"
 #include "MonsterMapping.h"
 
 static _int m_iCnt = 0;
-
-
 
 CMonster::CMonster(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
@@ -32,6 +31,9 @@ _int CMonster::Update_Object(const _float & fTimeDelta)
 	
 	if (m_pPlayerTransCom == nullptr)
 		m_pPlayerTransCom = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_CHARACTER, L"PLAYER", TRANSFORM_COMP, ID_DYNAMIC));
+
+	if (m_pComboUI == nullptr)
+		m_pComboUI = dynamic_cast<CComboUI*>(Engine::Get_GameObject(STAGE_UI, L"ComboUI"));
 
 	_vec3 vUIPos;
 	m_pTransCom->Get_Info(INFO_POS, &vUIPos);
@@ -89,6 +91,63 @@ HRESULT CMonster::Monster_DeleteMapping(void)
 	return S_OK;
 }
 
+_bool CMonster::Collision_Wall(const _float& fTimeDelta)
+{
+	_vec3 vPos;
+	m_pTransCom->Get_Info(INFO_POS, &vPos);
+
+	_vec3	vDir(0, 0, 0);
+	_vec3	vNormal(0, 0, 0);
+
+	_int iCollision = m_pCollision->Wall_Collision_For_Monster(&vNormal,this->m_pTransCom,this->m_pHitBox);
+
+	if (-1 != iCollision)
+	{
+		float fDot = D3DXVec3Dot(&vNormal, &vDir);
+		float fDiagonal = acosf(fDot);
+
+		if (iCollision == WALL_RIGHT || iCollision == WALL_LEFT || iCollision == WALL_BACK)
+		{
+			if (D3DXToDegree(fDiagonal) > 90.f)
+			{
+				_vec3 vSliding = vDir;
+				m_pCollision->Wall_Collision_By_DotSliding_For_Monster(&vSliding,this->m_pTransCom,this->m_pHitBox);
+
+				m_pTransCom->Move_Pos(&(vSliding * m_fSpeed * fTimeDelta));
+			}
+			else
+			{
+				vDir = _vec3 (1, 0, 0);
+				m_pTransCom->Move_Pos(&(vDir * m_fSpeed * fTimeDelta));
+			}
+			return true;
+		}
+		if (iCollision == WALL_FRONT)
+		{
+			if (D3DXToDegree(fDiagonal) < 90.f)
+			{
+				_vec3 vSliding = vDir;
+				m_pCollision->Wall_Collision_By_DotSliding_For_Monster(&vSliding, this->m_pTransCom, this->m_pHitBox);
+
+				m_pTransCom->Move_Pos(&(vSliding * m_fSpeed * fTimeDelta));
+			}
+			else
+			{
+				vDir = _vec3(-1, 0, 0);
+				m_pTransCom->Move_Pos(&(vDir * m_fSpeed * fTimeDelta));
+			}
+			return true;
+		}
+	}
+	else	
+	{
+		m_pTransCom->Move_Pos(&(vDir * m_fSpeed * fTimeDelta));
+		return false;
+	}
+
+	return false;
+}
+
 void CMonster::Hit_Effect()
 {
 	_vec3 vPos;
@@ -122,6 +181,8 @@ void CMonster::Hit_Check(_float _deltaTime)
 			if (pWeapon->Get_Shoot() == true)
 			{
 				m_tAbility->fCurrentHp -= pWeapon->Get_Ability()->fBulletAttack;
+				m_pComboUI->On_Switch();
+				m_pComboUI->ComboCntPlus();
 				Hit_Effect();
 				pWeapon->Set_Shoot(false);
 			}

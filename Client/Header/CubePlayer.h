@@ -7,6 +7,7 @@ class CWeapon;
 class CShotParticle;
 class CBulletParticle;
 class CProjectileParticle;
+class CPlayerMapping;
 
 class CCubePlayer : public CGameObject
 {
@@ -104,11 +105,14 @@ private:
 
 	CSphereTex*		m_pSphereBufferCom = nullptr;
 	CTransform*		m_pSphereTransCom = nullptr;
+	
+	CPlayerMapping* m_pBomb = nullptr;
 
 private:
 	CBulletParticle* m_pBulletParicle = nullptr;
 	CShotParticle*	 m_pShotParicle = nullptr;
 	CProjectileParticle* m_pProjectileParicle = nullptr;
+
 private:
 	_float			m_fLookAngle = 0.f;
 	_float			m_fDownAngle = 0.f;

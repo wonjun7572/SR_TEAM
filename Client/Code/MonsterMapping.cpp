@@ -20,8 +20,7 @@ HRESULT CMonsterMapping::Ready_Object(void)
 
 _int CMonsterMapping::Update_Object(const _float & fTimeDelta)
 {
-	
-		Add_RenderGroup(RENDER_ALPHA, this);
+	Add_RenderGroup(RENDER_ALPHA, this);
 	
 	Key_Input();
 

@@ -164,6 +164,7 @@
     <ClInclude Include="..\Header\Bullet.h" />
     <ClInclude Include="..\Header\BulletUI.h" />
     <ClInclude Include="..\Header\BulletParticle.h" />
+    <ClInclude Include="..\Header\ComboUI.h" />
     <ClInclude Include="..\Header\CrossHeader.h" />
     <ClInclude Include="..\Header\CubeArm.h" />
     <ClInclude Include="..\Header\CubeBody.h" />
@@ -186,6 +187,7 @@
     <ClInclude Include="..\Header\GunUI.h" />
     <ClInclude Include="..\Header\HealthPotion.h" />
     <ClInclude Include="..\Header\HitBarUI.h" />
+    <ClInclude Include="..\Header\Illusioner.h" />
     <ClInclude Include="..\Header\ImguiMgr.h" />
     <ClInclude Include="..\Header\Inventory.h" />
     <ClInclude Include="..\Header\Item.h" />
@@ -203,6 +205,7 @@
     <ClInclude Include="..\Header\Magma.h" />
     <ClInclude Include="..\Header\MainApp.h" />
     <ClInclude Include="..\Header\MaxPlusHp.h" />
+    <ClInclude Include="..\Header\Meteor.h" />
     <ClInclude Include="..\Header\Monster.h" />
     <ClInclude Include="..\Header\MonsterMapping.h" />
     <ClInclude Include="..\Header\MonsterParticle.h" />
@@ -287,6 +290,7 @@
     <ClCompile Include="..\Code\Bullet.cpp" />
     <ClCompile Include="..\Code\BulletParicle.cpp" />
     <ClCompile Include="..\Code\BulletUI.cpp" />
+    <ClCompile Include="..\Code\ComboUI.cpp" />
     <ClCompile Include="..\Code\CrossHeader.cpp" />
     <ClCompile Include="..\Code\CubeArm.cpp" />
     <ClCompile Include="..\Code\CubeBody.cpp" />
@@ -309,6 +313,7 @@
     <ClCompile Include="..\Code\GunUI.cpp" />
     <ClCompile Include="..\Code\HealthPotion.cpp" />
     <ClCompile Include="..\Code\HitBarUI.cpp" />
+    <ClCompile Include="..\Code\Illusioner.cpp" />
     <ClCompile Include="..\Code\ImguiMgr.cpp" />
     <ClCompile Include="..\Code\Inventory.cpp" />
     <ClCompile Include="..\Code\Item.cpp" />
@@ -326,6 +331,7 @@
     <ClCompile Include="..\Code\Magma.cpp" />
     <ClCompile Include="..\Code\MainApp.cpp" />
     <ClCompile Include="..\Code\MaxPlusHp.cpp" />
+    <ClCompile Include="..\Code\Meteor.cpp" />
     <ClCompile Include="..\Code\Monster.cpp" />
     <ClCompile Include="..\Code\MonsterMapping.cpp" />
     <ClCompile Include="..\Code\MonsterParticle.cpp" />

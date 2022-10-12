@@ -8,6 +8,7 @@
 #include "PoolMgr.h"
 
 #include "TransAxisBox.h"
+#include "ComboUI.h"
 
 USING(Engine)
 
@@ -60,9 +61,9 @@ _int CSlime::Update_Object(const _float & fTimeDelta)
 {
 	if (m_bDead)
 	{
+		m_pComboUI->KillCntPlus();
 		Create_Item();
 		Monster_DeleteMapping();
-
 		return -1;
 	}
 
@@ -74,30 +75,31 @@ _int CSlime::Update_Object(const _float & fTimeDelta)
 		FAILED_CHECK_RETURN(Build(), -1);
 	}
 
-	m_fTimeDelta = fTimeDelta;
 
 	CMonster::Update_Object(fTimeDelta);
-
-	_vec3 vPlayerPos;
-	m_pPlayerTransCom->Get_Info(INFO_POS, &vPlayerPos);
-	_vec3 vPlayerScale;
-	m_pPlayerTransCom->Get_Scale(&vPlayerScale);
-	_vec3 vScale;
-	m_pSphereTransCom->Get_Scale(&vScale);
-	_vec3 vPos;
-	m_pTransCom->Get_Info(INFO_POS, &vPos);
-
-	if (m_pCollision->Sphere_Collision(this->m_pSphereTransCom, m_pPlayerTransCom, vPlayerScale.x, vScale.x))
+	m_fTimeDelta = fTimeDelta;
+	if (!Collision_Wall(fTimeDelta))
 	{
-		m_pTransCom->Chase_Target(&vPlayerPos, 1.f, fTimeDelta);
+		_vec3 vPlayerPos;
+		m_pPlayerTransCom->Get_Info(INFO_POS, &vPlayerPos);
+		_vec3 vPlayerScale;
+		m_pPlayerTransCom->Get_Scale(&vPlayerScale);
+		_vec3 vScale;
+		m_pSphereTransCom->Get_Scale(&vScale);
+		_vec3 vPos;
+		m_pTransCom->Get_Info(INFO_POS, &vPos);
+
+		if (m_pCollision->Sphere_Collision(this->m_pSphereTransCom, m_pPlayerTransCom, vPlayerScale.x, vScale.x))
+		{
+			m_pTransCom->Chase_Target(&vPlayerPos, 1.f, fTimeDelta);
+		}
+
+		_vec3 vMonsterPos;
+		m_pTransCom->Get_Info(INFO_POS, &vMonsterPos);
+		m_pHitBoxTransCom->Set_Pos(vMonsterPos.x, vMonsterPos.y, vMonsterPos.z);
+		m_pSphereTransCom->Set_Pos(vMonsterPos.x, vMonsterPos.y, vMonsterPos.z);
 	}
-
-	_vec3 vMonsterPos;
-	m_pTransCom->Get_Info(INFO_POS, &vMonsterPos);
-	m_pHitBoxTransCom->Set_Pos(vMonsterPos.x, vMonsterPos.y, vMonsterPos.z);
-	m_pSphereTransCom->Set_Pos(vMonsterPos.x, vMonsterPos.y, vMonsterPos.z);
 	return 0;
-
 }
 
 void CSlime::LateUpdate_Object(void)
@@ -121,8 +123,8 @@ void CSlime::Render_Object(void)
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransCom->Get_WorldMatrixPointer());
 	m_pAnimationBox->Render_Buffer();
 
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pSphereTransCom->Get_WorldMatrixPointer());
-	m_pSphereBufferCom->Render_Buffer();
+	//m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pSphereTransCom->Get_WorldMatrixPointer());
+	//m_pSphereBufferCom->Render_Buffer();
 	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransUICom->Get_WorldMatrixPointer());
@@ -205,19 +207,19 @@ HRESULT CSlime::Create_Item()
 	case 0:
 		pGameObject = CHealthPotion::Create(m_pGraphicDev, vItemPos);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		Get_Layer(STAGE_ITEM)->Add_GameList(pGameObject);
+		Engine::Get_Layer(STAGE_ITEM)->Add_GameList(pGameObject);
 		break;
 
 	case 1:
 		pGameObject = CObtainBullet::Create(m_pGraphicDev, vItemPos);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		Get_Layer(STAGE_ITEM)->Add_GameList(pGameObject);
+		Engine::Get_Layer(STAGE_ITEM)->Add_GameList(pGameObject);
 		break;
 
 	case 2:
 		pGameObject = CObtainDefense::Create(m_pGraphicDev, vItemPos);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		Get_Layer(STAGE_ITEM)->Add_GameList(pGameObject);
+		Engine::Get_Layer(STAGE_ITEM)->Add_GameList(pGameObject);
 		break;
 	}
 
