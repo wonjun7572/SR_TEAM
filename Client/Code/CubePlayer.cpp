@@ -541,6 +541,7 @@ void CCubePlayer::Look_Direction(void)
 
 void CCubePlayer::Fire_Bullet(void)
 {
+	
 	if (Get_DIMouseState(DIM_RB))
 	{
 		if (Get_DIMouseState(DIM_LB))
@@ -549,7 +550,7 @@ void CCubePlayer::Fire_Bullet(void)
 			{
 				m_pBulletParicle->addParticle();
 				m_pShotParicle->addParticle();
-
+				
 				_float fGunSound = 1.f;
 				PlaySoundGun(L"RifleShot.mp3", SOUND_EFFECT, fGunSound);
 				m_Weapon->Set_MinusBullet();

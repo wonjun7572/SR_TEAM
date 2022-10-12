@@ -1,5 +1,6 @@
 #pragma once
 
+
 // 컴포넌트 이름
 #define RCTEX_COMP	    L"Proto_RcTexCom"
 #define	CUBETEX_COMP	L"Proto_CubeTexCom"
@@ -76,7 +77,15 @@
 #define BULLETPARTICLE_TEX_PATH		L"../Bin/Resources/Particle/BulletParticle.png"
 #define PROJECTILEPARTICLE_TEX		L"PROJECTILEPARTICLE_TEX"
 #define PROJECTILEPARTICLE_TEX_PATH	L"../Bin/Resources/Particle/BulletParticle.png"
+#define STATICPARTICLE_TEX			L"STATICPARTICLE_TEX"
+#define STATICPARTICLE_TEX_PATH		L"../Bin/Resources/Particle/StaticParticle/StaticParticle%d.png"
+
+#define BLUEBOMB_TEX				L"BLUEBOMB_TEX"
+#define BLUEBOMB_TEX_PATH			L"../Bin/Resources/Effect/BlueBomb/BlueBomb%d.png"
+
+
 // CrossHair
+
 #define CROSSHAIR_RIFLE_TEX			 L"Proto_CrossHeader_Rifle"
 #define CROSSHAIR_RIFLE_TEX_PATH	 L"../Bin/Resources/UI/Sprite/CrossHair_Rifle.png"
 #define CROSSHAIR_SHOTGUN_TEX		 L"Proto_CrossHeader_ShotGun"

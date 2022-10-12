@@ -8,7 +8,7 @@
 CItemParticle::CItemParticle(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CPSystem(pGraphicDev)
 {
-	m_fSize = 0.1f;
+	m_fSize = .05f;
 	m_vbSize = 2048;
 	m_vbOffset = 0;
 	m_vbBatchSize = 512;
@@ -40,10 +40,7 @@ _int CItemParticle::Update_Object(const _float & fTimeDelta)
 		//
 
 		//iter->vPos 
-		iter->vPos += iter->vVelocity * fTimeDelta;
-		
-		
-		
+		iter->vPos += iter->vVelocity * fTimeDelta;		
 		iter->fAge += fTimeDelta;
 
 		if (iter->fAge > iter->fLifeTime)
@@ -69,7 +66,7 @@ void CItemParticle::Render_Object(void)
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, &matWorld);
 	if (!m_particles.empty())
 	{
-		m_pTextureCom->Set_Texture(0);
+		m_pTextureCom->Set_Texture(5);
 		CPSystem::Render_Object();
 	}
 }
@@ -78,9 +75,9 @@ HRESULT CItemParticle::Add_Component(void)
 {
 	CComponent* pComponent = nullptr;
 
-	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Clone_Proto(BULLETPARTICLE_TEX));
+	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Clone_Proto(STATICPARTICLE_TEX));
 	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ BULLETPARTICLE_TEX, pComponent });
+	m_mapComponent[ID_STATIC].insert({ STATICPARTICLE_TEX, pComponent });
 
 	return S_OK;
 }
@@ -114,11 +111,11 @@ void CItemParticle::resetParticle(ATTRIBUTE * attribute)
 		
 	
 	_vec3 min = _vec3(-1.0f, -1.0f, -1.0f);
-	_vec3 max = _vec3(1.0f, 1.0f, 1.0f);
+	_vec3 max = _vec3(1.0f, 0.1f, 1.0f);
 	GetRandomVector(&attribute-> vVelocity, &min, &max);
 	attribute->vPos = vItemParticlePos + attribute->vVelocity / 20.f;
-	attribute->vVelocity *= .7f;
-	attribute->dwColor = D3DXCOLOR(GetRandomFloat(0.0f, 1.0f), GetRandomFloat(0.0f, 1.0f), GetRandomFloat(0.0f, 1.0f), 1.0f);
+	attribute->vVelocity *= 1.2f;
+	attribute->dwColor = D3DXCOLOR(GetRandomFloat(0.8f, 1.f), GetRandomFloat(0.8f, 1.0f), GetRandomFloat(0.f, .1f), 1.0f);
 		
 	//attribute->vPos.z = vItemParticlePos.z + 0.5f;
 	//attribute->vVelocity = vDir * 5000.f;
