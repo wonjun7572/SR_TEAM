@@ -247,6 +247,12 @@
     <Filter Include="02. GameObject\01. For_Stage\08. Monster\05.Illusioner">
       <UniqueIdentifier>{19cb1c5a-db84-437d-8e2d-d73850d02be6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\16. Boss">
+      <UniqueIdentifier>{7075532e-223d-4d4d-85df-0ac47cd722c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\16. Boss\Stage1 Middle">
+      <UniqueIdentifier>{31036221-7fa5-43bd-b419-ad3eedfbfde2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -588,6 +594,12 @@
     <ClInclude Include="..\Header\Illusioner.h">
       <Filter>02. GameObject\01. For_Stage\08. Monster\05.Illusioner</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\ComboUI.h">
+      <Filter>99. Default\헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\MiddleBoss.h">
+      <Filter>02. GameObject\01. For_Stage\16. Boss\Stage1 Middle</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -907,6 +919,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\Illusioner.cpp">
       <Filter>02. GameObject\01. For_Stage\08. Monster\05.Illusioner</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ComboUI.cpp">
+      <Filter>99. Default\소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\MiddleBoss.cpp">
+      <Filter>02. GameObject\01. For_Stage\16. Boss\Stage1 Middle</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

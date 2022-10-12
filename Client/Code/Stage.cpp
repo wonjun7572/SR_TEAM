@@ -66,6 +66,8 @@
 #include "MonsterParticle.h"
 #include "ProjectileParticle.h"
 #include "Illusioner.h"
+
+#include "MiddleBoss.h"
 CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CScene(pGraphicDev)
 {
@@ -395,13 +397,13 @@ HRESULT CStage::Ready_Layer_Monster(const _tchar * pLayerTag)
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
 	}
-	/*
+	
 	for (int i = 0; i < 10; i++)
 	{
 		pGameObject = CSkeleton::Create(m_pGraphicDev, _vec3(_float(rand() % 10 + 20), 0.6f, _float(rand() % 10) + 20));
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
-	}*/
+	}
 
 	for (int i = 0; i < 2; i++)
 	{
@@ -437,6 +439,17 @@ HRESULT CStage::Ready_Layer_Monster(const _tchar * pLayerTag)
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
 	}
+
+
+	pGameObject = CMiddleBoss::Create(m_pGraphicDev, _vec3(  109.f, 0.6f, 20.f));
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+	
+	//
+	//pGameObject = CMiddleBoss::Create(m_pGraphicDev, _vec3(10.f, 0.6f, 10.f));
+	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+
 
 
 	m_mapLayer.insert({ pLayerTag, pLayer });

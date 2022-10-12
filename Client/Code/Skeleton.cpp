@@ -65,6 +65,10 @@ _int CSkeleton::Update_Object(const _float & fTimeDelta)
 	m_pSphereTransCom->Get_Scale(&vScale);
 	_vec3 vPos;
 	m_pTransCom->Get_Info(INFO_POS, &vPos);
+
+
+
+
 	D3DXVECTOR3		vDir{ 1.f, 0.f, 0.f };
 	if (m_pCollision->Sphere_Collision(this->m_pSphereTransCom, m_pPlayerTransCom, vPlayerScale.x, vScale.x))
 	{
