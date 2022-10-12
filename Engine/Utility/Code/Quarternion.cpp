@@ -23,13 +23,6 @@ HRESULT CQuarternion::Ready_Quarternion(void)
 	return S_OK;
 }
 
-//HRESULT CQuarternion::Add_Quarternion(D3DXQUATERNION* _Qtn)
-//{
-//	m_QtnList.push_back(*_Qtn);
-//
-//	return S_OK;
-//}
-
 HRESULT CQuarternion::Add_World(D3DXMATRIX * _World)
 {
 	m_vecWorld.push_back(*_World);

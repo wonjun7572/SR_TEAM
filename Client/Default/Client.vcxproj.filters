@@ -244,6 +244,27 @@
     <Filter Include="02. GameObject\01. For_Stage\02 Wall">
       <UniqueIdentifier>{139b70e2-b611-4471-8714-9c310caac6a9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\16. Trap">
+      <UniqueIdentifier>{c59ef73a-07ac-430f-90df-a3f9cbd94010}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\16. Trap\Thorn">
+      <UniqueIdentifier>{4d0a88c8-c182-4d97-89b3-542ca4ec1f43}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\16. Trap\Magma">
+      <UniqueIdentifier>{2a7996f3-d07f-4bee-9e1c-7ba4f3a2c63c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\16. Trap\Itembox">
+      <UniqueIdentifier>{69d1c6be-0f9a-4834-bb26-1b862f626dc8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\17. Supporter">
+      <UniqueIdentifier>{5b689e2e-5451-4e74-af58-2fd6e39c853e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\17. Supporter\Supporter_Uzi">
+      <UniqueIdentifier>{6856a64e-0bb7-438f-8b82-795ee181396a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\06. Bullet\SpBullet">
+      <UniqueIdentifier>{47d0283b-5876-4cf8-90f7-1b1130ce8bb9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -576,6 +597,33 @@
     <ClInclude Include="..\Header\ItemParticle.h">
       <Filter>02. GameObject\01. For_Stage\12. Particle</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\ProjectileParticle.h">
+      <Filter>99. Default\헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\SkillCamera.h">
+      <Filter>99. Default\헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Thorn.h">
+      <Filter>02. GameObject\01. For_Stage\16. Trap\Thorn</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Trap.h">
+      <Filter>02. GameObject\01. For_Stage\16. Trap</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Magma.h">
+      <Filter>02. GameObject\01. For_Stage\16. Trap\Magma</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ItemBox.h">
+      <Filter>02. GameObject\01. For_Stage\16. Trap\Itembox</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Supporter_Uzi.h">
+      <Filter>02. GameObject\01. For_Stage\17. Supporter\Supporter_Uzi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Supporter.h">
+      <Filter>02. GameObject\01. For_Stage\17. Supporter</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\SpBullet.h">
+      <Filter>02. GameObject\01. For_Stage\06. Bullet\SpBullet</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -886,6 +934,33 @@
     </ClCompile>
     <ClCompile Include="..\Code\ItemParticle.cpp">
       <Filter>02. GameObject\01. For_Stage\12. Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ProjectileParticle.cpp">
+      <Filter>99. Default\소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SkillCamera.cpp">
+      <Filter>99. Default\소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Thorn.cpp">
+      <Filter>02. GameObject\01. For_Stage\16. Trap\Thorn</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Trap.cpp">
+      <Filter>02. GameObject\01. For_Stage\16. Trap</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Magma.cpp">
+      <Filter>02. GameObject\01. For_Stage\16. Trap\Magma</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ItemBox.cpp">
+      <Filter>02. GameObject\01. For_Stage\16. Trap\Itembox</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Supporter_Uzi.cpp">
+      <Filter>02. GameObject\01. For_Stage\17. Supporter\Supporter_Uzi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Supporter.cpp">
+      <Filter>02. GameObject\01. For_Stage\17. Supporter</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SpBullet.cpp">
+      <Filter>02. GameObject\01. For_Stage\06. Bullet\SpBullet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

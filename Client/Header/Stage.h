@@ -27,6 +27,8 @@ private:
 	HRESULT			Ready_Layer_Character(const _tchar* pLayerTag);
 	HRESULT			Ready_Layer_Monster(const _tchar* pLayerTag);
 	HRESULT			Ready_Layer_Bullet(const _tchar* pLayerTag);
+	HRESULT			Ready_Layer_PlayerBullet(const _tchar* pLayerTag);
+
 	HRESULT			Ready_Layer_Mapping(const _tchar* pLayerTag);
 
 	HRESULT			Ready_Layer_Gun(const _tchar* pLayerTag);
@@ -40,6 +42,9 @@ private:
 
 	HRESULT			Ready_Layer_Slime(const _tchar* pLayerTag);
 	HRESULT			Ready_Layer_Zombie(const _tchar* pLayerTag);
+
+	HRESULT			Ready_Layer_Trap(const _tchar* pLayerTag);
+	HRESULT			Ready_Layer_Supporter(const _tchar* pLayerTag);
 
 	HRESULT			Ready_Proto(void);
 	HRESULT			Ready_Light(void);
