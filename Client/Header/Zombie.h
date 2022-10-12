@@ -14,7 +14,7 @@ private:
 	virtual void	Render_Object(void) override;
 
 private:
-	HRESULT				Build(void);
+	HRESULT					Build(void);
 	void					Load_Animation(wstring FileName);
 	void					Run_Animation(const _float& AnimationSpeed);
 	void					Walk_Animation_Run(void);
