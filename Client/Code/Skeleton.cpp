@@ -73,8 +73,8 @@ _int CSkeleton::Update_Object(const _float & fTimeDelta)
 	if (m_pCollision->Sphere_Collision(this->m_pSphereTransCom, m_pPlayerTransCom, vPlayerScale.x, vScale.x))
 	{
 		m_pTransCom->Chase_Target(&vPlayerPos, 1.f, fTimeDelta);
-		m_fFrame += fTimeDelta;
 		_matrix matRotY, matTrans, matWorld;
+		m_fFrame += fTimeDelta;
 
 		if (m_fFrame >= 5.f)
 		{
@@ -117,9 +117,8 @@ void CSkeleton::Render_Object(void)
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pHitBoxTransCom->Get_WorldMatrixPointer());
 	m_pHitBox->Render_Buffer();
 
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pSphereTransCom->Get_WorldMatrixPointer());
-
-	m_pSphereBufferCom->Render_Buffer();
+	//m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pSphereTransCom->Get_WorldMatrixPointer());
+	//m_pSphereBufferCom->Render_Buffer();
 	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransUICom->Get_WorldMatrixPointer());

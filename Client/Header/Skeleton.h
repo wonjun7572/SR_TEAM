@@ -1,5 +1,6 @@
 #pragma once
 #include "Monster.h"
+
 class CSkeleton : public CMonster
 {
 private:
@@ -18,6 +19,7 @@ private:
 
 	_float				m_fFireAngle = 0.f;
 	_float				m_fFrame = 0.f;
+
 public:
 	static CSkeleton*	Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3& vPos);
 	virtual void		Free(void);

@@ -66,8 +66,6 @@
 #include "MonsterParticle.h"
 #include "ProjectileParticle.h"
 #include "Illusioner.h"
-
-#include "MiddleBoss.h"
 CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CScene(pGraphicDev)
 {
@@ -85,8 +83,8 @@ HRESULT CStage::Ready_Scene(void)
 
 	CGameObject*		pGameObject = nullptr;
 
-	_float fBGMSound = 1.f;
-	PlayBGM(L"Track_01.mp3", fBGMSound);
+	//_float fBGMSound = 1.f;
+	//PlayBGM(L"Track_01.mp3", fBGMSound);
 
 	FAILED_CHECK_RETURN(Ready_Proto(), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Light(), E_FAIL);
@@ -103,6 +101,7 @@ HRESULT CStage::Ready_Scene(void)
 	FAILED_CHECK_RETURN(Ready_Layer_Gun(STAGE_GUN), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Layer_GunItem(STAGE_GUNITEM), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Layer_Player(STAGE_PLAYER), E_FAIL);
+	FAILED_CHECK_RETURN(Ready_Layer_DestroyWall(STAGE_DESTORYWALL), E_FAIL);
 
 	return S_OK;
 }
@@ -162,6 +161,7 @@ HRESULT CStage::Ready_Layer_Environment(const _tchar * pLayerTag)
 	pGameObject = CProjectileParticle::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"ProjectileParticle", pGameObject), E_FAIL);
+
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
@@ -231,7 +231,6 @@ HRESULT CStage::Ready_Layer_UI(const _tchar * pLayerTag)
 	pGameObject = CShop::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Shop", pGameObject), E_FAIL);
-
 
 	pGameObject = CCrossHeader::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
@@ -310,6 +309,10 @@ HRESULT CStage::Ready_Layer_Wall(const _tchar * pLayerTag)
 			break;
 	}
 	CloseHandle(hFile);
+
+	pGameObject = CCubeShop::Create(m_pGraphicDev, _vec3(15.f, 0.f, 10.f));
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"CubeShop1", pGameObject), E_FAIL);
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
@@ -397,13 +400,13 @@ HRESULT CStage::Ready_Layer_Monster(const _tchar * pLayerTag)
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
 	}
-	
+	/*
 	for (int i = 0; i < 10; i++)
 	{
 		pGameObject = CSkeleton::Create(m_pGraphicDev, _vec3(_float(rand() % 10 + 20), 0.6f, _float(rand() % 10) + 20));
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
-	}
+	}*/
 
 	for (int i = 0; i < 2; i++)
 	{
@@ -439,17 +442,6 @@ HRESULT CStage::Ready_Layer_Monster(const _tchar * pLayerTag)
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
 	}
-
-
-	pGameObject = CMiddleBoss::Create(m_pGraphicDev, _vec3(  109.f, 0.6f, 20.f));
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
-	
-	//
-	//pGameObject = CMiddleBoss::Create(m_pGraphicDev, _vec3(10.f, 0.6f, 10.f));
-	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
-
 
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
@@ -592,7 +584,6 @@ HRESULT CStage::Ready_Layer_Item(const _tchar * pLayerTag)
 
 	CGameObject*		pGameObject = nullptr;
 	
-	
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
 	return S_OK;
@@ -616,6 +607,18 @@ HRESULT CStage::Ready_Layer_GunItem(const _tchar * pLayerTag)
 	pGameObject = CGetSniper::Create(m_pGraphicDev, _vec3(16.f, 0.6f, 20.f));
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"GetSniper", pGameObject), E_FAIL);
+
+	m_mapLayer.insert({ pLayerTag, pLayer });
+
+	return S_OK;
+}
+
+HRESULT CStage::Ready_Layer_DestroyWall(const _tchar * pLayerTag)
+{
+	Engine::CLayer*		pLayer = Engine::CLayer::Create();
+	NULL_CHECK_RETURN(pLayer, E_FAIL);
+
+	CGameObject*		pGameObject = nullptr;
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 

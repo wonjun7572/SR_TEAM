@@ -26,33 +26,6 @@ HRESULT CCollision::Ready_Collision(void)
 	return S_OK;
 }
 
-_bool CCollision::Check_Collision(void)
-{
-	m_pSrc = dynamic_cast<CHitBox*>(Get_Component(STAGE_CHARACTER, L"PLAYER", HITBOX_COMP, ID_STATIC));
-	m_pDst = dynamic_cast<CHitBox*>(Get_Component(L"Layer_GameLogic", L"TestPlayer0", HITBOX_COMP, ID_STATIC));
-
-	CTransform*	pSrcTrans = dynamic_cast<CTransform*>(Get_Component(STAGE_CHARACTER, L"PLAYER", TRANSFORM_COMP, ID_DYNAMIC));
-	CTransform*	pDstTrans = dynamic_cast<CTransform*>(Get_Component(L"Layer_GameLogic", L"TestPlayer0", TRANSFORM_COMP, ID_DYNAMIC));
-
-	m_pSrc->Get_MinMax(&m_vMin1, &m_vMax1);
-	m_pDst->Get_MinMax(&m_vMin2, &m_vMax2);
-
-	D3DXVec3TransformCoord(&m_vMin1, &m_vMin1, pSrcTrans->Get_WorldMatrixPointer());
-	D3DXVec3TransformCoord(&m_vMax1, &m_vMax1, pSrcTrans->Get_WorldMatrixPointer());
-	D3DXVec3TransformCoord(&m_vMin2, &m_vMin2, pDstTrans->Get_WorldMatrixPointer());
-	D3DXVec3TransformCoord(&m_vMax2, &m_vMax2, pDstTrans->Get_WorldMatrixPointer());
-
-	if (m_vMin1.x <= m_vMax2.x && m_vMax1.x >= m_vMin2.x &&
-		m_vMin1.y <= m_vMax2.y && m_vMax1.y >= m_vMin2.y &&
-		m_vMin1.z <= m_vMax2.z && m_vMax1.z >= m_vMin2.z)
-	{
-		//cout << "AAAAAAAAAAAAAAAAAAAAAAAAA" << endl;
-		return true;
-	}
-
-	return false;
-}
-
 _bool CCollision::Sphere_Collision(CTransform* pTempTransform, CTransform* pSourTransform, _float fTemp, _float fSour)
 {
 	_vec3 vTemp, vSour;
@@ -83,6 +56,9 @@ _int CCollision::Wall_Collision(_vec3* vNorm)
 {
 	CLayer* pLayer = Engine::Get_Layer(STAGE_WALL);
 	map<const _tchar*, CGameObject*> mapWall = pLayer->Get_GameObjectMap();
+
+	pLayer = Engine::Get_Layer(STAGE_DESTORYWALL);
+	list<CGameObject*> DestoryWallList = pLayer->Get_GameList();
 
 	CTransform*	pPlayerTransform = dynamic_cast<CTransform*>(Get_Component(STAGE_CHARACTER, L"PLAYER", TRANSFORM_COMP, ID_DYNAMIC));
 	CHitBox* pPlayerBox = dynamic_cast<CHitBox*>(Get_Component(STAGE_CHARACTER, L"PLAYER", HITBOX_COMP, ID_STATIC));
@@ -184,6 +160,302 @@ _int CCollision::Wall_Collision(_vec3* vNorm)
 		}
 	}
 
+	if (!DestoryWallList.empty())
+	{
+		for (auto iter : DestoryWallList)
+		{
+			CTransform* pWallTransform = dynamic_cast<CTransform*>(iter->Get_Component(TRANSFORM_COMP, ID_DYNAMIC));
+			NULL_CHECK_RETURN(pWallTransform, false);
+			CHitBox* pWallBox = dynamic_cast<CHitBox*>(iter->Get_Component(HITBOX_COMP, ID_STATIC));
+			NULL_CHECK_RETURN(pWallBox, false);
+
+			pPlayerBox->Get_MinMax(&m_vMin1, &m_vMax1);
+			pWallBox->Get_MinMax(&m_vMin2, &m_vMax2);
+
+			D3DXVec3TransformCoord(&m_vMin1, &m_vMin1, pPlayerTransform->Get_WorldMatrixPointer());
+			D3DXVec3TransformCoord(&m_vMax1, &m_vMax1, pPlayerTransform->Get_WorldMatrixPointer());
+			D3DXVec3TransformCoord(&m_vMin2, &m_vMin2, pWallTransform->Get_WorldMatrixPointer());
+			D3DXVec3TransformCoord(&m_vMax2, &m_vMax2, pWallTransform->Get_WorldMatrixPointer());
+
+			int iCollisionCnt = 0;
+
+			if (m_vMin1.x <= m_vMax2.x && m_vMax1.x >= m_vMin2.x &&
+				m_vMin1.y <= m_vMax2.y && m_vMax1.y >= m_vMin2.y &&
+				m_vMin1.z <= m_vMax2.z && m_vMax1.z >= m_vMin2.z)
+			{
+				_vec3 vWallPos, vWallRight, vWallUp, vWallLook;
+				pWallTransform->Get_Info(INFO_POS, &vWallPos);
+
+				const _vec3*	pCubtVtx = pWallBox->Get_VtxPos();
+				_vec3	vNormal(0, 0, 0);
+				_ulong	dwVtxIdx[3]{};
+
+				if ((vPlayerPos.x > vWallPos.x) && (m_vMin1.z > m_vMin2.z) && (m_vMax1.z < m_vMax2.z))
+				{
+					// 벽의 우측에 충돌
+					dwVtxIdx[0] = 1;
+					dwVtxIdx[1] = 5;
+					dwVtxIdx[2] = 6;
+					_vec3 vSrc = pCubtVtx[5] - pCubtVtx[6];
+					_vec3 vDst = pCubtVtx[5] - pCubtVtx[1];
+					D3DXVec3Cross(&vNormal, &vSrc, &vDst);
+					D3DXVec3Normalize(&vNormal, &vNormal);
+
+					memcpy(vNorm, vNormal, sizeof(_vec3));
+
+					return WALL_RIGHT;
+				}
+				if ((vPlayerPos.x < vWallPos.x) && (m_vMin1.z > m_vMin2.z) && (m_vMax1.z < m_vMax2.z))
+				{
+					// 벽의 좌측에 충돌
+					dwVtxIdx[0] = 4;
+					dwVtxIdx[1] = 0;
+					dwVtxIdx[2] = 3;
+					_vec3 vSrc = pCubtVtx[3] - pCubtVtx[0];
+					_vec3 vDst = pCubtVtx[4] - pCubtVtx[0];
+					D3DXVec3Cross(&vNormal, &vSrc, &vDst);
+					D3DXVec3Normalize(&vNormal, &vNormal);
+
+					memcpy(vNorm, vNormal, sizeof(_vec3));
+
+					return WALL_LEFT;
+				}
+				if ((vPlayerPos.z > vWallPos.z) && (m_vMin1.x > m_vMin2.x) && (m_vMax1.x < m_vMax2.x))
+				{
+					// 벽의 전측에 충돌
+					dwVtxIdx[0] = 7;
+					dwVtxIdx[1] = 6;
+					dwVtxIdx[2] = 5;
+					_vec3 vSrc = pCubtVtx[6] - pCubtVtx[7];
+					_vec3 vDst = pCubtVtx[6] - pCubtVtx[5];
+					D3DXVec3Cross(&vNormal, &vSrc, &vDst);
+					D3DXVec3Normalize(&vNormal, &vNormal);
+
+					memcpy(vNorm, vNormal, sizeof(_vec3));
+
+					return WALL_FRONT;
+				}
+				if ((vPlayerPos.z < vWallPos.z) && (m_vMin1.x > m_vMin2.x) && (m_vMax1.x < m_vMax2.x))
+				{
+					// 벽의 후측에 충돌
+					dwVtxIdx[0] = 0;
+					dwVtxIdx[1] = 1;
+					dwVtxIdx[2] = 2;
+					_vec3 vSrc = pCubtVtx[1] - pCubtVtx[0];
+					_vec3 vDst = pCubtVtx[2] - pCubtVtx[1];
+					D3DXVec3Cross(&vNormal, &vSrc, &vDst);
+					D3DXVec3Normalize(&vNormal, &vNormal);
+
+					memcpy(vNorm, vNormal, sizeof(_vec3));
+
+					return WALL_BACK;
+				}
+				return -1;
+			}
+		}
+	}
+
+	return -1;
+}
+
+_int CCollision::Wall_Collision_For_Monster(_vec3* vNorm, CTransform* pTransform, CHitBox* pHitBox)
+{
+	CLayer* pLayer = Engine::Get_Layer(STAGE_WALL);
+	map<const _tchar*, CGameObject*> mapWall = pLayer->Get_GameObjectMap();
+
+	pLayer = Engine::Get_Layer(STAGE_DESTORYWALL);
+	list<CGameObject*> DestoryWallList = pLayer->Get_GameList();
+
+	_vec3 vPos;
+	pTransform->Get_Info(INFO_POS, &vPos);
+
+	for (auto iter : mapWall)
+	{
+		CTransform* pWallTransform = dynamic_cast<CTransform*>(iter.second->Get_Component(TRANSFORM_COMP, ID_DYNAMIC));
+		NULL_CHECK_RETURN(pWallTransform, false);
+		CHitBox* pWallBox = dynamic_cast<CHitBox*>(iter.second->Get_Component(HITBOX_COMP, ID_STATIC));
+		NULL_CHECK_RETURN(pWallBox, false);
+
+		pHitBox->Get_MinMax(&m_vMin1, &m_vMax1);
+		pWallBox->Get_MinMax(&m_vMin2, &m_vMax2);
+
+		D3DXVec3TransformCoord(&m_vMin1, &m_vMin1, pTransform->Get_WorldMatrixPointer());
+		D3DXVec3TransformCoord(&m_vMax1, &m_vMax1, pTransform->Get_WorldMatrixPointer());
+		D3DXVec3TransformCoord(&m_vMin2, &m_vMin2, pWallTransform->Get_WorldMatrixPointer());
+		D3DXVec3TransformCoord(&m_vMax2, &m_vMax2, pWallTransform->Get_WorldMatrixPointer());
+
+		int iCollisionCnt = 0;
+
+		if (m_vMin1.x <= m_vMax2.x && m_vMax1.x >= m_vMin2.x &&
+			m_vMin1.y <= m_vMax2.y && m_vMax1.y >= m_vMin2.y &&
+			m_vMin1.z <= m_vMax2.z && m_vMax1.z >= m_vMin2.z)
+		{
+			_vec3 vWallPos, vWallRight, vWallUp, vWallLook;
+			pWallTransform->Get_Info(INFO_POS, &vWallPos);
+
+			const _vec3*	pCubtVtx = pWallBox->Get_VtxPos();
+			_vec3	vNormal(0, 0, 0);
+			_ulong	dwVtxIdx[3]{};
+
+			if ((vPos.x > vWallPos.x) && (m_vMin1.z > m_vMin2.z) && (m_vMax1.z < m_vMax2.z))
+			{
+				// 벽의 우측에 충돌
+				dwVtxIdx[0] = 1;
+				dwVtxIdx[1] = 5;
+				dwVtxIdx[2] = 6;
+				_vec3 vSrc = pCubtVtx[5] - pCubtVtx[6];
+				_vec3 vDst = pCubtVtx[5] - pCubtVtx[1];
+				D3DXVec3Cross(&vNormal, &vSrc, &vDst);
+				D3DXVec3Normalize(&vNormal, &vNormal);
+
+				memcpy(vNorm, vNormal, sizeof(_vec3));
+
+				return WALL_RIGHT;
+			}
+			if ((vPos.x < vWallPos.x) && (m_vMin1.z > m_vMin2.z) && (m_vMax1.z < m_vMax2.z))
+			{
+				// 벽의 좌측에 충돌
+				dwVtxIdx[0] = 4;
+				dwVtxIdx[1] = 0;
+				dwVtxIdx[2] = 3;
+				_vec3 vSrc = pCubtVtx[3] - pCubtVtx[0];
+				_vec3 vDst = pCubtVtx[4] - pCubtVtx[0];
+				D3DXVec3Cross(&vNormal, &vSrc, &vDst);
+				D3DXVec3Normalize(&vNormal, &vNormal);
+
+				memcpy(vNorm, vNormal, sizeof(_vec3));
+
+				return WALL_LEFT;
+			}
+			if ((vPos.z > vWallPos.z) && (m_vMin1.x > m_vMin2.x) && (m_vMax1.x < m_vMax2.x))
+			{
+				// 벽의 전측에 충돌
+				dwVtxIdx[0] = 7;
+				dwVtxIdx[1] = 6;
+				dwVtxIdx[2] = 5;
+				_vec3 vSrc = pCubtVtx[6] - pCubtVtx[7];
+				_vec3 vDst = pCubtVtx[6] - pCubtVtx[5];
+				D3DXVec3Cross(&vNormal, &vSrc, &vDst);
+				D3DXVec3Normalize(&vNormal, &vNormal);
+
+				memcpy(vNorm, vNormal, sizeof(_vec3));
+
+				return WALL_FRONT;
+			}
+			if ((vPos.z < vWallPos.z) && (m_vMin1.x > m_vMin2.x) && (m_vMax1.x < m_vMax2.x))
+			{
+				// 벽의 후측에 충돌
+				dwVtxIdx[0] = 0;
+				dwVtxIdx[1] = 1;
+				dwVtxIdx[2] = 2;
+				_vec3 vSrc = pCubtVtx[1] - pCubtVtx[0];
+				_vec3 vDst = pCubtVtx[2] - pCubtVtx[1];
+				D3DXVec3Cross(&vNormal, &vSrc, &vDst);
+				D3DXVec3Normalize(&vNormal, &vNormal);
+
+				memcpy(vNorm, vNormal, sizeof(_vec3));
+
+				return WALL_BACK;
+			}
+			return -1;
+		}
+	}
+
+	if (!DestoryWallList.empty())
+	{
+		for (auto iter : DestoryWallList)
+		{
+			CTransform* pWallTransform = dynamic_cast<CTransform*>(iter->Get_Component(TRANSFORM_COMP, ID_DYNAMIC));
+			NULL_CHECK_RETURN(pWallTransform, false);
+			CHitBox* pWallBox = dynamic_cast<CHitBox*>(iter->Get_Component(HITBOX_COMP, ID_STATIC));
+			NULL_CHECK_RETURN(pWallBox, false);
+
+			pHitBox->Get_MinMax(&m_vMin1, &m_vMax1);
+			pWallBox->Get_MinMax(&m_vMin2, &m_vMax2);
+
+			D3DXVec3TransformCoord(&m_vMin1, &m_vMin1, pTransform->Get_WorldMatrixPointer());
+			D3DXVec3TransformCoord(&m_vMax1, &m_vMax1, pTransform->Get_WorldMatrixPointer());
+			D3DXVec3TransformCoord(&m_vMin2, &m_vMin2, pWallTransform->Get_WorldMatrixPointer());
+			D3DXVec3TransformCoord(&m_vMax2, &m_vMax2, pWallTransform->Get_WorldMatrixPointer());
+
+			int iCollisionCnt = 0;
+
+			if (m_vMin1.x <= m_vMax2.x && m_vMax1.x >= m_vMin2.x &&
+				m_vMin1.y <= m_vMax2.y && m_vMax1.y >= m_vMin2.y &&
+				m_vMin1.z <= m_vMax2.z && m_vMax1.z >= m_vMin2.z)
+			{
+				_vec3 vWallPos, vWallRight, vWallUp, vWallLook;
+				pWallTransform->Get_Info(INFO_POS, &vWallPos);
+
+				const _vec3*	pCubtVtx = pWallBox->Get_VtxPos();
+				_vec3	vNormal(0, 0, 0);
+				_ulong	dwVtxIdx[3]{};
+
+				if ((vPos.x > vWallPos.x) && (m_vMin1.z > m_vMin2.z) && (m_vMax1.z < m_vMax2.z))
+				{
+					// 벽의 우측에 충돌
+					dwVtxIdx[0] = 1;
+					dwVtxIdx[1] = 5;
+					dwVtxIdx[2] = 6;
+					_vec3 vSrc = pCubtVtx[5] - pCubtVtx[6];
+					_vec3 vDst = pCubtVtx[5] - pCubtVtx[1];
+					D3DXVec3Cross(&vNormal, &vSrc, &vDst);
+					D3DXVec3Normalize(&vNormal, &vNormal);
+
+					memcpy(vNorm, vNormal, sizeof(_vec3));
+
+					return WALL_RIGHT;
+				}
+				if ((vPos.x < vWallPos.x) && (m_vMin1.z > m_vMin2.z) && (m_vMax1.z < m_vMax2.z))
+				{
+					// 벽의 좌측에 충돌
+					dwVtxIdx[0] = 4;
+					dwVtxIdx[1] = 0;
+					dwVtxIdx[2] = 3;
+					_vec3 vSrc = pCubtVtx[3] - pCubtVtx[0];
+					_vec3 vDst = pCubtVtx[4] - pCubtVtx[0];
+					D3DXVec3Cross(&vNormal, &vSrc, &vDst);
+					D3DXVec3Normalize(&vNormal, &vNormal);
+
+					memcpy(vNorm, vNormal, sizeof(_vec3));
+
+					return WALL_LEFT;
+				}
+				if ((vPos.z > vWallPos.z) && (m_vMin1.x > m_vMin2.x) && (m_vMax1.x < m_vMax2.x))
+				{
+					// 벽의 전측에 충돌
+					dwVtxIdx[0] = 7;
+					dwVtxIdx[1] = 6;
+					dwVtxIdx[2] = 5;
+					_vec3 vSrc = pCubtVtx[6] - pCubtVtx[7];
+					_vec3 vDst = pCubtVtx[6] - pCubtVtx[5];
+					D3DXVec3Cross(&vNormal, &vSrc, &vDst);
+					D3DXVec3Normalize(&vNormal, &vNormal);
+
+					memcpy(vNorm, vNormal, sizeof(_vec3));
+
+					return WALL_FRONT;
+				}
+				if ((vPos.z < vWallPos.z) && (m_vMin1.x > m_vMin2.x) && (m_vMax1.x < m_vMax2.x))
+				{
+					// 벽의 후측에 충돌
+					dwVtxIdx[0] = 0;
+					dwVtxIdx[1] = 1;
+					dwVtxIdx[2] = 2;
+					_vec3 vSrc = pCubtVtx[1] - pCubtVtx[0];
+					_vec3 vDst = pCubtVtx[2] - pCubtVtx[1];
+					D3DXVec3Cross(&vNormal, &vSrc, &vDst);
+					D3DXVec3Normalize(&vNormal, &vNormal);
+
+					memcpy(vNorm, vNormal, sizeof(_vec3));
+
+					return WALL_BACK;
+				}
+				return -1;
+			}
+		}
+	}
+
 	return -1;
 }
 
@@ -191,6 +463,9 @@ _int CCollision::Wall_Collision_By_DotSliding(_vec3 * vChangeDir)
 {
 	CLayer* pLayer = Engine::Get_Layer(STAGE_WALL);
 	map<const _tchar*, CGameObject*> mapWall = pLayer->Get_GameObjectMap();
+
+	pLayer = Engine::Get_Layer(STAGE_DESTORYWALL);
+	list<CGameObject*> DestoryWallList = pLayer->Get_GameList();
 
 	CTransform*	pPlayerTransform = dynamic_cast<CTransform*>(Get_Component(STAGE_CHARACTER, L"PLAYER", TRANSFORM_COMP, ID_DYNAMIC));
 	CHitBox* pPlayerBox = dynamic_cast<CHitBox*>(Get_Component(STAGE_CHARACTER, L"PLAYER", HITBOX_COMP, ID_STATIC));
@@ -302,6 +577,344 @@ _int CCollision::Wall_Collision_By_DotSliding(_vec3 * vChangeDir)
 				*vChangeDir = vSliding;
 
 				return WALL_BACK;
+			}
+		}
+	}
+
+	if (!DestoryWallList.empty())
+	{
+		for (auto iter : DestoryWallList)
+		{
+			CTransform* pWallTransform = dynamic_cast<CTransform*>(iter->Get_Component(TRANSFORM_COMP, ID_DYNAMIC));
+			NULL_CHECK_RETURN(pWallTransform, false);
+			CHitBox* pWallBox = dynamic_cast<CHitBox*>(iter->Get_Component(HITBOX_COMP, ID_STATIC));
+			NULL_CHECK_RETURN(pWallTransform, false);
+
+			pPlayerBox->Get_MinMax(&m_vMin1, &m_vMax1);
+			pWallBox->Get_MinMax(&m_vMin2, &m_vMax2);
+
+			D3DXVec3TransformCoord(&m_vMin1, &m_vMin1, pPlayerTransform->Get_WorldMatrixPointer());
+			D3DXVec3TransformCoord(&m_vMax1, &m_vMax1, pPlayerTransform->Get_WorldMatrixPointer());
+			D3DXVec3TransformCoord(&m_vMin2, &m_vMin2, pWallTransform->Get_WorldMatrixPointer());
+			D3DXVec3TransformCoord(&m_vMax2, &m_vMax2, pWallTransform->Get_WorldMatrixPointer());
+
+			if (m_vMin1.x <= m_vMax2.x && m_vMax1.x >= m_vMin2.x &&
+				m_vMin1.y <= m_vMax2.y && m_vMax1.y >= m_vMin2.y &&
+				m_vMin1.z <= m_vMax2.z && m_vMax1.z >= m_vMin2.z)
+			{
+				_vec3 vWallPos, vWallRight, vWallUp, vWallLook;
+				pWallTransform->Get_Info(INFO_POS, &vWallPos);
+				pWallTransform->Get_Info(INFO_RIGHT, &vWallRight);
+				pWallTransform->Get_Info(INFO_UP, &vWallUp);
+				pWallTransform->Get_Info(INFO_LOOK, &vWallLook);
+
+				_vec3	vWallAxis, vPlayerDir, vSliding;
+
+				if ((vPlayerPos.x > vWallPos.x) && (m_vMin1.z > m_vMin2.z) && (m_vMax1.z < m_vMax2.z))
+				{
+					// 벽의 우측에 충돌
+					// Dir과 Look 내적하여 스칼라값 구하고
+					// z이동값이 +이면 z+방향으로 스칼라값만큼 이동, z이동값이 -이면 z-방향으로 스칼라값만큼 이동
+
+					vWallAxis = vWallLook;
+					vPlayerDir = *vChangeDir;
+
+					D3DXVec3Normalize(&vWallAxis, &vWallAxis);
+
+					_float fScalar = D3DXVec3Dot(&vPlayerDir, &vWallAxis);
+
+					vSliding = vWallAxis * fScalar;
+
+					*vChangeDir = vSliding;
+
+					return WALL_RIGHT;
+				}
+				if ((vPlayerPos.x < vWallPos.x) && (m_vMin1.z > m_vMin2.z) && (m_vMax1.z < m_vMax2.z))
+				{
+					// 벽의 좌측에 충돌
+					// Dir과 Look 내적하여 스칼라값 구하고
+					// z이동값이 +이면 z+방향으로 스칼라값만큼 이동, z이동값이 -이면 z-방향으로 스칼라값만큼 이동
+
+					vWallAxis = vWallLook;
+					vPlayerDir = *vChangeDir;
+
+					D3DXVec3Normalize(&vWallAxis, &vWallAxis);
+
+					_float fScalar = D3DXVec3Dot(&vPlayerDir, &vWallAxis);
+
+					vSliding = vWallAxis * fScalar;
+
+					*vChangeDir = vSliding;
+
+					return WALL_LEFT;
+				}
+				if ((vPlayerPos.z > vWallPos.z) && (m_vMin1.x > m_vMin2.x) && (m_vMax1.x < m_vMax2.x))
+				{
+					// 벽의 전측에 충돌
+					// Dir과 Right 내적하여 스칼라값 구하고
+					// x이동값이 +이면 x+방향으로 스칼라값만큼 이동, x이동값이 -이면 x-방향으로 스칼라값만큼 이동
+
+					vWallAxis = vWallRight;
+					vPlayerDir = *vChangeDir;
+
+					D3DXVec3Normalize(&vWallAxis, &vWallAxis);
+
+					_float fScalar = D3DXVec3Dot(&vPlayerDir, &vWallAxis);
+
+					vSliding = vWallAxis * fScalar;
+
+					*vChangeDir = vSliding;
+
+					return WALL_FRONT;
+				}
+				if ((vPlayerPos.z < vWallPos.z) && (m_vMin1.x > m_vMin2.x) && (m_vMax1.x < m_vMax2.x))
+				{
+					// 벽의 후측에 충돌
+					// Dir과 Right 내적하여 스칼라값 구하고
+					// x이동값이 +이면 x+방향으로 스칼라값만큼 이동, x이동값이 -이면 x-방향으로 스칼라값만큼 이동
+
+					vWallAxis = vWallRight;
+					vPlayerDir = *vChangeDir;
+
+					D3DXVec3Normalize(&vWallAxis, &vWallAxis);
+
+					_float fScalar = D3DXVec3Dot(&vPlayerDir, &vWallAxis);
+
+					vSliding = vWallAxis * fScalar;
+
+					*vChangeDir = vSliding;
+
+					return WALL_BACK;
+				}
+			}
+		}
+	}
+
+	return -1;
+}
+
+_int CCollision::Wall_Collision_By_DotSliding_For_Monster(_vec3* vChangeDir, CTransform* pTransform, CHitBox* pHitBox)
+{
+	CLayer* pLayer = Engine::Get_Layer(STAGE_WALL);
+	map<const _tchar*, CGameObject*> mapWall = pLayer->Get_GameObjectMap();
+
+	pLayer = Engine::Get_Layer(STAGE_DESTORYWALL);
+	list<CGameObject*> DestoryWallList = pLayer->Get_GameList();
+
+	_vec3 vPos;
+	pTransform->Get_Info(INFO_POS, &vPos);
+
+	for (auto iter : mapWall)
+	{
+		CTransform* pWallTransform = dynamic_cast<CTransform*>(iter.second->Get_Component(TRANSFORM_COMP, ID_DYNAMIC));
+		NULL_CHECK_RETURN(pWallTransform, false);
+		CHitBox* pWallBox = dynamic_cast<CHitBox*>(iter.second->Get_Component(HITBOX_COMP, ID_STATIC));
+		NULL_CHECK_RETURN(pWallTransform, false);
+
+		pHitBox->Get_MinMax(&m_vMin1, &m_vMax1);
+		pWallBox->Get_MinMax(&m_vMin2, &m_vMax2);
+
+		D3DXVec3TransformCoord(&m_vMin1, &m_vMin1, pTransform->Get_WorldMatrixPointer());
+		D3DXVec3TransformCoord(&m_vMax1, &m_vMax1, pTransform->Get_WorldMatrixPointer());
+		D3DXVec3TransformCoord(&m_vMin2, &m_vMin2, pWallTransform->Get_WorldMatrixPointer());
+		D3DXVec3TransformCoord(&m_vMax2, &m_vMax2, pWallTransform->Get_WorldMatrixPointer());
+
+		if (m_vMin1.x <= m_vMax2.x && m_vMax1.x >= m_vMin2.x &&
+			m_vMin1.y <= m_vMax2.y && m_vMax1.y >= m_vMin2.y &&
+			m_vMin1.z <= m_vMax2.z && m_vMax1.z >= m_vMin2.z)
+		{
+			_vec3 vWallPos, vWallRight, vWallUp, vWallLook;
+			pWallTransform->Get_Info(INFO_POS, &vWallPos);
+			pWallTransform->Get_Info(INFO_RIGHT, &vWallRight);
+			pWallTransform->Get_Info(INFO_UP, &vWallUp);
+			pWallTransform->Get_Info(INFO_LOOK, &vWallLook);
+
+			_vec3	vWallAxis, vPlayerDir, vSliding;
+
+			if ((vPos.x > vWallPos.x) && (m_vMin1.z > m_vMin2.z) && (m_vMax1.z < m_vMax2.z))
+			{
+				// 벽의 우측에 충돌
+				// Dir과 Look 내적하여 스칼라값 구하고
+				// z이동값이 +이면 z+방향으로 스칼라값만큼 이동, z이동값이 -이면 z-방향으로 스칼라값만큼 이동
+
+				vWallAxis = vWallLook;
+				vPlayerDir = *vChangeDir;
+
+				D3DXVec3Normalize(&vWallAxis, &vWallAxis);
+
+				_float fScalar = D3DXVec3Dot(&vPlayerDir, &vWallAxis);
+
+				vSliding = vWallAxis * fScalar;
+
+				*vChangeDir = vSliding;
+
+				return WALL_RIGHT;
+			}
+			if ((vPos.x < vWallPos.x) && (m_vMin1.z > m_vMin2.z) && (m_vMax1.z < m_vMax2.z))
+			{
+				// 벽의 좌측에 충돌
+				// Dir과 Look 내적하여 스칼라값 구하고
+				// z이동값이 +이면 z+방향으로 스칼라값만큼 이동, z이동값이 -이면 z-방향으로 스칼라값만큼 이동
+
+				vWallAxis = vWallLook;
+				vPlayerDir = *vChangeDir;
+
+				D3DXVec3Normalize(&vWallAxis, &vWallAxis);
+
+				_float fScalar = D3DXVec3Dot(&vPlayerDir, &vWallAxis);
+
+				vSliding = vWallAxis * fScalar;
+
+				*vChangeDir = vSliding;
+
+				return WALL_LEFT;
+			}
+			if ((vPos.z > vWallPos.z) && (m_vMin1.x > m_vMin2.x) && (m_vMax1.x < m_vMax2.x))
+			{
+				// 벽의 전측에 충돌
+				// Dir과 Right 내적하여 스칼라값 구하고
+				// x이동값이 +이면 x+방향으로 스칼라값만큼 이동, x이동값이 -이면 x-방향으로 스칼라값만큼 이동
+
+				vWallAxis = vWallRight;
+				vPlayerDir = *vChangeDir;
+
+				D3DXVec3Normalize(&vWallAxis, &vWallAxis);
+
+				_float fScalar = D3DXVec3Dot(&vPlayerDir, &vWallAxis);
+
+				vSliding = vWallAxis * fScalar;
+
+				*vChangeDir = vSliding;
+
+				return WALL_FRONT;
+			}
+			if ((vPos.z < vWallPos.z) && (m_vMin1.x > m_vMin2.x) && (m_vMax1.x < m_vMax2.x))
+			{
+				// 벽의 후측에 충돌
+				// Dir과 Right 내적하여 스칼라값 구하고
+				// x이동값이 +이면 x+방향으로 스칼라값만큼 이동, x이동값이 -이면 x-방향으로 스칼라값만큼 이동
+
+				vWallAxis = vWallRight;
+				vPlayerDir = *vChangeDir;
+
+				D3DXVec3Normalize(&vWallAxis, &vWallAxis);
+
+				_float fScalar = D3DXVec3Dot(&vPlayerDir, &vWallAxis);
+
+				vSliding = vWallAxis * fScalar;
+
+				*vChangeDir = vSliding;
+
+				return WALL_BACK;
+			}
+		}
+	}
+
+	if (!DestoryWallList.empty())
+	{
+		for (auto iter : DestoryWallList)
+		{
+			CTransform* pWallTransform = dynamic_cast<CTransform*>(iter->Get_Component(TRANSFORM_COMP, ID_DYNAMIC));
+			NULL_CHECK_RETURN(pWallTransform, false);
+			CHitBox* pWallBox = dynamic_cast<CHitBox*>(iter->Get_Component(HITBOX_COMP, ID_STATIC));
+			NULL_CHECK_RETURN(pWallTransform, false);
+
+			pHitBox->Get_MinMax(&m_vMin1, &m_vMax1);
+			pWallBox->Get_MinMax(&m_vMin2, &m_vMax2);
+
+			D3DXVec3TransformCoord(&m_vMin1, &m_vMin1, pTransform->Get_WorldMatrixPointer());
+			D3DXVec3TransformCoord(&m_vMax1, &m_vMax1, pTransform->Get_WorldMatrixPointer());
+			D3DXVec3TransformCoord(&m_vMin2, &m_vMin2, pWallTransform->Get_WorldMatrixPointer());
+			D3DXVec3TransformCoord(&m_vMax2, &m_vMax2, pWallTransform->Get_WorldMatrixPointer());
+
+			if (m_vMin1.x <= m_vMax2.x && m_vMax1.x >= m_vMin2.x &&
+				m_vMin1.y <= m_vMax2.y && m_vMax1.y >= m_vMin2.y &&
+				m_vMin1.z <= m_vMax2.z && m_vMax1.z >= m_vMin2.z)
+			{
+				_vec3 vWallPos, vWallRight, vWallUp, vWallLook;
+				pWallTransform->Get_Info(INFO_POS, &vWallPos);
+				pWallTransform->Get_Info(INFO_RIGHT, &vWallRight);
+				pWallTransform->Get_Info(INFO_UP, &vWallUp);
+				pWallTransform->Get_Info(INFO_LOOK, &vWallLook);
+
+				_vec3	vWallAxis, vPlayerDir, vSliding;
+
+				if ((vPos.x > vWallPos.x) && (m_vMin1.z > m_vMin2.z) && (m_vMax1.z < m_vMax2.z))
+				{
+					// 벽의 우측에 충돌
+					// Dir과 Look 내적하여 스칼라값 구하고
+					// z이동값이 +이면 z+방향으로 스칼라값만큼 이동, z이동값이 -이면 z-방향으로 스칼라값만큼 이동
+
+					vWallAxis = vWallLook;
+					vPlayerDir = *vChangeDir;
+
+					D3DXVec3Normalize(&vWallAxis, &vWallAxis);
+
+					_float fScalar = D3DXVec3Dot(&vPlayerDir, &vWallAxis);
+
+					vSliding = vWallAxis * fScalar;
+
+					*vChangeDir = vSliding;
+
+					return WALL_RIGHT;
+				}
+				if ((vPos.x < vWallPos.x) && (m_vMin1.z > m_vMin2.z) && (m_vMax1.z < m_vMax2.z))
+				{
+					// 벽의 좌측에 충돌
+					// Dir과 Look 내적하여 스칼라값 구하고
+					// z이동값이 +이면 z+방향으로 스칼라값만큼 이동, z이동값이 -이면 z-방향으로 스칼라값만큼 이동
+
+					vWallAxis = vWallLook;
+					vPlayerDir = *vChangeDir;
+
+					D3DXVec3Normalize(&vWallAxis, &vWallAxis);
+
+					_float fScalar = D3DXVec3Dot(&vPlayerDir, &vWallAxis);
+
+					vSliding = vWallAxis * fScalar;
+
+					*vChangeDir = vSliding;
+
+					return WALL_LEFT;
+				}
+				if ((vPos.z > vWallPos.z) && (m_vMin1.x > m_vMin2.x) && (m_vMax1.x < m_vMax2.x))
+				{
+					// 벽의 전측에 충돌
+					// Dir과 Right 내적하여 스칼라값 구하고
+					// x이동값이 +이면 x+방향으로 스칼라값만큼 이동, x이동값이 -이면 x-방향으로 스칼라값만큼 이동
+
+					vWallAxis = vWallRight;
+					vPlayerDir = *vChangeDir;
+
+					D3DXVec3Normalize(&vWallAxis, &vWallAxis);
+
+					_float fScalar = D3DXVec3Dot(&vPlayerDir, &vWallAxis);
+
+					vSliding = vWallAxis * fScalar;
+
+					*vChangeDir = vSliding;
+
+					return WALL_FRONT;
+				}
+				if ((vPos.z < vWallPos.z) && (m_vMin1.x > m_vMin2.x) && (m_vMax1.x < m_vMax2.x))
+				{
+					// 벽의 후측에 충돌
+					// Dir과 Right 내적하여 스칼라값 구하고
+					// x이동값이 +이면 x+방향으로 스칼라값만큼 이동, x이동값이 -이면 x-방향으로 스칼라값만큼 이동
+
+					vWallAxis = vWallRight;
+					vPlayerDir = *vChangeDir;
+
+					D3DXVec3Normalize(&vWallAxis, &vWallAxis);
+
+					_float fScalar = D3DXVec3Dot(&vPlayerDir, &vWallAxis);
+
+					vSliding = vWallAxis * fScalar;
+
+					*vChangeDir = vSliding;
+
+					return WALL_BACK;
+				}
 			}
 		}
 	}

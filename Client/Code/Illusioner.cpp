@@ -5,6 +5,7 @@
 #include "ObtainDefense.h"
 #include "PoolMgr.h"
 #include "ComboUI.h"
+#include "TargetCube.h"
 
 #include "TransAxisBox.h"
 
@@ -76,49 +77,61 @@ _int CIllusioner::Update_Object(const _float & fTimeDelta)
 		FAILED_CHECK_RETURN(Build(), -1);
 	}
 
-	m_fTimeDelta = fTimeDelta;
-
 	CMonster::Update_Object(fTimeDelta);
-
-	_vec3 vPlayerPos;
-	m_pPlayerTransCom->Get_Info(INFO_POS, &vPlayerPos);
-	_vec3 vPlayerScale;
-	m_pPlayerTransCom->Get_Scale(&vPlayerScale);
-	_vec3 vScale;
-	m_pSphereTransCom->Get_Scale(&vScale);
-	_vec3 vPos;
-	m_pTransCom->Get_Info(INFO_POS, &vPos);
-
-	m_fFrame += fTimeDelta;
-
-	if (m_pCollision->Sphere_Collision(this->m_pSphereTransCom, m_pPlayerTransCom, vPlayerScale.x, vScale.x) && m_fFrame < 2.f)
+	m_fTimeDelta = fTimeDelta;
+	
+	if (!Collision_Wall(fTimeDelta))
 	{
-		m_pTransCom->Chase_Target(&vPlayerPos, 1.f, fTimeDelta);
-		m_STATE = ILLUSION_WALK;
-	}
-	else if (m_pCollision->Sphere_Collision(this->m_pSphereTransCom, m_pPlayerTransCom, vPlayerScale.x, vScale.x) && m_fFrame >= 2.f)
-	{
-		m_pTransCom->Chase_Target(&vPlayerPos, 0.f, fTimeDelta);
-		m_STATE = ILLUSION_ATTACK;
-		_vec3 vDir = vPlayerPos - vPos;
+		_vec3 vPlayerPos;
+		m_pPlayerTransCom->Get_Info(INFO_POS, &vPlayerPos);
+		_vec3 vPlayerScale;
+		m_pPlayerTransCom->Get_Scale(&vPlayerScale);
+		_vec3 vScale;
+		m_pSphereTransCom->Get_Scale(&vScale);
+		_vec3 vPos;
+		m_pTransCom->Get_Info(INFO_POS, &vPos);
 
-		if (m_AnimationTime >= 1.f)
+		m_fFrame += fTimeDelta;
+
+		if (m_pCollision->Sphere_Collision(this->m_pSphereTransCom, m_pPlayerTransCom, vPlayerScale.x, vScale.x) && m_fFrame < 2.f)
 		{
-			CPoolMgr::GetInstance()->Reuse_Obj(m_pGraphicDev, &vPos, &vDir, m_tAbility->fDamage);
-			m_fFrame = 0.f;
+			m_pTransCom->Chase_Target(&vPlayerPos, 1.f, fTimeDelta);
+			m_STATE = ILLUSION_WALK;
 		}
-	}
-	else
-	{
-		m_pTransCom->Chase_Target(&vPlayerPos, 0.f, fTimeDelta);
-		m_STATE = ILLUSION_IDLE;
-	}
+		else if (m_pCollision->Sphere_Collision(this->m_pSphereTransCom, m_pPlayerTransCom, vPlayerScale.x, vScale.x) && m_fFrame >= 2.f)
+		{
+			m_pTransCom->Chase_Target(&vPlayerPos, 0.f, fTimeDelta);
+			m_STATE = ILLUSION_ATTACK;
+			_vec3 vDir = vPlayerPos - vPos;
+
+			if (m_AnimationTime >= 1.f)
+			{
+				_vec3 vWallPos;
+				m_pTransCom->Get_Info(INFO_POS, &vWallPos);
+
+				_vec3 vLook;
+				m_pTransCom->Get_Info(INFO_LOOK, &vLook);
+				D3DXVec3Normalize(&vLook, &vLook);
+
+				CGameObject* pGameObject = CTargetCube::Create(m_pGraphicDev, _vec3(vWallPos.x + (vLook.x * 4.f), vWallPos.y - 3.f, vWallPos.z + (vLook.z * 4.f)), _vec3(0.f, 1.f, 0.f), _vec3(0.5f, 1.f, 0.5f), 13);
+
+				NULL_CHECK_RETURN(pGameObject, E_FAIL);
+				Engine::Get_Layer(STAGE_DESTORYWALL)->Add_GameList(pGameObject);
+				m_fFrame = 0.f;
+			}
+		}
+		else
+		{
+			m_pTransCom->Chase_Target(&vPlayerPos, 0.f, fTimeDelta);
+			m_STATE = ILLUSION_IDLE;
+		}
 
 
-	_vec3 vMonsterPos;
-	m_pTransCom->Get_Info(INFO_POS, &vMonsterPos);
-	m_pHitBoxTransCom->Set_Pos(vMonsterPos.x, vMonsterPos.y, vMonsterPos.z);
-	m_pSphereTransCom->Set_Pos(vMonsterPos.x, vMonsterPos.y, vMonsterPos.z);
+		_vec3 vMonsterPos;
+		m_pTransCom->Get_Info(INFO_POS, &vMonsterPos);
+		m_pHitBoxTransCom->Set_Pos(vMonsterPos.x, vMonsterPos.y, vMonsterPos.z);
+		m_pSphereTransCom->Set_Pos(vMonsterPos.x, vMonsterPos.y, vMonsterPos.z);
+	}
 	return 0;
 }
 
@@ -153,8 +166,8 @@ void CIllusioner::Render_Object(void)
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransCom->Get_WorldMatrixPointer());
 	m_pAnimationBox->Render_Buffer();
 
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pSphereTransCom->Get_WorldMatrixPointer());
-	m_pSphereBufferCom->Render_Buffer();
+	//m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pSphereTransCom->Get_WorldMatrixPointer());
+	//m_pSphereBufferCom->Render_Buffer();
 	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransUICom->Get_WorldMatrixPointer());
@@ -238,19 +251,19 @@ HRESULT CIllusioner::Create_Item()
 	case 0:
 		pGameObject = CHealthPotion::Create(m_pGraphicDev, vItemPos);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		Get_Layer(STAGE_ITEM)->Add_GameList(pGameObject);
+		Engine::Get_Layer(STAGE_ITEM)->Add_GameList(pGameObject);
 		break;
 
 	case 1:
 		pGameObject = CObtainBullet::Create(m_pGraphicDev, vItemPos);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		Get_Layer(STAGE_ITEM)->Add_GameList(pGameObject);
+		Engine::Get_Layer(STAGE_ITEM)->Add_GameList(pGameObject);
 		break;
 
 	case 2:
 		pGameObject = CObtainDefense::Create(m_pGraphicDev, vItemPos);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		Get_Layer(STAGE_ITEM)->Add_GameList(pGameObject);
+		Engine::Get_Layer(STAGE_ITEM)->Add_GameList(pGameObject);
 		break;
 	}
 	return S_OK;
