@@ -102,6 +102,7 @@ HRESULT CStage::Ready_Scene(void)
 	FAILED_CHECK_RETURN(Ready_Layer_GunItem(STAGE_GUNITEM), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Layer_Player(STAGE_PLAYER), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Layer_DestroyWall(STAGE_DESTORYWALL), E_FAIL);
+	FAILED_CHECK_RETURN(Ready_Layer_Skill(STAGE_SKILL), E_FAIL);
 
 	return S_OK;
 }
@@ -388,7 +389,7 @@ HRESULT CStage::Ready_Layer_Monster(const _tchar * pLayerTag)
 	CGameObject*		pGameObject = nullptr;
 	
 	// 위랑 아래랑 같아야함 문자열, 몬스터 아이템 땜시
-	
+	srand((unsigned int)time(NULL));
 	for (int i = 0; i < 4; i++)
 	{
 		_tchar* szName = new _tchar[256]{};
@@ -614,6 +615,18 @@ HRESULT CStage::Ready_Layer_GunItem(const _tchar * pLayerTag)
 }
 
 HRESULT CStage::Ready_Layer_DestroyWall(const _tchar * pLayerTag)
+{
+	Engine::CLayer*		pLayer = Engine::CLayer::Create();
+	NULL_CHECK_RETURN(pLayer, E_FAIL);
+
+	CGameObject*		pGameObject = nullptr;
+
+	m_mapLayer.insert({ pLayerTag, pLayer });
+
+	return S_OK;
+}
+
+HRESULT CStage::Ready_Layer_Skill(const _tchar * pLayerTag)
 {
 	Engine::CLayer*		pLayer = Engine::CLayer::Create();
 	NULL_CHECK_RETURN(pLayer, E_FAIL);
