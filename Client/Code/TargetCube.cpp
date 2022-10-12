@@ -82,10 +82,6 @@ void CTargetCube::Render_Object(void)
 	m_pTextureCom->Set_Texture(m_iTexIndex);
 	m_pBufferCom->Render_Buffer();
 
-	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
-	m_pHitBox->Render_Buffer();
-	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
-
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransUICom->Get_WorldMatrixPointer());
 	m_pTextureUICom->Set_Texture();
 	m_pBufferUICom->Resize_Buffer(m_tAbility->fCurrentHp / m_tAbility->fMaxHp);

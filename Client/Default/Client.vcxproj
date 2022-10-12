@@ -203,6 +203,7 @@
     <ClInclude Include="..\Header\LogoUI.h" />
     <ClInclude Include="..\Header\MainApp.h" />
     <ClInclude Include="..\Header\MaxPlusHp.h" />
+    <ClInclude Include="..\Header\Meteor.h" />
     <ClInclude Include="..\Header\Monster.h" />
     <ClInclude Include="..\Header\MonsterMapping.h" />
     <ClInclude Include="..\Header\MonsterParticle.h" />
@@ -321,6 +322,7 @@
     <ClCompile Include="..\Code\LogoUI.cpp" />
     <ClCompile Include="..\Code\MainApp.cpp" />
     <ClCompile Include="..\Code\MaxPlusHp.cpp" />
+    <ClCompile Include="..\Code\Meteor.cpp" />
     <ClCompile Include="..\Code\Monster.cpp" />
     <ClCompile Include="..\Code\MonsterMapping.cpp" />
     <ClCompile Include="..\Code\MonsterParticle.cpp" />

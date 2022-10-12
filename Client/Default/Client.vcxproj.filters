@@ -247,6 +247,9 @@
     <Filter Include="02. GameObject\01. For_Stage\08. Monster\05.Illusioner">
       <UniqueIdentifier>{19cb1c5a-db84-437d-8e2d-d73850d02be6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\16. Skill">
+      <UniqueIdentifier>{b7353904-ea38-453f-9793-d3a8ad2631b7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -591,6 +594,9 @@
     <ClInclude Include="..\Header\ProjectileParticle.h">
       <Filter>02. GameObject\01. For_Stage\12. Particle</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\Meteor.h">
+      <Filter>02. GameObject\01. For_Stage\16. Skill</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -913,6 +919,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\ProjectileParticle.cpp">
       <Filter>02. GameObject\01. For_Stage\12. Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Meteor.cpp">
+      <Filter>02. GameObject\01. For_Stage\16. Skill</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

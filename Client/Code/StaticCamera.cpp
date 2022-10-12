@@ -205,15 +205,15 @@ void CStaticCamera::Look_Target(const _float& _fTimeDelta)
 		_vec3 vUp;
 		m_pBombTransform->Get_Info(INFO_UP, &vUp);
 
-		m_vEye = (vLook * -1.f);
+		m_vEye = (vUp * -1.f);
 		D3DXVec3Normalize(&m_vEye, &m_vEye);
-		m_vEye *= 15.f;
+		m_vEye *= 13.f;
 
 		_vec3 vPos;
 		m_pBombTransform->Get_Info(INFO_POS, &vPos);
 
 		m_fFov = D3DXToRadian(60.f);
-		m_vEye += vPos + (vUp * 20.f);
+		m_vEye += vPos + (-vLook * 20.f);
 		m_vAt = vPos;
 	}
 	else
