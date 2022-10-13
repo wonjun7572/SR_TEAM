@@ -39,7 +39,7 @@ _int CInventory::Update_Object(const _float & fTimeDelta)
 	Weapon_Sorting();
 	Mouse();
 	Key_Input();
-
+	Equipment_Function();
 	return 0;
 }
 
@@ -126,6 +126,86 @@ void CInventory::Get_Item()
 
 }
 
+void CInventory::Equipment_Function()
+{
+	for (auto& iter : m_vecEquipments)
+	{
+		if (iter != nullptr)
+		{
+			if (dynamic_cast<CItemIcon*>(m_vecEquipments[0])->Get_iTemIdx() == 2) //우지일때
+			{
+				if (dynamic_cast<CItemIcon*>(iter)->Get_iTemIdx() == 5)
+				{
+
+				}
+				if (dynamic_cast<CItemIcon*>(iter)->Get_iTemIdx() == 6)
+				{
+
+				}
+				if (dynamic_cast<CItemIcon*>(iter)->Get_iTemIdx() == 7)
+				{
+					m_iEnforceCheck = 1;
+				}
+				if (dynamic_cast<CItemIcon*>(iter)->Get_iTemIdx() == 8)
+				{
+					m_iEnforceCheck = 2;
+				}					
+			}
+			if (dynamic_cast<CItemIcon*>(m_vecEquipments[0])->Get_iTemIdx() == 3) //샷건일때
+			{
+				if (dynamic_cast<CItemIcon*>(iter)->Get_iTemIdx() == 5)
+				{
+
+				}
+				if (dynamic_cast<CItemIcon*>(iter)->Get_iTemIdx() == 6)
+				{
+
+				}
+				if (dynamic_cast<CItemIcon*>(iter)->Get_iTemIdx() == 7)
+				{
+					m_iEnforceCheck = 3;
+				}
+				if (dynamic_cast<CItemIcon*>(iter)->Get_iTemIdx() == 8)
+				{
+					m_iEnforceCheck = 4;
+				}
+			}
+			if (dynamic_cast<CItemIcon*>(m_vecEquipments[0])->Get_iTemIdx() == 4) //스나일때
+			{
+				if (dynamic_cast<CItemIcon*>(iter)->Get_iTemIdx() == 5)
+				{
+
+				}
+				if (dynamic_cast<CItemIcon*>(iter)->Get_iTemIdx() == 6)
+				{
+
+				}
+				if (dynamic_cast<CItemIcon*>(iter)->Get_iTemIdx() == 7)
+				{
+					m_iEnforceCheck = 5;
+				}
+				if (dynamic_cast<CItemIcon*>(iter)->Get_iTemIdx() == 8)
+				{
+					m_iEnforceCheck = 6;
+				}
+			}
+		}
+	}
+	if (m_vecEquipments[1] ==nullptr || dynamic_cast<CItemIcon*>(m_vecEquipments[1])->Get_iTemIdx() < 7)
+	{
+		if (m_vecEquipments[2] == nullptr || dynamic_cast<CItemIcon*>(m_vecEquipments[2])->Get_iTemIdx() < 7)
+		{
+			if (m_vecEquipments[3] == nullptr || dynamic_cast<CItemIcon*>(m_vecEquipments[3])->Get_iTemIdx() < 7)
+			{
+				if (m_vecEquipments[4] == nullptr || dynamic_cast<CItemIcon*>(m_vecEquipments[4])->Get_iTemIdx() < 7)
+				{
+					m_iEnforceCheck = 0;
+				}
+			}
+		}
+	}
+}
+
 
 void CInventory::Sorting()
 {
@@ -200,7 +280,13 @@ void CInventory::Equipment_Sorting()
 		dynamic_cast<CItemIcon*>(m_vecEquipments[4])->Set_block(800.f *WINCY / WINCX, 275.f * WINCY / WINCX, 0.1f);
 	}
 
-
+	/*for (auto& iter : m_vecEquipments)
+	{
+		if (dynamic_cast<CItemIcon*>(iter)->Get_iTemIdx() == 7 && dynamic_cast<CItemIcon*>(iter)->Get_iTemIdx() == 8)
+		{
+		}		
+	}
+*/
 	// 플레이어 총 든 상태랑 연동하고 싶을 경우, if문 추가 후 아래를 묶으면 됨
 	/*if (m_vecEquipments[0] != nullptr)
 	{
