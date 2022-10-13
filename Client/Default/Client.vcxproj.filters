@@ -265,6 +265,9 @@
     <Filter Include="02. GameObject\01. For_Stage\21. MiddleBoss">
       <UniqueIdentifier>{0091e28e-b692-45e6-8762-b8ba0717f441}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\21. Rocket">
+      <UniqueIdentifier>{9cb28303-2be4-4a5b-aa55-51f86d88d953}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -651,6 +654,15 @@
     <ClInclude Include="..\Header\MiddleBoss.h">
       <Filter>02. GameObject\01. For_Stage\21. MiddleBoss</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\BrownCloudEffect.h">
+      <Filter>99. Default\헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\BattleCursier.h">
+      <Filter>02. GameObject\01. For_Stage\21. Rocket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Flight.h">
+      <Filter>02. GameObject\01. For_Stage\21. Rocket</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -1015,6 +1027,15 @@
     </ClCompile>
     <ClCompile Include="..\Code\MiddleBoss.cpp">
       <Filter>02. GameObject\01. For_Stage\21. MiddleBoss</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BrownCloudEffect.cpp">
+      <Filter>99. Default\소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BattleCursier.cpp">
+      <Filter>02. GameObject\01. For_Stage\21. Rocket</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Flight.cpp">
+      <Filter>02. GameObject\01. For_Stage\21. Rocket</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

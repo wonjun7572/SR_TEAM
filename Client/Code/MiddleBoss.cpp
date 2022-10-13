@@ -867,7 +867,7 @@ HRESULT CMiddleBoss::Monster_Mapping(void)
 
 HRESULT CMiddleBoss::Monster_DeleteMapping(void)
 {
-	Engine::Delete_GameObject(STAGE_MAPPING, m_szCntName);
+	Delete_GameObject(STAGE_MAPPING, m_szCntName);
 
 	return S_OK;
 }
@@ -964,10 +964,7 @@ void CMiddleBoss::Free(void)
 		Safe_Delete_Array(iter);
 	}
 
-	for (auto iter : m_listMonsterCnt)
-	{
-		Safe_Delete_Array(iter);
-	}
+	Safe_Delete_Array(m_szCntName);
 	
 	m_listMonsterCnt.clear();	
 	CGameObject::Free();
