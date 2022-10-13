@@ -116,11 +116,11 @@ HRESULT CCubeShop::Interact()
 		dynamic_cast<CShop*>(m_pShop)->Set_Switch();
 	}
 
-	if (m_bSwitch && m_pDialogBox != nullptr &&!(dynamic_cast<CShop*>(m_pShop)->Get_Switch()))
+	if (m_bSwitch && m_pDialogBox != nullptr && !(dynamic_cast<CShop*>(m_pShop)->Get_Switch()))
 	{
 		dynamic_cast<CLetterBox*>(m_pDialogBox)->On_Switch();
 	}
-	if (!m_bSwitch && m_pDialogBox != nullptr|| dynamic_cast<CShop*>(m_pShop)->Get_Switch())
+	if (!m_bSwitch && m_pDialogBox != nullptr && dynamic_cast<CShop*>(m_pShop)->Get_Switch())
 	{
 		dynamic_cast<CLetterBox*>(m_pDialogBox)->Off_Switch();
 	}
