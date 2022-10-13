@@ -23,7 +23,7 @@ _int CTerrain::Update_Object(const _float & fTimeDelta)
 {
 	Engine::CGameObject::Update_Object(fTimeDelta);
 
-	Add_RenderGroup(RENDER_PRIORITY, this);
+	Add_RenderGroup(RENDER_NONALPHA, this);
 
 	return 0;
 }

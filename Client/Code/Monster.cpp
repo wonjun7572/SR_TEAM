@@ -6,6 +6,7 @@
 #include "MonsterUI.h"
 #include "ComboUI.h"
 #include "MonsterMapping.h"
+#include "Meteor.h"
 
 static _int m_iCnt = 0;
 
@@ -43,6 +44,7 @@ _int CMonster::Update_Object(const _float & fTimeDelta)
 	m_pTransUICom->Billboard_Transform(fTimeDelta);
 	Add_RenderGroup(RENDER_NONALPHA, this);
 	Hit_Check(fTimeDelta);
+	Hit_SphereCheck(fTimeDelta);
 
 	return 0;
 }
@@ -202,6 +204,25 @@ void CMonster::Hit_Check(_float _deltaTime)
 			}
 		}
 	} 
+}
+
+void CMonster::Hit_SphereCheck(_float _deltaTime)
+{
+	if (!Get_Layer(STAGE_SKILL)->Get_GameList().empty())
+	{
+		m_pTransCom->Static_Update();
+
+		for (auto& iter : Get_Layer(STAGE_SKILL)->Get_GameList())
+		{
+			if (iter->GetSphereSkill() == true)
+			{
+				if (m_pCollision->Sphere_Collision(this->m_pSphereTransCom, dynamic_cast<CTransform*>(iter->Get_Component(TRANSFORM_COMP, ID_DYNAMIC)), 1.f, 2.f))
+				{
+					m_tAbility->fCurrentHp -= dynamic_cast<CMeteor*>(iter)->Get_Attack();
+				}
+			}
+		}
+	}
 }
 
 void CMonster::Free(void)

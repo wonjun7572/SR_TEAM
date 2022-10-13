@@ -43,8 +43,6 @@ private:	//	애니메이션 관련
 
 	list<_tchar*>		m_TcharList;
 
-
-
 //private:
 //	HRESULT				Add_Component(void);
 //	HRESULT				Create_Item();
