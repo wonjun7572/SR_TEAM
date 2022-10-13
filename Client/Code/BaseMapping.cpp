@@ -21,7 +21,7 @@ HRESULT CBaseMapping::Ready_Object(void)
 
 _int CBaseMapping::Update_Object(const _float & fTimeDelta)
 {
-	Add_RenderGroup(RENDER_ALPHA, this);
+	Add_RenderGroup(RENDER_MAPSETTING, this);
 	WorldMap();
 	Key_Input();
 	CGameObject::Update_Object(fTimeDelta);
@@ -118,7 +118,6 @@ void CBaseMapping::Begin_OrthoProj()
 	matView.m[3][0] = MAPPOSX - 4.f;
 	matView.m[3][1] = MAPPOSY;
 	matView.m[3][2] = 0.002f;//m_pTransform->m_vInfo[INFO_POS].z;; //+0.1f;
-
 
 	D3DXMatrixOrthoLH(&matOrtho, WINCX, WINCY, 0.f, 1.f);
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, &matWorld);

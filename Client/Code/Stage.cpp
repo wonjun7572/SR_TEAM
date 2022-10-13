@@ -16,11 +16,6 @@
 #include "CubeFoot.h"
 #include "CubeHand.h"
 
-#include "CubeMonster.h"
-#include "CubeMonsterArm.h"
-#include "CubeMonsterBody.h"
-#include "CubeMonsterHead.h"
-
 #include "Uzi.h"
 #include "Shotgun.h"
 #include "Sniper.h"

@@ -197,3 +197,7 @@ void CSoundMgr::SetChannelVolume(CHANNELID eID, float fVolume)
 
 	FMOD_System_Update(m_pSystem);
 }
+
+void CSoundMgr::Free(void)
+{
+}

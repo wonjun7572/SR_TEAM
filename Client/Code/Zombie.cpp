@@ -35,7 +35,6 @@ HRESULT CZombie::Ready_Object(const _vec3& vPos, _tchar* Name)
 	m_IDLE = MONSTERIDLE_1;
 	m_ATTACK = MONSTERATTACK_1;
 
-
 	m_MonsterName = Name;
 
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
@@ -158,8 +157,6 @@ void CZombie::Render_Object(void)
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransCom->Get_WorldMatrixPointer());
 	m_pAnimationBox->Render_Buffer();
 
-	//m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pSphereTransCom->Get_WorldMatrixPointer());
-	//m_pSphereBufferCom->Render_Buffer();
 	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransUICom->Get_WorldMatrixPointer());
@@ -748,7 +745,6 @@ void CZombie::Free(void)
 	{
 		Safe_Delete_Array(iter);
 	}
-
 
 	CMonster::Free();
 	Safe_Delete<MONSTERABILITY*>(m_tAbility);

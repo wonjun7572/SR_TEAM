@@ -17,7 +17,7 @@ HRESULT CLogoBilboard::Ready_Object(const _vec3& vPos)
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 	m_pTransCom->Set_Scale(2.3f, 5.6f, 0.f);
 	m_pTransCom->Set_Pos(vPos.x, vPos.y, vPos.z);
-
+	
 	return S_OK;
 }
 

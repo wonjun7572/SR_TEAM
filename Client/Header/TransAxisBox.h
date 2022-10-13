@@ -8,6 +8,7 @@ namespace Engine
 	class CTexture;
 	class CCalculator;
 	class CQuarternion;
+	class CFlexibleAxisCube;
 }
 
 class CTransAxisBox : public CGameObject

@@ -70,6 +70,8 @@ public:
 		m_vInfo[INFO_POS].z = fZ;
 	}
 
+	_float				GetBoundingSphereRadius() { return max(max(m_vScale.x, m_vScale.y),m_vScale.y); }
+
 	void				Set_Rotation(ROTATIONID eID, const _float& fAngle) { *(((_float*)&m_vAngle) + eID) = fAngle; }
 
 

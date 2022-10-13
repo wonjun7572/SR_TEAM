@@ -1,4 +1,8 @@
 #include "..\..\Header\Renderer.h"
+#include "FrustumCullMgr.h"
+#include "..\..\Client\Default\Define.h"
+#include "Transform.h"
+#include "..\..\Client\Header\TransAxisBox.h"
 
 USING(Engine)
 IMPLEMENT_SINGLETON(CRenderer)
@@ -18,8 +22,48 @@ void CRenderer::Add_RenderGroup(RENDERID eID, CGameObject * pGameObject)
 	if (eID >= RENDER_END || nullptr == pGameObject)
 		return;
 
-	m_RenderGroup[eID].push_back(pGameObject);
-	pGameObject->AddRef();
+	if (eID == RENDER_UI || eID == RENDER_PRIORITY || eID == RENDER_MAPSETTING || !pGameObject->GetCheckFrustum())
+	{
+		m_RenderGroup[eID].push_back(pGameObject);
+		pGameObject->AddRef();
+	}
+	else if (eID == RENDER_ANIOBJ && pGameObject->GetCheckFrustum())
+	{
+		_matrix matFinal;
+		dynamic_cast<CTransAxisBox*>(pGameObject)->Get_Final(&matFinal);
+		_vec3 vPos;
+		memcpy(&vPos, &matFinal.m[3][0], sizeof(_vec3));
+		if (CFrustumCullMgr::GetInstance()->ContainsSphere
+		(vPos, 5.f))
+		{
+			m_RenderGroup[eID].push_back(pGameObject);
+			pGameObject->AddRef();
+		}
+	}
+	else if (pGameObject->Get_Component(TRANSFORM_COMP, ID_DYNAMIC) != nullptr && pGameObject->GetCheckFrustum())
+	{
+		CTransform* pTransform = dynamic_cast<CTransform*>(pGameObject->Get_Component(TRANSFORM_COMP, ID_DYNAMIC));
+		_vec3 vPos;
+		pTransform->Get_Info(INFO_POS, &vPos);
+		if (CFrustumCullMgr::GetInstance()->ContainsSphere
+		(vPos, 5.f))
+		{
+			m_RenderGroup[eID].push_back(pGameObject);
+			pGameObject->AddRef();
+		}
+	}
+	else if (pGameObject->Get_Component(TRANSFORM_COMP, ID_STATIC) != nullptr && pGameObject->GetCheckFrustum())
+	{
+		CTransform* pTransform = dynamic_cast<CTransform*>(pGameObject->Get_Component(TRANSFORM_COMP, ID_STATIC));
+		_vec3 vPos;
+		pTransform->Get_Info(INFO_POS, &vPos);
+		if (CFrustumCullMgr::GetInstance()->ContainsSphere
+		(vPos, 5.f))
+		{
+			m_RenderGroup[eID].push_back(pGameObject);
+			pGameObject->AddRef();
+		}
+	}
 }
 
 void CRenderer::Render_GameObject(LPDIRECT3DDEVICE9 & pGraphicDev)
@@ -30,7 +74,6 @@ void CRenderer::Render_GameObject(LPDIRECT3DDEVICE9 & pGraphicDev)
 		Safe_Release(iter);			
 	}
 	m_RenderGroup[RENDER_PRIORITY].clear();
-
 	
 	for (auto& iter : m_RenderGroup[RENDER_NONALPHA])
 	{
@@ -45,6 +88,20 @@ void CRenderer::Render_GameObject(LPDIRECT3DDEVICE9 & pGraphicDev)
 		Safe_Release(iter);
 	}
 	m_RenderGroup[RENDER_ALPHA].clear();
+
+	for (auto& iter : m_RenderGroup[RENDER_ANIOBJ])
+	{
+		iter->Render_Object();
+		Safe_Release(iter);
+	}
+	m_RenderGroup[RENDER_ANIOBJ].clear();
+
+	for (auto& iter : m_RenderGroup[RENDER_MAPSETTING])
+	{
+		iter->Render_Object();
+		Safe_Release(iter);
+	}
+	m_RenderGroup[RENDER_MAPSETTING].clear();
 
 	for (auto& iter : m_RenderGroup[RENDER_UI])
 	{
@@ -70,7 +127,6 @@ void CRenderer::Clear_RenderGroup(void)
 		m_RenderGroup[i].clear();
 	}
 }
-
 
 void Engine::CRenderer::Free(void)
 {

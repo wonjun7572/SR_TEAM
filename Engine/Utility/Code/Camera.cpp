@@ -30,6 +30,8 @@ Engine::_int Engine::CCamera::Update_Object(const _float& fTimeDelta)
 	D3DXMatrixPerspectiveFovLH(&m_matProj, m_fFov, m_fAspect, m_fNear, m_fFar);
 	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &m_matProj);
 
+	CFrustumCullMgr::GetInstance()->Update(m_matView, m_matProj);
+
 	return 0;
 }
 

@@ -16,6 +16,7 @@ HRESULT CSkyBox::Ready_Object(void)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 	m_pTransCom->Set_Scale(40.f, 40.f, 40.f);
+	SetCheckFrustum(false);
 	return S_OK;
 }
 

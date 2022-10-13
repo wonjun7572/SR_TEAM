@@ -41,12 +41,12 @@ HRESULT CCubePlayer::Ready_Object(void)
 	m_pSphereTransCom->Set_Scale(0.5f, 0.5f, 0.5f);
 	m_pSphereTransCom->Set_Pos(10.f, 10.f, 10.f);
 	m_pSphereTransCom->Static_Update();
-
 	m_fSpeed = 10.f;
 
 	m_bUzi = false;
 	m_bShotgun = false;
 	m_bSniper = false;
+	SetCheckFrustum(false);
 
 	return S_OK;
 }
