@@ -177,10 +177,6 @@
     <ClInclude Include="..\Header\CubeHand.h" />
     <ClInclude Include="..\Header\CubeHead.h" />
     <ClInclude Include="..\Header\CubeLeg.h" />
-    <ClInclude Include="..\Header\CubeMonster.h" />
-    <ClInclude Include="..\Header\CubeMonsterArm.h" />
-    <ClInclude Include="..\Header\CubeMonsterBody.h" />
-    <ClInclude Include="..\Header\CubeMonsterHead.h" />
     <ClInclude Include="..\Header\CubePlayer.h" />
     <ClInclude Include="..\Header\CubeShop.h" />
     <ClInclude Include="..\Header\DynamicCamera.h" />
@@ -315,10 +311,6 @@
     <ClCompile Include="..\Code\CubeHand.cpp" />
     <ClCompile Include="..\Code\CubeHead.cpp" />
     <ClCompile Include="..\Code\CubeLeg.cpp" />
-    <ClCompile Include="..\Code\CubeMonster.cpp" />
-    <ClCompile Include="..\Code\CubeMonsterArm.cpp" />
-    <ClCompile Include="..\Code\CubeMonsterBody.cpp" />
-    <ClCompile Include="..\Code\CubeMonsterHead.cpp" />
     <ClCompile Include="..\Code\CubePlayer.cpp" />
     <ClCompile Include="..\Code\CubeShop.cpp" />
     <ClCompile Include="..\Code\DynamicCamera.cpp" />

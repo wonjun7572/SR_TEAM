@@ -28,7 +28,7 @@ _int CPlayerMapping::Update_Object(const _float & fTimeDelta)
 
 	CGameObject::Update_Object(fTimeDelta);
 	
-	Add_RenderGroup(RENDER_ALPHA, this);
+	Add_RenderGroup(RENDER_MAPSETTING, this);
 
 	if (m_bBombard)
 	{
@@ -41,7 +41,7 @@ _int CPlayerMapping::Update_Object(const _float & fTimeDelta)
 			m_fFrame = 0.f;
 		}
 
-		if (m_fSkillFrame >= 10.f)
+		if (m_fSkillFrame >= 5.f)
 		{
 			m_fFrame = 0.f;
 			m_fSkillFrame = 0.f;
@@ -264,7 +264,8 @@ HRESULT CPlayerMapping::Bombard(const _float& fTimeDelta)
 	_vec3 vPos;
 	m_pBombTransform->Get_Info(INFO_POS, &vPos);
 	
-	srand((unsigned int)time(NULL));
+	srand((unsigned int)time(NULL)+ m_iRand);
+	m_iRand = rand() % 1000;
 	int iDir = rand() % 4;
 	int iRand = rand() % 4;
 

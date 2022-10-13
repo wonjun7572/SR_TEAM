@@ -25,6 +25,9 @@ public:
 	virtual		void		LateUpdate_Object(void);
 	virtual		void		Render_Object(void);
 
+	void	SetCheckFrustum(_bool Frustum) { m_bFrustumCheck = Frustum; }
+	_bool	GetCheckFrustum() { return m_bFrustumCheck; }
+
 private:
 	CComponent*		Find_Component(const _tchar* pComponentTag, COMPONENTID eID);
 
@@ -35,10 +38,11 @@ protected:
 public:
 	void			Kill_Obj(void) { m_bDead = true; }
 
-
 protected:
 	_bool				m_bDead = false;
 	_int				m_iTexIndex = 0;
+
+	_bool				m_bFrustumCheck = true;
 
 public:
 	virtual void	Free(void);

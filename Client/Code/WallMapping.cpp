@@ -21,9 +21,7 @@ HRESULT CWallMapping::Ready_Object(void)
 
 _int CWallMapping::Update_Object(const _float & fTimeDelta)
 {
-
-	
-		Add_RenderGroup(RENDER_ALPHA, this);
+	Add_RenderGroup(RENDER_MAPSETTING, this);
 	
 	Key_Input();
 

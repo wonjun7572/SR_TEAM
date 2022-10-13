@@ -267,7 +267,6 @@ void CShop::Render_Object()
 		{
 			if (m_pRailGunScope || m_eLevelUP == LEVEL_RAIL)
 			{
-
 				m_bChecking = true;
 				dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->ItemCreate(7);
 			}
