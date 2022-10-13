@@ -17,7 +17,7 @@ public:
 	virtual void	LateUpdate_Object(void) override;
 	virtual void	Render_Object(void) override;
 	_bool			Get_Switch(void)  { return m_bInvSwitch; }
-	//vector<CGameObject*> Get_vecEquipments() { return m_vecEquipments; }
+	_int			Get_EnforceCheck(void) { return m_iEnforceCheck; }
 
 	void         ItemCreate(_int iItemIndex) 
 	{ 
@@ -40,6 +40,7 @@ private:
 	void		Equipment_Sorting();
 	void		Weapon_Sorting();
 	void		Get_Item();
+	void		Equipment_Function();
 	//void		Gun_Change();
 
 private:
@@ -68,7 +69,7 @@ private:
 	_bool				m_bWeaponCreate = false;
 	_int				m_iItemCnt = 0;
 	_int				m_iWeaponCnt = 0;
-
+	_int				m_iEnforceCheck = 0;
 	_int				iVectorNumb = 0;
 	_int				iWeaponNumb = 0;
 	_int				m_iItemIndex = 1;
