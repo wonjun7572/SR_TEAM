@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "..\Header\Thorn.h"
 #include "TransAxisBox.h"
+#include "CubePlayer.h"
 
 
 CThorn::CThorn(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -43,11 +44,16 @@ _int CThorn::Update_Object(const _float & fTimeDelta)
 
 	if (m_STATE == THORN_UP)
 	{
+		m_pTransCom->Set_Scale(0.3f, 0.6f, 0.3f);
+		m_pTransCom->Static_Update();
+		HitCheck();
 		Up_Animation_Run();
 		Run_Animation(5.f);
 	}
 	else if (m_STATE == THORN_DOWN)
 	{
+		m_pTransCom->Set_Scale(0.f, 0.f, 0.f);
+		m_pTransCom->Static_Update();
 		Down_Animation_Run();
 		Run_Animation(20.f);
 	}
@@ -89,6 +95,18 @@ HRESULT CThorn::Add_Component(void)
 	m_mapComponent[ID_STATIC].insert({ COLLISION_COMP, pComponent });
 
 	return S_OK;
+}
+
+void CThorn::HitCheck(void)
+{
+	CLayer* pLayer = Engine::Get_Layer(STAGE_CHARACTER);
+	CCubePlayer* pPlayer = dynamic_cast<CCubePlayer*>(pLayer->Get_GameObject(L"PLAYER"));
+
+	CTransform* pPlayerTransform = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_CHARACTER, L"PLAYER", TRANSFORM_COMP, ID_DYNAMIC));
+	CHitBox* pPlayerHitbox = dynamic_cast<CHitBox*>(Engine::Get_Component(STAGE_CHARACTER, L"PLAYER", HITBOX_COMP, ID_STATIC));
+
+	if (m_pCollision->Collision_Square(pPlayerTransform, pPlayerHitbox, m_pTransCom, m_pHitBox))
+		pPlayer->KnuckDown(10);
 }
 
 HRESULT CThorn::Build(void)
