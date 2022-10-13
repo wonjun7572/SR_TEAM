@@ -15,7 +15,7 @@ CTerrain::~CTerrain()
 HRESULT CTerrain::Ready_Object(void)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
-
+	SetCheckFrustum(false);
 	return S_OK;
 }
 

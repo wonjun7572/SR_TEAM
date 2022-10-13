@@ -131,11 +131,11 @@ HRESULT CTestCube::Interact(void)
 	vDir = vPos - vPlayerPos;
 	fDistance = D3DXVec3Length(&vDir);
 	
-	if (fDistance <= 15.f)
+	if (fDistance <= 10.f)
 	{
 		m_bSwitch = true;
 	}
-	if (fDistance > 15.f)
+	if (fDistance > 10.f)
 	{
 		m_bSwitch = false;
 	}
@@ -161,7 +161,7 @@ HRESULT CTestCube::Interact(void)
 
 	if (m_bSwitch && Get_DIKeyState(DIK_E))
 	{
-		if (m_iTexIndex == 37 || m_iTexIndex == 45 || m_iTexIndex == 99) //초록색문
+		if (m_iTexIndex == 37 || m_iTexIndex == 99) //초록색문
 			if (vPos.y < 15)
 			{
 				m_bDoorOpen = true;
@@ -179,9 +179,11 @@ HRESULT CTestCube::Interact(void)
 
 	if(m_bDoorOpen)
 	{ 
-		if(vPos.y > -15)
-		vPos.y -= 0.1f;
-		m_pTransCom->Set_Pos(vPos.x, vPos.y, vPos.z);
+		if (vPos.y > -15)
+		{
+			vPos.y -= 0.1f;
+			m_pTransCom->Set_Pos(vPos.x, vPos.y, vPos.z);
+		}
 	}
 
 	return S_OK;

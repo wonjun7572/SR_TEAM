@@ -28,31 +28,32 @@ private:
 	HRESULT				Create_Item();
 
 	CCubeCol*			m_pAnimationBox = nullptr;
-	_float					m_fFrame = 0.f;
-	_float					m_fTimeDelta = 0.f;
-	_bool					m_bFirst = true;
-	_float					m_AnimationTime = 0.f;
-private:
-	HRESULT					Build(void);
-	void					Load_Animation(wstring FileName);
-	void					Run_Animation(const _float& AnimationSpeed);
-	void					Look_Direction(void);
+	_float				m_fFrame = 0.f;
 
-	void					Walk_Animation_Run(void);
-	void					Idle_Animation_Run(void);
-	void					Attack_Animation_Run(void);
+private:	//	애니메이션 관련
+	HRESULT				Build(void);
+	void				Load_Animation(wstring FileName, _uint AnimationID);
+	void				Run_Animation(const _float& AnimationSpeed);
+	void				Look_Direction(void);
 
-	_tchar*					m_MonsterName;
+	_float				m_fTimeDelta = 0.f;
+	_bool				m_bFirst = true;
+	_float				m_AnimationTime = 0.f;
 
-	ILLUSIONSTATEID			m_BeforeState;
-	ILLUSIONSTATEID			m_STATE;
-	ILLUSIONWALKID			m_WALK;
-	ILLUSIONIDLEID			m_IDLE;
-	ILLUSIONATTACKID		m_ATTACK;
+	void				Walk_Animation_Run(void);
+	void				Idle_Animation_Run(void);
+	void				Attack_Animation_Run(void);
 
-	CLayer*					pMyLayer;
-	list<char*>				m_CharList;
-	list<_tchar*>			m_TcharList;
+	ILLUSIONSTATEID		m_STATE;
+	ILLUSIONWALKID		m_WALK;
+	ILLUSIONIDLEID		m_IDLE;
+	ILLUSIONATTACKID	m_ATTACK;
+
+	CLayer*				pMyLayer;
+	_tchar*				m_MonsterName;
+	_bool				m_bRun = false;
+
+	list<_tchar*>		m_TcharList;
 
 public:
 	static CIllusioner*	Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3& vPos, _tchar* Name);

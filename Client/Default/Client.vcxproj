@@ -126,7 +126,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../Header;../Code;../../Reference/Header;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../Default;../Header;../Code;../../Reference/Header;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/Ylsymbol %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
@@ -162,9 +162,13 @@
   <ItemGroup>
     <ClInclude Include="..\Header\AnimationPlayer.h" />
     <ClInclude Include="..\Header\BaseMapping.h" />
+    <ClInclude Include="..\Header\BubbleEffect.h" />
     <ClInclude Include="..\Header\Bullet.h" />
     <ClInclude Include="..\Header\BulletUI.h" />
     <ClInclude Include="..\Header\BulletParticle.h" />
+    <ClInclude Include="..\Header\CloudEffect.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="..\Header\ComboUI.h" />
     <ClInclude Include="..\Header\CrossHeader.h" />
     <ClInclude Include="..\Header\CubeArm.h" />
@@ -173,16 +177,17 @@
     <ClInclude Include="..\Header\CubeHand.h" />
     <ClInclude Include="..\Header\CubeHead.h" />
     <ClInclude Include="..\Header\CubeLeg.h" />
-    <ClInclude Include="..\Header\CubeMonster.h" />
-    <ClInclude Include="..\Header\CubeMonsterArm.h" />
-    <ClInclude Include="..\Header\CubeMonsterBody.h" />
-    <ClInclude Include="..\Header\CubeMonsterHead.h" />
     <ClInclude Include="..\Header\CubePlayer.h" />
     <ClInclude Include="..\Header\CubeShop.h" />
     <ClInclude Include="..\Header\DynamicCamera.h" />
     <ClInclude Include="..\Header\FlameEffect.h" />
     <ClInclude Include="..\Header\IceEffect.h" />
-    <ClInclude Include="..\Header\MiddleBoss.h" />
+    <ClInclude Include="..\Header\Ping.h" />
+    <ClInclude Include="..\Header\RcEffect.h" />
+    <ClInclude Include="..\Header\SoundWave.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="..\Header\SparkEffect.h" />
     <ClInclude Include="..\Header\StaticParticle.h" />
     <ClInclude Include="..\Header\ExitButton.h" />
     <ClInclude Include="..\Header\FireMan.h" />
@@ -292,9 +297,13 @@
   <ItemGroup>
     <ClCompile Include="..\Code\AnimationPlayer.cpp" />
     <ClCompile Include="..\Code\BaseMapping.cpp" />
+    <ClCompile Include="..\Code\BubbleEffect.cpp" />
     <ClCompile Include="..\Code\Bullet.cpp" />
     <ClCompile Include="..\Code\BulletParicle.cpp" />
     <ClCompile Include="..\Code\BulletUI.cpp" />
+    <ClCompile Include="..\Code\CloudEffect.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\Code\ComboUI.cpp" />
     <ClCompile Include="..\Code\CrossHeader.cpp" />
     <ClCompile Include="..\Code\CubeArm.cpp" />
@@ -303,16 +312,17 @@
     <ClCompile Include="..\Code\CubeHand.cpp" />
     <ClCompile Include="..\Code\CubeHead.cpp" />
     <ClCompile Include="..\Code\CubeLeg.cpp" />
-    <ClCompile Include="..\Code\CubeMonster.cpp" />
-    <ClCompile Include="..\Code\CubeMonsterArm.cpp" />
-    <ClCompile Include="..\Code\CubeMonsterBody.cpp" />
-    <ClCompile Include="..\Code\CubeMonsterHead.cpp" />
     <ClCompile Include="..\Code\CubePlayer.cpp" />
     <ClCompile Include="..\Code\CubeShop.cpp" />
     <ClCompile Include="..\Code\DynamicCamera.cpp" />
     <ClCompile Include="..\Code\FlameEffect.cpp" />
     <ClCompile Include="..\Code\IceEffect.cpp" />
-    <ClCompile Include="..\Code\MiddleBoss.cpp" />
+    <ClCompile Include="..\Code\Ping.cpp" />
+    <ClCompile Include="..\Code\RcEffect.cpp" />
+    <ClCompile Include="..\Code\SoundWave.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\Code\SparkEffect.cpp" />
     <ClCompile Include="..\Code\StaticParticle.cpp" />
     <ClCompile Include="..\Code\ExitButton.cpp" />
     <ClCompile Include="..\Code\FireMan.cpp" />
@@ -396,45 +406,59 @@
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="GraphEditor.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="ImCurveEdit.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="ImGradient.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="imgui.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="ImGuiFileBrowser.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="ImGuiFileDialog.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="ImGuizmo.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="imgui_demo.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="imgui_draw.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="imgui_impl_dx9.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="imgui_impl_win32.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="imgui_tables.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="imgui_widgets.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="ImSequencer.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\Code\PlayerDefenseUI.cpp" />
     <ClCompile Include="..\Code\PlayerFaceUI.cpp" />

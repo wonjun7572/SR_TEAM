@@ -11,8 +11,13 @@
 #include "ShotParticle.h"
 #include "BulletParticle.h"
 #include "ProjectileParticle.h"
+
+#include "RcEffect.h"
 #include "Inventory.h"
 #include "Shop.h"
+
+#include "Supporter_Uzi.h"
+#include "Ping.h"
 
 CCubePlayer::CCubePlayer(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
@@ -41,12 +46,12 @@ HRESULT CCubePlayer::Ready_Object(void)
 	m_pSphereTransCom->Set_Scale(0.5f, 0.5f, 0.5f);
 	m_pSphereTransCom->Set_Pos(10.f, 10.f, 10.f);
 	m_pSphereTransCom->Static_Update();
-
 	m_fSpeed = 10.f;
 
 	m_bUzi = false;
 	m_bShotgun = false;
 	m_bSniper = false;
+	SetCheckFrustum(false);
 
 	return S_OK;
 }
@@ -60,11 +65,13 @@ _int CCubePlayer::Update_Object(const _float & fTimeDelta)
 
 	FAILED_CHECK_RETURN(Get_BodyTransform(), -1);
 
+	CoolTimer();
+
 		// 이동, 애니메이션 관련
 		if (!(dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->Get_Switch())
 			&& !(dynamic_cast<CShop*>(Engine::Get_GameObject(STAGE_UI, L"Shop"))->Get_Switch()))
 		{
-			if (m_pBomb->Get_WorldMap() == false)
+			if (m_pBomb->Get_WorldMap() == false && (m_iKnuckStack == 0))
 			{
 				Move();
 			}
@@ -80,10 +87,22 @@ _int CCubePlayer::Update_Object(const _float & fTimeDelta)
 
 		Assemble();
 
+		if (Get_DIKeyState(DIK_UP))
+		{
+			//	넉백 테스트
+			//KnuckDown(1);
+			//SlowDown(1);
+		}
+		if (Get_DIKeyState(DIK_LSHIFT))
+		{
+			//	대시 테스트, 몬스터 방향으로만 가능하게 변경 예정
+			Dash();
+		}
+
+
 	CGameObject::Update_Object(fTimeDelta);
 
 	Engine::Add_RenderGroup(RENDER_NONALPHA, this);
-
 	return 0;
 }
 
@@ -98,7 +117,7 @@ void CCubePlayer::LateUpdate_Object(void)
 	{
 		if (m_Weapon->Get_Ability()->fBulletRate - m_fBulletTime <= 0.f)
 		{
-				Fire_Bullet();
+			Fire_Bullet();
 		}
 	}
 	
@@ -112,23 +131,59 @@ void CCubePlayer::LateUpdate_Object(void)
 
 void CCubePlayer::Render_Object(void)
 {
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
-	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+}
 
-	m_pHitBox->Render_Buffer();
+void CCubePlayer::CoolTimer(void)
+{
+	m_fGlobal_Cooltime += m_fTimeDelta;
+	m_iKnuckStack -= 1;
+	m_iDashStack -= 1;
 
-	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
-	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+	if (m_fGlobal_Cooltime >= 1.f)
+		m_fGlobal_Cooltime = 1.f;
+	if (m_iKnuckStack < 0)
+		m_iKnuckStack = 0;
+	if (m_iDashStack < 0)
+		m_iDashStack = 0;
+	if (m_fSpeed < 10.f)
+		m_fSpeed += 1.f;
 
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pSphereTransCom->Get_WorldMatrixPointer());
-	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+	_vec3 vLook;
+	m_pBodyWorld->Get_Info(INFO_LOOK, &vLook);
+	D3DXVec3Normalize(&vLook, &vLook);
 
-	m_pSphereBufferCom->Render_Buffer();
+	m_pBodyWorld->Move_Pos(&(vLook* m_iDashStack * m_fTimeDelta));
 
-	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
-	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+	vLook *= -1.f;
+	m_pBodyWorld->Move_Pos(&(vLook * m_iKnuckStack * m_fTimeDelta));
+}
+
+void CCubePlayer::KnuckDown(const _float & fDamage)
+{
+	if (m_fGlobal_Cooltime >= 1.f)
+	{
+		m_tAbility->fHp -= fDamage;
+		m_iKnuckStack = 10;
+		m_fGlobal_Cooltime = 0;
+	}
+}
+
+void CCubePlayer::SlowDown(const _float & fDamage)
+{
+	if (m_fGlobal_Cooltime >= 1.f)
+	{
+		m_tAbility->fHp -= fDamage;
+		m_fGlobal_Cooltime = 0;
+	}
+	m_fSpeed = 3.f;
+}
+
+void CCubePlayer::Dash(void)
+{
+	if (D3DXVec3Length(&m_vDirection) != 0)
+	{
+		m_iDashStack = 10;
+	}
 }
 
 void CCubePlayer::Update_NullCheck()
@@ -196,8 +251,8 @@ void CCubePlayer::Assemble(void)
 		m_pLeftHandWorld->Static_Update();
 		m_pRightHandWorld->Static_Update();
 		m_pLeftFootWorld->Static_Update();
-		m_pRightHandWorld->Static_Update();
-	}
+		m_pRightHandWorld->Static_Update();	
+	}		
 }
 
 void CCubePlayer::Animation(void)
@@ -358,10 +413,8 @@ void CCubePlayer::Animation(void)
 
 void CCubePlayer::Move()
 {
-	////////////방향체크용////////////////
 	_vec3 vPos;
 	m_pBodyWorld->Get_Info(INFO_POS, &vPos);
-	////////////방향체크용////////////////
 
 	_vec3	vDir(0, 0, 0);
 	_vec3	vNormal(0, 0, 0);
@@ -433,9 +486,38 @@ void CCubePlayer::Move()
 		D3DXVec3Normalize(&vDir, &vDir);
 	}
 
+	if (Key_Down(DIK_F))
+	{
+		if(m_Weapon == Engine::Get_GameObject(STAGE_GUN, L"SNIPER"))
+			dynamic_cast<CBaseMapping*>(Engine::Get_GameObject(STAGE_MAPPING, L"BaseMapping"))->Switch_Worldmap();
+	}
+
 	if (Key_Down(DIK_G))
 	{
 		m_pProjectileParicle->addParticle();
+	}
+
+	if (Key_Down(DIK_T))
+	{
+		CTerrainTex*	pTerrainBufferCom = dynamic_cast<CTerrainTex*>(Engine::Get_Component(STAGE_ENVIRONMENT, L"Terrain", L"Proto_TerrainTexCom", ID_STATIC));
+		NULL_CHECK_RETURN(pTerrainBufferCom, );
+
+		CTransform*		pTerrainTransformCom = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_ENVIRONMENT, L"Terrain", TRANSFORM_COMP, ID_DYNAMIC));
+		NULL_CHECK_RETURN(pTerrainTransformCom, );
+
+		_vec3 vPos;
+		vPos = m_pCalculatorCom->Peek_Target_Vector(g_hWnd, &_vec3(0.f, 0.f, 0.f), pTerrainBufferCom, pTerrainTransformCom);
+		_vec3 vSetPos = _vec3(vPos.x, vPos.y + 0.5f, vPos.z);
+
+		CLayer* pLayer = Get_Layer(STAGE_SKILL);
+		CGameObject* pGameObject = CPing::Create(m_pGraphicDev, vSetPos);
+		NULL_CHECK_RETURN(pGameObject, );
+		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), );
+
+		for (auto& iter : Get_Layer(STAGE_SUPPORTER)->Get_GameList())
+		{
+			dynamic_cast<CSupporter_Uzi*>(iter)->SetOrdered(true);
+		}
 	}
 
 	if (Get_DIKeyState(DIK_SPACE))
@@ -488,6 +570,8 @@ void CCubePlayer::Move()
 	{
 		m_pBodyWorld->Move_Pos(&(vDir * m_fSpeed * m_fTimeDelta));
 	}
+
+	m_vDirection = vDir;
 }
 
 void CCubePlayer::TransAxis(void)
@@ -498,7 +582,7 @@ void CCubePlayer::TransAxis(void)
 
 	m_pBodyWorld->Get_Info(INFO_POS, &vBefore);
 	m_pBodyWorld->Get_BeforeInfo(INFO_POS, &vAfter);
-
+	
 	m_pLeftArmWorld->Rotation_Axis_Animation(-0.1f, -0.15f, m_fLeftArmAngle, -m_fLookAngle);
 	m_pRightArmWorld->Rotation_Axis_Animation(-0.1f, 0.15f, m_fRightArmAngle, -m_fLookAngle);
 
@@ -550,7 +634,7 @@ void CCubePlayer::Fire_Bullet(void)
 				m_pShotParicle->addParticle();
 				
 				_float fGunSound = 1.f;
-				PlaySoundGun(L"RifleShot.mp3", SOUND_EFFECT, fGunSound);
+				Engine::PlaySoundGun(L"RifleShot.mp3", SOUND_EFFECT, fGunSound);
 				m_Weapon->Set_MinusBullet();
 				m_Weapon->Set_Shoot(true);
 				m_fBulletTime = 0.f;
@@ -740,11 +824,11 @@ HRESULT CCubePlayer::Add_Component(void)
 	m_mapComponent[ID_STATIC].insert({ CALCULATOR_COMP, pInstance });
 
 	// For Sphere
-	pInstance = m_pSphereBufferCom = dynamic_cast<CSphereTex*>(Clone_Proto(SPHERETEX_COMP));
+	pInstance = m_pSphereBufferCom = dynamic_cast<CSphereTex*>(Engine::Clone_Proto(SPHERETEX_COMP));
 	NULL_CHECK_RETURN(m_pSphereBufferCom, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ SPHERETEX_COMP, pInstance });
 
-	pInstance = m_pSphereTransCom = dynamic_cast<CTransform*>(Clone_Proto(TRANSFORM_COMP));
+	pInstance = m_pSphereTransCom = dynamic_cast<CTransform*>(Engine::Clone_Proto(TRANSFORM_COMP));
 	NULL_CHECK_RETURN(m_pSphereBufferCom, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Sphere_TransCom", pInstance });
 

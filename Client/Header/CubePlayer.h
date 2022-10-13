@@ -8,6 +8,7 @@ class CShotParticle;
 class CBulletParticle;
 class CProjectileParticle;
 class CPlayerMapping;
+class CRcEffect;
 
 class CCubePlayer : public CGameObject
 {
@@ -52,6 +53,20 @@ public:
 	virtual _int	Update_Object(const _float& fTimeDelta) override;
 	virtual void	LateUpdate_Object(void) override;
 	virtual void	Render_Object(void) override;
+
+
+private:
+	_int			m_iKnuckStack = 0;
+	_int			m_iDashStack = 0;
+	_float			m_fGlobal_Cooltime = 0.f;				//	데미지 내부 글쿨
+	void			CoolTimer(void);
+
+public:	//	상태이상, 외부에서 지정
+	void			KnuckDown(const _float& fDamage);	//	데미지 입으면서 밀려남
+	void			SlowDown(const _float& fDamage);	//	느려짐
+
+private:
+	void			Dash(void);
 
 public:
 	CWeapon*		Get_Weapon() { return m_Weapon; }
@@ -133,6 +148,8 @@ private:
 
 	_float			m_fSpeed = 10.f;
 
+	_vec3			m_vDirection;
+
 	CWeapon*		m_Weapon = nullptr;
 
 	_bool			m_bUzi;
@@ -150,7 +167,7 @@ private:
 	_bool				m_MappingInit = false;
 	CTransform*			m_pBaseMapping = nullptr;
 	list<TCHAR*>		m_listMonsterCnt;
-
+	CGameObject*			m_pEffect = nullptr;
 public:
 	void			Capture_Uzi(void) { m_bUzi = true; }
 	void			Capture_Shotgun(void) { m_bShotgun = true; }

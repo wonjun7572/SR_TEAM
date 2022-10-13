@@ -49,13 +49,23 @@ _uint CLoading::Loading_ForStage(void)
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(BULLETPARTICLE_TEX, CTexture::Create(m_pGraphicDev, BULLETPARTICLE_TEX_PATH, TEX_NORMAL)), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(PROJECTILEPARTICLE_TEX, CTexture::Create(m_pGraphicDev, PROJECTILEPARTICLE_TEX_PATH, TEX_NORMAL)), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(STATICPARTICLE_TEX, CTexture::Create(m_pGraphicDev, STATICPARTICLE_TEX_PATH, TEX_NORMAL,8)), E_FAIL);
-
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_MonsterParticle", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Particle/blood.png", TEX_NORMAL)), E_FAIL);
 	}
-
+	//¿Ã∆Â∆Æ
 	{
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(BLUEBOMB_TEX, CTexture::Create(m_pGraphicDev, BLUEBOMB_TEX_PATH, TEX_NORMAL,3)), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(REDEFFECT_TEX, CTexture::Create(m_pGraphicDev, REDEFFECT_TEX_PATH, TEX_NORMAL, 10)), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(BLUEEFFECT_TEX, CTexture::Create(m_pGraphicDev, BLUEEFFECT_TEX_PATH, TEX_NORMAL, 10)), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(CASTINGEFFECT_TEX, CTexture::Create(m_pGraphicDev, CASTINGEFFECT_TEX_PATH, TEX_NORMAL, 10)), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(STAREFFECT_TEX, CTexture::Create(m_pGraphicDev, STAREFFECT_TEX_PATH, TEX_NORMAL, 9)), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(COIN_TEX, CTexture::Create(m_pGraphicDev, COIN_TEX_PATH, TEX_NORMAL, 8)), E_FAIL);
 
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(CREATEEFFECT_TEX, CTexture::Create(m_pGraphicDev, CREATEEFFECT_TEX_PATH, TEX_NORMAL, 11)), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(EXPLOSION_TEX, CTexture::Create(m_pGraphicDev, EXPLOSION_TEX_PATH, TEX_NORMAL, 12)), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(LIGHTNING_TEX, CTexture::Create(m_pGraphicDev, LIGHTNING_TEX_PATH, TEX_NORMAL, 4)), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(REDBOMB_TEX, CTexture::Create(m_pGraphicDev, REDBOMB_TEX_PATH, TEX_NORMAL, 8)), E_FAIL);
+
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(STUN_TEX, CTexture::Create(m_pGraphicDev, STUN_TEX_PATH, TEX_NORMAL, 4)), E_FAIL);
 	}
 
 	{
@@ -192,6 +202,7 @@ _uint CLoading::Loading_ForStage(void)
 	{
 		// Skiil
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Lava_Tex", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Lava.png", TEX_NORMAL)), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Ping_Tex", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/locationPin.png", TEX_NORMAL)), E_FAIL);
 	}
 
 	m_bFinish = true;

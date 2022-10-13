@@ -31,10 +31,10 @@ HRESULT CSlime::Ready_Object(const _vec3& vPos, _tchar* Name)
 	m_tAbility->fDamage = 10.f;
 	m_tAbility->strObjTag = L"Slime";
 
-
 	m_MonsterName = Name;
-	
-	m_JUMP = SLIMEJUMP_START;
+
+	m_STATE = SLIME_JUMP;
+	m_JUMP = SLIMEJUMP_1;
 
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
@@ -55,12 +55,9 @@ HRESULT CSlime::Ready_Object(const _vec3& vPos, _tchar* Name)
 	m_pSphereTransCom->Set_Pos(vAnimationPos.x, vAnimationPos.y, vAnimationPos.z);
 	m_pSphereTransCom->Static_Update();
 
-
-	m_pSearchRange_TransCom->Set_Scale(&_vec3(15.f, 15.f, 15.f));
+	m_pSearchRange_TransCom->Set_Scale(&_vec3(10.f, 10.f, 10.f));
 	m_pSearchRange_TransCom->Set_Pos(vAnimationPos.x, vAnimationPos.y, vAnimationPos.z);
 	m_pSearchRange_TransCom->Static_Update();
-
-
 
 	return S_OK;
 }
@@ -83,14 +80,9 @@ _int CSlime::Update_Object(const _float & fTimeDelta)
 
 		FAILED_CHECK_RETURN(Build(), -1);
 
-		Load_Animation(L"../../Data/Slime/Animation_Jump_Start.dat", 0);
-		Load_Animation(L"../../Data/Slime/Slime_Down_1.dat", 1);
-		Load_Animation(L"../../Data/Slime/Slime_Down_2.dat", 2);
-
+		Load_Animation(L"../../Data/Slime/Slime_Down_1.dat", 0);
+		Load_Animation(L"../../Data/Slime/Slime_Down_2.dat", 1);
 	}
-	
-
-
 
 	CMonster::Update_Object(fTimeDelta);
 	m_fTimeDelta = fTimeDelta;
@@ -106,14 +98,17 @@ _int CSlime::Update_Object(const _float & fTimeDelta)
 		m_pTransCom->Get_Info(INFO_POS, &vPos);
 		_vec3 vSearchScale;
 		m_pSearchRange_TransCom->Get_Scale(&vSearchScale);
-		
+
 
 		if (this->m_pSearchRange_TransCom, m_pPlayerTransCom, vPlayerScale.x, vSearchScale.x)
 		{
 			m_pTransCom->Chase_Target(&vPlayerPos, 1.f, fTimeDelta);
-			m_JUMP = SLIMEJUMP_START;
 		}
-		
+		else
+		{
+			m_pTransCom->Chase_Target(&vPlayerPos, 0.f, fTimeDelta);
+		}
+
 		Look_Direction();
 
 		_vec3 vMonsterPos;
@@ -129,8 +124,7 @@ void CSlime::LateUpdate_Object(void)
 	Monster_Mapping();
 	if (!m_bFirst)
 	{
-
-		if (m_JUMP == SLIMEJUMP_START)
+		if (m_STATE == SLIME_JUMP)
 		{
 			Jump_Animation_Run();
 			Run_Animation(5.f);
@@ -142,16 +136,16 @@ void CSlime::LateUpdate_Object(void)
 
 void CSlime::Render_Object(void)
 {
-	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pHitBoxTransCom->Get_WorldMatrixPointer());
-	m_pHitBox->Render_Buffer();
+	//m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+	//m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pHitBoxTransCom->Get_WorldMatrixPointer());
+	//m_pHitBox->Render_Buffer();
 
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransCom->Get_WorldMatrixPointer());
-	m_pAnimationBox->Render_Buffer();
+	//m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransCom->Get_WorldMatrixPointer());
+	//m_pAnimationBox->Render_Buffer();
 
-	//m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pSphereTransCom->Get_WorldMatrixPointer());
-	//m_pSphereBufferCom->Render_Buffer();
-	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+	////m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pSphereTransCom->Get_WorldMatrixPointer());
+	////m_pSphereBufferCom->Render_Buffer();
+	//m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransUICom->Get_WorldMatrixPointer());
 
@@ -215,7 +209,6 @@ HRESULT CSlime::Add_Component(void)
 	NULL_CHECK_RETURN(m_pSphereBufferCom, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"SearchRange", pComponent });
 
-
 	// 추가
 	pComponent = m_pAnimationBox = dynamic_cast<CCubeCol*>(Clone_Proto(CUBECOL_COMP));
 	NULL_CHECK_RETURN(m_pSphereBufferCom, E_FAIL);
@@ -226,7 +219,7 @@ HRESULT CSlime::Add_Component(void)
 
 HRESULT CSlime::Create_Item()
 {
-	CGameObject*		pGameObject = nullptr;
+	CGameObject*      pGameObject = nullptr;
 	_vec3 vItemPos;
 	m_pTransCom->Get_Info(INFO_POS, &vItemPos);
 
@@ -260,7 +253,7 @@ HRESULT CSlime::Create_Item()
 HRESULT CSlime::Build(void)
 {
 	//HANDLE      hFile = CreateFile(L"../../Data/PLAYER_DEFAULT.dat",      // 파일의 경로와 이름
-	HANDLE      hFile = CreateFile(L"../../Data/Slime/SLIME_DEFAULT.dat",      // 파일의 경로와 이름	
+	HANDLE      hFile = CreateFile(L"../../Data/Slime/SLIME_DEFAULT.dat",      // 파일의 경로와 이름   
 		GENERIC_READ,         // 파일 접근 모드 (GENERIC_WRITE : 쓰기 전용, GENERIC_READ : 읽기 전용)
 		NULL,               // 공유 방식(파일이 열려있는 상태에서 다른 프로세스가 오픈할 때 허용할 것인가)    
 		NULL,               // 보안 속성(NULL을 지정하면 기본값 상태)
@@ -276,15 +269,15 @@ HRESULT CSlime::Build(void)
 	DWORD   dwByte = 0;
 
 	_vec3   vRight, vUp, vLook, vPos, vScale, vAngle;
-	_int	iDrawNum = 0;
-	_float	fAxisX = 0.f, fAxisY = 0.f, fAxisZ = 0.f;
-	_int	iChildCnt = 0;
-	_int	iParentCnt = 0;
+	_int   iDrawNum = 0;
+	_float   fAxisX = 0.f, fAxisY = 0.f, fAxisZ = 0.f;
+	_int   iChildCnt = 0;
+	_int   iParentCnt = 0;
 
 	int iSize = 0;
 	ReadFile(hFile, &iSize, sizeof(int), &dwByte, nullptr);
 
-	list<const _tchar*>	LoadOrder;
+	list<const _tchar*>   LoadOrder;
 	for (int i = 0; i < iSize; ++i)
 	{
 		_tchar* szName = new _tchar[256]{};
@@ -313,7 +306,7 @@ HRESULT CSlime::Build(void)
 		pGameObject = CTransAxisBox::Create(m_pGraphicDev);
 		NULL_CHECK_RETURN(pMyLayer, E_FAIL);
 
-		FAILED_CHECK_RETURN(pMyLayer->Add_GamePair(LoadOrder.front(), pGameObject), E_FAIL);	//	Map을 쓰지 않는다!!!!! Layer/노트 참고
+		FAILED_CHECK_RETURN(pMyLayer->Add_GamePair(LoadOrder.front(), pGameObject), E_FAIL);   //   Map을 쓰지 않는다!!!!! Layer/노트 참고
 
 		pGameObject->Set_DrawTexIndex(iDrawNum);
 
@@ -330,13 +323,13 @@ HRESULT CSlime::Build(void)
 
 		Transcom->Worldspace_By_Quarternion();
 
-		_vec3	vPos;
+		_vec3   vPos;
 		Transcom->Get_Info(INFO_POS, &vPos);
 
-		_vec3	vPlayerPos;
+		_vec3   vPlayerPos;
 		m_pTransCom->Get_Info(INFO_POS, &vPlayerPos);
 
-		if (0 == _tcscmp(LoadOrder.front(), L"A_ROOT"))	//	루트 이름은 항상 고정이므로 이렇게 지정해둠, 루트를 몸통으로 사용해도 좋고 아주 작게 만들어서 바닥으로 해도 좋고? 근데 거기까진 안해봤습니다ㅎ
+		if (0 == _tcscmp(LoadOrder.front(), L"A_ROOT"))   //   루트 이름은 항상 고정이므로 이렇게 지정해둠, 루트를 몸통으로 사용해도 좋고 아주 작게 만들어서 바닥으로 해도 좋고? 근데 거기까진 안해봤습니다ㅎ
 			Transcom->Set_Pos(vPos.x + vPlayerPos.x, vPos.y + vPlayerPos.y, vPos.z + vPlayerPos.z);
 		else
 			Transcom->Set_Pos(vPos.x, vPos.y, vPos.z);
@@ -380,7 +373,7 @@ HRESULT CSlime::Build(void)
 	{
 		for (auto& List : dynamic_cast<CTransAxisBox*>(iter.second)->m_ParentKey)
 		{
-			auto	MapFindIter = find_if(pMyLayer->Get_GamePairPtr()->begin(), pMyLayer->Get_GamePairPtr()->end(), CTag_Finder(List));
+			auto   MapFindIter = find_if(pMyLayer->Get_GamePairPtr()->begin(), pMyLayer->Get_GamePairPtr()->end(), CTag_Finder(List));
 
 			dynamic_cast<CTransAxisBox*>(iter.second)->m_ParentList.push_back(dynamic_cast<CTransAxisBox*>(MapFindIter->second));
 		}
@@ -410,7 +403,7 @@ void CSlime::Load_Animation(wstring FileName, _uint AnimationID)
 	int iSize = 0;
 	ReadFile(hFile, &iSize, sizeof(_int), &dwByte, nullptr);
 
-	list<const _tchar*>	LoadOrder;
+	list<const _tchar*>   LoadOrder;
 	for (int i = 0; i < iSize; ++i)
 	{
 		_tchar* szName = new _tchar[256]{};
@@ -421,7 +414,7 @@ void CSlime::Load_Animation(wstring FileName, _uint AnimationID)
 
 	for (auto& iter : LoadOrder)
 	{
-		auto	MapFindIter = find_if(pMyLayer->Get_GamePairPtr()->begin(), pMyLayer->Get_GamePairPtr()->end(), CTag_Finder(iter));
+		auto   MapFindIter = find_if(pMyLayer->Get_GamePairPtr()->begin(), pMyLayer->Get_GamePairPtr()->end(), CTag_Finder(iter));
 
 		CQuarternion* Quaternion = dynamic_cast<CQuarternion*>(MapFindIter->second->Get_Component(L"Proto_QuaternionCom", ID_STATIC));
 
@@ -494,13 +487,13 @@ void CSlime::Run_Animation(const _float & AnimationSpeed)
 		D3DXMatrixTranslation(&matNewTrans, vTransLerp.x, vTransLerp.y, vTransLerp.z);
 		matNewWorld = matNewScale * matNewRot * matNewTrans;
 
-		CTransform*	BoxTransform = dynamic_cast<CTransform*>(iter.second->Get_Component(L"Proto_TransformCom", ID_STATIC));
+		CTransform*   BoxTransform = dynamic_cast<CTransform*>(iter.second->Get_Component(L"Proto_TransformCom", ID_STATIC));
 		_matrix matWorld;
 		BoxTransform->Set_WorldMatrix(&matNewWorld);
 		BoxTransform->Set_Scale(&vScaleLerp);
 		BoxTransform->Set_Angle(&_vec3(yaw, pitch, roll));
 
-		_vec3		vPlayerPos;
+		_vec3      vPlayerPos;
 		m_pTransCom->Get_Info(INFO_POS, &vPlayerPos);
 
 		if (0 == _tcscmp(iter.first, L"A_ROOT"))
@@ -513,6 +506,7 @@ void CSlime::Run_Animation(const _float & AnimationSpeed)
 void CSlime::Jump_Animation_Run(void)
 {
 	list<pair<const _tchar*, CGameObject*>> ListBox = *(pMyLayer->Get_GamePairPtr());
+
 	if (m_AnimationTime >= 1.f)
 	{
 		list<pair<const _tchar*, CGameObject*>> ListBox = *(pMyLayer->Get_GamePairPtr());
@@ -523,16 +517,14 @@ void CSlime::Jump_Animation_Run(void)
 			Qtan->Delete_WorldVector();
 		}
 
-		if (m_JUMP == SLIMEJUMP_START)
-			m_JUMP = SLIMEJUMP_1;
-		else if (m_JUMP == SLIMEJUMP_1)
+		if (m_JUMP == SLIMEJUMP_1)
 			m_JUMP = SLIMEJUMP_2;
 		else if (m_JUMP == SLIMEJUMP_2)
 			m_JUMP = SLIMEJUMP_1;
 
 		m_AnimationTime = 0.f;
 	}
-	for (auto& iter : ListBox)	
+	for (auto& iter : ListBox)
 	{
 		CQuarternion* Qtan = dynamic_cast<CQuarternion*>(iter.second->Get_Component(L"Proto_QuaternionCom", ID_STATIC));
 		Qtan->Change_Animation(0 + m_JUMP);
@@ -543,7 +535,7 @@ void CSlime::Look_Direction(void)
 {
 	_matrix matWorld;
 	m_pTransCom->Get_WorldMatrix(&matWorld);
-	
+
 	D3DXQUATERNION qRot;
 	D3DXMatrixDecompose(&_vec3(), &qRot, &_vec3(), &matWorld);
 
@@ -574,7 +566,7 @@ void CSlime::Look_Direction(void)
 
 CSlime * CSlime::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3 & vPos, _tchar* Name)
 {
-	CSlime *	pInstance = new CSlime(pGraphicDev);
+	CSlime *   pInstance = new CSlime(pGraphicDev);
 
 	if (FAILED(pInstance->Ready_Object(vPos, Name)))
 	{
@@ -596,11 +588,6 @@ void CSlime::Free(void)
 	{
 		Safe_Delete_Array(iter);
 	}
-
-	/*for (auto iter : m_CharList)
-	{
-		Safe_Delete_Array(iter);
-	}*/
 
 	CMonster::Free();
 	Safe_Delete<MONSTERABILITY*>(m_tAbility);

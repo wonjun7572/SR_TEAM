@@ -27,6 +27,7 @@ protected:
 
 protected:
 	void				Hit_Check(_float _deltaTime);
+	void				Hit_SphereCheck(_float _deltaTime);
 
 public:
 	void          Set_Damaged(_float iDamage)

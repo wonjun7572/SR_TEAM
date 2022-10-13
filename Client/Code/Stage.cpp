@@ -16,11 +16,6 @@
 #include "CubeFoot.h"
 #include "CubeHand.h"
 
-#include "CubeMonster.h"
-#include "CubeMonsterArm.h"
-#include "CubeMonsterBody.h"
-#include "CubeMonsterHead.h"
-
 #include "Uzi.h"
 #include "Shotgun.h"
 #include "Sniper.h"
@@ -63,16 +58,22 @@
 #include "MonsterUI.h"
 #include "HitBarUI.h"
 #include "ComboUI.h"
+
 #include "MonsterParticle.h"
 #include "ProjectileParticle.h"
 #include "FlameEffect.h"
 #include "IceEffect.h"
+#include "BubbleEffect.h"
+#include "SparkEffect.h"
+#include "SoundWave.h"
+#include "CloudEffect.h"
+
 #include "Illusioner.h"
 
 #include "Thorn.h"
 #include "Magma.h"
 #include "ItemBox.h"
-#include "MiddleBoss.h"
+
 #include "Supporter_Uzi.h"
 
 CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -175,6 +176,23 @@ HRESULT CStage::Ready_Layer_Environment(const _tchar * pLayerTag)
 	pGameObject = CIceEffect::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"IceEffect", pGameObject), E_FAIL);
+
+	pGameObject = CSparkEffect::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"SparkEffect", pGameObject), E_FAIL);
+	pGameObject = CSoundWave::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"SoundWave", pGameObject), E_FAIL);
+	pGameObject = CCloudEffect::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"CloudEffect", pGameObject), E_FAIL);
+
+
+
+
+	pGameObject = CBubbleEffect::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"BubbleEffect", pGameObject), E_FAIL);
 
 	pGameObject = CMonsterParticle::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
@@ -430,7 +448,7 @@ HRESULT CStage::Ready_Layer_Monster(const _tchar * pLayerTag)
 		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
 	}*/
 
-	for (int i = 0; i < 2; i++)
+	for (int i = 0; i < 1; i++)
 	{
 		_tchar* szName = new _tchar[256]{};
 		wstring wName = L"Fireman_%d";
@@ -442,7 +460,7 @@ HRESULT CStage::Ready_Layer_Monster(const _tchar * pLayerTag)
 		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
 	}
 
-	for (int i = 0; i < 2; i++)
+	for (int i = 0; i < 1; i++)
 	{
 		_tchar* szName = new _tchar[256]{};
 		wstring wName = L"Slime_%d";
@@ -453,8 +471,8 @@ HRESULT CStage::Ready_Layer_Monster(const _tchar * pLayerTag)
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
 	}
-	
-	for (int i = 0; i < 2; i++)
+
+	for (int i = 0; i < 1; i++)
 	{
 		_tchar* szName = new _tchar[256]{};
 		wstring wName = L"Illusioner%d";
@@ -465,17 +483,6 @@ HRESULT CStage::Ready_Layer_Monster(const _tchar * pLayerTag)
 		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
 	}
 
-	//미들보스 
-	for (int i = 0; i < 1; ++i)
-	{
-		_tchar* szName = new _tchar[256]{};
-		wstring wName = L"MiddleBoss_%d";
-		wsprintfW(szName, wName.c_str(), i);
-		NameList.push_back(szName);
-		pGameObject = CMiddleBoss::Create(m_pGraphicDev, _vec3(109.f, 0.6f, 10.f), szName);
-		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
-	}
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 

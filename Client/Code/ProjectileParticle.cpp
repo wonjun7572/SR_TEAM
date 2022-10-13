@@ -4,6 +4,10 @@
 #include "CubePlayer.h"
 #include "FlameEffect.h"
 #include "IceEffect.h"
+#include "BubbleEffect.h"
+#include "CloudEffect.h"
+#include "SoundWave.h"
+#include "SparkEffect.h"
 
 CProjectileParticle::CProjectileParticle(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CPSystem(pGraphicDev)
@@ -148,26 +152,54 @@ void CProjectileParticle::Dead_Effect()
 {
 	for (list<ATTRIBUTE>::iterator iter = m_particles.begin(); iter != m_particles.end(); iter++)
 	{
-		/*if (!m_pFlameEffectParticle)
+	/*	if (!m_pFlameEffectParticle)
 			m_pFlameEffectParticle = dynamic_cast<CFlameEffect*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"FlameEffect"));
-		m_pFlameEffectParticle->Set_PclePos(m_vDeadPos);
-		
-		
+		m_pFlameEffectParticle->Set_PclePos(m_vDeadPos);		
 		for (_int i = 0; i < 25; ++i)
 		{
 			m_pFlameEffectParticle->addParticle();
-		}
-*/
+		}*/
 
-
-		if (!m_pIceEffectParticle)
+		/*if (!m_pIceEffectParticle)
 			m_pIceEffectParticle = dynamic_cast<CIceEffect*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"IceEffect"));
 		m_pIceEffectParticle->Set_PclePos(m_vDeadPos);
-
-
-		for (_int i = 0; i < 150; ++i)
+		for (_int i = 0; i < 100; ++i)
 		{
 			m_pIceEffectParticle->addParticle();
 		}
+*/
+
+	/*	if (!m_pBubbleEffectParticle)
+			m_pBubbleEffectParticle = dynamic_cast<CBubbleEffect*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"BubbleEffect"));
+		m_pBubbleEffectParticle->Set_PclePos(m_vDeadPos);
+		for (_int i = 0; i < 70; ++i)
+		{
+			m_pBubbleEffectParticle->addParticle();
+		}*/
+	/*	if (!m_CloudEffectParticle)
+			m_CloudEffectParticle = dynamic_cast<CCloudEffect*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"CloudEffect"));
+		m_CloudEffectParticle->Set_PclePos(m_vDeadPos);
+		for (_int i = 0; i < 70; ++i)
+		{
+			m_CloudEffectParticle->addParticle();
+		}*/
+
+		/*if (!m_SparkEffectParticle)
+			m_SparkEffectParticle = dynamic_cast<CSparkEffect*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"SparkEffect"));
+		m_SparkEffectParticle->Set_PclePos(m_vDeadPos);
+		for (_int i = 0; i < 70; ++i)
+		{
+			m_SparkEffectParticle->addParticle();
+		}*/
+
+		/*if (!m_SoundWaveParticle)
+			m_SoundWaveParticle = dynamic_cast<CSoundWave*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"SoundWave"));
+		m_SoundWaveParticle->Set_PclePos(m_vDeadPos);
+		for (_int i = 0; i < 70; ++i)
+		{
+			m_SoundWaveParticle->addParticle();
+		}*/
+
+
 	}
 }

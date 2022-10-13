@@ -2,7 +2,7 @@
 #include "GameObject.h"
 class CLogoBilboard : public CGameObject
 {
-public:
+private:
 	explicit CLogoBilboard(LPDIRECT3DDEVICE9 pGraphicDev);
 	virtual ~CLogoBilboard();
 
@@ -23,6 +23,5 @@ private:
 public:
 	static CLogoBilboard*		Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3& vPos);
 	void Free(void) override;
-
 };
 

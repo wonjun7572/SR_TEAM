@@ -81,13 +81,13 @@ _int CBullet::Update_Object(const _float & fTimeDelta)
 	Engine::CGameObject::Update_Object(fTimeDelta);
 
 	m_pTransCom->Move_Pos(&(m_vDirection * fTimeDelta * m_fSpeed));
+	Engine::Add_RenderGroup(RENDER_NONALPHA, this);
 
 	return 0;
 }
 
 void CBullet::LateUpdate_Object(void)
 {
-	Engine::Add_RenderGroup(RENDER_NONALPHA, this);
 	Engine::CGameObject::LateUpdate_Object();
 }
 

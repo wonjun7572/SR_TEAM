@@ -177,6 +177,7 @@ call CopyUtility.bat</Command>
     <ClInclude Include="..\..\Header\DynamicBuffer.h" />
     <ClInclude Include="..\..\Header\Export_Utility.h" />
     <ClInclude Include="..\..\Header\FlexibleAxisCube.h" />
+    <ClInclude Include="..\..\Header\FrustumCullMgr.h" />
     <ClInclude Include="..\..\Header\GameObject.h" />
     <ClInclude Include="..\..\Header\Hitbox.h" />
     <ClInclude Include="..\..\Header\Layer.h" />
@@ -205,6 +206,7 @@ call CopyUtility.bat</Command>
     <ClCompile Include="..\Code\CubeCol.cpp" />
     <ClCompile Include="..\Code\DynamicBuffer.cpp" />
     <ClCompile Include="..\Code\FlexibleAxisCube.cpp" />
+    <ClCompile Include="..\Code\FrustumCullMgr.cpp" />
     <ClCompile Include="..\Code\Interface.cpp" />
     <ClCompile Include="..\Code\PSystem.cpp" />
     <ClCompile Include="..\Code\Quarternion.cpp" />

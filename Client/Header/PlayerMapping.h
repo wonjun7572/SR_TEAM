@@ -52,8 +52,12 @@ private:
 
 	_bool	m_bBombard = false;
 
+	_int	m_iRand = 0;
+
 	_float	m_fFrame = 0.f;
 	_float  m_fSkillFrame = 0.f;
+
+
 
 public:
 	static CPlayerMapping*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
