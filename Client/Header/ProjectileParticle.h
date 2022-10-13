@@ -8,7 +8,7 @@ class CBubbleEffect;
 class CCloudEffect;
 class CSparkEffect;
 class CSoundWave;
-
+class CRainbowCloud;
 class CProjectileParticle : public CPSystem
 {
 protected:
@@ -40,6 +40,7 @@ private:
 	CIceEffect* m_pIceEffectParticle = nullptr;
 	CBubbleEffect* m_pBubbleEffectParticle = nullptr;
 	CCloudEffect* m_CloudEffectParticle = nullptr;
+	CRainbowCloud* m_RainbowCloud = nullptr;
 
 	CSparkEffect* m_SparkEffectParticle = nullptr;
 	CSoundWave* m_SoundWaveParticle = nullptr;

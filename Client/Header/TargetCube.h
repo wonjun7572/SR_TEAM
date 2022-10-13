@@ -1,7 +1,10 @@
 #pragma once
 #include "GameObject.h"
 
+
 class CMonsterUI;
+class CBubbleEffect;
+class CRainbowCloud;
 
 class CTargetCube :	public CGameObject
 {
@@ -41,6 +44,8 @@ private:
 
 	_vec3				m_vDir = _vec3(0.f, 0.f, 0.f);
 	_vec3				m_vScale = _vec3(0.f, 0.f, 0.f);
+	CBubbleEffect*		m_pBubbleEffectParticle = nullptr;
+	CRainbowCloud*		 m_pRainbowCloud = nullptr;
 
 private:
 	MONSTERABILITY*		m_tAbility;

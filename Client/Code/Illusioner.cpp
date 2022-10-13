@@ -6,7 +6,7 @@
 #include "PoolMgr.h"
 #include "ComboUI.h"
 #include "TargetCube.h"
-
+#include "RcEffect.h"
 #include "TransAxisBox.h"
 
 USING(Engine)
@@ -133,6 +133,9 @@ _int CIllusioner::Update_Object(const _float & fTimeDelta)
 		}
 		else if (m_pCollision->Sphere_Collision(this->m_pAttackRange_TransCom, m_pPlayerTransCom, vPlayerScale.x, vAttackScale.x))
 		{
+			
+
+
 			// 공격충돌
 			m_pTransCom->Chase_Target(&vPlayerPos, 0.f, fTimeDelta);
 			m_STATE = ILLUSION_ATTACK;
@@ -147,10 +150,18 @@ _int CIllusioner::Update_Object(const _float & fTimeDelta)
 				D3DXVec3Normalize(&vLook, &vLook);
 
 				CGameObject* pGameObject = CTargetCube::Create(m_pGraphicDev, _vec3(vWallPos.x + (vLook.x * 4.f), vWallPos.y - 3.f, vWallPos.z + (vLook.z * 4.f)), _vec3(0.f, 1.f, 0.f), _vec3(1.f, 1.f, 0.5f), 13);
-
+				
 				NULL_CHECK_RETURN(pGameObject, E_FAIL);
 				Engine::Get_Layer(STAGE_DESTORYWALL)->Add_GameList(pGameObject);
 				m_fFrame = 0.f;
+
+				m_pEffect = CRcEffect::Create(m_pGraphicDev, CASTINGEFFECT_EFT); //enum EFFECTID
+				dynamic_cast<CRcEffect*>(m_pEffect)->Set_EffectPos(vPos.x, vPos.y, vPos.z);//EFFECT POS
+				dynamic_cast<CRcEffect*>(m_pEffect)->Set_SingleUse();
+				m_pEffect = CRcEffect::Create(m_pGraphicDev, STAREFFECT_EFT); //enum EFFECTID
+				dynamic_cast<CRcEffect*>(m_pEffect)->Set_EffectPos(vPlayerPos.x, vPlayerPos.y, vPlayerPos.z);//EFFECT POS
+				dynamic_cast<CRcEffect*>(m_pEffect)->Set_SingleUse();
+				//dynamic_cast<CRcEffect*>(m_pEffect)->Dead_Timer(10.f);
 			}
 			m_bRun = false;
 		}

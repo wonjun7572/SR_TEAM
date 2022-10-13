@@ -39,6 +39,9 @@ _int CTestCube::Update_Object(const _float& fTimeDelta)
 {
 	if (m_bDead)
 	{
+		
+		Delete_GameObject(STAGE_MAPPING, m_szCntName);
+		
 		return -1;
 	}
 	Update_NullCheck();
@@ -124,6 +127,9 @@ void CTestCube::Update_NullCheck()
 
 HRESULT CTestCube::Interact(void)
 {
+
+
+
 	CGameObject*		pGameObject = nullptr;
 
 	CTransform*		pPlayerTransformCom = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_CHARACTER, L"BODY", TRANSFORM_COMP, ID_DYNAMIC));
@@ -214,6 +220,8 @@ HRESULT CTestCube::Interact(void)
 		{
 			vPos.y -= 0.1f;
 			m_pTransCom->Set_Pos(vPos.x, vPos.y, vPos.z);
+			if (vPos.y < -15)
+				m_bDead = true;
 		}
 	}
 
@@ -306,15 +314,14 @@ HRESULT CTestCube::Wall_Mapping(void)
 			
 			dynamic_cast<CWallMapping*>(m_pMapWall)->Set_Texture(37);
 		}
-		TCHAR* szCntName = new TCHAR[64];
-		wsprintf(szCntName, L"");
+		wsprintf(m_szCntName, L"");
 		const _tchar*	szNumbering = L"MapWall_%d";
-		wsprintf(szCntName, szNumbering, m_iMappingCnt);
-		Engine::Add_GameObject(STAGE_MAPPING, m_pMapWall, szCntName);
-		m_listWallCnt.push_back(szCntName);
+		wsprintf(m_szCntName, szNumbering, m_iMappingCnt);
+		Engine::Add_GameObject(STAGE_MAPPING, m_pMapWall, m_szCntName);
+		m_listWallCnt.push_back(m_szCntName);
 
 		
-		m_pWallMapping = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_MAPPING, szCntName, TRANSFORM_COMP, ID_DYNAMIC));
+		m_pWallMapping = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_MAPPING, m_szCntName, TRANSFORM_COMP, ID_DYNAMIC));
 		NULL_CHECK_RETURN(m_pWallMapping, E_FAIL);
 		++m_iMappingCnt;
 		

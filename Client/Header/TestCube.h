@@ -66,6 +66,7 @@ private: // 문 상호작용 관련
 	_bool				m_bDoorUp = false;
 	_bool				m_bCameraShaking = false;
 	_float				m_fTimer = 0.f;
+	TCHAR* m_szCntName = new TCHAR[64];
 
 	wstring				m_strPress;
 	CGameObject*		m_pLetterBox = nullptr;

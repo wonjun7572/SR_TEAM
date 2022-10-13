@@ -52,6 +52,7 @@ private:	//	애니메이션 관련
 	CLayer*				pMyLayer;
 	_tchar*				m_MonsterName;
 	_bool				m_bRun = false;
+	CGameObject*			m_pEffect = nullptr;
 
 	list<_tchar*>		m_TcharList;
 

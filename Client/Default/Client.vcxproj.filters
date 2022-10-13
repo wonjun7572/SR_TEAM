@@ -630,26 +630,32 @@
     <ClInclude Include="..\Header\IceEffect.h">
       <Filter>02. GameObject\01. For_Stage\12. Particle</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\BubbleEffect.h">
-      <Filter>99. Default\헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CloudEffect.h">
-      <Filter>99. Default\헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\RcEffect.h">
-      <Filter>99. Default\헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\SoundWave.h">
-      <Filter>99. Default\헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\SparkEffect.h">
-      <Filter>99. Default\헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\Ping.h">
       <Filter>02. GameObject\01. For_Stage\20. BillBoard</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\MiddleBoss.h">
       <Filter>02. GameObject\01. For_Stage\21. MiddleBoss</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\BrownCloudEffect.h">
+      <Filter>02. GameObject\01. For_Stage\12. Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\BubbleEffect.h">
+      <Filter>02. GameObject\01. For_Stage\12. Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CloudEffect.h">
+      <Filter>02. GameObject\01. For_Stage\12. Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\SoundWave.h">
+      <Filter>02. GameObject\01. For_Stage\12. Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\SparkEffect.h">
+      <Filter>02. GameObject\01. For_Stage\12. Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\RcEffect.h">
+      <Filter>02. GameObject\01. For_Stage\19. Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\RainbowCloud.h">
+      <Filter>02. GameObject\01. For_Stage\12. Particle</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -995,26 +1001,32 @@
     <ClCompile Include="..\Code\IceEffect.cpp">
       <Filter>02. GameObject\01. For_Stage\12. Particle</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\BubbleEffect.cpp">
-      <Filter>99. Default\소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\CloudEffect.cpp">
-      <Filter>99. Default\소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\RcEffect.cpp">
-      <Filter>99. Default\소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\SoundWave.cpp">
-      <Filter>99. Default\소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\SparkEffect.cpp">
-      <Filter>99. Default\소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\Ping.cpp">
       <Filter>02. GameObject\01. For_Stage\20. BillBoard</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\MiddleBoss.cpp">
       <Filter>02. GameObject\01. For_Stage\21. MiddleBoss</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CloudEffect.cpp">
+      <Filter>02. GameObject\01. For_Stage\12. Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BubbleEffect.cpp">
+      <Filter>02. GameObject\01. For_Stage\12. Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BrownCloudEffect.cpp">
+      <Filter>02. GameObject\01. For_Stage\12. Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SoundWave.cpp">
+      <Filter>02. GameObject\01. For_Stage\12. Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SparkEffect.cpp">
+      <Filter>02. GameObject\01. For_Stage\12. Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\RcEffect.cpp">
+      <Filter>02. GameObject\01. For_Stage\19. Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\RainbowCloud.cpp">
+      <Filter>02. GameObject\01. For_Stage\12. Particle</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

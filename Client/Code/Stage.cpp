@@ -59,6 +59,7 @@
 #include "HitBarUI.h"
 #include "ComboUI.h"
 
+#include "RainbowCloud.h"
 #include "MonsterParticle.h"
 #include "ProjectileParticle.h"
 #include "FlameEffect.h"
@@ -169,6 +170,10 @@ HRESULT CStage::Ready_Layer_Environment(const _tchar * pLayerTag)
 	pGameObject = CItemParticle::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"ItemParticle", pGameObject), E_FAIL);
+
+	pGameObject = CRainbowCloud::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"RainbowCloud", pGameObject), E_FAIL);
 
 	pGameObject = CFlameEffect::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);

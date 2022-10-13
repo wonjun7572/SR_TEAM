@@ -15,6 +15,10 @@ public:
 	{
 		m_vSoundWavePatriclePos = _vPos;
 	}
+	void					Set_Dir(_vec3 _vDir)
+	{
+		m_vDir = _vDir;
+	}
 
 public:
 	HRESULT						Add_Component(void);
@@ -23,7 +27,7 @@ public:
 
 private:
 	_vec3	m_vSoundWavePatriclePos = { 0.f,0.f,0.f };
-
+	_vec3	m_vDir = { 0.f,0.f,0.f };
 public:
 	virtual		void		resetParticle(ATTRIBUTE* attribute);
 };

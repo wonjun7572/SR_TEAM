@@ -302,6 +302,7 @@ void CSupporter_Uzi::Find_Target(void)
 				CPoolMgr::GetInstance()->Reuse_PlayerBullet(m_pGraphicDev, &vGunPos_Left, &vDir_Left, 5, 10.f);
 				CPoolMgr::GetInstance()->Reuse_PlayerBullet(m_pGraphicDev, &vGunPos_Right, &vDir_Right, 5, 10.f);
 			}
+			
 		}
 	}
 }

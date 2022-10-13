@@ -1,8 +1,10 @@
-﻿     ../Bin\Client.lib 라이브러리 및 ../Bin\Client.exp 개체를 생성하고 있습니다.
+﻿  BubbleEffect.cpp
+..\Code\BubbleEffect.cpp(46): warning C4244: '인수': 'int'에서 'FLOAT'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+     ../Bin\Client.lib 라이브러리 및 ../Bin\Client.exp 개체를 생성하고 있습니다.
   코드를 생성하고 있습니다.
-  0 of 7821 functions ( 0.0%) were compiled, the rest were copied from previous compilation.
+  1 of 7889 functions ( 0.0%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    268 functions had inline decision re-evaluated but remain unchanged
+    0 functions had inline decision re-evaluated but remain unchanged
   코드를 생성했습니다.
-  Client.vcxproj -> C:\Users\sam51\Desktop\SR_TEAM\Client\Default\../Bin\Client.exe
+  Client.vcxproj -> C:\Users\DecoyZ\Desktop\SR_TEAM\Client\Default\../Bin\Client.exe
   Client.vcxproj -> ../Bin\Client.pdb (Full PDB)

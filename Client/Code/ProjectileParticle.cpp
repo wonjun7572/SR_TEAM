@@ -8,7 +8,7 @@
 #include "CloudEffect.h"
 #include "SoundWave.h"
 #include "SparkEffect.h"
-
+#include "RainbowCloud.h"
 CProjectileParticle::CProjectileParticle(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CPSystem(pGraphicDev)
 {
@@ -182,7 +182,18 @@ void CProjectileParticle::Dead_Effect()
 		for (_int i = 0; i < 70; ++i)
 		{
 			m_CloudEffectParticle->addParticle();
-		}*/
+		}
+	
+	if (!m_RainbowCloud)
+	m_RainbowCloud = dynamic_cast<CRainbowCloud*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"RainbowCloud"));
+	m_RainbowCloud->Set_PclePos(m_vDeadPos);
+	for (_int i = 0; i < 70; ++i)
+	{
+	m_RainbowCloud->addParticle();
+	}
+
+
+	*/
 
 		/*if (!m_SparkEffectParticle)
 			m_SparkEffectParticle = dynamic_cast<CSparkEffect*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"SparkEffect"));

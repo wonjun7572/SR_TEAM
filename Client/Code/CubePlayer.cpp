@@ -58,16 +58,6 @@ HRESULT CCubePlayer::Ready_Object(void)
 
 _int CCubePlayer::Update_Object(const _float & fTimeDelta)
 {
-	m_Weapon == Engine::Get_GameObject(STAGE_GUN, L"UZI1")))
-		{
-		m_fLeftArmAngle = D3DXToRadian(-90.f) + m_fDownAngle;
-		m_fRightArmAngle = D3DXToRadian(-90.f) + m_fDownAngle;
-		m_fHandAngle = 0.f;
-
-		}
-	// ¼¦°Ç / ½º³ª °ßÂø
-	if ((m_Weapon == Engine::Get_GameObject(STAGE_GUN, L"SHOTGUN")) ||
-		(m_Weapon == Engine::Get_GameObject(STAGE_GUN, L"SNIPER")))
 	Update_NullCheck();
 	
 	m_fTimeDelta = fTimeDelta;

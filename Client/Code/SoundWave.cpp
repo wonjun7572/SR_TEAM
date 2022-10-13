@@ -6,7 +6,7 @@
 CSoundWave::CSoundWave(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CPSystem(pGraphicDev)
 {
-	m_fSize = 1.f;
+	m_fSize = .3f;
 	m_vbSize = 2048;
 	m_vbOffset = 0;
 	m_vbBatchSize = 512;
@@ -90,7 +90,6 @@ void CSoundWave::Free(void)
 void CSoundWave::resetParticle(ATTRIBUTE * attribute)
 {
 	_vec3 vPos;
-	_vec3 vDir;
 	//pPlayerTransformCom->Get_Info(INFO_POS, &vPos);
 	//pPlayerTransformCom->Get_Info(INFO_LOOK, &vDir);
 
@@ -98,7 +97,7 @@ void CSoundWave::resetParticle(ATTRIBUTE * attribute)
 
 	attribute->vPos = m_vSoundWavePatriclePos;
 
-	attribute->vVelocity = (vDir * 200.f);
+	attribute->vVelocity = (m_vDir * 2.f);
 	attribute->dwColor = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
 
 	attribute->fAge = 0.0f;
