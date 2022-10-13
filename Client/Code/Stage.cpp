@@ -63,10 +63,16 @@
 #include "MonsterUI.h"
 #include "HitBarUI.h"
 #include "ComboUI.h"
+
 #include "MonsterParticle.h"
 #include "ProjectileParticle.h"
 #include "FlameEffect.h"
 #include "IceEffect.h"
+#include "BubbleEffect.h"
+#include "SparkEffect.h"
+#include "SoundWave.h"
+#include "CloudEffect.h"
+
 #include "Illusioner.h"
 
 #include "Thorn.h"
@@ -175,6 +181,23 @@ HRESULT CStage::Ready_Layer_Environment(const _tchar * pLayerTag)
 	pGameObject = CIceEffect::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"IceEffect", pGameObject), E_FAIL);
+
+	pGameObject = CSparkEffect::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"SparkEffect", pGameObject), E_FAIL);
+	pGameObject = CSoundWave::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"SoundWave", pGameObject), E_FAIL);
+	pGameObject = CCloudEffect::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"CloudEffect", pGameObject), E_FAIL);
+
+
+
+
+	pGameObject = CBubbleEffect::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"BubbleEffect", pGameObject), E_FAIL);
 
 	pGameObject = CMonsterParticle::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);

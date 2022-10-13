@@ -85,8 +85,31 @@
 #define STATICPARTICLE_TEX			L"STATICPARTICLE_TEX"
 #define STATICPARTICLE_TEX_PATH		L"../Bin/Resources/Particle/StaticParticle/StaticParticle%d.png"
 
+//Effect
 #define BLUEBOMB_TEX				L"BLUEBOMB_TEX"
 #define BLUEBOMB_TEX_PATH			L"../Bin/Resources/Effect/BlueBomb/BlueBomb%d.png"
+
+#define BLUEEFFECT_TEX				L"BLUEEFFECT_TEX"
+#define BLUEEFFECT_TEX_PATH			L"../Bin/Resources/Effect/BlueEffect/BlueEffect%d.png"
+#define CASTINGEFFECT_TEX			L"CASTINGEFFECT_TEX"
+#define CASTINGEFFECT_TEX_PATH		L"../Bin/Resources/Effect/CastingEffect/CastingEffect%d.png"
+#define STAREFFECT_TEX				L"STAREFFECT_TEX"
+#define STAREFFECT_TEX_PATH			L"../Bin/Resources/Effect/StarEffect/StarEffect%d.png"
+#define COIN_TEX					L"COIN_TEX"
+#define COIN_TEX_PATH				L"../Bin/Resources/Effect/Coin/Coin%d.png"
+#define CREATEEFFECT_TEX			L"CREATEEFFECT_TEX"
+#define CREATEEFFECT_TEX_PATH		L"../Bin/Resources/Effect/CreateEffect/CreateEffect%d.png"
+
+#define EXPLOSION_TEX			L"EXPLOSION_TEX"
+#define EXPLOSION_TEX_PATH		L"../Bin/Resources/Effect/Explosion/Explosion%d.png"
+#define LIGHTNING_TEX			L"LIGHTNING_TEX"
+#define LIGHTNING_TEX_PATH		L"../Bin/Resources/Effect/Lightning/Lightning%d.png"
+#define REDBOMB_TEX				L"REDBOMB_TEX"
+#define REDBOMB_TEX_PATH		L"../Bin/Resources/Effect/RedBomb/RedBomb%d.png"
+#define REDEFFECT_TEX			L"REDEFFECT_TEX"
+#define REDEFFECT_TEX_PATH		L"../Bin/Resources/Effect/RedEffect/RedEffect%d.png"
+#define STUN_TEX				L"STUN_TEX"
+#define STUN_TEX_PATH			L"../Bin/Resources/Effect/Stun/Stun%d.png"
 
 
 // CrossHair

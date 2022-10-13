@@ -11,6 +11,8 @@
 #include "ShotParticle.h"
 #include "BulletParticle.h"
 #include "ProjectileParticle.h"
+
+#include "RcEffect.h"
 #include "Inventory.h"
 #include "Shop.h"
 
@@ -83,7 +85,6 @@ _int CCubePlayer::Update_Object(const _float & fTimeDelta)
 	CGameObject::Update_Object(fTimeDelta);
 
 	Engine::Add_RenderGroup(RENDER_NONALPHA, this);
-
 	return 0;
 }
 
@@ -133,6 +134,8 @@ void CCubePlayer::Render_Object(void)
 
 void CCubePlayer::Update_NullCheck()
 {
+	
+
 	if (!m_pShotParicle)
 		m_pShotParicle = dynamic_cast<CShotParticle*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"ShotParticle"));
 
@@ -155,6 +158,10 @@ void CCubePlayer::Set_OnTerrain(void)
 
 	_vec3		vPos;
 	m_pBodyWorld->Get_BeforeInfo(INFO_POS, &vPos);
+
+
+
+
 
 	Engine::CTerrainTex*	pTerrainTexCom = dynamic_cast<Engine::CTerrainTex*>(Engine::Get_Component(STAGE_ENVIRONMENT, L"Terrain", TERRAINTEX_COMP, ID_STATIC));
 	NULL_CHECK(pTerrainTexCom);
@@ -196,8 +203,11 @@ void CCubePlayer::Assemble(void)
 		m_pLeftHandWorld->Static_Update();
 		m_pRightHandWorld->Static_Update();
 		m_pLeftFootWorld->Static_Update();
-		m_pRightHandWorld->Static_Update();
-	}
+		m_pRightHandWorld->Static_Update();	
+	m_pEffect = CRcEffect::Create(m_pGraphicDev, 0); //enum EFFECTID
+	}		
+		dynamic_cast<CRcEffect*>(m_pEffect)->Set_EffectPos(vBodyPos.x, vBodyPos.y, vBodyPos.z);//EFFECT POS
+	
 }
 
 void CCubePlayer::Animation(void)
@@ -498,7 +508,7 @@ void CCubePlayer::TransAxis(void)
 
 	m_pBodyWorld->Get_Info(INFO_POS, &vBefore);
 	m_pBodyWorld->Get_BeforeInfo(INFO_POS, &vAfter);
-
+	
 	m_pLeftArmWorld->Rotation_Axis_Animation(-0.1f, -0.15f, m_fLeftArmAngle, -m_fLookAngle);
 	m_pRightArmWorld->Rotation_Axis_Animation(-0.1f, 0.15f, m_fRightArmAngle, -m_fLookAngle);
 

@@ -4,6 +4,11 @@
 class CItemParticle;
 class CFlameEffect;
 class CIceEffect;
+class CBubbleEffect;
+class CCloudEffect;
+class CSparkEffect;
+class CSoundWave;
+
 class CProjectileParticle : public CPSystem
 {
 protected:
@@ -30,8 +35,12 @@ private:
 	_vec3		m_vDeadPos = { 0.f,0.f,0.f };
 	_int	m_iTextureIndex = 0;
 	_float  m_fTextureTime = 0;
+
 	CFlameEffect* m_pFlameEffectParticle = nullptr;
 	CIceEffect* m_pIceEffectParticle = nullptr;
-
+	CBubbleEffect* m_pBubbleEffectParticle = nullptr;
+	CCloudEffect* m_CloudEffectParticle = nullptr;
+	CSparkEffect* m_SparkEffectParticle = nullptr;
+	CSoundWave* m_SoundWaveParticle = nullptr;
 };
 
