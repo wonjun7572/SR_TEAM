@@ -14,18 +14,34 @@ private:
 	virtual void	Render_Object(void) override;
 
 private:
+	HRESULT				Add_Component(void);
+	HRESULT				Create_Item();
+
+private:	//	애니메이션 관련
 	HRESULT				Build(void);
-	void				Load_Animation(wstring FileName);
+	void				Load_Animation(wstring FileName, _uint AnimationID);
 	void				Run_Animation(const _float& AnimationSpeed);
-	void				Walk_Animation_Run(void);
 	void				Look_Direction(void);
 
+	_float				m_fTimeDelta = 0.f;
+	_bool				m_bFirst = true;
+	_float				m_AnimationTime = 0.f;
+
+	void				Walk_Animation_Run(void);
 	void				Idle_Animation_Run(void);
 	void				Attack_Animation_Run(void);
+	void				Dead_Animation_Run(void);
 
-private:
-	HRESULT				Add_Component(void);
+	ZOMBIESTATEID		m_STATE;
+	ZOMBIEWALKID		m_WALK;
+	ZOMBIEIDLEID		m_IDLE;
+	ZOMBIEATTACKID		m_ATTACK;
+	ZOMBIEDEADID		m_DEAD;
 
+	CLayer*				pMyLayer;
+	_tchar*				m_MonsterName;
+
+	list<_tchar*>		m_TcharList;
 
 
 

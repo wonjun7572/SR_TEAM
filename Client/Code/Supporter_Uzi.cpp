@@ -141,13 +141,13 @@ void CSupporter_Uzi::LateUpdate_Object(void)
 
 void CSupporter_Uzi::Render_Object(void)
 {
-	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+	/*m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pHitBoxTransform->Get_WorldMatrixPointer());
 	m_pHitBox->Render_Buffer();
 
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pSphereTransCom->Get_WorldMatrixPointer());
 	m_pSphereBufferCom->Render_Buffer();
-	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);*/
 }
 
 HRESULT CSupporter_Uzi::Add_Component(void)
