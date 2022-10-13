@@ -128,10 +128,6 @@ private:
 
 	_int		m_iGunIndex;
 	_bool		m_bCheckUzi = false;
-	_bool		m_bMouseCheck = false;
-	_bool		m_bChecking = false;
-	_bool		m_GunChecking = false;
-	_bool		m_bLBDown = false;
 	_float		fScale;
 	_float		fScale2;
 	//¹öÆ°
