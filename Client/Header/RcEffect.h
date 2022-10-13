@@ -28,6 +28,7 @@ public:
 	_int		Get_RcEffectIdx() { return m_iNumber; }
 	void		Set_EffectPos(_float fX, _float fY, _float fZ) { m_fPosX = fX, m_fPosY = fY, m_fPosZ = fZ; }
 	void		Set_SingleUse(void){ m_bSingleUse = true; }
+	void		Set_Scale(_float _fScale) { m_fScale = _fScale; }
 	void		Dead_Timer(_float _fDeadTimer) { m_fDeadTimer = _fDeadTimer; }
 
 private:
@@ -44,8 +45,8 @@ private:
 	CRcTex*			 m_pRcTexCom = nullptr;	
 
 	list<TCHAR*>	 m_listRcEffect;
-	_tchar			 szCntName[64];
-	_tchar			 szTextureName[64];
+	_tchar			 szCntName[256];
+	_tchar			 szTextureName[256];
 
 private:
 	_int			m_iIndex = 0;
@@ -60,6 +61,7 @@ private:
 	_float			m_fPosY = 0.f;
 	_float			m_fPosZ = 0.f;
 
+	_float			m_fScale = 2.f;
 	_float			m_fTimer = 0.f;
 	_float			m_fDeadTimer = 0.f;
 

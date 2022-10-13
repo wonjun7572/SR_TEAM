@@ -4,8 +4,10 @@
 #include "..\Header\RcEffect.h"
 
 //»ç¿ë¹ý
-//m_pEffect = CRcEffect::Create(m_pGraphicDev, 2); //enum EFFECTID
-//dynamic_cast<CRcEffect*>(m_pEffect)->Set_EffectPos(vBodyPos.x, vBodyPos.y, vBodyPos.z);//EFFECT POS
+//m_pEffect = CRcEffect::Create(m_pGraphicDev, REDEFFECT_EFT); //enum EFFECTID
+//dynamic_cast<CRcEffect*>(m_pEffect)->Set_EffectPos(m_vPos.x, m_vPos.y, m_vPos.z);//EFFECT POS
+//dynamic_cast<CRcEffect*>(m_pEffect)->Set_SingleUse();
+//dynamic_cast<CRcEffect*>(m_pEffect)->Dead_Timer(10.f);
 
 static _int iEffectCnt = 0;
 
@@ -24,7 +26,6 @@ HRESULT CRcEffect::Ready_Object(_int iIndex)
 	m_iNumber = iIndex;
 	Index();
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
-	m_pTransformCom->Set_Scale(2.f, 2.f, 2.f);
 	m_pTransformCom->Static_Update();
 	wsprintf(szCntName, L"RcEffect_%d", iEffectCnt);
 	iEffectCnt++;
@@ -41,7 +42,7 @@ _int CRcEffect::Update_Object(const _float & fTimeDelta)
 	}
 	CGameObject::Update_Object(fTimeDelta);
 	m_pTransformCom->Billboard_Transform(fTimeDelta);
-	Add_RenderGroup(RENDER_ALPHA, this);
+	Add_RenderGroup(RENDER_UI, this);
 	m_fTimer += fTimeDelta;
 	Dead_Condition();
 	Effect_Change();
@@ -60,6 +61,7 @@ void CRcEffect::Render_Object(void)
 {
 
 	m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+	m_pTransformCom->Set_Scale(m_fScale, m_fScale, m_fScale);
 
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrixPointer());
 
@@ -191,7 +193,7 @@ void CRcEffect::Effect_Change()
 	{
 		if (m_fTimer > m_fTexTimer)
 		{			
-			if (m_iTexIndex <= m_iTexEnd)
+			if (m_iTexIndex < m_iTexEnd)
 			{
 				m_iTexIndex += 1;				
 			}
@@ -202,11 +204,11 @@ void CRcEffect::Effect_Change()
 	{
 		if (m_fTimer > m_fTexTimer)
 		{
-			if (m_iTexIndex <= m_iTexEnd)
+			if (m_iTexIndex < m_iTexEnd)
 			{
 				m_iTexIndex+=1;				
 			}
-			if (m_iTexIndex > m_iTexEnd)
+			if (m_iTexIndex >= m_iTexEnd)
 			{
 				m_iTexIndex = m_iTexRecall;
 			}
@@ -219,14 +221,14 @@ void CRcEffect::Dead_Condition()
 {
 	if (m_bSingleUse)
 	{
-		if (m_iTexIndex > m_iTexEnd)
+		if (m_iTexIndex >= m_iTexEnd)
 		{
 			m_bDead = true;
 		}
 	}
 	if (m_fTimer > m_fDeadTimer)
 	{
-		if (m_iTexIndex > m_iTexEnd)
+		if (m_iTexIndex >= m_iTexEnd)
 		{
 			m_bDead = true;
 		}

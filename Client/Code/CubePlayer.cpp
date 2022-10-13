@@ -204,10 +204,7 @@ void CCubePlayer::Assemble(void)
 		m_pRightHandWorld->Static_Update();
 		m_pLeftFootWorld->Static_Update();
 		m_pRightHandWorld->Static_Update();	
-	m_pEffect = CRcEffect::Create(m_pGraphicDev, 0); //enum EFFECTID
 	}		
-		dynamic_cast<CRcEffect*>(m_pEffect)->Set_EffectPos(vBodyPos.x, vBodyPos.y, vBodyPos.z);//EFFECT POS
-	
 }
 
 void CCubePlayer::Animation(void)
@@ -443,6 +440,13 @@ void CCubePlayer::Move()
 		D3DXVec3Normalize(&vDir, &vDir);
 	}
 
+	if (Key_Down(DIK_F))
+	{
+		if(m_Weapon == Engine::Get_GameObject(STAGE_GUN, L"SNIPER"))
+			dynamic_cast<CBaseMapping*>(Engine::Get_GameObject(STAGE_MAPPING, L"BaseMapping"))->Switch_Worldmap();
+	}
+
+
 	if (Key_Down(DIK_G))
 	{
 		m_pProjectileParicle->addParticle();
@@ -560,7 +564,7 @@ void CCubePlayer::Fire_Bullet(void)
 				m_pShotParicle->addParticle();
 				
 				_float fGunSound = 1.f;
-				PlaySoundGun(L"RifleShot.mp3", SOUND_EFFECT, fGunSound);
+				Engine::PlaySoundGun(L"RifleShot.mp3", SOUND_EFFECT, fGunSound);
 				m_Weapon->Set_MinusBullet();
 				m_Weapon->Set_Shoot(true);
 				m_fBulletTime = 0.f;
@@ -750,11 +754,11 @@ HRESULT CCubePlayer::Add_Component(void)
 	m_mapComponent[ID_STATIC].insert({ CALCULATOR_COMP, pInstance });
 
 	// For Sphere
-	pInstance = m_pSphereBufferCom = dynamic_cast<CSphereTex*>(Clone_Proto(SPHERETEX_COMP));
+	pInstance = m_pSphereBufferCom = dynamic_cast<CSphereTex*>(Engine::Clone_Proto(SPHERETEX_COMP));
 	NULL_CHECK_RETURN(m_pSphereBufferCom, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ SPHERETEX_COMP, pInstance });
 
-	pInstance = m_pSphereTransCom = dynamic_cast<CTransform*>(Clone_Proto(TRANSFORM_COMP));
+	pInstance = m_pSphereTransCom = dynamic_cast<CTransform*>(Engine::Clone_Proto(TRANSFORM_COMP));
 	NULL_CHECK_RETURN(m_pSphereBufferCom, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Sphere_TransCom", pInstance });
 
