@@ -90,6 +90,7 @@ private:
 	void			Look_Direction(void);
 	void			Fire_Bullet(void);
 	void			Gun_Check(void);
+	void			Skill_Enforcing(void); //스킬강화관련 함수
 
 private:
 	void			Jump(void);
@@ -168,6 +169,11 @@ private:
 	CTransform*			m_pBaseMapping = nullptr;
 	list<TCHAR*>		m_listMonsterCnt;
 	CGameObject*			m_pEffect = nullptr;
+
+	//스킬강화관련 변수입니다
+	_int			m_iSkillEnforce = 0;
+	
+
 public:
 	void			Capture_Uzi(void) { m_bUzi = true; }
 	void			Capture_Shotgun(void) { m_bShotgun = true; }

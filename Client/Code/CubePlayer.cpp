@@ -58,13 +58,23 @@ HRESULT CCubePlayer::Ready_Object(void)
 
 _int CCubePlayer::Update_Object(const _float & fTimeDelta)
 {
+	m_Weapon == Engine::Get_GameObject(STAGE_GUN, L"UZI1")))
+		{
+		m_fLeftArmAngle = D3DXToRadian(-90.f) + m_fDownAngle;
+		m_fRightArmAngle = D3DXToRadian(-90.f) + m_fDownAngle;
+		m_fHandAngle = 0.f;
+
+		}
+	// 샷건 / 스나 견착
+	if ((m_Weapon == Engine::Get_GameObject(STAGE_GUN, L"SHOTGUN")) ||
+		(m_Weapon == Engine::Get_GameObject(STAGE_GUN, L"SNIPER")))
 	Update_NullCheck();
 	
 	m_fTimeDelta = fTimeDelta;
 	m_fBulletTime += fTimeDelta;
 
 	FAILED_CHECK_RETURN(Get_BodyTransform(), -1);
-
+	Skill_Enforcing();
 	CoolTimer();
 
 		// 이동, 애니메이션 관련
@@ -750,6 +760,46 @@ void CCubePlayer::Gun_Check(void)
 			}
 		}
 	}
+}
+
+void CCubePlayer::Skill_Enforcing(void)
+{
+	//m_iSkillEnforce = dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->Get_EnforceCheck();
+	//switch (m_iSkillEnforce)
+	//{
+	//case 0:
+	//	cout << 0 << endl;
+	//	break;
+	//case 1://우지1강화
+	//	cout << 1 << endl;
+	//	break;
+	//case 2://우지2강화
+	//	cout << 2 << endl;
+	//	break;
+	//case 3://우지3강화
+	//	cout << 3 << endl;
+	//	break;
+	//case 4://우지4강화
+	//	cout << 4 << endl;
+	//	break;
+	//case 5://우지5강화
+	//	cout << 5 << endl;
+	//	break;
+	//case 6://우지6강화
+	//	cout << 6 << endl;
+	//	break;
+	//default:
+	//	break;
+	//}
+
+
+	//if(m_Weapon == Engine::Get_GameObject(STAGE_GUN, L"UZI1")
+	//{}
+	//	
+	//if (m_Weapon == Engine::Get_GameObject(STAGE_GUN, L"SHOTGUN")
+	//{}
+	//if (m_Weapon == Engine::Get_GameObject(STAGE_GUN, L"SNIPER")
+	//{}
 }
 
 void CCubePlayer::Jump(void)

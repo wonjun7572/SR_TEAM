@@ -40,6 +40,7 @@ private:
 	CIceEffect* m_pIceEffectParticle = nullptr;
 	CBubbleEffect* m_pBubbleEffectParticle = nullptr;
 	CCloudEffect* m_CloudEffectParticle = nullptr;
+
 	CSparkEffect* m_SparkEffectParticle = nullptr;
 	CSoundWave* m_SoundWaveParticle = nullptr;
 };
