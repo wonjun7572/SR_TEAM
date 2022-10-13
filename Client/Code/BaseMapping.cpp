@@ -91,7 +91,7 @@ void CBaseMapping::Key_Input(void)
 
 	if (Key_Down(DIK_F))
 	{
-		m_bWorldmap = !m_bWorldmap;		
+		m_bWorldmap = false;
 	}
 }
 

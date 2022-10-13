@@ -32,7 +32,6 @@ HRESULT CIllusioner::Ready_Object(const _vec3 & vPos, _tchar * Name)
 	m_MonsterName = Name;
 
 	m_STATE = ILLUSION_IDLE;
-	m_BeforeState = ILLUSION_IDLE;
 	m_WALK = ILLUSIONWALK_START;
 	m_IDLE = ILLUSIONIDLE_1;
 	m_ATTACK = ILLUSIONATTACK_1;
@@ -56,6 +55,18 @@ HRESULT CIllusioner::Ready_Object(const _vec3 & vPos, _tchar * Name)
 	m_pSphereTransCom->Set_Pos(vAnimationPos.x, vAnimationPos.y, vAnimationPos.z);
 	m_pSphereTransCom->Static_Update();
 
+	m_pSearchRange_TransCom->Set_Scale(&_vec3(15.f, 15.f, 15.f));
+	m_pSearchRange_TransCom->Set_Pos(vAnimationPos.x, vAnimationPos.y, vAnimationPos.z);
+	m_pSearchRange_TransCom->Static_Update();
+
+	m_pAttackRange_TransCom->Set_Scale(&_vec3(10.f, 10.f, 10.f));
+	m_pAttackRange_TransCom->Set_Pos(vAnimationPos.x, vAnimationPos.y, vAnimationPos.z);
+	m_pAttackRange_TransCom->Static_Update();
+
+	m_pRunawayRange_TransCom->Set_Scale(&_vec3(5.f, 5.f, 5.f));
+	m_pRunawayRange_TransCom->Set_Pos(vAnimationPos.x, vAnimationPos.y, vAnimationPos.z);
+	m_pRunawayRange_TransCom->Static_Update();
+
 	return S_OK;
 }
 
@@ -72,9 +83,20 @@ _int CIllusioner::Update_Object(const _float & fTimeDelta)
 	if (m_bFirst)
 	{
 		m_bFirst = false;
+
 		Engine::Get_Scene()->New_Layer(m_MonsterName);
 		pMyLayer = Engine::Get_Layer(m_MonsterName);
+
 		FAILED_CHECK_RETURN(Build(), -1);
+
+		Load_Animation(L"../../Data/ILLUSIONER/Illusion_Idle_1.dat", 0);
+		Load_Animation(L"../../Data/ILLUSIONER/Illusion_Idle_2.dat", 1);
+
+		Load_Animation(L"../../Data/ILLUSIONER/Illusion_Walk_Start.dat", 2);
+		Load_Animation(L"../../Data/ILLUSIONER/Illusion_Walk_1.dat", 3);
+		Load_Animation(L"../../Data/ILLUSIONER/Illusion_Walk_2.dat", 4);
+
+		Load_Animation(L"../../Data/ILLUSIONER/Illusion_Attack_1.dat", 5);
 	}
 
 	CMonster::Update_Object(fTimeDelta);
@@ -91,18 +113,29 @@ _int CIllusioner::Update_Object(const _float & fTimeDelta)
 		_vec3 vPos;
 		m_pTransCom->Get_Info(INFO_POS, &vPos);
 
+		_vec3 vSearchScale, vAttackScale, vRunScale;
+		m_pSearchRange_TransCom->Get_Scale(&vSearchScale);
+		m_pAttackRange_TransCom->Get_Scale(&vAttackScale);
+		m_pRunawayRange_TransCom->Get_Scale(&vRunScale);
+
+		_vec3 vDir;
+		vDir = vPlayerPos - vPos;
+		D3DXVec3Normalize(&vDir, &vDir);
+
 		m_fFrame += fTimeDelta;
 
-		if (m_pCollision->Sphere_Collision(this->m_pSphereTransCom, m_pPlayerTransCom, vPlayerScale.x, vScale.x) && m_fFrame < 2.f)
+		if (m_pCollision->Sphere_Collision(this->m_pRunawayRange_TransCom, m_pPlayerTransCom, vPlayerScale.x, vRunScale.x)/* && (m_STATE != FIREMAN_ATTACK)*/)
 		{
-			m_pTransCom->Chase_Target(&vPlayerPos, 1.f, fTimeDelta);
+			// 도망충돌
+			m_pTransCom->Chase_Target(&vPlayerPos, -5.f, fTimeDelta);
 			m_STATE = ILLUSION_WALK;
+			m_bRun = true;
 		}
-		else if (m_pCollision->Sphere_Collision(this->m_pSphereTransCom, m_pPlayerTransCom, vPlayerScale.x, vScale.x) && m_fFrame >= 2.f)
+		else if (m_pCollision->Sphere_Collision(this->m_pAttackRange_TransCom, m_pPlayerTransCom, vPlayerScale.x, vAttackScale.x))
 		{
+			// 공격충돌
 			m_pTransCom->Chase_Target(&vPlayerPos, 0.f, fTimeDelta);
 			m_STATE = ILLUSION_ATTACK;
-			_vec3 vDir = vPlayerPos - vPos;
 
 			if (m_AnimationTime >= 1.f)
 			{
@@ -119,18 +152,33 @@ _int CIllusioner::Update_Object(const _float & fTimeDelta)
 				Engine::Get_Layer(STAGE_DESTORYWALL)->Add_GameList(pGameObject);
 				m_fFrame = 0.f;
 			}
+			m_bRun = false;
 		}
-		else
+		else if (m_pCollision->Sphere_Collision(this->m_pSearchRange_TransCom, m_pPlayerTransCom, vPlayerScale.x, vSearchScale.x)/* && (m_STATE != FIREMAN_ATTACK)*/)
 		{
-			m_pTransCom->Chase_Target(&vPlayerPos, 0.f, fTimeDelta);
+			// 탐지충돌
+			m_pTransCom->Chase_Target(&vPlayerPos, 5.f, fTimeDelta);
+			m_STATE = ILLUSION_WALK;
+			m_bRun = false;
+		}
+		else if (m_STATE != ILLUSION_ATTACK)
+		{
 			m_STATE = ILLUSION_IDLE;
+			m_bRun = false;
 		}
 
+		Look_Direction();
 
 		_vec3 vMonsterPos;
 		m_pTransCom->Get_Info(INFO_POS, &vMonsterPos);
 		m_pHitBoxTransCom->Set_Pos(vMonsterPos.x, vMonsterPos.y, vMonsterPos.z);
 		m_pSphereTransCom->Set_Pos(vMonsterPos.x, vMonsterPos.y, vMonsterPos.z);
+
+		m_pSearchRange_TransCom->Set_Pos(vMonsterPos.x, vMonsterPos.y, vMonsterPos.z);
+		m_pAttackRange_TransCom->Set_Pos(vMonsterPos.x, vMonsterPos.y, vMonsterPos.z);
+		m_pRunawayRange_TransCom->Set_Pos(vMonsterPos.x, vMonsterPos.y, vMonsterPos.z);
+			
+
 	}
 	return 0;
 }
@@ -138,20 +186,25 @@ _int CIllusioner::Update_Object(const _float & fTimeDelta)
 void CIllusioner::LateUpdate_Object(void)
 {
 	Monster_Mapping();
-	if (!m_bFirst && (m_STATE == ILLUSION_WALK))
+
+
+	if (!m_bFirst)
 	{
-		Walk_Animation_Run();
-		Look_Direction();
-	}
-	else if (!m_bFirst && (m_STATE == ILLUSION_IDLE))
-	{
-		Idle_Animation_Run();
-		Look_Direction();
-	}
-	else if (!m_bFirst && (m_STATE == ILLUSION_ATTACK))
-	{
-		Attack_Animation_Run();
-		Look_Direction();
+		if (m_STATE == ILLUSION_WALK)
+		{
+			Walk_Animation_Run();
+			Run_Animation(5.f);
+		}
+		else if (m_STATE == ILLUSION_IDLE)
+		{
+			Idle_Animation_Run();
+			Run_Animation(5.f);
+		}
+		else if (m_STATE == ILLUSION_ATTACK)
+		{
+			Attack_Animation_Run();
+			Run_Animation(5.f);
+		}
 	}
 
 	CMonster::LateUpdate_Object();
@@ -159,14 +212,16 @@ void CIllusioner::LateUpdate_Object(void)
 
 void CIllusioner::Render_Object(void)
 {
-	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pHitBoxTransCom->Get_WorldMatrixPointer());
-	m_pHitBox->Render_Buffer();
+	//m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+	//m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pHitBoxTransCom->Get_WorldMatrixPointer());
+	//m_pHitBox->Render_Buffer();
 
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransCom->Get_WorldMatrixPointer());
-	m_pAnimationBox->Render_Buffer();
+	//m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransCom->Get_WorldMatrixPointer());
+	//m_pAnimationBox->Render_Buffer();
 
-	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+	////m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pSphereTransCom->Get_WorldMatrixPointer());
+	////m_pSphereBufferCom->Render_Buffer();
+	//m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransUICom->Get_WorldMatrixPointer());
 
@@ -226,6 +281,20 @@ HRESULT CIllusioner::Add_Component(void)
 	NULL_CHECK_RETURN(m_pSphereBufferCom, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Sphere_TransCom", pComponent });
 
+	///////////////////////////탐지///////////////////////////////////////////////////////
+	pComponent = m_pSearchRange_TransCom = dynamic_cast<CTransform*>(Clone_Proto(TRANSFORM_COMP));
+	NULL_CHECK_RETURN(m_pSphereBufferCom, E_FAIL);
+	m_mapComponent[ID_DYNAMIC].insert({ L"SearchRange", pComponent });
+
+	pComponent = m_pAttackRange_TransCom = dynamic_cast<CTransform*>(Clone_Proto(TRANSFORM_COMP));
+	NULL_CHECK_RETURN(m_pSphereBufferCom, E_FAIL);
+	m_mapComponent[ID_DYNAMIC].insert({ L"AttackRange", pComponent });
+
+	pComponent = m_pRunawayRange_TransCom = dynamic_cast<CTransform*>(Clone_Proto(TRANSFORM_COMP));
+	NULL_CHECK_RETURN(m_pSphereBufferCom, E_FAIL);
+	m_mapComponent[ID_DYNAMIC].insert({ L"RunawayRange", pComponent });
+	////////////////////////////////////////////////////////////////////////////////////////
+
 	// 추가
 	pComponent = m_pAnimationBox = dynamic_cast<CCubeCol*>(Clone_Proto(CUBECOL_COMP));
 	NULL_CHECK_RETURN(m_pSphereBufferCom, E_FAIL);
@@ -236,7 +305,6 @@ HRESULT CIllusioner::Add_Component(void)
 
 HRESULT CIllusioner::Create_Item()
 {
-
 	CGameObject*		pGameObject = nullptr;
 	_vec3 vItemPos;
 	m_pTransCom->Get_Info(INFO_POS, &vItemPos);
@@ -298,7 +366,7 @@ void CIllusioner::Free(void)
 
 HRESULT CIllusioner::Build(void)
 {
-	HANDLE      hFile = CreateFile(L"../../Data/ILLUSIONER/ILL06.dat",      // 파일의 경로와 이름	
+	HANDLE      hFile = CreateFile(L"../../Data/ILLUSIONER/Illusion.dat",      // 파일의 경로와 이름	
 		GENERIC_READ,         // 파일 접근 모드 (GENERIC_WRITE : 쓰기 전용, GENERIC_READ : 읽기 전용)
 		NULL,               // 공유 방식(파일이 열려있는 상태에서 다른 프로세스가 오픈할 때 허용할 것인가)    
 		NULL,               // 보안 속성(NULL을 지정하면 기본값 상태)
@@ -428,7 +496,7 @@ HRESULT CIllusioner::Build(void)
 	return S_OK;
 }
 
-void CIllusioner::Load_Animation(wstring FileName)
+void CIllusioner::Load_Animation(wstring FileName, _uint AnimationID)
 {
 	HANDLE      hFile = CreateFile(FileName.c_str(),      // 파일의 경로와 이름
 		GENERIC_READ,         // 파일 접근 모드 (GENERIC_WRITE : 쓰기 전용, GENERIC_READ : 읽기 전용)
@@ -475,7 +543,7 @@ void CIllusioner::Load_Animation(wstring FileName)
 		{
 			_matrix matAnimation;
 			ReadFile(hFile, &matAnimation, sizeof(D3DXMATRIX), &dwByte, nullptr);
-			Quaternion->Add_World(&matAnimation);
+			Quaternion->Fill_Animation(&matAnimation, AnimationID);
 		}
 
 		iSize--;
@@ -584,23 +652,10 @@ void CIllusioner::Look_Direction(void)
 
 void CIllusioner::Walk_Animation_Run(void)
 {
-	if (m_BeforeState != m_STATE)
-	{
-		list<pair<const _tchar*, CGameObject*>> ListBox = *(pMyLayer->Get_GamePairPtr());
-
-		for (auto& iter : ListBox)	//	모든 쿼터니언(애니메이션) 객체들에 대해 기존의 애니메이션 값을 전부 지워줌
-		{
-			CQuarternion* Qtan = dynamic_cast<CQuarternion*>(iter.second->Get_Component(L"Proto_QuaternionCom", ID_STATIC));
-			Qtan->Delete_WorldVector();
-		}
-
-		m_BeforeState = m_STATE;
-	}
+	list<pair<const _tchar*, CGameObject*>> ListBox = *(pMyLayer->Get_GamePairPtr());
 
 	if (m_AnimationTime >= 1.f)
 	{
-		list<pair<const _tchar*, CGameObject*>> ListBox = *(pMyLayer->Get_GamePairPtr());
-
 		for (auto& iter : ListBox)
 		{
 			CQuarternion* Qtan = dynamic_cast<CQuarternion*>(iter.second->Get_Component(L"Proto_QuaternionCom", ID_STATIC));
@@ -612,48 +667,24 @@ void CIllusioner::Walk_Animation_Run(void)
 		else if (m_WALK == ILLUSIONWALK_1)
 			m_WALK = ILLUSIONWALK_2;
 		else if (m_WALK == ILLUSIONWALK_2)
-			m_WALK = ILLUSIONWALK_2;
+			m_WALK = ILLUSIONWALK_1;
 
 		m_AnimationTime = 0.f;
 	}
 
-	//	bool/열거체 값에 따라 어떤 애니메이션을 불러올 것인지 결정
-	if (m_WALK == ILLUSIONWALK_START)
+	for (auto& iter : ListBox)	// 애니메이션 변경
 	{
-		Load_Animation(L"../../Data/ILLUSIONER/ILL_WALKING_START.dat");
-		Run_Animation(1.f);
-	}
-	else if (m_WALK == ILLUSIONWALK_1)
-	{
-		Load_Animation(L"../../Data/ILLUSIONER/ILL_WALKING07.dat");
-		Run_Animation(3.f);
-	}
-	else if (m_WALK == ILLUSIONWALK_2)
-	{
-		Load_Animation(L"../../Data/ILLUSIONER/ILL_WALKING08.dat");
-		Run_Animation(3.f);
+		CQuarternion* Qtan = dynamic_cast<CQuarternion*>(iter.second->Get_Component(L"Proto_QuaternionCom", ID_STATIC));
+		Qtan->Change_Animation(2 + m_WALK);
 	}
 }
 
 void CIllusioner::Idle_Animation_Run(void)
 {
-	if (m_BeforeState != m_STATE)
-	{
-		list<pair<const _tchar*, CGameObject*>> ListBox = *(pMyLayer->Get_GamePairPtr());
-
-		for (auto& iter : ListBox)	//	모든 쿼터니언(애니메이션) 객체들에 대해 기존의 애니메이션 값을 전부 지워줌
-		{
-			CQuarternion* Qtan = dynamic_cast<CQuarternion*>(iter.second->Get_Component(L"Proto_QuaternionCom", ID_STATIC));
-			Qtan->Delete_WorldVector();
-		}
-
-		m_BeforeState = m_STATE;
-	}
+	list<pair<const _tchar*, CGameObject*>> ListBox = *(pMyLayer->Get_GamePairPtr());
 
 	if (m_AnimationTime >= 1.f)
 	{
-		list<pair<const _tchar*, CGameObject*>> ListBox = *(pMyLayer->Get_GamePairPtr());
-
 		for (auto& iter : ListBox)
 		{
 			CQuarternion* Qtan = dynamic_cast<CQuarternion*>(iter.second->Get_Component(L"Proto_QuaternionCom", ID_STATIC));
@@ -668,51 +699,34 @@ void CIllusioner::Idle_Animation_Run(void)
 		m_AnimationTime = 0.f;
 	}
 
-	//	bool/열거체 값에 따라 어떤 애니메이션을 불러올 것인지 결정
-	if (m_IDLE == ILLUSIONIDLE_1)
+	for (auto& iter : ListBox)	// 애니메이션 변경
 	{
-		Load_Animation(L"../../Data/ILLUSIONER/ILL_IDLE5.dat");
-		Run_Animation(5.f);
-	}
-	else if (m_IDLE == ILLUSIONIDLE_2)
-	{
-		Load_Animation(L"../../Data/ILLUSIONER/ILL_IDLE6.dat");
-		Run_Animation(5.f);
+		CQuarternion* Qtan = dynamic_cast<CQuarternion*>(iter.second->Get_Component(L"Proto_QuaternionCom", ID_STATIC));
+		Qtan->Change_Animation(0 + m_IDLE);
 	}
 }
 
 void CIllusioner::Attack_Animation_Run(void)
 {
-	if (m_BeforeState != m_STATE)
-	{
-		list<pair<const _tchar*, CGameObject*>> ListBox = *(pMyLayer->Get_GamePairPtr());
-
-		for (auto& iter : ListBox)	//	모든 쿼터니언(애니메이션) 객체들에 대해 기존의 애니메이션 값을 전부 지워줌
-		{
-			CQuarternion* Qtan = dynamic_cast<CQuarternion*>(iter.second->Get_Component(L"Proto_QuaternionCom", ID_STATIC));
-			Qtan->Delete_WorldVector();
-		}
-
-		m_BeforeState = m_STATE;
-	}
+	list<pair<const _tchar*, CGameObject*>> ListBox = *(pMyLayer->Get_GamePairPtr());
 
 	if (m_AnimationTime >= 1.f)
 	{
-		list<pair<const _tchar*, CGameObject*>> ListBox = *(pMyLayer->Get_GamePairPtr());
-
 		for (auto& iter : ListBox)
 		{
 			CQuarternion* Qtan = dynamic_cast<CQuarternion*>(iter.second->Get_Component(L"Proto_QuaternionCom", ID_STATIC));
 			Qtan->Delete_WorldVector();
 		}
 
+		//if (m_ATTACK == FIREMANATTACK_1)
+		//	m_ATTACK = FIREMANATTACK_END;
+
 		m_AnimationTime = 0.f;
 	}
 
-	//	bool/열거체 값에 따라 어떤 애니메이션을 불러올 것인지 결정
-	if (m_ATTACK == ILLUSIONATTACK_1)
+	for (auto& iter : ListBox)	// 애니메이션 변경
 	{
-		Load_Animation(L"../../Data/ILLUSIONER/ILL_ATTACKING.dat");
-		Run_Animation(10.f);
+		CQuarternion* Qtan = dynamic_cast<CQuarternion*>(iter.second->Get_Component(L"Proto_QuaternionCom", ID_STATIC));
+		Qtan->Change_Animation(5 + m_ATTACK);
 	}
 }

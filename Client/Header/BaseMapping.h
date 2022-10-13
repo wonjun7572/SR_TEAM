@@ -19,6 +19,7 @@ public:
 	virtual void	Render_Object(void) override;
 	_bool			Get_Worldmap(void) { return m_bWorldmap; }
 	_bool			Get_Minimap(void) { return m_bMinimap; }
+	void			Switch_Worldmap(void) { m_bWorldmap = !m_bWorldmap; }
 	void			Key_Input(void);
 
 private:
