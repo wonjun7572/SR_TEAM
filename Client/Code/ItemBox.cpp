@@ -378,7 +378,7 @@ void CItemBox::Up_Animation_Run(void)
 			Qtan->Delete_WorldVector();
 		}
 
-		m_STATE = ITEMBOX_DOWN;
+		m_STATE = ITEMBOX_END;
 
 		m_AnimationTime = 0.f;
 	}

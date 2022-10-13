@@ -58,7 +58,6 @@ HRESULT CCubePlayer::Ready_Object(void)
 
 _int CCubePlayer::Update_Object(const _float & fTimeDelta)
 {
-
 	Update_NullCheck();
 	
 	m_fTimeDelta = fTimeDelta;

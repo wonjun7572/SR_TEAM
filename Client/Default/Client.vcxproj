@@ -162,6 +162,7 @@
   <ItemGroup>
     <ClInclude Include="..\Header\AnimationPlayer.h" />
     <ClInclude Include="..\Header\BaseMapping.h" />
+    <ClInclude Include="..\Header\BattleCursier.h" />
     <ClInclude Include="..\Header\BrownCloudEffect.h" />
     <ClInclude Include="..\Header\BubbleEffect.h" />
     <ClInclude Include="..\Header\Bullet.h" />
@@ -182,6 +183,7 @@
     <ClInclude Include="..\Header\CubeShop.h" />
     <ClInclude Include="..\Header\DynamicCamera.h" />
     <ClInclude Include="..\Header\FlameEffect.h" />
+    <ClInclude Include="..\Header\Flight.h" />
     <ClInclude Include="..\Header\IceEffect.h" />
     <ClInclude Include="..\Header\MiddleBoss.h" />
     <ClInclude Include="..\Header\Ping.h" />
@@ -299,6 +301,7 @@
   <ItemGroup>
     <ClCompile Include="..\Code\AnimationPlayer.cpp" />
     <ClCompile Include="..\Code\BaseMapping.cpp" />
+    <ClCompile Include="..\Code\BattleCursier.cpp" />
     <ClCompile Include="..\Code\BrownCloudEffect.cpp" />
     <ClCompile Include="..\Code\BubbleEffect.cpp" />
     <ClCompile Include="..\Code\Bullet.cpp" />
@@ -319,6 +322,7 @@
     <ClCompile Include="..\Code\CubeShop.cpp" />
     <ClCompile Include="..\Code\DynamicCamera.cpp" />
     <ClCompile Include="..\Code\FlameEffect.cpp" />
+    <ClCompile Include="..\Code\Flight.cpp" />
     <ClCompile Include="..\Code\IceEffect.cpp" />
     <ClCompile Include="..\Code\MiddleBoss.cpp" />
     <ClCompile Include="..\Code\Ping.cpp" />
