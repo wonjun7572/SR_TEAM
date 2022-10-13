@@ -66,7 +66,7 @@ void CPlayerMapping::LateUpdate_Object(void)
 	m_pTransformPlayer->Get_Info(INFO_POS, &vPos);
 	m_pTransform->Set_Pos(vPos.x, vPos.y, vPos.z);
 
-	if (!m_bWorldMap)
+	if (!m_bWorldMap && !m_bBombard)
 	{
 		m_pBombTransform->Set_Pos(vPos.x, vPos.y, vPos.z);
 	}

@@ -103,6 +103,16 @@ namespace Engine
 		_float fMaxHp;
 		_float fDamage;
 	}MONSTERABILITY;
+	
+	typedef struct tagMiddeMonster
+	{
+		std::wstring strObjTag;
+		_float fCurrentHp;
+		_float fMaxHp;
+		_float fDamage;
+	}MIDDLEBOSSABILITY;
+
+
 }
 
 

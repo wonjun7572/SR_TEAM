@@ -1,6 +1,10 @@
 #include "stdafx.h"
 #include "SparkEffect.h"
 #include "..\Header\Meteor.h"
+#include "RcEffect.h"
+#include "SparkEffect.h"
+#include "FlameEffect.h"
+
 
 CMeteor::CMeteor(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
@@ -22,6 +26,9 @@ HRESULT CMeteor::Ready_Object(const _vec3& Position)
 
 	m_pTransCom->Set_Scale(&_vec3(1.f, 1.f, 1.f));
 
+	m_fAttack = 10.f;
+	m_bSphereSkill = true;
+
 	return S_OK;
 }
 
@@ -39,6 +46,17 @@ _int CMeteor::Update_Object(const _float & fTimeDelta)
 
 	if (m_vPos.y <= 1.f)
 	{
+		//»ç¿ë¹ý
+		m_pEffect = CRcEffect::Create(m_pGraphicDev, EXPLOSION_EFT); //enum EFFECTID
+		dynamic_cast<CRcEffect*>(m_pEffect)->Set_EffectPos(m_vPos.x, m_vPos.y, m_vPos.z);//EFFECT POS
+		dynamic_cast<CRcEffect*>(m_pEffect)->Set_SingleUse();
+		if (!m_pFlameEffectParticle)
+			m_pFlameEffectParticle = dynamic_cast<CFlameEffect*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"FlameEffect"));
+		m_pFlameEffectParticle->Set_PclePos(m_vPos);
+		for (_int i = 0; i < 25; ++i)
+		{
+			m_pFlameEffectParticle->addParticle();
+		}
 		return -1;
 	}
 	Meteor_Effect();

@@ -119,8 +119,6 @@ _int CZombie::Update_Object(const _float & fTimeDelta)
 	m_pSearchRange_TransCom->Get_Scale(&vSearchScale);
 	m_pAttackRange_TransCom->Get_Scale(&vAttackScale);
 
-	//m_fFrame += fTimeDelta;
-
 	if (!Collision_Wall(fTimeDelta))
 	{
 		if (m_pCollision->Sphere_Collision(this->m_pAttackRange_TransCom, m_pPlayerTransCom, vPlayerScale.x, vAttackScale.x))
