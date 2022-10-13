@@ -366,9 +366,9 @@ HRESULT CStage::Ready_Layer_Character(const _tchar * pLayerTag)
 
 	CGameObject*		pGameObject = nullptr;
 
-	pGameObject = CAnimationPlayer::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"AnimationPlayer", pGameObject), E_FAIL);
+	//pGameObject = CAnimationPlayer::Create(m_pGraphicDev);
+	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"AnimationPlayer", pGameObject), E_FAIL);
 
 	//	¸Ó¸®
 	pGameObject = CCubeHead::Create(m_pGraphicDev);
@@ -725,23 +725,23 @@ HRESULT CStage::Ready_Layer_Trap(const _tchar * pLayerTag)
 	wsprintfW(szName, wName.c_str(), i);
 	NameList.push_back(szName);*/
 
-	pGameObject = CThorn::Create(m_pGraphicDev, _vec3(15.f, 0.f, 15.f), L"Thorn1");
+	pGameObject = CThorn::Create(m_pGraphicDev, _vec3(10.f, 0.f, 10.f), L"Thorn1");
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
 
-	pGameObject = CThorn::Create(m_pGraphicDev, _vec3(16.f, 0.f, 15.f), L"Thorn2");
+	pGameObject = CThorn::Create(m_pGraphicDev, _vec3(10.f, 0.f, 12.f), L"Thorn2");
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
 
-	pGameObject = CThorn::Create(m_pGraphicDev, _vec3(17.f, 0.f, 15.f), L"Thorn3");
+	pGameObject = CThorn::Create(m_pGraphicDev, _vec3(10.f, 0.f, 14.f), L"Thorn3");
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
 
-	pGameObject = CThorn::Create(m_pGraphicDev, _vec3(18.f, 0.f, 15.f), L"Thorn4");
+	pGameObject = CThorn::Create(m_pGraphicDev, _vec3(10.f, 0.f, 16.f), L"Thorn4");
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
 
-	pGameObject = CThorn::Create(m_pGraphicDev, _vec3(19.f, 0.f, 15.f), L"Thorn5");
+	pGameObject = CThorn::Create(m_pGraphicDev, _vec3(110.f, 0.f, 18.f), L"Thorn5");
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
 
@@ -749,7 +749,7 @@ HRESULT CStage::Ready_Layer_Trap(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
 
-	pGameObject = CItemBox::Create(m_pGraphicDev, _vec3(30.f, 0.5f, 20.f), L"ITEMBOX1");
+	pGameObject = CItemBox::Create(m_pGraphicDev, _vec3(30.f, 0.3f, 20.f), L"ITEMBOX1");
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
 

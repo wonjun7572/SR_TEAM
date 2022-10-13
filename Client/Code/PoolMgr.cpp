@@ -79,6 +79,7 @@ HRESULT CPoolMgr::Reuse_PlayerBullet(LPDIRECT3DDEVICE9 & pGraphicDev, const _vec
 		NULL_CHECK_RETURN(pObj, E_FAIL);
 		m_PlayerBulletPool.pop_front();
 
+		dynamic_cast<CSpBullet*>(pObj)->isAlive(true);
 		dynamic_cast<CSpBullet*>(pObj)->Set_Dir(*vDir);
 
 		Engine::Get_Layer(STAGE_BULLETPLAYER)->Add_GameList(pObj);
