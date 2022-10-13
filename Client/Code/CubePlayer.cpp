@@ -65,11 +65,13 @@ _int CCubePlayer::Update_Object(const _float & fTimeDelta)
 
 	FAILED_CHECK_RETURN(Get_BodyTransform(), -1);
 
+	CoolTimer();
+
 		// 이동, 애니메이션 관련
 		if (!(dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->Get_Switch())
 			&& !(dynamic_cast<CShop*>(Engine::Get_GameObject(STAGE_UI, L"Shop"))->Get_Switch()))
 		{
-			if (m_pBomb->Get_WorldMap() == false)
+			if (m_pBomb->Get_WorldMap() == false && (m_iKnuckStack == 0))
 			{
 				Move();
 			}
@@ -84,6 +86,19 @@ _int CCubePlayer::Update_Object(const _float & fTimeDelta)
 		}
 
 		Assemble();
+
+		if (Get_DIKeyState(DIK_UP))
+		{
+			//	넉백 테스트
+			//KnuckDown(1);
+			//SlowDown(1);
+		}
+		if (Get_DIKeyState(DIK_LSHIFT))
+		{
+			//	대시 테스트, 몬스터 방향으로만 가능하게 변경 예정
+			Dash();
+		}
+
 
 	CGameObject::Update_Object(fTimeDelta);
 
@@ -116,6 +131,59 @@ void CCubePlayer::LateUpdate_Object(void)
 
 void CCubePlayer::Render_Object(void)
 {
+}
+
+void CCubePlayer::CoolTimer(void)
+{
+	m_fGlobal_Cooltime += m_fTimeDelta;
+	m_iKnuckStack -= 1;
+	m_iDashStack -= 1;
+
+	if (m_fGlobal_Cooltime >= 1.f)
+		m_fGlobal_Cooltime = 1.f;
+	if (m_iKnuckStack < 0)
+		m_iKnuckStack = 0;
+	if (m_iDashStack < 0)
+		m_iDashStack = 0;
+	if (m_fSpeed < 10.f)
+		m_fSpeed += 1.f;
+
+	_vec3 vLook;
+	m_pBodyWorld->Get_Info(INFO_LOOK, &vLook);
+	D3DXVec3Normalize(&vLook, &vLook);
+
+	m_pBodyWorld->Move_Pos(&(vLook* m_iDashStack * m_fTimeDelta));
+
+	vLook *= -1.f;
+	m_pBodyWorld->Move_Pos(&(vLook * m_iKnuckStack * m_fTimeDelta));
+}
+
+void CCubePlayer::KnuckDown(const _float & fDamage)
+{
+	if (m_fGlobal_Cooltime >= 1.f)
+	{
+		m_tAbility->fHp -= fDamage;
+		m_iKnuckStack = 10;
+		m_fGlobal_Cooltime = 0;
+	}
+}
+
+void CCubePlayer::SlowDown(const _float & fDamage)
+{
+	if (m_fGlobal_Cooltime >= 1.f)
+	{
+		m_tAbility->fHp -= fDamage;
+		m_fGlobal_Cooltime = 0;
+	}
+	m_fSpeed = 3.f;
+}
+
+void CCubePlayer::Dash(void)
+{
+	if (D3DXVec3Length(&m_vDirection) != 0)
+	{
+		m_iDashStack = 10;
+	}
 }
 
 void CCubePlayer::Update_NullCheck()
@@ -502,6 +570,8 @@ void CCubePlayer::Move()
 	{
 		m_pBodyWorld->Move_Pos(&(vDir * m_fSpeed * m_fTimeDelta));
 	}
+
+	m_vDirection = vDir;
 }
 
 void CCubePlayer::TransAxis(void)

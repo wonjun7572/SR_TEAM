@@ -14,6 +14,7 @@ public:
 
 private:
 	HRESULT				Add_Component(void);
+	void				HitCheck(void);
 
 private:	//	애니메이션 관련
 	HRESULT				Build(void);

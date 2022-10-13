@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "..\Header\Magma.h"
 #include "TransAxisBox.h"
+#include "CubePlayer.h"
 
 CMagma::CMagma(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CTrap(pGraphicDev)
@@ -15,7 +16,7 @@ HRESULT CMagma::Ready_Object(const _vec3 & vPos, _tchar * Name)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
-	m_pTransCom->Set_Scale(1.f, 0.1f, 1.f);
+	m_pTransCom->Set_Scale(1.f, 0.5f, 1.f);
 	m_pTransCom->Set_Pos(vPos.x, vPos.y, vPos.z);
 	m_pTransCom->Static_Update();
 
@@ -39,6 +40,8 @@ _int CMagma::Update_Object(const _float & fTimeDelta)
 		Load_Animation(L"../../Data/Magma/MAGMA_UP.dat", 0);
 		Load_Animation(L"../../Data/Magma/MAGMA_DOWN.dat", 1);
 	}
+
+	HitCheck();
 
 	if (m_STATE == MAGMA_UP)
 	{
@@ -87,6 +90,18 @@ HRESULT CMagma::Add_Component(void)
 	m_mapComponent[ID_STATIC].insert({ COLLISION_COMP, pComponent });
 
 	return S_OK;
+}
+
+void CMagma::HitCheck(void)
+{
+	CLayer* pLayer = Engine::Get_Layer(STAGE_CHARACTER);
+	CCubePlayer* pPlayer = dynamic_cast<CCubePlayer*>(pLayer->Get_GameObject(L"PLAYER"));
+
+	CTransform* pPlayerTransform = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_CHARACTER, L"PLAYER", TRANSFORM_COMP, ID_DYNAMIC));
+	CHitBox* pPlayerHitbox = dynamic_cast<CHitBox*>(Engine::Get_Component(STAGE_CHARACTER, L"PLAYER", HITBOX_COMP, ID_STATIC));
+
+	if (m_pCollision->Collision_Square(pPlayerTransform, pPlayerHitbox, m_pTransCom, m_pHitBox))
+		pPlayer->SlowDown(5);
 }
 
 HRESULT CMagma::Build(void)
