@@ -28,6 +28,9 @@ public:
 	void	SetCheckFrustum(_bool Frustum) { m_bFrustumCheck = Frustum; }
 	_bool	GetCheckFrustum() { return m_bFrustumCheck; }
 
+	void	SetSphereSkill(_bool SphereSkill) { m_bSphereSkill = SphereSkill; }
+	_bool	GetSphereSkill() { return m_bSphereSkill; }
+
 private:
 	CComponent*		Find_Component(const _tchar* pComponentTag, COMPONENTID eID);
 
@@ -43,6 +46,8 @@ protected:
 	_int				m_iTexIndex = 0;
 
 	_bool				m_bFrustumCheck = true;
+
+	_bool				m_bSphereSkill = false;
 
 public:
 	virtual void	Free(void);

@@ -16,6 +16,9 @@
 #include "Inventory.h"
 #include "Shop.h"
 
+#include "Supporter_Uzi.h"
+#include "Ping.h"
+
 CCubePlayer::CCubePlayer(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
 {
@@ -138,23 +141,6 @@ void CCubePlayer::LateUpdate_Object(void)
 
 void CCubePlayer::Render_Object(void)
 {
-	/*m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
-	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
-
-	m_pHitBox->Render_Buffer();
-
-	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
-	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
-
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pSphereTransCom->Get_WorldMatrixPointer());
-	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
-
-	m_pSphereBufferCom->Render_Buffer();
-
-	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
-	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);*/
 }
 
 void CCubePlayer::CoolTimer(void)
@@ -212,8 +198,6 @@ void CCubePlayer::Dash(void)
 
 void CCubePlayer::Update_NullCheck()
 {
-	
-
 	if (!m_pShotParicle)
 		m_pShotParicle = dynamic_cast<CShotParticle*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"ShotParticle"));
 
@@ -236,10 +220,6 @@ void CCubePlayer::Set_OnTerrain(void)
 
 	_vec3		vPos;
 	m_pBodyWorld->Get_BeforeInfo(INFO_POS, &vPos);
-
-
-
-
 
 	Engine::CTerrainTex*	pTerrainTexCom = dynamic_cast<Engine::CTerrainTex*>(Engine::Get_Component(STAGE_ENVIRONMENT, L"Terrain", TERRAINTEX_COMP, ID_STATIC));
 	NULL_CHECK(pTerrainTexCom);
@@ -443,10 +423,8 @@ void CCubePlayer::Animation(void)
 
 void CCubePlayer::Move()
 {
-	////////////방향체크용////////////////
 	_vec3 vPos;
 	m_pBodyWorld->Get_Info(INFO_POS, &vPos);
-	////////////방향체크용////////////////
 
 	_vec3	vDir(0, 0, 0);
 	_vec3	vNormal(0, 0, 0);
@@ -524,10 +502,32 @@ void CCubePlayer::Move()
 			dynamic_cast<CBaseMapping*>(Engine::Get_GameObject(STAGE_MAPPING, L"BaseMapping"))->Switch_Worldmap();
 	}
 
-
 	if (Key_Down(DIK_G))
 	{
 		m_pProjectileParicle->addParticle();
+	}
+
+	if (Key_Down(DIK_T))
+	{
+		CTerrainTex*	pTerrainBufferCom = dynamic_cast<CTerrainTex*>(Engine::Get_Component(STAGE_ENVIRONMENT, L"Terrain", L"Proto_TerrainTexCom", ID_STATIC));
+		NULL_CHECK_RETURN(pTerrainBufferCom, );
+
+		CTransform*		pTerrainTransformCom = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_ENVIRONMENT, L"Terrain", TRANSFORM_COMP, ID_DYNAMIC));
+		NULL_CHECK_RETURN(pTerrainTransformCom, );
+
+		_vec3 vPos;
+		vPos = m_pCalculatorCom->Peek_Target_Vector(g_hWnd, &_vec3(0.f, 0.f, 0.f), pTerrainBufferCom, pTerrainTransformCom);
+		_vec3 vSetPos = _vec3(vPos.x, vPos.y + 0.5f, vPos.z);
+
+		CLayer* pLayer = Get_Layer(STAGE_SKILL);
+		CGameObject* pGameObject = CPing::Create(m_pGraphicDev, vSetPos);
+		NULL_CHECK_RETURN(pGameObject, );
+		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), );
+
+		for (auto& iter : Get_Layer(STAGE_SUPPORTER)->Get_GameList())
+		{
+			dynamic_cast<CSupporter_Uzi*>(iter)->SetOrdered(true);
+		}
 	}
 
 	if (Get_DIKeyState(DIK_SPACE))

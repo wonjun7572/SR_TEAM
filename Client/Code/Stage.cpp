@@ -75,6 +75,7 @@
 #include "ItemBox.h"
 
 #include "Supporter_Uzi.h"
+#include "MiddleBoss.h"
 
 CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CScene(pGraphicDev)
@@ -484,6 +485,17 @@ HRESULT CStage::Ready_Layer_Monster(const _tchar * pLayerTag)
 		wsprintfW(szName, wName.c_str(), i);
 		NameList.push_back(szName);
 		pGameObject = CIllusioner::Create(m_pGraphicDev, _vec3(_float(rand() % 4 + 10), 0.6f, _float(rand() % 4) + 27), szName);
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+	}
+
+	for (int i = 0; i < 1; ++i)
+	{
+		_tchar* szName = new _tchar[256]{};
+		wstring wName = L"MiddleBoss_%d";
+		wsprintfW(szName, wName.c_str(), i);
+		NameList.push_back(szName);
+		pGameObject = CMiddleBoss::Create(m_pGraphicDev, _vec3(109.f, 0.6f, 10.f), szName);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
 	}

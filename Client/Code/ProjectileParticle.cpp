@@ -152,15 +152,13 @@ void CProjectileParticle::Dead_Effect()
 {
 	for (list<ATTRIBUTE>::iterator iter = m_particles.begin(); iter != m_particles.end(); iter++)
 	{
-		/*if (!m_pFlameEffectParticle)
+	/*	if (!m_pFlameEffectParticle)
 			m_pFlameEffectParticle = dynamic_cast<CFlameEffect*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"FlameEffect"));
 		m_pFlameEffectParticle->Set_PclePos(m_vDeadPos);		
 		for (_int i = 0; i < 25; ++i)
 		{
 			m_pFlameEffectParticle->addParticle();
-		}
-*/
-
+		}*/
 
 		if (!m_pIceEffectParticle)
 			m_pIceEffectParticle = dynamic_cast<CIceEffect*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"IceEffect"));

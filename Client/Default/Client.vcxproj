@@ -183,6 +183,8 @@
     <ClInclude Include="..\Header\DynamicCamera.h" />
     <ClInclude Include="..\Header\FlameEffect.h" />
     <ClInclude Include="..\Header\IceEffect.h" />
+    <ClInclude Include="..\Header\MiddleBoss.h" />
+    <ClInclude Include="..\Header\Ping.h" />
     <ClInclude Include="..\Header\RcEffect.h" />
     <ClInclude Include="..\Header\SoundWave.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
@@ -318,6 +320,8 @@
     <ClCompile Include="..\Code\DynamicCamera.cpp" />
     <ClCompile Include="..\Code\FlameEffect.cpp" />
     <ClCompile Include="..\Code\IceEffect.cpp" />
+    <ClCompile Include="..\Code\MiddleBoss.cpp" />
+    <ClCompile Include="..\Code\Ping.cpp" />
     <ClCompile Include="..\Code\RcEffect.cpp" />
     <ClCompile Include="..\Code\SoundWave.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>

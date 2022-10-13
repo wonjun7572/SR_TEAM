@@ -1,7 +1,10 @@
 #pragma once
 #include "GameObject.h"
-#include "RcEffect.h"
-#include "SparkEffect.h"
+
+class CRcEffect;
+class CSparkEffect;
+class CFlameEffect;
+
 class CMeteor :	public CGameObject
 {
 private:
@@ -14,23 +17,26 @@ public:
 	virtual		void		LateUpdate_Object(void);
 	virtual		void		Render_Object(void);
 
+	_float		Get_Attack() { return m_fAttack; }
+
 private:
 	HRESULT					Add_Component(void);
 	void					Meteor_Effect(void);
 
-
 private:
-	CTransform*				m_pTransCom;
-	CSphereTex*				m_pSphereTex;
-	CTexture*				m_pTexture;
+	CTransform*				m_pTransCom = nullptr;
+	CSphereTex*				m_pSphereTex = nullptr;
+	CTexture*				m_pTexture = nullptr;
 	CGameObject*			m_pEffect = nullptr;
-	CSparkEffect*			 m_SparkEffectParticle = nullptr;
+	CSparkEffect*			m_SparkEffectParticle = nullptr;
+	CFlameEffect*			m_pFlameEffectParticle = nullptr;
 
 	_vec3					m_vTarget;
 	_vec3					m_vPos;
 	_float					m_fTimer = 0.f;
 	_float					m_fParticleTimer = 0.f;
 
+	_float					m_fAttack = 0.f;
 
 public:
 	static CMeteor*	Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3& Position);
