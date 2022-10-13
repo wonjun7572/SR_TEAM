@@ -1,5 +1,6 @@
 #pragma once
 #include "ItemIcon.h"
+#include "RcEffect.h"
 #include "GameObject.h"
 #include "Weapon.h"
 USING(Engine)
