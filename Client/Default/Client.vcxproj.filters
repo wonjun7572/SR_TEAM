@@ -259,6 +259,9 @@
     <Filter Include="02. GameObject\01. For_Stage\19. Effect">
       <UniqueIdentifier>{6064013c-b6da-49f6-94eb-d51444bbc0f5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\20. BillBoard">
+      <UniqueIdentifier>{97ebe466-2b13-4a05-8c1a-2b85aa2672b3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -639,6 +642,9 @@
     <ClInclude Include="..\Header\SparkEffect.h">
       <Filter>99. Default\헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\Ping.h">
+      <Filter>02. GameObject\01. For_Stage\20. BillBoard</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -997,6 +1003,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\SparkEffect.cpp">
       <Filter>99. Default\소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Ping.cpp">
+      <Filter>02. GameObject\01. For_Stage\20. BillBoard</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

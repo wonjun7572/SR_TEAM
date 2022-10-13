@@ -32,7 +32,6 @@ _int CLogoBilboard::Update_Object(const _float & fTimeDelta)
 void CLogoBilboard::LateUpdate_Object(void)
 {
 	CGameObject::LateUpdate_Object();
-
 }
 
 void CLogoBilboard::Render_Object(void)
