@@ -963,6 +963,14 @@ void CMiddleBoss::Free(void)
 	{
 		Safe_Delete_Array(iter);
 	}
+
+
+	for (auto& iter : m_listMonsterCnt)
+	{
+		if (iter != nullptr)
+			delete iter;
+	}
+
 	
 	m_listMonsterCnt.clear();	
 	CGameObject::Free();
