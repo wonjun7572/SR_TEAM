@@ -40,6 +40,8 @@ private:
 	HRESULT			Ready_Layer_DestroyWall(const _tchar* pLayerTag);
 	HRESULT			Ready_Layer_Skill(const _tchar* pLayerTag);
 
+	HRESULT			Ready_Layer_Creature(const _tchar* pLayerTag);
+
 
 	//	파츠 레이어
 	HRESULT			Ready_Layer_Player(const _tchar* pLayerTag);
