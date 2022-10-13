@@ -15,6 +15,8 @@ public:
 private:
 	HRESULT				Add_Component(void);
 
+	CTransform*			m_pPlayerTransCom = nullptr;
+
 private:	//	애니메이션 관련
 	HRESULT				Build(void);
 	void				Load_Animation(wstring FileName, _uint AnimationID);
