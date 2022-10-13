@@ -17,7 +17,7 @@ HRESULT CThorn::Ready_Object(const _vec3 & vPos, _tchar* Name)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
-	m_pTransCom->Set_Scale(0.3f, 0.6f, 0.3f);
+	m_pTransCom->Set_Scale(1.f, 1.f, 1.f);
 	m_pTransCom->Set_Pos(vPos.x, vPos.y, vPos.z);
 	m_pTransCom->Static_Update();
 
@@ -44,7 +44,7 @@ _int CThorn::Update_Object(const _float & fTimeDelta)
 
 	if (m_STATE == THORN_UP)
 	{
-		m_pTransCom->Set_Scale(0.3f, 0.6f, 0.3f);
+		m_pTransCom->Set_Scale(1.f, 1.f, 1.f);
 		m_pTransCom->Static_Update();
 		HitCheck();
 		Up_Animation_Run();

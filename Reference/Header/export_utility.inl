@@ -140,4 +140,5 @@ inline void			Release_Utility(void)
 	CRenderer::GetInstance()->DestroyInstance();
 	CProtoMgr::GetInstance()->DestroyInstance();
 	CManagement::GetInstance()->DestroyInstance();
+	CFrustumCullMgr::GetInstance()->DestroyInstance();
 }
