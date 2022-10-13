@@ -922,6 +922,25 @@ _int CCollision::Wall_Collision_By_DotSliding_For_Monster(_vec3* vChangeDir, CTr
 	return -1;
 }
 
+_bool CCollision::Collision_Square(CTransform * pSrcTrans, CHitBox * pSrcHit, CTransform * pDstTrans, CHitBox * pDstHit)
+{
+	pSrcHit->Get_MinMax(&m_vMin1, &m_vMax1);
+	pDstHit->Get_MinMax(&m_vMin2, &m_vMax2);
+
+	D3DXVec3TransformCoord(&m_vMin1, &m_vMin1, pSrcTrans->Get_WorldMatrixPointer());
+	D3DXVec3TransformCoord(&m_vMax1, &m_vMax1, pSrcTrans->Get_WorldMatrixPointer());
+	D3DXVec3TransformCoord(&m_vMin2, &m_vMin2, pDstTrans->Get_WorldMatrixPointer());
+	D3DXVec3TransformCoord(&m_vMax2, &m_vMax2, pDstTrans->Get_WorldMatrixPointer());
+
+	if (m_vMin1.x <= m_vMax2.x && m_vMax1.x >= m_vMin2.x &&
+		m_vMin1.y <= m_vMax2.y && m_vMax1.y >= m_vMin2.y &&
+		m_vMin1.z <= m_vMax2.z && m_vMax1.z >= m_vMin2.z)
+	{
+		return true;
+	}
+	return false;
+}
+
 void CCollision::Get_Item(void)
 {
 	CLayer* pLayer = Engine::Get_Layer(STAGE_ITEM);

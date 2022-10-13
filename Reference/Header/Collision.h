@@ -25,6 +25,8 @@ public:
 	_int		Wall_Collision_For_Monster(_vec3* vNorm, CTransform* pTransform, CHitBox* pHitBox);
 	_int		Wall_Collision_By_DotSliding_For_Monster(_vec3* vChangeDir, CTransform* pTransform, CHitBox* pHitBox);
 
+	_bool		Collision_Square(CTransform* pSrcTrans, CHitBox* pSrcHit, CTransform* pDstTrans, CHitBox* pDstHit);
+
 	void		Get_Item(void);
 	void		Get_GunItem();
 
