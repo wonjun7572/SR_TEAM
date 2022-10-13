@@ -37,7 +37,7 @@ _int CTransAxisBox::Update_Object(const _float & fTimeDelta)
 	}
 
 	Engine::CGameObject::Update_Object(fTimeDelta);
-	Add_RenderGroup(RENDER_NONALPHA, this);
+	Add_RenderGroup(RENDER_ANIOBJ, this);
 
 	_matrix matWorld, matParent;
 	D3DXMatrixIdentity(&matWorld);

@@ -16,11 +16,6 @@
 #include "CubeFoot.h"
 #include "CubeHand.h"
 
-#include "CubeMonster.h"
-#include "CubeMonsterArm.h"
-#include "CubeMonsterBody.h"
-#include "CubeMonsterHead.h"
-
 #include "Uzi.h"
 #include "Shotgun.h"
 #include "Sniper.h"
@@ -775,9 +770,9 @@ HRESULT CStage::Ready_Layer_Supporter(const _tchar * pLayerTag)
 
 	CGameObject*		pGameObject = nullptr;
 
-	/*pGameObject = CSupporter_Uzi::Create(m_pGraphicDev, _vec3(20.f, 0.5f, 20.f), L"SUPPORT_UZI");
+	pGameObject = CSupporter_Uzi::Create(m_pGraphicDev, _vec3(20.f, 0.5f, 20.f), L"SUPPORT_UZI");
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);*/
+	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 

@@ -438,18 +438,6 @@
     <ClInclude Include="..\Header\ToolScene.h">
       <Filter>01. Scene\10. ToolScene</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\CubeMonster.h">
-      <Filter>02. GameObject\01. For_Stage\08. Monster\00. CubeMonster</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CubeMonsterArm.h">
-      <Filter>02. GameObject\01. For_Stage\08. Monster\00. CubeMonster\00. CubeMonsterArm</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CubeMonsterBody.h">
-      <Filter>02. GameObject\01. For_Stage\08. Monster\00. CubeMonster\01. CubeMonsterBody</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CubeMonsterHead.h">
-      <Filter>02. GameObject\01. For_Stage\08. Monster\00. CubeMonster\02. CubeMonsterHead</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\PlayButton.h">
       <Filter>01. Scene\00. Logo\00. Button\01. PlayButton</Filter>
     </ClInclude>
@@ -639,6 +627,9 @@
     <ClInclude Include="..\Header\BubbleEffect.h">
       <Filter>99. Default\헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CloudEffect.h">
+      <Filter>99. Default\헤더 파일</Filter>
+    </ClInclude>
     <ClInclude Include="..\Header\RcEffect.h">
       <Filter>99. Default\헤더 파일</Filter>
     </ClInclude>
@@ -647,12 +638,6 @@
     </ClInclude>
     <ClInclude Include="..\Header\SparkEffect.h">
       <Filter>99. Default\헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CloudEffect.h">
-      <Filter>02. GameObject\01. For_Stage\12. Particle</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\BrownCloudEffect.h">
-      <Filter>02. GameObject\01. For_Stage\12. Particle</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -817,18 +802,6 @@
     </ClCompile>
     <ClCompile Include="..\Code\ToolScene.cpp">
       <Filter>01. Scene\10. ToolScene</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\CubeMonster.cpp">
-      <Filter>02. GameObject\01. For_Stage\08. Monster\00. CubeMonster</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\CubeMonsterArm.cpp">
-      <Filter>02. GameObject\01. For_Stage\08. Monster\00. CubeMonster\00. CubeMonsterArm</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\CubeMonsterBody.cpp">
-      <Filter>02. GameObject\01. For_Stage\08. Monster\00. CubeMonster\01. CubeMonsterBody</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\CubeMonsterHead.cpp">
-      <Filter>02. GameObject\01. For_Stage\08. Monster\00. CubeMonster\02. CubeMonsterHead</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\PlayButton.cpp">
       <Filter>01. Scene\00. Logo\00. Button\01. PlayButton</Filter>
@@ -1013,6 +986,9 @@
     <ClCompile Include="..\Code\BubbleEffect.cpp">
       <Filter>99. Default\소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\CloudEffect.cpp">
+      <Filter>99. Default\소스 파일</Filter>
+    </ClCompile>
     <ClCompile Include="..\Code\RcEffect.cpp">
       <Filter>99. Default\소스 파일</Filter>
     </ClCompile>
@@ -1021,12 +997,6 @@
     </ClCompile>
     <ClCompile Include="..\Code\SparkEffect.cpp">
       <Filter>99. Default\소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\CloudEffect.cpp">
-      <Filter>02. GameObject\01. For_Stage\12. Particle</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\BrownCloudEffect.cpp">
-      <Filter>02. GameObject\01. For_Stage\12. Particle</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

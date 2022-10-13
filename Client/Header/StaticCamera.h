@@ -3,6 +3,7 @@
 #include "Camera.h"
 #include "Engine_Include.h"
 #include "Export_Function.h"
+#include "FrustumCullMgr.h"
 
 class CStaticCamera : public Engine::CCamera
 {
