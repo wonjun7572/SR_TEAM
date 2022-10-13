@@ -3,6 +3,7 @@
 #include "TransAxisBox.h"
 #include "PoolMgr.h"
 
+
 CSupporter_Uzi::CSupporter_Uzi(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CSupporter(pGraphicDev)
 {
@@ -81,7 +82,40 @@ _int CSupporter_Uzi::Update_Object(const _float & fTimeDelta)
 	m_pPlayerTransCom->Get_Info(INFO_POS, &vPlayerPos);
 
 	//	플레이어가 근처에 없으면 따라가기
-	if (!m_pCollision->Sphere_Collision(this->m_pSphereTransCom, m_pPlayerTransCom, vPlayerScale.x, vScale.x) && (m_STATE != UZISUPPORT_ATTACK))
+	if (m_bGetOrder)
+	{
+		if (!m_bOrdering)
+		{
+			CTerrainTex*	pTerrainBufferCom = dynamic_cast<CTerrainTex*>(Engine::Get_Component(STAGE_ENVIRONMENT, L"Terrain", L"Proto_TerrainTexCom", ID_STATIC));
+			NULL_CHECK_RETURN(pTerrainBufferCom, 0);
+
+			CTransform*		pTerrainTransformCom = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_ENVIRONMENT, L"Terrain", TRANSFORM_COMP, ID_DYNAMIC));
+			NULL_CHECK_RETURN(pTerrainTransformCom, 0);
+
+			_vec3 vPos;
+			vPos = m_pCalculatorCom->Peek_Target_Vector(g_hWnd, &_vec3(0.f, 0.f, 0.f), pTerrainBufferCom, pTerrainTransformCom);
+			_vec3 vSetPos = _vec3(vPos.x, vPos.y + 0.5f, vPos.z);
+			
+			m_vOrderPos = vSetPos;
+			m_bGetOrder = true;
+			m_bOrdering = true;
+		}
+
+		m_pTransform->Chase_Target(&m_vOrderPos, 5.f, fTimeDelta);
+	
+		_vec3 vPosition;
+		m_pTransform->Get_Info(INFO_POS, &vPosition);
+
+		if (fabs(m_vOrderPos.x - vPosition.x) < 1.f &&
+			fabs(m_vOrderPos.y - vPosition.y) < 1.f &&
+			fabs(m_vOrderPos.z - vPosition.z) < 1.f)
+		{
+			m_bGetOrder = false;
+			m_bOrdering = false;
+		}
+		m_STATE = UZISUPPORT_WALK;
+	}
+	else if (!m_pCollision->Sphere_Collision(this->m_pSphereTransCom, m_pPlayerTransCom, vPlayerScale.x, vScale.x) && (m_STATE != UZISUPPORT_ATTACK))
 	{
 		m_pTransform->Chase_Target(&vPlayerPos, 5.f, fTimeDelta);
 		m_STATE = UZISUPPORT_WALK;
@@ -184,7 +218,6 @@ HRESULT CSupporter_Uzi::Add_Component(void)
 	m_mapComponent[ID_DYNAMIC].insert({ L"m_pSphereTransCom", pComponent });
 
 	return S_OK;
-
 }
 
 void CSupporter_Uzi::Look_Direction(void)

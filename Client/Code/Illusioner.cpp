@@ -137,7 +137,7 @@ _int CIllusioner::Update_Object(const _float & fTimeDelta)
 			m_pTransCom->Chase_Target(&vPlayerPos, 0.f, fTimeDelta);
 			m_STATE = ILLUSION_ATTACK;
 
-			if (m_AnimationTime >= 1.f)
+			if (m_fFrame >= 2.f)
 			{
 				_vec3 vWallPos;
 				m_pTransCom->Get_Info(INFO_POS, &vWallPos);
@@ -146,7 +146,7 @@ _int CIllusioner::Update_Object(const _float & fTimeDelta)
 				m_pTransCom->Get_Info(INFO_LOOK, &vLook);
 				D3DXVec3Normalize(&vLook, &vLook);
 
-				CGameObject* pGameObject = CTargetCube::Create(m_pGraphicDev, _vec3(vWallPos.x + (vLook.x * 4.f), vWallPos.y - 3.f, vWallPos.z + (vLook.z * 4.f)), _vec3(0.f, 1.f, 0.f), _vec3(0.5f, 1.f, 0.5f), 13);
+				CGameObject* pGameObject = CTargetCube::Create(m_pGraphicDev, _vec3(vWallPos.x + (vLook.x * 4.f), vWallPos.y - 3.f, vWallPos.z + (vLook.z * 4.f)), _vec3(0.f, 1.f, 0.f), _vec3(1.f, 1.f, 0.5f), 13);
 
 				NULL_CHECK_RETURN(pGameObject, E_FAIL);
 				Engine::Get_Layer(STAGE_DESTORYWALL)->Add_GameList(pGameObject);
