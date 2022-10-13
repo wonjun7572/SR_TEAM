@@ -168,29 +168,6 @@ _int CFireMan::Update_Object(const _float & fTimeDelta)
 		
 		Look_Direction();
 
-		/*if (m_pCollision->Sphere_Collision(this->m_pSphereTransCom, m_pPlayerTransCom, vPlayerScale.x, vScale.x) && m_fFrame < 2.f)
-		{
-			m_pTransCom->Chase_Target(&vPlayerPos, 1.f, fTimeDelta);
-			m_STATE = FIREMAN_WALK;
-		}
-		else if (m_pCollision->Sphere_Collision(this->m_pSphereTransCom, m_pPlayerTransCom, vPlayerScale.x, vScale.x) && m_fFrame >= 2.f)
-		{
-			m_pTransCom->Chase_Target(&vPlayerPos, 0.f, fTimeDelta);
-			m_STATE = FIREMAN_ATTACK;
-			_vec3 vDir = vPlayerPos - vPos;
-			if (m_AnimationTime >= 1.f)
-			{
-				CPoolMgr::GetInstance()->Reuse_Obj(m_pGraphicDev, &vPos, &vDir, m_tAbility->fDamage);
-			
-				m_fFrame = 0.f;
-			}
-		}
-		else
-		{
-			m_pTransCom->Chase_Target(&vPlayerPos, 0.f, fTimeDelta);
-			m_STATE = FIREMAN_IDLE;
-		}*/
-
 		_vec3 vMonsterPos;
 		m_pTransCom->Get_Info(INFO_POS, &vMonsterPos);
 		m_pHitBoxTransCom->Set_Pos(vMonsterPos.x, vMonsterPos.y, vMonsterPos.z);
@@ -232,16 +209,16 @@ void CFireMan::LateUpdate_Object(void)
 
 void CFireMan::Render_Object(void)
 {
-	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pHitBoxTransCom->Get_WorldMatrixPointer());
-	m_pHitBox->Render_Buffer();
+	//m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+	//m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pHitBoxTransCom->Get_WorldMatrixPointer());
+	//m_pHitBox->Render_Buffer();
 
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransCom->Get_WorldMatrixPointer());
-	m_pAnimationBox->Render_Buffer();
+	//m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransCom->Get_WorldMatrixPointer());
+	//m_pAnimationBox->Render_Buffer();
 
-	//m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pSphereTransCom->Get_WorldMatrixPointer());
-	//m_pSphereBufferCom->Render_Buffer();
-	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+	////m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pSphereTransCom->Get_WorldMatrixPointer());
+	////m_pSphereBufferCom->Render_Buffer();
+	//m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransUICom->Get_WorldMatrixPointer());
 
