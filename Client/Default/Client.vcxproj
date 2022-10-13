@@ -162,6 +162,7 @@
   <ItemGroup>
     <ClInclude Include="..\Header\AnimationPlayer.h" />
     <ClInclude Include="..\Header\BaseMapping.h" />
+    <ClInclude Include="..\Header\BrownCloudEffect.h" />
     <ClInclude Include="..\Header\BubbleEffect.h" />
     <ClInclude Include="..\Header\Bullet.h" />
     <ClInclude Include="..\Header\BulletUI.h" />
@@ -300,6 +301,7 @@
   <ItemGroup>
     <ClCompile Include="..\Code\AnimationPlayer.cpp" />
     <ClCompile Include="..\Code\BaseMapping.cpp" />
+    <ClCompile Include="..\Code\BrownCloudEffect.cpp" />
     <ClCompile Include="..\Code\BubbleEffect.cpp" />
     <ClCompile Include="..\Code\Bullet.cpp" />
     <ClCompile Include="..\Code\BulletParicle.cpp" />

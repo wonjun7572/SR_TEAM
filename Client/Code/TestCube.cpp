@@ -2,8 +2,9 @@
 #include "TestCube.h"
 #include "WallMapping.h"
 #include "LetterBox.h"
-
 #include "Export_Function.h"
+#include "CubePlayer.h"
+
 static _int m_iMappingCnt = 0;
 static _int m_iLetterCnt = 0;
 
@@ -36,6 +37,10 @@ HRESULT CTestCube::Ready_Object(int PosX, int PosY)
 
 _int CTestCube::Update_Object(const _float& fTimeDelta)
 {
+	if (m_bDead)
+	{
+		return -1;
+	}
 	Update_NullCheck();
 	CGameObject::Update_Object(fTimeDelta);
 	if (!(dynamic_cast<CBaseMapping*>(Engine::Get_GameObject(STAGE_MAPPING, L"BaseMapping"))->Get_Worldmap()))
@@ -44,7 +49,7 @@ _int CTestCube::Update_Object(const _float& fTimeDelta)
 	}
 	Wall_Mapping();
 	Interact();
-		
+	m_fTimer += fTimeDelta;
 	return 0;
 }
 
@@ -116,6 +121,7 @@ void CTestCube::Update_NullCheck()
 		m_pMonsterParticle = dynamic_cast<CMonsterParticle*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"MonsterParticle"));
 }
 
+
 HRESULT CTestCube::Interact(void)
 {
 	CGameObject*		pGameObject = nullptr;
@@ -131,18 +137,18 @@ HRESULT CTestCube::Interact(void)
 	vDir = vPos - vPlayerPos;
 	fDistance = D3DXVec3Length(&vDir);
 	
-	if (fDistance <= 10.f)
+	if (fDistance <= 12.f)
 	{
 		m_bSwitch = true;
 	}
-	if (fDistance > 10.f)
+	if (fDistance > 12.f)
 	{
 		m_bSwitch = false;
 	}
 
 	if (!m_bLetterboxInit&& m_bSwitch)
 	{
-		if (m_iTexIndex == 37 || m_iTexIndex == 45 || m_iTexIndex == 99)
+		if (m_iTexIndex == 37 || m_iTexIndex == 99)
 		{
 			m_bLetterboxInit = true;
 
@@ -168,6 +174,23 @@ HRESULT CTestCube::Interact(void)
 			}
 	}	
 
+	if (m_bSwitch && Get_DIKeyState(DIK_E))
+	{
+		if (m_iTexIndex == 45) //초록색문
+		{
+			if (vPos.y <= 5)
+			{
+				m_bDead = true;
+				//m_bDoorUp = true;
+				m_bCameraShaking = true;
+				for (_int i = 0; i < 15; ++i)
+				{
+					m_pBrownCloudEffect->addParticle();
+				};
+			}
+		}
+	}
+
 	if (m_bSwitch && m_pLetterBox != nullptr)
 	{
 		dynamic_cast<CLetterBox*>(m_pLetterBox)->On_Switch();
@@ -177,6 +200,14 @@ HRESULT CTestCube::Interact(void)
 		dynamic_cast<CLetterBox*>(m_pLetterBox)->Off_Switch();
 	}
 
+	if (m_bSwitch &&m_iTexIndex == 45)
+	{
+		m_bDoorFall = true;
+	}
+	if (!m_bSwitch &&m_iTexIndex == 45)
+	{
+		m_bDoorUp = true;
+	}
 	if(m_bDoorOpen)
 	{ 
 		if (vPos.y > -15)
@@ -184,6 +215,48 @@ HRESULT CTestCube::Interact(void)
 			vPos.y -= 0.1f;
 			m_pTransCom->Set_Pos(vPos.x, vPos.y, vPos.z);
 		}
+	}
+
+	if (m_bDoorFall&&!m_bDoorUp)
+	{
+		if (m_pStaticCam == nullptr)
+			m_pStaticCam = dynamic_cast<CStaticCamera*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"StaticCamera"));
+		if (!m_pBrownCloudEffect)
+			m_pBrownCloudEffect = dynamic_cast<CBrownCloudEffect*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"BrownCloudEffect"));
+		m_pBrownCloudEffect->Set_PclePos(vPos);
+		if (vPos.y > 5)
+		{
+			vPos.y -= 1.f;
+			m_pTransCom->Set_Pos(vPos.x, vPos.y, vPos.z);
+			m_fTimer = 0.f;
+		}
+		if (vPos.y <= 5)
+		{
+		
+			m_bDoorFall = false;	
+
+			if (m_bCameraShaking)
+			{
+				m_pStaticCam->CameraShaking();
+				for (_int i = 0; i < 15; ++i)
+					{
+						m_pBrownCloudEffect->addParticle();
+					}
+				if (m_fTimer > 0.5f)
+					m_bCameraShaking = false;
+			}
+		}
+	}
+	if (m_bDoorUp&&!m_bDoorFall)
+	{
+		if (vPos.y < 10)
+		{
+			vPos.y += 0.5f;
+			m_pTransCom->Set_Pos(vPos.x, vPos.y, vPos.z);
+		}
+		if (vPos.y >= 10)
+			m_bDoorUp = false;
+		m_bCameraShaking = true;
 	}
 
 	return S_OK;

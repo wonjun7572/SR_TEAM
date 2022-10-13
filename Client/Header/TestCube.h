@@ -1,6 +1,8 @@
 #pragma once
 #include "GameObject.h"
 #include "MonsterParticle.h"
+#include "BrownCloudEffect.h"
+#include "StaticCamera.h"
 BEGIN(Engine)
 
 class CTexture;
@@ -60,8 +62,15 @@ private: // 문 상호작용 관련
 	_bool				m_bSwitch = false;
 	_bool				m_bLetterboxInit = false;
 	_bool				m_bDoorOpen = false;
+	_bool				m_bDoorFall = false;
+	_bool				m_bDoorUp = false;
+	_bool				m_bCameraShaking = false;
+	_float				m_fTimer = 0.f;
+
 	wstring				m_strPress;
 	CGameObject*		m_pLetterBox = nullptr;
+	CBrownCloudEffect* m_pBrownCloudEffect = nullptr;
+	CStaticCamera*		m_pStaticCam = nullptr;
 
 	CMonsterParticle* m_pMonsterParticle = nullptr;
 

@@ -25,7 +25,7 @@ public:
 	const _matrix* GetProjmatrix()  { return &m_matProj; }
 
 	void		HitPlayer() { m_bPlayerHit = true; }
-
+	void		CameraShaking() { m_bEarthQuake = true; }
 private:
 	void		Key_Input(const _float& fTimeDelta);
 	void		Mouse_Fix();
@@ -44,6 +44,7 @@ private:
 	_int			m_iReverse = 1;
 	_float			m_fFrame = 0.f;
 	_bool			m_bPlayerHit = false;
+	_bool			m_bEarthQuake = false;
 
 public:
 	static CStaticCamera*		Create(LPDIRECT3DDEVICE9 pGraphicDev,

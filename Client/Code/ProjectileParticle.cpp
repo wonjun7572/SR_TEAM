@@ -162,14 +162,14 @@ void CProjectileParticle::Dead_Effect()
 */
 
 
-		/*if (!m_pIceEffectParticle)
+		if (!m_pIceEffectParticle)
 			m_pIceEffectParticle = dynamic_cast<CIceEffect*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"IceEffect"));
 		m_pIceEffectParticle->Set_PclePos(m_vDeadPos);
 		for (_int i = 0; i < 100; ++i)
 		{
 			m_pIceEffectParticle->addParticle();
 		}
-*/
+
 
 	/*	if (!m_pBubbleEffectParticle)
 			m_pBubbleEffectParticle = dynamic_cast<CBubbleEffect*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"BubbleEffect"));
