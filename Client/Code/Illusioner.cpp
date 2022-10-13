@@ -6,7 +6,7 @@
 #include "PoolMgr.h"
 #include "ComboUI.h"
 #include "TargetCube.h"
-
+#include "RcEffect.h"
 #include "TransAxisBox.h"
 
 USING(Engine)
@@ -134,6 +134,13 @@ _int CIllusioner::Update_Object(const _float & fTimeDelta)
 		else if (m_pCollision->Sphere_Collision(this->m_pAttackRange_TransCom, m_pPlayerTransCom, vPlayerScale.x, vAttackScale.x))
 		{
 			// 공격충돌
+				m_pEffect = CRcEffect::Create(m_pGraphicDev, CASTINGEFFECT_EFT); //enum EFFECTID
+				dynamic_cast<CRcEffect*>(m_pEffect)->Set_EffectPos(vPos.x, vPos.y, vPos.z);//EFFECT POS		포지션
+				//dynamic_cast<CRcEffect*>(m_pEffect)->Set_SingleUse();				//한번돌고나면 없어지는것
+				dynamic_cast<CRcEffect*>(m_pEffect)->Dead_Timer(0.01f);				//시간동안 유지되는것 
+			
+
+
 			m_pTransCom->Chase_Target(&vPlayerPos, 0.f, fTimeDelta);
 			m_STATE = ILLUSION_ATTACK;
 
