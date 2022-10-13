@@ -8,6 +8,7 @@ class CShotParticle;
 class CBulletParticle;
 class CProjectileParticle;
 class CPlayerMapping;
+class CRcEffect;
 
 class CCubePlayer : public CGameObject
 {
@@ -166,7 +167,7 @@ private:
 	_bool				m_MappingInit = false;
 	CTransform*			m_pBaseMapping = nullptr;
 	list<TCHAR*>		m_listMonsterCnt;
-
+	CGameObject*			m_pEffect = nullptr;
 public:
 	void			Capture_Uzi(void) { m_bUzi = true; }
 	void			Capture_Shotgun(void) { m_bShotgun = true; }

@@ -49,6 +49,7 @@ void CInventory::LateUpdate_Object(void)
 	{
 		m_bInit = true;
 		CItemIcon* pGameObject = CItemIcon::Create(m_pGraphicDev, 0);
+		
 	}
 }
 

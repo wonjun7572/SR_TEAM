@@ -91,6 +91,7 @@ _int CSupporter_Uzi::Update_Object(const _float & fTimeDelta)
 		m_pTransform->Chase_Target(&vPlayerPos, 0.f, fTimeDelta);
 		m_STATE = UZISUPPORT_IDLE;
 	}
+	// 여기서 good
 
 	Find_Target();	//	맨 아래에 둘 것, 주변 적 탐색하여 공격하는 기능임
 	//	Look_Direction 지금 yaw만 적용시킨 상태

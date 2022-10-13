@@ -2,7 +2,7 @@
 
 #include "GameObject.h"
 
-class CPoolMgr// : public CComponent
+class CPoolMgr
 {
 	DECLARE_SINGLETON(CPoolMgr)
 

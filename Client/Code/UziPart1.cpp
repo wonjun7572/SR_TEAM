@@ -58,7 +58,6 @@ HRESULT CUziPart1::Add_Component(void)
 	pInstance = m_pTransform = dynamic_cast<CTransform*>(Engine::Clone_Proto(TRANSFORM_COMP));
 	NULL_CHECK_RETURN(pInstance, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ TRANSFORM_COMP, pInstance });
-	//m_mapComponent[ID_STATIC].insert({ TRANSFORM_COMP, pInstance });
 
 
 	return S_OK;

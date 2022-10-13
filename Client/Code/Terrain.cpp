@@ -15,7 +15,7 @@ CTerrain::~CTerrain()
 HRESULT CTerrain::Ready_Object(void)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
-
+	SetCheckFrustum(false);
 	return S_OK;
 }
 
@@ -23,7 +23,7 @@ _int CTerrain::Update_Object(const _float & fTimeDelta)
 {
 	Engine::CGameObject::Update_Object(fTimeDelta);
 
-	Add_RenderGroup(RENDER_NONALPHA, this);
+	Add_RenderGroup(RENDER_PRIORITY, this);
 
 	return 0;
 }

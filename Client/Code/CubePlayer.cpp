@@ -11,6 +11,8 @@
 #include "ShotParticle.h"
 #include "BulletParticle.h"
 #include "ProjectileParticle.h"
+
+#include "RcEffect.h"
 #include "Inventory.h"
 #include "Shop.h"
 
@@ -41,12 +43,12 @@ HRESULT CCubePlayer::Ready_Object(void)
 	m_pSphereTransCom->Set_Scale(0.5f, 0.5f, 0.5f);
 	m_pSphereTransCom->Set_Pos(10.f, 10.f, 10.f);
 	m_pSphereTransCom->Static_Update();
-
 	m_fSpeed = 10.f;
 
 	m_bUzi = false;
 	m_bShotgun = false;
 	m_bSniper = false;
+	SetCheckFrustum(false);
 
 	return S_OK;
 }
@@ -98,7 +100,6 @@ _int CCubePlayer::Update_Object(const _float & fTimeDelta)
 	CGameObject::Update_Object(fTimeDelta);
 
 	Engine::Add_RenderGroup(RENDER_NONALPHA, this);
-
 	return 0;
 }
 
@@ -201,6 +202,8 @@ void CCubePlayer::Dash(void)
 
 void CCubePlayer::Update_NullCheck()
 {
+	
+
 	if (!m_pShotParicle)
 		m_pShotParicle = dynamic_cast<CShotParticle*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"ShotParticle"));
 
@@ -223,6 +226,10 @@ void CCubePlayer::Set_OnTerrain(void)
 
 	_vec3		vPos;
 	m_pBodyWorld->Get_BeforeInfo(INFO_POS, &vPos);
+
+
+
+
 
 	Engine::CTerrainTex*	pTerrainTexCom = dynamic_cast<Engine::CTerrainTex*>(Engine::Get_Component(STAGE_ENVIRONMENT, L"Terrain", TERRAINTEX_COMP, ID_STATIC));
 	NULL_CHECK(pTerrainTexCom);
@@ -264,8 +271,8 @@ void CCubePlayer::Assemble(void)
 		m_pLeftHandWorld->Static_Update();
 		m_pRightHandWorld->Static_Update();
 		m_pLeftFootWorld->Static_Update();
-		m_pRightHandWorld->Static_Update();
-	}
+		m_pRightHandWorld->Static_Update();	
+	}		
 }
 
 void CCubePlayer::Animation(void)
@@ -501,6 +508,13 @@ void CCubePlayer::Move()
 		D3DXVec3Normalize(&vDir, &vDir);
 	}
 
+	if (Key_Down(DIK_F))
+	{
+		if(m_Weapon == Engine::Get_GameObject(STAGE_GUN, L"SNIPER"))
+			dynamic_cast<CBaseMapping*>(Engine::Get_GameObject(STAGE_MAPPING, L"BaseMapping"))->Switch_Worldmap();
+	}
+
+
 	if (Key_Down(DIK_G))
 	{
 		m_pProjectileParicle->addParticle();
@@ -568,7 +582,7 @@ void CCubePlayer::TransAxis(void)
 
 	m_pBodyWorld->Get_Info(INFO_POS, &vBefore);
 	m_pBodyWorld->Get_BeforeInfo(INFO_POS, &vAfter);
-
+	
 	m_pLeftArmWorld->Rotation_Axis_Animation(-0.1f, -0.15f, m_fLeftArmAngle, -m_fLookAngle);
 	m_pRightArmWorld->Rotation_Axis_Animation(-0.1f, 0.15f, m_fRightArmAngle, -m_fLookAngle);
 
@@ -620,7 +634,7 @@ void CCubePlayer::Fire_Bullet(void)
 				m_pShotParicle->addParticle();
 				
 				_float fGunSound = 1.f;
-				PlaySoundGun(L"RifleShot.mp3", SOUND_EFFECT, fGunSound);
+				Engine::PlaySoundGun(L"RifleShot.mp3", SOUND_EFFECT, fGunSound);
 				m_Weapon->Set_MinusBullet();
 				m_Weapon->Set_Shoot(true);
 				m_fBulletTime = 0.f;
@@ -810,11 +824,11 @@ HRESULT CCubePlayer::Add_Component(void)
 	m_mapComponent[ID_STATIC].insert({ CALCULATOR_COMP, pInstance });
 
 	// For Sphere
-	pInstance = m_pSphereBufferCom = dynamic_cast<CSphereTex*>(Clone_Proto(SPHERETEX_COMP));
+	pInstance = m_pSphereBufferCom = dynamic_cast<CSphereTex*>(Engine::Clone_Proto(SPHERETEX_COMP));
 	NULL_CHECK_RETURN(m_pSphereBufferCom, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ SPHERETEX_COMP, pInstance });
 
-	pInstance = m_pSphereTransCom = dynamic_cast<CTransform*>(Clone_Proto(TRANSFORM_COMP));
+	pInstance = m_pSphereTransCom = dynamic_cast<CTransform*>(Engine::Clone_Proto(TRANSFORM_COMP));
 	NULL_CHECK_RETURN(m_pSphereBufferCom, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Sphere_TransCom", pInstance });
 
