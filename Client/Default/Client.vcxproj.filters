@@ -211,6 +211,9 @@
     <Filter Include="02. GameObject\01. For_Stage\08. Monster\01. Zombie">
       <UniqueIdentifier>{b73bf1a3-5d54-4214-b883-9b9076a98984}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\14. Crosshair">
+      <UniqueIdentifier>{3f226a98-4f8f-4047-88ae-9e99d5ca4d7d}</UniqueIdentifier>
+    </Filter>
     <Filter Include="02. GameObject\01. For_Stage\09. UI\Monster">
       <UniqueIdentifier>{bdd44947-81ab-4c33-9ac8-daa3f4a423ed}</UniqueIdentifier>
     </Filter>
@@ -247,38 +250,14 @@
     <Filter Include="02. GameObject\01. For_Stage\16. Skill">
       <UniqueIdentifier>{b7353904-ea38-453f-9793-d3a8ad2631b7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\01. For_Stage\12. Particle\Effect">
-      <UniqueIdentifier>{5ecefa0f-770c-4ae7-b220-9324383f4f83}</UniqueIdentifier>
+    <Filter Include="02. GameObject\01. For_Stage\17. Supporter">
+      <UniqueIdentifier>{8ed3bb62-6903-45c0-8dab-b3d82dc3460b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\01. For_Stage\12. Particle\Effect\Flame">
-      <UniqueIdentifier>{003930e4-cd3a-4546-994e-1bf13589a79e}</UniqueIdentifier>
+    <Filter Include="02. GameObject\01. For_Stage\18. Trap">
+      <UniqueIdentifier>{327e46a2-fa1e-4eea-ade8-6c09099aed4f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\01. For_Stage\12. Particle\Effect\Ice">
-      <UniqueIdentifier>{c0eda825-d2f1-4e24-a4a0-ba9ff02b31cd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\01. For_Stage\12. Particle\Effect\Cloud">
-      <UniqueIdentifier>{3f1e3b75-6fcf-4fd0-b42b-3fc5c8ed0fda}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\01. For_Stage\12. Particle\Effect\Bubble">
-      <UniqueIdentifier>{ed0a476c-649f-4a04-b5a5-3a4748f5251f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\01. For_Stage\12. Particle\Effect\SoundWave">
-      <UniqueIdentifier>{a6d5c0fa-70a3-4430-ba9e-5381769a9591}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\01. For_Stage\12. Particle\Effect\Grenade">
-      <UniqueIdentifier>{98784078-5e62-48e7-829e-ed305ccd437a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\01. For_Stage\12. Particle\Effect\Item">
-      <UniqueIdentifier>{d1578a85-4ec1-4eb5-b93f-3c16e4bc1fb6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\01. For_Stage\12. Particle\Effect\Spark">
-      <UniqueIdentifier>{e6897e53-65a9-460a-a1c8-d027db0db99a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\01. For_Stage\17. Effect">
-      <UniqueIdentifier>{998782c3-c17b-41f6-b5d6-b9b8b2e62bca}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\01. For_Stage\14. Crosshair">
-      <UniqueIdentifier>{3f226a98-4f8f-4047-88ae-9e99d5ca4d7d}</UniqueIdentifier>
+    <Filter Include="02. GameObject\01. For_Stage\19. Effect">
+      <UniqueIdentifier>{6064013c-b6da-49f6-94eb-d51444bbc0f5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -609,6 +588,9 @@
     <ClInclude Include="..\Header\MonsterParticle.h">
       <Filter>02. GameObject\01. For_Stage\12. Particle</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\ItemParticle.h">
+      <Filter>02. GameObject\01. For_Stage\12. Particle</Filter>
+    </ClInclude>
     <ClInclude Include="..\Header\SkillCamera.h">
       <Filter>99. Default\헤더 파일</Filter>
     </ClInclude>
@@ -618,59 +600,41 @@
     <ClInclude Include="..\Header\ComboUI.h">
       <Filter>02. GameObject\01. For_Stage\09. UI\Player</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\ProjectileParticle.h">
+      <Filter>02. GameObject\01. For_Stage\12. Particle</Filter>
+    </ClInclude>
     <ClInclude Include="..\Header\Meteor.h">
       <Filter>02. GameObject\01. For_Stage\16. Skill</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\ItemBox.h">
-      <Filter>99. Default\헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\Magma.h">
-      <Filter>99. Default\헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\SpBullet.h">
-      <Filter>99. Default\헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\Supporter.h">
-      <Filter>99. Default\헤더 파일</Filter>
+      <Filter>02. GameObject\01. For_Stage\17. Supporter</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Supporter_Uzi.h">
-      <Filter>99. Default\헤더 파일</Filter>
+      <Filter>02. GameObject\01. For_Stage\17. Supporter</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\Thorn.h">
-      <Filter>99. Default\헤더 파일</Filter>
+    <ClInclude Include="..\Header\ItemBox.h">
+      <Filter>02. GameObject\01. For_Stage\18. Trap</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Magma.h">
+      <Filter>02. GameObject\01. For_Stage\18. Trap</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Trap.h">
-      <Filter>99. Default\헤더 파일</Filter>
+      <Filter>02. GameObject\01. For_Stage\18. Trap</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Thorn.h">
+      <Filter>02. GameObject\01. For_Stage\18. Trap</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\SpBullet.h">
+      <Filter>02. GameObject\01. For_Stage\06. Bullet</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\StaticParticle.h">
-      <Filter>02. GameObject\01. For_Stage\12. Particle\Effect</Filter>
+      <Filter>02. GameObject\01. For_Stage\12. Particle</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\FlameEffect.h">
-      <Filter>02. GameObject\01. For_Stage\12. Particle\Effect\Flame</Filter>
+      <Filter>02. GameObject\01. For_Stage\12. Particle</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\IceEffect.h">
-      <Filter>02. GameObject\01. For_Stage\12. Particle\Effect\Ice</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\BubbleEffect.h">
-      <Filter>02. GameObject\01. For_Stage\12. Particle\Effect\Bubble</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\SoundWave.h">
-      <Filter>02. GameObject\01. For_Stage\12. Particle\Effect\SoundWave</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CloudEffect.h">
-      <Filter>02. GameObject\01. For_Stage\12. Particle\Effect\Cloud</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\ProjectileParticle.h">
-      <Filter>02. GameObject\01. For_Stage\12. Particle\Effect\Grenade</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\ItemParticle.h">
-      <Filter>02. GameObject\01. For_Stage\12. Particle\Effect\Item</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\SparkEffect.h">
-      <Filter>02. GameObject\01. For_Stage\12. Particle\Effect\Spark</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\RcEffect.h">
-      <Filter>02. GameObject\01. For_Stage\17. Effect</Filter>
+      <Filter>02. GameObject\01. For_Stage\12. Particle</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -980,6 +944,9 @@
     <ClCompile Include="..\Code\MonsterParticle.cpp">
       <Filter>02. GameObject\01. For_Stage\12. Particle</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\ItemParticle.cpp">
+      <Filter>02. GameObject\01. For_Stage\12. Particle</Filter>
+    </ClCompile>
     <ClCompile Include="..\Code\SkillCamera.cpp">
       <Filter>99. Default\소스 파일</Filter>
     </ClCompile>
@@ -989,59 +956,41 @@
     <ClCompile Include="..\Code\ComboUI.cpp">
       <Filter>02. GameObject\01. For_Stage\09. UI\Player</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\ProjectileParticle.cpp">
+      <Filter>02. GameObject\01. For_Stage\12. Particle</Filter>
+    </ClCompile>
     <ClCompile Include="..\Code\Meteor.cpp">
       <Filter>02. GameObject\01. For_Stage\16. Skill</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\ItemBox.cpp">
-      <Filter>99. Default\소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\Magma.cpp">
-      <Filter>99. Default\소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\SpBullet.cpp">
-      <Filter>99. Default\소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\Supporter.cpp">
-      <Filter>99. Default\소스 파일</Filter>
+      <Filter>02. GameObject\01. For_Stage\17. Supporter</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Supporter_Uzi.cpp">
-      <Filter>99. Default\소스 파일</Filter>
+      <Filter>02. GameObject\01. For_Stage\17. Supporter</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Magma.cpp">
+      <Filter>02. GameObject\01. For_Stage\18. Trap</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Thorn.cpp">
-      <Filter>99. Default\소스 파일</Filter>
+      <Filter>02. GameObject\01. For_Stage\18. Trap</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Trap.cpp">
-      <Filter>99. Default\소스 파일</Filter>
+      <Filter>02. GameObject\01. For_Stage\18. Trap</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ItemBox.cpp">
+      <Filter>02. GameObject\01. For_Stage\18. Trap</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SpBullet.cpp">
+      <Filter>02. GameObject\01. For_Stage\06. Bullet</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\StaticParticle.cpp">
-      <Filter>02. GameObject\01. For_Stage\12. Particle\Effect</Filter>
+      <Filter>02. GameObject\01. For_Stage\12. Particle</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\FlameEffect.cpp">
-      <Filter>02. GameObject\01. For_Stage\12. Particle\Effect\Flame</Filter>
+      <Filter>02. GameObject\01. For_Stage\12. Particle</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\IceEffect.cpp">
-      <Filter>02. GameObject\01. For_Stage\12. Particle\Effect\Ice</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\BubbleEffect.cpp">
-      <Filter>02. GameObject\01. For_Stage\12. Particle\Effect\Bubble</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\SoundWave.cpp">
-      <Filter>02. GameObject\01. For_Stage\12. Particle\Effect\SoundWave</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\CloudEffect.cpp">
-      <Filter>02. GameObject\01. For_Stage\12. Particle\Effect\Cloud</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\ProjectileParticle.cpp">
-      <Filter>02. GameObject\01. For_Stage\12. Particle\Effect\Grenade</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\ItemParticle.cpp">
-      <Filter>02. GameObject\01. For_Stage\12. Particle\Effect\Item</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\SparkEffect.cpp">
-      <Filter>02. GameObject\01. For_Stage\12. Particle\Effect\Spark</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\RcEffect.cpp">
-      <Filter>02. GameObject\01. For_Stage\17. Effect</Filter>
+      <Filter>02. GameObject\01. For_Stage\12. Particle</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
