@@ -134,6 +134,7 @@ void PlaySoundGun(TCHAR* pSoundKey, CHANNELID eID, float fVolume)
 
 inline void			Release_Utility(void)
 {
+	CFrustumCullMgr::GetInstance()->DestroyInstance();
 	CSoundMgr::GetInstance()->DestroyInstance();
 	CLightMgr::GetInstance()->DestroyInstance();
 	CRenderer::GetInstance()->DestroyInstance();
