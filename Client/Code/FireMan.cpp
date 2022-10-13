@@ -57,6 +57,19 @@ HRESULT CFireMan::Ready_Object(const _vec3 & vPos, _tchar * Name)
 	m_pSphereTransCom->Set_Pos(vAnimationPos.x, vAnimationPos.y, vAnimationPos.z);
 	m_pSphereTransCom->Static_Update();
 
+
+	m_pSearchRange_TransCom->Set_Scale(&_vec3(15.f, 15.f, 15.f));
+	m_pSearchRange_TransCom->Set_Pos(vAnimationPos.x, vAnimationPos.y, vAnimationPos.z);
+	m_pSearchRange_TransCom->Static_Update();
+
+	m_pAttackRange_TransCom->Set_Scale(&_vec3(10.f, 10.f, 10.f));
+	m_pAttackRange_TransCom->Set_Pos(vAnimationPos.x, vAnimationPos.y, vAnimationPos.z);
+	m_pAttackRange_TransCom->Static_Update();
+
+	m_pRunawayRange_TransCom->Set_Scale(&_vec3(5.f, 5.f, 5.f));
+	m_pRunawayRange_TransCom->Set_Pos(vAnimationPos.x, vAnimationPos.y, vAnimationPos.z);
+	m_pRunawayRange_TransCom->Static_Update();
+
 	return S_OK;
 }
 
@@ -74,9 +87,23 @@ _int CFireMan::Update_Object(const _float & fTimeDelta)
 	if (m_bFirst)
 	{
 		m_bFirst = false;
+
+		//	1. 레이어를 생성하고 불러온다.
 		Engine::Get_Scene()->New_Layer(m_MonsterName);
 		pMyLayer = Engine::Get_Layer(m_MonsterName);
+
+		//	2. 모델을 불러온다.
 		FAILED_CHECK_RETURN(Build(), -1);
+
+		//	3.	애니메이션을 불러온다.
+		Load_Animation(L"../../Data/Fireman/Fireman_Idle_1.dat", 0);
+		Load_Animation(L"../../Data/Fireman/Fireman_Idle_2.dat", 1);
+
+		Load_Animation(L"../../Data/Fireman/Fireman_Walk_Start.dat", 2);
+		Load_Animation(L"../../Data/Fireman/Fireman_Walk_1.dat", 3);
+		Load_Animation(L"../../Data/Fireman/Fireman_Walk_2.dat", 4);
+
+		Load_Animation(L"../../Data/Fireman/Fireman_Attack_1.dat", 5);
 	}
 
 	m_fTimeDelta = fTimeDelta;
@@ -85,18 +112,63 @@ _int CFireMan::Update_Object(const _float & fTimeDelta)
 
 	_vec3 vPlayerPos;
 	m_pPlayerTransCom->Get_Info(INFO_POS, &vPlayerPos);
+
 	_vec3 vPlayerScale;
 	m_pPlayerTransCom->Get_Scale(&vPlayerScale);
-	_vec3 vScale;
-	m_pSphereTransCom->Get_Scale(&vScale);
+
+	_vec3 vScale;//////////////////////////////////////
+	m_pSphereTransCom->Get_Scale(&vScale);/////////////
+
+	_vec3 vSearchScale, vAttackScale, vRunScale;
+	m_pSearchRange_TransCom->Get_Scale(&vSearchScale);
+	m_pAttackRange_TransCom->Get_Scale(&vAttackScale);
+	m_pRunawayRange_TransCom->Get_Scale(&vRunScale);
+
 	_vec3 vPos;
 	m_pTransCom->Get_Info(INFO_POS, &vPos);
+	_vec3 vDir;
+	vDir = vPlayerPos - vPos;
+	D3DXVec3Normalize(&vDir, &vDir);
 
 	m_fFrame += fTimeDelta;
 
 	if (!Collision_Wall(fTimeDelta))
 	{
-		if (m_pCollision->Sphere_Collision(this->m_pSphereTransCom, m_pPlayerTransCom, vPlayerScale.x, vScale.x) && m_fFrame < 2.f)
+		if (m_pCollision->Sphere_Collision(this->m_pRunawayRange_TransCom, m_pPlayerTransCom, vPlayerScale.x, vRunScale.x)/* && (m_STATE != FIREMAN_ATTACK)*/)
+		{
+			// 도망충돌
+			m_pTransCom->Chase_Target(&vPlayerPos, -5.f, fTimeDelta);
+			m_STATE = FIREMAN_WALK;
+			m_bRun = true;
+		}
+		else if (m_pCollision->Sphere_Collision(this->m_pAttackRange_TransCom, m_pPlayerTransCom, vPlayerScale.x, vAttackScale.x))
+		{
+			// 공격충돌
+			m_pTransCom->Chase_Target(&vPlayerPos, 0.f, fTimeDelta);
+			m_STATE = FIREMAN_ATTACK;
+
+			if (m_AnimationTime >= 1.f)
+			{
+				CPoolMgr::GetInstance()->Reuse_Obj(m_pGraphicDev, &vPos, &vDir, 10);
+			}
+			m_bRun = false;
+		}
+		else if (m_pCollision->Sphere_Collision(this->m_pSearchRange_TransCom, m_pPlayerTransCom, vPlayerScale.x, vSearchScale.x)/* && (m_STATE != FIREMAN_ATTACK)*/)
+		{
+			// 탐지충돌
+			m_pTransCom->Chase_Target(&vPlayerPos, 5.f, fTimeDelta);
+			m_STATE = FIREMAN_WALK;
+			m_bRun = false;
+		}
+		else if (m_STATE != FIREMAN_ATTACK)
+		{
+			m_STATE = FIREMAN_IDLE;
+			m_bRun = false;
+		}
+		
+		Look_Direction();
+
+		/*if (m_pCollision->Sphere_Collision(this->m_pSphereTransCom, m_pPlayerTransCom, vPlayerScale.x, vScale.x) && m_fFrame < 2.f)
 		{
 			m_pTransCom->Chase_Target(&vPlayerPos, 1.f, fTimeDelta);
 			m_STATE = FIREMAN_WALK;
@@ -117,12 +189,16 @@ _int CFireMan::Update_Object(const _float & fTimeDelta)
 		{
 			m_pTransCom->Chase_Target(&vPlayerPos, 0.f, fTimeDelta);
 			m_STATE = FIREMAN_IDLE;
-		}
+		}*/
 
 		_vec3 vMonsterPos;
 		m_pTransCom->Get_Info(INFO_POS, &vMonsterPos);
 		m_pHitBoxTransCom->Set_Pos(vMonsterPos.x, vMonsterPos.y, vMonsterPos.z);
 		m_pSphereTransCom->Set_Pos(vMonsterPos.x, vMonsterPos.y, vMonsterPos.z);
+
+		m_pSearchRange_TransCom->Set_Pos(vMonsterPos.x, vMonsterPos.y, vMonsterPos.z);
+		m_pAttackRange_TransCom->Set_Pos(vMonsterPos.x, vMonsterPos.y, vMonsterPos.z);
+		m_pRunawayRange_TransCom->Set_Pos(vMonsterPos.x, vMonsterPos.y, vMonsterPos.z);
 	}
 	return 0;
 
@@ -131,20 +207,24 @@ _int CFireMan::Update_Object(const _float & fTimeDelta)
 void CFireMan::LateUpdate_Object(void)
 {
 	Monster_Mapping();
-	if (!m_bFirst && (m_STATE == FIREMAN_WALK))
+
+	if (!m_bFirst)
 	{
-		Walk_Animation_Run();
-		Look_Direction();
-	}
-	else if (!m_bFirst && (m_STATE == FIREMAN_IDLE))
-	{
-		Idle_Animation_Run();
-		Look_Direction();
-	}
-	else if (!m_bFirst && (m_STATE == FIREMAN_ATTACK))
-	{
-		Attack_Animation_Run();
-		Look_Direction();
+		if (m_STATE == FIREMAN_WALK)
+		{
+			Walk_Animation_Run();
+			Run_Animation(5.f);
+		}
+		else if (m_STATE == FIREMAN_IDLE)
+		{
+			Idle_Animation_Run();
+			Run_Animation(5.f);
+		}
+		else if (m_STATE == FIREMAN_ATTACK)
+		{
+			Attack_Animation_Run();
+			Run_Animation(5.f);
+		}
 	}
 
 	CMonster::LateUpdate_Object();
@@ -218,6 +298,20 @@ HRESULT CFireMan::Add_Component(void)
 	pComponent = m_pSphereTransCom = dynamic_cast<CTransform*>(Clone_Proto(TRANSFORM_COMP));
 	NULL_CHECK_RETURN(m_pSphereBufferCom, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Sphere_TransCom", pComponent });
+
+	///////////////////////////탐지///////////////////////////////////////////////////////
+	pComponent = m_pSearchRange_TransCom = dynamic_cast<CTransform*>(Clone_Proto(TRANSFORM_COMP));
+	NULL_CHECK_RETURN(m_pSphereBufferCom, E_FAIL);
+	m_mapComponent[ID_DYNAMIC].insert({ L"SearchRange", pComponent });
+
+	pComponent = m_pAttackRange_TransCom = dynamic_cast<CTransform*>(Clone_Proto(TRANSFORM_COMP));
+	NULL_CHECK_RETURN(m_pSphereBufferCom, E_FAIL);
+	m_mapComponent[ID_DYNAMIC].insert({ L"AttackRange", pComponent });
+
+	pComponent = m_pRunawayRange_TransCom = dynamic_cast<CTransform*>(Clone_Proto(TRANSFORM_COMP));
+	NULL_CHECK_RETURN(m_pSphereBufferCom, E_FAIL);
+	m_mapComponent[ID_DYNAMIC].insert({ L"RunawayRange", pComponent });
+	////////////////////////////////////////////////////////////////////////////////////////
 
 	// 추가
 	pComponent = m_pAnimationBox = dynamic_cast<CCubeCol*>(Clone_Proto(CUBECOL_COMP));
@@ -392,7 +486,7 @@ HRESULT CFireMan::Build(void)
 	return S_OK;
 }
 
-void CFireMan::Load_Animation(wstring FileName)
+void CFireMan::Load_Animation(wstring FileName, _uint AnimationID)
 {
 	HANDLE      hFile = CreateFile(FileName.c_str(),      // 파일의 경로와 이름
 		GENERIC_READ,         // 파일 접근 모드 (GENERIC_WRITE : 쓰기 전용, GENERIC_READ : 읽기 전용)
@@ -439,7 +533,7 @@ void CFireMan::Load_Animation(wstring FileName)
 		{
 			_matrix matAnimation;
 			ReadFile(hFile, &matAnimation, sizeof(D3DXMATRIX), &dwByte, nullptr);
-			Quaternion->Add_World(&matAnimation);
+			Quaternion->Fill_Animation(&matAnimation, AnimationID);
 		}
 
 		iSize--;
@@ -514,23 +608,10 @@ void CFireMan::Run_Animation(const _float & AnimationSpeed)
 
 void CFireMan::Walk_Animation_Run(void)
 {
-	if (m_BeforeState != m_STATE)
-	{
-		list<pair<const _tchar*, CGameObject*>> ListBox = *(pMyLayer->Get_GamePairPtr());
-
-		for (auto& iter : ListBox)	//	모든 쿼터니언(애니메이션) 객체들에 대해 기존의 애니메이션 값을 전부 지워줌
-		{
-			CQuarternion* Qtan = dynamic_cast<CQuarternion*>(iter.second->Get_Component(L"Proto_QuaternionCom", ID_STATIC));
-			Qtan->Delete_WorldVector();
-		}
-
-		m_BeforeState = m_STATE;
-	}
+	list<pair<const _tchar*, CGameObject*>> ListBox = *(pMyLayer->Get_GamePairPtr());
 
 	if (m_AnimationTime >= 1.f)
 	{
-		list<pair<const _tchar*, CGameObject*>> ListBox = *(pMyLayer->Get_GamePairPtr());
-
 		for (auto& iter : ListBox)
 		{
 			CQuarternion* Qtan = dynamic_cast<CQuarternion*>(iter.second->Get_Component(L"Proto_QuaternionCom", ID_STATIC));
@@ -547,43 +628,19 @@ void CFireMan::Walk_Animation_Run(void)
 		m_AnimationTime = 0.f;
 	}
 
-	//	bool/열거체 값에 따라 어떤 애니메이션을 불러올 것인지 결정
-	if (m_WALK == FIREMANWALK_START)
+	for (auto& iter : ListBox)	// 애니메이션 변경
 	{
-		Load_Animation(L"../../Data/Fireman/Fireman_Walk_Start.dat");
-		Run_Animation(1.f);
-	}
-	else if (m_WALK == FIREMANWALK_1)
-	{
-		Load_Animation(L"../../Data/Fireman/Fireman_Walk_1.dat");
-		Run_Animation(3.f);
-	}
-	else if (m_WALK == FIREMANWALK_2)
-	{
-		Load_Animation(L"../../Data/Fireman/Fireman_Walk_2.dat");
-		Run_Animation(3.f);
+		CQuarternion* Qtan = dynamic_cast<CQuarternion*>(iter.second->Get_Component(L"Proto_QuaternionCom", ID_STATIC));
+		Qtan->Change_Animation(2 + m_WALK);
 	}
 }
 
 void CFireMan::Idle_Animation_Run(void)
 {
-	if (m_BeforeState != m_STATE)
-	{
-		list<pair<const _tchar*, CGameObject*>> ListBox = *(pMyLayer->Get_GamePairPtr());
-
-		for (auto& iter : ListBox)	//	모든 쿼터니언(애니메이션) 객체들에 대해 기존의 애니메이션 값을 전부 지워줌
-		{
-			CQuarternion* Qtan = dynamic_cast<CQuarternion*>(iter.second->Get_Component(L"Proto_QuaternionCom", ID_STATIC));
-			Qtan->Delete_WorldVector();
-		}
-
-		m_BeforeState = m_STATE;
-	}
+	list<pair<const _tchar*, CGameObject*>> ListBox = *(pMyLayer->Get_GamePairPtr());
 
 	if (m_AnimationTime >= 1.f)
 	{
-		list<pair<const _tchar*, CGameObject*>> ListBox = *(pMyLayer->Get_GamePairPtr());
-
 		for (auto& iter : ListBox)
 		{
 			CQuarternion* Qtan = dynamic_cast<CQuarternion*>(iter.second->Get_Component(L"Proto_QuaternionCom", ID_STATIC));
@@ -598,52 +655,35 @@ void CFireMan::Idle_Animation_Run(void)
 		m_AnimationTime = 0.f;
 	}
 
-	//	bool/열거체 값에 따라 어떤 애니메이션을 불러올 것인지 결정
-	if (m_IDLE == FIREMANIDLE_1)
+	for (auto& iter : ListBox)	// 애니메이션 변경
 	{
-		Load_Animation(L"../../Data/Fireman/Fireman_Idle_1.dat");
-		Run_Animation(5.f);
-	}
-	else if (m_IDLE == FIREMANIDLE_2)
-	{
-		Load_Animation(L"../../Data/Fireman/Fireman_Idle_2.dat");
-		Run_Animation(5.f);
+		CQuarternion* Qtan = dynamic_cast<CQuarternion*>(iter.second->Get_Component(L"Proto_QuaternionCom", ID_STATIC));
+		Qtan->Change_Animation(0 + m_IDLE);
 	}
 }
 
 void CFireMan::Attack_Animation_Run(void)
 {
-	if (m_BeforeState != m_STATE)
-	{
-		list<pair<const _tchar*, CGameObject*>> ListBox = *(pMyLayer->Get_GamePairPtr());
-
-		for (auto& iter : ListBox)	//	모든 쿼터니언(애니메이션) 객체들에 대해 기존의 애니메이션 값을 전부 지워줌
-		{
-			CQuarternion* Qtan = dynamic_cast<CQuarternion*>(iter.second->Get_Component(L"Proto_QuaternionCom", ID_STATIC));
-			Qtan->Delete_WorldVector();
-		}
-
-		m_BeforeState = m_STATE;
-	}
+	list<pair<const _tchar*, CGameObject*>> ListBox = *(pMyLayer->Get_GamePairPtr());
 
 	if (m_AnimationTime >= 1.f)
 	{
-		list<pair<const _tchar*, CGameObject*>> ListBox = *(pMyLayer->Get_GamePairPtr());
-
 		for (auto& iter : ListBox)
 		{
 			CQuarternion* Qtan = dynamic_cast<CQuarternion*>(iter.second->Get_Component(L"Proto_QuaternionCom", ID_STATIC));
 			Qtan->Delete_WorldVector();
 		}
 
+		//if (m_ATTACK == FIREMANATTACK_1)
+		//	m_ATTACK = FIREMANATTACK_END;
+
 		m_AnimationTime = 0.f;
 	}
 
-	//	bool/열거체 값에 따라 어떤 애니메이션을 불러올 것인지 결정
-	if (m_ATTACK == FIREMANATTACK_1)
+	for (auto& iter : ListBox)	// 애니메이션 변경
 	{
-		Load_Animation(L"../../Data/Fireman/Fireman_Attack_1.dat");
-		Run_Animation(10.f);
+		CQuarternion* Qtan = dynamic_cast<CQuarternion*>(iter.second->Get_Component(L"Proto_QuaternionCom", ID_STATIC));
+		Qtan->Change_Animation(5 + m_ATTACK);
 	}
 }
 
@@ -666,6 +706,10 @@ void CFireMan::Look_Direction(void)
 	yaw = atan2f(2.0f * (qRot.x * qRot.z + qRot.w * qRot.y), (-sqx - sqy + sqz + sqw));
 	roll = atan2f(2.0f * (qRot.x * qRot.y + qRot.w * qRot.z), (-sqx + sqy - sqz + sqw));
 
+	if (m_bRun)
+	{
+		yaw += D3DXToRadian(180.f);
+	}
 
 	list<pair<const _tchar*, CGameObject*>> ListBox = *(pMyLayer->Get_GamePairPtr());
 
@@ -676,7 +720,7 @@ void CFireMan::Look_Direction(void)
 			_vec3 vAngle;
 			CTransform* Transform = dynamic_cast<CTransform*>(iter.second->Get_Component(L"Proto_TransformCom", ID_STATIC));
 			Transform->Get_Angle(&vAngle);
-			Transform->Set_Angle(&_vec3(yaw, vAngle.y, roll));
+			Transform->Set_Angle(&_vec3(yaw, vAngle.x, vAngle.z));
 		}
 	}
 }
