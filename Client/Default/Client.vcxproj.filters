@@ -597,6 +597,39 @@
     <ClInclude Include="..\Header\Meteor.h">
       <Filter>02. GameObject\01. For_Stage\16. Skill</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\FlameEffect.h">
+      <Filter>99. Default\헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\IceEffect.h">
+      <Filter>99. Default\헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\StaticParticle.h">
+      <Filter>99. Default\헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ItemBox.h">
+      <Filter>99. Default\헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Magma.h">
+      <Filter>99. Default\헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\SpBullet.h">
+      <Filter>99. Default\헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Supporter.h">
+      <Filter>99. Default\헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Supporter_Uzi.h">
+      <Filter>99. Default\헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Thorn.h">
+      <Filter>99. Default\헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Trap.h">
+      <Filter>99. Default\헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\MiddleBoss.h">
+      <Filter>99. Default\헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -922,6 +955,39 @@
     </ClCompile>
     <ClCompile Include="..\Code\Meteor.cpp">
       <Filter>02. GameObject\01. For_Stage\16. Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\FlameEffect.cpp">
+      <Filter>99. Default\소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\IceEffect.cpp">
+      <Filter>99. Default\소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\StaticParticle.cpp">
+      <Filter>99. Default\소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ItemBox.cpp">
+      <Filter>99. Default\소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Magma.cpp">
+      <Filter>99. Default\소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SpBullet.cpp">
+      <Filter>99. Default\소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Supporter.cpp">
+      <Filter>99. Default\소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Supporter_Uzi.cpp">
+      <Filter>99. Default\소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Thorn.cpp">
+      <Filter>99. Default\소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Trap.cpp">
+      <Filter>99. Default\소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\MiddleBoss.cpp">
+      <Filter>99. Default\소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
