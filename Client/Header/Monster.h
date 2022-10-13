@@ -53,7 +53,14 @@ protected:
 	CTransform*			m_pPlayerTransCom = nullptr;
 
 	CSphereTex*			m_pSphereBufferCom = nullptr;
+
+	////////////////////////////////////////////////////////////////////////
 	CTransform*			m_pSphereTransCom = nullptr;
+	////////////////////////////////////////////////////////////////////////
+	CTransform*			m_pSearchRange_TransCom = nullptr;		//	추적범위
+	CTransform*			m_pAttackRange_TransCom = nullptr;		//	공격범위
+	CTransform*			m_pRunawayRange_TransCom = nullptr;		//	근처에오면 도망(원거리몹)
+	////////////////////////////////////////////////////////////////////////
 
 	MONSTERABILITY*		m_tAbility;
 
