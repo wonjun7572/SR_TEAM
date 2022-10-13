@@ -33,8 +33,9 @@ void CRenderer::Add_RenderGroup(RENDERID eID, CGameObject * pGameObject)
 		dynamic_cast<CTransAxisBox*>(pGameObject)->Get_Final(&matFinal);
 		_vec3 vPos;
 		memcpy(&vPos, &matFinal.m[3][0], sizeof(_vec3));
+		_float fRadius = dynamic_cast<CTransAxisBox*>(pGameObject)->GetBoundingSphereRadius(matFinal);
 		if (CFrustumCullMgr::GetInstance()->ContainsSphere
-		(vPos, 5.f))
+		(vPos, fRadius))
 		{
 			m_RenderGroup[eID].push_back(pGameObject);
 			pGameObject->AddRef();
@@ -46,7 +47,7 @@ void CRenderer::Add_RenderGroup(RENDERID eID, CGameObject * pGameObject)
 		_vec3 vPos;
 		pTransform->Get_Info(INFO_POS, &vPos);
 		if (CFrustumCullMgr::GetInstance()->ContainsSphere
-		(vPos, 5.f))
+		(vPos,pTransform->GetBoundingSphereRadius() + 1.f))
 		{
 			m_RenderGroup[eID].push_back(pGameObject);
 			pGameObject->AddRef();
@@ -58,7 +59,7 @@ void CRenderer::Add_RenderGroup(RENDERID eID, CGameObject * pGameObject)
 		_vec3 vPos;
 		pTransform->Get_Info(INFO_POS, &vPos);
 		if (CFrustumCullMgr::GetInstance()->ContainsSphere
-		(vPos, 5.f))
+		(vPos, pTransform->GetBoundingSphereRadius() + 1.f))
 		{
 			m_RenderGroup[eID].push_back(pGameObject);
 			pGameObject->AddRef();

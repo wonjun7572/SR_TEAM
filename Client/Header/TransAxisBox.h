@@ -37,6 +37,19 @@ public:
 	_float			Get_Y(void) { return m_fY; }
 	_float			Get_Z(void) { return m_fZ; }
 
+	_float				GetBoundingSphereRadius(const _matrix& matWorld)
+	{
+		_vec3 vScaleX, vScaleY, vScaleZ;
+		memcpy(&vScaleX, &matWorld.m[0][0], sizeof(_vec3));
+		memcpy(&vScaleY, &matWorld.m[1][0], sizeof(_vec3));
+		memcpy(&vScaleZ, &matWorld.m[2][0], sizeof(_vec3));
+
+		_float fX = D3DXVec3Length(&vScaleX);
+		_float fY = D3DXVec3Length(&vScaleY);
+		_float fZ = D3DXVec3Length(&vScaleZ);
+		return max(max(fX, fY), fZ);
+	}
+
 public:
 	list<CTransAxisBox*>	m_ParentList;
 	list<_tchar*>			m_ParentKey;

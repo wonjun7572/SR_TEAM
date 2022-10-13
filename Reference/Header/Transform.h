@@ -70,10 +70,22 @@ public:
 		m_vInfo[INFO_POS].z = fZ;
 	}
 
-	_float				GetBoundingSphereRadius() { return max(max(m_vScale.x, m_vScale.y),m_vScale.y); }
+	_float				GetBoundingSphereRadius() 
+	{ 
+		_vec3 vScaleX, vScaleY, vScaleZ;
+		memcpy(&vScaleX, &m_matWorld.m[0][0], sizeof(_vec3));
+		memcpy(&vScaleY, &m_matWorld.m[1][0], sizeof(_vec3));
+		memcpy(&vScaleZ, &m_matWorld.m[2][0], sizeof(_vec3));
+
+		_float fX = D3DXVec3Length(&vScaleX);
+		_float fY = D3DXVec3Length(&vScaleY);
+		_float fZ = D3DXVec3Length(&vScaleZ);
+		return max(max(fX, fY),fZ); 
+	}
+
+
 
 	void				Set_Rotation(ROTATIONID eID, const _float& fAngle) { *(((_float*)&m_vAngle) + eID) = fAngle; }
-
 
 public:
 	void				Chase_Target(const _vec3* pTargetPos, const _float& fSpeed, const _float& fTimeDelta);
