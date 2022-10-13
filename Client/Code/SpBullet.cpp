@@ -51,18 +51,27 @@ _int CSpBullet::Update_Object(const _float & fTimeDelta)
 
 		//CTransform* pTransform = dynamic_cast<CTransform*>(iter->Get_Component(TRANSFORM_COMP, ID_DYNAMIC));
 		CTransform* pTransform = dynamic_cast<CTransform*>(iter->Get_Component(L"HitBox_Transform", ID_DYNAMIC));
+		CHitBox* pHitbox = dynamic_cast<CHitBox*>(iter->Get_Component(HITBOX_COMP, ID_STATIC));
 
-		_vec3 vMonsterScale;
-		pTransform->Get_Scale(&vMonsterScale);
-		/*_vec3 vMonsterPos;
-		pTransform->Get_Info(INFO_POS, &vMonsterPos);*/
-
-		if (m_pCollision->Sphere_Collision(this->m_pTransCom, pTransform, vMonsterScale.x, vScale.x) && m_bDamage)
+		if (m_pCollision->Collision_Square(this->m_pTransCom, this->m_pHitbox, pTransform, pHitbox))
 		{
-			dynamic_cast<CMonster*>(iter)->Set_Damaged(m_fDamage);
+			if(m_bDamage)
+				dynamic_cast<CMonster*>(iter)->Set_Damaged(m_fDamage);
 			m_bDamage = false;
 			break;
 		}
+
+		//_vec3 vMonsterScale;
+		//pTransform->Get_Scale(&vMonsterScale);
+		///*_vec3 vMonsterPos;
+		//pTransform->Get_Info(INFO_POS, &vMonsterPos);*/
+
+		//if (m_pCollision->Sphere_Collision(this->m_pTransCom, pTransform, vMonsterScale.x, vScale.x) && m_bDamage)
+		//{
+		//	dynamic_cast<CMonster*>(iter)->Set_Damaged(m_fDamage);
+		//	m_bDamage = false;
+		//	break;
+		//}
 	}
 
 	Engine::CGameObject::Update_Object(fTimeDelta);
@@ -99,9 +108,17 @@ HRESULT CSpBullet::Add_Component(void)
 	NULL_CHECK_RETURN(m_pTransCom, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ TRANSFORM_COMP, pComponent });
 
-	pComponent = m_pBufferCom = dynamic_cast<CSphereTex*>(Clone_Proto(SPHERETEX_COMP));
+	/*pComponent = m_pBufferCom = dynamic_cast<CSphereTex*>(Clone_Proto(SPHERETEX_COMP));
 	NULL_CHECK_RETURN(m_pBufferCom, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ SPHERETEX_COMP, pComponent });
+	m_mapComponent[ID_STATIC].insert({ SPHERETEX_COMP, pComponent });*/
+
+	pComponent = m_pBufferCom = dynamic_cast<CCubeTex*>(Clone_Proto(CUBETEX_COMP));
+	NULL_CHECK_RETURN(m_pBufferCom, E_FAIL);
+	m_mapComponent[ID_STATIC].insert({ CUBETEX_COMP, pComponent });
+
+	pComponent = m_pHitbox = dynamic_cast<CHitBox*>(Clone_Proto(HITBOX_COMP));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[ID_STATIC].insert({ HITBOX_COMP, pComponent });
 
 	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Clone_Proto(L"BULLET_TEX"));
 	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);

@@ -20,10 +20,16 @@ public:
 	void Before_Update();
 	void Set_Dir(const _vec3& vDir) { m_vDirection = vDir; }
 
+public:
+	void				isAlive(bool is) { m_bDamage = is; }
+
 private:
 	CTransform*			m_pTransCom = nullptr;
 	CTexture*			m_pTextureCom = nullptr;
-	CSphereTex*			m_pBufferCom = nullptr;
+	//CSphereTex*			m_pBufferCom = nullptr;
+	//CRcCol*				m_pBufferCom = nullptr;
+	CCubeTex*			m_pBufferCom = nullptr;
+	CHitBox*			m_pHitbox = nullptr;
 
 	CCollision*			m_pCollision = nullptr;
 

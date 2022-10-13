@@ -49,8 +49,7 @@ Engine::_int CStaticCamera::Update_Object(const _float& fTimeDelta)
 
 		Look_Target(fTimeDelta);
 
-		if(m_bPlayerHit)
-			Camera_Shaking(fTimeDelta);
+		Camera_Shaking(fTimeDelta);
 	
 		Mouse_Fix();
 	}
@@ -242,13 +241,29 @@ void CStaticCamera::Look_Target(const _float& _fTimeDelta)
 
 void CStaticCamera::Camera_Shaking(const _float& _fTimeDelta)
 {
-	m_fFrame += 0.2f * _fTimeDelta;
-	m_iReverse *= -1;
-	m_vEye.y = m_vEye.y + (_float(m_iReverse) * 0.1f * _fTimeDelta);
-	
-	if (m_fFrame >= 0.2f)
+	if (m_bPlayerHit)
 	{
-		m_fFrame = 0.f;
-		m_bPlayerHit = false;
+		m_fFrame += 0.1f * _fTimeDelta;
+		m_iReverse *= -1;
+		m_vEye.y = m_vEye.y + (_float(m_iReverse) * 0.03f * _fTimeDelta);
+
+		if (m_fFrame >= 0.025f)
+		{
+			m_fFrame = 0.f;
+			m_bPlayerHit = false;
+		}
+	}
+	
+	if (m_bEarthQuake)
+	{
+		m_fFrame += 0.1f * _fTimeDelta;
+		m_iReverse *= -1;
+		m_vEye.y = m_vEye.y + (_float(m_iReverse) * 0.1f * _fTimeDelta);
+
+		if (m_fFrame >= 0.15f)
+		{
+			m_fFrame = 0.f;
+			m_bEarthQuake = false;
+		}
 	}
 }

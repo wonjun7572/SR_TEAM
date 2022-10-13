@@ -14,7 +14,7 @@ enum PLANE_TYPE
 	PLANE_END
 };
 
-class CFrustumCullMgr
+class ENGINE_DLL CFrustumCullMgr
 {
 	DECLARE_SINGLETON(CFrustumCullMgr)
 

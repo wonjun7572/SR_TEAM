@@ -16,13 +16,13 @@ HRESULT CItemBox::Ready_Object(const _vec3 & vPos, _tchar * Name)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
-	m_pTransCom->Set_Scale(0.3f, 1.f, 0.3f);
+	m_pTransCom->Set_Scale(2.f, 2.f, 2.f);
 	m_pTransCom->Set_Pos(vPos.x, vPos.y, vPos.z);
 	m_pTransCom->Static_Update();
 
 	m_TrapName = Name;
 
-	m_STATE = ITEMBOX_UP;
+	m_STATE = ITEMBOX_END;
 
 	return S_OK;
 }
@@ -34,6 +34,7 @@ _int CItemBox::Update_Object(const _float & fTimeDelta)
 	if (m_bFirst)
 	{
 		m_bFirst = false;
+		m_pPlayerTransCom = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_CHARACTER, L"PLAYER", TRANSFORM_COMP, ID_DYNAMIC));
 		Engine::Get_Scene()->New_Layer(m_TrapName);
 		pMyLayer = Engine::Get_Layer(m_TrapName);
 		FAILED_CHECK_RETURN(Build(), -1);
@@ -41,15 +42,18 @@ _int CItemBox::Update_Object(const _float & fTimeDelta)
 		Load_Animation(L"../../Data/Itembox/ITEMBOX_Open.dat", 1);
 	}
 
-	if (m_STATE == ITEMBOX_UP)
+	_vec3 vPlayerScale;
+	m_pPlayerTransCom->Get_Scale(&vPlayerScale);
+	_vec3 vScale;
+	m_pTransCom->Get_Scale(&vScale);
+
+	if (m_pCollision->Sphere_Collision(this->m_pTransCom, m_pPlayerTransCom, vPlayerScale.x, vScale.x))
 	{
-		Up_Animation_Run();
-		Run_Animation(5.f);
-	}
-	else if (m_STATE == ITEMBOX_DOWN)
-	{
-		Down_Animation_Run();
-		Run_Animation(5.f);
+		if (Get_DIKeyState(DIK_E))
+		{
+			m_pTransCom->Set_Scale(0.f, 0.f, 0.f);
+			m_STATE = ITEMBOX_UP;
+		}
 	}
 
 	Add_RenderGroup(RENDER_PRIORITY, this);
@@ -60,6 +64,20 @@ _int CItemBox::Update_Object(const _float & fTimeDelta)
 
 void CItemBox::LateUpdate_Object(void)
 {
+	if (!m_bFirst)
+	{
+		if (m_STATE == ITEMBOX_UP)
+		{
+			Up_Animation_Run();
+			Run_Animation(5.f);
+		}
+		else if (m_STATE == ITEMBOX_DOWN)
+		{
+			Down_Animation_Run();
+			Run_Animation(5.f);
+		}
+	}
+
 	CTrap::LateUpdate_Object();
 }
 
@@ -67,7 +85,7 @@ void CItemBox::Render_Object(void)
 {
 	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransCom->Get_WorldMatrixPointer());
-	m_pHitBox->Render_Buffer();
+	//m_pHitBox->Render_Buffer();
 	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 }
 
