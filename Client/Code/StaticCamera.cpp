@@ -245,7 +245,7 @@ void CStaticCamera::Camera_Shaking(const _float& _fTimeDelta)
 	m_fFrame += 0.2f * _fTimeDelta;
 	m_iReverse *= -1;
 	m_vEye.y = m_vEye.y + (_float(m_iReverse) * 0.1f * _fTimeDelta);
-
+	
 	if (m_fFrame >= 0.2f)
 	{
 		m_fFrame = 0.f;

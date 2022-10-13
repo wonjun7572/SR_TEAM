@@ -1,128 +1,5 @@
-﻿  stdafx.cpp
-  PlayerFaceUI.cpp
-  PlayerDefenseUI.cpp
-  Client.cpp
-  Zombie.cpp
-  ShotParticle.cpp
-  WeaponUI.cpp
-  Weapon.cpp
-  WallMapping.cpp
-  Wall.cpp
-  UziPart5.cpp
-  UziPart4.cpp
-  UziPart3.cpp
-  UziPart2.cpp
-  UziPart1.cpp
-  Uzi.cpp
-  Trap.cpp
-  TransAxisBox.cpp
-  ToolScene.cpp
-  Thorn.cpp
-  TestCube.cpp
-  코드를 생성하고 있습니다...
-  컴파일하고 있습니다...
-  Terrain.cpp
-c:\users\sam51\desktop\sr_team\client\code\terrain.cpp(78): warning C4101: 'expn' :참조되지 않은 지역 변수입니다.
-  TargetCube.cpp
-  Supporter_Uzi.cpp
-  Supporter.cpp
-  StaticCamera.cpp
-  Stage.cpp
-  SpBullet.cpp
-  SniperPart4.cpp
-  SniperPart3.cpp
-  SniperPart2.cpp
-  SniperPart1.cpp
-  Sniper.cpp
-  Slime.cpp
-  SkyBox.cpp
-  SkillCamera.cpp
-  Skeleton.cpp
-  ShotgunPart4.cpp
-  ShotgunPart3.cpp
-  ShotgunPart2.cpp
-  ShotgunPart1.cpp
-  코드를 생성하고 있습니다...
-  컴파일하고 있습니다...
-  Shotgun.cpp
-  Shop.cpp
-  ProjectileParticle.cpp
-  PoolMgr.cpp
-  PlayerUI.cpp
-  PlayerMapping.cpp
-  PlayerHpUI.cpp
-  PlayButton.cpp
-  OptionButton.cpp
-  ObtainDefense.cpp
-  ObtainBullet.cpp
-  MonsterUI.cpp
-  MonsterParticle.cpp
-  MonsterMapping.cpp
-  Monster.cpp
-  Meteor.cpp
-  MaxPlusHp.cpp
-  MainApp.cpp
-  Magma.cpp
-  LogoUI.cpp
-  코드를 생성하고 있습니다...
-  컴파일하고 있습니다...
-  LogoBilboard.cpp
-  Logo.cpp
-  Loading.cpp
-  LetterBox.cpp
-  ItemParticle.cpp
-  ItemIcon.cpp
-  ItemBox.cpp
-  Item.cpp
-  Inventory.cpp
-c:\users\sam51\desktop\sr_team\client\code\inventory.cpp(308): warning C4018: '>': signed 또는 unsigned가 일치하지 않습니다.
-  ImguiMgr.cpp
-c:\users\sam51\desktop\sr_team\client\code\imguimgr.cpp(255): warning C4390: ';': 제어된 빈 문이 있습니다. 이 문이 필요합니까?
-c:\users\sam51\desktop\sr_team\client\code\imguimgr.cpp(257): warning C4390: ';': 제어된 빈 문이 있습니다. 이 문이 필요합니까?
-c:\users\sam51\desktop\sr_team\client\code\imguimgr.cpp(259): warning C4390: ';': 제어된 빈 문이 있습니다. 이 문이 필요합니까?
-c:\users\sam51\desktop\sr_team\client\code\imguimgr.cpp(275): warning C4390: ';': 제어된 빈 문이 있습니다. 이 문이 필요합니까?
-c:\users\sam51\desktop\sr_team\client\code\imguimgr.cpp(277): warning C4390: ';': 제어된 빈 문이 있습니다. 이 문이 필요합니까?
-c:\users\sam51\desktop\sr_team\client\code\imguimgr.cpp(279): warning C4390: ';': 제어된 빈 문이 있습니다. 이 문이 필요합니까?
-  Illusioner.cpp
-  HitBarUI.cpp
-  HealthPotion.cpp
-  GunUI.cpp
-  GetUzi.cpp
-  GetSniper.cpp
-  GetShotgun.cpp
-  FireMan.cpp
-  ExitButton.cpp
-  StaticParticle.cpp
-  코드를 생성하고 있습니다...
-  컴파일하고 있습니다...
-  SparkEffect.cpp
-  RcEffect.cpp
-  Ping.cpp
-  IceEffect.cpp
-  FlameEffect.cpp
-c:\users\sam51\desktop\sr_team\client\code\flameeffect.cpp(120): warning C4305: '인수': 'double'에서 'Engine::_float'(으)로 잘립니다.
-  DynamicCamera.cpp
-  CubeShop.cpp
-  CubePlayer.cpp
-c:\users\sam51\desktop\sr_team\client\code\cubeplayer.cpp(155): warning C4244: '인수': 'Engine::_int'에서 'FLOAT'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\sam51\desktop\sr_team\client\code\cubeplayer.cpp(158): warning C4244: '인수': 'Engine::_int'에서 'FLOAT'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-  CubeLeg.cpp
-  CubeHead.cpp
-  CubeHand.cpp
-  CubeFoot.cpp
-  CubeBody.cpp
-  CubeArm.cpp
-  CrossHeader.cpp
-  ComboUI.cpp
-  BulletUI.cpp
-  BulletParicle.cpp
-  Bullet.cpp
-  BubbleEffect.cpp
-c:\users\sam51\desktop\sr_team\client\code\bubbleeffect.cpp(46): warning C4244: '인수': 'int'에서 'FLOAT'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-  코드를 생성하고 있습니다...
-  컴파일하고 있습니다...
-  BaseMapping.cpp
-  AnimationPlayer.cpp
+﻿  Stage.cpp
+  MiddleBoss.cpp
   코드를 생성하고 있습니다...
   LogoCamera.cpp
   SoundWave.cpp
@@ -143,6 +20,7 @@ c:\users\sam51\desktop\sr_team\client\code\bubbleeffect.cpp(46): warning C4244: 
   ImCurveEdit.cpp
   GraphEditor.cpp
   코드를 생성하고 있습니다...
+  LINK : ../Bin\Client.exe을(를) 찾을 수 없거나 마지막 증분 링크에 의해 빌드되지 않았습니다. 전체 링크를 수행하고 있습니다.
      ../Bin\Client.lib 라이브러리 및 ../Bin\Client.exp 개체를 생성하고 있습니다.
-  Client.vcxproj -> C:\Users\sam51\Desktop\SR_TEAM\Client\Default\../Bin\Client.exe
+  Client.vcxproj -> C:\Users\beoms\OneDrive\문서\GitHub\SR_TEAM\Client\Default\../Bin\Client.exe
   Client.vcxproj -> ../Bin\Client.pdb (Full PDB)
