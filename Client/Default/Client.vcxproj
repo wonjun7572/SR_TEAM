@@ -179,6 +179,9 @@
     <ClInclude Include="..\Header\CubePlayer.h" />
     <ClInclude Include="..\Header\CubeShop.h" />
     <ClInclude Include="..\Header\DynamicCamera.h" />
+    <ClInclude Include="..\Header\FlameEffect.h" />
+    <ClInclude Include="..\Header\IceEffect.h" />
+    <ClInclude Include="..\Header\StaticParticle.h" />
     <ClInclude Include="..\Header\ExitButton.h" />
     <ClInclude Include="..\Header\FireMan.h" />
     <ClInclude Include="..\Header\GetShotgun.h" />
@@ -305,6 +308,9 @@
     <ClCompile Include="..\Code\CubePlayer.cpp" />
     <ClCompile Include="..\Code\CubeShop.cpp" />
     <ClCompile Include="..\Code\DynamicCamera.cpp" />
+    <ClCompile Include="..\Code\FlameEffect.cpp" />
+    <ClCompile Include="..\Code\IceEffect.cpp" />
+    <ClCompile Include="..\Code\StaticParticle.cpp" />
     <ClCompile Include="..\Code\ExitButton.cpp" />
     <ClCompile Include="..\Code\FireMan.cpp" />
     <ClCompile Include="..\Code\GetShotgun.cpp" />
