@@ -250,6 +250,15 @@
     <Filter Include="02. GameObject\01. For_Stage\16. Skill">
       <UniqueIdentifier>{b7353904-ea38-453f-9793-d3a8ad2631b7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\17. Supporter">
+      <UniqueIdentifier>{8ed3bb62-6903-45c0-8dab-b3d82dc3460b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\18. Trap">
+      <UniqueIdentifier>{327e46a2-fa1e-4eea-ade8-6c09099aed4f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\19. Effect">
+      <UniqueIdentifier>{6064013c-b6da-49f6-94eb-d51444bbc0f5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -597,38 +606,35 @@
     <ClInclude Include="..\Header\Meteor.h">
       <Filter>02. GameObject\01. For_Stage\16. Skill</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\FlameEffect.h">
-      <Filter>99. Default\헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\IceEffect.h">
-      <Filter>99. Default\헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\StaticParticle.h">
-      <Filter>99. Default\헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\ItemBox.h">
-      <Filter>99. Default\헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\Magma.h">
-      <Filter>99. Default\헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\SpBullet.h">
-      <Filter>99. Default\헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\Supporter.h">
-      <Filter>99. Default\헤더 파일</Filter>
+      <Filter>02. GameObject\01. For_Stage\17. Supporter</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Supporter_Uzi.h">
-      <Filter>99. Default\헤더 파일</Filter>
+      <Filter>02. GameObject\01. For_Stage\17. Supporter</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\Thorn.h">
-      <Filter>99. Default\헤더 파일</Filter>
+    <ClInclude Include="..\Header\ItemBox.h">
+      <Filter>02. GameObject\01. For_Stage\18. Trap</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Magma.h">
+      <Filter>02. GameObject\01. For_Stage\18. Trap</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Trap.h">
-      <Filter>99. Default\헤더 파일</Filter>
+      <Filter>02. GameObject\01. For_Stage\18. Trap</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\MiddleBoss.h">
-      <Filter>99. Default\헤더 파일</Filter>
+    <ClInclude Include="..\Header\Thorn.h">
+      <Filter>02. GameObject\01. For_Stage\18. Trap</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\SpBullet.h">
+      <Filter>02. GameObject\01. For_Stage\06. Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\StaticParticle.h">
+      <Filter>02. GameObject\01. For_Stage\12. Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\FlameEffect.h">
+      <Filter>02. GameObject\01. For_Stage\12. Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\IceEffect.h">
+      <Filter>02. GameObject\01. For_Stage\12. Particle</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -956,38 +962,35 @@
     <ClCompile Include="..\Code\Meteor.cpp">
       <Filter>02. GameObject\01. For_Stage\16. Skill</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\FlameEffect.cpp">
-      <Filter>99. Default\소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\IceEffect.cpp">
-      <Filter>99. Default\소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\StaticParticle.cpp">
-      <Filter>99. Default\소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\ItemBox.cpp">
-      <Filter>99. Default\소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\Magma.cpp">
-      <Filter>99. Default\소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\SpBullet.cpp">
-      <Filter>99. Default\소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\Supporter.cpp">
-      <Filter>99. Default\소스 파일</Filter>
+      <Filter>02. GameObject\01. For_Stage\17. Supporter</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Supporter_Uzi.cpp">
-      <Filter>99. Default\소스 파일</Filter>
+      <Filter>02. GameObject\01. For_Stage\17. Supporter</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Magma.cpp">
+      <Filter>02. GameObject\01. For_Stage\18. Trap</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Thorn.cpp">
-      <Filter>99. Default\소스 파일</Filter>
+      <Filter>02. GameObject\01. For_Stage\18. Trap</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Trap.cpp">
-      <Filter>99. Default\소스 파일</Filter>
+      <Filter>02. GameObject\01. For_Stage\18. Trap</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\MiddleBoss.cpp">
-      <Filter>99. Default\소스 파일</Filter>
+    <ClCompile Include="..\Code\ItemBox.cpp">
+      <Filter>02. GameObject\01. For_Stage\18. Trap</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SpBullet.cpp">
+      <Filter>02. GameObject\01. For_Stage\06. Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\StaticParticle.cpp">
+      <Filter>02. GameObject\01. For_Stage\12. Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\FlameEffect.cpp">
+      <Filter>02. GameObject\01. For_Stage\12. Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\IceEffect.cpp">
+      <Filter>02. GameObject\01. For_Stage\12. Particle</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
