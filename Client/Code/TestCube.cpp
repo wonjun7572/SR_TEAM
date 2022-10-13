@@ -76,7 +76,6 @@ void CTestCube::Render_Object()
 	//m_pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_ONE);
 	if(! (dynamic_cast<CBaseMapping*>(Engine::Get_GameObject(STAGE_MAPPING, L"BaseMapping"))->Get_Worldmap()))
 	{
-	//m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
 		if (m_bWireFrame)
 			m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 
@@ -86,11 +85,6 @@ void CTestCube::Render_Object()
 
 		if (m_bWireFrame)
 			m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
-
-		m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
-		m_pHitBox->Render_Buffer();
-		m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
-	//	m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
 	}
 }
 

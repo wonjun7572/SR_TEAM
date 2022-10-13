@@ -28,6 +28,12 @@ protected:
 protected:
 	void				Hit_Check(_float _deltaTime);
 
+public:
+	void          Set_Damaged(_float iDamage)
+	{
+		m_tAbility->fCurrentHp -= iDamage;
+	}
+
 protected:
 	CCubeTex*			m_pBufferCom = nullptr;
 	CTransform*			m_pTransCom = nullptr;

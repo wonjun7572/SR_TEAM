@@ -144,6 +144,8 @@ _bool CMonster::Collision_Wall(const _float& fTimeDelta)
 		m_pTransCom->Move_Pos(&(vDir * m_fSpeed * fTimeDelta));
 		return false;
 	}
+
+	return false;
 }
 
 void CMonster::Hit_Effect()

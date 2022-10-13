@@ -179,6 +179,9 @@
     <ClInclude Include="..\Header\CubePlayer.h" />
     <ClInclude Include="..\Header\CubeShop.h" />
     <ClInclude Include="..\Header\DynamicCamera.h" />
+    <ClInclude Include="..\Header\FlameEffect.h" />
+    <ClInclude Include="..\Header\IceEffect.h" />
+    <ClInclude Include="..\Header\StaticParticle.h" />
     <ClInclude Include="..\Header\ExitButton.h" />
     <ClInclude Include="..\Header\FireMan.h" />
     <ClInclude Include="..\Header\GetShotgun.h" />
@@ -191,6 +194,7 @@
     <ClInclude Include="..\Header\ImguiMgr.h" />
     <ClInclude Include="..\Header\Inventory.h" />
     <ClInclude Include="..\Header\Item.h" />
+    <ClInclude Include="..\Header\ItemBox.h" />
     <ClInclude Include="..\Header\ItemIcon.h" />
     <ClInclude Include="..\Header\ItemParticle.h" />
     <ClInclude Include="..\Header\LetterBox.h" />
@@ -201,9 +205,10 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="..\Header\LogoUI.h" />
+    <ClInclude Include="..\Header\Magma.h" />
     <ClInclude Include="..\Header\MainApp.h" />
     <ClInclude Include="..\Header\MaxPlusHp.h" />
-    <ClInclude Include="..\Header\MiddleBoss.h" />
+    <ClInclude Include="..\Header\Meteor.h" />
     <ClInclude Include="..\Header\Monster.h" />
     <ClInclude Include="..\Header\MonsterMapping.h" />
     <ClInclude Include="..\Header\MonsterParticle.h" />
@@ -232,13 +237,18 @@
     <ClInclude Include="..\Header\SniperPart2.h" />
     <ClInclude Include="..\Header\SniperPart3.h" />
     <ClInclude Include="..\Header\SniperPart4.h" />
+    <ClInclude Include="..\Header\SpBullet.h" />
     <ClInclude Include="..\Header\Stage.h" />
     <ClInclude Include="..\Header\StaticCamera.h" />
+    <ClInclude Include="..\Header\Supporter.h" />
+    <ClInclude Include="..\Header\Supporter_Uzi.h" />
     <ClInclude Include="..\Header\TargetCube.h" />
     <ClInclude Include="..\Header\Terrain.h" />
     <ClInclude Include="..\Header\TestCube.h" />
+    <ClInclude Include="..\Header\Thorn.h" />
     <ClInclude Include="..\Header\ToolScene.h" />
     <ClInclude Include="..\Header\TransAxisBox.h" />
+    <ClInclude Include="..\Header\Trap.h" />
     <ClInclude Include="..\Header\Uzi.h" />
     <ClInclude Include="..\Header\UziPart1.h" />
     <ClInclude Include="..\Header\UziPart2.h" />
@@ -298,6 +308,9 @@
     <ClCompile Include="..\Code\CubePlayer.cpp" />
     <ClCompile Include="..\Code\CubeShop.cpp" />
     <ClCompile Include="..\Code\DynamicCamera.cpp" />
+    <ClCompile Include="..\Code\FlameEffect.cpp" />
+    <ClCompile Include="..\Code\IceEffect.cpp" />
+    <ClCompile Include="..\Code\StaticParticle.cpp" />
     <ClCompile Include="..\Code\ExitButton.cpp" />
     <ClCompile Include="..\Code\FireMan.cpp" />
     <ClCompile Include="..\Code\GetShotgun.cpp" />
@@ -310,6 +323,7 @@
     <ClCompile Include="..\Code\ImguiMgr.cpp" />
     <ClCompile Include="..\Code\Inventory.cpp" />
     <ClCompile Include="..\Code\Item.cpp" />
+    <ClCompile Include="..\Code\ItemBox.cpp" />
     <ClCompile Include="..\Code\ItemIcon.cpp" />
     <ClCompile Include="..\Code\ItemParticle.cpp" />
     <ClCompile Include="..\Code\LetterBox.cpp" />
@@ -320,9 +334,10 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\Code\LogoUI.cpp" />
+    <ClCompile Include="..\Code\Magma.cpp" />
     <ClCompile Include="..\Code\MainApp.cpp" />
     <ClCompile Include="..\Code\MaxPlusHp.cpp" />
-    <ClCompile Include="..\Code\MiddleBoss.cpp" />
+    <ClCompile Include="..\Code\Meteor.cpp" />
     <ClCompile Include="..\Code\Monster.cpp" />
     <ClCompile Include="..\Code\MonsterMapping.cpp" />
     <ClCompile Include="..\Code\MonsterParticle.cpp" />
@@ -351,13 +366,18 @@
     <ClCompile Include="..\Code\SniperPart2.cpp" />
     <ClCompile Include="..\Code\SniperPart3.cpp" />
     <ClCompile Include="..\Code\SniperPart4.cpp" />
+    <ClCompile Include="..\Code\SpBullet.cpp" />
     <ClCompile Include="..\Code\Stage.cpp" />
     <ClCompile Include="..\Code\StaticCamera.cpp" />
+    <ClCompile Include="..\Code\Supporter.cpp" />
+    <ClCompile Include="..\Code\Supporter_Uzi.cpp" />
     <ClCompile Include="..\Code\TargetCube.cpp" />
     <ClCompile Include="..\Code\Terrain.cpp" />
     <ClCompile Include="..\Code\TestCube.cpp" />
+    <ClCompile Include="..\Code\Thorn.cpp" />
     <ClCompile Include="..\Code\ToolScene.cpp" />
     <ClCompile Include="..\Code\TransAxisBox.cpp" />
+    <ClCompile Include="..\Code\Trap.cpp" />
     <ClCompile Include="..\Code\Uzi.cpp" />
     <ClCompile Include="..\Code\UziPart1.cpp" />
     <ClCompile Include="..\Code\UziPart2.cpp" />

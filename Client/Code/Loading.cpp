@@ -47,7 +47,15 @@ _uint CLoading::Loading_ForStage(void)
 	{
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(SHOTPARTICLE_TEX, CTexture::Create(m_pGraphicDev, SHOTPARTICLE_TEX_PATH, TEX_NORMAL)), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(BULLETPARTICLE_TEX, CTexture::Create(m_pGraphicDev, BULLETPARTICLE_TEX_PATH, TEX_NORMAL)), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(PROJECTILEPARTICLE_TEX, CTexture::Create(m_pGraphicDev, PROJECTILEPARTICLE_TEX_PATH, TEX_NORMAL)), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(STATICPARTICLE_TEX, CTexture::Create(m_pGraphicDev, STATICPARTICLE_TEX_PATH, TEX_NORMAL,8)), E_FAIL);
+
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_MonsterParticle", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Particle/blood.png", TEX_NORMAL)), E_FAIL);
+	}
+
+	{
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(BLUEBOMB_TEX, CTexture::Create(m_pGraphicDev, BLUEBOMB_TEX_PATH, TEX_NORMAL,3)), E_FAIL);
+
 	}
 
 	{
@@ -127,8 +135,8 @@ _uint CLoading::Loading_ForStage(void)
 
 	// Map
 	{
-		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Minimap", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/\Texture2D/hud_minimap_bg.png", TEX_NORMAL)), E_FAIL);
-		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Bomb_TEX", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Bomb.png", TEX_NORMAL)), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Minimap", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Texture2D/hud_minimap_bg.png", TEX_NORMAL)), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Bomb_TEX", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/TargetAim.png", TEX_NORMAL)), E_FAIL);
 	}
 
 	// PNGtoCube
@@ -160,7 +168,6 @@ _uint CLoading::Loading_ForStage(void)
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(ITEM_TRANSFORM_COMP, CTransform::Create(m_pGraphicDev)), E_FAIL);
 	}
 
-		FAILED_CHECK_RETURN(Engine::Ready_Proto(PROJECTILEPARTICLE_TEX, CTexture::Create(m_pGraphicDev, PROJECTILEPARTICLE_TEX_PATH, TEX_NORMAL)), E_FAIL);
 
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(CROSSHAIR_RIFLE_TEX, CTexture::Create(m_pGraphicDev, CROSSHAIR_RIFLE_TEX_PATH, TEX_NORMAL)), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(CROSSHAIR_SHOTGUN_TEX, CTexture::Create(m_pGraphicDev, CROSSHAIR_SHOTGUN_PATH, TEX_NORMAL)), E_FAIL);
@@ -180,6 +187,11 @@ _uint CLoading::Loading_ForStage(void)
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_RailGunCom", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/UI/ShopUI/RailGun.png", TEX_NORMAL)), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_BurstModeCom", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/UI/ShopUI/RailGun.png", TEX_NORMAL)), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_UpgradeStringCom", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/UI/ShopUI/UIupgrade.png", TEX_NORMAL)), E_FAIL);
+	}
+
+	{
+		// Skiil
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Lava_Tex", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Lava.png", TEX_NORMAL)), E_FAIL);
 	}
 
 	m_bFinish = true;
