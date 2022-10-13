@@ -31,9 +31,10 @@ HRESULT CSlime::Ready_Object(const _vec3& vPos, _tchar* Name)
 	m_tAbility->fDamage = 10.f;
 	m_tAbility->strObjTag = L"Slime";
 
-	m_JUMP = SLIMEJUMP_START;
 
 	m_MonsterName = Name;
+	
+	m_JUMP = SLIMEJUMP_START;
 
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
@@ -54,6 +55,13 @@ HRESULT CSlime::Ready_Object(const _vec3& vPos, _tchar* Name)
 	m_pSphereTransCom->Set_Pos(vAnimationPos.x, vAnimationPos.y, vAnimationPos.z);
 	m_pSphereTransCom->Static_Update();
 
+
+	m_pSearchRange_TransCom->Set_Scale(&_vec3(15.f, 15.f, 15.f));
+	m_pSearchRange_TransCom->Set_Pos(vAnimationPos.x, vAnimationPos.y, vAnimationPos.z);
+	m_pSearchRange_TransCom->Static_Update();
+
+
+
 	return S_OK;
 }
 
@@ -72,8 +80,16 @@ _int CSlime::Update_Object(const _float & fTimeDelta)
 		m_bFirst = false;
 		Engine::Get_Scene()->New_Layer(m_MonsterName);
 		pMyLayer = Engine::Get_Layer(m_MonsterName);
+
 		FAILED_CHECK_RETURN(Build(), -1);
+
+		Load_Animation(L"../../Data/Slime/Animation_Jump_Start.dat", 0);
+		Load_Animation(L"../../Data/Slime/Slime_Down_1.dat", 1);
+		Load_Animation(L"../../Data/Slime/Slime_Down_2.dat", 2);
+
 	}
+	
+
 
 
 	CMonster::Update_Object(fTimeDelta);
@@ -88,11 +104,17 @@ _int CSlime::Update_Object(const _float & fTimeDelta)
 		m_pSphereTransCom->Get_Scale(&vScale);
 		_vec3 vPos;
 		m_pTransCom->Get_Info(INFO_POS, &vPos);
+		_vec3 vSearchScale;
+		m_pSearchRange_TransCom->Get_Scale(&vSearchScale);
+		
 
-		if (m_pCollision->Sphere_Collision(this->m_pSphereTransCom, m_pPlayerTransCom, vPlayerScale.x, vScale.x))
+		if (this->m_pSearchRange_TransCom, m_pPlayerTransCom, vPlayerScale.x, vSearchScale.x)
 		{
 			m_pTransCom->Chase_Target(&vPlayerPos, 1.f, fTimeDelta);
+			m_JUMP = SLIMEJUMP_START;
 		}
+		
+		Look_Direction();
 
 		_vec3 vMonsterPos;
 		m_pTransCom->Get_Info(INFO_POS, &vMonsterPos);
@@ -107,8 +129,12 @@ void CSlime::LateUpdate_Object(void)
 	Monster_Mapping();
 	if (!m_bFirst)
 	{
-		Jump_Animation_Run();
-		Look_Direction();
+
+		if (m_JUMP == SLIMEJUMP_START)
+		{
+			Jump_Animation_Run();
+			Run_Animation(5.f);
+		}
 	}
 
 	CMonster::LateUpdate_Object();
@@ -184,6 +210,11 @@ HRESULT CSlime::Add_Component(void)
 	pComponent = m_pSphereTransCom = dynamic_cast<CTransform*>(Clone_Proto(TRANSFORM_COMP));
 	NULL_CHECK_RETURN(m_pSphereBufferCom, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Sphere_TransCom", pComponent });
+
+	pComponent = m_pSearchRange_TransCom = dynamic_cast<CTransform*>(Clone_Proto(TRANSFORM_COMP));
+	NULL_CHECK_RETURN(m_pSphereBufferCom, E_FAIL);
+	m_mapComponent[ID_DYNAMIC].insert({ L"SearchRange", pComponent });
+
 
 	// 추가
 	pComponent = m_pAnimationBox = dynamic_cast<CCubeCol*>(Clone_Proto(CUBECOL_COMP));
@@ -345,7 +376,7 @@ HRESULT CSlime::Build(void)
 			break;
 	}
 
-	for (auto& iter : *(pMyLayer->Get_GamePairPtr()))		//	List 개꿀
+	for (auto& iter : *(pMyLayer->Get_GamePairPtr()))
 	{
 		for (auto& List : dynamic_cast<CTransAxisBox*>(iter.second)->m_ParentKey)
 		{
@@ -359,7 +390,7 @@ HRESULT CSlime::Build(void)
 	return S_OK;
 }
 
-void CSlime::Load_Animation(wstring FileName)
+void CSlime::Load_Animation(wstring FileName, _uint AnimationID)
 {
 	HANDLE      hFile = CreateFile(FileName.c_str(),      // 파일의 경로와 이름
 		GENERIC_READ,         // 파일 접근 모드 (GENERIC_WRITE : 쓰기 전용, GENERIC_READ : 읽기 전용)
@@ -406,7 +437,7 @@ void CSlime::Load_Animation(wstring FileName)
 		{
 			_matrix matAnimation;
 			ReadFile(hFile, &matAnimation, sizeof(D3DXMATRIX), &dwByte, nullptr);
-			Quaternion->Add_World(&matAnimation);
+			Quaternion->Fill_Animation(&matAnimation, AnimationID);
 		}
 
 		iSize--;
@@ -481,6 +512,7 @@ void CSlime::Run_Animation(const _float & AnimationSpeed)
 
 void CSlime::Jump_Animation_Run(void)
 {
+	list<pair<const _tchar*, CGameObject*>> ListBox = *(pMyLayer->Get_GamePairPtr());
 	if (m_AnimationTime >= 1.f)
 	{
 		list<pair<const _tchar*, CGameObject*>> ListBox = *(pMyLayer->Get_GamePairPtr());
@@ -500,22 +532,10 @@ void CSlime::Jump_Animation_Run(void)
 
 		m_AnimationTime = 0.f;
 	}
-
-	//	bool/열거체 값에 따라 어떤 애니메이션을 불러올 것인지 결정
-	if (m_JUMP == SLIMEJUMP_START)
+	for (auto& iter : ListBox)	
 	{
-		Load_Animation(L"../../Data/Slime/Animation_Jump_Start.dat");
-		Run_Animation(1.f);
-	}
-	else if (m_JUMP == SLIMEJUMP_1)
-	{
-		Load_Animation(L"../../Data/Slime/Slime_Down_1.dat");
-		Run_Animation(1.f);
-	}
-	else if (m_JUMP == SLIMEJUMP_2)
-	{
-		Load_Animation(L"../../Data/Slime/Slime_Down_2.dat");
-		Run_Animation(1.f);
+		CQuarternion* Qtan = dynamic_cast<CQuarternion*>(iter.second->Get_Component(L"Proto_QuaternionCom", ID_STATIC));
+		Qtan->Change_Animation(0 + m_JUMP);
 	}
 }
 

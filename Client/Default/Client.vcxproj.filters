@@ -259,6 +259,12 @@
     <Filter Include="02. GameObject\01. For_Stage\19. Effect">
       <UniqueIdentifier>{6064013c-b6da-49f6-94eb-d51444bbc0f5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\20.Boss">
+      <UniqueIdentifier>{4f9db9fa-22f7-475a-b433-c1d3ee30c073}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\20.Boss\00. MiddleBoss">
+      <UniqueIdentifier>{d69fca81-4e02-480e-8e4f-1a07871075c4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -636,6 +642,9 @@
     <ClInclude Include="..\Header\IceEffect.h">
       <Filter>02. GameObject\01. For_Stage\12. Particle</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\MiddleBoss.h">
+      <Filter>02. GameObject\01. For_Stage\20.Boss\00. MiddleBoss</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -991,6 +1000,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\IceEffect.cpp">
       <Filter>02. GameObject\01. For_Stage\12. Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\MiddleBoss.cpp">
+      <Filter>02. GameObject\01. For_Stage\20.Boss\00. MiddleBoss</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

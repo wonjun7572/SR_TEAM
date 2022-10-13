@@ -33,7 +33,7 @@ private:
 
 private:	//	애니메이션 관련
 	HRESULT					Build(void);
-	void					Load_Animation(wstring FileName);
+	void					Load_Animation(wstring FileName, _uint AnimationID);
 	void					Run_Animation(const _float& AnimationSpeed);
 	void					Jump_Animation_Run(void);
 	void					Look_Direction(void);
@@ -48,7 +48,7 @@ private:	//	애니메이션 관련
 	CLayer*					pMyLayer;
 	_tchar*					m_MonsterName;
 
-	list<char*>				m_CharList;				// char쓰레기통
+
 	list<_tchar*>			m_TcharList;			// tchar쓰레기통
 
 public:
