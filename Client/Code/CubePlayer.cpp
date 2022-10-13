@@ -173,7 +173,7 @@ void CCubePlayer::KnuckDown(const _float & fDamage)
 	if (m_fGlobal_Cooltime >= 1.f)
 	{
 		m_tAbility->fHp -= fDamage;
-		m_iKnuckStack = 10;
+		m_iKnuckStack = 15;
 		m_fGlobal_Cooltime = 0;
 	}
 }
