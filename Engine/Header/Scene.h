@@ -17,6 +17,9 @@ public:
 	CComponent*				Get_Component(const _tchar* pLayerTag, const _tchar* pObjTag, const _tchar* pComponentTag, COMPONENTID eID);
 	CGameObject*			Get_GameObject(const _tchar* pLayerTag, const _tchar* pObjTag); 
 
+	SCENE_ID				Get_SceneId() { return m_eID; }
+	void					Set_SceneId(SCENE_ID eID) { m_eID = eID; }
+
 	map<const _tchar*, CLayer*> Get_MapLayer() { return m_mapLayer; }
 
 	void Add_Layer(CLayer* pLayer, _tchar* LayerName)
@@ -37,10 +40,13 @@ public:
 	virtual		void LateUpdate_Scene(void);
 	virtual		void Render_Scene(void) {}
 
+	
 
 protected:
 	LPDIRECT3DDEVICE9				m_pGraphicDev;
 	map<const _tchar*, CLayer*>		m_mapLayer;
+
+	SCENE_ID						m_eID;
 
 public:
 	virtual void	Free(void);

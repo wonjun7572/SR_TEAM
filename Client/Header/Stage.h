@@ -42,7 +42,6 @@ private:
 
 	HRESULT			Ready_Layer_Creature(const _tchar* pLayerTag);
 
-
 	//	ÆÄÃ÷ ·¹ÀÌ¾î
 	HRESULT			Ready_Layer_Player(const _tchar* pLayerTag);
 
@@ -53,11 +52,33 @@ private:
 
 	HRESULT			Ready_Proto(void);
 	HRESULT			Ready_Light(void);
+
+	HRESULT			Load_Position(OBJECT_ID eID,wstring strDirectory);
 	
 private:
 	////////////¸Ê ÆÄ½Ì
 	_int			m_iIndex = 0;
 	list<_tchar* >	NameList;
+
+	_int	m_iGunIndex = 0;
+	_int	m_iShopIndex = 0;
+	_int	m_iLavaIndex = 0;
+	_int	m_iItemIndex = 0;
+	_int	m_iThroneIndex = 0;
+	_int	m_iSlimeIndex = 0;
+	_int	m_iFireManIndex = 0;
+	_int	m_iZombieIndex = 0;
+	_int	m_iIllusionerIndex = 0;
+
+	vector<_vec3> vecGun;
+	vector<_vec3> vecShop;
+	vector<_vec3> vecLava;
+	vector<_vec3> vecItem;
+	vector<_vec3> vecThrone;
+	vector<_vec3> vecSlime;
+	vector<_vec3> vecFireMan;
+	vector<_vec3> vecZombie;
+	vector<_vec3> vecIllusioner;
 
 public:
 	static CStage*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
