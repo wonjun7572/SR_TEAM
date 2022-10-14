@@ -10,6 +10,8 @@
 #include "DynamicCamera.h"
 #include "ToolScene.h"
 
+#include "ObjectCube.h"
+
 IMPLEMENT_SINGLETON(CImGuiMgr)
 
 ImGuiTextBuffer CImGuiMgr::log;
@@ -21,10 +23,13 @@ bool CImGuiMgr::Show_Player_Window = false;
 bool CImGuiMgr::Show_Monster_Window = false;
 bool CImGuiMgr::Show_Cube_Tool = false;
 bool CImGuiMgr::Show_Camera_Tool = false;
+bool CImGuiMgr::Show_Object_Tool = false;
 
 _int CImGuiMgr::m_iInterval = 100;
 _int CImGuiMgr::m_iWidth = 100;
 _int CImGuiMgr::m_iDepth = 1;
+
+static _int iObjectNum;
 
 ImVec4 CImGuiMgr::clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
@@ -36,35 +41,6 @@ CImGuiMgr::CImGuiMgr()
 CImGuiMgr::~CImGuiMgr()
 {
 	Free();
-}
-
-HRESULT CImGuiMgr::Ready_MapTool(LPDIRECT3DDEVICE9 pGraphicDev, CScene* pScene)
-{
-	CLayer *pLayer = Engine::CLayer::Create();
-	pScene->Add_Layer(pLayer, L"Layer_MapTool");
-	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_TerrainTexCom_MapTool", CTexture::Create(pGraphicDev, L"../Bin/Resource/Texture/Terrain/Tile/textures_%d.png", TEX_NORMAL, 18)), E_FAIL);
-	return S_OK;
-}
-
-HRESULT CImGuiMgr::Ready_PlayerTool(LPDIRECT3DDEVICE9 pGraphicDev, CScene * pScene, CLayer* pLayer)
-{
-	if (pLayer == nullptr)
-	{
-		CLayer* pLayer = Engine::CLayer::Create();
-		pScene->Add_Layer(pLayer, L"Layer_PlayerTool");
-	}
-
-	return S_OK;
-}
-
-HRESULT CImGuiMgr::Ready_MonsterTool(LPDIRECT3DDEVICE9 pGraphicDev, CScene * pScene)
-{
-	return S_OK;
-}
-
-HRESULT CImGuiMgr::Ready_CameraTool(LPDIRECT3DDEVICE9 pGraphicDev, CScene * pScene, CLayer * pLayer)
-{
-	return S_OK;
 }
 
 void CImGuiMgr::TransformEdit(CCamera* pCamera, CTransform* pTransform, _bool& Window)
@@ -151,8 +127,10 @@ void CImGuiMgr::TransformEdit(CCamera* pCamera, CTransform* pTransform, _bool& W
 	ImGuizmo::Manipulate(pCamera->GetView(), pCamera->GetProj(), mCurrentGizmoOperation, mCurrentGizmoMode, matWorld, NULL, useSnap ? &snap[0] : NULL);
 
 	pTransform->m_matWorld = matWorld;
-
 	ImGuizmo::DecomposeMatrixToComponents(matWorld, matrixTranslation, matrixRotation, matrixScale);
+	matrixRotation[0] = D3DXToRadian(matrixRotation[0]);
+	matrixRotation[1] = D3DXToRadian(matrixRotation[1]);
+	matrixRotation[2] = D3DXToRadian(matrixRotation[2]);
 	memcpy(&pTransform->m_vInfo[INFO_POS], matrixTranslation, sizeof(matrixTranslation));
 	memcpy(&pTransform->m_vAngle, matrixRotation, sizeof(matrixRotation));
 	memcpy(&pTransform->m_vScale, matrixScale, sizeof(matrixScale));
@@ -225,6 +203,7 @@ void CImGuiMgr::WindowLayOut()
 	ImGui::Checkbox("Cube_Tool", &Show_Cube_Tool);
 	ImGui::Checkbox("MonsterTool", &Show_Monster_Window);
 	ImGui::Checkbox("CameraTool", &Show_Camera_Tool);
+	ImGui::Checkbox("ObjectTool", &Show_Object_Tool);
 
 	if (ImGui::Button("Clear"))
 	{
@@ -234,13 +213,14 @@ void CImGuiMgr::WindowLayOut()
 		Show_Cube_Tool = false;
 		Show_Monster_Window = false;
 		Show_Camera_Tool = false;
+		Show_Object_Tool = false;
 	}
 
 	ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
 	ImGui::End();
 }
 
-void CImGuiMgr::CreateObject(LPDIRECT3DDEVICE9 pGrahicDev, CScene* pScene, CCamera* pCam)
+void CImGuiMgr::CreateWall(LPDIRECT3DDEVICE9 pGrahicDev, CScene* pScene, CCamera* pCam)
 {
 	if (!Show_Cube_Tool)
 		return;
@@ -252,11 +232,11 @@ void CImGuiMgr::CreateObject(LPDIRECT3DDEVICE9 pGrahicDev, CScene* pScene, CCame
 	static _int iSaveStageNum;
 	static _int iLoadStageNum;
 
-	if (ImGui::RadioButton("Stage1", &iSaveStageNum, 1));
+	ImGui::RadioButton("Stage1", &iSaveStageNum, 1);
 	ImGui::SameLine();
-	if (ImGui::RadioButton("Stage2", &iSaveStageNum, 2));
+	ImGui::RadioButton("Stage2", &iSaveStageNum, 2);
 	ImGui::SameLine();
-	if (ImGui::RadioButton("Stage3", &iSaveStageNum, 3));
+	ImGui::RadioButton("Stage3", &iSaveStageNum, 3);
 	if (ImGui::Button("Save"))
 	{
 		if (iSaveStageNum == 1)
@@ -272,11 +252,11 @@ void CImGuiMgr::CreateObject(LPDIRECT3DDEVICE9 pGrahicDev, CScene* pScene, CCame
 			Save_Transform(pScene, L"../../Data/Map3.dat");
 		}
 	}
-	if (ImGui::RadioButton("Load_Stage1", &iLoadStageNum, 1));
+	ImGui::RadioButton("Load_Stage1", &iLoadStageNum, 1);
 	ImGui::SameLine();
-	if (ImGui::RadioButton("Load_Stage2", &iLoadStageNum, 2));
+	ImGui::RadioButton("Load_Stage2", &iLoadStageNum, 2);
 	ImGui::SameLine();
-	if (ImGui::RadioButton("Load_Stage3", &iLoadStageNum, 3));
+	ImGui::RadioButton("Load_Stage3", &iLoadStageNum, 3);
 	if (ImGui::Button("Load"))
 	{
 		if (iLoadStageNum == 1)
@@ -309,7 +289,7 @@ void CImGuiMgr::CreateObject(LPDIRECT3DDEVICE9 pGrahicDev, CScene* pScene, CCame
 		ImGui::SameLine();
 		if (ImGui::Button("Delete"))
 		{
-			CLayer* MyLayer = pScene->Get_Layer(L"Layer_MapTool");
+			CLayer* MyLayer = pScene->Get_Layer(L"Layer_Wall");
 			MyLayer->Delete_GameObject(m_CurrentSelectGameObjectObjKey.c_str());
 		}
 	}
@@ -333,21 +313,19 @@ void CImGuiMgr::CreateObject(LPDIRECT3DDEVICE9 pGrahicDev, CScene* pScene, CCame
 			pGameObject = CTestCube::Create(pGrahicDev, int(temp.x), int(temp.y));
 			NULL_CHECK_RETURN(pGameObject, );
 
-			CLayer* pCubelayer = pScene->Get_Layer(L"Layer_MapTool");
+			CLayer* pCubelayer = pScene->Get_Layer(L"Layer_Wall");
 
 			FAILED_CHECK_RETURN(pCubelayer->Add_GameObject(szObjTag, pGameObject), );
 
 			++m_iIndex;
-
-			//pScene->Add_Layer(pCubelayer, L"Layer_MapTool");
 		}
 	}
 
 	if (m_bCubeSelectCheck)
 	{
-		if (ImGui::IsMouseClicked(0))
+		if (ImGui::IsMouseDoubleClicked(0))
 		{
-			CLayer* MyLayer = pScene->Get_Layer(L"Layer_MapTool");
+			CLayer* MyLayer = pScene->Get_Layer(L"Layer_Wall");
 
 			map<const _tchar*, CGameObject*> test = MyLayer->Get_GameObjectMap();
 
@@ -362,7 +340,7 @@ void CImGuiMgr::CreateObject(LPDIRECT3DDEVICE9 pGrahicDev, CScene* pScene, CCame
 		}
 	}
 
-	CTestCube* pGameObject = dynamic_cast<CTestCube*>(Engine::Get_GameObject(L"Layer_MapTool", m_CurrentSelectGameObjectObjKey.c_str()));
+	CTestCube* pGameObject = dynamic_cast<CTestCube*>(Engine::Get_GameObject(L"Layer_Wall", m_CurrentSelectGameObjectObjKey.c_str()));
 	if (pGameObject)
 	{
 		ImGui::NewLine();
@@ -407,75 +385,6 @@ void CImGuiMgr::CreateObject(LPDIRECT3DDEVICE9 pGrahicDev, CScene* pScene, CCame
 	ImGui::End();
 }
 
-void CImGuiMgr::TerrainTool(LPDIRECT3DDEVICE9 pGrahicDev, CScene* pScene)
-{
-	if (!Show_Terrain_Window)
-		return;
-
-	ImGui::Begin("Terrain Settings");
-
-	if (ImGui::CollapsingHeader("Tile Count", ImGuiTreeNodeFlags_DefaultOpen))
-	{
-		ImGui::SliderInt("Width", &m_iWidth, 0, 200);
-		ImGui::SliderInt("Depth", &m_iDepth, 0, 200);
-		ImGui::SliderInt("Interval", &m_iInterval, 0, 10);
-		ImGui::NewLine();
-		if (ImGui::Button("Create"))
-		{
-			CLayer* MyLayer = pScene->Get_Layer(L"Layer_Tool");
-			MyLayer->Delete_GameObject(L"TerrainByTool");
-
-			Engine::Delete_Proto(L"Proto_TerrainTexCom");
-			FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_TerrainTexCom", CTerrainTex::Create(pGrahicDev, m_iWidth, m_iDepth, m_iInterval)), );
-
-			CGameObject* pGameObject = nullptr;
-
-			pGameObject = CTerrain::Create(pGrahicDev);
-			NULL_CHECK_RETURN(pGameObject, );
-			FAILED_CHECK_RETURN(MyLayer->Add_GameObject(L"TerrainByTool", pGameObject), );
-
-			ImGui::SameLine();
-			if (ImGui::Button("Clear"))
-			{
-				CLayer* pLayer = pScene->Get_Layer(L"Layer_Tool");
-				pLayer->Delete_GameObject(L"TerrainByTool");
-			}
-		}
-	}
-
-	CTerrain* pGameObject = dynamic_cast<CTerrain*>(Engine::Get_GameObject(L"Layer_Tool", L"TerrainByTool"));
-	if (pGameObject)
-	{
-		ImGui::NewLine();
-		if (ImGui::CollapsingHeader("Options", ImGuiTreeNodeFlags_DefaultOpen))
-		{
-			static _bool	bWireFrame = false;
-			if (ImGui::Checkbox("WireFrame", &bWireFrame))
-				pGameObject->Set_WireFrame(bWireFrame);
-		}
-		ImGui::NewLine();
-		if (ImGui::CollapsingHeader("Tile Texture", ImGuiTreeNodeFlags_DefaultOpen))
-		{
-			CTexture* pTextureCom = dynamic_cast<CTexture*>(pGameObject->Get_Component(L"Proto_TerrainTexCom_MapTool", ID_STATIC));
-
-			vector<IDirect3DBaseTexture9*> vecTexture = pTextureCom->Get_Texture();
-
-			for (_uint i = 0; i < vecTexture.size(); ++i)
-			{
-				if (ImGui::ImageButton((void*)vecTexture[i], ImVec2(32.f, 32.f)))
-				{
-					pGameObject->m_iTerrainIdx = i;
-				}
-				if (i == 0 || (i + 1) % 6)
-					ImGui::SameLine();
-			}
-		}
-	}
-
-
-	ImGui::End();
-}
-
 void CImGuiMgr::Save_Transform(CScene* pScene, wstring strDirectory)
 {
 	HANDLE      hFile = CreateFile(strDirectory.c_str(),
@@ -492,13 +401,12 @@ void CImGuiMgr::Save_Transform(CScene* pScene, wstring strDirectory)
 		return;
 	}
 
-	CLayer* MyLayer = pScene->Get_Layer(L"Layer_MapTool");
+	CLayer* MyLayer = pScene->Get_Layer(L"Layer_Wall");
 	DWORD   dwByte = 0;
 
 	map<const _tchar*, CGameObject*> test = MyLayer->Get_GameObjectMap();
 	for (auto iter = test.begin(); iter != test.end(); ++iter)
 	{
-
 		CTransform* Transcom = dynamic_cast<CTransform*>(iter->second->Get_Component(TRANSFORM_COMP, ID_DYNAMIC));
 
 		_vec3   vRight, vUp, vLook, vPos, vScale, vAngle;
@@ -519,7 +427,6 @@ void CImGuiMgr::Save_Transform(CScene* pScene, wstring strDirectory)
 		WriteFile(hFile, &vScale, sizeof(_vec3), &dwByte, nullptr);
 		WriteFile(hFile, &vAngle, sizeof(_vec3), &dwByte, nullptr);
 		WriteFile(hFile, &iDrawNum, sizeof(_int), &dwByte, nullptr);
-
 	}
 
 	CloseHandle(hFile);
@@ -565,7 +472,7 @@ void CImGuiMgr::Load_Transform(LPDIRECT3DDEVICE9 pGrahicDev, CScene *pScene, wst
 		NameList.push_back(Load_Name);
 
 		pGameObject = CTestCube::Create(pGrahicDev);
-		pMyLayer = pScene->Get_Layer(L"Layer_MapTool");
+		pMyLayer = pScene->Get_Layer(L"Layer_Wall");
 
 		FAILED_CHECK_RETURN(pMyLayer->Add_GameObject(Load_Name, pGameObject), );
 		pGameObject->Set_DrawTexIndex(iDrawIndex);
@@ -678,6 +585,665 @@ void CImGuiMgr::SwitchCamera(LPDIRECT3DDEVICE9 pGrahicDev, CScene * pScene, CLay
 		m_pSelectedTransform = pTranscom;
 
 	ImGui::End();
+}
+
+void CImGuiMgr::CreateObject(LPDIRECT3DDEVICE9 pGrahicDev, CScene * pScene, CCamera * pCam)
+{
+	if (!Show_Object_Tool)
+		return;
+
+	ImGui::Begin("Object Settings");
+
+	ImGui::Text("this is Transform_ButtonMenu");
+
+	static _int iSaveStageNum;
+	static _int iLoadStageNum;
+
+	ImGui::RadioButton("Gun", &iObjectNum, 1);
+	ImGui::SameLine();
+	ImGui::RadioButton("Shop", &iObjectNum, 2);
+	ImGui::SameLine();
+	ImGui::RadioButton("Lava", &iObjectNum, 3);
+	ImGui::RadioButton("Item", &iObjectNum, 4);
+	ImGui::SameLine();
+	ImGui::RadioButton("Throne", &iObjectNum, 5);
+	ImGui::SameLine();
+	ImGui::RadioButton("Slime", &iObjectNum, 6);
+	ImGui::RadioButton("FireMan", &iObjectNum, 7);
+	ImGui::SameLine();
+	ImGui::RadioButton("Zombie", &iObjectNum, 8);
+	ImGui::SameLine();
+	ImGui::RadioButton("Illusioner", &iObjectNum, 9);
+
+	if (ImGui::Button("Save"))
+	{
+		if (iObjectNum == 1)
+		{
+			Save_ObjectTransform(pScene, L"../../Data/GunPos.dat");
+		}
+		if (iObjectNum == 2)
+		{
+			Save_ObjectTransform(pScene, L"../../Data/ShopPos.dat");
+		}
+		if (iObjectNum == 3)
+		{
+			Save_ObjectTransform(pScene, L"../../Data/LavaPos.dat");
+		}
+		if (iObjectNum == 4)
+		{
+			Save_ObjectTransform(pScene, L"../../Data/ItemPos.dat");
+		}
+		if (iObjectNum == 5)
+		{
+			Save_ObjectTransform(pScene, L"../../Data/ThronePos.dat");
+		}
+		if (iObjectNum == 6)
+		{
+			Save_ObjectTransform(pScene, L"../../Data/SlimePos.dat");
+		}
+		if (iObjectNum == 7)
+		{
+			Save_ObjectTransform(pScene, L"../../Data/FireManPos.dat");
+		}
+		if (iObjectNum == 8)
+		{
+			Save_ObjectTransform(pScene, L"../../Data/ZombiePos.dat");
+		}
+		if (iObjectNum == 9)
+		{
+			Save_ObjectTransform(pScene, L"../../Data/IllusionerPos.dat");
+		}
+	}
+	if (ImGui::Button("Load"))
+	{
+		if (iObjectNum == 1)
+		{
+			Load_ObjectTransform(pGrahicDev,pScene, L"../../Data/GunPos.dat");
+		}
+		if (iObjectNum == 2)
+		{
+			Load_ObjectTransform(pGrahicDev,pScene, L"../../Data/ShopPos.dat");
+		}
+		if (iObjectNum == 3)
+		{
+			Load_ObjectTransform(pGrahicDev,pScene, L"../../Data/LavaPos.dat");
+		}
+		if (iObjectNum == 4)
+		{
+			Load_ObjectTransform(pGrahicDev,pScene, L"../../Data/ItemPos.dat");
+		}
+		if (iObjectNum == 5)
+		{
+			Load_ObjectTransform(pGrahicDev,pScene, L"../../Data/ThronePos.dat");
+		}
+		if (iObjectNum == 6)
+		{
+			Load_ObjectTransform(pGrahicDev,pScene, L"../../Data/SlimePos.dat");
+		}
+		if (iObjectNum == 7)
+		{
+			Load_ObjectTransform(pGrahicDev,pScene, L"../../Data/FireManPos.dat");
+		}
+		if (iObjectNum == 8)
+		{
+			Load_ObjectTransform(pGrahicDev,pScene, L"../../Data/ZombiePos.dat");
+		}
+		if (iObjectNum == 9)
+		{
+			Load_ObjectTransform(pGrahicDev,pScene, L"../../Data/IllusionerPos.dat");
+		}
+	}
+
+	if (ImGui::CollapsingHeader("Object Create & Choose Button", ImGuiTreeNodeFlags_DefaultOpen))
+	{
+		if (ImGui::Button("Create"))
+		{
+			m_bObjectCreateCheck = true;
+			m_bObjectSelectCheck = false;
+		}
+		ImGui::SameLine();
+		if (ImGui::Button("ChoseCube"))
+		{
+			m_bObjectSelectCheck = true;
+			m_bObjectCreateCheck = false;
+		}
+		ImGui::SameLine();
+		if (ImGui::Button("Delete"))
+		{
+			CLayer* MyLayer = nullptr;
+			if (iObjectNum == 1)
+				MyLayer = pScene->Get_Layer(L"Layer_Gun");
+			if (iObjectNum == 2)
+				MyLayer = pScene->Get_Layer(L"Layer_Shop");
+			if (iObjectNum == 3)
+				MyLayer = pScene->Get_Layer(L"Layer_Lava");
+			if (iObjectNum == 4)
+				MyLayer = pScene->Get_Layer(L"Layer_ItemBox");
+			if (iObjectNum == 5)
+				MyLayer = pScene->Get_Layer(L"Layer_Throne");
+			if (iObjectNum == 6)
+				MyLayer = pScene->Get_Layer(L"Layer_Slime");
+			if (iObjectNum == 7)
+				MyLayer = pScene->Get_Layer(L"Layer_FireMan");
+			if (iObjectNum == 8)
+				MyLayer = pScene->Get_Layer(L"Layer_Zombie");
+			if (iObjectNum == 9)
+				MyLayer = pScene->Get_Layer(L"Layer_Illusioner");
+
+			MyLayer->Delete_GameObject(m_CurrentSelectGameObjectObjKey.c_str());
+		}
+	}
+
+	CTransform * pTranscom = nullptr;
+	if (m_bObjectCreateCheck)
+	{
+		ImGui::Text("if double click Create Object");
+
+		if (ImGui::IsMouseDoubleClicked(0))
+		{
+			if (iObjectNum == 1)
+			{
+				ImVec2 temp = ImGui::GetMousePos();
+				CGameObject *pGameObject = nullptr;
+				_tchar* szObjTag = new _tchar[20];
+				wstring t = L"Gun%d";
+				wsprintfW(szObjTag, t.c_str(), m_iGunIndex);
+				NameList.push_back(szObjTag);
+				pGameObject = CObjectCube::Create(pGrahicDev, GUN ,int(temp.x), int(temp.y));
+				NULL_CHECK_RETURN(pGameObject, );
+				CLayer* pCubelayer = pScene->Get_Layer(L"Layer_Gun");
+				FAILED_CHECK_RETURN(pCubelayer->Add_GameObject(szObjTag, pGameObject), );
+				++m_iGunIndex;
+			}
+			if (iObjectNum == 2)
+			{
+				ImVec2 temp = ImGui::GetMousePos();
+				CGameObject *pGameObject = nullptr;
+				_tchar* szObjTag = new _tchar[20];
+				wstring t = L"Shop%d";
+				wsprintfW(szObjTag, t.c_str(), m_iShopIndex);
+				NameList.push_back(szObjTag);
+				pGameObject = CObjectCube::Create(pGrahicDev, SHOP, int(temp.x), int(temp.y));
+				NULL_CHECK_RETURN(pGameObject, );
+				CLayer* pCubelayer = pScene->Get_Layer(L"Layer_Shop");
+				FAILED_CHECK_RETURN(pCubelayer->Add_GameObject(szObjTag, pGameObject), );
+				++m_iShopIndex;
+			}
+			if (iObjectNum == 3)
+			{
+				ImVec2 temp = ImGui::GetMousePos();
+				CGameObject *pGameObject = nullptr;
+				_tchar* szObjTag = new _tchar[20];
+				wstring t = L"Lava%d";
+				wsprintfW(szObjTag, t.c_str(), m_iLavaIndex);
+				NameList.push_back(szObjTag);
+				pGameObject = CObjectCube::Create(pGrahicDev, LAVA, int(temp.x), int(temp.y));
+				NULL_CHECK_RETURN(pGameObject, );
+				CLayer* pCubelayer = pScene->Get_Layer(L"Layer_Lava");
+				FAILED_CHECK_RETURN(pCubelayer->Add_GameObject(szObjTag, pGameObject), );
+				++m_iLavaIndex;
+			}
+			if (iObjectNum == 4)
+			{
+				ImVec2 temp = ImGui::GetMousePos();
+				CGameObject *pGameObject = nullptr;
+				_tchar* szObjTag = new _tchar[20];
+				wstring t = L"Item%d";
+				wsprintfW(szObjTag, t.c_str(), m_iItemIndex);
+				NameList.push_back(szObjTag);
+				pGameObject = CObjectCube::Create(pGrahicDev, ITEMBOX, int(temp.x), int(temp.y));
+				NULL_CHECK_RETURN(pGameObject, );
+				CLayer* pCubelayer = pScene->Get_Layer(L"Layer_ItemBox");
+				FAILED_CHECK_RETURN(pCubelayer->Add_GameObject(szObjTag, pGameObject), );
+				++m_iItemIndex;
+			}
+			if (iObjectNum == 5)
+			{
+				ImVec2 temp = ImGui::GetMousePos();
+				CGameObject *pGameObject = nullptr;
+				_tchar* szObjTag = new _tchar[20];
+				wstring t = L"Throne%d";
+				wsprintfW(szObjTag, t.c_str(), m_iThroneIndex);
+				NameList.push_back(szObjTag);
+				pGameObject = CObjectCube::Create(pGrahicDev, THRONE, int(temp.x), int(temp.y));
+				NULL_CHECK_RETURN(pGameObject, );
+				CLayer* pCubelayer = pScene->Get_Layer(L"Layer_Throne");
+				FAILED_CHECK_RETURN(pCubelayer->Add_GameObject(szObjTag, pGameObject), );
+				++m_iThroneIndex;
+			}
+			if (iObjectNum == 6)
+			{
+				ImVec2 temp = ImGui::GetMousePos();
+				CGameObject *pGameObject = nullptr;
+				_tchar* szObjTag = new _tchar[20];
+				wstring t = L"Slime%d";
+				wsprintfW(szObjTag, t.c_str(), m_iSlimeIndex);
+				NameList.push_back(szObjTag);
+				pGameObject = CObjectCube::Create(pGrahicDev, SLIME, int(temp.x), int(temp.y));
+				NULL_CHECK_RETURN(pGameObject, );
+				CLayer* pCubelayer = pScene->Get_Layer(L"Layer_Slime");
+				FAILED_CHECK_RETURN(pCubelayer->Add_GameObject(szObjTag, pGameObject), );
+				++m_iSlimeIndex;
+			}
+			if (iObjectNum == 7)
+			{
+				ImVec2 temp = ImGui::GetMousePos();
+				CGameObject *pGameObject = nullptr;
+				_tchar* szObjTag = new _tchar[20];
+				wstring t = L"FireMan%d";
+				wsprintfW(szObjTag, t.c_str(), m_iFireManIndex);
+				NameList.push_back(szObjTag);
+				pGameObject = CObjectCube::Create(pGrahicDev, FIREMAN, int(temp.x), int(temp.y));
+				NULL_CHECK_RETURN(pGameObject, );
+				CLayer* pCubelayer = pScene->Get_Layer(L"Layer_FireMan");
+				FAILED_CHECK_RETURN(pCubelayer->Add_GameObject(szObjTag, pGameObject), );
+				++m_iFireManIndex;
+			}
+			if (iObjectNum == 8)
+			{
+				ImVec2 temp = ImGui::GetMousePos();
+				CGameObject *pGameObject = nullptr;
+				_tchar* szObjTag = new _tchar[20];
+				wstring t = L"Zombie%d";
+				wsprintfW(szObjTag, t.c_str(), m_iZombieIndex);
+				NameList.push_back(szObjTag);
+				pGameObject = CObjectCube::Create(pGrahicDev, ZOMBIE, int(temp.x), int(temp.y));
+				NULL_CHECK_RETURN(pGameObject, );
+				CLayer* pCubelayer = pScene->Get_Layer(L"Layer_Zombie");
+				FAILED_CHECK_RETURN(pCubelayer->Add_GameObject(szObjTag, pGameObject), );
+				++m_iZombieIndex;
+			}
+			if (iObjectNum == 9)
+			{
+				ImVec2 temp = ImGui::GetMousePos();
+				CGameObject *pGameObject = nullptr;
+				_tchar* szObjTag = new _tchar[20];
+				wstring t = L"Illusioner%d";
+				wsprintfW(szObjTag, t.c_str(), m_iIllusionerIndex);
+				NameList.push_back(szObjTag);
+				pGameObject = CObjectCube::Create(pGrahicDev, ILLUSIONER, int(temp.x), int(temp.y));
+				NULL_CHECK_RETURN(pGameObject, );
+				CLayer* pCubelayer = pScene->Get_Layer(L"Layer_Illusioner");
+				FAILED_CHECK_RETURN(pCubelayer->Add_GameObject(szObjTag, pGameObject), );
+				++m_iIllusionerIndex;
+			}
+		}
+	}
+
+	if (m_bObjectSelectCheck)
+	{
+		if (ImGui::IsMouseDoubleClicked(0))
+		{
+			if (iObjectNum == 1)
+			{
+				CLayer* MyLayer = pScene->Get_Layer(L"Layer_Gun");
+
+				map<const _tchar*, CGameObject*> test = MyLayer->Get_GameObjectMap();
+
+				for (auto iter = test.begin(); iter != test.end(); ++iter)
+				{
+					if (dynamic_cast<CObjectCube*>(iter->second)->Set_SelectGizmo())
+					{
+						pTranscom = dynamic_cast<CTransform*>(iter->second->Get_Component(TRANSFORM_COMP, ID_DYNAMIC));
+						m_CurrentSelectGameObjectObjKey = iter->first;
+					}
+				}
+			}
+			if (iObjectNum == 2)
+			{
+				CLayer* MyLayer = pScene->Get_Layer(L"Layer_Shop");
+
+				map<const _tchar*, CGameObject*> test = MyLayer->Get_GameObjectMap();
+
+				for (auto iter = test.begin(); iter != test.end(); ++iter)
+				{
+					if (dynamic_cast<CObjectCube*>(iter->second)->Set_SelectGizmo())
+					{
+						pTranscom = dynamic_cast<CTransform*>(iter->second->Get_Component(TRANSFORM_COMP, ID_DYNAMIC));
+						m_CurrentSelectGameObjectObjKey = iter->first;
+					}
+				}
+			}
+			if (iObjectNum == 3)
+			{
+				CLayer* MyLayer = pScene->Get_Layer(L"Layer_Lava");
+
+				map<const _tchar*, CGameObject*> test = MyLayer->Get_GameObjectMap();
+
+				for (auto iter = test.begin(); iter != test.end(); ++iter)
+				{
+					if (dynamic_cast<CObjectCube*>(iter->second)->Set_SelectGizmo())
+					{
+						pTranscom = dynamic_cast<CTransform*>(iter->second->Get_Component(TRANSFORM_COMP, ID_DYNAMIC));
+						m_CurrentSelectGameObjectObjKey = iter->first;
+					}
+				}
+			}
+			if (iObjectNum == 4)
+			{
+				CLayer* MyLayer = pScene->Get_Layer(L"Layer_ItemBox");
+
+				map<const _tchar*, CGameObject*> test = MyLayer->Get_GameObjectMap();
+
+				for (auto iter = test.begin(); iter != test.end(); ++iter)
+				{
+					if (dynamic_cast<CObjectCube*>(iter->second)->Set_SelectGizmo())
+					{
+						pTranscom = dynamic_cast<CTransform*>(iter->second->Get_Component(TRANSFORM_COMP, ID_DYNAMIC));
+						m_CurrentSelectGameObjectObjKey = iter->first;
+					}
+				}
+			}
+			if (iObjectNum == 5)
+			{
+				CLayer* MyLayer = pScene->Get_Layer(L"Layer_Throne");
+
+				map<const _tchar*, CGameObject*> test = MyLayer->Get_GameObjectMap();
+
+				for (auto iter = test.begin(); iter != test.end(); ++iter)
+				{
+					if (dynamic_cast<CObjectCube*>(iter->second)->Set_SelectGizmo())
+					{
+						pTranscom = dynamic_cast<CTransform*>(iter->second->Get_Component(TRANSFORM_COMP, ID_DYNAMIC));
+						m_CurrentSelectGameObjectObjKey = iter->first;
+					}
+				}
+			}
+			if (iObjectNum == 6)
+			{
+				CLayer* MyLayer = pScene->Get_Layer(L"Layer_Slime");
+
+				map<const _tchar*, CGameObject*> test = MyLayer->Get_GameObjectMap();
+
+				for (auto iter = test.begin(); iter != test.end(); ++iter)
+				{
+					if (dynamic_cast<CObjectCube*>(iter->second)->Set_SelectGizmo())
+					{
+						pTranscom = dynamic_cast<CTransform*>(iter->second->Get_Component(TRANSFORM_COMP, ID_DYNAMIC));
+						m_CurrentSelectGameObjectObjKey = iter->first;
+					}
+				}
+			}
+			if (iObjectNum == 7)
+			{
+				CLayer* MyLayer = pScene->Get_Layer(L"Layer_FireMan");
+
+				map<const _tchar*, CGameObject*> test = MyLayer->Get_GameObjectMap();
+
+				for (auto iter = test.begin(); iter != test.end(); ++iter)
+				{
+					if (dynamic_cast<CObjectCube*>(iter->second)->Set_SelectGizmo())
+					{
+						pTranscom = dynamic_cast<CTransform*>(iter->second->Get_Component(TRANSFORM_COMP, ID_DYNAMIC));
+						m_CurrentSelectGameObjectObjKey = iter->first;
+					}
+				}
+			}
+			if (iObjectNum == 8)
+			{
+				CLayer* MyLayer = pScene->Get_Layer(L"Layer_Zombie");
+
+				map<const _tchar*, CGameObject*> test = MyLayer->Get_GameObjectMap();
+
+				for (auto iter = test.begin(); iter != test.end(); ++iter)
+				{
+					if (dynamic_cast<CObjectCube*>(iter->second)->Set_SelectGizmo())
+					{
+						pTranscom = dynamic_cast<CTransform*>(iter->second->Get_Component(TRANSFORM_COMP, ID_DYNAMIC));
+						m_CurrentSelectGameObjectObjKey = iter->first;
+					}
+				}
+			}
+			if (iObjectNum == 9)
+			{
+				CLayer* MyLayer = pScene->Get_Layer(L"Layer_Illusioner");
+
+				map<const _tchar*, CGameObject*> test = MyLayer->Get_GameObjectMap();
+
+				for (auto iter = test.begin(); iter != test.end(); ++iter)
+				{
+					if (dynamic_cast<CObjectCube*>(iter->second)->Set_SelectGizmo())
+					{
+						pTranscom = dynamic_cast<CTransform*>(iter->second->Get_Component(TRANSFORM_COMP, ID_DYNAMIC));
+						m_CurrentSelectGameObjectObjKey = iter->first;
+					}
+				}
+			}
+		}
+	}
+
+	TransformEdit(pCam, m_pSelectedTransform, Show_Cube_Tool);
+
+	// 셀렉버튼을 위한것
+	if (pTranscom != nullptr)
+		m_pSelectedTransform = pTranscom;
+
+	ImGui::End();
+}
+
+void CImGuiMgr::Save_ObjectTransform(CScene * pScene, wstring strDirectory)
+{
+	HANDLE      hFile = CreateFile(strDirectory.c_str(),
+		// 파일의 경로와 이름
+		GENERIC_WRITE,         // 파일 접근 모드 (GENERIC_WRITE : 쓰기 전용, GENERIC_READ : 읽기 전용)
+		NULL,               // 공유 방식(파일이 열려있는 상태에서 다른 프로세스가 오픈할 때 허용할 것인가)    
+		NULL,               // 보안 속성(NULL을 지정하면 기본값 상태)
+		CREATE_ALWAYS,         // CREATE_ALWAYS : 파일이 없다면 생성, 있다면 덮어쓰기, OPEN_EXISTING  : 파일이 있을 경우에만 열기
+		FILE_ATTRIBUTE_NORMAL,  // 파일 속성(읽기 전용, 숨김 등) : FILE_ATTRIBUTE_NORMAL : 아무런 속성이 없는 파일
+		NULL);               // 생성될 파일의 속성을 제공할 템플릿 파일(안쓰니깐 NULL)
+
+	if (INVALID_HANDLE_VALUE == hFile)
+	{
+		return;
+	}
+
+	CLayer* MyLayer = nullptr;
+	_vec3   vRight, vUp, vLook, vPos, vScale, vAngle;
+	if (iObjectNum == 1)
+		MyLayer = pScene->Get_Layer(L"Layer_Gun");
+	if (iObjectNum == 2)
+		MyLayer = pScene->Get_Layer(L"Layer_Shop");
+	if (iObjectNum == 3)
+		MyLayer = pScene->Get_Layer(L"Layer_Lava");
+	if (iObjectNum == 4)
+		MyLayer = pScene->Get_Layer(L"Layer_ItemBox");
+	if (iObjectNum == 5)
+		MyLayer = pScene->Get_Layer(L"Layer_Throne");
+	if (iObjectNum == 6)
+		MyLayer = pScene->Get_Layer(L"Layer_Slime");
+	if (iObjectNum == 7)
+		MyLayer = pScene->Get_Layer(L"Layer_FireMan");
+	if (iObjectNum == 8)
+		MyLayer = pScene->Get_Layer(L"Layer_Zombie");
+	if (iObjectNum == 9)
+		MyLayer = pScene->Get_Layer(L"Layer_Illusioner");
+
+	DWORD   dwByte = 0;
+
+	map<const _tchar*, CGameObject*> mapLayer = MyLayer->Get_GameObjectMap();
+	for (auto iter = mapLayer.begin(); iter != mapLayer.end(); ++iter)
+	{
+		CTransform* Transcom = dynamic_cast<CTransform*>(iter->second->Get_Component(TRANSFORM_COMP, ID_DYNAMIC));
+
+		_vec3   vRight, vUp, vLook, vPos, vScale, vAngle;
+		_int	iDrawNum = 0;
+
+		Transcom->Get_Info(INFO_RIGHT, &vRight);
+		Transcom->Get_Info(INFO_UP, &vUp);
+		Transcom->Get_Info(INFO_LOOK, &vLook);
+		Transcom->Get_Info(INFO_POS, &vPos);
+		memcpy(vScale, Transcom->m_vScale, sizeof(_vec3));
+		memcpy(vAngle, Transcom->m_vAngle, sizeof(_vec3));
+
+		WriteFile(hFile, &vRight, sizeof(_vec3), &dwByte, nullptr);
+		WriteFile(hFile, &vUp, sizeof(_vec3), &dwByte, nullptr);
+		WriteFile(hFile, &vLook, sizeof(_vec3), &dwByte, nullptr);
+		WriteFile(hFile, &vPos, sizeof(_vec3), &dwByte, nullptr);
+		WriteFile(hFile, &vScale, sizeof(_vec3), &dwByte, nullptr);
+		WriteFile(hFile, &vAngle, sizeof(_vec3), &dwByte, nullptr);
+	}
+
+	CloseHandle(hFile);
+	MSG_BOX("Save_Complete");
+}
+
+void CImGuiMgr::Load_ObjectTransform(LPDIRECT3DDEVICE9 pGrahicDev, CScene * pScene, wstring strDirectory)
+{
+	HANDLE      hFile = CreateFile(strDirectory.c_str(),      // 파일의 경로와 이름
+		GENERIC_READ,         // 파일 접근 모드 (GENERIC_WRITE : 쓰기 전용, GENERIC_READ : 읽기 전용)
+		NULL,               // 공유 방식(파일이 열려있는 상태에서 다른 프로세스가 오픈할 때 허용할 것인가)    
+		NULL,               // 보안 속성(NULL을 지정하면 기본값 상태)
+		OPEN_EXISTING,         // CREATE_ALWAYS : 파일이 없다면 생성, 있다면 덮어쓰기, OPEN_EXISTING  : 파일이 있을 경우에만 열기
+		FILE_ATTRIBUTE_NORMAL,  // 파일 속성(읽기 전용, 숨김 등) : FILE_ATTRIBUTE_NORMAL : 아무런 속성이 없는 파일
+		NULL);               // 생성될 파일의 속성을 제공할 템플릿 파일(안쓰니깐 NULL)
+
+	if (INVALID_HANDLE_VALUE == hFile)
+	{
+		return;
+	}
+
+	DWORD   dwByte = 0;
+
+	_vec3   vRight, vUp, vLook, vPos, vScale, vAngle;
+	CLayer* pMyLayer = nullptr;
+
+	while (true)
+	{
+		ReadFile(hFile, &vRight, sizeof(_vec3), &dwByte, nullptr);
+		ReadFile(hFile, &vUp, sizeof(_vec3), &dwByte, nullptr);
+		ReadFile(hFile, &vLook, sizeof(_vec3), &dwByte, nullptr);
+		ReadFile(hFile, &vPos, sizeof(_vec3), &dwByte, nullptr);
+		ReadFile(hFile, &vScale, sizeof(_vec3), &dwByte, nullptr);
+		ReadFile(hFile, &vAngle, sizeof(_vec3), &dwByte, nullptr);
+
+		CGameObject *pGameObject = nullptr;
+
+		if (iObjectNum == 1)
+		{
+			_tchar* Load_Name = new _tchar[20];
+			wstring t = L"Gun%d";
+			wsprintfW(Load_Name, t.c_str(), m_iGunIndex);
+			NameList.push_back(Load_Name);
+			pGameObject = CObjectCube::Create(pGrahicDev);
+			pMyLayer = pScene->Get_Layer(L"Layer_Gun");
+			FAILED_CHECK_RETURN(pMyLayer->Add_GameObject(Load_Name, pGameObject), );
+			pGameObject->Set_DrawTexIndex(1);
+			++m_iGunIndex;
+		}
+		if (iObjectNum == 2)
+		{
+			_tchar* Load_Name = new _tchar[20];
+			wstring t = L"Shop%d";
+			wsprintfW(Load_Name, t.c_str(), m_iShopIndex);
+			NameList.push_back(Load_Name);
+			pGameObject = CObjectCube::Create(pGrahicDev);
+			pMyLayer = pScene->Get_Layer(L"Layer_Shop");
+			FAILED_CHECK_RETURN(pMyLayer->Add_GameObject(Load_Name, pGameObject), );
+			pGameObject->Set_DrawTexIndex(2);
+			++m_iShopIndex;
+		}
+		if (iObjectNum == 3)
+		{
+			_tchar* Load_Name = new _tchar[20];
+			wstring t = L"Lava%d";
+			wsprintfW(Load_Name, t.c_str(), m_iLavaIndex);
+			NameList.push_back(Load_Name);
+			pGameObject = CObjectCube::Create(pGrahicDev);
+			pMyLayer = pScene->Get_Layer(L"Layer_Lava");
+			FAILED_CHECK_RETURN(pMyLayer->Add_GameObject(Load_Name, pGameObject), );
+			pGameObject->Set_DrawTexIndex(3);
+			++m_iLavaIndex;
+		}
+		if (iObjectNum == 4)
+		{
+			_tchar* Load_Name = new _tchar[20];
+			wstring t = L"Item%d";
+			wsprintfW(Load_Name, t.c_str(), m_iItemIndex);
+			NameList.push_back(Load_Name);
+			pGameObject = CObjectCube::Create(pGrahicDev);
+			pMyLayer = pScene->Get_Layer(L"Layer_ItemBox");
+			FAILED_CHECK_RETURN(pMyLayer->Add_GameObject(Load_Name, pGameObject), );
+			pGameObject->Set_DrawTexIndex(4);
+			++m_iItemIndex;
+		}
+		if (iObjectNum == 5)
+		{
+			_tchar* Load_Name = new _tchar[20];
+			wstring t = L"Throne%d";
+			wsprintfW(Load_Name, t.c_str(), m_iThroneIndex);
+			NameList.push_back(Load_Name);
+			pGameObject = CObjectCube::Create(pGrahicDev);
+			pMyLayer = pScene->Get_Layer(L"Layer_Throne");
+			FAILED_CHECK_RETURN(pMyLayer->Add_GameObject(Load_Name, pGameObject), );
+			pGameObject->Set_DrawTexIndex(5);
+			++m_iThroneIndex;
+		}
+		if (iObjectNum == 6)
+		{
+			_tchar* Load_Name = new _tchar[20];
+			wstring t = L"Slime%d";
+			wsprintfW(Load_Name, t.c_str(), m_iSlimeIndex);
+			NameList.push_back(Load_Name);
+			pGameObject = CObjectCube::Create(pGrahicDev);
+			pMyLayer = pScene->Get_Layer(L"Layer_Slime");
+			FAILED_CHECK_RETURN(pMyLayer->Add_GameObject(Load_Name, pGameObject), );
+			pGameObject->Set_DrawTexIndex(6);
+			++m_iSlimeIndex;
+		}
+		if (iObjectNum == 7)
+		{
+			_tchar* Load_Name = new _tchar[20];
+			wstring t = L"FireMan%d";
+			wsprintfW(Load_Name, t.c_str(), m_iFireManIndex);
+			NameList.push_back(Load_Name);
+			pGameObject = CObjectCube::Create(pGrahicDev);
+			pMyLayer = pScene->Get_Layer(L"Layer_FireMan");
+			FAILED_CHECK_RETURN(pMyLayer->Add_GameObject(Load_Name, pGameObject), );
+			pGameObject->Set_DrawTexIndex(7);
+			++m_iFireManIndex;
+		}
+		if (iObjectNum == 8)
+		{
+			_tchar* Load_Name = new _tchar[20];
+			wstring t = L"Zombie%d";
+			wsprintfW(Load_Name, t.c_str(), m_iGunIndex);
+			NameList.push_back(Load_Name);
+			pGameObject = CObjectCube::Create(pGrahicDev);
+			pMyLayer = pScene->Get_Layer(L"Layer_Zombie");
+			FAILED_CHECK_RETURN(pMyLayer->Add_GameObject(Load_Name, pGameObject), );
+			pGameObject->Set_DrawTexIndex(8);
+			++m_iZombieIndex;
+		}
+		if (iObjectNum == 9)
+		{
+			_tchar* Load_Name = new _tchar[20];
+			wstring t = L"Illusioner%d";
+			wsprintfW(Load_Name, t.c_str(), m_iIllusionerIndex);
+			NameList.push_back(Load_Name);
+			pGameObject = CObjectCube::Create(pGrahicDev);
+			pMyLayer = pScene->Get_Layer(L"Layer_Illusioner");
+			FAILED_CHECK_RETURN(pMyLayer->Add_GameObject(Load_Name, pGameObject), );
+			pGameObject->Set_DrawTexIndex(9);
+			++m_iIllusionerIndex;
+		}
+
+		CTransform* Transcom = dynamic_cast<CTransform*>(pGameObject->Get_Component(TRANSFORM_COMP, ID_DYNAMIC));
+
+		Transcom->Set_Info(INFO_RIGHT, &vRight);
+		Transcom->Set_Info(INFO_UP, &vUp);
+		Transcom->Set_Info(INFO_LOOK, &vLook);
+		Transcom->Set_Info(INFO_POS, &vPos);
+		Transcom->Set_Angle(&vAngle);
+		Transcom->Set_Scale(&vScale);
+
+		Transcom->Update_Component(0.01f);
+
+		//   받아온 정보 입력해줘야함
+		if (0 == dwByte)
+			break;
+	}
+	CloseHandle(hFile);
+	MSG_BOX("Load_Complete");
 }
 
 void CImGuiMgr::Free()

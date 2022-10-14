@@ -47,6 +47,7 @@ Engine::_int CLogo::Update_Scene(const _float& fTimeDelta)
 			CScene*      pScene = CStage::Create(m_pGraphicDev);
 			NULL_CHECK_RETURN(pScene, E_FAIL);
 			FAILED_CHECK_RETURN(Engine::Set_Scene(pScene), E_FAIL);
+			pScene->Set_SceneId(STAGE_SCENE);
 			return 0;
 		}
 
@@ -55,6 +56,7 @@ Engine::_int CLogo::Update_Scene(const _float& fTimeDelta)
 			CScene*      pScene = CToolScene::Create(m_pGraphicDev);
 			NULL_CHECK_RETURN(pScene, E_FAIL);
 			FAILED_CHECK_RETURN(Engine::Set_Scene(pScene), E_FAIL);
+			pScene->Set_SceneId(TOOL_SCENE);
 			return 0;
 		}
 	}

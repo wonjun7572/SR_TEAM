@@ -186,6 +186,7 @@
     <ClInclude Include="..\Header\Flight.h" />
     <ClInclude Include="..\Header\IceEffect.h" />
     <ClInclude Include="..\Header\MiddleBoss.h" />
+    <ClInclude Include="..\Header\ObjectCube.h" />
     <ClInclude Include="..\Header\Ping.h" />
     <ClInclude Include="..\Header\RcEffect.h" />
     <ClInclude Include="..\Header\SoundWave.h">
@@ -294,6 +295,7 @@
     <ClInclude Include="ImZoomSlider.h" />
     <ClInclude Include="..\Header\PlayerDefenseUI.h" />
     <ClInclude Include="..\Header\PlayerFaceUI.h" />
+    <ClInclude Include="KrakenBoss.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
@@ -325,6 +327,7 @@
     <ClCompile Include="..\Code\Flight.cpp" />
     <ClCompile Include="..\Code\IceEffect.cpp" />
     <ClCompile Include="..\Code\MiddleBoss.cpp" />
+    <ClCompile Include="..\Code\ObjectCube.cpp" />
     <ClCompile Include="..\Code\Ping.cpp" />
     <ClCompile Include="..\Code\RcEffect.cpp" />
     <ClCompile Include="..\Code\SoundWave.cpp">
@@ -470,6 +473,7 @@
     </ClCompile>
     <ClCompile Include="..\Code\PlayerDefenseUI.cpp" />
     <ClCompile Include="..\Code\PlayerFaceUI.cpp" />
+    <ClCompile Include="KrakenBoss.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

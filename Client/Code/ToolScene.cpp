@@ -25,17 +25,30 @@ HRESULT CToolScene::Ready_Scene(void)
 	FAILED_CHECK_RETURN(Ready_Layer_Environment(L"Layer_Environment"), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Layer_UI(L"Layer_UI"), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Layer_Wall(L"Layer_Wall"), E_FAIL);
-	FAILED_CHECK_RETURN(Ready_Layer_Tool(L"Layer_Tool"), E_FAIL);
+	FAILED_CHECK_RETURN(Ready_Layer_Tool(L"Layer_MapTool"), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Layer_Camera(L"Layer_Cam"), E_FAIL);
+
+	FAILED_CHECK_RETURN(Ready_Layer_Gun(L"Layer_Gun"), E_FAIL);
+	FAILED_CHECK_RETURN(Ready_Layer_Shop(L"Layer_Shop"), E_FAIL);
+	FAILED_CHECK_RETURN(Ready_Layer_Lava(L"Layer_Lava"), E_FAIL);
+	FAILED_CHECK_RETURN(Ready_Layer_ItemBox(L"Layer_ItemBox"), E_FAIL);
+	FAILED_CHECK_RETURN(Ready_Layer_Throne(L"Layer_Throne"), E_FAIL);
+	FAILED_CHECK_RETURN(Ready_Layer_Slime(L"Layer_Slime"), E_FAIL);
+	FAILED_CHECK_RETURN(Ready_Layer_Fireman(L"Layer_FireMan"), E_FAIL);
+	FAILED_CHECK_RETURN(Ready_Layer_Zombie(L"Layer_Zombie"), E_FAIL);
+	FAILED_CHECK_RETURN(Ready_Layer_Illusioner(L"Layer_Illusioner"), E_FAIL);
+
 	return S_OK;
 }
 
 _int CToolScene::Update_Scene(const _float & fTimeDelta)
 {
 	CImGuiMgr::GetInstance()->WindowLayOut();
-	CImGuiMgr::GetInstance()->TerrainTool(m_pGraphicDev, this);
+	CImGuiMgr::GetInstance()->CreateWall(m_pGraphicDev, this, m_pCam);
 	CImGuiMgr::GetInstance()->CreateObject(m_pGraphicDev, this, m_pCam);
+
 	CImGuiMgr::GetInstance()->SwitchCamera(m_pGraphicDev, this, m_pCamLayer, m_pCam);
+	
 	return Engine::CScene::Update_Scene(fTimeDelta);
 }
 
@@ -119,8 +132,6 @@ HRESULT CToolScene::Ready_Layer_Wall(const _tchar * pLayerTag)
 
 HRESULT CToolScene::Ready_Layer_Tool(const _tchar * pLayerTag)
 {
-	CImGuiMgr::GetInstance()->Ready_MapTool(m_pGraphicDev, this);
-
 	Engine::CLayer*		pLayer = Engine::CLayer::Create();
 	NULL_CHECK_RETURN(pLayer, E_FAIL);
 
@@ -131,6 +142,123 @@ HRESULT CToolScene::Ready_Layer_Tool(const _tchar * pLayerTag)
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"TerrainByTool", pGameObject), E_FAIL);
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
+
+	return S_OK;
+}
+
+HRESULT CToolScene::Ready_Layer_Gun(const _tchar * pLayerTag)
+{
+	Engine::CLayer*		pLayer = Engine::CLayer::Create();
+	NULL_CHECK_RETURN(pLayer, E_FAIL);
+
+	CGameObject*		pGameObject = nullptr;
+
+	m_mapLayer.insert({ pLayerTag, pLayer });
+
+
+	return S_OK;
+}
+
+HRESULT CToolScene::Ready_Layer_Shop(const _tchar * pLayerTag)
+{
+	Engine::CLayer*		pLayer = Engine::CLayer::Create();
+	NULL_CHECK_RETURN(pLayer, E_FAIL);
+
+	CGameObject*		pGameObject = nullptr;
+
+	m_mapLayer.insert({ pLayerTag, pLayer });
+
+
+	return S_OK;
+}
+
+HRESULT CToolScene::Ready_Layer_Lava(const _tchar * pLayerTag)
+{
+	Engine::CLayer*		pLayer = Engine::CLayer::Create();
+	NULL_CHECK_RETURN(pLayer, E_FAIL);
+
+	CGameObject*		pGameObject = nullptr;
+
+	m_mapLayer.insert({ pLayerTag, pLayer });
+
+
+	return S_OK;
+}
+
+HRESULT CToolScene::Ready_Layer_ItemBox(const _tchar * pLayerTag)
+{
+	Engine::CLayer*		pLayer = Engine::CLayer::Create();
+	NULL_CHECK_RETURN(pLayer, E_FAIL);
+
+	CGameObject*		pGameObject = nullptr;
+
+	m_mapLayer.insert({ pLayerTag, pLayer });
+
+
+	return S_OK;
+}
+
+HRESULT CToolScene::Ready_Layer_Throne(const _tchar * pLayerTag)
+{
+	Engine::CLayer*		pLayer = Engine::CLayer::Create();
+	NULL_CHECK_RETURN(pLayer, E_FAIL);
+
+	CGameObject*		pGameObject = nullptr;
+
+	m_mapLayer.insert({ pLayerTag, pLayer });
+
+
+	return S_OK;
+}
+
+HRESULT CToolScene::Ready_Layer_Slime(const _tchar * pLayerTag)
+{
+	Engine::CLayer*		pLayer = Engine::CLayer::Create();
+	NULL_CHECK_RETURN(pLayer, E_FAIL);
+
+	CGameObject*		pGameObject = nullptr;
+
+	m_mapLayer.insert({ pLayerTag, pLayer });
+
+
+	return S_OK;
+}
+
+HRESULT CToolScene::Ready_Layer_Fireman(const _tchar * pLayerTag)
+{
+	Engine::CLayer*		pLayer = Engine::CLayer::Create();
+	NULL_CHECK_RETURN(pLayer, E_FAIL);
+
+	CGameObject*		pGameObject = nullptr;
+
+	m_mapLayer.insert({ pLayerTag, pLayer });
+
+
+	return S_OK;
+}
+
+HRESULT CToolScene::Ready_Layer_Zombie(const _tchar * pLayerTag)
+{
+	Engine::CLayer*		pLayer = Engine::CLayer::Create();
+	NULL_CHECK_RETURN(pLayer, E_FAIL);
+
+	CGameObject*		pGameObject = nullptr;
+
+	m_mapLayer.insert({ pLayerTag, pLayer });
+
+
+	return S_OK;
+}
+
+HRESULT CToolScene::Ready_Layer_Illusioner(const _tchar * pLayerTag)
+{
+	Engine::CLayer*		pLayer = Engine::CLayer::Create();
+	NULL_CHECK_RETURN(pLayer, E_FAIL);
+
+	CGameObject*		pGameObject = nullptr;
+
+	m_mapLayer.insert({ pLayerTag, pLayer });
+
 
 	return S_OK;
 }

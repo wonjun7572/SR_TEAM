@@ -31,6 +31,7 @@
 
 #include "PSystem.h"
 #include "DynamicBuffer.h"
+#include "FrustumCullMgr.h"
 
 BEGIN(Engine)
 

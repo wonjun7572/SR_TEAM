@@ -19,6 +19,13 @@ struct TexturePath
 	_tchar*	wszFilePathName;
 };
 
+struct ObjectElement
+{
+	_int	iId;
+	wstring strName;
+	_vec3	vPos;
+};
+
 class CImGuiMgr : public CBase
 {
 	DECLARE_SINGLETON(CImGuiMgr)
@@ -41,21 +48,18 @@ public:
 	// 예시 
 
 public:
-	HRESULT Ready_MapTool(LPDIRECT3DDEVICE9 pGraphicDev, CScene* pScene);		//  맵툴에 필요한 리소스를 생성합니다.
-	HRESULT Ready_PlayerTool(LPDIRECT3DDEVICE9 pGraphicDev, CScene* pScene, CLayer* pLayer);	//  플레이어 툴
-	HRESULT Ready_MonsterTool(LPDIRECT3DDEVICE9 pGraphicDev, CScene* pScene);   //  몬스터 툴
-	HRESULT	Ready_CameraTool(LPDIRECT3DDEVICE9 pGraphicDev, CScene* pScene, CLayer* pLayer);
-
-public:
 	// Map_Tool 기능 생성
 	// 창생성
 	void  WindowLayOut(); // 맨처음 버튼
-	void  CreateObject(LPDIRECT3DDEVICE9 pGrahicDev, CScene* pScene, CCamera *pCam);// 오브젝트 생성
-	void  TerrainTool(LPDIRECT3DDEVICE9 pGrahicDev, CScene* pScene);				// Terrain Tool
+	void  CreateWall(LPDIRECT3DDEVICE9 pGrahicDev, CScene* pScene, CCamera *pCam);// 오브젝트 생성
 	void  Save_Transform(CScene* pScene, wstring strDirectory = L"../../Data/Map.dat");											// 큐브 오브젝트 저장
 	void  Load_Transform(LPDIRECT3DDEVICE9 pGrahicDev, CScene *pScene, wstring strDirectory = L"../../Data/Map.dat");				// 큐브 오브젝트 로드
-
 	void  SwitchCamera(LPDIRECT3DDEVICE9 pGrahicDev, CScene* pScene, CLayer* pLayer, CCamera* pCam);
+
+	void  CreateObject(LPDIRECT3DDEVICE9 pGrahicDev, CScene* pScene, CCamera *pCam);
+	void  Save_ObjectTransform(CScene* pScene, wstring strDirectory = L"../../Data/ObjectTransform.dat");
+	void  Load_ObjectTransform(LPDIRECT3DDEVICE9 pGrahicDev, CScene* pScene, wstring strDirectory = L"../../Data/ObjectTransform.dat");
+
 
 private:
 	// Map_Tool 변수
@@ -66,11 +70,24 @@ private:
 	_bool	m_bCameraCreateCheck = false;
 	_bool	m_bCameraSelectCheck = false;
 
+	_bool	m_bObjectCreateCheck = false;
+	_bool	m_bObjectSelectCheck = false;
+
 	_int	m_iIndex = 0;
 
 	static _int m_iWidth;
 	static _int m_iDepth;
 	static _int m_iInterval;
+
+	_int	m_iGunIndex = 0;
+	_int	m_iShopIndex = 0;
+	_int	m_iLavaIndex = 0;
+	_int	m_iItemIndex = 0;
+	_int	m_iThroneIndex = 0;
+	_int	m_iSlimeIndex = 0;
+	_int	m_iFireManIndex = 0;
+	_int	m_iZombieIndex = 0;
+	_int	m_iIllusionerIndex = 0;
 
 	list<_tchar* > NameList;
 	list<char*> CamList;
@@ -86,6 +103,7 @@ public:
 	static  _bool Show_Cube_Tool;
 	static  _bool Show_Monster_Window;
 	static  _bool Show_Camera_Tool;
+	static  _bool Show_Object_Tool;
 	static ImVec4 clear_color;
 	// ~ window창 생성시 필요한 불변수
 
