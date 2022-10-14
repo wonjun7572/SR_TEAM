@@ -49,6 +49,7 @@ _int CMeteor::Update_Object(const _float & fTimeDelta)
 		//»ç¿ë¹ý
 		m_pEffect = CRcEffect::Create(m_pGraphicDev, EXPLOSION_EFT); //enum EFFECTID
 		dynamic_cast<CRcEffect*>(m_pEffect)->Set_EffectPos(m_vPos.x, m_vPos.y, m_vPos.z);//EFFECT POS
+		dynamic_cast<CRcEffect*>(m_pEffect)->Set_Scale(10.f);
 		dynamic_cast<CRcEffect*>(m_pEffect)->Set_SingleUse();
 		if (!m_pFlameEffectParticle)
 			m_pFlameEffectParticle = dynamic_cast<CFlameEffect*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"FlameEffect"));
@@ -98,8 +99,17 @@ void CMeteor::Meteor_Effect(void)
 {
 	_float fRand = 0.f;
 	fRand = (rand() % 50)*0.05f;
-	if(m_fParticleTimer>0.5)
-		{ }
+	if (m_fParticleTimer > 0.75f)
+	{
+		if (!m_SparkEffectParticle)
+			m_SparkEffectParticle = dynamic_cast<CSparkEffect*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"SparkEffect"));
+		m_SparkEffectParticle->Set_PclePos(m_vPos);
+		for (_int i = 0; i < 70; ++i)
+		{
+			m_SparkEffectParticle->addParticle();
+		}
+		m_fParticleTimer = 0.f;
+	}
 
 	if (m_fTimer > 1.f)
 	{
@@ -108,13 +118,7 @@ void CMeteor::Meteor_Effect(void)
 		dynamic_cast<CRcEffect*>(m_pEffect)->Set_EffectPos(m_vPos.x+ fRand, m_vPos.y, m_vPos.z+ fRand);//EFFECT POS
 		dynamic_cast<CRcEffect*>(m_pEffect)->Set_SingleUse();
 
-		if (!m_SparkEffectParticle)
-			m_SparkEffectParticle = dynamic_cast<CSparkEffect*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"SparkEffect"));
-		m_SparkEffectParticle->Set_PclePos(m_vPos);
-		for (_int i = 0; i < 70; ++i)
-		{
-			m_SparkEffectParticle->addParticle();
-		}
+		
 		m_fTimer = 0.f;
 	}
 	//dynamic_cast<CRcEffect*>(m_pEffect)->Dead_Timer(10.f);

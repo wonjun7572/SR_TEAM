@@ -64,7 +64,7 @@ _int CCubePlayer::Update_Object(const _float & fTimeDelta)
 	m_fBulletTime += fTimeDelta;
 
 	FAILED_CHECK_RETURN(Get_BodyTransform(), -1);
-	Skill_Enforcing();
+	Inventory_Check();
 	CoolTimer();
 
 		// 이동, 애니메이션 관련
@@ -115,7 +115,7 @@ void CCubePlayer::LateUpdate_Object(void)
 
 	if (m_Weapon)
 	{
-		if (m_Weapon->Get_Ability()->fBulletRate - m_fBulletTime <= 0.f)
+		if (m_Weapon->Get_Ability()->fBulletRate - (m_fBulletTime*(m_iSpeedItem+1)) <= 0.f)
 		{
 			Fire_Bullet();
 		}
@@ -492,7 +492,7 @@ void CCubePlayer::Move()
 			dynamic_cast<CBaseMapping*>(Engine::Get_GameObject(STAGE_MAPPING, L"BaseMapping"))->Switch_Worldmap();
 	}
 
-	if (Key_Down(DIK_G))
+	if (Key_Down(DIK_G)/* && m_iWeaponState == 3*/)
 	{
 		m_pProjectileParicle->addParticle();
 	}
@@ -683,48 +683,55 @@ void CCubePlayer::Gun_Check(void)
 		m_tAbility->iGunTexture = 4;
 		m_bSniper = false;
 	}
-	if (Get_DIKeyState(DIK_1) & 0x80)
+	
+	if (Get_DIKeyState(DIK_1) & 0x80 || m_iSetWeaponState == 2)
 	{
 		if (!m_vecWeapon.empty())
 		{
 			if (m_vecWeapon[0] != nullptr)
 			{
+				m_Weapon = m_vecWeapon[0];
 				dynamic_cast<CSniper*>(Engine::Get_GameObject(STAGE_GUN, L"SNIPER"))->Off_Sniper();
 				dynamic_cast<CShotgun*>(Engine::Get_GameObject(STAGE_GUN, L"SHOTGUN"))->Off_ShotGun();
 				dynamic_cast<CUzi*>(Engine::Get_GameObject(STAGE_GUN, L"UZI1"))->Set_Uzi();
 				dynamic_cast<CUzi*>(Engine::Get_GameObject(STAGE_GUN, L"UZI2"))->Set_Uzi();
-				m_Weapon = m_vecWeapon[0];
 				m_tAbility->iGunTexture = 0; // 혹여나 총 업그레이드해서 다른 총으로 보이게 된다면 이 숫자와 UI/Gun 에 들어있는 숫자와 비교해서 넣으면됨.
+				m_iSetWeaponState = 0;
+				//m_iWeaponState = 2;
 			}
 		}
 	}
-	if (Get_DIKeyState(DIK_2) & 0x80)
+	if (Get_DIKeyState(DIK_2) & 0x80 || m_iSetWeaponState == 3)
 	{
 		if (m_vecWeapon.size() >= 2)
 		{
 			if (m_vecWeapon[1] != nullptr)
 			{
+				m_Weapon = m_vecWeapon[1];
 				dynamic_cast<CSniper*>(Engine::Get_GameObject(STAGE_GUN, L"SNIPER"))->Off_Sniper();
 				dynamic_cast<CUzi*>(Engine::Get_GameObject(STAGE_GUN, L"UZI1"))->Off_Uzi();
 				dynamic_cast<CUzi*>(Engine::Get_GameObject(STAGE_GUN, L"UZI2"))->Off_Uzi();
 				dynamic_cast<CShotgun*>(Engine::Get_GameObject(STAGE_GUN, L"SHOTGUN"))->Set_ShotGun();
-				m_Weapon = m_vecWeapon[1];
 				m_tAbility->iGunTexture = 2;
+
+				m_iSetWeaponState = 0;
 			}
 		}
 	}
-	if (Get_DIKeyState(DIK_3) & 0x80)
+	if (Get_DIKeyState(DIK_3) & 0x80 || m_iSetWeaponState ==4)
 	{
 		if (m_vecWeapon.size() >= 3)
 		{
 			if (m_vecWeapon[2] != nullptr)
 			{
+				m_Weapon = m_vecWeapon[2];
 				dynamic_cast<CUzi*>(Engine::Get_GameObject(STAGE_GUN, L"UZI1"))->Off_Uzi();
 				dynamic_cast<CUzi*>(Engine::Get_GameObject(STAGE_GUN, L"UZI2"))->Off_Uzi();
 				dynamic_cast<CShotgun*>(Engine::Get_GameObject(STAGE_GUN, L"SHOTGUN"))->Off_ShotGun();
 				dynamic_cast<CSniper*>(Engine::Get_GameObject(STAGE_GUN, L"SNIPER"))->Set_Sniper();
-				m_Weapon = m_vecWeapon[2];
 				m_tAbility->iGunTexture = 4;
+
+				m_iSetWeaponState = 0;
 			}
 		}
 	}
@@ -752,44 +759,55 @@ void CCubePlayer::Gun_Check(void)
 	}
 }
 
-void CCubePlayer::Skill_Enforcing(void)
+void CCubePlayer::Inventory_Check(void)
 {
-	//m_iSkillEnforce = dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->Get_EnforceCheck();
-	//switch (m_iSkillEnforce)
-	//{
-	//case 0:
-	//	cout << 0 << endl;
-	//	break;
-	//case 1://우지1강화
-	//	cout << 1 << endl;
-	//	break;
-	//case 2://우지2강화
-	//	cout << 2 << endl;
-	//	break;
-	//case 3://우지3강화
-	//	cout << 3 << endl;
-	//	break;
-	//case 4://우지4강화
-	//	cout << 4 << endl;
-	//	break;
-	//case 5://우지5강화
-	//	cout << 5 << endl;
-	//	break;
-	//case 6://우지6강화
-	//	cout << 6 << endl;
-	//	break;
-	//default:
-	//	break;
-	//}
+	m_iDmgItem = dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->Get_WeaponDmg();
+	m_iSpeedItem = dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->Get_WeaponSpeed();
+	m_iSkillEnforce = dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->Get_EnforceCheck();
+	switch (m_iSkillEnforce)
+	{
+	case 0:
+		cout << 0 << endl;
+		break;
+	case 1://우지1강화
+		cout << 1 << endl;
+		break;
+	case 2://우지2강화
+		cout << 2 << endl;
+		break;
+	case 3://샷건1강화
+		cout << 3 << endl;
+		break;
+	case 4://샷건2강화
+		cout << 4 << endl;
+		break;
+	case 5://스나1강화
+		cout << 5 << endl;
+		break;
+	case 6://스나2강화
+		cout << 6 << endl;
+		break;
+	default:
+		break;
+	}
 
-
-	//if(m_Weapon == Engine::Get_GameObject(STAGE_GUN, L"UZI1")
-	//{}
-	//	
-	//if (m_Weapon == Engine::Get_GameObject(STAGE_GUN, L"SHOTGUN")
-	//{}
-	//if (m_Weapon == Engine::Get_GameObject(STAGE_GUN, L"SNIPER")
-	//{}
+	
+	{
+		if (m_Weapon == Engine::Get_GameObject(STAGE_GUN, L"UZI1"))
+		{
+			m_iWeaponState = 2;
+		}
+		else if (m_Weapon == Engine::Get_GameObject(STAGE_GUN, L"SHOTGUN"))
+		{
+			m_iWeaponState = 3;
+		}
+		else if (m_Weapon == Engine::Get_GameObject(STAGE_GUN, L"SNIPER"))
+		{
+			m_iWeaponState = 4;
+		}
+		else
+			m_iWeaponState = 0;
+	}	
 }
 
 void CCubePlayer::Jump(void)

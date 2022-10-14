@@ -6,6 +6,7 @@
 #include "PoolMgr.h"
 #include "ComboUI.h"
 #include "TargetCube.h"
+#include "RcEffect.h"
 
 #include "TransAxisBox.h"
 
@@ -151,7 +152,19 @@ _int CIllusioner::Update_Object(const _float & fTimeDelta)
 				NULL_CHECK_RETURN(pGameObject, E_FAIL);
 				Engine::Get_Layer(STAGE_DESTORYWALL)->Add_GameList(pGameObject);
 				m_fFrame = 0.f;
+
+				m_pEffect = CRcEffect::Create(m_pGraphicDev, CASTINGEFFECT_EFT); //enum EFFECTID
+				dynamic_cast<CRcEffect*>(m_pEffect)->Set_EffectPos(vPos.x, vPos.y, vPos.z);//EFFECT POS
+				dynamic_cast<CRcEffect*>(m_pEffect)->Set_SingleUse();
+
+				m_pPlayerEffect = CRcEffect::Create(m_pGraphicDev, STAREFFECT_EFT); //enum EFFECTID
+				dynamic_cast<CRcEffect*>(m_pPlayerEffect)->Set_EffectPos(vPlayerPos.x, vPlayerPos.y, vPlayerPos.z);//EFFECT POS
+				dynamic_cast<CRcEffect*>(m_pPlayerEffect)->Set_SingleUse();
+				
+
 			}
+			
+
 			m_bRun = false;
 		}
 		else if (m_pCollision->Sphere_Collision(this->m_pSearchRange_TransCom, m_pPlayerTransCom, vPlayerScale.x, vSearchScale.x)/* && (m_STATE != FIREMAN_ATTACK)*/)

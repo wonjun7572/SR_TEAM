@@ -4,8 +4,10 @@
 #include "..\Header\RcEffect.h"
 
 //»ç¿ë¹ý
+//CGameObject*			m_pEffect = nullptr;
 //m_pEffect = CRcEffect::Create(m_pGraphicDev, REDEFFECT_EFT); //enum EFFECTID
-//dynamic_cast<CRcEffect*>(m_pEffect)->Set_EffectPos(m_vPos.x, m_vPos.y, m_vPos.z);//EFFECT POS
+//dynamic_cast<CRcEffect*>(m_pEffect)->Set_EffectPos(vPos.x, vPos.y, vPos.z);//EFFECT POS
+//dynamic_cast<CRcEffect*>(m_pEffect)->Set_Scale(10.f);
 //dynamic_cast<CRcEffect*>(m_pEffect)->Set_SingleUse();
 //dynamic_cast<CRcEffect*>(m_pEffect)->Dead_Timer(10.f);
 
@@ -46,8 +48,7 @@ _int CRcEffect::Update_Object(const _float & fTimeDelta)
 	m_fTimer += fTimeDelta;
 	Dead_Condition();
 	Effect_Change();
-
-	cout << m_iTexIndex << endl;
+	
 	return 0;
 }
 

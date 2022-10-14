@@ -3,6 +3,7 @@
 #include "CubePlayer.h"
 #include "Weapon.h"
 #include "MonsterUI.h"
+#include "RainbowCloudEffect.h"
 
 CTargetCube::CTargetCube(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CGameObject(pGraphicDev)
@@ -48,11 +49,7 @@ _int CTargetCube::Update_Object(const _float & fTimeDelta)
 	if(vCenter.y < 0.f)
 		m_pTransCom->Move_Pos(&(m_vDir * fTimeDelta));
 
-	if (m_bDead)
-	{
-		// 파티클 추가?
-		return -1;
-	}
+	
 
 	m_fFrame += fTimeDelta;
 
@@ -63,7 +60,19 @@ _int CTargetCube::Update_Object(const _float & fTimeDelta)
 	m_pTransUICom->Billboard_Transform(fTimeDelta);
 	Add_RenderGroup(RENDER_NONALPHA, this);
 	Hit_Check(fTimeDelta);
-	
+
+	if (m_bDead)
+	{
+		if (!m_pRainbowCloudEffectParticle)
+			m_pRainbowCloudEffectParticle = dynamic_cast<CRainbowCloudEffect*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"RainbowCloudEffect"));
+		m_pRainbowCloudEffectParticle->Set_PclePos(vPos);
+		for (_int i = 0; i < 25; ++i)
+		{
+			m_pRainbowCloudEffectParticle->addParticle();
+		}
+		// 파티클 추가?
+		return -1;
+	}
 	return 0;
 }
 
