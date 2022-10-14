@@ -21,6 +21,7 @@ private:
 	CTransform*		m_pTransform = nullptr;
 	CTexture*		m_pTexture = nullptr;
 	CCubeTex*		m_pCube = nullptr;
+	CLayer*			m_pMyLayer = nullptr;
 
 public:
 	static CCubeHand*	Create(LPDIRECT3DDEVICE9 pGraphicDev);

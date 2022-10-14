@@ -11,6 +11,7 @@
 //dynamic_cast<CRcEffect*>(m_pEffect)->Set_SingleUse();
 //dynamic_cast<CRcEffect*>(m_pEffect)->Dead_Timer(10.f);
 
+//
 static _int iEffectCnt = 0;
 
 CRcEffect::CRcEffect(LPDIRECT3DDEVICE9 pGraphicDev)

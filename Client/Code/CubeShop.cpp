@@ -20,7 +20,7 @@ HRESULT CCubeShop::Ready_Object(const _vec3& vPos)
 	FAILED_CHECK_RETURN(Add_component(), E_FAIL);
 
 	m_pTransform->Set_Scale(0.5f, 0.5f, 0.5f);
-	m_pTransform->Set_Pos(vPos.x, vPos.y + 0.5f, vPos.z);
+	m_pTransform->Set_Pos(vPos.x, vPos.y, vPos.z);
 	return S_OK;
 }
 

@@ -355,7 +355,6 @@ _bool CCalculator::Peek_Cube_Target(HWND hWnd, _vec3 * SrcPos, const CCubeTex * 
 }
 
 
-
 CComponent* CCalculator::Clone(void)
 {
 	return new CCalculator(*this);

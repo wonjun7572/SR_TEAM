@@ -113,6 +113,15 @@ namespace Engine
 	}MIDDLEBOSSABILITY;
 
 
+	typedef struct tagKraken
+	{
+		std::wstring strObjTag;
+		_float fCurrentHp;
+		_float fMaxHp;
+		_float fDamage;
+
+	}KRAKENABILITY;
+
 }
 
 
