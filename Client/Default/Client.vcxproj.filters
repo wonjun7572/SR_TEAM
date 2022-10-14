@@ -666,6 +666,9 @@
     <ClInclude Include="..\Header\ObjectCube.h">
       <Filter>02. GameObject\01. For_Stage\99. TestCube</Filter>
     </ClInclude>
+    <ClInclude Include="KrakenBoss.h">
+      <Filter>02. GameObject\01. For_Stage\21. MiddleBoss</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -1042,6 +1045,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\ObjectCube.cpp">
       <Filter>02. GameObject\01. For_Stage\99. TestCube</Filter>
+    </ClCompile>
+    <ClCompile Include="KrakenBoss.cpp">
+      <Filter>02. GameObject\01. For_Stage\21. MiddleBoss</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
