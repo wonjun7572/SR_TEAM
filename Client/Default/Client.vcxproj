@@ -186,6 +186,7 @@
     <ClInclude Include="..\Header\Flight.h" />
     <ClInclude Include="..\Header\IceEffect.h" />
     <ClInclude Include="..\Header\MiddleBoss.h" />
+    <ClInclude Include="..\Header\ObjectCube.h" />
     <ClInclude Include="..\Header\Ping.h" />
     <ClInclude Include="..\Header\RcEffect.h" />
     <ClInclude Include="..\Header\SoundWave.h">
@@ -325,6 +326,7 @@
     <ClCompile Include="..\Code\Flight.cpp" />
     <ClCompile Include="..\Code\IceEffect.cpp" />
     <ClCompile Include="..\Code\MiddleBoss.cpp" />
+    <ClCompile Include="..\Code\ObjectCube.cpp" />
     <ClCompile Include="..\Code\Ping.cpp" />
     <ClCompile Include="..\Code\RcEffect.cpp" />
     <ClCompile Include="..\Code\SoundWave.cpp">

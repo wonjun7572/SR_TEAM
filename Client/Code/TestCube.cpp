@@ -28,7 +28,7 @@ HRESULT CTestCube::Ready_Object(int PosX, int PosY)
 	else
 	{ Set_TransformPositon(); }
 	
-	_vec3 vScale = { 0.5f,0.5f,0.5f };
+	_vec3 vScale = { 0.5f, 0.5f, 0.5f };
 	m_pTransCom->Set_Scale(&vScale);
 	
 	return S_OK;
@@ -41,17 +41,47 @@ _int CTestCube::Update_Object(const _float& fTimeDelta)
 	{
 		return -1;
 	}
-	Update_NullCheck();
-	CGameObject::Update_Object(fTimeDelta);
-	if (!(dynamic_cast<CBaseMapping*>(Engine::Get_GameObject(STAGE_MAPPING, L"BaseMapping"))->Get_Worldmap()))
+
+	if (Engine::Get_Scene()->Get_SceneId() == STAGE_SCENE)
 	{
+		Update_NullCheck();
+		CGameObject::Update_Object(fTimeDelta);
+		if (!(dynamic_cast<CBaseMapping*>(Engine::Get_GameObject(STAGE_MAPPING, L"BaseMapping"))->Get_Worldmap()))
+		{
+			Add_RenderGroup(RENDER_NONALPHA, this);
+		}
+		Wall_Mapping();
+		Interact();
+		m_fTimer += fTimeDelta;
+	}
+	else if (Engine::Get_Scene()->Get_SceneId() == TOOL_SCENE)
+	{
+		CGameObject::Update_Object(fTimeDelta);
 		Add_RenderGroup(RENDER_NONALPHA, this);
 	}
-	Wall_Mapping();
-	Interact();
-	m_fTimer += fTimeDelta;
+
+	
 	return 0;
 }
+
+// 툴쓸때는 이거꺼주고 위에꺼 써야함
+//_int CTestCube::Update_Object(const _float& fTimeDelta)
+//{
+//	if (m_bDead)
+//	{
+//		return -1;
+//	}
+//	Update_NullCheck();
+//	CGameObject::Update_Object(fTimeDelta);
+//	if (!(dynamic_cast<CBaseMapping*>(Engine::Get_GameObject(STAGE_MAPPING, L"BaseMapping"))->Get_Worldmap()))
+//	{
+//		Add_RenderGroup(RENDER_NONALPHA, this);
+//	}
+//	Wall_Mapping();
+//	Interact();
+//	m_fTimer += fTimeDelta;
+//	return 0;
+//}
 
 void CTestCube::Render_Object()
 {
@@ -79,7 +109,7 @@ void CTestCube::Render_Object()
 	//불투명
 	//m_pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ZERO);
 	//m_pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_ONE);
-	if(! (dynamic_cast<CBaseMapping*>(Engine::Get_GameObject(STAGE_MAPPING, L"BaseMapping"))->Get_Worldmap()))
+	//if(! (dynamic_cast<CBaseMapping*>(Engine::Get_GameObject(STAGE_MAPPING, L"BaseMapping"))->Get_Worldmap()))
 	{
 		if (m_bWireFrame)
 			m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
@@ -96,10 +126,10 @@ void CTestCube::Render_Object()
 // 큐브를 선택 후 터레인 자리위에 올려 놓는 함수
 void CTestCube::Set_TransformPositon()
 {
-	CTerrainTex*	pTerrainBufferCom = dynamic_cast<CTerrainTex*>(Engine::Get_Component(L"Layer_Tool", L"TerrainByTool", L"Proto_TerrainTexCom", ID_STATIC));
+	CTerrainTex*	pTerrainBufferCom = dynamic_cast<CTerrainTex*>(Engine::Get_Component(L"Layer_MapTool", L"TerrainByTool", L"Proto_TerrainTexCom", ID_STATIC));
 	NULL_CHECK_RETURN(pTerrainBufferCom, );
 
-	CTransform*		pTerrainTransformCom = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Tool", L"TerrainByTool", TRANSFORM_COMP, ID_DYNAMIC));
+	CTransform*		pTerrainTransformCom = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_MapTool", L"TerrainByTool", TRANSFORM_COMP, ID_DYNAMIC));
 	NULL_CHECK_RETURN(pTerrainTransformCom, );
 
 	_vec3 Temp = m_pCalculatorCom->Peek_Target_Vector(g_hWnd, &(_vec3(0.f,0.f,0.f)), pTerrainBufferCom, pTerrainTransformCom);
@@ -285,7 +315,6 @@ HRESULT CTestCube::Add_Component()
 	pComponent = m_pHitBox = dynamic_cast<CHitBox*>(Clone_Proto(HITBOX_COMP));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ HITBOX_COMP, pComponent });
-
 
 	return S_OK;
 }

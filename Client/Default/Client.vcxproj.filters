@@ -663,6 +663,9 @@
     <ClInclude Include="..\Header\Flight.h">
       <Filter>02. GameObject\01. For_Stage\21. Rocket</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\ObjectCube.h">
+      <Filter>02. GameObject\01. For_Stage\99. TestCube</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -1036,6 +1039,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\Flight.cpp">
       <Filter>02. GameObject\01. For_Stage\21. Rocket</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ObjectCube.cpp">
+      <Filter>02. GameObject\01. For_Stage\99. TestCube</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
