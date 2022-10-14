@@ -6,9 +6,7 @@
 
 USING(Engine)
 
-
-class CPlayerMapping :
-	public CGameObject
+class CPlayerMapping :	public CGameObject
 {
 private:
 	explicit CPlayerMapping(LPDIRECT3DDEVICE9 pGraphicDev);

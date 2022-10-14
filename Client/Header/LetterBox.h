@@ -1,8 +1,7 @@
 #pragma once
 #include "GameObject.h"
 #include "Export_Function.h"
-class CLetterBox :
-	public CGameObject
+class CLetterBox :	public CGameObject
 {
 private:
 	explicit CLetterBox(LPDIRECT3DDEVICE9 pGraphicDev);
