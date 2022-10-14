@@ -94,36 +94,37 @@ HRESULT CCubeShop::Interact()
 	{
 		m_bSwitch = false;
 	}
-
-	if (!m_bDialogInit && m_bSwitch)
-	{
-		m_bDialogInit = true;
-
-		m_pDialogBox = CLetterBox::Create(m_pGraphicDev, L"Press [E] to Interact", sizeof(L"Press [E] to Interact"), 0);
 	
-		TCHAR* szCntName = new TCHAR[64];
-		wsprintf(szCntName, L"");
-		const _tchar*	szNumbering = L"ShopLetter_%d";
-		wsprintf(szCntName, szNumbering, m_iDialogCnt);
-		Engine::Add_GameObject(STAGE_MAPPING, m_pDialogBox, szCntName);
-		m_listDialogCnt.push_back(szCntName);
+	//if (!m_bDialogInit && m_bSwitch)
+	//{
+	//	m_bDialogInit = true;
+	//
+	//	m_pDialogBox = CLetterBox::Create(m_pGraphicDev, L"Press [E] to Interact", sizeof(L"Press [E] to Interact"), 0);
+	//
+	//	TCHAR* szCntName = new TCHAR[64];
+	//	wsprintf(szCntName, L"");
+	//	const _tchar*	szNumbering = L"ShopLetter_%d";
+	//	wsprintf(szCntName, szNumbering, m_iDialogCnt);
+	//	Engine::Add_GameObject(STAGE_MAPPING, m_pDialogBox, szCntName);
+	//	m_listDialogCnt.push_back(szCntName);
+	//
+	//	++m_iDialogCnt;
+	//}
 
-		++m_iDialogCnt;
-	}
 
 	if (m_bSwitch && Key_Down(DIK_E))
 	{
 		dynamic_cast<CShop*>(m_pShop)->Set_Switch();
 	}
 
-	if (m_bSwitch && m_pDialogBox != nullptr && !(dynamic_cast<CShop*>(m_pShop)->Get_Switch()))
-	{
-		dynamic_cast<CLetterBox*>(m_pDialogBox)->On_Switch();
-	}
-	if (!m_bSwitch && m_pDialogBox != nullptr && dynamic_cast<CShop*>(m_pShop)->Get_Switch())
-	{
-		dynamic_cast<CLetterBox*>(m_pDialogBox)->Off_Switch();
-	}
+	//if (m_bSwitch && m_pDialogBox != nullptr && !(dynamic_cast<CShop*>(m_pShop)->Get_Switch()))
+	//{
+	//	dynamic_cast<CLetterBox*>(m_pDialogBox)->On_Switch();
+	//}
+	//if (!m_bSwitch && m_pDialogBox != nullptr && dynamic_cast<CShop*>(m_pShop)->Get_Switch())
+	//{
+	//	dynamic_cast<CLetterBox*>(m_pDialogBox)->Off_Switch();
+	//}
 
 	return S_OK;
 }
