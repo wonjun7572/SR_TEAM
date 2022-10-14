@@ -50,7 +50,7 @@ private:
 	HRESULT				Monster_Mapping(void);
 	HRESULT				Monster_DeleteMapping(void);
 
-
+	
 
 protected:
 	CTransform*			m_pTransCom = nullptr;
