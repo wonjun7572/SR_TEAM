@@ -31,6 +31,16 @@ private:
 
 	HRESULT			Ready_Layer_Tool(const _tchar* pLayerTag);
 
+	HRESULT			Ready_Layer_Gun(const _tchar* pLayerTag);
+	HRESULT			Ready_Layer_Shop(const _tchar* pLayerTag);
+	HRESULT			Ready_Layer_Lava(const _tchar* pLayerTag);
+	HRESULT			Ready_Layer_ItemBox(const _tchar* pLayerTag);
+	HRESULT			Ready_Layer_Throne(const _tchar* pLayerTag);
+	HRESULT			Ready_Layer_Slime(const _tchar* pLayerTag);
+	HRESULT			Ready_Layer_Fireman(const _tchar* pLayerTag);
+	HRESULT			Ready_Layer_Zombie(const _tchar* pLayerTag);
+	HRESULT			Ready_Layer_Illusioner(const _tchar* pLayerTag);
+
 	HRESULT			Ready_Proto(void);
 	HRESULT			Ready_Light(void);
 
