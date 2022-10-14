@@ -262,11 +262,17 @@
     <Filter Include="02. GameObject\01. For_Stage\20. BillBoard">
       <UniqueIdentifier>{97ebe466-2b13-4a05-8c1a-2b85aa2672b3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\01. For_Stage\21. MiddleBoss">
-      <UniqueIdentifier>{0091e28e-b692-45e6-8762-b8ba0717f441}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. GameObject\01. For_Stage\21. Rocket">
       <UniqueIdentifier>{9cb28303-2be4-4a5b-aa55-51f86d88d953}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\21. Boss">
+      <UniqueIdentifier>{0091e28e-b692-45e6-8762-b8ba0717f441}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\21. Boss\00. MiddleBoss">
+      <UniqueIdentifier>{e019c841-4acd-46d6-b003-5d6504e7161c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\21. Boss\01.FinalBoss">
+      <UniqueIdentifier>{38f7afe0-aff1-4ce1-904d-3fba054a0308}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -651,9 +657,6 @@
     <ClInclude Include="..\Header\Ping.h">
       <Filter>02. GameObject\01. For_Stage\20. BillBoard</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\MiddleBoss.h">
-      <Filter>02. GameObject\01. For_Stage\21. MiddleBoss</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\BrownCloudEffect.h">
       <Filter>99. Default\헤더 파일</Filter>
     </ClInclude>
@@ -662,6 +665,12 @@
     </ClInclude>
     <ClInclude Include="..\Header\Flight.h">
       <Filter>02. GameObject\01. For_Stage\21. Rocket</Filter>
+    </ClInclude>
+    <ClInclude Include="KrakenBoss.h">
+      <Filter>02. GameObject\01. For_Stage\21. Boss\01.FinalBoss</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\MiddleBoss.h">
+      <Filter>02. GameObject\01. For_Stage\21. Boss\00. MiddleBoss</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1025,9 +1034,6 @@
     <ClCompile Include="..\Code\Ping.cpp">
       <Filter>02. GameObject\01. For_Stage\20. BillBoard</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\MiddleBoss.cpp">
-      <Filter>02. GameObject\01. For_Stage\21. MiddleBoss</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\BrownCloudEffect.cpp">
       <Filter>99. Default\소스 파일</Filter>
     </ClCompile>
@@ -1036,6 +1042,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\Flight.cpp">
       <Filter>02. GameObject\01. For_Stage\21. Rocket</Filter>
+    </ClCompile>
+    <ClCompile Include="KrakenBoss.cpp">
+      <Filter>02. GameObject\01. For_Stage\21. Boss\01.FinalBoss</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\MiddleBoss.cpp">
+      <Filter>02. GameObject\01. For_Stage\21. Boss\00. MiddleBoss</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
