@@ -76,6 +76,7 @@
 
 #include "Supporter_Uzi.h"
 #include "MiddleBoss.h"
+#include "KrakenBoss.h"
 
 #include "BattleCursier.h"
 #include "Flight.h"
@@ -435,363 +436,368 @@ HRESULT CStage::Ready_Layer_Monster(const _tchar * pLayerTag)
 	srand((unsigned int)time(NULL));
 	// 0  42
 	// 18 59
-	{
-		for (int i = 0; i < 2; i++)
-		{
-			_tchar* szName = new _tchar[256]{};
-			wstring wName = L"Zombie_%d";
-			wsprintfW(szName, wName.c_str(), i);
-			NameList.push_back(szName);
+	//{
+	//	for (int i = 0; i < 2; i++)
+	//	{
+	//		_tchar* szName = new _tchar[256]{};
+	//		wstring wName = L"Zombie_%d";
+	//		wsprintfW(szName, wName.c_str(), i);
+	//		NameList.push_back(szName);
 
-			pGameObject = CZombie::Create(m_pGraphicDev, _vec3(_float(rand() % 18) + 2, 0.6f, _float(rand() % 17 + 44)), szName);
-			NULL_CHECK_RETURN(pGameObject, E_FAIL);
-			FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
-		}
+	//		pGameObject = CZombie::Create(m_pGraphicDev, _vec3(_float(rand() % 18) + 2, 0.6f, _float(rand() % 17 + 44)), szName);
+	//		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+	//	}
 
-		for (int i = 0; i < 1; i++)
-		{
-			_tchar* szName = new _tchar[256]{};
-			wstring wName = L"Fireman_%d";
-			wsprintfW(szName, wName.c_str(), i);
-			NameList.push_back(szName);
+	//	for (int i = 0; i < 1; i++)
+	//	{
+	//		_tchar* szName = new _tchar[256]{};
+	//		wstring wName = L"Fireman_%d";
+	//		wsprintfW(szName, wName.c_str(), i);
+	//		NameList.push_back(szName);
 
-			pGameObject = CFireMan::Create(m_pGraphicDev, _vec3(_float(rand() % 18) + 2, 0.6f, _float(rand() % 17) + 44), szName);
-			NULL_CHECK_RETURN(pGameObject, E_FAIL);
-			FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
-		}
+	//		pGameObject = CFireMan::Create(m_pGraphicDev, _vec3(_float(rand() % 18) + 2, 0.6f, _float(rand() % 17) + 44), szName);
+	//		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+	//	}
 
-		for (int i = 0; i < 2; i++)
-		{
-			_tchar* szName = new _tchar[256]{};
-			wstring wName = L"Slime_%d";
-			wsprintfW(szName, wName.c_str(), i);
-			NameList.push_back(szName);
+	//	for (int i = 0; i < 2; i++)
+	//	{
+	//		_tchar* szName = new _tchar[256]{};
+	//		wstring wName = L"Slime_%d";
+	//		wsprintfW(szName, wName.c_str(), i);
+	//		NameList.push_back(szName);
 
-			pGameObject = CSlime::Create(m_pGraphicDev, _vec3(_float(rand() % 18) + 2, 0.6f, _float(rand() % 17) + 44), szName);
-			NULL_CHECK_RETURN(pGameObject, E_FAIL);
-			FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
-		}
+	//		pGameObject = CSlime::Create(m_pGraphicDev, _vec3(_float(rand() % 18) + 2, 0.6f, _float(rand() % 17) + 44), szName);
+	//		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+	//	}
 
-		for (int i = 0; i < 1; i++)
-		{
-			_tchar* szName = new _tchar[256]{};
-			wstring wName = L"Illusioner%d";
-			wsprintfW(szName, wName.c_str(), i);
-			NameList.push_back(szName);
-			pGameObject = CIllusioner::Create(m_pGraphicDev, _vec3(_float(rand() % 18) + 2, 0.6f, _float(rand() % 17) + 44), szName);
-			NULL_CHECK_RETURN(pGameObject, E_FAIL);
-			FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
-		}
-	}
+	//	for (int i = 0; i < 1; i++)
+	//	{
+	//		_tchar* szName = new _tchar[256]{};
+	//		wstring wName = L"Illusioner%d";
+	//		wsprintfW(szName, wName.c_str(), i);
+	//		NameList.push_back(szName);
+	//		pGameObject = CIllusioner::Create(m_pGraphicDev, _vec3(_float(rand() % 18) + 2, 0.6f, _float(rand() % 17) + 44), szName);
+	//		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+	//	}
+	//}
 
-	// 15 ~ 64
-	// 1 ~ 88
-	{
-		for (int i = 2; i < 4; i++)
-		{
-			_tchar* szName = new _tchar[256]{};
-			wstring wName = L"Zombie_%d";
-			wsprintfW(szName, wName.c_str(), i);
-			NameList.push_back(szName);
+	//// 15 ~ 64
+	//// 1 ~ 88
+	//{
+	//	for (int i = 2; i < 4; i++)
+	//	{
+	//		_tchar* szName = new _tchar[256]{};
+	//		wstring wName = L"Zombie_%d";
+	//		wsprintfW(szName, wName.c_str(), i);
+	//		NameList.push_back(szName);
 
-			pGameObject = CZombie::Create(m_pGraphicDev, _vec3(_float(rand() % 14 + 1), 0.6f, _float(rand() % 64) + 24), szName);
-			NULL_CHECK_RETURN(pGameObject, E_FAIL);
-			FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
-		}
+	//		pGameObject = CZombie::Create(m_pGraphicDev, _vec3(_float(rand() % 14 + 1), 0.6f, _float(rand() % 64) + 24), szName);
+	//		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+	//	}
 
-		for (int i = 1; i < 3; i++)
-		{
-			_tchar* szName = new _tchar[256]{};
-			wstring wName = L"Fireman_%d";
-			wsprintfW(szName, wName.c_str(), i);
-			NameList.push_back(szName);
+	//	for (int i = 1; i < 3; i++)
+	//	{
+	//		_tchar* szName = new _tchar[256]{};
+	//		wstring wName = L"Fireman_%d";
+	//		wsprintfW(szName, wName.c_str(), i);
+	//		NameList.push_back(szName);
 
-			pGameObject = CFireMan::Create(m_pGraphicDev, _vec3(_float(rand() % 14 + 1), 0.6f, _float(rand() % 64) + 24), szName);
-			NULL_CHECK_RETURN(pGameObject, E_FAIL);
-			FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
-		}
+	//		pGameObject = CFireMan::Create(m_pGraphicDev, _vec3(_float(rand() % 14 + 1), 0.6f, _float(rand() % 64) + 24), szName);
+	//		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+	//	}
 
-		for (int i = 2; i < 4; i++)
-		{
-			_tchar* szName = new _tchar[256]{};
-			wstring wName = L"Slime_%d";
-			wsprintfW(szName, wName.c_str(), i);
-			NameList.push_back(szName);
+	//	for (int i = 2; i < 4; i++)
+	//	{
+	//		_tchar* szName = new _tchar[256]{};
+	//		wstring wName = L"Slime_%d";
+	//		wsprintfW(szName, wName.c_str(), i);
+	//		NameList.push_back(szName);
 
-			pGameObject = CSlime::Create(m_pGraphicDev, _vec3(_float(rand() % 14) + 1, 0.6f, _float(rand() % 64) + 24), szName);
-			NULL_CHECK_RETURN(pGameObject, E_FAIL);
-			FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
-		}
+	//		pGameObject = CSlime::Create(m_pGraphicDev, _vec3(_float(rand() % 14) + 1, 0.6f, _float(rand() % 64) + 24), szName);
+	//		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+	//	}
 
-		for (int i = 1; i < 3; i++)
-		{
-			_tchar* szName = new _tchar[256]{};
-			wstring wName = L"Illusioner%d";
-			wsprintfW(szName, wName.c_str(), i);
-			NameList.push_back(szName);
-			pGameObject = CIllusioner::Create(m_pGraphicDev, _vec3(_float(rand() % 14 + 1), 0.6f, _float(rand() % 64) + 24), szName);
-			NULL_CHECK_RETURN(pGameObject, E_FAIL);
-			FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
-		}
-	}
+	//	for (int i = 1; i < 3; i++)
+	//	{
+	//		_tchar* szName = new _tchar[256]{};
+	//		wstring wName = L"Illusioner%d";
+	//		wsprintfW(szName, wName.c_str(), i);
+	//		NameList.push_back(szName);
+	//		pGameObject = CIllusioner::Create(m_pGraphicDev, _vec3(_float(rand() % 14 + 1), 0.6f, _float(rand() % 64) + 24), szName);
+	//		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+	//	}
+	//}
 
-	// 1 ~ 101 
-	// 10 ~ 116
-	{
-		for (int i = 4; i < 5; i++)
-		{
-			_tchar* szName = new _tchar[256]{};
-			wstring wName = L"Zombie_%d";
-			wsprintfW(szName, wName.c_str(), i);
-			NameList.push_back(szName);
+	//// 1 ~ 101 
+	//// 10 ~ 116
+	//{
+	//	for (int i = 4; i < 5; i++)
+	//	{
+	//		_tchar* szName = new _tchar[256]{};
+	//		wstring wName = L"Zombie_%d";
+	//		wsprintfW(szName, wName.c_str(), i);
+	//		NameList.push_back(szName);
 
-			pGameObject = CZombie::Create(m_pGraphicDev, _vec3(_float(rand() % 9 + 1), 0.6f, _float(rand() % 15) + 101), szName);
-			NULL_CHECK_RETURN(pGameObject, E_FAIL);
-			FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
-		}
+	//		pGameObject = CZombie::Create(m_pGraphicDev, _vec3(_float(rand() % 9 + 1), 0.6f, _float(rand() % 15) + 101), szName);
+	//		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+	//	}
 
-		for (int i = 3; i < 4; i++)
-		{
-			_tchar* szName = new _tchar[256]{};
-			wstring wName = L"Fireman_%d";
-			wsprintfW(szName, wName.c_str(), i);
-			NameList.push_back(szName);
+	//	for (int i = 3; i < 4; i++)
+	//	{
+	//		_tchar* szName = new _tchar[256]{};
+	//		wstring wName = L"Fireman_%d";
+	//		wsprintfW(szName, wName.c_str(), i);
+	//		NameList.push_back(szName);
 
-			pGameObject = CFireMan::Create(m_pGraphicDev, _vec3(_float(rand() % 9 + 1), 0.6f, _float(rand() % 15) + 101), szName);
-			NULL_CHECK_RETURN(pGameObject, E_FAIL);
-			FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
-		}
+	//		pGameObject = CFireMan::Create(m_pGraphicDev, _vec3(_float(rand() % 9 + 1), 0.6f, _float(rand() % 15) + 101), szName);
+	//		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+	//	}
 
-		for (int i = 4; i < 5; i++)
-		{
-			_tchar* szName = new _tchar[256]{};
-			wstring wName = L"Slime_%d";
-			wsprintfW(szName, wName.c_str(), i);
-			NameList.push_back(szName);
+	//	for (int i = 4; i < 5; i++)
+	//	{
+	//		_tchar* szName = new _tchar[256]{};
+	//		wstring wName = L"Slime_%d";
+	//		wsprintfW(szName, wName.c_str(), i);
+	//		NameList.push_back(szName);
 
-			pGameObject = CSlime::Create(m_pGraphicDev, _vec3(_float(rand() % 9) + 1, 0.6f, _float(rand() % 15) + 101), szName);
-			NULL_CHECK_RETURN(pGameObject, E_FAIL);
-			FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
-		}
+	//		pGameObject = CSlime::Create(m_pGraphicDev, _vec3(_float(rand() % 9) + 1, 0.6f, _float(rand() % 15) + 101), szName);
+	//		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+	//	}
 
-		for (int i = 3; i < 4; i++)
-		{
-			_tchar* szName = new _tchar[256]{};
-			wstring wName = L"Illusioner%d";
-			wsprintfW(szName, wName.c_str(), i);
-			NameList.push_back(szName);
-			pGameObject = CIllusioner::Create(m_pGraphicDev, _vec3(_float(rand() % 9 + 1), 0.6f, _float(rand() % 15) + 101), szName);
-			NULL_CHECK_RETURN(pGameObject, E_FAIL);
-			FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
-		}
-	}
-	
-	// 26 ~ 125
-	// 16 ~ 117
-	{
-		for (int i = 5; i < 6; i++)
-		{
-			_tchar* szName = new _tchar[256]{};
-			wstring wName = L"Zombie_%d";
-			wsprintfW(szName, wName.c_str(), i);
-			NameList.push_back(szName);
+	//	for (int i = 3; i < 4; i++)
+	//	{
+	//		_tchar* szName = new _tchar[256]{};
+	//		wstring wName = L"Illusioner%d";
+	//		wsprintfW(szName, wName.c_str(), i);
+	//		NameList.push_back(szName);
+	//		pGameObject = CIllusioner::Create(m_pGraphicDev, _vec3(_float(rand() % 9 + 1), 0.6f, _float(rand() % 15) + 101), szName);
+	//		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+	//	}
+	//}
+	//
+	//// 26 ~ 125
+	//// 16 ~ 117
+	//{
+	//	for (int i = 5; i < 6; i++)
+	//	{
+	//		_tchar* szName = new _tchar[256]{};
+	//		wstring wName = L"Zombie_%d";
+	//		wsprintfW(szName, wName.c_str(), i);
+	//		NameList.push_back(szName);
 
-			pGameObject = CZombie::Create(m_pGraphicDev, _vec3(_float(rand() % 10 + 16), 0.6f, _float(rand() % 8) + 117), szName);
-			NULL_CHECK_RETURN(pGameObject, E_FAIL);
-			FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
-		}
+	//		pGameObject = CZombie::Create(m_pGraphicDev, _vec3(_float(rand() % 10 + 16), 0.6f, _float(rand() % 8) + 117), szName);
+	//		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+	//	}
 
-		for (int i = 4; i < 5; i++)
-		{
-			_tchar* szName = new _tchar[256]{};
-			wstring wName = L"Fireman_%d";
-			wsprintfW(szName, wName.c_str(), i);
-			NameList.push_back(szName);
+	//	for (int i = 4; i < 5; i++)
+	//	{
+	//		_tchar* szName = new _tchar[256]{};
+	//		wstring wName = L"Fireman_%d";
+	//		wsprintfW(szName, wName.c_str(), i);
+	//		NameList.push_back(szName);
 
-			pGameObject = CFireMan::Create(m_pGraphicDev, _vec3(_float(rand() % 10 + 16), 0.6f, _float(rand() % 8) + 117), szName);
-			NULL_CHECK_RETURN(pGameObject, E_FAIL);
-			FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
-		}
+	//		pGameObject = CFireMan::Create(m_pGraphicDev, _vec3(_float(rand() % 10 + 16), 0.6f, _float(rand() % 8) + 117), szName);
+	//		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+	//	}
 
-		for (int i = 5; i < 6; i++)
-		{
-			_tchar* szName = new _tchar[256]{};
-			wstring wName = L"Slime_%d";
-			wsprintfW(szName, wName.c_str(), i);
-			NameList.push_back(szName);
+	//	for (int i = 5; i < 6; i++)
+	//	{
+	//		_tchar* szName = new _tchar[256]{};
+	//		wstring wName = L"Slime_%d";
+	//		wsprintfW(szName, wName.c_str(), i);
+	//		NameList.push_back(szName);
 
-			pGameObject = CSlime::Create(m_pGraphicDev, _vec3(_float(rand() % 10 + 16), 0.6f, _float(rand() % 8) + 117), szName);
-			NULL_CHECK_RETURN(pGameObject, E_FAIL);
-			FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
-		}
+	//		pGameObject = CSlime::Create(m_pGraphicDev, _vec3(_float(rand() % 10 + 16), 0.6f, _float(rand() % 8) + 117), szName);
+	//		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+	//	}
 
-		for (int i = 4; i < 5; i++)
-		{
-			_tchar* szName = new _tchar[256]{};
-			wstring wName = L"Illusioner%d";
-			wsprintfW(szName, wName.c_str(), i);
-			NameList.push_back(szName);
-			pGameObject = CIllusioner::Create(m_pGraphicDev, _vec3(_float(rand() % 10 + 16), 0.6f, _float(rand() % 8) + 117), szName);
-			NULL_CHECK_RETURN(pGameObject, E_FAIL);
-			FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
-		}
-	}
+	//	for (int i = 4; i < 5; i++)
+	//	{
+	//		_tchar* szName = new _tchar[256]{};
+	//		wstring wName = L"Illusioner%d";
+	//		wsprintfW(szName, wName.c_str(), i);
+	//		NameList.push_back(szName);
+	//		pGameObject = CIllusioner::Create(m_pGraphicDev, _vec3(_float(rand() % 10 + 16), 0.6f, _float(rand() % 8) + 117), szName);
+	//		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+	//	}
+	//}
 
-	// 48 ~ 103
-	// 61 ~ 114
-	{
-		for (int i = 6; i < 7; i++)
-		{
-			_tchar* szName = new _tchar[256]{};
-			wstring wName = L"Zombie_%d";
-			wsprintfW(szName, wName.c_str(), i);
-			NameList.push_back(szName);
+	//// 48 ~ 103
+	//// 61 ~ 114
+	//{
+	//	for (int i = 6; i < 7; i++)
+	//	{
+	//		_tchar* szName = new _tchar[256]{};
+	//		wstring wName = L"Zombie_%d";
+	//		wsprintfW(szName, wName.c_str(), i);
+	//		NameList.push_back(szName);
 
-			pGameObject = CZombie::Create(m_pGraphicDev, _vec3(_float(rand() % 13 + 48), 0.6f, _float(rand() % 11) + 103), szName);
-			NULL_CHECK_RETURN(pGameObject, E_FAIL);
-			FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
-		}
+	//		pGameObject = CZombie::Create(m_pGraphicDev, _vec3(_float(rand() % 13 + 48), 0.6f, _float(rand() % 11) + 103), szName);
+	//		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+	//	}
 
-		for (int i = 5; i < 6; i++)
-		{
-			_tchar* szName = new _tchar[256]{};
-			wstring wName = L"Fireman_%d";
-			wsprintfW(szName, wName.c_str(), i);
-			NameList.push_back(szName);
+	//	for (int i = 5; i < 6; i++)
+	//	{
+	//		_tchar* szName = new _tchar[256]{};
+	//		wstring wName = L"Fireman_%d";
+	//		wsprintfW(szName, wName.c_str(), i);
+	//		NameList.push_back(szName);
 
-			pGameObject = CFireMan::Create(m_pGraphicDev, _vec3(_float(rand() % 13 + 48), 0.6f, _float(rand() % 11) + 103), szName);
-			NULL_CHECK_RETURN(pGameObject, E_FAIL);
-			FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
-		}
+	//		pGameObject = CFireMan::Create(m_pGraphicDev, _vec3(_float(rand() % 13 + 48), 0.6f, _float(rand() % 11) + 103), szName);
+	//		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+	//	}
 
-		for (int i = 6; i < 7; i++)
-		{
-			_tchar* szName = new _tchar[256]{};
-			wstring wName = L"Slime_%d";
-			wsprintfW(szName, wName.c_str(), i);
-			NameList.push_back(szName);
+	//	for (int i = 6; i < 7; i++)
+	//	{
+	//		_tchar* szName = new _tchar[256]{};
+	//		wstring wName = L"Slime_%d";
+	//		wsprintfW(szName, wName.c_str(), i);
+	//		NameList.push_back(szName);
 
-			pGameObject = CSlime::Create(m_pGraphicDev, _vec3(_float(rand() % 13 + 48), 0.6f, _float(rand() % 11) + 103), szName);
-			NULL_CHECK_RETURN(pGameObject, E_FAIL);
-			FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
-		}
+	//		pGameObject = CSlime::Create(m_pGraphicDev, _vec3(_float(rand() % 13 + 48), 0.6f, _float(rand() % 11) + 103), szName);
+	//		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+	//	}
 
-		for (int i = 5; i < 6; i++)
-		{
-			_tchar* szName = new _tchar[256]{};
-			wstring wName = L"Illusioner%d";
-			wsprintfW(szName, wName.c_str(), i);
-			NameList.push_back(szName);
-			pGameObject = CIllusioner::Create(m_pGraphicDev, _vec3(_float(rand() % 13 + 48), 0.6f, _float(rand() % 11) + 103), szName);
-			NULL_CHECK_RETURN(pGameObject, E_FAIL);
-			FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
-		}
-	}
+	//	for (int i = 5; i < 6; i++)
+	//	{
+	//		_tchar* szName = new _tchar[256]{};
+	//		wstring wName = L"Illusioner%d";
+	//		wsprintfW(szName, wName.c_str(), i);
+	//		NameList.push_back(szName);
+	//		pGameObject = CIllusioner::Create(m_pGraphicDev, _vec3(_float(rand() % 13 + 48), 0.6f, _float(rand() % 11) + 103), szName);
+	//		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+	//	}
+	//}
 
-	// 43 - 96
-	// 52 - 79
-	{
-		for (int i = 7; i < 9; i++)
-		{
-			_tchar* szName = new _tchar[256]{};
-			wstring wName = L"Zombie_%d";
-			wsprintfW(szName, wName.c_str(), i);
-			NameList.push_back(szName);
+	//// 43 - 96
+	//// 52 - 79
+	//{
+	//	for (int i = 7; i < 9; i++)
+	//	{
+	//		_tchar* szName = new _tchar[256]{};
+	//		wstring wName = L"Zombie_%d";
+	//		wsprintfW(szName, wName.c_str(), i);
+	//		NameList.push_back(szName);
 
-			pGameObject = CZombie::Create(m_pGraphicDev, _vec3(_float(rand() % 9 + 43), 0.6f, _float(rand() % 17) + 76), szName);
-			NULL_CHECK_RETURN(pGameObject, E_FAIL);
-			FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
-		}
+	//		pGameObject = CZombie::Create(m_pGraphicDev, _vec3(_float(rand() % 9 + 43), 0.6f, _float(rand() % 17) + 76), szName);
+	//		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+	//	}
 
-		for (int i = 6; i < 8; i++)
-		{
-			_tchar* szName = new _tchar[256]{};
-			wstring wName = L"Fireman_%d";
-			wsprintfW(szName, wName.c_str(), i);
-			NameList.push_back(szName);
+	//	for (int i = 6; i < 8; i++)
+	//	{
+	//		_tchar* szName = new _tchar[256]{};
+	//		wstring wName = L"Fireman_%d";
+	//		wsprintfW(szName, wName.c_str(), i);
+	//		NameList.push_back(szName);
 
-			pGameObject = CFireMan::Create(m_pGraphicDev, _vec3(_float(rand() % 9 + 43), 0.6f, _float(rand() % 17) + 76), szName);
-			NULL_CHECK_RETURN(pGameObject, E_FAIL);
-			FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
-		}
+	//		pGameObject = CFireMan::Create(m_pGraphicDev, _vec3(_float(rand() % 9 + 43), 0.6f, _float(rand() % 17) + 76), szName);
+	//		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+	//	}
 
-		for (int i = 7; i < 9; i++)
-		{
-			_tchar* szName = new _tchar[256]{};
-			wstring wName = L"Slime_%d";
-			wsprintfW(szName, wName.c_str(), i);
-			NameList.push_back(szName);
+	//	for (int i = 7; i < 9; i++)
+	//	{
+	//		_tchar* szName = new _tchar[256]{};
+	//		wstring wName = L"Slime_%d";
+	//		wsprintfW(szName, wName.c_str(), i);
+	//		NameList.push_back(szName);
 
-			pGameObject = CSlime::Create(m_pGraphicDev, _vec3(_float(rand() % 9 + 43), 0.6f, _float(rand() % 17) + 76), szName);
-			NULL_CHECK_RETURN(pGameObject, E_FAIL);
-			FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
-		}
+	//		pGameObject = CSlime::Create(m_pGraphicDev, _vec3(_float(rand() % 9 + 43), 0.6f, _float(rand() % 17) + 76), szName);
+	//		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+	//	}
 
-		for (int i = 6; i < 8; i++)
-		{
-			_tchar* szName = new _tchar[256]{};
-			wstring wName = L"Illusioner%d";
-			wsprintfW(szName, wName.c_str(), i);
-			NameList.push_back(szName);
-			pGameObject = CIllusioner::Create(m_pGraphicDev, _vec3(_float(rand() % 9 + 43), 0.6f, _float(rand() % 17) + 76), szName);
-			NULL_CHECK_RETURN(pGameObject, E_FAIL);
-			FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
-		}
-	}
+	//	for (int i = 6; i < 8; i++)
+	//	{
+	//		_tchar* szName = new _tchar[256]{};
+	//		wstring wName = L"Illusioner%d";
+	//		wsprintfW(szName, wName.c_str(), i);
+	//		NameList.push_back(szName);
+	//		pGameObject = CIllusioner::Create(m_pGraphicDev, _vec3(_float(rand() % 9 + 43), 0.6f, _float(rand() % 17) + 76), szName);
+	//		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+	//	}
+	//}
 
 
-	// 43 - 5
-	// 55 - 23
-	{
-		for (int i = 9; i < 11; i++)
-		{
-			_tchar* szName = new _tchar[256]{};
-			wstring wName = L"Zombie_%d";
-			wsprintfW(szName, wName.c_str(), i);
-			NameList.push_back(szName);
+	//// 43 - 5
+	//// 55 - 23
+	//{
+	//	for (int i = 9; i < 11; i++)
+	//	{
+	//		_tchar* szName = new _tchar[256]{};
+	//		wstring wName = L"Zombie_%d";
+	//		wsprintfW(szName, wName.c_str(), i);
+	//		NameList.push_back(szName);
 
-			pGameObject = CZombie::Create(m_pGraphicDev, _vec3(_float(rand() % 12 + 43), 0.6f, _float(rand() % 18) + 5), szName);
-			NULL_CHECK_RETURN(pGameObject, E_FAIL);
-			FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
-		}
+	//		pGameObject = CZombie::Create(m_pGraphicDev, _vec3(_float(rand() % 12 + 43), 0.6f, _float(rand() % 18) + 5), szName);
+	//		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+	//	}
 
-		for (int i = 8; i < 10; i++)
-		{
-			_tchar* szName = new _tchar[256]{};
-			wstring wName = L"Fireman_%d";
-			wsprintfW(szName, wName.c_str(), i);
-			NameList.push_back(szName);
+	//	for (int i = 8; i < 10; i++)
+	//	{
+	//		_tchar* szName = new _tchar[256]{};
+	//		wstring wName = L"Fireman_%d";
+	//		wsprintfW(szName, wName.c_str(), i);
+	//		NameList.push_back(szName);
 
-			pGameObject = CFireMan::Create(m_pGraphicDev, _vec3(_float(rand() % 12 + 43), 0.6f, _float(rand() % 18) + 5), szName);
-			NULL_CHECK_RETURN(pGameObject, E_FAIL);
-			FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
-		}
+	//		pGameObject = CFireMan::Create(m_pGraphicDev, _vec3(_float(rand() % 12 + 43), 0.6f, _float(rand() % 18) + 5), szName);
+	//		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+	//	}
 
-		for (int i = 9; i < 11; i++)
-		{
-			_tchar* szName = new _tchar[256]{};
-			wstring wName = L"Slime_%d";
-			wsprintfW(szName, wName.c_str(), i);
-			NameList.push_back(szName);
+	//	for (int i = 9; i < 11; i++)
+	//	{
+	//		_tchar* szName = new _tchar[256]{};
+	//		wstring wName = L"Slime_%d";
+	//		wsprintfW(szName, wName.c_str(), i);
+	//		NameList.push_back(szName);
 
-			pGameObject = CSlime::Create(m_pGraphicDev, _vec3(_float(rand() % 12 + 43), 0.6f, _float(rand() % 18) + 5), szName);
-			NULL_CHECK_RETURN(pGameObject, E_FAIL);
-			FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
-		}
+	//		pGameObject = CSlime::Create(m_pGraphicDev, _vec3(_float(rand() % 12 + 43), 0.6f, _float(rand() % 18) + 5), szName);
+	//		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+	//	}
 
-		for (int i = 8; i < 10; i++)
-		{
-			_tchar* szName = new _tchar[256]{};
-			wstring wName = L"Illusioner%d";
-			wsprintfW(szName, wName.c_str(), i);
-			NameList.push_back(szName);
-			pGameObject = CIllusioner::Create(m_pGraphicDev, _vec3(_float(rand() % 12 + 43), 0.6f, _float(rand() % 18) + 5), szName);
-			NULL_CHECK_RETURN(pGameObject, E_FAIL);
-			FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
-		}
-	}
+	//	for (int i = 8; i < 10; i++)
+	//	{
+	//		_tchar* szName = new _tchar[256]{};
+	//		wstring wName = L"Illusioner%d";
+	//		wsprintfW(szName, wName.c_str(), i);
+	//		NameList.push_back(szName);
+	//		pGameObject = CIllusioner::Create(m_pGraphicDev, _vec3(_float(rand() % 12 + 43), 0.6f, _float(rand() % 18) + 5), szName);
+	//		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+	//	}
+	//}
 
 	pGameObject = CMiddleBoss::Create(m_pGraphicDev, _vec3(109.f, 0.6f, 10.f), L"MiddleBoss");
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+
+
+	pGameObject = CKrakenBoss::Create(m_pGraphicDev, _vec3(10.f,4.5f, 10.f), L"Kraken");
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
 
