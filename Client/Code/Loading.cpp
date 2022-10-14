@@ -71,6 +71,20 @@ _uint CLoading::Loading_ForStage(void)
 	{
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_CubePlayerTexture", CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/CubeTile/CubeTile_%d.dds", TEX_CUBE, 100)), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_CubeMonsterTexture", CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Texture.dds", TEX_CUBE, 4)), E_FAIL);
+
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"DOOMGUY", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Doomguy/Doom_%d.dds", TEX_CUBE, 10)), E_FAIL);
+		/*
+		Body			0
+		Head			1
+		Leftarm			2
+		Lefthand		3
+		Rightarm		4
+		Righthand		5
+		Leftleg			6
+		Leftfoot		7
+		Rightleg		8
+		Rightfoot		9
+		*/
 	}
 
 	{
@@ -82,7 +96,7 @@ _uint CLoading::Loading_ForStage(void)
 
 	// AnimationPlayerÆÄ½Ì
 	{
-		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"", CTexture::Create(m_pGraphicDev, HP_100_FACE_PATH, TEX_NORMAL, 5)), E_FAIL);
+		//FAILED_CHECK_RETURN(Engine::Ready_Proto(L"", CTexture::Create(m_pGraphicDev, HP_100_FACE_PATH, TEX_NORMAL, 5)), E_FAIL);
 	}
 
 	// PLAYER UI
