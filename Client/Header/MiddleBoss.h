@@ -85,6 +85,7 @@ private:
 	_vec3				vUIPos;
 	_bool				m_MappingInit = false;
 	TCHAR*				m_szCntName = new TCHAR[64];
+
 	list<TCHAR*>		m_listMonsterCnt;
 private:
 	HRESULT				Add_Component(void);
