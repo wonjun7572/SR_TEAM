@@ -17,10 +17,23 @@ private:
 	HRESULT			Add_Component(void);
 	CTransform*		m_pTransform = nullptr;
 
+public:
+	void			Replace(const _vec3& vPos, const _vec3& vAngle, const _vec3& vDir)
+	{
+		m_pTransform->Set_Pos(vPos.x, vPos.y, vPos.z);
+		m_vAngle = vAngle;
+		m_vDirection = vDir;
+	}
+
 private:
 	HRESULT			Build(void);
 
 	_vec3			m_vDirection;
+	_vec3			m_vAngle;
+
+	int iA = 0;
+
+	vector<_vec3>	m_ShufflePos;
 
 	_float			m_fTimeDelta = 0.f;
 	_bool			m_bFirst = true;
