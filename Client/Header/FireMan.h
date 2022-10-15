@@ -30,7 +30,6 @@ private:
 	CCubeCol*			m_pAnimationBox = nullptr;
 
 	_float				m_fFrame = 0.f;
-	_bool				m_bRun = false;
 
 private:	//	애니메이션 관련
 	HRESULT				Build(void);

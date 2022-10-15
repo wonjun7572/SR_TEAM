@@ -552,6 +552,32 @@ const _matrix* Engine::CTransform::Compute_LookAtTarget(const _vec3* pTargetPos)
 												D3DXVec3Normalize(&vzLook, &m_vInfo[INFO_LOOK]))));
 }
 
+void CTransform::Chase_Target_By_Direction(_vec3 * vDirection, const _float & fSpeed, const _float & fTimeDelta)
+{
+	m_vInfo[INFO_POS] += *D3DXVec3Normalize(vDirection, vDirection) * fSpeed * fTimeDelta;
+
+	_matrix		matRot = *LookAtTarget_By_Direction(vDirection);
+	_matrix		matScale, matTrans;
+
+	D3DXMatrixScaling(&matScale, m_vScale.x, m_vScale.y, m_vScale.z);
+	D3DXMatrixTranslation(&matTrans, m_vInfo[INFO_POS].x, m_vInfo[INFO_POS].y, m_vInfo[INFO_POS].z);
+
+	m_matWorld = matScale * matRot * matTrans;
+}
+
+const _matrix * CTransform::LookAtTarget_By_Direction(_vec3 * vDirection)
+{
+	_vec3		vAxis, vzLook;
+	_matrix		matRot;
+
+	// D3DXMatrixRotationAxis : 임의의 축회전 행렬을 만들어주는 함수
+	return D3DXMatrixRotationAxis(&matRot,
+		D3DXVec3Cross(&vAxis, &m_vInfo[INFO_LOOK], vDirection),
+		acosf(D3DXVec3Dot(D3DXVec3Normalize(vDirection, vDirection),
+			D3DXVec3Normalize(&vzLook, &m_vInfo[INFO_LOOK]))));
+
+}
+
 void CTransform::Billboard_Transform(const _float & fTimeDelta)
 {
 	//	이거 쓸라면 Transform Component 속성 Static 이어야됨!

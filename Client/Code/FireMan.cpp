@@ -128,55 +128,59 @@ _int CFireMan::Update_Object(const _float & fTimeDelta)
 	m_pTransCom->Get_Info(INFO_POS, &vPos);
 	_vec3 vDir;
 	vDir = vPlayerPos - vPos;
-	D3DXVec3Normalize(&vDir, &vDir);
+	//D3DXVec3Normalize(&vDir, &vDir);
+	vDir.y = 0.f;
 
 	m_fFrame += fTimeDelta;
 
-	if (!Collision_Wall(fTimeDelta))
+	if (m_pCollision->Sphere_Collision(this->m_pRunawayRange_TransCom, m_pPlayerTransCom, vPlayerScale.x, vRunScale.x)/* && (m_STATE != FIREMAN_ATTACK)*/)
 	{
-		if (m_pCollision->Sphere_Collision(this->m_pRunawayRange_TransCom, m_pPlayerTransCom, vPlayerScale.x, vRunScale.x)/* && (m_STATE != FIREMAN_ATTACK)*/)
-		{
-			// 도망충돌
-			m_pTransCom->Chase_Target(&vPlayerPos, -5.f, fTimeDelta);
-			m_STATE = FIREMAN_WALK;
-			m_bRun = true;
-		}
-		else if (m_pCollision->Sphere_Collision(this->m_pAttackRange_TransCom, m_pPlayerTransCom, vPlayerScale.x, vAttackScale.x))
-		{
-			// 공격충돌
-			m_pTransCom->Chase_Target(&vPlayerPos, 0.f, fTimeDelta);
-			m_STATE = FIREMAN_ATTACK;
-
-			if (m_AnimationTime >= 1.f)
-			{
-				CPoolMgr::GetInstance()->Reuse_Obj(m_pGraphicDev, &vPos, &vDir, 10);
-			}
-			m_bRun = false;
-		}
-		else if (m_pCollision->Sphere_Collision(this->m_pSearchRange_TransCom, m_pPlayerTransCom, vPlayerScale.x, vSearchScale.x)/* && (m_STATE != FIREMAN_ATTACK)*/)
-		{
-			// 탐지충돌
-			m_pTransCom->Chase_Target(&vPlayerPos, 5.f, fTimeDelta);
-			m_STATE = FIREMAN_WALK;
-			m_bRun = false;
-		}
-		else if (m_STATE != FIREMAN_ATTACK)
-		{
-			m_STATE = FIREMAN_IDLE;
-			m_bRun = false;
-		}
-		
-		Look_Direction();
-
-		_vec3 vMonsterPos;
-		m_pTransCom->Get_Info(INFO_POS, &vMonsterPos);
-		m_pHitBoxTransCom->Set_Pos(vMonsterPos.x, vMonsterPos.y, vMonsterPos.z);
-		m_pSphereTransCom->Set_Pos(vMonsterPos.x, vMonsterPos.y, vMonsterPos.z);
-
-		m_pSearchRange_TransCom->Set_Pos(vMonsterPos.x, vMonsterPos.y, vMonsterPos.z);
-		m_pAttackRange_TransCom->Set_Pos(vMonsterPos.x, vMonsterPos.y, vMonsterPos.z);
-		m_pRunawayRange_TransCom->Set_Pos(vMonsterPos.x, vMonsterPos.y, vMonsterPos.z);
+		// 도망충돌
+		//m_pTransCom->Chase_Target(&vPlayerPos, 0.f, fTimeDelta);
+		vDir *= -1.f;
+		m_pCollision->Wall_Collision_Check(this->m_pTransCom, this->m_pHitBox, &vDir);
+		m_pTransCom->Chase_Target_By_Direction(&vDir, 5.f, fTimeDelta);
+		m_STATE = FIREMAN_WALK;
 	}
+	else if (m_pCollision->Sphere_Collision(this->m_pAttackRange_TransCom, m_pPlayerTransCom, vPlayerScale.x, vAttackScale.x))
+	{
+		// 공격충돌
+		//m_pTransCom->Chase_Target(&vPlayerPos, 0.f, fTimeDelta);
+		m_pCollision->Wall_Collision_Check(this->m_pTransCom, this->m_pHitBox, &vDir);
+		m_pTransCom->Chase_Target_By_Direction(&vDir, 0.f, fTimeDelta);
+		m_STATE = FIREMAN_ATTACK;
+
+		if (m_AnimationTime >= 1.f)
+		{
+			CPoolMgr::GetInstance()->Reuse_Obj(m_pGraphicDev, &vPos, &vDir, 10);
+		}
+	}
+	else if (m_pCollision->Sphere_Collision(this->m_pSearchRange_TransCom, m_pPlayerTransCom, vPlayerScale.x, vSearchScale.x)/* && (m_STATE != FIREMAN_ATTACK)*/)
+	{
+		// 탐지충돌
+		//m_pTransCom->Chase_Target(&vPlayerPos, 0.f, fTimeDelta);
+		m_pCollision->Wall_Collision_Check(this->m_pTransCom, this->m_pHitBox, &vDir);
+		m_pTransCom->Chase_Target_By_Direction(&vDir, 5.f, fTimeDelta);
+		m_STATE = FIREMAN_WALK;
+	}
+	else if (m_STATE != FIREMAN_ATTACK)
+	{
+		m_STATE = FIREMAN_IDLE;
+	}
+	
+	CPoolMgr::GetInstance()->Reuse_PlayerBullet(m_pGraphicDev, &vPos, &vDir, 0, 100);
+
+	Look_Direction();
+
+	_vec3 vMonsterPos;
+	m_pTransCom->Get_Info(INFO_POS, &vMonsterPos);
+	m_pHitBoxTransCom->Set_Pos(vMonsterPos.x, vMonsterPos.y, vMonsterPos.z);
+	m_pSphereTransCom->Set_Pos(vMonsterPos.x, vMonsterPos.y, vMonsterPos.z);
+
+	m_pSearchRange_TransCom->Set_Pos(vMonsterPos.x, vMonsterPos.y, vMonsterPos.z);
+	m_pAttackRange_TransCom->Set_Pos(vMonsterPos.x, vMonsterPos.y, vMonsterPos.z);
+	m_pRunawayRange_TransCom->Set_Pos(vMonsterPos.x, vMonsterPos.y, vMonsterPos.z);
+	
 	return 0;
 
 }
@@ -683,11 +687,6 @@ void CFireMan::Look_Direction(void)
 	pitch = asinf(2.f * (qRot.w * qRot.x - qRot.y * qRot.z));
 	yaw = atan2f(2.0f * (qRot.x * qRot.z + qRot.w * qRot.y), (-sqx - sqy + sqz + sqw));
 	roll = atan2f(2.0f * (qRot.x * qRot.y + qRot.w * qRot.z), (-sqx + sqy - sqz + sqw));
-
-	if (m_bRun)
-	{
-		yaw += D3DXToRadian(180.f);
-	}
 
 	list<pair<const _tchar*, CGameObject*>> ListBox = *(pMyLayer->Get_GamePairPtr());
 

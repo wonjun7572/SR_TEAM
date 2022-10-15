@@ -32,7 +32,8 @@ protected:
 public:
 	void          Set_Damaged(_float iDamage)
 	{
-		m_tAbility->fCurrentHp -= iDamage;
+		if(this != nullptr)
+			m_tAbility->fCurrentHp -= iDamage;
 	}
 
 protected:
@@ -77,6 +78,8 @@ protected:
 	CTransform*			m_pMonsterMapping = nullptr;
 
 	_float				m_fSpeed = 1.f;
+
+	_vec3				m_vDirection;
 
 protected:
 	virtual void	Free(void)override;
