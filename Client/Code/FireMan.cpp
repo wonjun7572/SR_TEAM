@@ -168,8 +168,6 @@ _int CFireMan::Update_Object(const _float & fTimeDelta)
 		m_STATE = FIREMAN_IDLE;
 	}
 	
-	CPoolMgr::GetInstance()->Reuse_PlayerBullet(m_pGraphicDev, &vPos, &vDir, 0, 100);
-
 	Look_Direction();
 
 	_vec3 vMonsterPos;
