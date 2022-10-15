@@ -98,15 +98,20 @@ _int CSlime::Update_Object(const _float & fTimeDelta)
 		m_pTransCom->Get_Info(INFO_POS, &vPos);
 		_vec3 vSearchScale;
 		m_pSearchRange_TransCom->Get_Scale(&vSearchScale);
+		_vec3 vDir;
+		vDir = vPlayerPos - vDir;
+		vDir.y = 0.f;
 
 
 		if (this->m_pSearchRange_TransCom, m_pPlayerTransCom, vPlayerScale.x, vSearchScale.x)
 		{
-			m_pTransCom->Chase_Target(&vPlayerPos, 1.f, fTimeDelta);
+			m_pCollision->Wall_Collision_Check(this->m_pTransCom, this->m_pHitBox, &vDir);
+			m_pTransCom->Chase_Target_By_Direction(&vDir, 2.f, fTimeDelta);
 		}
 		else
 		{
-			m_pTransCom->Chase_Target(&vPlayerPos, 0.f, fTimeDelta);
+			m_pCollision->Wall_Collision_Check(this->m_pTransCom, this->m_pHitBox, &vDir);
+			m_pTransCom->Chase_Target_By_Direction(&vDir, 0.f, fTimeDelta);
 		}
 
 		Look_Direction();

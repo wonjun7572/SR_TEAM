@@ -95,7 +95,7 @@ _int CKrakenBoss::Update_Object(const _float & fTimeDelta)
 	m_pHitBoxTransCom->Set_Pos(vMonsterPos.x, vMonsterPos.y, vMonsterPos.z);
 	m_pSphereTransCom->Set_Pos(vMonsterPos.x, vMonsterPos.y, vMonsterPos.z);
 	m_pTransCom->Get_Info(INFO_POS, &vUIPos);
-	m_pTransUICom->Set_Pos(vUIPos.x, vUIPos.y + 1.4f, vUIPos.z);
+	m_pTransUICom->Set_Pos(vUIPos.x, vUIPos.y + 2.4f, vUIPos.z);
 	
 	
 	
@@ -105,7 +105,7 @@ _int CKrakenBoss::Update_Object(const _float & fTimeDelta)
 void CKrakenBoss::Render_Object(void)
 {
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransCom->Get_WorldMatrixPointer());
-	m_pTextureCom->Set_Texture(10);
+	m_pTextureCom->Set_Texture(11);
 	m_pBufferCom->Render_Buffer();
 
 	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
@@ -135,25 +135,28 @@ void CKrakenBoss::LateUpdate_Object(void)
 	}
 
 
-	//if (!m_bFirst)
-	//{
-	//	if (m_STATE == KRAKEN_WALK)
-	//	{
 
-	//	}
-	//	else if (m_STATE == KRAKEN_IDLE)
-	//	{
 
-	//	}
-	//	else if (m_STATE == KRAKEN_ATTACK)
-	//	{
+	//애니메이션 관련해서 run animation 이랑 각자 상황에 맞는 애니메이션 넣어주면됨.
+	if (!m_bFirst)
+	{
+		if (m_STATE == KRAKEN_WALK)
+		{
 
-	//	}
-	//	else if (m_STATE == KRAKEN_SHOT)
-	//	{
+		}
+		else if (m_STATE == KRAKEN_IDLE)
+		{
 
-	//	}
-	//}
+		}
+		else if (m_STATE == KRAKEN_ATTACK)
+		{
+
+		}
+		else if (m_STATE == KRAKEN_SHOT)
+		{
+
+		}
+	}
 
 	CGameObject::LateUpdate_Object();
 
@@ -203,6 +206,33 @@ _int CKrakenBoss::Update_Pattern(_float fTimeDelta)
 		m_pMonsterUI = dynamic_cast<CMonsterUI*>(Engine::Get_GameObject(STAGE_UI, L"MonsterUI"));
 	if (m_pComboUI == nullptr)
 		m_pComboUI = dynamic_cast<CComboUI*>(Engine::Get_GameObject(STAGE_UI, L"ComboUI"));
+
+
+
+	_float Hp = m_tAbility->fCurrentHp / m_tAbility->fMaxHp;
+	//rand함수를 통해서 or  체력별 패턴을 넣을것
+	//if(Hp >= 0.8)
+	//{
+	//	m_STATE = KRAKEN_ATTACK;
+	//	//패턴 
+	//}
+	//else if (Hp >= 0.6f)
+	//{
+	//	m_STATE = KRAKEN_ATTACK;
+	//}
+	//else if (Hp >= 0.4f)
+	//{
+	//	m_STATE = KRAKEN_ATTACK;
+	//}
+	//else if (Hp >= 0.2f)
+	//{
+	//	m_STATE = KRAKEN_ATTACK;
+	//}
+	//else if (Hp <= 0.f)
+	//{
+	//	m_STATE = KRAKEN_ATTACK;
+	//}
+
 
 	return 0;
 }
@@ -257,6 +287,11 @@ HRESULT CKrakenBoss::Add_Component(void)
 	pComponent = m_pSphereTransCom = dynamic_cast<CTransform*>(Clone_Proto(TRANSFORM_COMP));
 	NULL_CHECK_RETURN(m_pSphereBufferCom, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Sphere_TransCom", pComponent });
+
+	pComponent = m_pAnimationBox = dynamic_cast<CCubeCol*>(Clone_Proto(CUBECOL_COMP));
+	NULL_CHECK_RETURN(m_pSphereBufferCom, E_FAIL);
+	m_mapComponent[ID_STATIC].insert({ CUBECOL_COMP, pComponent });
+
 
 	return S_OK;
 }
@@ -647,13 +682,13 @@ void CKrakenBoss::Set_OnTerrain(void)
 {
 	_vec3 vAnimationPos;
 
-	_vec3		vPos;
+
 	m_pTransCom->Get_BeforeInfo(INFO_POS, &vAnimationPos);
 
 	Engine::CTerrainTex*	pTerrainTexCom = dynamic_cast<Engine::CTerrainTex*>(Engine::Get_Component(STAGE_ENVIRONMENT, L"Terrain", TERRAINTEX_COMP, ID_STATIC));
 	NULL_CHECK(pTerrainTexCom);
 
-	_float fHeight = m_pCalculatorCom->HeightOnTerrain(&vAnimationPos, pTerrainTexCom->Get_VtxPos(), VTXCNTX, VTXCNTZ) + 0.6f;
+	_float fHeight = m_pCalculatorCom->HeightOnTerrain(&vAnimationPos, pTerrainTexCom->Get_VtxPos(), VTXCNTX, VTXCNTZ);
 
 	m_pTransCom->Set_Pos(vAnimationPos.x, fHeight, vAnimationPos.z);
 }
