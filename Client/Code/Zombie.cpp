@@ -153,7 +153,6 @@ _int CZombie::Update_Object(const _float & fTimeDelta)
 
 void CZombie::LateUpdate_Object(void)
 {
-	Monster_Mapping();
 	
 	if (!m_bFirst)
 	{

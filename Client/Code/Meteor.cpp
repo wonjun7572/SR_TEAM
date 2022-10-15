@@ -4,6 +4,7 @@
 #include "RcEffect.h"
 #include "SparkEffect.h"
 #include "FlameEffect.h"
+#include "StaticCamera.h"
 
 
 CMeteor::CMeteor(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -29,6 +30,7 @@ HRESULT CMeteor::Ready_Object(const _vec3& Position)
 	m_fAttack = 10.f;
 	m_bSphereSkill = true;
 
+	
 	return S_OK;
 }
 
@@ -49,7 +51,7 @@ _int CMeteor::Update_Object(const _float & fTimeDelta)
 		//»ç¿ë¹ý
 		m_pEffect = CRcEffect::Create(m_pGraphicDev, EXPLOSION_EFT); //enum EFFECTID
 		dynamic_cast<CRcEffect*>(m_pEffect)->Set_EffectPos(m_vPos.x, m_vPos.y, m_vPos.z);//EFFECT POS
-		dynamic_cast<CRcEffect*>(m_pEffect)->Set_Scale(10.f);
+		dynamic_cast<CRcEffect*>(m_pEffect)->Set_Scale(5.f);
 		dynamic_cast<CRcEffect*>(m_pEffect)->Set_SingleUse();
 		if (!m_pFlameEffectParticle)
 			m_pFlameEffectParticle = dynamic_cast<CFlameEffect*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"FlameEffect"));
@@ -58,6 +60,10 @@ _int CMeteor::Update_Object(const _float & fTimeDelta)
 		{
 			m_pFlameEffectParticle->addParticle();
 		}
+
+		_float fGunSound = .3f;
+		Engine::PlaySoundGun(L"MeteorBomb.wav", SOUND_EFFECT, fGunSound);
+		dynamic_cast<CStaticCamera*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"StaticCamera"))->HitPlayer();
 		return -1;
 	}
 	Meteor_Effect();

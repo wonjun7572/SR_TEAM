@@ -183,7 +183,6 @@ _int CFireMan::Update_Object(const _float & fTimeDelta)
 
 void CFireMan::LateUpdate_Object(void)
 {
-	Monster_Mapping();
 
 	if (!m_bFirst)
 	{

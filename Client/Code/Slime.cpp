@@ -121,7 +121,6 @@ _int CSlime::Update_Object(const _float & fTimeDelta)
 
 void CSlime::LateUpdate_Object(void)
 {
-	Monster_Mapping();
 	if (!m_bFirst)
 	{
 		if (m_STATE == SLIME_JUMP)
@@ -136,6 +135,7 @@ void CSlime::LateUpdate_Object(void)
 
 void CSlime::Render_Object(void)
 {
+
 	//m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 	//m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pHitBoxTransCom->Get_WorldMatrixPointer());
 	//m_pHitBox->Render_Buffer();

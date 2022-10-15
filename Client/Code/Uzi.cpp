@@ -17,7 +17,7 @@ HRESULT CUzi::Ready_Object(void)
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 	m_tAbility = new GUNABILITY;
 
-	m_tAbility->fBulletAttack = 20.f;
+	m_tAbility->fBulletAttack =5.f;
 	m_tAbility->fBulletRate = 0.1f;
 	m_tAbility->fRemainBulletCnt = 300.f;
 	m_tAbility->fBulletCount = 300.f;

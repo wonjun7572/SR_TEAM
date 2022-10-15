@@ -488,13 +488,20 @@ void CCubePlayer::Move()
 
 	if (Key_Down(DIK_F))
 	{
-		if(m_Weapon == Engine::Get_GameObject(STAGE_GUN, L"SNIPER"))
+		//if (m_Weapon == Engine::Get_GameObject(STAGE_GUN, L"SNIPER"))
+		{
 			dynamic_cast<CBaseMapping*>(Engine::Get_GameObject(STAGE_MAPPING, L"BaseMapping"))->Switch_Worldmap();
+
+			_float fGunSound = .2f;
+			Engine::PlaySoundGun(L"Meteor.wav", SOUND_EFFECT, fGunSound);
+		}
 	}
 
-	if (Key_Down(DIK_G)/* && m_iWeaponState == 3*/)
+	if (Key_Down(DIK_G) && m_iWeaponState == 3)
 	{
 		m_pProjectileParicle->addParticle();
+		_float fGunSound = 1.f;
+		Engine::PlaySoundGun(L"Grenade.wav", SOUND_EFFECT, fGunSound);
 	}
 
 	if (Key_Down(DIK_T))
@@ -633,8 +640,14 @@ void CCubePlayer::Fire_Bullet(void)
 				m_pBulletParicle->addParticle();
 				m_pShotParicle->addParticle();
 				
+				
 				_float fGunSound = 1.f;
-				Engine::PlaySoundGun(L"RifleShot.mp3", SOUND_EFFECT, fGunSound);
+				if (m_iWeaponState == 2)// 우지
+					Engine::PlaySoundGun(L"RifleShot.mp3", SOUND_EFFECT, fGunSound);
+				if (m_iWeaponState == 3)// 샷건
+					Engine::PlaySoundGun(L"ShotgunSound.wav", SOUND_EFFECT, fGunSound);
+				if (m_iWeaponState == 4)// 스나
+					Engine::PlaySoundGun(L"SniperSound.wav", SOUND_EFFECT, fGunSound);
 				m_Weapon->Set_MinusBullet();
 				m_Weapon->Set_Shoot(true);
 				m_fBulletTime = 0.f;

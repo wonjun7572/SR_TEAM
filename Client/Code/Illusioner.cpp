@@ -198,7 +198,6 @@ _int CIllusioner::Update_Object(const _float & fTimeDelta)
 
 void CIllusioner::LateUpdate_Object(void)
 {
-	Monster_Mapping();
 
 
 	if (!m_bFirst)

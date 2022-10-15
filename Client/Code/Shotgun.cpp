@@ -20,7 +20,7 @@ HRESULT CShotgun::Ready_Object(void)
 	m_tAbility->fBulletRate = 1.f;
 	m_tAbility->fRemainBulletCnt = 50.f;
 	m_tAbility->fBulletCount = 300.f;
-	m_tAbility->fBulletAttack = 50.f;
+	m_tAbility->fBulletAttack = 35.f;
 
 	m_bEquiped = false;
 

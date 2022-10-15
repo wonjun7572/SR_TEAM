@@ -256,6 +256,10 @@ void CPlayerMapping::Key_Input(const _float& fTimeDelta)
 	if (Mouse_Down(DIM_LB) && m_bWorldMap)
 	{
 		m_bBombard = true;
+		_float fGunSound = 1.f;
+		Engine::PlaySoundGun(L"MeteorCreate.wav", SOUND_EFFECT, 0.3f);
+		Engine::PlaySoundGun(L"MeteorCreate2.wav", SOUND_EFFECT, fGunSound);
+		dynamic_cast<CBaseMapping*>(Engine::Get_GameObject(STAGE_MAPPING, L"BaseMapping"))->Switch_Worldmap();
 	}
 }
 

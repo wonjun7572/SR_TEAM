@@ -22,6 +22,8 @@ CMonster::~CMonster()
 
 HRESULT CMonster::Ready_Object(const _vec3 & vPos, wstring _strObjTag)
 {
+	Monster_DeleteMapping();
+
 	return S_OK;
 }
 
@@ -45,12 +47,19 @@ _int CMonster::Update_Object(const _float & fTimeDelta)
 	Add_RenderGroup(RENDER_NONALPHA, this);
 	Hit_Check(fTimeDelta);
 	Hit_SphereCheck(fTimeDelta);
-
+	
+	if (m_bDead)
+	{
+		Monster_DeleteMapping();
+		return -1;
+	}
 	return 0;
 }
 
 void CMonster::LateUpdate_Object(void)
 {
+	Monster_Mapping();
+
 	if (m_tAbility->fCurrentHp <= 0.f)
 	{
 		m_pMonsterUI->Off_Switch();
