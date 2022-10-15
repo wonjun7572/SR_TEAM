@@ -48,8 +48,6 @@ _int CSpBullet::Update_Object(const _float & fTimeDelta)
 	for (auto& iter : pMonsterLayer->Get_GameList())
 	{
 		//	구충돌 좀 봐야할듯
-
-		//CTransform* pTransform = dynamic_cast<CTransform*>(iter->Get_Component(TRANSFORM_COMP, ID_DYNAMIC));
 		CTransform* pTransform = dynamic_cast<CTransform*>(iter->Get_Component(L"HitBox_Transform", ID_DYNAMIC));
 		CHitBox* pHitbox = dynamic_cast<CHitBox*>(iter->Get_Component(HITBOX_COMP, ID_STATIC));
 
@@ -60,18 +58,6 @@ _int CSpBullet::Update_Object(const _float & fTimeDelta)
 			m_bDamage = false;
 			break;
 		}
-
-		//_vec3 vMonsterScale;
-		//pTransform->Get_Scale(&vMonsterScale);
-		///*_vec3 vMonsterPos;
-		//pTransform->Get_Info(INFO_POS, &vMonsterPos);*/
-
-		//if (m_pCollision->Sphere_Collision(this->m_pTransCom, pTransform, vMonsterScale.x, vScale.x) && m_bDamage)
-		//{
-		//	dynamic_cast<CMonster*>(iter)->Set_Damaged(m_fDamage);
-		//	m_bDamage = false;
-		//	break;
-		//}
 	}
 
 	Engine::CGameObject::Update_Object(fTimeDelta);

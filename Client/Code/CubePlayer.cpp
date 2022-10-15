@@ -18,6 +18,7 @@
 
 #include "Supporter_Uzi.h"
 #include "Ping.h"
+#include "Flight.h"
 
 CCubePlayer::CCubePlayer(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
@@ -67,37 +68,37 @@ _int CCubePlayer::Update_Object(const _float & fTimeDelta)
 	Inventory_Check();
 	CoolTimer();
 
-		// 이동, 애니메이션 관련
-		if (!(dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->Get_Switch())
-			&& !(dynamic_cast<CShop*>(Engine::Get_GameObject(STAGE_UI, L"Shop"))->Get_Switch()))
+	// 이동, 애니메이션 관련
+	if (!(dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->Get_Switch())
+		&& !(dynamic_cast<CShop*>(Engine::Get_GameObject(STAGE_UI, L"Shop"))->Get_Switch()))
+	{
+		if (m_pBomb->Get_WorldMap() == false && (m_iKnuckStack == 0) && m_pFlight->Get_Control() == false)
 		{
-			if (m_pBomb->Get_WorldMap() == false && (m_iKnuckStack == 0))
-			{
-				Move();
-			}
+			Move();
 		}
+	}
+	Key_Skill();
+	Look_Direction();
+	
+	if (!(dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->Get_Switch())
+		&& !(dynamic_cast<CShop*>(Engine::Get_GameObject(STAGE_UI, L"Shop"))->Get_Switch()))
+	{
+		Animation();
+	}
 
-		Look_Direction();
-		
-		if (!(dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->Get_Switch())
-			&& !(dynamic_cast<CShop*>(Engine::Get_GameObject(STAGE_UI, L"Shop"))->Get_Switch()))
-		{
-			Animation();
-		}
+	Assemble();
 
-		Assemble();
-
-		if (Get_DIKeyState(DIK_UP))
-		{
-			//	넉백 테스트
-			//KnuckDown(1);
-			//SlowDown(1);
-		}
-		if (Get_DIKeyState(DIK_LSHIFT))
-		{
-			//	대시 테스트, 몬스터 방향으로만 가능하게 변경 예정
-			Dash();
-		}
+	if (Get_DIKeyState(DIK_UP))
+	{
+		//	넉백 테스트
+		//KnuckDown(1);
+		//SlowDown(1);
+	}
+	if (Get_DIKeyState(DIK_LSHIFT))
+	{
+		//	대시 테스트, 몬스터 방향으로만 가능하게 변경 예정
+		Dash();
+	}
 
 
 	CGameObject::Update_Object(fTimeDelta);
@@ -131,6 +132,18 @@ void CCubePlayer::LateUpdate_Object(void)
 
 void CCubePlayer::Render_Object(void)
 {
+}
+
+void CCubePlayer::Key_Skill()
+{
+	if (Key_Down(DIK_F))
+	{
+		if (m_Weapon == Engine::Get_GameObject(STAGE_GUN, L"SNIPER"))
+			dynamic_cast<CBaseMapping*>(Engine::Get_GameObject(STAGE_MAPPING, L"BaseMapping"))->Switch_Worldmap();
+
+		if (m_Weapon == Engine::Get_GameObject(STAGE_GUN, L"UZI1"))
+			dynamic_cast<CFlight*>(Engine::Get_GameObject(STAGE_FLIGHTPLAYER, L"FLIGHTPLAYER"))->Set_Control();
+	}
 }
 
 void CCubePlayer::CoolTimer(void)
@@ -201,6 +214,9 @@ void CCubePlayer::Update_NullCheck()
 
 	if (m_pBomb == nullptr)
 		m_pBomb = dynamic_cast<CPlayerMapping*>(Engine::Get_GameObject(STAGE_MAPPING, L"Map"));
+
+	if(m_pFlight == nullptr)
+		m_pFlight = dynamic_cast<CFlight*>(Engine::Get_GameObject(STAGE_FLIGHTPLAYER, L"FLIGHTPLAYER"));
 }
 
 void CCubePlayer::Set_OnTerrain(void)
@@ -486,11 +502,7 @@ void CCubePlayer::Move()
 		D3DXVec3Normalize(&vDir, &vDir);
 	}
 
-	if (Key_Down(DIK_F))
-	{
-		if(m_Weapon == Engine::Get_GameObject(STAGE_GUN, L"SNIPER"))
-			dynamic_cast<CBaseMapping*>(Engine::Get_GameObject(STAGE_MAPPING, L"BaseMapping"))->Switch_Worldmap();
-	}
+	
 
 	if (Key_Down(DIK_G)/* && m_iWeaponState == 3*/)
 	{

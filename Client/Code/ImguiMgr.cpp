@@ -1061,6 +1061,7 @@ void CImGuiMgr::Save_ObjectTransform(CScene * pScene, wstring strDirectory)
 	DWORD   dwByte = 0;
 
 	map<const _tchar*, CGameObject*> mapLayer = MyLayer->Get_GameObjectMap();
+	
 	for (auto iter = mapLayer.begin(); iter != mapLayer.end(); ++iter)
 	{
 		CTransform* Transcom = dynamic_cast<CTransform*>(iter->second->Get_Component(TRANSFORM_COMP, ID_DYNAMIC));
