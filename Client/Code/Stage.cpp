@@ -55,6 +55,7 @@
 #include "Slime.h"
 #include "Zombie.h"
 #include "Skeleton.h"
+#include "Alien.h"
 #include "MonsterUI.h"
 #include "HitBarUI.h"
 #include "ComboUI.h"
@@ -475,14 +476,20 @@ HRESULT CStage::Ready_Layer_Monster(const _tchar * pLayerTag)
 		}
 	}
 
+	pGameObject = CAlien::Create(m_pGraphicDev, _vec3(10.f, 0.6f, 10.f), L"Alien");
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+
+
 	pGameObject = CMiddleBoss::Create(m_pGraphicDev, _vec3(109.f, 0.6f, 10.f), L"MiddleBoss");
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
-	
-	
-	//pGameObject = CKrakenBoss::Create(m_pGraphicDev, _vec3(10.f, 5.6f, 10.f), L"Kraken");
-	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+
+
+	/*
+	pGameObject = CKrakenBoss::Create(m_pGraphicDev, _vec3(10.f, 5.6f, 10.f), L"Kraken");
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);*/
 
 
 	m_mapLayer.insert({ pLayerTag, pLayer });

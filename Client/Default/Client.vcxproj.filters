@@ -268,6 +268,9 @@
     <Filter Include="02. GameObject\01. For_Stage\21. Rocket">
       <UniqueIdentifier>{9cb28303-2be4-4a5b-aa55-51f86d88d953}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\08. Monster\06. Alien">
+      <UniqueIdentifier>{daab9fa7-f9c6-4606-b2b6-23e5c04356b9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -669,6 +672,9 @@
     <ClInclude Include="KrakenBoss.h">
       <Filter>02. GameObject\01. For_Stage\21. MiddleBoss</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\Alien.h">
+      <Filter>02. GameObject\01. For_Stage\08. Monster\06. Alien</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -1048,6 +1054,9 @@
     </ClCompile>
     <ClCompile Include="KrakenBoss.cpp">
       <Filter>02. GameObject\01. For_Stage\21. MiddleBoss</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Alien.cpp">
+      <Filter>02. GameObject\01. For_Stage\08. Monster\06. Alien</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

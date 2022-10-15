@@ -43,7 +43,7 @@ _int CBubbleEffect::Update_Object(const _float & fTimeDelta)
 
 		//iter->vPos 
 
-		iter->vPos += iter->vVelocity * fTimeDelta*(rand() % 20) / 10;
+		iter->vPos += iter->vVelocity * fTimeDelta*(rand() % 20) / 10.f;
 		iter->fAge += fTimeDelta;
 
 		if (iter->fAge > iter->fLifeTime)

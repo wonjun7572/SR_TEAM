@@ -48,7 +48,7 @@ private:	//	애니메이션 관련
 	ILLUSIONWALKID		m_WALK;
 	ILLUSIONIDLEID		m_IDLE;
 	ILLUSIONATTACKID	m_ATTACK;
-	CGameObject*			m_pEffect = nullptr;
+	CGameObject*		m_pEffect = nullptr;
 	CLayer*				pMyLayer;
 	_tchar*				m_MonsterName;
 	_bool				m_bRun = false;
