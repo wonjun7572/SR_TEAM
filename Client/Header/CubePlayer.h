@@ -17,6 +17,9 @@ private:
 	virtual ~CCubePlayer();
 
 public:
+	void			SetWeaponState(_int _WeaponState) { m_iSetWeaponState = _WeaponState; /*m_iWeaponState = _WeaponState;*/ }
+	_int			GetWeaponState() { return m_iWeaponState ; }
+
 	void			Get_HitboxMin(_vec3* vMin, _vec3* vMax)
 	{
 		D3DXVec3TransformCoord(vMin, &m_vMin, m_pTransform->Get_WorldMatrixPointer());
@@ -90,7 +93,7 @@ private:
 	void			Look_Direction(void);
 	void			Fire_Bullet(void);
 	void			Gun_Check(void);
-	void			Skill_Enforcing(void); //스킬강화관련 함수
+	void			Inventory_Check(void); //인벤토리관련 함수
 
 private:
 	void			Jump(void);
@@ -170,9 +173,12 @@ private:
 	list<TCHAR*>		m_listMonsterCnt;
 	CGameObject*			m_pEffect = nullptr;
 
-	//스킬강화관련 변수입니다
+	//인벤토리관련 변수입니다
 	_int			m_iSkillEnforce = 0;
-	
+	_int			m_iWeaponState = 0;
+	_int			m_iSetWeaponState = 0;
+	_int			m_iDmgItem = 0;
+	_int			m_iSpeedItem = 0;
 
 public:
 	void			Capture_Uzi(void) { m_bUzi = true; }

@@ -8,6 +8,7 @@
 #include "CloudEffect.h"
 #include "SoundWave.h"
 #include "SparkEffect.h"
+#include "RainbowCloudEffect.h"
 
 CProjectileParticle::CProjectileParticle(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CPSystem(pGraphicDev)
@@ -61,6 +62,8 @@ _int CProjectileParticle::Update_Object(const _float & fTimeDelta)
 		if ((iter->fAge > iter->fLifeTime)|| iter->vPos.y<0.5f)
 		{
 			m_vDeadPos = iter->vPos;
+			
+			
 			iter->bAlive = false;
 			Dead_Effect();
 		}
@@ -127,7 +130,7 @@ void CProjectileParticle::resetParticle(ATTRIBUTE * attribute)
 
 
 	CTransform* pTransform = nullptr;
-	Gravity = 75.f;
+	Gravity = 45.f;
 	//m_fDeadTime = 0;
 		
 		CTransform*		pPlayerTransformCom = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_CHARACTER, L"HEAD", TRANSFORM_COMP, ID_DYNAMIC));
@@ -137,9 +140,9 @@ void CProjectileParticle::resetParticle(ATTRIBUTE * attribute)
 
 		D3DXVECTOR3 vDir;
 		pPlayerTransformCom->Get_Info(INFO_LOOK, &vDir);
-
+		
 		attribute->vPos = vPos ;
-		attribute->vVelocity = (vDir * 200.f);
+		attribute->vVelocity = (vDir * 150.f);
 
 		attribute->dwColor = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
 
@@ -200,6 +203,12 @@ void CProjectileParticle::Dead_Effect()
 			m_SoundWaveParticle->addParticle();
 		}*/
 
-
+		/*if (!m_pRainbowCloudEffectParticle)
+			m_pRainbowCloudEffectParticle = dynamic_cast<CRainbowCloudEffect*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"RainbowCloudEffect"));
+		m_pRainbowCloudEffectParticle->Set_PclePos(m_vDeadPos);
+		for (_int i = 0; i < 70; ++i)
+		{
+			m_pRainbowCloudEffectParticle->addParticle();
+		}*/
 	}
 }

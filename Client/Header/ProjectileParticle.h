@@ -8,6 +8,8 @@ class CBubbleEffect;
 class CCloudEffect;
 class CSparkEffect;
 class CSoundWave;
+class CRainbowCloudEffect;
+class CBrownCloudEffect;
 
 class CProjectileParticle : public CPSystem
 {
@@ -25,6 +27,7 @@ public:
 	HRESULT						Add_Component(void);
 	static CProjectileParticle*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
 	virtual		void			Free(void);
+	_vec3		Get_DeadPos() { return m_vDeadPos; }
 
 public:
 	virtual		void		resetParticle(ATTRIBUTE* attribute);
@@ -39,9 +42,12 @@ private:
 	CFlameEffect* m_pFlameEffectParticle = nullptr;
 	CIceEffect* m_pIceEffectParticle = nullptr;
 	CBubbleEffect* m_pBubbleEffectParticle = nullptr;
-	CCloudEffect* m_CloudEffectParticle = nullptr;
+	CCloudEffect* m_pCloudEffectParticle = nullptr;
+	CRainbowCloudEffect* m_pRainbowCloudEffectParticle = nullptr;
+	CBrownCloudEffect* m_pBrownCloudEffectParticle = nullptr;
+	CSparkEffect* m_pSparkEffectParticle = nullptr;
+	CSoundWave* m_pSoundWaveParticle = nullptr;
 
-	CSparkEffect* m_SparkEffectParticle = nullptr;
-	CSoundWave* m_SoundWaveParticle = nullptr;
+
 };
 

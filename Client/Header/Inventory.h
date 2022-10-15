@@ -18,7 +18,8 @@ public:
 	virtual void	Render_Object(void) override;
 	_bool			Get_Switch(void)  { return m_bInvSwitch; }
 	_int			Get_EnforceCheck(void) { return m_iEnforceCheck; }
-
+	_int			Get_WeaponDmg(void) { return m_iWeaponDmg; }
+	_int			Get_WeaponSpeed(void) { return m_iWeaponSpeed; }
 	void         ItemCreate(_int iItemIndex) 
 	{ 
 		m_bItemCreate = true; 
@@ -39,9 +40,9 @@ private:
 	void		Sorting();
 	void		Equipment_Sorting();
 	void		Weapon_Sorting();
-	void		Get_Item();
-	void		Equipment_Function();
-	//void		Gun_Change();
+	void		Enhancement();
+	void		Syncronize();
+
 
 private:
 	CGameObject*		m_pPlayer = nullptr;
@@ -70,11 +71,17 @@ private:
 	_int				m_iItemCnt = 0;
 	_int				m_iWeaponCnt = 0;
 	_int				m_iEnforceCheck = 0;
-	_int				iVectorNumb = 0;
-	_int				iWeaponNumb = 0;
+	_int				m_iVectorNumb = 0;
+	_int				m_iWeaponNumb = 0;
+	_int				m_iWeaponState = 0;
+	_int				m_iWeaponSpeed = 0;
+	_int				m_iWeaponDmg = 0;
+	_int				m_iWeaponSpeedCnt = 0;
+	_int				m_iWeaponDmgCnt = 0;
 	_int				m_iItemIndex = 1;
 	_float				m_fInvPosX = 0.f;
 	_float				m_fInvPosY = 0.f;
+
 	// m_fInvPosX + WINCX / 2  인벤토리 원점의 위치
 
 public:

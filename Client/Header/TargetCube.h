@@ -2,7 +2,7 @@
 #include "GameObject.h"
 
 class CMonsterUI;
-
+class CRainbowCloudEffect;
 class CTargetCube :	public CGameObject
 {
 private:
@@ -44,6 +44,7 @@ private:
 
 private:
 	MONSTERABILITY*		m_tAbility;
+	CRainbowCloudEffect* m_pRainbowCloudEffectParticle = nullptr;
 
 public:
 	static CTargetCube*		Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3& vPos , const _vec3& vDir, const _vec3& vScale, const _int& iIndex);

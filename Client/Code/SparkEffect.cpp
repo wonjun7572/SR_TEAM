@@ -44,7 +44,11 @@ _int CSparkEffect::Update_Object(const _float & fTimeDelta)
 		D3DXVec3Normalize(&vtest, &(iter->vVelocity));
 		//if(D3DXVec3Length(&(iter->vVelocity)) <1)
 		//iter->vPos += iter->vVelocity * fTimeDelta;
-		iter->vPos += vtest * fTimeDelta  * .5f;
+		if (!(-0.1f < iter->vPos.y && iter->vPos.y < 0.05f))
+		{
+			iter->vPos += vtest * fTimeDelta  * .5f;
+			iter->vPos.y -= 5 * fTimeDelta*iter->fAge*iter->fAge;
+		}
 		iter->fAge += fTimeDelta;
 
 		if (iter->fAge > iter->fLifeTime)
