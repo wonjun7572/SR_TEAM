@@ -160,6 +160,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Header\Alien.h" />
     <ClInclude Include="..\Header\AnimationPlayer.h" />
     <ClInclude Include="..\Header\BaseMapping.h" />
     <ClInclude Include="..\Header\BattleCursier.h" />
@@ -303,6 +304,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Code\Alien.cpp" />
     <ClCompile Include="..\Code\AnimationPlayer.cpp" />
     <ClCompile Include="..\Code\BaseMapping.cpp" />
     <ClCompile Include="..\Code\BattleCursier.cpp" />

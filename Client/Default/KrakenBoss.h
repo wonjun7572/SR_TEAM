@@ -57,7 +57,7 @@ protected:
 	CCollision*			m_pCollision = nullptr;
 	CComboUI*			m_pComboUI = nullptr;
 	CLayer*				pMyLayer;
-
+	CCubeCol*			m_pAnimationBox = nullptr;
 	//기능관련 
 private:
 	HRESULT				Add_Component(void);
