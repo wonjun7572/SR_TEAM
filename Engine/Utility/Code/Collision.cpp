@@ -258,6 +258,88 @@ _int CCollision::Wall_Collision(_vec3* vNorm)
 	return -1;
 }
 
+void CCollision::Wall_Collision_Check(CTransform * pMonsterTrans, CHitBox * pMonsterHit, _vec3* vDir)
+{
+	CLayer* pLayer = Engine::Get_Layer(STAGE_WALL);
+	map<const _tchar*, CGameObject*> mapWall = pLayer->Get_GameObjectMap();
+
+	_vec3 vMonsterPos;
+	pMonsterTrans->Get_Info(INFO_POS, &vMonsterPos);
+
+	for (auto iter : mapWall)
+	{
+		CTransform* pWallTransform = dynamic_cast<CTransform*>(iter.second->Get_Component(TRANSFORM_COMP, ID_DYNAMIC));
+		NULL_CHECK_RETURN(pWallTransform, );
+		CHitBox* pWallBox = dynamic_cast<CHitBox*>(iter.second->Get_Component(HITBOX_COMP, ID_STATIC));
+		NULL_CHECK_RETURN(pWallBox, );
+
+		pMonsterHit->Get_MinMax(&m_vMin1, &m_vMax1);
+		pWallBox->Get_MinMax(&m_vMin2, &m_vMax2);
+
+		D3DXVec3TransformCoord(&m_vMin1, &m_vMin1, pMonsterTrans->Get_WorldMatrixPointer());
+		D3DXVec3TransformCoord(&m_vMax1, &m_vMax1, pMonsterTrans->Get_WorldMatrixPointer());
+		D3DXVec3TransformCoord(&m_vMin2, &m_vMin2, pWallTransform->Get_WorldMatrixPointer());
+		D3DXVec3TransformCoord(&m_vMax2, &m_vMax2, pWallTransform->Get_WorldMatrixPointer());
+
+		int iCollisionCnt = 0;
+
+		if (m_vMin1.x <= m_vMax2.x && m_vMax1.x >= m_vMin2.x &&
+			m_vMin1.y <= m_vMax2.y && m_vMax1.y >= m_vMin2.y &&
+			m_vMin1.z <= m_vMax2.z && m_vMax1.z >= m_vMin2.z)
+		{
+			if (m_vMin1.x > m_vMin2.x && m_vMax1.x < m_vMax2.x)
+			{
+				// 위아래로 충돌
+				if (m_vMax1.z > m_vMax2.z && (*vDir).z < 0.f)
+				{
+					(*vDir).z = 0.f;
+				}
+				if (m_vMin1.z < m_vMin2.z && (*vDir).z > 0.f)
+				{
+					(*vDir).z = 0.f;
+				}
+			}
+			else if (m_vMin1.z > m_vMin2.z && m_vMax1.z < m_vMax2.z)
+			{
+				if (m_vMax1.x > m_vMax2.x && (*vDir).x < 0.f)
+				{
+					(*vDir).x = 0.f;
+				}
+				if (m_vMin1.x < m_vMin2.x && (*vDir).x > 0.f)
+				{
+					(*vDir).x = 0.f;
+				}
+			}
+			else
+			{
+				if ((m_vMax1.x > m_vMin2.x || m_vMin1.x < m_vMax2.x) && ( fabs(m_vMax1.x - m_vMin2.x) > 0.1 ) && (fabs(m_vMin1.x - m_vMax2.x) > 0.1))
+				{
+					if (m_vMax1.z > m_vMax2.z && (*vDir).z < 0.f)
+					{
+						(*vDir).z = 0.f;
+					}
+					if (m_vMin1.z < m_vMin2.z && (*vDir).z > 0.f)
+					{
+						(*vDir).z = 0.f;
+					}
+				}
+				if ((m_vMax1.z > m_vMin2.z || m_vMin1.z < m_vMax2.z) && (fabs(m_vMax1.z - m_vMin2.z) > 0.1) && (fabs(m_vMin1.z - m_vMax2.z) > 0.1))
+				{
+					if (m_vMax1.x > m_vMax2.x && (*vDir).x < 0.f)
+					{
+						(*vDir).x = 0.f;
+					}
+					if (m_vMin1.x < m_vMin2.x && (*vDir).x > 0.f)
+					{
+						(*vDir).x = 0.f;
+					}
+				}
+			}
+
+		}
+	}
+}
+
 _int CCollision::Wall_Collision_For_Monster(_vec3* vNorm, CTransform* pTransform, CHitBox* pHitBox)
 {
 	CLayer* pLayer = Engine::Get_Layer(STAGE_WALL);

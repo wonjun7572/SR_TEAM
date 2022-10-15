@@ -79,6 +79,8 @@ protected:
 
 	_float				m_fSpeed = 1.f;
 
+	_vec3				m_vDirection;
+
 protected:
 	virtual void	Free(void)override;
 };

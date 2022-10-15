@@ -542,46 +542,50 @@ void CCubePlayer::Move()
 		m_bJump = false;
 	}
 
-	_int iCollision = m_pCollision->Wall_Collision(&vNormal);
+	m_pCollision->Wall_Collision_Check(this->m_pTransform, this->m_pHitBox, &vDir);
 
-	if (-1 != iCollision)
-	{
-		float fDot = D3DXVec3Dot(&vNormal, &vDir);
-		float fDiagonal = acosf(fDot);
+	m_pBodyWorld->Move_Pos(&(vDir * m_fSpeed * m_fTimeDelta));
 
-		if (iCollision == WALL_RIGHT || iCollision == WALL_LEFT || iCollision == WALL_BACK)
-		{
-			if (D3DXToDegree(fDiagonal) > 90.f)
-			{
-				_vec3 vSliding = vDir;
-				m_pCollision->Wall_Collision_By_DotSliding(&vSliding);
+	//_int iCollision = m_pCollision->Wall_Collision(&vNormal);
 
-				m_pBodyWorld->Move_Pos(&(vSliding * m_fSpeed * m_fTimeDelta));
-			}
-			else
-			{
-				m_pBodyWorld->Move_Pos(&(vDir * m_fSpeed * m_fTimeDelta));
-			}
-		}
-		if (iCollision == WALL_FRONT)
-		{
-			if (D3DXToDegree(fDiagonal) < 90.f)
-			{
-				_vec3 vSliding = vDir;
-				m_pCollision->Wall_Collision_By_DotSliding(&vSliding);
+	//if (-1 != iCollision)
+	//{
+	//	float fDot = D3DXVec3Dot(&vNormal, &vDir);
+	//	float fDiagonal = acosf(fDot);
 
-				m_pBodyWorld->Move_Pos(&(vSliding * m_fSpeed * m_fTimeDelta));
-			}
-			else
-			{
-				m_pBodyWorld->Move_Pos(&(vDir * m_fSpeed * m_fTimeDelta));
-			}
-		}
-	}
-	else	//	충돌하지 않았으며 충돌한 방향과 반대 방향으로 진행하는 이동 처리
-	{
-		m_pBodyWorld->Move_Pos(&(vDir * m_fSpeed * m_fTimeDelta));
-	}
+	//	if (iCollision == WALL_RIGHT || iCollision == WALL_LEFT || iCollision == WALL_BACK)
+	//	{
+	//		if (D3DXToDegree(fDiagonal) > 90.f)
+	//		{
+	//			_vec3 vSliding = vDir;
+	//			m_pCollision->Wall_Collision_By_DotSliding(&vSliding);
+
+	//			m_pBodyWorld->Move_Pos(&(vSliding * m_fSpeed * m_fTimeDelta));
+	//		}
+	//		else
+	//		{
+	//			m_pBodyWorld->Move_Pos(&(vDir * m_fSpeed * m_fTimeDelta));
+	//		}
+	//	}
+	//	if (iCollision == WALL_FRONT)
+	//	{
+	//		if (D3DXToDegree(fDiagonal) < 90.f)
+	//		{
+	//			_vec3 vSliding = vDir;
+	//			m_pCollision->Wall_Collision_By_DotSliding(&vSliding);
+
+	//			m_pBodyWorld->Move_Pos(&(vSliding * m_fSpeed * m_fTimeDelta));
+	//		}
+	//		else
+	//		{
+	//			m_pBodyWorld->Move_Pos(&(vDir * m_fSpeed * m_fTimeDelta));
+	//		}
+	//	}
+	//}
+	//else	//	충돌하지 않았으며 충돌한 방향과 반대 방향으로 진행하는 이동 처리
+	//{
+	//	m_pBodyWorld->Move_Pos(&(vDir * m_fSpeed * m_fTimeDelta));
+	//}
 
 	m_vDirection = vDir;
 }
