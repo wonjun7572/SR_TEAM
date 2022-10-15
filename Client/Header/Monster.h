@@ -32,7 +32,8 @@ protected:
 public:
 	void          Set_Damaged(_float iDamage)
 	{
-		m_tAbility->fCurrentHp -= iDamage;
+		if(this != nullptr)
+			m_tAbility->fCurrentHp -= iDamage;
 	}
 
 protected:

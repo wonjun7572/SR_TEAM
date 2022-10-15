@@ -9,6 +9,7 @@ class CBulletParticle;
 class CProjectileParticle;
 class CPlayerMapping;
 class CRcEffect;
+class CFlight;
 
 class CCubePlayer : public CGameObject
 {
@@ -57,7 +58,7 @@ public:
 	virtual void	LateUpdate_Object(void) override;
 	virtual void	Render_Object(void) override;
 
-
+	void			Key_Skill();
 private:
 	_int			m_iKnuckStack = 0;
 	_int			m_iDashStack = 0;
@@ -126,6 +127,7 @@ private:
 	CTransform*		m_pSphereTransCom = nullptr;
 	
 	CPlayerMapping* m_pBomb = nullptr;
+	CFlight*		m_pFlight = nullptr;
 
 private:
 	CBulletParticle* m_pBulletParicle = nullptr;
