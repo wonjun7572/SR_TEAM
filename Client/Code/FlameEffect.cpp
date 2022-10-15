@@ -113,7 +113,7 @@ void CFlameEffect::resetParticle(ATTRIBUTE * attribute)
 	_vec3 min = _vec3(-1.0f, 1.0f, -1.0f);
 	_vec3 max = _vec3(1.0f, 0.5f, 1.0f);
 	GetRandomVector(&attribute->vVelocity, &min, &max);
-	attribute->vPos = vFlameEffectPos + 1.5f * attribute->vVelocity;
+	attribute->vPos = vFlameEffectPos + 3.5f * attribute->vVelocity;
 	attribute->vPos.y = 0.3f + (rand()%2)*0.1f;
 	
 	attribute->vVelocity *= .1f;
@@ -125,6 +125,6 @@ void CFlameEffect::resetParticle(ATTRIBUTE * attribute)
 	//attribute->dwColor = D3DXCOLOR(1.f, 1.f, 0.5f, 1.0f);
 
 	attribute->fAge = 0.0f;
-	attribute->fLifeTime = 1.f;
+	attribute->fLifeTime = 1.5f;
 
 }
