@@ -39,6 +39,7 @@ _int CTestCube::Update_Object(const _float& fTimeDelta)
 {
 	if (m_bDead)
 	{
+		m_pStaticCam->CameraShaking();
 		return -1;
 	}
 
@@ -155,9 +156,16 @@ void CTestCube::Update_NullCheck()
 HRESULT CTestCube::Interact(void)
 {
 	CGameObject*		pGameObject = nullptr;
+	CProjectileParticle* m_pProjectileParicle = nullptr;
 
 	CTransform*		pPlayerTransformCom = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_CHARACTER, L"BODY", TRANSFORM_COMP, ID_DYNAMIC));
 	NULL_CHECK_RETURN(pPlayerTransformCom, E_FAIL);
+	if (!m_pProjectileParicle)
+		m_pProjectileParicle = dynamic_cast<CProjectileParticle*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"ProjectileParticle"));
+	
+	
+
+
 	_vec3		vPlayerPos;
 	_vec3		vPos;
 	_vec3		vDir;
@@ -166,7 +174,17 @@ HRESULT CTestCube::Interact(void)
 	pPlayerTransformCom->Get_Info(Engine::INFO_POS, &vPlayerPos);
 	vDir = vPos - vPlayerPos;
 	fDistance = D3DXVec3Length(&vDir);
-	
+
+	_vec3		vGrenadePos;
+	_vec3		vGPos;
+	_vec3		vGDir;
+	_float		fGDistance;
+	vGPos = m_pProjectileParicle->Get_DeadPos();
+	pPlayerTransformCom->Get_Info(Engine::INFO_POS, &vGrenadePos);
+	vGDir = vPos- vGPos ;
+	fGDistance = D3DXVec3Length(&vGDir);
+
+
 	if (fDistance <= 12.f)
 	{
 		m_bSwitch = true;
@@ -204,14 +222,14 @@ HRESULT CTestCube::Interact(void)
 			}
 	}	
 
-	if (m_bSwitch && Get_DIKeyState(DIK_E))
+	if (fGDistance < 5)
 	{
-		if (m_iTexIndex == 45) //초록색문
+		if (m_iTexIndex == 45) // 갈색문
 		{
 			if (vPos.y <= 5)
 			{
 				m_bDead = true;
-				//m_bDoorUp = true;
+				m_bDoorUp = true;
 				m_bCameraShaking = true;
 				for (_int i = 0; i < 15; ++i)
 				{

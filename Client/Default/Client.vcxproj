@@ -183,6 +183,7 @@
     <ClInclude Include="..\Header\CubePlayer.h" />
     <ClInclude Include="..\Header\CubeShop.h" />
     <ClInclude Include="..\Header\DynamicCamera.h" />
+    <ClInclude Include="..\Header\EveryParticle.h" />
     <ClInclude Include="..\Header\FlameEffect.h" />
     <ClInclude Include="..\Header\Flight.h" />
     <ClInclude Include="..\Header\IceEffect.h" />
@@ -194,7 +195,6 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="..\Header\SparkEffect.h" />
-    <ClInclude Include="..\Header\StaticParticle.h" />
     <ClInclude Include="..\Header\ExitButton.h" />
     <ClInclude Include="..\Header\FireMan.h" />
     <ClInclude Include="..\Header\GetShotgun.h" />
@@ -242,7 +242,6 @@
     <ClInclude Include="..\Header\ShotgunPart3.h" />
     <ClInclude Include="..\Header\ShotgunPart4.h" />
     <ClInclude Include="..\Header\Skeleton.h" />
-    <ClInclude Include="..\Header\SkillCamera.h" />
     <ClInclude Include="..\Header\SkyBox.h" />
     <ClInclude Include="..\Header\Slime.h" />
     <ClInclude Include="..\Header\Sniper.h" />
@@ -253,6 +252,7 @@
     <ClInclude Include="..\Header\SpBullet.h" />
     <ClInclude Include="..\Header\Stage.h" />
     <ClInclude Include="..\Header\StaticCamera.h" />
+    <ClInclude Include="..\Header\RainbowCloudEffect.h" />
     <ClInclude Include="..\Header\Supporter.h" />
     <ClInclude Include="..\Header\Supporter_Uzi.h" />
     <ClInclude Include="..\Header\TargetCube.h" />
@@ -336,7 +336,6 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\Code\SparkEffect.cpp" />
-    <ClCompile Include="..\Code\StaticParticle.cpp" />
     <ClCompile Include="..\Code\ExitButton.cpp" />
     <ClCompile Include="..\Code\FireMan.cpp" />
     <ClCompile Include="..\Code\GetShotgun.cpp" />
@@ -384,7 +383,6 @@
     <ClCompile Include="..\Code\ShotgunPart3.cpp" />
     <ClCompile Include="..\Code\ShotgunPart4.cpp" />
     <ClCompile Include="..\Code\Skeleton.cpp" />
-    <ClCompile Include="..\Code\SkillCamera.cpp" />
     <ClCompile Include="..\Code\SkyBox.cpp" />
     <ClCompile Include="..\Code\Slime.cpp" />
     <ClCompile Include="..\Code\Sniper.cpp" />
@@ -395,6 +393,7 @@
     <ClCompile Include="..\Code\SpBullet.cpp" />
     <ClCompile Include="..\Code\Stage.cpp" />
     <ClCompile Include="..\Code\StaticCamera.cpp" />
+    <ClCompile Include="..\Code\RainbowCloudEffect.cpp" />
     <ClCompile Include="..\Code\Supporter.cpp" />
     <ClCompile Include="..\Code\Supporter_Uzi.cpp" />
     <ClCompile Include="..\Code\TargetCube.cpp" />

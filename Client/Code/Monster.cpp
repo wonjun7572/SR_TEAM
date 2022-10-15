@@ -22,6 +22,7 @@ CMonster::~CMonster()
 
 HRESULT CMonster::Ready_Object(const _vec3 & vPos, wstring _strObjTag)
 {
+	m_vDirection = { 0.f, 0.f, 0.f };
 	return S_OK;
 }
 
