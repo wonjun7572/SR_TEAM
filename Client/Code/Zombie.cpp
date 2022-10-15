@@ -119,18 +119,24 @@ _int CZombie::Update_Object(const _float & fTimeDelta)
 	m_pSearchRange_TransCom->Get_Scale(&vSearchScale);
 	m_pAttackRange_TransCom->Get_Scale(&vAttackScale);
 
-	if (!Collision_Wall(fTimeDelta))
-	{
+	_vec3 vDir;
+	vDir = vPlayerPos - vPos;
+
+	vDir.y = 0.f;
+
+	
 		if (m_pCollision->Sphere_Collision(this->m_pAttackRange_TransCom, m_pPlayerTransCom, vPlayerScale.x, vAttackScale.x))
 		{
 			// 공격충돌
-			m_pTransCom->Chase_Target(&vPlayerPos, 0.f, fTimeDelta);
+			m_pCollision->Wall_Collision_Check(this->m_pTransCom, this->m_pHitBox, &vDir);
+			m_pTransCom->Chase_Target_By_Direction(&vDir, 5.f, fTimeDelta);
 			m_STATE = ZOMBIE_ATTACK;
 		}
 		else if (m_pCollision->Sphere_Collision(this->m_pSearchRange_TransCom, m_pPlayerTransCom, vPlayerScale.x, vSearchScale.x)/* && (m_STATE != FIREMAN_ATTACK)*/)
 		{
 			// 탐지충돌
-			m_pTransCom->Chase_Target(&vPlayerPos, 3.f, fTimeDelta);
+			m_pCollision->Wall_Collision_Check(this->m_pTransCom, this->m_pHitBox, &vDir);
+			m_pTransCom->Chase_Target_By_Direction(&vDir, 5.f, fTimeDelta);
 			m_STATE = ZOMBIE_WALK;
 		}
 		else if (m_STATE != FIREMAN_ATTACK)
@@ -147,7 +153,7 @@ _int CZombie::Update_Object(const _float & fTimeDelta)
 
 		m_pSearchRange_TransCom->Set_Pos(vMonsterPos.x, vMonsterPos.y, vMonsterPos.z);
 		m_pAttackRange_TransCom->Set_Pos(vMonsterPos.x, vMonsterPos.y, vMonsterPos.z);
-	}
+	
 	return 0;
 }
 

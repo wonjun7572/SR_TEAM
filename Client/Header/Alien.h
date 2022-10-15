@@ -16,6 +16,8 @@ public:
 private:
 	HRESULT				Add_Component(void);
 	HRESULT				Create_Item(void);
+	void				Look_Direction(void);
+
 	_float				m_fTimeDelta = 0.f;
 	_float				m_fFrame = 0.f;
 private:
@@ -26,6 +28,24 @@ private:
 	ALIENATTACKID   m_ATTACK;
 	ALIENSHOTTINGID m_SHOT;
 	_tchar*			m_MonsterName;
+	CLayer*			pMyLayer = nullptr;
+	_float				m_AnimationTime = 0.f;
+	_bool				m_bFirst = true;
+
+private:
+
+	void				Walk_Animation_Run(void);
+	void				Idle_Animation_Run(void);
+	void				Attack_Animation_Run(void);
+
+	HRESULT				Build(void);
+	void				Load_Animation(wstring FileName, _uint AnimationID);
+	void				Run_Animation(const _float& AnimationSpeed);
+
+	
+	
+	CCubeCol*			m_pAnimationBox = nullptr;
+	list<_tchar*>		m_TcharList;
 
 
 public:

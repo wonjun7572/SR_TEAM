@@ -58,6 +58,7 @@
 #include "MonsterUI.h"
 #include "HitBarUI.h"
 #include "ComboUI.h"
+#include "Alien.h"
 
 #include "MonsterParticle.h"
 #include "ProjectileParticle.h"
@@ -69,6 +70,7 @@
 #include "CloudEffect.h"
 #include "BrownCloudEffect.h"
 #include "Illusioner.h"
+#include "RainbowCloudEffect.h"
 
 #include "Thorn.h"
 #include "Magma.h"
@@ -215,6 +217,10 @@ HRESULT CStage::Ready_Layer_Environment(const _tchar * pLayerTag)
 	pGameObject = CProjectileParticle::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"ProjectileParticle", pGameObject), E_FAIL);
+
+	//pGameObject = CRainbowCloudEffect::Create(m_pGraphicDev);
+	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"RainbowEffect", pGameObject), E_FAIL);
 
 	// KEY 추가해야함
 	// X: 8 Z : 65
@@ -448,6 +454,17 @@ HRESULT CStage::Ready_Layer_Monster(const _tchar * pLayerTag)
 	CGameObject*		pGameObject = nullptr;
 
 	pGameObject = CFireMan::Create(m_pGraphicDev, _vec3(10.f, 0.6f, 10.f), L"FIREMAN");
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+
+
+	//pGameObject = CIllusioner::Create(m_pGraphicDev, _vec3(12.f, 0.6f, 10.f), L"Illusioner");
+	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+
+
+
+	pGameObject = CAlien::Create(m_pGraphicDev, _vec3(14.f, 0.6f, 10.f), L"Alien");
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
 
