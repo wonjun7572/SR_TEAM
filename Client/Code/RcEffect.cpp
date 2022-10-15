@@ -61,7 +61,6 @@ void CRcEffect::LateUpdate_Object(void)
 
 void CRcEffect::Render_Object(void)
 {
-
 	m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
 	m_pTransformCom->Set_Scale(m_fScale, m_fScale, m_fScale);
 
@@ -91,9 +90,9 @@ HRESULT CRcEffect::Add_Component()
 	m_mapComponent[ID_STATIC].insert({ TRANSFORM_COMP, pComponent });
 	
 	
-		pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Clone_Proto(szTextureName));
-		NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
-		m_mapComponent[ID_STATIC].insert({ szTextureName, pComponent });
+	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Clone_Proto(szTextureName));
+	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
+	m_mapComponent[ID_STATIC].insert({ szTextureName, pComponent });
 	
 	return S_OK;
 }

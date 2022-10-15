@@ -152,6 +152,20 @@
 #define RIFLE_ITEM_TEX				L"RIFLE_ITEM_TEX"
 #define RIFLE_ITEM_TEX_PATH			L"../Bin/Resources/PngToCube/rifle_hud.png"
 
+#define BLUEKEY_ITEM_BUFFER			L"BLUEKEY_ITEM"
+#define BLUEKEY_ITEM_TEX			L"BLUEKEY_ITEM_TEX"
+#define BLUEKEY_ITEM_TEX_PATH		L"../Bin/Resources/PngToCube/TEXTURE_KEY_BLUE.png"
+
+#define REDKEY_ITEM_BUFFER			L"REDKEY_ITEM"
+#define REDKEY_ITEM_TEX				L"REDKEY_ITEM_TEX"
+#define REDKEY_ITEM_TEX_PATH		L"../Bin/Resources/PngToCube/TEXTURE_KEY_RED.png"
+
+#define YELLOWKEY_ITEM_BUFFER		L"YELLOWKEY_ITEM"
+#define YELLOWKEY_ITEM_TEX			L"YELLOWKEY_ITEM_TEX"
+#define YELLOWKEY_ITEM_TEX_PATH		L"../Bin/Resources/PngToCube/TEXTURE_KEY_YELLOW.png"
+
+
+
 // 이미지 경로
 #define HP_100_FACE_PATH		L"../Bin/Resources/UI/Player/Face/HP100_%d.png"
 #define HP_75_FACE_PATH			L"../Bin/Resources/UI/Player/Face/HP75_%d.png" 

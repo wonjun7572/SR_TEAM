@@ -80,6 +80,7 @@
 #include "BattleCursier.h"
 #include "FlightBulletParticle.h"
 #include "Flight.h"
+#include "Key.h"
 
 CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CScene(pGraphicDev)
@@ -222,8 +223,17 @@ HRESULT CStage::Ready_Layer_Environment(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"FlightBulletParticle", pGameObject), E_FAIL);
 
-	// KEY 추가해야함
-	// X: 8 Z : 65
+	pGameObject = CKey::Create(m_pGraphicDev, _vec3(20.f,0.6f,10.f), COLOR_BLUE);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"BLUEKEY", pGameObject), E_FAIL);
+	
+	pGameObject = CKey::Create(m_pGraphicDev, _vec3(24.f, 0.6f, 10.f), COLOR_RED);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"REDKEY", pGameObject), E_FAIL);
+	
+	pGameObject = CKey::Create(m_pGraphicDev, _vec3(28.f, 0.6f, 10.f), COLOR_YELLOW);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"YELLOWKEY", pGameObject), E_FAIL);
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
@@ -834,9 +844,9 @@ HRESULT CStage::Ready_Layer_Supporter(const _tchar * pLayerTag)
 
 	CGameObject*		pGameObject = nullptr;
 
-	/*pGameObject = CSupporter_Uzi::Create(m_pGraphicDev, _vec3(20.f, 0.5f, 20.f), L"SUPPORT_UZI");
+	pGameObject = CSupporter_Uzi::Create(m_pGraphicDev, _vec3(20.f, 0.5f, 20.f), L"SUPPORT_UZI");
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);*/
+	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
