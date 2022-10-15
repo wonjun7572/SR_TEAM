@@ -48,18 +48,15 @@ private:	//	애니메이션 관련
 	ILLUSIONWALKID		m_WALK;
 	ILLUSIONIDLEID		m_IDLE;
 	ILLUSIONATTACKID	m_ATTACK;
-	CGameObject*			m_pEffect = nullptr;
+	CGameObject*		m_pEffect = nullptr;
 	CLayer*				pMyLayer;
 	_tchar*				m_MonsterName;
 	_bool				m_bRun = false;
-	CGameObject*			m_pEffect = nullptr;
-	CGameObject*			m_pPlayerEffect = nullptr;
-
+	CGameObject*		m_pPlayerEffect = nullptr;
 
 	_float			m_fPosX = 0.f;
 	_float			m_fPosY = 0.f;
 	_float			m_fPosZ = 0.f;
-
 
 	list<_tchar*>		m_TcharList;
 

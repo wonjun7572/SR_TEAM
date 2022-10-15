@@ -2,6 +2,8 @@
 #include "..\Header\Flight.h"
 
 #include "TransAxisBox.h"
+#include "FlightBulletParticle.h"
+#include "PoolMgr.h"
 
 CFlight::CFlight(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
@@ -23,7 +25,6 @@ HRESULT CFlight::Ready_Object(const _vec3 & vPos, const _vec3 & vDir, _tchar * N
 	m_pTransform->Set_Scale(1.f, 1.f, 1.f);
 	m_pTransform->Set_Pos(vPos.x, vPos.y, vPos.z);
 	m_pTransform->Static_Update();
-
 	/*_vec3 vShuffle;
 	m_ShufflePos.reserve(24);
 	for (float i = 10.f; i <= 110.f; i += 10.f)
@@ -46,7 +47,7 @@ HRESULT CFlight::Ready_Object(const _vec3 & vPos, const _vec3 & vDir, _tchar * N
 
 _int CFlight::Update_Object(const _float & fTimeDelta)
 {
-	m_fTimeDelta = fTimeDelta;
+	m_fBulletTime += fTimeDelta;
 
 	if (m_bFirst)
 	{
@@ -57,66 +58,30 @@ _int CFlight::Update_Object(const _float & fTimeDelta)
 		FAILED_CHECK_RETURN(Build(), -1);
 	}
 
-	//if (Get_DIKeyState(DIK_K))
-	//{
-	//	m_vAngle.y += 1;
-	//	Replace(_vec3(10,10,10), m_vAngle, _vec3(1,0,0));
-	//}
+	if (!m_pBulletParicle)
+		m_pBulletParicle = dynamic_cast<CFlightBulletParticle*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"FlightBulletParticle"));
 
-	_vec3 vPos;
-	m_pTransform->Get_Info(INFO_POS, &vPos);
-
-	//if (vPos.x > 170.f || vPos.x < -50.f || vPos.z > 170.f || vPos.z < -50.f)
-	//{
-	//	random_shuffle(m_ShufflePos.begin(), m_ShufflePos.end());
-
-	//	_vec3 vAngle, vDir;
-
-	//	/*
-	//	谅>快	1	0	0	90
-	//	快>谅	-1	0	0	270
-	//	第>菊	0	0	1	0
-	//	菊>第	0	0	-1	180
-	//	*/
-
-	//	if (m_ShufflePos.front().z == -50.f)	//	第>菊
-	//	{
-	//		vAngle = { 0.f, D3DXToRadian(180.f) ,0.f };
-	//		vDir = { 0.f, 0.f, 1.f };
-	//	}
-	//	else if (m_ShufflePos.front().x == -50.f)	//	谅>快
-	//	{
-	//		vAngle = { 0.f, D3DXToRadian(270.f) ,0.f };
-	//		vDir = { 1.f, 0.f, 0.f };
-	//	}
-	//	else if (m_ShufflePos.front().z == 170.f)	//	菊>第
-	//	{
-	//		vAngle = { 0.f, D3DXToRadian(90.f) ,0.f };
-	//		vDir = { 0.f, 0.f, -1.f };
-	//	}
-	//	else if (m_ShufflePos.front().x == 170.f)	//	快>谅
-	//	{
-	//		vAngle = { 0.f, D3DXToRadian(0.f) ,0.f };
-	//		vDir = { -1.f, 0.f, 0.f };
-	//	}
-
-	//	Replace(m_ShufflePos.front(), vAngle, vDir);
-
-	//}
-
-	//m_pTransform->Set_Angle(&m_vAngle);
-
-	m_pTransform->Move_Pos(&(m_vDirection * 10.f * fTimeDelta));
-
-
-	for (auto& iter : *(pMyLayer->Get_GamePairPtr()))
+	if (m_bControl == true)
 	{
-		CTransform*	BoxTransform = dynamic_cast<CTransform*>(iter.second->Get_Component(L"Proto_TransformCom", ID_STATIC));
-
-		if (0 == _tcscmp(iter.first, L"A_ROOT"))
-			BoxTransform->Set_Pos(vPos.x, vPos.y, vPos.z);
+		Key_Input(fTimeDelta);
+		Look_Direction();
 	}
+	else
+	{
+		_vec3 vPos;
+		m_pTransform->Get_Info(INFO_POS, &vPos);
 
+		_vec3 vLook;
+		m_pTransform->Get_Info(INFO_LOOK, &vLook);
+		m_pTransform->Move_Pos(&(-vLook * 1.f * fTimeDelta));
+		for (auto& iter : *(pMyLayer->Get_GamePairPtr()))
+		{
+			CTransform*	BoxTransform = dynamic_cast<CTransform*>(iter.second->Get_Component(L"Proto_TransformCom", ID_STATIC));
+
+			if (0 == _tcscmp(iter.first, L"A_ROOT"))
+				BoxTransform->Set_Pos(vPos.x, vPos.y, vPos.z);
+		}
+	}
 	CGameObject::Update_Object(fTimeDelta);
 
 	return 0;
@@ -272,6 +237,97 @@ HRESULT CFlight::Build(void)
 
 	CloseHandle(hFile);
 	return S_OK;
+}
+
+void CFlight::Key_Input(const _float& fTimeDelta)
+{
+	_vec3 vPos;
+	m_pTransform->Get_Info(INFO_POS, &vPos);
+
+	_vec3 vLook;
+	m_pTransform->Get_Info(INFO_LOOK, &vLook);
+
+	m_pTransform->Move_Pos(&(-vLook * 10.f * fTimeDelta));
+
+	long		dwMouseMove = 0;
+
+	if (dwMouseMove = Engine::Get_DIMouseMove(DIMS_X))
+	{
+		m_pTransform->Rotation(ROT_Y, D3DXToRadian(dwMouseMove / 20.f));
+	}
+
+	if (dwMouseMove = Engine::Get_DIMouseMove(DIMS_Y))
+	{
+		m_pTransform->Rotation(ROT_X, D3DXToRadian(dwMouseMove / 20.f));
+	}
+
+	if (m_fBulletTime > 0.2f)
+	{
+		if (Get_DIMouseState(DIM_LB))
+		{
+			Fire_Bullet();
+
+			_float fGunSound = 1.f;
+			Engine::PlaySoundGun(L"RifleShot.mp3", SOUND_EFFECT, fGunSound);
+			Set_Shoot(true);
+			m_fBulletTime = 0.f;
+		}
+	}
+
+	for (auto& iter : *(pMyLayer->Get_GamePairPtr()))
+	{
+		CTransform*	BoxTransform = dynamic_cast<CTransform*>(iter.second->Get_Component(L"Proto_TransformCom", ID_STATIC));
+
+		if (0 == _tcscmp(iter.first, L"A_ROOT"))
+			BoxTransform->Set_Pos(vPos.x, vPos.y, vPos.z);
+	}
+}
+
+void CFlight::Look_Direction()
+{
+	_matrix matWorld;
+	m_pTransform->Get_WorldMatrix(&matWorld);
+
+	D3DXQUATERNION qRot;
+	D3DXMatrixDecompose(&_vec3(), &qRot, &_vec3(), &matWorld);
+
+	_float pitch, yaw, roll;
+
+	FLOAT sqw = qRot.w * qRot.w;
+	FLOAT sqx = qRot.x * qRot.x;
+	FLOAT sqy = qRot.y * qRot.y;
+	FLOAT sqz = qRot.z * qRot.z;
+
+	pitch = asinf(2.f * (qRot.w * qRot.x - qRot.y * qRot.z));
+	yaw	  = atan2f(2.0f * (qRot.x * qRot.z + qRot.w * qRot.y), (-sqx - sqy + sqz + sqw));
+	roll  = atan2f(2.0f * (qRot.x * qRot.y + qRot.w * qRot.z), (-sqx + sqy - sqz + sqw));
+
+	list<pair<const _tchar*, CGameObject*>> ListBox = *(pMyLayer->Get_GamePairPtr());
+
+	for (auto& iter : ListBox)
+	{
+		if (0 == _tcscmp(iter.first, L"A_ROOT"))
+		{
+			_vec3 vAngle;
+			CTransform* Transform = dynamic_cast<CTransform*>(iter.second->Get_Component(L"Proto_TransformCom", ID_STATIC));
+			Transform->Get_Angle(&vAngle);
+			Transform->Set_Angle(&_vec3(yaw, pitch, roll));
+		}
+	}
+}
+
+void CFlight::Fire_Bullet()
+{
+	m_iPosSet *= -1;
+	_vec3 vPos;
+	m_pTransform->Get_Info(INFO_POS, &vPos);
+	vPos.x += 0.5f * m_iPosSet;
+
+	_vec3 vLook;
+	m_pTransform->Get_Info(INFO_LOOK, &vLook);
+	vLook *= -1;
+	vPos += vLook;
+	CPoolMgr::GetInstance()->Reuse_PlayerBullet(m_pGraphicDev, &vPos, &vLook, 5, 50.f);
 }
 
 CFlight * CFlight::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3 & vPos, const _vec3 & vDir, _tchar * Name)

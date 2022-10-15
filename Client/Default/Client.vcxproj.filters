@@ -310,6 +310,9 @@
     <Filter Include="02. GameObject\01. For_Stage\98. Particle\02. SparkEffect\SparkEffect">
       <UniqueIdentifier>{6f61648b-c955-4525-a484-eb290c51fde3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\98. Particle\01. EllipseParticle\FlightBulletParticle">
+      <UniqueIdentifier>{450732ba-faad-40a3-bea7-8228e27be1e3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -705,6 +708,15 @@
     <ClInclude Include="..\Header\ItemParticle.h">
       <Filter>02. GameObject\01. For_Stage\98. Particle\02. SparkEffect</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\ObjectCube.h">
+      <Filter>99. Default\헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="KrakenBoss.h">
+      <Filter>99. Default\헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\FlightBulletParticle.h">
+      <Filter>02. GameObject\01. For_Stage\98. Particle\01. EllipseParticle\FlightBulletParticle</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -1075,6 +1087,15 @@
     </ClCompile>
     <ClCompile Include="..\Code\ItemParticle.cpp">
       <Filter>02. GameObject\01. For_Stage\98. Particle\02. SparkEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ObjectCube.cpp">
+      <Filter>99. Default\소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="KrakenBoss.cpp">
+      <Filter>99. Default\소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\FlightBulletParticle.cpp">
+      <Filter>02. GameObject\01. For_Stage\98. Particle\01. EllipseParticle\FlightBulletParticle</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

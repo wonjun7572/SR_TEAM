@@ -67,10 +67,10 @@ void CMagma::LateUpdate_Object(void)
 
 void CMagma::Render_Object(void)
 {
-	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+	/*m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransCom->Get_WorldMatrixPointer());
 	m_pHitBox->Render_Buffer();
-	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);*/
 }
 
 HRESULT CMagma::Add_Component(void)
