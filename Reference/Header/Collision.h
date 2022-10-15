@@ -22,6 +22,9 @@ public:
 	_int		Wall_Collision(_vec3* vNorm);
 	_int		Wall_Collision_By_DotSliding(_vec3* vChangeDir);
 
+	//	벽충돌 최종본
+	void		Wall_Collision_Check(CTransform* pMonsterTrans, CHitBox* pMonsterHit, _vec3* vDir);
+
 	_int		Wall_Collision_For_Monster(_vec3* vNorm, CTransform* pTransform, CHitBox* pHitBox);
 	_int		Wall_Collision_By_DotSliding_For_Monster(_vec3* vChangeDir, CTransform* pTransform, CHitBox* pHitBox);
 

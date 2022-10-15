@@ -91,6 +91,10 @@ public:
 	void				Chase_Target(const _vec3* pTargetPos, const _float& fSpeed, const _float& fTimeDelta);
 	const _matrix*		Compute_LookAtTarget(const _vec3* pTargetPos);
 	
+	void				Chase_Target_By_Direction(_vec3* vDirection, const _float& fSpeed, const _float& fTimeDelta);
+	const _matrix*		LookAtTarget_By_Direction(_vec3* vDirection);
+
+
 public:
 	void				Billboard_Transform(const _float& fTimeDelta);
 
