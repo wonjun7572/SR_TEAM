@@ -160,6 +160,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Header\Alien.h" />
     <ClInclude Include="..\Header\AnimationPlayer.h" />
     <ClInclude Include="..\Header\BaseMapping.h" />
     <ClInclude Include="..\Header\BattleCursier.h" />
@@ -186,7 +187,10 @@
     <ClInclude Include="..\Header\FlameEffect.h" />
     <ClInclude Include="..\Header\Flight.h" />
     <ClInclude Include="..\Header\FlightBulletParticle.h" />
+    <ClInclude Include="..\Header\FlightCamera.h" />
+    <ClInclude Include="..\Header\FlightSpot.h" />
     <ClInclude Include="..\Header\IceEffect.h" />
+    <ClInclude Include="..\Header\Key.h" />
     <ClInclude Include="..\Header\MiddleBoss.h" />
     <ClInclude Include="..\Header\ObjectCube.h" />
     <ClInclude Include="..\Header\Ping.h" />
@@ -303,6 +307,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Code\Alien.cpp" />
     <ClCompile Include="..\Code\AnimationPlayer.cpp" />
     <ClCompile Include="..\Code\BaseMapping.cpp" />
     <ClCompile Include="..\Code\BattleCursier.cpp" />
@@ -328,7 +333,10 @@
     <ClCompile Include="..\Code\FlameEffect.cpp" />
     <ClCompile Include="..\Code\Flight.cpp" />
     <ClCompile Include="..\Code\FlightBulletParticle.cpp" />
+    <ClCompile Include="..\Code\FlightCamera.cpp" />
+    <ClCompile Include="..\Code\FlightSpot.cpp" />
     <ClCompile Include="..\Code\IceEffect.cpp" />
+    <ClCompile Include="..\Code\Key.cpp" />
     <ClCompile Include="..\Code\MiddleBoss.cpp" />
     <ClCompile Include="..\Code\ObjectCube.cpp" />
     <ClCompile Include="..\Code\Ping.cpp" />

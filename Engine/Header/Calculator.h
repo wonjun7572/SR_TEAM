@@ -29,6 +29,8 @@ public:
 	//	큐브 타겟 피킹
 	_bool		Peek_Cube_Target(HWND hWnd, _vec3 * SrcPos, const CCubeTex * pCubeTex, const CTransform * pTransform);
 
+	_vec3		Get_Mouse_World(HWND hWnd);
+
 public:
 	virtual CComponent* Clone(void) override;
 	static CCalculator*	Create(LPDIRECT3DDEVICE9 pGraphicDev);

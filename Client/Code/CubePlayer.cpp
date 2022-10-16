@@ -18,6 +18,10 @@
 
 #include "Supporter_Uzi.h"
 #include "Ping.h"
+#include "Flight.h"
+
+#include "StaticCamera.h"
+#include "FlightCamera.h"
 
 CCubePlayer::CCubePlayer(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
@@ -67,37 +71,37 @@ _int CCubePlayer::Update_Object(const _float & fTimeDelta)
 	Inventory_Check();
 	CoolTimer();
 
-		// 이동, 애니메이션 관련
-		if (!(dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->Get_Switch())
-			&& !(dynamic_cast<CShop*>(Engine::Get_GameObject(STAGE_UI, L"Shop"))->Get_Switch()))
+	// 이동, 애니메이션 관련
+	if (!(dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->Get_Switch())
+		&& !(dynamic_cast<CShop*>(Engine::Get_GameObject(STAGE_UI, L"Shop"))->Get_Switch()))
+	{
+		if (m_pBomb->Get_WorldMap() == false && (m_iKnuckStack == 0) && m_pFlight->Get_Control() == false)
 		{
-			if (m_pBomb->Get_WorldMap() == false && (m_iKnuckStack == 0))
-			{
-				Move();
-			}
+			Move();
 		}
+	}
+	Key_Skill();
+	Look_Direction();
+	
+	if (!(dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->Get_Switch())
+		&& !(dynamic_cast<CShop*>(Engine::Get_GameObject(STAGE_UI, L"Shop"))->Get_Switch()))
+	{
+		Animation();
+	}
 
-		Look_Direction();
-		
-		if (!(dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->Get_Switch())
-			&& !(dynamic_cast<CShop*>(Engine::Get_GameObject(STAGE_UI, L"Shop"))->Get_Switch()))
-		{
-			Animation();
-		}
+	Assemble();
 
-		Assemble();
-
-		if (Get_DIKeyState(DIK_UP))
-		{
-			//	넉백 테스트
-			//KnuckDown(1);
-			//SlowDown(1);
-		}
-		if (Get_DIKeyState(DIK_LSHIFT))
-		{
-			//	대시 테스트, 몬스터 방향으로만 가능하게 변경 예정
-			Dash();
-		}
+	if (Get_DIKeyState(DIK_UP))
+	{
+		//	넉백 테스트
+		//KnuckDown(1);
+		//SlowDown(1);
+	}
+	if (Get_DIKeyState(DIK_LSHIFT))
+	{
+		//	대시 테스트, 몬스터 방향으로만 가능하게 변경 예정
+		Dash();
+	}
 
 
 	CGameObject::Update_Object(fTimeDelta);
@@ -133,6 +137,27 @@ void CCubePlayer::Render_Object(void)
 {
 }
 
+void CCubePlayer::Key_Skill()
+{
+	if (Key_Down(DIK_F))
+	{
+		if (m_Weapon == Engine::Get_GameObject(STAGE_GUN, L"SNIPER"))
+			dynamic_cast<CBaseMapping*>(Engine::Get_GameObject(STAGE_MAPPING, L"BaseMapping"))->Switch_Worldmap();
+
+		if (m_Weapon == Engine::Get_GameObject(STAGE_GUN, L"UZI1"))
+		{
+			if (static_cast<CStaticCamera*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"StaticCamera"))->Get_MainCam())
+				static_cast<CFlight*>(Engine::Get_GameObject(STAGE_FLIGHTPLAYER, L"FLIGHTPLAYER"))->Set_Control();
+			else
+			{
+				static_cast<CFlight*>(Engine::Get_GameObject(STAGE_FLIGHTPLAYER, L"FLIGHTPLAYER"))->Set_Control();
+				static_cast<CStaticCamera*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"StaticCamera"))->Set_MainCam(true);
+				static_cast<CFlightCamera*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"FlightCamera"))->Set_MainCam(false);
+			}
+		}
+	}
+}
+
 void CCubePlayer::CoolTimer(void)
 {
 	m_fGlobal_Cooltime += m_fTimeDelta;
@@ -152,10 +177,10 @@ void CCubePlayer::CoolTimer(void)
 	m_pBodyWorld->Get_Info(INFO_LOOK, &vLook);
 	D3DXVec3Normalize(&vLook, &vLook);
 
-	m_pBodyWorld->Move_Pos(&(vLook* (_float)m_iDashStack * m_fTimeDelta));
+	m_pBodyWorld->Move_Pos(&(vLook* m_iDashStack * m_fTimeDelta));
 
 	vLook *= -1.f;
-	m_pBodyWorld->Move_Pos(&(vLook * (_float)m_iKnuckStack * m_fTimeDelta));
+	m_pBodyWorld->Move_Pos(&(vLook * m_iKnuckStack * m_fTimeDelta));
 }
 
 void CCubePlayer::KnuckDown(const _float & fDamage)
@@ -201,6 +226,9 @@ void CCubePlayer::Update_NullCheck()
 
 	if (m_pBomb == nullptr)
 		m_pBomb = dynamic_cast<CPlayerMapping*>(Engine::Get_GameObject(STAGE_MAPPING, L"Map"));
+
+	if(m_pFlight == nullptr)
+		m_pFlight = dynamic_cast<CFlight*>(Engine::Get_GameObject(STAGE_FLIGHTPLAYER, L"FLIGHTPLAYER"));
 }
 
 void CCubePlayer::Set_OnTerrain(void)
@@ -486,22 +514,11 @@ void CCubePlayer::Move()
 		D3DXVec3Normalize(&vDir, &vDir);
 	}
 
-	if (Key_Down(DIK_F))
-	{
-		if (m_Weapon == Engine::Get_GameObject(STAGE_GUN, L"SNIPER"))
-		{
-			dynamic_cast<CBaseMapping*>(Engine::Get_GameObject(STAGE_MAPPING, L"BaseMapping"))->Switch_Worldmap();
+	
 
-			_float fGunSound = .2f;
-			Engine::PlaySoundGun(L"Meteor.wav", SOUND_EFFECT, fGunSound);
-		}
-	}
-
-	if (Key_Down(DIK_G) && m_iWeaponState == 3)
+	if (Key_Down(DIK_G)/* && m_iWeaponState == 3*/)
 	{
 		m_pProjectileParicle->addParticle();
-		_float fGunSound = 1.f;
-		Engine::PlaySoundGun(L"Grenade.wav", SOUND_EFFECT, fGunSound);
 	}
 
 	if (Key_Down(DIK_T))
@@ -537,46 +554,50 @@ void CCubePlayer::Move()
 		m_bJump = false;
 	}
 
-	_int iCollision = m_pCollision->Wall_Collision(&vNormal);
+	m_pCollision->Wall_Collision_Check(this->m_pTransform, this->m_pHitBox, &vDir);
 
-	if (-1 != iCollision)
-	{
-		float fDot = D3DXVec3Dot(&vNormal, &vDir);
-		float fDiagonal = acosf(fDot);
+	m_pBodyWorld->Move_Pos(&(vDir * m_fSpeed * m_fTimeDelta));
 
-		if (iCollision == WALL_RIGHT || iCollision == WALL_LEFT || iCollision == WALL_BACK)
-		{
-			if (D3DXToDegree(fDiagonal) > 90.f)
-			{
-				_vec3 vSliding = vDir;
-				m_pCollision->Wall_Collision_By_DotSliding(&vSliding);
+	//_int iCollision = m_pCollision->Wall_Collision(&vNormal);
 
-				m_pBodyWorld->Move_Pos(&(vSliding * m_fSpeed * m_fTimeDelta));
-			}
-			else
-			{
-				m_pBodyWorld->Move_Pos(&(vDir * m_fSpeed * m_fTimeDelta));
-			}
-		}
-		if (iCollision == WALL_FRONT)
-		{
-			if (D3DXToDegree(fDiagonal) < 90.f)
-			{
-				_vec3 vSliding = vDir;
-				m_pCollision->Wall_Collision_By_DotSliding(&vSliding);
+	//if (-1 != iCollision)
+	//{
+	//	float fDot = D3DXVec3Dot(&vNormal, &vDir);
+	//	float fDiagonal = acosf(fDot);
 
-				m_pBodyWorld->Move_Pos(&(vSliding * m_fSpeed * m_fTimeDelta));
-			}
-			else
-			{
-				m_pBodyWorld->Move_Pos(&(vDir * m_fSpeed * m_fTimeDelta));
-			}
-		}
-	}
-	else	//	충돌하지 않았으며 충돌한 방향과 반대 방향으로 진행하는 이동 처리
-	{
-		m_pBodyWorld->Move_Pos(&(vDir * m_fSpeed * m_fTimeDelta));
-	}
+	//	if (iCollision == WALL_RIGHT || iCollision == WALL_LEFT || iCollision == WALL_BACK)
+	//	{
+	//		if (D3DXToDegree(fDiagonal) > 90.f)
+	//		{
+	//			_vec3 vSliding = vDir;
+	//			m_pCollision->Wall_Collision_By_DotSliding(&vSliding);
+
+	//			m_pBodyWorld->Move_Pos(&(vSliding * m_fSpeed * m_fTimeDelta));
+	//		}
+	//		else
+	//		{
+	//			m_pBodyWorld->Move_Pos(&(vDir * m_fSpeed * m_fTimeDelta));
+	//		}
+	//	}
+	//	if (iCollision == WALL_FRONT)
+	//	{
+	//		if (D3DXToDegree(fDiagonal) < 90.f)
+	//		{
+	//			_vec3 vSliding = vDir;
+	//			m_pCollision->Wall_Collision_By_DotSliding(&vSliding);
+
+	//			m_pBodyWorld->Move_Pos(&(vSliding * m_fSpeed * m_fTimeDelta));
+	//		}
+	//		else
+	//		{
+	//			m_pBodyWorld->Move_Pos(&(vDir * m_fSpeed * m_fTimeDelta));
+	//		}
+	//	}
+	//}
+	//else	//	충돌하지 않았으며 충돌한 방향과 반대 방향으로 진행하는 이동 처리
+	//{
+	//	m_pBodyWorld->Move_Pos(&(vDir * m_fSpeed * m_fTimeDelta));
+	//}
 
 	m_vDirection = vDir;
 }
@@ -640,14 +661,8 @@ void CCubePlayer::Fire_Bullet(void)
 				m_pBulletParicle->addParticle();
 				m_pShotParicle->addParticle();
 				
-				
 				_float fGunSound = 1.f;
-				if (m_iWeaponState == 2)// 우지
-					Engine::PlaySoundGun(L"RifleShot.mp3", SOUND_EFFECT, fGunSound);
-				if (m_iWeaponState == 3)// 샷건
-					Engine::PlaySoundGun(L"ShotgunSound.wav", SOUND_EFFECT, fGunSound);
-				if (m_iWeaponState == 4)// 스나
-					Engine::PlaySoundGun(L"SniperSound.wav", SOUND_EFFECT, fGunSound);
+				Engine::PlaySoundGun(L"RifleShot.mp3", SOUND_EFFECT, fGunSound);
 				m_Weapon->Set_MinusBullet();
 				m_Weapon->Set_Shoot(true);
 				m_fBulletTime = 0.f;
@@ -780,18 +795,25 @@ void CCubePlayer::Inventory_Check(void)
 	switch (m_iSkillEnforce)
 	{
 	case 0:
+		//cout << 0 << endl;
 		break;
 	case 1://우지1강화
+		//cout << 1 << endl;
 		break;
 	case 2://우지2강화
+		//cout << 2 << endl;
 		break;
 	case 3://샷건1강화
+		//cout << 3 << endl;
 		break;
 	case 4://샷건2강화
+		//cout << 4 << endl;
 		break;
 	case 5://스나1강화
+		//cout << 5 << endl;
 		break;
 	case 6://스나2강화
+		//cout << 6 << endl;
 		break;
 	default:
 		break;

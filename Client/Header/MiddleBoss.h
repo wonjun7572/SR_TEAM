@@ -73,6 +73,15 @@ protected:
 	CComboUI*			m_pComboUI = nullptr;
 	CCubeCol*			m_pAnimationBox = nullptr;
 	CCalculator*	m_pCalculatorCom = nullptr;
+	//CBrownCloudEffect* m_pBrownCloudEffectParticle = nullptr;
+	//#### 갈색구름
+//	if (!m_pBrownCloudEffectParticle)
+//		m_pBrownCloudEffectParticle = dynamic_cast<CBrownCloudEffect*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"BrownCloudEffect"));
+//	m_pBrownCloudEffectParticle->Set_PclePos(m_vDeadPos);
+//	for (_int i = 0; i < 70; ++i)
+//	{
+//		m_pBrownCloudEffectParticle->addParticle();
+//	}
 
 private:
 	_float				m_fFrame = 0.f;

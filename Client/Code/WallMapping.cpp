@@ -78,7 +78,6 @@ void CWallMapping::Render_Object(void)
 		m_pCube->Render_Buffer();
 	}
 	m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
-
 }
 
 
