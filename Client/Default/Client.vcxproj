@@ -257,10 +257,12 @@
     <ClInclude Include="..\Header\Stage.h" />
     <ClInclude Include="..\Header\StaticCamera.h" />
     <ClInclude Include="..\Header\RainbowCloudEffect.h" />
+    <ClInclude Include="..\Header\StaticField.h" />
     <ClInclude Include="..\Header\Supporter.h" />
     <ClInclude Include="..\Header\Supporter_Uzi.h" />
     <ClInclude Include="..\Header\TargetCube.h" />
     <ClInclude Include="..\Header\Terrain.h" />
+    <ClInclude Include="..\Header\Terret.h" />
     <ClInclude Include="..\Header\TestCube.h" />
     <ClInclude Include="..\Header\Thorn.h" />
     <ClInclude Include="..\Header\ToolScene.h" />
@@ -402,10 +404,12 @@
     <ClCompile Include="..\Code\Stage.cpp" />
     <ClCompile Include="..\Code\StaticCamera.cpp" />
     <ClCompile Include="..\Code\RainbowCloudEffect.cpp" />
+    <ClCompile Include="..\Code\StaticField.cpp" />
     <ClCompile Include="..\Code\Supporter.cpp" />
     <ClCompile Include="..\Code\Supporter_Uzi.cpp" />
     <ClCompile Include="..\Code\TargetCube.cpp" />
     <ClCompile Include="..\Code\Terrain.cpp" />
+    <ClCompile Include="..\Code\Terret.cpp" />
     <ClCompile Include="..\Code\TestCube.cpp" />
     <ClCompile Include="..\Code\Thorn.cpp" />
     <ClCompile Include="..\Code\ToolScene.cpp" />

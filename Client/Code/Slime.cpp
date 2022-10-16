@@ -85,7 +85,9 @@ _int CSlime::Update_Object(const _float & fTimeDelta)
 	}
 
 	CMonster::Update_Object(fTimeDelta);
-	m_fTimeDelta = fTimeDelta;
+	if (m_iSphereSkillTag != SKILL_STATICFIELD)
+		m_fTimeDelta = fTimeDelta;
+
 	if (!Collision_Wall(fTimeDelta))
 	{
 		_vec3 vPlayerPos;
@@ -98,22 +100,20 @@ _int CSlime::Update_Object(const _float & fTimeDelta)
 		m_pTransCom->Get_Info(INFO_POS, &vPos);
 		_vec3 vSearchScale;
 		m_pSearchRange_TransCom->Get_Scale(&vSearchScale);
-		_vec3 vDir;
-		vDir = vPlayerPos - vDir;
-		vDir.y = 0.f;
 
 
 		if (this->m_pSearchRange_TransCom, m_pPlayerTransCom, vPlayerScale.x, vSearchScale.x)
 		{
-			m_pCollision->Wall_Collision_Check(this->m_pTransCom, this->m_pHitBox, &vDir);
-			m_pTransCom->Chase_Target_By_Direction(&vDir, 2.f, fTimeDelta);
+			if (m_iSphereSkillTag != SKILL_STATICFIELD)
+				m_pTransCom->Chase_Target(&vPlayerPos, 1.f, fTimeDelta);
 		}
 		else
 		{
-			m_pCollision->Wall_Collision_Check(this->m_pTransCom, this->m_pHitBox, &vDir);
-			m_pTransCom->Chase_Target_By_Direction(&vDir, 0.f, fTimeDelta);
+			if (m_iSphereSkillTag != SKILL_STATICFIELD)
+				m_pTransCom->Chase_Target(&vPlayerPos, 0.f, fTimeDelta);
 		}
 
+		if (m_iSphereSkillTag != SKILL_STATICFIELD)
 		Look_Direction();
 
 		_vec3 vMonsterPos;
@@ -126,7 +126,6 @@ _int CSlime::Update_Object(const _float & fTimeDelta)
 
 void CSlime::LateUpdate_Object(void)
 {
-	Monster_Mapping();
 	if (!m_bFirst)
 	{
 		if (m_STATE == SLIME_JUMP)
@@ -141,6 +140,7 @@ void CSlime::LateUpdate_Object(void)
 
 void CSlime::Render_Object(void)
 {
+
 	//m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 	//m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pHitBoxTransCom->Get_WorldMatrixPointer());
 	//m_pHitBox->Render_Buffer();

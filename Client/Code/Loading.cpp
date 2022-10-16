@@ -69,7 +69,7 @@ _uint CLoading::Loading_ForStage(void)
 	}
 
 	{
-		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_CubePlayerTexture", CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/CubeTile/CubeTile_%d.dds", TEX_CUBE, 100)), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_CubePlayerTexture", CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/CubeTile/CubeTile_%d.dds", TEX_CUBE, 110)), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_CubeMonsterTexture", CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Texture.dds", TEX_CUBE, 4)), E_FAIL);
 
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"DOOMGUY", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Doomguy/Doom_%d.dds", TEX_CUBE, 10)), E_FAIL);
@@ -225,8 +225,10 @@ _uint CLoading::Loading_ForStage(void)
 
 	{
 		// Skiil
-		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Lava_Tex", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Lava.png", TEX_NORMAL)), E_FAIL);
-		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Ping_Tex", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/locationPin.png", TEX_NORMAL)), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Lava_Tex", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Skill/Lava.png", TEX_NORMAL)), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Ping_Tex", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Skill/locationPin.png", TEX_NORMAL)), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Skull_Tex", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Particle/StaticParticle/StaticParticle00.png", TEX_NORMAL)), E_FAIL);
+
 	}
 
 	m_bFinish = true;

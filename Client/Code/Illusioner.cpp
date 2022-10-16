@@ -128,17 +128,16 @@ _int CIllusioner::Update_Object(const _float & fTimeDelta)
 		if (m_pCollision->Sphere_Collision(this->m_pRunawayRange_TransCom, m_pPlayerTransCom, vPlayerScale.x, vRunScale.x)/* && (m_STATE != FIREMAN_ATTACK)*/)
 		{
 			// 도망충돌
-			vDir *= -1.f;
-			m_pCollision->Wall_Collision_Check(this->m_pTransCom, this->m_pHitBox, &vDir);
-			m_pTransCom->Chase_Target_By_Direction(&vDir, 5.f, fTimeDelta);
+			if (m_iSphereSkillTag != SKILL_STATICFIELD)
+				m_pTransCom->Chase_Target(&vPlayerPos, -5.f, fTimeDelta);
 			m_STATE = ILLUSION_WALK;
 			m_bRun = true;
 		}
 		else if (m_pCollision->Sphere_Collision(this->m_pAttackRange_TransCom, m_pPlayerTransCom, vPlayerScale.x, vAttackScale.x))
 		{
 			// 공격충돌
-			m_pCollision->Wall_Collision_Check(this->m_pTransCom, this->m_pHitBox, &vDir);
-			m_pTransCom->Chase_Target_By_Direction(&vDir, 0.f, fTimeDelta);
+			if (m_iSphereSkillTag != SKILL_STATICFIELD)
+				m_pTransCom->Chase_Target(&vPlayerPos, 0.f, fTimeDelta);
 			m_STATE = ILLUSION_ATTACK;
 
 			if (m_fFrame >= 2.f)
@@ -173,8 +172,8 @@ _int CIllusioner::Update_Object(const _float & fTimeDelta)
 		else if (m_pCollision->Sphere_Collision(this->m_pSearchRange_TransCom, m_pPlayerTransCom, vPlayerScale.x, vSearchScale.x)/* && (m_STATE != FIREMAN_ATTACK)*/)
 		{
 			// 탐지충돌
-			m_pCollision->Wall_Collision_Check(this->m_pTransCom, this->m_pHitBox, &vDir);
-			m_pTransCom->Chase_Target_By_Direction(&vDir, 5.f, fTimeDelta);
+			if (m_iSphereSkillTag != SKILL_STATICFIELD)
+				m_pTransCom->Chase_Target(&vPlayerPos, 5.f, fTimeDelta);
 			m_STATE = ILLUSION_WALK;
 			m_bRun = false;
 		}
@@ -202,7 +201,6 @@ _int CIllusioner::Update_Object(const _float & fTimeDelta)
 
 void CIllusioner::LateUpdate_Object(void)
 {
-	Monster_Mapping();
 
 
 	if (!m_bFirst)
