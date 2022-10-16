@@ -50,6 +50,7 @@ private:
 	_float			m_fSpeed = 10.f;
 	_float			m_fAngle = 0.f;
 	_bool			m_bChangePOV = false;
+	_float			m_fBombFrame = 0.f;
 
 
 	_int			m_iReverse = 1;

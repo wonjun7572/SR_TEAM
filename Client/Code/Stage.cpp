@@ -7,6 +7,7 @@
 #include "TestCube.h"
 
 #include "AnimationPlayer.h"
+#include "FlightCamera.h"
 
 #include "CubePlayer.h"
 #include "CubeHead.h"
@@ -81,6 +82,7 @@
 #include "FlightBulletParticle.h"
 #include "Flight.h"
 #include "Key.h"
+#include "FlightSpot.h"
 
 CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CScene(pGraphicDev)
@@ -158,6 +160,14 @@ HRESULT CStage::Ready_Layer_Environment(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pLayer, E_FAIL);
 
 	CGameObject*		pGameObject = nullptr;
+
+	pGameObject = CFlightSpot::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"FlightSpot", pGameObject), E_FAIL);
+
+	pGameObject = CFlightCamera::Create(m_pGraphicDev, &_vec3(0.f, 0.f, 0.f), &_vec3(1.f, 0.f, 0.f), &_vec3(0.f, 1.f, 0.f));
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"FlightCamera", pGameObject), E_FAIL);
 
 	pGameObject = CStaticCamera::Create(m_pGraphicDev, &_vec3(0.f, 20.f, -10.f), &_vec3(0.f, 0.f, 0.f), &_vec3(0.f, 1.f, 0.f));
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
