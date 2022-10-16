@@ -20,6 +20,9 @@
 #include "Ping.h"
 #include "Flight.h"
 
+#include "StaticCamera.h"
+#include "FlightCamera.h"
+
 CCubePlayer::CCubePlayer(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
 {
@@ -142,7 +145,16 @@ void CCubePlayer::Key_Skill()
 			dynamic_cast<CBaseMapping*>(Engine::Get_GameObject(STAGE_MAPPING, L"BaseMapping"))->Switch_Worldmap();
 
 		if (m_Weapon == Engine::Get_GameObject(STAGE_GUN, L"UZI1"))
-			dynamic_cast<CFlight*>(Engine::Get_GameObject(STAGE_FLIGHTPLAYER, L"FLIGHTPLAYER"))->Set_Control();
+		{
+			if (static_cast<CStaticCamera*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"StaticCamera"))->Get_MainCam())
+				static_cast<CFlight*>(Engine::Get_GameObject(STAGE_FLIGHTPLAYER, L"FLIGHTPLAYER"))->Set_Control();
+			else
+			{
+				static_cast<CFlight*>(Engine::Get_GameObject(STAGE_FLIGHTPLAYER, L"FLIGHTPLAYER"))->Set_Control();
+				static_cast<CStaticCamera*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"StaticCamera"))->Set_MainCam(true);
+				static_cast<CFlightCamera*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"FlightCamera"))->Set_MainCam(false);
+			}
+		}
 	}
 }
 
@@ -783,25 +795,25 @@ void CCubePlayer::Inventory_Check(void)
 	switch (m_iSkillEnforce)
 	{
 	case 0:
-		cout << 0 << endl;
+		//cout << 0 << endl;
 		break;
 	case 1://우지1강화
-		cout << 1 << endl;
+		//cout << 1 << endl;
 		break;
 	case 2://우지2강화
-		cout << 2 << endl;
+		//cout << 2 << endl;
 		break;
 	case 3://샷건1강화
-		cout << 3 << endl;
+		//cout << 3 << endl;
 		break;
 	case 4://샷건2강화
-		cout << 4 << endl;
+		//cout << 4 << endl;
 		break;
 	case 5://스나1강화
-		cout << 5 << endl;
+		//cout << 5 << endl;
 		break;
 	case 6://스나2강화
-		cout << 6 << endl;
+		//cout << 6 << endl;
 		break;
 	default:
 		break;

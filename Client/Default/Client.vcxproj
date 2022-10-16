@@ -186,6 +186,8 @@
     <ClInclude Include="..\Header\FlameEffect.h" />
     <ClInclude Include="..\Header\Flight.h" />
     <ClInclude Include="..\Header\FlightBulletParticle.h" />
+    <ClInclude Include="..\Header\FlightCamera.h" />
+    <ClInclude Include="..\Header\FlightSpot.h" />
     <ClInclude Include="..\Header\IceEffect.h" />
     <ClInclude Include="..\Header\MiddleBoss.h" />
     <ClInclude Include="..\Header\ObjectCube.h" />
@@ -327,6 +329,8 @@
     <ClCompile Include="..\Code\FlameEffect.cpp" />
     <ClCompile Include="..\Code\Flight.cpp" />
     <ClCompile Include="..\Code\FlightBulletParticle.cpp" />
+    <ClCompile Include="..\Code\FlightCamera.cpp" />
+    <ClCompile Include="..\Code\FlightSpot.cpp" />
     <ClCompile Include="..\Code\IceEffect.cpp" />
     <ClCompile Include="..\Code\MiddleBoss.cpp" />
     <ClCompile Include="..\Code\ObjectCube.cpp" />

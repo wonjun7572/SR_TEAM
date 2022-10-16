@@ -6,6 +6,7 @@
 #include "Shop.h"
 #include "PlayerMapping.h"
 #include "Flight.h"
+#include "FlightCamera.h"
 
 CStaticCamera::CStaticCamera(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CCamera(pGraphicDev)
@@ -34,6 +35,8 @@ HRESULT CStaticCamera::Ready_Object(const _vec3* pEye,
 	m_fNear = fNear;
 	m_fFar = fFar;
 
+	m_bMainCameraOn = true;
+
 	m_fDistance = 10.f;
 
 	FAILED_CHECK_RETURN(CCamera::Ready_Object(), E_FAIL);
@@ -43,6 +46,9 @@ HRESULT CStaticCamera::Ready_Object(const _vec3* pEye,
 
 Engine::_int CStaticCamera::Update_Object(const _float& fTimeDelta)
 {
+	if (!m_bMainCameraOn)
+		return 0;
+
 	if (!(dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->Get_Switch()) 
 		&& !(dynamic_cast<CShop*>(Engine::Get_GameObject(STAGE_UI, L"Shop"))->Get_Switch()))
 	{
@@ -65,6 +71,9 @@ Engine::_int CStaticCamera::Update_Object(const _float& fTimeDelta)
 
 void CStaticCamera::LateUpdate_Object(void)
 {
+	if (!m_bMainCameraOn)
+		return;
+
 	CCamera::LateUpdate_Object();
 }
 
@@ -119,7 +128,7 @@ void CStaticCamera::Look_Target(const _float& _fTimeDelta)
 
 	if (nullptr == m_pFlightTransform)
 	{
-		m_pFlightTransform = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_FLIGHTPLAYER, L"FLIGHTPLAYER", TRANSFORM_COMP, ID_DYNAMIC));
+		m_pFlightTransform = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_FLIGHTPLAYER, L"FLIGHTPLAYER", TRANSFORM_COMP, ID_STATIC));
 		NULL_CHECK(m_pFlightTransform);
 	}
 
@@ -276,9 +285,10 @@ void CStaticCamera::Look_Target(const _float& _fTimeDelta)
 		}
 		else
 		{
-			m_fFov = D3DXToRadian(60.f);
-			m_vEye += vFlightPos + (vLook * 10.f);
-			m_vAt = vFlightPos + (vUp * 2.f) + (-vLook * 1.f);
+			Set_MainCam(false);
+			static_cast<CFlightCamera*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"FlightCamera"))->Set_MainCam(true);
+			//static_cast<CFlightCamera*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"FlightCamera"))->Set_At(&(vFlightPos + (vUp * 2.f) + (-vLook * 1.f)));
+			static_cast<CFlightCamera*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"FlightCamera"))->Set_Eye(&(vFlightPos + (vLook * -10.f) + (vUp * 3.f)));
 		}
 	}
 	else
