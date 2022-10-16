@@ -19,6 +19,7 @@ public:
 private:
 	HRESULT			Add_Component(void);
 	CTransform*		m_pTransform = nullptr;
+	CCalculator*	m_pCalculator = nullptr;
 
 public:
 	void			Replace(const _vec3& vPos, const _vec3& vAngle, const _vec3& vDir)
@@ -38,9 +39,15 @@ private:
 	void			Look_Direction();
 	void			Fire_Bullet();
 
+	void			Move(const _float& fTimeDelta);
+	_float			m_fRotX = 0.f;
+	_float			m_fRotY = 0.f;
+	_float			m_fTurn = 0.f;
+
 
 	_vec3			m_vDirection;
 	_vec3			m_vAngle;
+	_float			m_Frame = 0.f;
 
 	int iA = 0;
 

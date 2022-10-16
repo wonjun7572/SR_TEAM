@@ -54,6 +54,8 @@ public:
 	////////////////////////////////////////
 	void				Worldspace_By_Quarternion(void);
 	D3DXQUATERNION		Quaternion;
+	////////////////////////////////////////
+	void				Quaternion_Transform(void);
 
 
 	const _matrix*		Get_WorldMatrixPointer()					 {	return &m_matWorld; }
@@ -107,6 +109,7 @@ public:
 	_vec3			m_vScale;
 	_vec3			m_vAngle;
 	_matrix			m_matWorld;
+	D3DXQUATERNION	m_Quaternion;
 
 public:
 	static CTransform*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
