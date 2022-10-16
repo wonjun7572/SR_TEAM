@@ -63,6 +63,7 @@ Engine::_int CStaticCamera::Update_Object(const _float& fTimeDelta)
 
 	m_fFrame += fTimeDelta * 0.5f;
 	m_fFlightFrame += fTimeDelta * 0.5f;
+	m_fBombFrame += fTimeDelta * 0.5f;
 
 	_int   iExit = CCamera::Update_Object(fTimeDelta);
 
@@ -238,13 +239,13 @@ void CStaticCamera::Look_Target(const _float& _fTimeDelta)
 		m_pTransform_Target->Get_Info(INFO_POS, &vPlayerPos);
 
 		_vec3 vTransLerp;
-		D3DXVec3Lerp(&vTransLerp,&vPlayerPos,&vBombPos, m_fFrame);
+		D3DXVec3Lerp(&vTransLerp,&vPlayerPos,&vBombPos, m_fBombFrame);
 
-		if (m_fFrame < 1.f)
+		if (m_fBombFrame < 1.f)
 		{
 			m_fFov = D3DXToRadian(60.f);
-			m_vEye += vTransLerp + (-vLook * m_fFrame * 20.f);
-			m_vAt = vTransLerp;
+			m_vEye += vTransLerp + (-vLook * m_fBombFrame * 20.f);
+			m_vAt =vTransLerp;
 		}
 		else
 		{
@@ -315,7 +316,7 @@ void CStaticCamera::Look_Target(const _float& _fTimeDelta)
 	}
 
 	if(dynamic_cast<CPlayerMapping*>(pBomb)->Get_WorldMap() == false)
-		m_fFrame = 0.f;
+		m_fBombFrame = 0.f;
 	if (dynamic_cast<CFlight*>(pFlight)->Get_Control() == false)
 		m_fFlightFrame = 0.f;
 }

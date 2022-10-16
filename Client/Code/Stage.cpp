@@ -8,8 +8,6 @@
 
 #include "AnimationPlayer.h"
 
-#include "FlightCamera.h"
-
 #include "CubePlayer.h"
 #include "CubeHead.h"
 #include "CubeBody.h"
@@ -82,7 +80,7 @@
 #include "BattleCursier.h"
 #include "FlightBulletParticle.h"
 #include "Flight.h"
-#include "FlightSpot.h"
+#include "Key.h"
 
 CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CScene(pGraphicDev)
@@ -142,18 +140,6 @@ HRESULT CStage::Ready_Scene(void)
 
 _int CStage::Update_Scene(const _float & fTimeDelta)
 {
-	if (Get_DIKeyState(DIK_L))
-	{
-		static_cast<CStaticCamera*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"StaticCamera"))->Set_MainCam(false);
-		static_cast<CFlightCamera*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"FlightCamera"))->Set_MainCam(true);
-		static_cast<CFlightCamera*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"FlightCamera"))->Set_Eye(&_vec3(10, 10, 10));
-	}
-	if (Get_DIKeyState(DIK_K))
-	{
-		static_cast<CStaticCamera*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"StaticCamera"))->Set_MainCam(true);
-		static_cast<CFlightCamera*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"FlightCamera"))->Set_MainCam(false);
-	}
-
 	return Engine::CScene::Update_Scene(fTimeDelta);
 }
 
@@ -172,14 +158,6 @@ HRESULT CStage::Ready_Layer_Environment(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pLayer, E_FAIL);
 
 	CGameObject*		pGameObject = nullptr;
-
-	pGameObject = CFlightSpot::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"FlightSpot", pGameObject), E_FAIL);
-
-	pGameObject = CFlightCamera::Create(m_pGraphicDev, &_vec3(0.f, 0.f, 0.f), &_vec3(1.f, 0.f, 0.f), &_vec3(0.f, 1.f, 0.f));
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"FlightCamera", pGameObject), E_FAIL);
 
 	pGameObject = CStaticCamera::Create(m_pGraphicDev, &_vec3(0.f, 20.f, -10.f), &_vec3(0.f, 0.f, 0.f), &_vec3(0.f, 1.f, 0.f));
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
@@ -245,8 +223,17 @@ HRESULT CStage::Ready_Layer_Environment(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"FlightBulletParticle", pGameObject), E_FAIL);
 
-	// KEY 추가해야함
-	// X: 8 Z : 65
+	pGameObject = CKey::Create(m_pGraphicDev, _vec3(20.f,0.6f,10.f), COLOR_BLUE);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"BLUEKEY", pGameObject), E_FAIL);
+	
+	pGameObject = CKey::Create(m_pGraphicDev, _vec3(24.f, 0.6f, 10.f), COLOR_RED);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"REDKEY", pGameObject), E_FAIL);
+	
+	pGameObject = CKey::Create(m_pGraphicDev, _vec3(28.f, 0.6f, 10.f), COLOR_YELLOW);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"YELLOWKEY", pGameObject), E_FAIL);
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
@@ -476,9 +463,9 @@ HRESULT CStage::Ready_Layer_Monster(const _tchar * pLayerTag)
 
 	CGameObject*		pGameObject = nullptr;
 
-	/*pGameObject = CFireMan::Create(m_pGraphicDev, _vec3(10.f, 0.6f, 10.f), L"FIREMAN");
+	pGameObject = CFireMan::Create(m_pGraphicDev, _vec3(10.f, 0.6f, 10.f), L"FIREMAN");
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);*/
+	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
 
 	/*if (!vecFireMan.empty())
 	{
@@ -857,9 +844,9 @@ HRESULT CStage::Ready_Layer_Supporter(const _tchar * pLayerTag)
 
 	CGameObject*		pGameObject = nullptr;
 
-	/*pGameObject = CSupporter_Uzi::Create(m_pGraphicDev, _vec3(20.f, 0.5f, 20.f), L"SUPPORT_UZI");
+	pGameObject = CSupporter_Uzi::Create(m_pGraphicDev, _vec3(20.f, 0.5f, 20.f), L"SUPPORT_UZI");
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);*/
+	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 

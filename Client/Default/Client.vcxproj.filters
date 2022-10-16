@@ -247,6 +247,9 @@
     <Filter Include="02. GameObject\01. For_Stage\16. Skill">
       <UniqueIdentifier>{b7353904-ea38-453f-9793-d3a8ad2631b7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\17. Supporter">
+      <UniqueIdentifier>{8ed3bb62-6903-45c0-8dab-b3d82dc3460b}</UniqueIdentifier>
+    </Filter>
     <Filter Include="02. GameObject\01. For_Stage\18. Trap">
       <UniqueIdentifier>{327e46a2-fa1e-4eea-ade8-6c09099aed4f}</UniqueIdentifier>
     </Filter>
@@ -310,14 +313,8 @@
     <Filter Include="02. GameObject\01. For_Stage\98. Particle\01. EllipseParticle\FlightBulletParticle">
       <UniqueIdentifier>{450732ba-faad-40a3-bea7-8228e27be1e3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\01. For_Stage\21. Rocket\FlightSpot">
-      <UniqueIdentifier>{ca438257-d1d7-40a1-a4f5-78a67d25867a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\01. For_Stage\17. Supporter">
-      <UniqueIdentifier>{8ed3bb62-6903-45c0-8dab-b3d82dc3460b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\02. For_Public\02. FlightCamera">
-      <UniqueIdentifier>{e0bc0d7a-e3da-4804-b287-c8e232748b38}</UniqueIdentifier>
+    <Filter Include="02. GameObject\01. For_Stage\10. Item\Key">
+      <UniqueIdentifier>{b2e09751-32a8-4e8e-be87-78466d0480d4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -723,11 +720,8 @@
     <ClInclude Include="..\Header\FlightBulletParticle.h">
       <Filter>02. GameObject\01. For_Stage\98. Particle\01. EllipseParticle\FlightBulletParticle</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\FlightSpot.h">
-      <Filter>02. GameObject\01. For_Stage\21. Rocket\FlightSpot</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\FlightCamera.h">
-      <Filter>02. GameObject\02. For_Public\02. FlightCamera</Filter>
+    <ClInclude Include="..\Header\Key.h">
+      <Filter>99. Default\헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1109,11 +1103,8 @@
     <ClCompile Include="..\Code\FlightBulletParticle.cpp">
       <Filter>02. GameObject\01. For_Stage\98. Particle\01. EllipseParticle\FlightBulletParticle</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\FlightSpot.cpp">
-      <Filter>02. GameObject\01. For_Stage\21. Rocket\FlightSpot</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\FlightCamera.cpp">
-      <Filter>02. GameObject\02. For_Public\02. FlightCamera</Filter>
+    <ClCompile Include="..\Code\Key.cpp">
+      <Filter>99. Default\소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

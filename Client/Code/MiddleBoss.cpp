@@ -668,9 +668,9 @@ void CMiddleBoss::Attack_Animation_Run(void)
 			CQuarternion* Qtan = dynamic_cast<CQuarternion*>(iter.second->Get_Component(L"Proto_QuaternionCom", ID_STATIC));
 			Qtan->Delete_WorldVector();
 		}
-		m_AnimationTime = 0.f;
 		if (m_ATTACK == MIDDLEBOSSATTACK_START)
 			m_ATTACK = MIDDLEBOSSATTACK_1;
+		m_AnimationTime = 0.f;
 
 
 	}

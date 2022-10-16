@@ -47,7 +47,5 @@ private:
 	CBrownCloudEffect* m_pBrownCloudEffectParticle = nullptr;
 	CSparkEffect* m_pSparkEffectParticle = nullptr;
 	CSoundWave* m_pSoundWaveParticle = nullptr;
-
-
 };
 
