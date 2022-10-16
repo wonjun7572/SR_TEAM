@@ -122,6 +122,15 @@ namespace Engine
 
 	}KRAKENABILITY;
 
+
+	typedef struct tagTerret
+	{
+		std::wstring strObjTag;
+		_float fCurrentHp;
+		_float fMaxHp;
+		_float fDamage;
+	}TERRETABILITY;
+
 }
 
 

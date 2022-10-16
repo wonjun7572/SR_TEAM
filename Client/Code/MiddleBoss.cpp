@@ -104,19 +104,23 @@ _int CMiddleBoss::Update_Object(const _float & fTimeDelta)
 		pMyLayer = Engine::Get_Layer(m_MonsterName);
 		FAILED_CHECK_RETURN(Build(), -1);
 
-		Load_Animation(L"../../Data/MiddleMonster/MIDDLE_IDLE2.dat", 0);
-		Load_Animation(L"../../Data/MiddleMonster/MIDDLE_IDLE3.dat", 1);
+		Load_Animation(L"../../Data/MiddleMonster/MIDDLE_IDLESTART10.dat", 0);
+		Load_Animation(L"../../Data/MiddleMonster/MIDDLE_IDLESTART11.dat", 1);
+		Load_Animation(L"../../Data/MiddleMonster/MIDDLE_IDLESTART12.dat", 2);
+		Load_Animation(L"../../Data/MiddleMonster/MIDDLE_IDLESTART13.dat", 3);
 
-		Load_Animation(L"../../Data/MiddleMonster/MIDDLE_STARTING.dat", 2);
-		Load_Animation(L"../../Data/MiddleMonster/MIDDLE_WALKING11.dat", 3);
-		Load_Animation(L"../../Data/MiddleMonster/MIDDLE_WALKING12.dat", 4);
+		Load_Animation(L"../../Data/MiddleMonster/MIDDLE2_WALKINGSTART.dat", 4);
+		Load_Animation(L"../../Data/MiddleMonster/MIDDLE2_WALKING1.dat", 5);
+		Load_Animation(L"../../Data/MiddleMonster/MIDDLE2_WALKING2.dat", 6);
 
-		Load_Animation(L"../../Data/MiddleMonster/FINAL_FOOTSTEP1.dat", 5);
-		Load_Animation(L"../../Data/MiddleMonster/FINAL_FOOTSTEP2.dat", 6);
-	
-		
-		Load_Animation(L"../../Data/MiddleMonster/FINAL_SHOOTING.dat", 7);
-		Load_Animation(L"../../Data/MiddleMonster/FINAL_SHOOTING1.dat", 8);
+		Load_Animation(L"../../Data/MiddleMonster/MIDDLE2_RIGHTATTACKINGSTART.dat", 7);
+		Load_Animation(L"../../Data/MiddleMonster/MIDDLE2_RIGHTATTACK1.dat", 8);
+		Load_Animation(L"../../Data/MiddleMonster/MIDDLE_LEFTATTACKINGSTART.dat", 9);
+		Load_Animation(L"../../Data/MiddleMonster/MIDDLE2_LEFTATTACK1.dat", 10);
+
+
+		Load_Animation(L"../../Data/MiddleMonster/MIDDLE2_SHOOTINGSTART.dat", 11);
+		Load_Animation(L"../../Data/MiddleMonster/MIDDLE2_SHOOTING1.dat", 12);
 	}
 
 
@@ -157,22 +161,22 @@ void CMiddleBoss::LateUpdate_Object(void)
 		if (m_STATE == MIDDLEBOSS_WALK)
 		{
 			Walk_Animation_Run();
-			Run_Animation(15.f);
+			Run_Animation(60.f);
 		}
 		else if (m_STATE == MIDDLEBOSS_IDLE)
 		{
 			Idle_Animation_Run();
-			Run_Animation(15.f);
+			Run_Animation(150.f);
 		}
 		else if (m_STATE == MIDDLEBOSS_ATTACK)
 		{
 			Attack_Animation_Run();
-			Run_Animation(15.f);
+			Run_Animation(90.f);
 		}
 		else if (m_STATE == MIDDLEBOSS_SHOT)
 		{
 			Shot_Animation_Run();
-			Run_Animation(15.f);
+			Run_Animation(30.f);
 		}
 	}
 
@@ -207,12 +211,36 @@ void CMiddleBoss::Render_Object(void)
 
 _int CMiddleBoss::Update_Pattern(_float fTimeDelta)
 {
+	//왼손 오른손잡는 방향 잡아보자 
+
+	_vec3 vShotgunLeft;
+	_vec3 vShotgunRight;
+	_vec3 m_vDirectionLeft;
+	_vec3 m_vDirectionRight;
+	for (auto& iter : pMyLayer->Get_GamePair())
+	{
+		if (0 == _tcscmp(iter.first, L"LEFTSHOOTING"))
+		{
+			_matrix matBoss;
+			dynamic_cast<CTransAxisBox*>(iter.second)->Get_Final(&matBoss);
+			vShotgunLeft = { matBoss.m[3][0], matBoss.m[3][1], matBoss.m[3][2] };
+		}
+		if (0 == _tcscmp(iter.first, L"RIGHTSHOOTING"))
+		{
+			_matrix matBoss;
+			dynamic_cast<CTransAxisBox*>(iter.second)->Get_Final(&matBoss);
+			vShotgunRight = { matBoss.m[3][0], matBoss.m[3][1], matBoss.m[3][2] };
+		}
+	}
+
 	if (m_pPlayerTransCom == nullptr)
 	{
 		m_pPlayerTransCom = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_CHARACTER, L"PLAYER", TRANSFORM_COMP, ID_DYNAMIC));
 	}
+	
 	if (m_pMonsterUI == nullptr)
 		m_pMonsterUI = dynamic_cast<CMonsterUI*>(Engine::Get_GameObject(STAGE_UI, L"MonsterUI"));
+	
 	if (m_pComboUI == nullptr)
 		m_pComboUI = dynamic_cast<CComboUI*>(Engine::Get_GameObject(STAGE_UI, L"ComboUI"));
 
@@ -226,40 +254,47 @@ _int CMiddleBoss::Update_Pattern(_float fTimeDelta)
 	m_pTransCom->Get_Info(INFO_POS, &vPos);
 	_vec3 m_vDir;
 	m_vDir = vPlayerPos - vPos;
-	_vec3 vAnimationPos;
-
-	
 	_float m_fPlayerCurrent = D3DXVec3Length(&m_vDir);
+	_vec3 vAnimationPos;
 	_vec3 vSearchScale, vAttackScale;
 	
 	m_pSearchRange_TransCom->Get_Scale(&vSearchScale);
 	m_pAttackRange_TransCom->Get_Scale(&vAttackScale);
+	
 	_float HP = m_tAbility->fCurrentHp / m_tAbility->fMaxHp;
-	if (m_fDetectRange >= m_fTargetLength)
-	{
+	
+
 		if (HP >= 0.9f)
 		{
 
 			if (m_pCollision->Sphere_Collision(this->m_pSphereTransCom, m_pPlayerTransCom, vPlayerScale.x, vScale.x) && m_fFrame < 2.f)
 			{//패턴1
-				m_pTransCom->Chase_Target(&vPlayerPos, 10.f, fTimeDelta);
+				m_pTransCom->Chase_Target(&vPlayerPos, 0, fTimeDelta);
 				m_STATE = MIDDLEBOSS_WALK;
 			}
 		}
 		else if (HP >= 0.6f)
 		{
-
-
-			_vec3 vDir{ 1.f, 0.f, 0.f };
 			if (m_pCollision->Sphere_Collision(this->m_pSphereTransCom, m_pPlayerTransCom, vPlayerScale.x, vScale.x) && m_fFrame < 2.f)
 			{//패턴2
+				{//_vec3 vDir{ 1.f, 0.f, 0.f };
+
+					m_STATE = MIDDLEBOSS_ATTACK;
+					m_pTransCom->Chase_Target(&vPlayerPos, 0, fTimeDelta);
+					_vec3 m_vDirectionLeft = vPlayerPos - vShotgunLeft;
+					_vec3 m_vDirectionRight = vPlayerPos - vShotgunRight;
+					D3DXVec3Normalize(&m_vDirectionLeft, &m_vDirectionLeft);
+					D3DXVec3Normalize(&m_vDirectionRight, &m_vDirectionRight);
+					if (m_AnimationTime >= 1)
+					{
+						CPoolMgr::GetInstance()->Reuse_Obj(m_pGraphicDev, &vShotgunLeft, &m_vDirectionLeft, m_tAbility->fDamage);
+						CPoolMgr::GetInstance()->Reuse_Obj(m_pGraphicDev, &vShotgunRight, &m_vDirectionRight, m_tAbility->fDamage);
+					}
+					cout << m_vDirectionLeft.x << "," << m_vDirectionLeft.y << "," << m_vDirectionLeft.z << endl;
+				}	
 
 
-				m_STATE = MIDDLEBOSS_SHOT;
-				m_pTransCom->Chase_Target(&vPlayerPos, 3.f, fTimeDelta);
-				//m_fTimeDelta = fTimeDelta;
-				CPoolMgr::GetInstance()->Reuse_Obj(m_pGraphicDev, &vPos, &m_vDir, m_tAbility->fDamage);
-
+				
 			}
 		}
 		else if (HP >= 0.01f)
@@ -269,8 +304,9 @@ _int CMiddleBoss::Update_Pattern(_float fTimeDelta)
 			D3DXVECTOR3		vDir{ 1.f, 0.f, 0.f };
 			if (m_pCollision->Sphere_Collision(this->m_pSphereTransCom, m_pPlayerTransCom, vPlayerScale.x, vScale.x))
 			{
-				m_STATE = MIDDLEBOSS_ATTACK;
-				m_pTransCom->Chase_Target(&vPlayerPos, 3.f, fTimeDelta);
+				m_STATE = MIDDLEBOSS_SHOT;
+		
+				m_pTransCom->Chase_Target(&vPlayerPos, 0, fTimeDelta);
 				m_fFrame += fTimeDelta;
 				_matrix matRotY, matTrans, matWorld;
 
@@ -291,10 +327,6 @@ _int CMiddleBoss::Update_Pattern(_float fTimeDelta)
 					m_fFrame = 0.f;
 				}
 			}
-
-
-		}
-
 	}
 	return 0;
 }
@@ -345,7 +377,7 @@ void CMiddleBoss::Hit_Check(_float _deltaTime)
 
 HRESULT CMiddleBoss::Build(void)
 {
-	HANDLE      hFile = CreateFile(L"../../Data/MiddleMonster/MIDDLE_FINAL.dat",      // 파일의 경로와 이름	
+	HANDLE      hFile = CreateFile(L"../../Data/MiddleMonster/MIDDLE2_FINAL.dat",      // 파일의 경로와 이름	
 		GENERIC_READ,         // 파일 접근 모드 (GENERIC_WRITE : 쓰기 전용, GENERIC_READ : 읽기 전용)
 		NULL,               // 공유 방식(파일이 열려있는 상태에서 다른 프로세스가 오픈할 때 허용할 것인가)    
 		NULL,               // 보안 속성(NULL을 지정하면 기본값 상태)
@@ -651,7 +683,7 @@ void CMiddleBoss::Walk_Animation_Run(void)
 	for (auto& iter : ListBox)	// 애니메이션 변경
 	{
 		CQuarternion* Qtan = dynamic_cast<CQuarternion*>(iter.second->Get_Component(L"Proto_QuaternionCom", ID_STATIC));
-		Qtan->Change_Animation(2 + m_WALK);
+		Qtan->Change_Animation(4 + m_WALK);
 	}
 
 	
@@ -670,6 +702,12 @@ void CMiddleBoss::Attack_Animation_Run(void)
 		}
 		if (m_ATTACK == MIDDLEBOSSATTACK_START)
 			m_ATTACK = MIDDLEBOSSATTACK_1;
+		else if (m_ATTACK == MIDDLEBOSSATTACK_1)
+			m_ATTACK = MIDDLEBOSSATTACK_2;
+		else if (m_ATTACK == MIDDLEBOSSATTACK_2)
+			m_ATTACK = MIDDLEBOSSATTACK_3;
+		else if (m_ATTACK == MIDDLEBOSSATTACK_3)
+			m_ATTACK = MIDDLEBOSSATTACK_START;
 		m_AnimationTime = 0.f;
 
 
@@ -678,7 +716,7 @@ void CMiddleBoss::Attack_Animation_Run(void)
 	for (auto& iter : ListBox)	// 애니메이션 변경
 	{
 		CQuarternion* Qtan = dynamic_cast<CQuarternion*>(iter.second->Get_Component(L"Proto_QuaternionCom", ID_STATIC));
-		Qtan->Change_Animation(5 + m_ATTACK);
+		Qtan->Change_Animation(7 + m_ATTACK);
 	}
 }
 
@@ -694,7 +732,9 @@ void CMiddleBoss::Shot_Animation_Run(void)
 			Qtan->Delete_WorldVector();
 		}
 		m_AnimationTime = 0.f;
-		if (m_SHOT == MIDDLEBOSSSHOT_START)
+		if (m_SHOT == MIDDLEBOSSSHOT_1)
+			m_SHOT = MIDDLEBOSSSHOT_START;
+		else if (m_SHOT == MIDDLEBOSSSHOT_START)
 			m_SHOT = MIDDLEBOSSSHOT_1;
 
 
@@ -703,7 +743,7 @@ void CMiddleBoss::Shot_Animation_Run(void)
 	for (auto& iter : ListBox)	// 애니메이션 변경
 	{
 		CQuarternion* Qtan = dynamic_cast<CQuarternion*>(iter.second->Get_Component(L"Proto_QuaternionCom", ID_STATIC));
-		Qtan->Change_Animation(7 + m_SHOT);
+		Qtan->Change_Animation(11 + m_SHOT);
 	}
 }
 
@@ -795,6 +835,10 @@ void CMiddleBoss::Idle_Animation_Run(void)
 		if (m_IDLE == MIDDLEBOSSIDLE_1)
 			m_IDLE = MIDDLEBOSSIDLE_2;
 		else if (m_IDLE == MIDDLEBOSSIDLE_2)
+			m_IDLE = MIDDLEBOSSIDLE_3;
+		else if (m_IDLE == MIDDLEBOSSIDLE_3)
+			m_IDLE = MIDDLEBOSSIDLE_4;
+		else if (m_IDLE == MIDDLEBOSSIDLE_4)
 			m_IDLE = MIDDLEBOSSIDLE_1;
 
 		m_AnimationTime = 0.f;
