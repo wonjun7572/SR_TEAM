@@ -6,6 +6,7 @@
 #include "Shop.h"
 #include "PlayerMapping.h"
 #include "Flight.h"
+#include "FlightCamera.h"
 
 CStaticCamera::CStaticCamera(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CCamera(pGraphicDev)
@@ -34,6 +35,8 @@ HRESULT CStaticCamera::Ready_Object(const _vec3* pEye,
 	m_fNear = fNear;
 	m_fFar = fFar;
 
+	m_bMainCameraOn = true;
+
 	m_fDistance = 10.f;
 
 	FAILED_CHECK_RETURN(CCamera::Ready_Object(), E_FAIL);
@@ -43,6 +46,9 @@ HRESULT CStaticCamera::Ready_Object(const _vec3* pEye,
 
 Engine::_int CStaticCamera::Update_Object(const _float& fTimeDelta)
 {
+	if (!m_bMainCameraOn)
+		return 0;
+
 	if (!(dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->Get_Switch()) 
 		&& !(dynamic_cast<CShop*>(Engine::Get_GameObject(STAGE_UI, L"Shop"))->Get_Switch()))
 	{
@@ -57,6 +63,7 @@ Engine::_int CStaticCamera::Update_Object(const _float& fTimeDelta)
 
 	m_fFrame += fTimeDelta * 0.5f;
 	m_fFlightFrame += fTimeDelta * 0.5f;
+	m_fBombFrame += fTimeDelta * 0.5f;
 
 	_int   iExit = CCamera::Update_Object(fTimeDelta);
 
@@ -65,6 +72,9 @@ Engine::_int CStaticCamera::Update_Object(const _float& fTimeDelta)
 
 void CStaticCamera::LateUpdate_Object(void)
 {
+	if (!m_bMainCameraOn)
+		return;
+
 	CCamera::LateUpdate_Object();
 }
 
@@ -119,7 +129,7 @@ void CStaticCamera::Look_Target(const _float& _fTimeDelta)
 
 	if (nullptr == m_pFlightTransform)
 	{
-		m_pFlightTransform = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_FLIGHTPLAYER, L"FLIGHTPLAYER", TRANSFORM_COMP, ID_DYNAMIC));
+		m_pFlightTransform = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_FLIGHTPLAYER, L"FLIGHTPLAYER", TRANSFORM_COMP, ID_STATIC));
 		NULL_CHECK(m_pFlightTransform);
 	}
 
@@ -229,13 +239,13 @@ void CStaticCamera::Look_Target(const _float& _fTimeDelta)
 		m_pTransform_Target->Get_Info(INFO_POS, &vPlayerPos);
 
 		_vec3 vTransLerp;
-		D3DXVec3Lerp(&vTransLerp,&vPlayerPos,&vBombPos, m_fFrame);
+		D3DXVec3Lerp(&vTransLerp,&vPlayerPos,&vBombPos, m_fBombFrame);
 
-		if (m_fFrame < 1.f)
+		if (m_fBombFrame < 1.f)
 		{
 			m_fFov = D3DXToRadian(60.f);
-			m_vEye += vTransLerp + (-vLook * m_fFrame * 20.f);
-			m_vAt = vTransLerp;
+			m_vEye += vTransLerp + (-vLook * m_fBombFrame * 20.f);
+			m_vAt =vTransLerp;
 		}
 		else
 		{
@@ -276,9 +286,10 @@ void CStaticCamera::Look_Target(const _float& _fTimeDelta)
 		}
 		else
 		{
-			m_fFov = D3DXToRadian(60.f);
-			m_vEye += vFlightPos + (vLook * 10.f);
-			m_vAt = vFlightPos + (vUp * 2.f) + (-vLook * 1.f);
+			Set_MainCam(false);
+			static_cast<CFlightCamera*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"FlightCamera"))->Set_MainCam(true);
+			//static_cast<CFlightCamera*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"FlightCamera"))->Set_At(&(vFlightPos + (vUp * 2.f) + (-vLook * 1.f)));
+			static_cast<CFlightCamera*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"FlightCamera"))->Set_Eye(&(vFlightPos + (vLook * -10.f) + (vUp * 3.f)));
 		}
 	}
 	else
@@ -305,7 +316,7 @@ void CStaticCamera::Look_Target(const _float& _fTimeDelta)
 	}
 
 	if(dynamic_cast<CPlayerMapping*>(pBomb)->Get_WorldMap() == false)
-		m_fFrame = 0.f;
+		m_fBombFrame = 0.f;
 	if (dynamic_cast<CFlight*>(pFlight)->Get_Control() == false)
 		m_fFlightFrame = 0.f;
 }

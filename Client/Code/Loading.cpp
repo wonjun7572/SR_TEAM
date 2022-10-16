@@ -185,6 +185,16 @@ _uint CLoading::Loading_ForStage(void)
 
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(BULLET_ITEM_BUFFER, CDynamicBuffer::Create(m_pGraphicDev, BULLET_ITEM_TEX_PATH, 0.01f, 1.f, 1.f)), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(BULLET_ITEM_TEX, CTexture::Create(m_pGraphicDev, BULLET_ITEM_TEX_PATH, TEX_NORMAL)), E_FAIL);
+	
+		// Å° 3°³
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(BLUEKEY_ITEM_BUFFER, CDynamicBuffer::Create(m_pGraphicDev, BLUEKEY_ITEM_TEX_PATH, 0.01f, 1.f, 1.f)), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(BLUEKEY_ITEM_TEX, CTexture::Create(m_pGraphicDev, BLUEKEY_ITEM_TEX_PATH, TEX_NORMAL)), E_FAIL);
+
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(REDKEY_ITEM_BUFFER, CDynamicBuffer::Create(m_pGraphicDev, REDKEY_ITEM_TEX_PATH, 0.01f, 1.f, 1.f)), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(REDKEY_ITEM_TEX, CTexture::Create(m_pGraphicDev, REDKEY_ITEM_TEX_PATH, TEX_NORMAL)), E_FAIL);
+
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(YELLOWKEY_ITEM_BUFFER, CDynamicBuffer::Create(m_pGraphicDev, YELLOWKEY_ITEM_TEX_PATH, 0.01f, 1.f, 1.f)), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(YELLOWKEY_ITEM_TEX, CTexture::Create(m_pGraphicDev, YELLOWKEY_ITEM_TEX_PATH, TEX_NORMAL)), E_FAIL);
 	}
 
 	// ITEM

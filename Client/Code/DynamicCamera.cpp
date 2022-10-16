@@ -212,7 +212,6 @@ void CDynamicCamera::Mouse_Move(void)
 		D3DXVec3TransformNormal(&vLook, &vLook, &matRot);
 
 		m_vAt = m_vEye + vLook;
-
 	}
 }
 

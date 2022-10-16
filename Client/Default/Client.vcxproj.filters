@@ -313,6 +313,9 @@
     <Filter Include="02. GameObject\01. For_Stage\98. Particle\01. EllipseParticle\FlightBulletParticle">
       <UniqueIdentifier>{450732ba-faad-40a3-bea7-8228e27be1e3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\10. Item\Key">
+      <UniqueIdentifier>{b2e09751-32a8-4e8e-be87-78466d0480d4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -717,11 +720,8 @@
     <ClInclude Include="..\Header\FlightBulletParticle.h">
       <Filter>02. GameObject\01. For_Stage\98. Particle\01. EllipseParticle\FlightBulletParticle</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\Alien.h">
-      <Filter>02. GameObject\01. For_Stage\08. Monster</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\Terret.h">
-      <Filter>02. GameObject\01. For_Stage\18. Trap</Filter>
+    <ClInclude Include="..\Header\Key.h">
+      <Filter>99. Default\헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1103,11 +1103,8 @@
     <ClCompile Include="..\Code\FlightBulletParticle.cpp">
       <Filter>02. GameObject\01. For_Stage\98. Particle\01. EllipseParticle\FlightBulletParticle</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\Alien.cpp">
-      <Filter>02. GameObject\01. For_Stage\08. Monster</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\Terret.cpp">
-      <Filter>02. GameObject\01. For_Stage\18. Trap</Filter>
+    <ClCompile Include="..\Code\Key.cpp">
+      <Filter>99. Default\소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

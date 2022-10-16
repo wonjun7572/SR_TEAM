@@ -4,6 +4,8 @@
 #include "TransAxisBox.h"
 #include "FlightBulletParticle.h"
 #include "PoolMgr.h"
+#include "FlightCamera.h"
+#include "FlightSpot.h"
 
 CFlight::CFlight(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
@@ -61,10 +63,12 @@ _int CFlight::Update_Object(const _float & fTimeDelta)
 	if (!m_pBulletParicle)
 		m_pBulletParicle = dynamic_cast<CFlightBulletParticle*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"FlightBulletParticle"));
 
-	if (m_bControl == true)
+	if (m_bControl == true && static_cast<CFlightCamera*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"FlightCamera"))->Get_Maincam())
 	{
 		Key_Input(fTimeDelta);
+		Move(fTimeDelta);
 		Look_Direction();
+		m_pTransform->Quaternion_Transform();
 	}
 	else
 	{
@@ -73,6 +77,7 @@ _int CFlight::Update_Object(const _float & fTimeDelta)
 
 		_vec3 vLook;
 		m_pTransform->Get_Info(INFO_LOOK, &vLook);
+		D3DXVec3Normalize(&vLook, &vLook);
 		m_pTransform->Move_Pos(&(-vLook * 1.f * fTimeDelta));
 		for (auto& iter : *(pMyLayer->Get_GamePairPtr()))
 		{
@@ -102,7 +107,11 @@ HRESULT CFlight::Add_Component(void)
 
 	pComponent = m_pTransform = dynamic_cast<CTransform*>(Clone_Proto(TRANSFORM_COMP));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_DYNAMIC].insert({ TRANSFORM_COMP, pComponent });
+	m_mapComponent[ID_STATIC].insert({ TRANSFORM_COMP, pComponent });
+
+	pComponent = m_pCalculator = dynamic_cast<CCalculator *>(Clone_Proto(CALCULATOR_COMP));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[ID_STATIC].insert({ CALCULATOR_COMP, pComponent });
 
 	return S_OK;
 }
@@ -241,15 +250,9 @@ HRESULT CFlight::Build(void)
 
 void CFlight::Key_Input(const _float& fTimeDelta)
 {
-	_vec3 vPos;
-	m_pTransform->Get_Info(INFO_POS, &vPos);
+	//m_pTransform->Move_Pos(&(-vLook * 1.f * fTimeDelta));
 
-	_vec3 vLook;
-	m_pTransform->Get_Info(INFO_LOOK, &vLook);
-
-	m_pTransform->Move_Pos(&(-vLook * 10.f * fTimeDelta));
-
-	long		dwMouseMove = 0;
+	/*long		dwMouseMove = 0;
 
 	if (dwMouseMove = Engine::Get_DIMouseMove(DIMS_X))
 	{
@@ -259,7 +262,7 @@ void CFlight::Key_Input(const _float& fTimeDelta)
 	if (dwMouseMove = Engine::Get_DIMouseMove(DIMS_Y))
 	{
 		m_pTransform->Rotation(ROT_X, D3DXToRadian(dwMouseMove / 20.f));
-	}
+	}*/
 
 	if (m_fBulletTime > 0.2f)
 	{
@@ -272,14 +275,6 @@ void CFlight::Key_Input(const _float& fTimeDelta)
 			Set_Shoot(true);
 			m_fBulletTime = 0.f;
 		}
-	}
-
-	for (auto& iter : *(pMyLayer->Get_GamePairPtr()))
-	{
-		CTransform*	BoxTransform = dynamic_cast<CTransform*>(iter.second->Get_Component(L"Proto_TransformCom", ID_STATIC));
-
-		if (0 == _tcscmp(iter.first, L"A_ROOT"))
-			BoxTransform->Set_Pos(vPos.x, vPos.y, vPos.z);
 	}
 }
 
@@ -325,9 +320,103 @@ void CFlight::Fire_Bullet()
 
 	_vec3 vLook;
 	m_pTransform->Get_Info(INFO_LOOK, &vLook);
-	vLook *= -1;
+	//vLook *= -1;
 	vPos += vLook;
 	CPoolMgr::GetInstance()->Reuse_PlayerBullet(m_pGraphicDev, &vPos, &vLook, 5, 50.f);
+}
+
+void CFlight::Move(const _float& fTimeDelta)
+{
+	_vec3 vPos;
+	m_pTransform->Get_Info(INFO_POS, &vPos);
+
+	_vec3 vSpotPos;
+	dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_ENVIRONMENT, L"FlightSpot", TRANSFORM_COMP, ID_DYNAMIC))
+		->Get_Info(INFO_POS, &vSpotPos);
+
+	_vec3 vSpotRight;
+	dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_ENVIRONMENT, L"FlightSpot", TRANSFORM_COMP, ID_DYNAMIC))
+		->Get_Info(INFO_RIGHT, &vSpotRight);
+	D3DXVec3Normalize(&vSpotRight, &vSpotRight);
+
+	_vec3 vDir = vSpotPos - vPos;
+	_float fDistance = D3DXVec3Length(&vDir);
+
+	D3DXVec3Normalize(&vDir, &vDir);
+
+	m_pTransform->Move_Pos(&(vDir * fDistance * 2.f * fTimeDelta));
+
+	_matrix matView;
+	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
+	D3DXMatrixInverse(&matView, nullptr, &matView);
+	_vec3 vEye = { matView.m[3][0],matView.m[3][1],matView.m[3][2] };
+	_vec3 vCamLook = { matView.m[2][0],matView.m[2][1],matView.m[2][2] };
+	D3DXVec3Normalize(&vCamLook, &vCamLook);
+
+	m_fRotY = vSpotPos.y - vEye.y;
+	m_fTurn = vSpotPos.x - vEye.x;
+
+	{
+		m_fRotX += Get_DIMouseMove(DIMS_X);
+
+		if (m_fRotX > 1000.f)
+			m_fRotX = 1000.f;
+		else if (m_fRotX < -1000.f)
+			m_fRotX = -1000.f;
+
+		if (m_fRotX > 0)
+			m_fRotX -= 10.f;
+		else if (m_fRotX < 0)
+			m_fRotX += 10.f;
+
+		if (m_fRotX > -10.f && m_fRotX < 10.f)
+			m_fRotX = 0.f;
+	}
+
+	/*{
+		m_fRotY += Get_DIMouseMove(DIMS_Y);
+		if (m_fRotY > 600.f)
+			m_fRotY = 600.f;
+		else if (m_fRotY < -600.f)
+			m_fRotY = -600.f;
+
+		if (m_fRotY > 0)
+			m_fRotY -= 10.f;
+		else if (m_fRotY < 0)
+			m_fRotY += 10.f;
+
+		if (m_fRotY > -10.f && m_fRotY < 10.f)
+			m_fRotY = 0.f;
+	}*/
+
+	{
+		_float fDot = D3DXVec3Dot(&vSpotRight, &vCamLook);
+		_float fAngle = acosf(fDot);
+		m_fTurn = D3DXToDegree(fAngle) - 90.f;
+
+		if (vSpotRight.x < vCamLook.x || vSpotRight.z < vCamLook.z)
+		{
+			m_fTurn = D3DX_PI * 2.f - m_fTurn;
+		}
+		if (vCamLook.z < 0.f)
+		{
+			m_fTurn += 180.f;
+		}
+	}
+
+	m_pTransform->Set_Rotation(ROT_Z, D3DXToRadian(-m_fRotX / 20.f));
+	m_pTransform->Set_Rotation(ROT_X, -m_fRotY / 10.f);
+	m_pTransform->Set_Rotation(ROT_Y, D3DXToRadian(m_fTurn));
+
+	for (auto& iter : *(pMyLayer->Get_GamePairPtr()))
+	{
+		CTransform*	BoxTransform = dynamic_cast<CTransform*>(iter.second->Get_Component(L"Proto_TransformCom", ID_STATIC));
+
+		if (0 == _tcscmp(iter.first, L"A_ROOT"))
+		{
+			BoxTransform->Set_Pos(vPos.x, vPos.y, vPos.z);
+		}
+	}
 }
 
 CFlight * CFlight::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3 & vPos, const _vec3 & vDir, _tchar * Name)

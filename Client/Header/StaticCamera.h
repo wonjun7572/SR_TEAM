@@ -27,6 +27,13 @@ public:
 
 	void		HitPlayer() { m_bPlayerHit = true; }
 	void		CameraShaking() { m_bEarthQuake = true; }
+
+public:
+	void		Set_MainCam(_bool is) { m_bMainCameraOn = is; }
+	_bool		Get_MainCam(void) { return m_bMainCameraOn; }
+private:
+	_bool		m_bMainCameraOn = true;
+
 private:
 	void		Key_Input(const _float& fTimeDelta);
 	void		Mouse_Fix();
@@ -43,6 +50,7 @@ private:
 	_float			m_fSpeed = 10.f;
 	_float			m_fAngle = 0.f;
 	_bool			m_bChangePOV = false;
+	_float			m_fBombFrame = 0.f;
 
 
 	_int			m_iReverse = 1;
