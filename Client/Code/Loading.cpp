@@ -215,8 +215,10 @@ _uint CLoading::Loading_ForStage(void)
 
 	{
 		// Skiil
-		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Lava_Tex", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Lava.png", TEX_NORMAL)), E_FAIL);
-		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Ping_Tex", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/locationPin.png", TEX_NORMAL)), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Lava_Tex", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Skill/Lava.png", TEX_NORMAL)), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Ping_Tex", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Skill/locationPin.png", TEX_NORMAL)), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Skull_Tex", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Particle/StaticParticle/StaticParticle00.png", TEX_NORMAL)), E_FAIL);
+
 	}
 
 	m_bFinish = true;

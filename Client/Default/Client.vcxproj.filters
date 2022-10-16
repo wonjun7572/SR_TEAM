@@ -313,6 +313,18 @@
     <Filter Include="02. GameObject\01. For_Stage\98. Particle\01. EllipseParticle\FlightBulletParticle">
       <UniqueIdentifier>{450732ba-faad-40a3-bea7-8228e27be1e3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\16. Skill\Meteor">
+      <UniqueIdentifier>{4d7439e1-c44c-41c3-a2e3-120220b2011d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\16. Skill\StaticField">
+      <UniqueIdentifier>{d3fff235-97ab-4641-b77c-ea93641cea57}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\16. Skill\Shield">
+      <UniqueIdentifier>{a4e887ac-0267-4640-8d46-f0fc84fac481}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\16. Skill\Hyperion">
+      <UniqueIdentifier>{4bd2acde-8de9-4812-834e-ddf2559ee495}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -627,9 +639,6 @@
     <ClInclude Include="..\Header\ComboUI.h">
       <Filter>02. GameObject\01. For_Stage\09. UI\Player</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\Meteor.h">
-      <Filter>02. GameObject\01. For_Stage\16. Skill</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\Supporter.h">
       <Filter>02. GameObject\01. For_Stage\17. Supporter</Filter>
     </ClInclude>
@@ -716,6 +725,12 @@
     </ClInclude>
     <ClInclude Include="..\Header\FlightBulletParticle.h">
       <Filter>02. GameObject\01. For_Stage\98. Particle\01. EllipseParticle\FlightBulletParticle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Meteor.h">
+      <Filter>02. GameObject\01. For_Stage\16. Skill\Meteor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\StaticField.h">
+      <Filter>02. GameObject\01. For_Stage\16. Skill\StaticField</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1010,9 +1025,6 @@
     <ClCompile Include="..\Code\ComboUI.cpp">
       <Filter>02. GameObject\01. For_Stage\09. UI\Player</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\Meteor.cpp">
-      <Filter>02. GameObject\01. For_Stage\16. Skill</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\Supporter.cpp">
       <Filter>02. GameObject\01. For_Stage\17. Supporter</Filter>
     </ClCompile>
@@ -1096,6 +1108,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\FlightBulletParticle.cpp">
       <Filter>02. GameObject\01. For_Stage\98. Particle\01. EllipseParticle\FlightBulletParticle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Meteor.cpp">
+      <Filter>02. GameObject\01. For_Stage\16. Skill\Meteor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\StaticField.cpp">
+      <Filter>02. GameObject\01. For_Stage\16. Skill\StaticField</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

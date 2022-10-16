@@ -85,7 +85,9 @@ _int CSlime::Update_Object(const _float & fTimeDelta)
 	}
 
 	CMonster::Update_Object(fTimeDelta);
-	m_fTimeDelta = fTimeDelta;
+	if (m_iSphereSkillTag != SKILL_STATICFIELD)
+		m_fTimeDelta = fTimeDelta;
+
 	if (!Collision_Wall(fTimeDelta))
 	{
 		_vec3 vPlayerPos;
@@ -102,13 +104,16 @@ _int CSlime::Update_Object(const _float & fTimeDelta)
 
 		if (this->m_pSearchRange_TransCom, m_pPlayerTransCom, vPlayerScale.x, vSearchScale.x)
 		{
-			m_pTransCom->Chase_Target(&vPlayerPos, 1.f, fTimeDelta);
+			if (m_iSphereSkillTag != SKILL_STATICFIELD)
+				m_pTransCom->Chase_Target(&vPlayerPos, 1.f, fTimeDelta);
 		}
 		else
 		{
-			m_pTransCom->Chase_Target(&vPlayerPos, 0.f, fTimeDelta);
+			if (m_iSphereSkillTag != SKILL_STATICFIELD)
+				m_pTransCom->Chase_Target(&vPlayerPos, 0.f, fTimeDelta);
 		}
 
+		if (m_iSphereSkillTag != SKILL_STATICFIELD)
 		Look_Direction();
 
 		_vec3 vMonsterPos;

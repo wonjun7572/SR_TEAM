@@ -75,6 +75,10 @@ HRESULT CFireMan::Ready_Object(const _vec3 & vPos, _tchar * Name)
 
 _int CFireMan::Update_Object(const _float & fTimeDelta)
 {
+	if (m_iSphereSkillTag != SKILL_STATICFIELD)
+	m_fTimeDelta = fTimeDelta;
+
+
 	if (m_bDead)
 	{
 		m_pComboUI->KillCntPlus();
@@ -106,7 +110,6 @@ _int CFireMan::Update_Object(const _float & fTimeDelta)
 		Load_Animation(L"../../Data/Fireman/Fireman_Attack_1.dat", 5);
 	}
 
-	m_fTimeDelta = fTimeDelta;
 
 	CMonster::Update_Object(fTimeDelta);
 
@@ -132,47 +135,52 @@ _int CFireMan::Update_Object(const _float & fTimeDelta)
 	vDir.y = 0.f;
 
 	m_fFrame += fTimeDelta;
-
-	if (m_pCollision->Sphere_Collision(this->m_pRunawayRange_TransCom, m_pPlayerTransCom, vPlayerScale.x, vRunScale.x)/* && (m_STATE != FIREMAN_ATTACK)*/)
-	{
-		// 도망충돌
-		//m_pTransCom->Chase_Target(&vPlayerPos, 0.f, fTimeDelta);
-		vDir *= -1.f;
-		m_pCollision->Wall_Collision_Check(this->m_pTransCom, this->m_pHitBox, &vDir);
-		m_pTransCom->Chase_Target_By_Direction(&vDir, 5.f, fTimeDelta);
-		m_STATE = FIREMAN_WALK;
-	}
-	else if (m_pCollision->Sphere_Collision(this->m_pAttackRange_TransCom, m_pPlayerTransCom, vPlayerScale.x, vAttackScale.x))
-	{
-		// 공격충돌
-		//m_pTransCom->Chase_Target(&vPlayerPos, 0.f, fTimeDelta);
-		m_pCollision->Wall_Collision_Check(this->m_pTransCom, this->m_pHitBox, &vDir);
-		m_pTransCom->Chase_Target_By_Direction(&vDir, 0.f, fTimeDelta);
-		m_STATE = FIREMAN_ATTACK;
-
-		if (m_AnimationTime >= 1.f)
-		{
-			CPoolMgr::GetInstance()->Reuse_Obj(m_pGraphicDev, &vPos, &vDir, 10);
-		}
-	}
-	else if (m_pCollision->Sphere_Collision(this->m_pSearchRange_TransCom, m_pPlayerTransCom, vPlayerScale.x, vSearchScale.x)/* && (m_STATE != FIREMAN_ATTACK)*/)
-	{
-		// 탐지충돌
-		//m_pTransCom->Chase_Target(&vPlayerPos, 0.f, fTimeDelta);
-		m_pCollision->Wall_Collision_Check(this->m_pTransCom, this->m_pHitBox, &vDir);
-		m_pTransCom->Chase_Target_By_Direction(&vDir, 5.f, fTimeDelta);
-		m_STATE = FIREMAN_WALK;
-	}
-	else if (m_STATE != FIREMAN_ATTACK)
-	{
-		m_STATE = FIREMAN_IDLE;
-	}
 	
-	CPoolMgr::GetInstance()->Reuse_PlayerBullet(m_pGraphicDev, &vPos, &vDir, 0, 100);
+		if (m_pCollision->Sphere_Collision(this->m_pRunawayRange_TransCom, m_pPlayerTransCom, vPlayerScale.x, vRunScale.x)/* && (m_STATE != FIREMAN_ATTACK)*/)
+		{
+			// 도망충돌
+			//m_pTransCom->Chase_Target(&vPlayerPos, 0.f, fTimeDelta);
+			vDir *= -1.f;
+			m_pCollision->Wall_Collision_Check(this->m_pTransCom, this->m_pHitBox, &vDir);
+			if (m_iSphereSkillTag != SKILL_STATICFIELD)
+				m_pTransCom->Chase_Target_By_Direction(&vDir, 5.f, fTimeDelta);
+			m_STATE = FIREMAN_WALK;
 
+		}
+		else if (m_pCollision->Sphere_Collision(this->m_pAttackRange_TransCom, m_pPlayerTransCom, vPlayerScale.x, vAttackScale.x))
+		{
+			// 공격충돌
+			//m_pTransCom->Chase_Target(&vPlayerPos, 0.f, fTimeDelta);
+			m_pCollision->Wall_Collision_Check(this->m_pTransCom, this->m_pHitBox, &vDir);
+			if (m_iSphereSkillTag != SKILL_STATICFIELD)
+				m_pTransCom->Chase_Target_By_Direction(&vDir, 0.f, fTimeDelta);
+			m_STATE = FIREMAN_ATTACK;
+
+			if (m_AnimationTime >= 1.f)
+			{
+				CPoolMgr::GetInstance()->Reuse_Obj(m_pGraphicDev, &vPos, &vDir, 10);
+			}
+		}
+		else if (m_pCollision->Sphere_Collision(this->m_pSearchRange_TransCom, m_pPlayerTransCom, vPlayerScale.x, vSearchScale.x)/* && (m_STATE != FIREMAN_ATTACK)*/)
+		{
+			// 탐지충돌
+			//m_pTransCom->Chase_Target(&vPlayerPos, 0.f, fTimeDelta);
+			m_pCollision->Wall_Collision_Check(this->m_pTransCom, this->m_pHitBox, &vDir);
+			if (m_iSphereSkillTag != SKILL_STATICFIELD)
+				m_pTransCom->Chase_Target_By_Direction(&vDir, 5.f, fTimeDelta);
+			m_STATE = FIREMAN_WALK;
+		}
+		else if (m_STATE != FIREMAN_ATTACK)
+		{
+			if (m_iSphereSkillTag != SKILL_STATICFIELD)
+			m_STATE = FIREMAN_IDLE;
+		}
+
+	
+//	CPoolMgr::GetInstance()->Reuse_PlayerBullet(m_pGraphicDev, &vPos, &vDir, 0, 100);
 	Look_Direction();
-
 	_vec3 vMonsterPos;
+
 	m_pTransCom->Get_Info(INFO_POS, &vMonsterPos);
 	m_pHitBoxTransCom->Set_Pos(vMonsterPos.x, vMonsterPos.y, vMonsterPos.z);
 	m_pSphereTransCom->Set_Pos(vMonsterPos.x, vMonsterPos.y, vMonsterPos.z);
@@ -190,20 +198,23 @@ void CFireMan::LateUpdate_Object(void)
 
 	if (!m_bFirst)
 	{
-		if (m_STATE == FIREMAN_WALK)
+		if (m_iSphereSkillTag != SKILL_STATICFIELD)
 		{
-			Walk_Animation_Run();
-			Run_Animation(5.f);
-		}
-		else if (m_STATE == FIREMAN_IDLE)
-		{
-			Idle_Animation_Run();
-			Run_Animation(5.f);
-		}
-		else if (m_STATE == FIREMAN_ATTACK)
-		{
-			Attack_Animation_Run();
-			Run_Animation(5.f);
+			if (m_STATE == FIREMAN_WALK)
+			{
+				Walk_Animation_Run();
+				Run_Animation(5.f);
+			}
+			else if (m_STATE == FIREMAN_IDLE)
+			{
+				Idle_Animation_Run();
+				Run_Animation(5.f);
+			}
+			else if (m_STATE == FIREMAN_ATTACK)
+			{
+				Attack_Animation_Run();
+				Run_Animation(5.f);
+			}
 		}
 	}
 

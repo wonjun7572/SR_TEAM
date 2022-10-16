@@ -20,12 +20,13 @@ HRESULT CMeteor::Ready_Object(const _vec3& Position)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 	_float fRand = (rand()%20)*0.1f;
+	m_fSphereScale = 1.f;
 
 	m_vTarget = Position;
 
 	m_pTransCom->Set_Pos(Position.x + 10.f + fRand, Position.y + 10.f,Position.z+ fRand);
 
-	m_pTransCom->Set_Scale(&_vec3(1.f, 1.f, 1.f));
+	m_pTransCom->Set_Scale(&_vec3(m_fSphereScale, m_fSphereScale, m_fSphereScale));
 
 	m_fAttack = 10.f;
 	m_bSphereSkill = true;

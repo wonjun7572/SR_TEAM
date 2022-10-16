@@ -152,10 +152,10 @@ void CCubePlayer::CoolTimer(void)
 	m_pBodyWorld->Get_Info(INFO_LOOK, &vLook);
 	D3DXVec3Normalize(&vLook, &vLook);
 
-	m_pBodyWorld->Move_Pos(&(vLook* m_iDashStack * m_fTimeDelta));
+	m_pBodyWorld->Move_Pos(&(vLook* (_float)m_iDashStack * m_fTimeDelta));
 
 	vLook *= -1.f;
-	m_pBodyWorld->Move_Pos(&(vLook * m_iKnuckStack * m_fTimeDelta));
+	m_pBodyWorld->Move_Pos(&(vLook * (_float)m_iKnuckStack * m_fTimeDelta));
 }
 
 void CCubePlayer::KnuckDown(const _float & fDamage)
@@ -488,7 +488,7 @@ void CCubePlayer::Move()
 
 	if (Key_Down(DIK_F))
 	{
-		//if (m_Weapon == Engine::Get_GameObject(STAGE_GUN, L"SNIPER"))
+		if (m_Weapon == Engine::Get_GameObject(STAGE_GUN, L"SNIPER"))
 		{
 			dynamic_cast<CBaseMapping*>(Engine::Get_GameObject(STAGE_MAPPING, L"BaseMapping"))->Switch_Worldmap();
 
@@ -780,25 +780,18 @@ void CCubePlayer::Inventory_Check(void)
 	switch (m_iSkillEnforce)
 	{
 	case 0:
-		cout << 0 << endl;
 		break;
 	case 1://우지1강화
-		cout << 1 << endl;
 		break;
 	case 2://우지2강화
-		cout << 2 << endl;
 		break;
 	case 3://샷건1강화
-		cout << 3 << endl;
 		break;
 	case 4://샷건2강화
-		cout << 4 << endl;
 		break;
 	case 5://스나1강화
-		cout << 5 << endl;
 		break;
 	case 6://스나2강화
-		cout << 6 << endl;
 		break;
 	default:
 		break;

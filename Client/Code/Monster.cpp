@@ -44,9 +44,11 @@ _int CMonster::Update_Object(const _float & fTimeDelta)
 
 	Engine::CGameObject::Update_Object(fTimeDelta);
 	m_pTransUICom->Billboard_Transform(fTimeDelta);
-	Add_RenderGroup(RENDER_NONALPHA, this);
+	Add_RenderGroup(RENDER_ALPHA, this);
 	Hit_Check(fTimeDelta);
 	Hit_SphereCheck(fTimeDelta);
+	Skill_SphereCheck(fTimeDelta);
+	Monster_Mapping();
 
 	return 0;
 }
@@ -251,13 +253,33 @@ void CMonster::Hit_SphereCheck(_float _deltaTime)
 		{
 			if (iter->GetSphereSkill() == true)
 			{
-				if (m_pCollision->Sphere_Collision(this->m_pSphereTransCom, dynamic_cast<CTransform*>(iter->Get_Component(TRANSFORM_COMP, ID_DYNAMIC)), 1.f, 2.f))
+				if (m_pCollision->Sphere_Collision(this->m_pSphereTransCom, dynamic_cast<CTransform*>(iter->Get_Component(TRANSFORM_COMP, ID_DYNAMIC)), 1.f, iter->GetSphereScale()*2.f))
 				{
 					m_tAbility->fCurrentHp -= dynamic_cast<CMeteor*>(iter)->Get_Attack();
 				}
 			}
 		}
 	}
+}
+
+void CMonster::Skill_SphereCheck(_float _deltaTime)
+{
+	if (!Get_Layer(STAGE_SKILL)->Get_GameList().empty())
+	{
+		m_pTransCom->Static_Update();
+		for (auto& iter : Get_Layer(STAGE_SKILL)->Get_GameList())
+		{
+			if (iter->GetSphereSkillTag() != 0)
+			{
+				if (m_pCollision->Sphere_Collision(this->m_pSphereTransCom, dynamic_cast<CTransform*>(iter->Get_Component(TRANSFORM_COMP, ID_DYNAMIC)), 1.f, iter->GetSphereScale()))
+				{
+					m_iSphereSkillTag = iter->GetSphereSkillTag();
+				}
+			}
+		}
+	}
+	else
+		m_iSphereSkillTag = 0;
 }
 
 void CMonster::Free(void)

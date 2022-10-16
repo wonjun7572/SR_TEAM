@@ -123,7 +123,7 @@ void CSparkEffect::resetParticle(ATTRIBUTE * attribute)
 	GetRandomVector(&attribute->vVelocity, &min, &max);
 	attribute->vPos = vSparkEffectPos + attribute->vVelocity / 1.5f;
 	attribute->vVelocity *= 10.f;
-	attribute->dwColor = D3DXCOLOR(GetRandomFloat(0.8f, 1.0f), GetRandomFloat(0.8f, 1.0f), GetRandomFloat(0.1f, 0.3f), 1.0f);
+	attribute->dwColor = D3DXCOLOR(GetRandomFloat(0.7f, .9f), GetRandomFloat(0.15f, 0.35f), GetRandomFloat(0.1f, 0.3f), 1.0f);
 
 	//attribute->vPos.z = vSparkEffectPos.z + 0.5f;
 	//attribute->vVelocity = vDir * 5000.f;

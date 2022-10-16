@@ -72,9 +72,11 @@ _int CSkeleton::Update_Object(const _float & fTimeDelta)
 	D3DXVECTOR3		vDir{ 1.f, 0.f, 0.f };
 	if (m_pCollision->Sphere_Collision(this->m_pSphereTransCom, m_pPlayerTransCom, vPlayerScale.x, vScale.x))
 	{
-		m_pTransCom->Chase_Target(&vPlayerPos, 1.f, fTimeDelta);
+		if (m_iSphereSkillTag != SKILL_STATICFIELD)
+			m_pTransCom->Chase_Target(&vPlayerPos, 1.f, fTimeDelta);
 		_matrix matRotY, matTrans, matWorld;
-		m_fFrame += fTimeDelta;
+		if (m_iSphereSkillTag != SKILL_STATICFIELD)
+			m_fFrame += fTimeDelta;
 
 		if (m_fFrame >= 5.f)
 		{
