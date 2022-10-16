@@ -73,6 +73,7 @@
 #include "Thorn.h"
 #include "Magma.h"
 #include "ItemBox.h"
+#include "Terret.h"
 
 #include "Supporter_Uzi.h"
 #include "MiddleBoss.h"
@@ -80,6 +81,7 @@
 #include "BattleCursier.h"
 #include "FlightBulletParticle.h"
 #include "Flight.h"
+
 
 CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CScene(pGraphicDev)
@@ -453,41 +455,41 @@ HRESULT CStage::Ready_Layer_Monster(const _tchar * pLayerTag)
 
 	CGameObject*		pGameObject = nullptr;
 
-	pGameObject = CFireMan::Create(m_pGraphicDev, _vec3(10.f, 0.6f, 10.f), L"FIREMAN");
+	//pGameObject = CFireMan::Create(m_pGraphicDev, _vec3(10.f, 0.6f, 10.f), L"FIREMAN");
+	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+
+	//if (!vecFireMan.empty())
+	//{
+	//	for (size_t i = 0; i < vecFireMan.size(); i++)
+	//	{
+	//		_tchar* szName = new _tchar[256]{};
+	//		wstring wName = L"Fireman_%d";
+	//		wsprintfW(szName, wName.c_str(), i);
+	//		NameList.push_back(szName);
+	//		pGameObject = CFireMan::Create(m_pGraphicDev, vecFireMan[i], szName);
+	//		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+	//	}
+	//}
+
+	//if (!vecSlime.empty())
+	//{
+	//	for (size_t i = 0; i < vecSlime.size(); i++)
+	//	{
+	//		_tchar* szName = new _tchar[256]{};
+	//		wstring wName = L"Slime_%d";
+	//		wsprintfW(szName, wName.c_str(), i);
+	//		NameList.push_back(szName);
+	//		pGameObject = CSlime::Create(m_pGraphicDev, vecSlime[i], szName);
+	//		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+	//	}
+	//}
+
+	pGameObject = CMiddleBoss::Create(m_pGraphicDev, _vec3(10.f, 2.6f, 10.f), L"MiddleBoss");
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
-
-	/*if (!vecFireMan.empty())
-	{
-		for (size_t i = 0; i < vecFireMan.size(); i++)
-		{
-			_tchar* szName = new _tchar[256]{};
-			wstring wName = L"Fireman_%d";
-			wsprintfW(szName, wName.c_str(), i);
-			NameList.push_back(szName);
-			pGameObject = CFireMan::Create(m_pGraphicDev, vecFireMan[i], szName);
-			NULL_CHECK_RETURN(pGameObject, E_FAIL);
-			FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
-		}
-	}
-
-	if (!vecSlime.empty())
-	{
-		for (size_t i = 0; i < vecSlime.size(); i++)
-		{
-			_tchar* szName = new _tchar[256]{};
-			wstring wName = L"Slime_%d";
-			wsprintfW(szName, wName.c_str(), i);
-			NameList.push_back(szName);
-			pGameObject = CSlime::Create(m_pGraphicDev, vecSlime[i], szName);
-			NULL_CHECK_RETURN(pGameObject, E_FAIL);
-			FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
-		}
-	}
-
-	pGameObject = CMiddleBoss::Create(m_pGraphicDev, _vec3(109.f, 0.6f, 10.f), L"MiddleBoss");
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);*/
 	
 	
 	//pGameObject = CKrakenBoss::Create(m_pGraphicDev, _vec3(10.f, 5.6f, 10.f), L"Kraken");
@@ -780,6 +782,12 @@ HRESULT CStage::Ready_Layer_Trap(const _tchar * pLayerTag)
 
 	CGameObject*		pGameObject = nullptr;
 
+	//pGameObject = CTerret::Create(m_pGraphicDev, _vec3(14.f, 0.6f, 10.f), L"Terret");
+	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+
+
+
 	/*if (!vecThrone.empty())
 	{
 		for (size_t i = 0; i < vecThrone.size(); i++)
@@ -821,6 +829,9 @@ HRESULT CStage::Ready_Layer_Trap(const _tchar * pLayerTag)
 			FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
 		}
 	}*/
+
+
+
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 

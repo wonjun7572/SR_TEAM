@@ -258,6 +258,7 @@
     <ClInclude Include="..\Header\Supporter_Uzi.h" />
     <ClInclude Include="..\Header\TargetCube.h" />
     <ClInclude Include="..\Header\Terrain.h" />
+    <ClInclude Include="..\Header\Terret.h" />
     <ClInclude Include="..\Header\TestCube.h" />
     <ClInclude Include="..\Header\Thorn.h" />
     <ClInclude Include="..\Header\ToolScene.h" />
@@ -400,6 +401,7 @@
     <ClCompile Include="..\Code\Supporter_Uzi.cpp" />
     <ClCompile Include="..\Code\TargetCube.cpp" />
     <ClCompile Include="..\Code\Terrain.cpp" />
+    <ClCompile Include="..\Code\Terret.cpp" />
     <ClCompile Include="..\Code\TestCube.cpp" />
     <ClCompile Include="..\Code\Thorn.cpp" />
     <ClCompile Include="..\Code\ToolScene.cpp" />

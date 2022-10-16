@@ -717,6 +717,12 @@
     <ClInclude Include="..\Header\FlightBulletParticle.h">
       <Filter>02. GameObject\01. For_Stage\98. Particle\01. EllipseParticle\FlightBulletParticle</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\Alien.h">
+      <Filter>02. GameObject\01. For_Stage\08. Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Terret.h">
+      <Filter>02. GameObject\01. For_Stage\18. Trap</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -1096,6 +1102,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\FlightBulletParticle.cpp">
       <Filter>02. GameObject\01. For_Stage\98. Particle\01. EllipseParticle\FlightBulletParticle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Alien.cpp">
+      <Filter>02. GameObject\01. For_Stage\08. Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Terret.cpp">
+      <Filter>02. GameObject\01. For_Stage\18. Trap</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
