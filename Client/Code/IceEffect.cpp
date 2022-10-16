@@ -46,8 +46,9 @@ _int CIceEffect::Update_Object(const _float & fTimeDelta)
 			//iter->vPos += iter->vVelocity * fTimeDelta;
 		if (!(-0.1f < iter->vPos.y && iter->vPos.y < 0.05f ))
 		{
-			iter->vPos += vtest * fTimeDelta  * .5f;
-			iter->vPos.y -= 5 * fTimeDelta*iter->fAge*iter->fAge;
+			iter->vPos += vtest * fTimeDelta  * .1f;
+			if(iter->fAge > 2.0)
+			iter->vPos.y -= 5 * fTimeDelta*(iter->fAge-2)*(iter->fAge-2);
 		}
 		iter->fAge += fTimeDelta;
 
@@ -122,9 +123,9 @@ void CIceEffect::resetParticle(ATTRIBUTE * attribute)
 	_vec3 min = _vec3(-1.0f, -1.0f, -1.0f);
 	_vec3 max = _vec3(1.0f, 1.0f, 1.0f);
 	GetRandomVector(&attribute->vVelocity, &min, &max);
-	attribute->vPos = vIceEffectPos + attribute->vVelocity / .75f;
+	attribute->vPos = vIceEffectPos + attribute->vVelocity / .33f;
 	attribute->vVelocity *= 10.f;
-	attribute->dwColor = D3DXCOLOR(GetRandomFloat(0.1f, 0.3f), GetRandomFloat(0.8f, 1.0f), GetRandomFloat(0.8f, 1.f), 1.0f);
+	attribute->dwColor = D3DXCOLOR(GetRandomFloat(0.8f, 0.9f), GetRandomFloat(0.8f, 1.0f), GetRandomFloat(0.8f, 1.f), 1.0f);
 
 	//attribute->vPos.z = vIceEffectPos.z + 0.5f;
 	//attribute->vVelocity = vDir * 5000.f;
@@ -132,5 +133,5 @@ void CIceEffect::resetParticle(ATTRIBUTE * attribute)
 	//attribute->dwColor = D3DXCOLOR(1.f, 1.f, 0.5f, 1.0f);
 
 	attribute->fAge = 0.0f;
-	attribute->fLifeTime = 2.f;
+	attribute->fLifeTime = 5.f;
 }

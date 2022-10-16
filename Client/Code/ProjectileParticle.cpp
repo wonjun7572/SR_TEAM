@@ -9,6 +9,7 @@
 #include "SoundWave.h"
 #include "SparkEffect.h"
 #include "RainbowCloudEffect.h"
+#include "StaticField.h"
 
 CProjectileParticle::CProjectileParticle(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CPSystem(pGraphicDev)
@@ -66,6 +67,10 @@ _int CProjectileParticle::Update_Object(const _float & fTimeDelta)
 			
 			iter->bAlive = false;
 			Dead_Effect();
+			CLayer* pLayer = Get_Layer(STAGE_SKILL);			
+			CGameObject* pGameObject2 = CStaticField::Create(m_pGraphicDev, m_vDeadPos);
+			NULL_CHECK_RETURN(pGameObject2, E_FAIL);
+			FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject2), );
 		}
 		
 	}
@@ -166,7 +171,7 @@ void CProjectileParticle::Dead_Effect()
 		if (!m_pIceEffectParticle)
 			m_pIceEffectParticle = dynamic_cast<CIceEffect*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"IceEffect"));
 		m_pIceEffectParticle->Set_PclePos(m_vDeadPos);
-		for (_int i = 0; i < 100; ++i)
+		for (_int i = 0; i < 150; ++i)
 		{
 			m_pIceEffectParticle->addParticle();
 		}
@@ -179,30 +184,30 @@ void CProjectileParticle::Dead_Effect()
 		{
 			m_pBubbleEffectParticle->addParticle();
 		}*/
-	/*	if (!m_CloudEffectParticle)
-			m_CloudEffectParticle = dynamic_cast<CCloudEffect*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"CloudEffect"));
-		m_CloudEffectParticle->Set_PclePos(m_vDeadPos);
+		/*if (!m_pCloudEffectParticle)
+			m_pCloudEffectParticle = dynamic_cast<CCloudEffect*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"CloudEffect"));
+		m_pCloudEffectParticle->Set_PclePos(m_vDeadPos);
 		for (_int i = 0; i < 70; ++i)
 		{
-			m_CloudEffectParticle->addParticle();
+			m_pCloudEffectParticle->addParticle();
 		}*/
 
-		/*if (!m_SparkEffectParticle)
-			m_SparkEffectParticle = dynamic_cast<CSparkEffect*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"SparkEffect"));
-		m_SparkEffectParticle->Set_PclePos(m_vDeadPos);
+		/*if (!m_pSparkEffectParticle)
+			m_pSparkEffectParticle = dynamic_cast<CSparkEffect*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"SparkEffect"));
+		m_pSparkEffectParticle->Set_PclePos(m_vDeadPos);
 		for (_int i = 0; i < 70; ++i)
 		{
-			m_SparkEffectParticle->addParticle();
+			m_pSparkEffectParticle->addParticle();
 		}*/
 
-		/*if (!m_SoundWaveParticle)
-			m_SoundWaveParticle = dynamic_cast<CSoundWave*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"SoundWave"));
-		m_SoundWaveParticle->Set_PclePos(m_vDeadPos);
+		/*if (!m_pSoundWaveParticle)
+			m_pSoundWaveParticle = dynamic_cast<CSoundWave*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"SoundWave"));
+		m_pSoundWaveParticle->Set_PclePos(m_vDeadPos);
 		for (_int i = 0; i < 70; ++i)
 		{
-			m_SoundWaveParticle->addParticle();
-		}*/
-
+			m_pSoundWaveParticle->addParticle();
+		}
+*/
 		/*if (!m_pRainbowCloudEffectParticle)
 			m_pRainbowCloudEffectParticle = dynamic_cast<CRainbowCloudEffect*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"RainbowCloudEffect"));
 		m_pRainbowCloudEffectParticle->Set_PclePos(m_vDeadPos);

@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "..\Header\PlayerMapping.h"
 #include "Meteor.h"
+#include "StaticField.h"
 
 CPlayerMapping::CPlayerMapping(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
@@ -256,6 +257,10 @@ void CPlayerMapping::Key_Input(const _float& fTimeDelta)
 	if (Mouse_Down(DIM_LB) && m_bWorldMap)
 	{
 		m_bBombard = true;
+		_float fGunSound = 1.f;
+		Engine::PlaySoundGun(L"MeteorCreate.wav", SOUND_EFFECT, 0.3f);
+		Engine::PlaySoundGun(L"MeteorCreate2.wav", SOUND_EFFECT, fGunSound);
+		dynamic_cast<CBaseMapping*>(Engine::Get_GameObject(STAGE_MAPPING, L"BaseMapping"))->Switch_Worldmap();
 	}
 }
 
@@ -281,10 +286,11 @@ HRESULT CPlayerMapping::Bombard(const _float& fTimeDelta)
 		vRand = _vec3(vPos.x - iRand, vPos.y, vPos.z - iRand);
 
 	CGameObject* pGameObject = CMeteor::Create(m_pGraphicDev, vRand);
+
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	CLayer* pLayer = Get_Layer(STAGE_SKILL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
-
+	
 	return S_OK;
 }
 
