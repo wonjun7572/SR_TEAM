@@ -316,6 +316,9 @@
     <Filter Include="02. GameObject\01. For_Stage\10. Item\Key">
       <UniqueIdentifier>{b2e09751-32a8-4e8e-be87-78466d0480d4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\02. For_Public\02. FlightCamera">
+      <UniqueIdentifier>{329db54d-547c-418c-8c69-f6a01e16c722}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -723,6 +726,15 @@
     <ClInclude Include="..\Header\Key.h">
       <Filter>99. Default\헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\Alien.h">
+      <Filter>99. Default\헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\FlightCamera.h">
+      <Filter>02. GameObject\02. For_Public\02. FlightCamera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\FlightSpot.h">
+      <Filter>02. GameObject\01. For_Stage\21. Rocket</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -1105,6 +1117,15 @@
     </ClCompile>
     <ClCompile Include="..\Code\Key.cpp">
       <Filter>99. Default\소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Alien.cpp">
+      <Filter>99. Default\소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\FlightCamera.cpp">
+      <Filter>02. GameObject\02. For_Public\02. FlightCamera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\FlightSpot.cpp">
+      <Filter>02. GameObject\01. For_Stage\21. Rocket</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
