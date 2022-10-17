@@ -25,7 +25,8 @@ private:
 	CTexture*				m_pTexture = nullptr;
 	CGameObject*			m_pEffect = nullptr;
 
-	_float					m_fTimedelta = 0.f;
+	_float					m_fAge = 0.f;
+	_float					m_fDuration = 0.f;
 
 public:
 	static CStaticField*	Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3& Position);

@@ -48,7 +48,9 @@ void CCubeHead::Key_Input(const _float & fTimeDelta)
 	_long MoveX = Get_DIMouseMove(DIMS_X);
 	_long MoveY = Get_DIMouseMove(DIMS_Y);
 	_long MoveZ = Get_DIMouseMove(DIMS_Z);
-
+	//_int _ia = 1;
+	//MoveX += _ia;
+	//_ia++;
 	m_pTransform->Rotation(ROT_Y, D3DXToRadian(MoveX / 10.f));
 	m_pTransform->Rotation(ROT_X, D3DXToRadian(MoveY / 10.f));
 }

@@ -275,7 +275,7 @@ void CMonster::Skill_SphereCheck(_float _deltaTime)
 				{
 					m_iSphereSkillTag = iter->GetSphereSkillTag();
 				}
-			}
+			}			
 		}
 	}
 	else

@@ -16,6 +16,7 @@ HRESULT CStaticField::Ready_Object(const _vec3 & Position)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 	m_fSphereScale = 5.f;
+	m_fDuration = 3.f;
 	m_pTransCom->Set_Pos(Position.x , Position.y , Position.z );
 
 	m_pTransCom->Set_Scale(&_vec3(m_fSphereScale, m_fSphereScale, m_fSphereScale));
@@ -30,8 +31,8 @@ _int CStaticField::Update_Object(const _float & fTimeDelta)
 {
 	CGameObject::Update_Object(fTimeDelta);
 	Add_RenderGroup(RENDER_UI, this);
-	m_fTimedelta += fTimeDelta;
-	if (m_fTimedelta > 2.f)
+	m_fAge += fTimeDelta;
+	if (m_fAge > m_fDuration)
 	{
 		m_bDead = true;
 		return -1;
@@ -79,9 +80,9 @@ HRESULT CStaticField::Add_Component(void)
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_SphereTexCom2", pComponent });
 
-	pComponent = m_pTexture = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Skull_Tex"));
+	pComponent = m_pTexture = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"White_Tex"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Skull_Tex", pComponent });
+	m_mapComponent[ID_STATIC].insert({ L"White_Tex", pComponent });
 
 	return S_OK;
 }
@@ -92,7 +93,7 @@ CStaticField * CStaticField::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3 &
 
 	if (FAILED(pInstance->Ready_Object(Position)))
 	{
-		MSG_BOX("Skull Object Create Fail");
+		MSG_BOX("CStaticField Object Create Fail");
 		Safe_Release(pInstance);
 		return nullptr;
 	}

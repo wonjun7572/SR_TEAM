@@ -10,6 +10,10 @@ class CProjectileParticle;
 class CPlayerMapping;
 class CRcEffect;
 class CFlight;
+class CShield;
+class CCubeParticle;
+class CDashCube;
+
 
 class CCubePlayer : public CGameObject
 {
@@ -133,7 +137,8 @@ private:
 	CBulletParticle* m_pBulletParicle = nullptr;
 	CShotParticle*	 m_pShotParicle = nullptr;
 	CProjectileParticle* m_pProjectileParicle = nullptr;
-
+	CCubeParticle* m_pCubeParticle = nullptr;
+	CDashCube*		m_pDashCube = nullptr;
 private:
 	_float			m_fLookAngle = 0.f;
 	_float			m_fDownAngle = 0.f;
@@ -182,6 +187,9 @@ private:
 	_int			m_iDmgItem = 0;
 	_int			m_iSpeedItem = 0;
 
+	//방벽관련 변수입니다
+	_bool			m_bShield = false;
+	CShield*		m_pShield = nullptr;
 public:
 	void			Capture_Uzi(void) { m_bUzi = true; }
 	void			Capture_Shotgun(void) { m_bShotgun = true; }
