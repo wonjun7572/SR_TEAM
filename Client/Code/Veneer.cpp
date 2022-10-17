@@ -23,7 +23,7 @@ _int CVeneer::Update_Object(const _float & fTimeDelta)
 {
 	m_fFrame += fTimeDelta;
 
-	if (m_fFrame > 2.f)
+	if (m_fFrame > 4.f)
 	{
 		return -1;
 	}
