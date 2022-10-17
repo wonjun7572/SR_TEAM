@@ -141,7 +141,10 @@ _int CMiddleBoss::Update_Object(const _float & fTimeDelta)
 void CMiddleBoss::LateUpdate_Object(void)
 {
 	Monster_Mapping();
+
 	Set_OnTerrain();
+	m_pTransCom->Static_Update();
+
 	if (m_tAbility->fCurrentHp <= 0.f)
 	{
 		m_pMonsterUI->Off_Switch();
@@ -285,7 +288,7 @@ _int CMiddleBoss::Update_Pattern(_float fTimeDelta)
 
 		if (m_STATE == MIDDLEBOSS_IDLE)
 		{
-			m_pTransCom->Chase_Target(&vPlayerPos, 0.f, fTimeDelta);
+			//m_pTransCom->Chase_Target(&vPlayerPos, 0.f, fTimeDelta);
 			m_ReloadTimer += fTimeDelta;
 
 			if (m_ReloadTimer >= 3.f)
@@ -307,7 +310,7 @@ _int CMiddleBoss::Update_Pattern(_float fTimeDelta)
 		}
 		else if (m_STATE == MIDDLEBOSS_ATTACK)
 		{
-			m_pTransCom->Chase_Target(&vPlayerPos, 0.f, fTimeDelta);
+			//m_pTransCom->Chase_Target(&vPlayerPos, 0.f, fTimeDelta);
 
 			if (m_PATTERN == MIDDLEBOSS_SKILL_NORMALATTACK)
 			{
@@ -316,13 +319,13 @@ _int CMiddleBoss::Update_Pattern(_float fTimeDelta)
 				D3DXVec3Normalize(&m_vDirectionLeft, &m_vDirectionLeft);
 				D3DXVec3Normalize(&m_vDirectionRight, &m_vDirectionRight);
 
-				if ((m_NORMALATTACK == MIDDLEBOSS_NORMALATTACK_1))
+				if ((m_NORMALATTACK == MIDDLEBOSS_NORMALATTACK_1) && m_AnimationTime >= 1.f)
 				{
-					CPoolMgr::GetInstance()->Reuse_Obj(m_pGraphicDev, &vShotgunRight, &m_vDirectionRight, m_tAbility->fDamage);
+					CPoolMgr::GetInstance()->Reuse_ExBullet(m_pGraphicDev, &vShotgunRight, &m_vDirectionRight, 20.f);
 				}
-				if ((m_NORMALATTACK == MIDDLEBOSS_NORMALATTACK_3))
+				if ((m_NORMALATTACK == MIDDLEBOSS_NORMALATTACK_3) && m_AnimationTime >= 1.f)
 				{
-					CPoolMgr::GetInstance()->Reuse_Obj(m_pGraphicDev, &vShotgunLeft, &m_vDirectionLeft, m_tAbility->fDamage);
+					CPoolMgr::GetInstance()->Reuse_ExBullet(m_pGraphicDev, &vShotgunLeft, &m_vDirectionLeft, 20.f);
 				}
 			}
 			else if (m_PATTERN == MIDDLEBOSS_SKILL_BOMBING)

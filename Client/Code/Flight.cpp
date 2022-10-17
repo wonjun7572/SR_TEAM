@@ -342,11 +342,13 @@ void CFlight::Fire_Bullet()
 	m_pTransform->Get_Info(INFO_POS, &vPos);
 	vPos.x += 0.5f * m_iPosSet;
 
-	_vec3 vLook;
-	m_pTransform->Get_Info(INFO_LOOK, &vLook);
-	//vLook *= -1;
-	vPos += vLook;
-	CPoolMgr::GetInstance()->Reuse_PlayerBullet(m_pGraphicDev, &vPos, &vLook, 5, 50.f);
+	_vec3 vMouse;
+	vMouse = m_pCalculator->Get_Mouse_World(g_hWnd);
+
+	_vec3 vLook = vMouse - vPos;
+	D3DXVec3Normalize(&vLook, &vLook);
+
+	CPoolMgr::GetInstance()->Reuse_ExBullet(m_pGraphicDev, &vPos, &vLook, 100.f);
 }
 
 void CFlight::Bombing()
