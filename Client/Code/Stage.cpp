@@ -408,19 +408,20 @@ HRESULT CStage::Ready_Layer_Wall(const _tchar * pLayerTag)
 	}
 	CloseHandle(hFile);
 
-	//if (!vecShop.empty())
-	//{
-	//	for (size_t i = 0; i < vecShop.size(); i++)
-	//	{
-	//		_tchar* szName = new _tchar[256]{};
-	//		wstring wName = L"CubeShop_%d";
-	//		wsprintfW(szName, wName.c_str(), i);
-	//		NameList.push_back(szName);
-	//		pGameObject = CCubeShop::Create(m_pGraphicDev, vecShop[i]);
-	//		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//		FAILED_CHECK_RETURN(pLayer->Add_GameObject(szName, pGameObject), E_FAIL);
-	//	}
-	//}
+	if (!vecShop.empty())
+	{
+		for (size_t i = 0; i < vecShop.size(); i++)
+		{
+			_vec3 vShop = { 0.f,0.5f,0.f };
+			_tchar* szName = new _tchar[256]{};
+			wstring wName = L"CubeShop_%d";
+			wsprintfW(szName, wName.c_str(), i);
+			NameList.push_back(szName);
+			pGameObject = CCubeShop::Create(m_pGraphicDev, vecShop[i]+ vShop);
+			NULL_CHECK_RETURN(pGameObject, E_FAIL);
+			FAILED_CHECK_RETURN(pLayer->Add_GameObject(szName, pGameObject), E_FAIL);
+		}
+	}
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
@@ -491,23 +492,23 @@ HRESULT CStage::Ready_Layer_Monster(const _tchar * pLayerTag)
 
 	CGameObject*		pGameObject = nullptr;
 
-	/*pGameObject = CFireMan::Create(m_pGraphicDev, _vec3(30.f, 0.6f, 30.f), L"FIREMAN");
+	pGameObject = CFireMan::Create(m_pGraphicDev, _vec3(30.f, 0.6f, 30.f), L"FIREMAN");
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);*/
+	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
 
-	//if (!vecFireMan.empty())
-	//{
-	//	for (size_t i = 0; i < vecFireMan.size(); i++)
-	//	{
-	//		_tchar* szName = new _tchar[256]{};
-	//		wstring wName = L"Fireman_%d";
-	//		wsprintfW(szName, wName.c_str(), i);
-	//		NameList.push_back(szName);
-	//		pGameObject = CFireMan::Create(m_pGraphicDev, vecFireMan[i], szName);
-	//		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
-	//	}
-	//}
+	if (!vecFireMan.empty())
+	{
+		for (size_t i = 0; i < vecFireMan.size(); i++)
+		{
+			_tchar* szName = new _tchar[256]{};
+			wstring wName = L"Fireman_%d";
+			wsprintfW(szName, wName.c_str(), i);
+			NameList.push_back(szName);
+			pGameObject = CFireMan::Create(m_pGraphicDev, vecFireMan[i], szName);
+			NULL_CHECK_RETURN(pGameObject, E_FAIL);
+			FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+		}
+	}
 
 	//if (!vecSlime.empty())
 	//{

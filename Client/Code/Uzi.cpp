@@ -15,6 +15,8 @@ CUzi::~CUzi()
 HRESULT CUzi::Ready_Object(void)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
+	
+
 	m_tAbility = new GUNABILITY;
 
 	m_tAbility->fBulletAttack =5.f;
@@ -35,6 +37,14 @@ _int CUzi::Update_Object(const _float & fTimeDelta)
 
 		Engine::Add_RenderGroup(RENDER_NONALPHA, this);
 		CGameObject::Update_Object(fTimeDelta);
+		CCubePlayer* m_pPlayer = nullptr;
+		
+		if (dynamic_cast<CCubePlayer*>(Engine::Get_GameObject(STAGE_CHARACTER, L"PLAYER")))
+		{
+			CCubePlayer* m_pPlayer = dynamic_cast<CCubePlayer*>(Engine::Get_GameObject(STAGE_CHARACTER, L"PLAYER"));
+			_int iDmg = m_pPlayer->Get_DmgItem();
+			m_tAbility->fBulletAttack = 5.f*(iDmg + 1);
+		}
 	}
 	return 0;	
 }

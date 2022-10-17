@@ -892,6 +892,7 @@ void CCubePlayer::Inventory_Check(void)
 	m_iDmgItem = dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->Get_WeaponDmg();
 	m_iSpeedItem = dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->Get_WeaponSpeed();
 	m_iSkillEnforce = dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->Get_EnforceCheck();
+
 	switch (m_iSkillEnforce)
 	{
 	case 0:
