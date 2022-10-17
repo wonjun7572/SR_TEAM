@@ -10,7 +10,7 @@
 #include "SparkEffect.h"
 #include "RainbowCloudEffect.h"
 #include "StaticField.h"
-
+#include "HyperionStrike.h"
 CProjectileParticle::CProjectileParticle(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CPSystem(pGraphicDev)
 {
@@ -36,7 +36,7 @@ _int CProjectileParticle::Update_Object(const _float & fTimeDelta)
 	for (list<ATTRIBUTE>::iterator iter = m_particles.begin(); iter != m_particles.end(); iter++)
 	{
 		iter->vPos += (iter->vVelocity) * fTimeDelta;
-		iter->vPos.y -= 0.01f* (Gravity*iter->fAge)*(Gravity* iter->fAge) * fTimeDelta;
+		iter->vPos.y -= 0.01f* (m_fGravity*iter->fAge)*(m_fGravity* iter->fAge) * fTimeDelta;
 		iter->fAge += fTimeDelta;
 		
 		m_fTextureTime += fTimeDelta;
@@ -68,9 +68,9 @@ _int CProjectileParticle::Update_Object(const _float & fTimeDelta)
 			iter->bAlive = false;
 			Dead_Effect();
 			CLayer* pLayer = Get_Layer(STAGE_SKILL);			
-			CGameObject* pGameObject2 = CStaticField::Create(m_pGraphicDev, m_vDeadPos);
-			NULL_CHECK_RETURN(pGameObject2, E_FAIL);
-			FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject2), );
+			CGameObject* pGameObject = CStaticField::Create(m_pGraphicDev, m_vDeadPos);
+			NULL_CHECK_RETURN(pGameObject, E_FAIL);
+			FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), );
 		}
 		
 	}
@@ -135,7 +135,7 @@ void CProjectileParticle::resetParticle(ATTRIBUTE * attribute)
 
 
 	CTransform* pTransform = nullptr;
-	Gravity = 45.f;
+	m_fGravity = 45.f;
 	//m_fDeadTime = 0;
 		
 		CTransform*		pPlayerTransformCom = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_CHARACTER, L"HEAD", TRANSFORM_COMP, ID_DYNAMIC));

@@ -40,13 +40,13 @@ _int CSparkEffect::Update_Object(const _float & fTimeDelta)
 		//
 
 		//iter->vPos 
-		_vec3 vtest;
-		D3DXVec3Normalize(&vtest, &(iter->vVelocity));
+		_vec3 vDir;
+		D3DXVec3Normalize(&vDir, &(iter->vVelocity));
 		//if(D3DXVec3Length(&(iter->vVelocity)) <1)
 		//iter->vPos += iter->vVelocity * fTimeDelta;
 		if (!(-0.1f < iter->vPos.y && iter->vPos.y < 0.05f))
 		{
-			iter->vPos += vtest * fTimeDelta  * .5f;
+			iter->vPos += vDir * fTimeDelta  * .5f;
 			iter->vPos.y -= 5 * fTimeDelta*iter->fAge*iter->fAge;
 		}
 		iter->fAge += fTimeDelta;

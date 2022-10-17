@@ -40,6 +40,7 @@ private:
 
 	HRESULT			Ready_Layer_DestroyWall(const _tchar* pLayerTag);
 	HRESULT			Ready_Layer_Skill(const _tchar* pLayerTag);
+	HRESULT			Ready_Layer_SkillCruiser(const _tchar* pLayerTag);
 
 	HRESULT			Ready_Layer_Creature(const _tchar* pLayerTag);
 

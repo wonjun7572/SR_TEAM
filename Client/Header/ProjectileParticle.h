@@ -34,7 +34,7 @@ public:
 private:
 	void		Dead_Effect();
 private:
-	_float		Gravity = 0.f;
+	_float		m_fGravity = 0.f;
 	_vec3		m_vDeadPos = { 0.f,0.f,0.f };
 	_int	m_iTextureIndex = 0;
 	_float  m_fTextureTime = 0;
