@@ -283,6 +283,7 @@
     <ClInclude Include="..\Header\UziPart3.h" />
     <ClInclude Include="..\Header\UziPart4.h" />
     <ClInclude Include="..\Header\UziPart5.h" />
+    <ClInclude Include="..\Header\Veneer.h" />
     <ClInclude Include="..\Header\Wall.h" />
     <ClInclude Include="..\Header\WallMapping.h" />
     <ClInclude Include="..\Header\Weapon.h" />
@@ -439,6 +440,7 @@
     <ClCompile Include="..\Code\UziPart3.cpp" />
     <ClCompile Include="..\Code\UziPart4.cpp" />
     <ClCompile Include="..\Code\UziPart5.cpp" />
+    <ClCompile Include="..\Code\Veneer.cpp" />
     <ClCompile Include="..\Code\Wall.cpp" />
     <ClCompile Include="..\Code\WallMapping.cpp" />
     <ClCompile Include="..\Code\Weapon.cpp" />

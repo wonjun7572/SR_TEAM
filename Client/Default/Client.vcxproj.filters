@@ -729,9 +729,6 @@
     <ClInclude Include="..\Header\FlightBulletParticle.h">
       <Filter>02. GameObject\01. For_Stage\98. Particle\01. EllipseParticle\FlightBulletParticle</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\Key.h">
-      <Filter>99. Default\헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\Alien.h">
       <Filter>99. Default\헤더 파일</Filter>
     </ClInclude>
@@ -771,8 +768,11 @@
     <ClInclude Include="..\Header\Shield.h">
       <Filter>99. Default\헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\Supporter_Shotgun.h">
-      <Filter>02. GameObject\01. For_Stage\17. Supporter</Filter>
+    <ClInclude Include="..\Header\Key.h">
+      <Filter>02. GameObject\01. For_Stage\10. Item\Key</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Veneer.h">
+      <Filter>99. Default\헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1154,9 +1154,6 @@
     <ClCompile Include="..\Code\FlightBulletParticle.cpp">
       <Filter>02. GameObject\01. For_Stage\98. Particle\01. EllipseParticle\FlightBulletParticle</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\Key.cpp">
-      <Filter>99. Default\소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\Alien.cpp">
       <Filter>99. Default\소스 파일</Filter>
     </ClCompile>
@@ -1196,8 +1193,11 @@
     <ClCompile Include="..\Code\Shield.cpp">
       <Filter>99. Default\소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\Supporter_Shotgun.cpp">
-      <Filter>02. GameObject\01. For_Stage\17. Supporter</Filter>
+    <ClCompile Include="..\Code\Key.cpp">
+      <Filter>02. GameObject\01. For_Stage\10. Item\Key</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Veneer.cpp">
+      <Filter>99. Default\소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

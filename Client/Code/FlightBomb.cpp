@@ -48,8 +48,6 @@ _int CFlightBomb::Update_Object(const _float & fTimeDelta)
 		wsprintfW(szName, wName.c_str(), g_iExplosion);
 		m_TcharList.push_back(szName);
 
-
-
 		g_iExplosion++;
 
 		// À§Ä¡ ¹Ù²ãÁà¾ßÇÔ

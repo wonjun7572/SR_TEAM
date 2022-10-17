@@ -187,7 +187,7 @@ void CCubePlayer::KnuckDown(const _float & fDamage, const _float& fDistance)
 	if (m_fGlobal_Cooltime >= 1.f)
 	{
 		m_tAbility->fHp -= fDamage;
-		m_iKnuckStack = fDistance;
+		m_iKnuckStack = _int(fDistance);
 		m_fGlobal_Cooltime = 0;
 	}
 }
@@ -639,9 +639,9 @@ void CCubePlayer::Move()
 			NULL_CHECK_RETURN(pGameObject, );
 			FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), );
 
-			for (auto& iter : Get_Layer(STAGE_SUPPORTER)->Get_GameList())
+			for (auto& iter : Get_Layer(STAGE_SUPPORTER)->Get_GameObjectMap())
 			{
-				dynamic_cast<CSupporter_Uzi*>(iter)->SetOrdered(true);
+				dynamic_cast<CSupporter_Uzi*>(iter.second)->SetOrdered(true);
 			}
 		}
 
@@ -892,6 +892,7 @@ void CCubePlayer::Inventory_Check(void)
 	m_iDmgItem = dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->Get_WeaponDmg();
 	m_iSpeedItem = dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->Get_WeaponSpeed();
 	m_iSkillEnforce = dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->Get_EnforceCheck();
+
 	switch (m_iSkillEnforce)
 	{
 	case 0:
