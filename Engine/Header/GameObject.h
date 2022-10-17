@@ -5,7 +5,7 @@
 
 BEGIN(Engine)
 
-class ENGINE_DLL CGameObject :	public CBase
+class ENGINE_DLL CGameObject : public CBase
 {
 protected:
 	explicit CGameObject(LPDIRECT3DDEVICE9 pGraphicDev);
@@ -31,6 +31,10 @@ public:
 	void	SetSphereSkill(_bool SphereSkill) { m_bSphereSkill = SphereSkill; }
 	_bool	GetSphereSkill() { return m_bSphereSkill; }
 
+	void	SetSphereSkillTag(_int SphereSkillTag) { m_iSphereSkillTag = SphereSkillTag; }
+	_int	GetSphereSkillTag() { return m_iSphereSkillTag; }
+	_float	GetSphereScale() { return m_fSphereScale; }
+
 private:
 	CComponent*		Find_Component(const _tchar* pComponentTag, COMPONENTID eID);
 
@@ -48,6 +52,8 @@ protected:
 	_bool				m_bFrustumCheck = true;
 
 	_bool				m_bSphereSkill = false;
+	_int 				m_iSphereSkillTag = 0;
+	_float				m_fSphereScale = 0.f;
 
 public:
 	virtual void	Free(void);

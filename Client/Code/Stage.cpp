@@ -70,6 +70,7 @@
 #include "CloudEffect.h"
 #include "BrownCloudEffect.h"
 #include "Illusioner.h"
+#include "EveryParticle.h"
 
 #include "Thorn.h"
 #include "Magma.h"
@@ -214,6 +215,10 @@ HRESULT CStage::Ready_Layer_Environment(const _tchar * pLayerTag)
 	pGameObject = CCloudEffect::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"CloudEffect", pGameObject), E_FAIL);
+
+	pGameObject = CRainbowCloudEffect::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"RainbowCloudEffect", pGameObject), E_FAIL);
 
 	pGameObject = CBrownCloudEffect::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);

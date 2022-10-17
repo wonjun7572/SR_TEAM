@@ -28,6 +28,7 @@ protected:
 protected:
 	void				Hit_Check(_float _deltaTime);
 	void				Hit_SphereCheck(_float _deltaTime);
+	void				Skill_SphereCheck(_float _deltaTime);
 
 public:
 	void          Set_Damaged(_float iDamage)
@@ -63,6 +64,8 @@ protected:
 	CTransform*			m_pAttackRange_TransCom = nullptr;		//	공격범위
 	CTransform*			m_pRunawayRange_TransCom = nullptr;		//	근처에오면 도망(원거리몹)
 	////////////////////////////////////////////////////////////////////////
+
+	_bool				m_b;
 
 	MONSTERABILITY*		m_tAbility;
 

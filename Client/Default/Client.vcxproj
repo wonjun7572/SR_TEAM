@@ -258,6 +258,7 @@
     <ClInclude Include="..\Header\Stage.h" />
     <ClInclude Include="..\Header\StaticCamera.h" />
     <ClInclude Include="..\Header\RainbowCloudEffect.h" />
+    <ClInclude Include="..\Header\StaticField.h" />
     <ClInclude Include="..\Header\Supporter.h" />
     <ClInclude Include="..\Header\Supporter_Uzi.h" />
     <ClInclude Include="..\Header\TargetCube.h" />
@@ -405,6 +406,7 @@
     <ClCompile Include="..\Code\Stage.cpp" />
     <ClCompile Include="..\Code\StaticCamera.cpp" />
     <ClCompile Include="..\Code\RainbowCloudEffect.cpp" />
+    <ClCompile Include="..\Code\StaticField.cpp" />
     <ClCompile Include="..\Code\Supporter.cpp" />
     <ClCompile Include="..\Code\Supporter_Uzi.cpp" />
     <ClCompile Include="..\Code\TargetCube.cpp" />

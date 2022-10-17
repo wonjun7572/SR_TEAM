@@ -39,6 +39,8 @@ _int CTestCube::Update_Object(const _float& fTimeDelta)
 {
 	if (m_bDead)
 	{
+		_float fGunSound = 1.f;
+		Engine::PlaySoundGun(L"EXPLOLRG.wav", SOUND_EFFECT, fGunSound);
 		m_pStaticCam->CameraShaking();
 		return -1;
 	}
