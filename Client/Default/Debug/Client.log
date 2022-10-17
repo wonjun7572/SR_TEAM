@@ -24,7 +24,7 @@
   TestCube.cpp
   Terret.cpp
   Terrain.cpp
-c:\users\sam51\desktop\sr_team\client\code\terrain.cpp(78): warning C4101: 'expn' :참조되지 않은 지역 변수입니다.
+c:\users\decoyz\desktop\sr_team\client\code\terrain.cpp(78): warning C4101: 'expn' :참조되지 않은 지역 변수입니다.
   TargetCube.cpp
   Supporter_Uzi.cpp
   Supporter.cpp
@@ -50,7 +50,7 @@ c:\users\sam51\desktop\sr_team\client\code\terrain.cpp(78): warning C4101: 'expn
   Shotgun.cpp
   Shop.cpp
   ProjectileParticle.cpp
-c:\users\sam51\desktop\sr_team\client\code\projectileparticle.cpp(73): warning C4035: 'CProjectileParticle::Update_Object': 반환 값이 없습니다.
+c:\users\decoyz\desktop\sr_team\client\code\projectileparticle.cpp(73): warning C4035: 'CProjectileParticle::Update_Object': 반환 값이 없습니다.
   PoolMgr.cpp
   PlayerUI.cpp
   PlayerMapping.cpp
@@ -79,7 +79,7 @@ c:\users\sam51\desktop\sr_team\client\code\projectileparticle.cpp(73): warning C
   ItemBox.cpp
   Item.cpp
   Inventory.cpp
-c:\users\sam51\desktop\sr_team\client\code\inventory.cpp(416): warning C4018: '>': signed 또는 unsigned가 일치하지 않습니다.
+c:\users\decoyz\desktop\sr_team\client\code\inventory.cpp(416): warning C4018: '>': signed 또는 unsigned가 일치하지 않습니다.
   ImguiMgr.cpp
   Illusioner.cpp
   HitBarUI.cpp
@@ -107,7 +107,7 @@ c:\users\sam51\desktop\sr_team\client\code\inventory.cpp(416): warning C4018: '>
   FlightBomb.cpp
   Flight.cpp
   FlameEffect.cpp
-c:\users\sam51\desktop\sr_team\client\code\flameeffect.cpp(120): warning C4305: '인수': 'double'에서 'Engine::_float'(으)로 잘립니다.
+c:\users\decoyz\desktop\sr_team\client\code\flameeffect.cpp(120): warning C4305: '인수': 'double'에서 'Engine::_float'(으)로 잘립니다.
   Explosion.cpp
   ExBullet.cpp
   DynamicCamera.cpp
@@ -115,9 +115,9 @@ c:\users\sam51\desktop\sr_team\client\code\flameeffect.cpp(120): warning C4305: 
   컴파일하고 있습니다...
   CubeShop.cpp
   CubePlayer.cpp
-c:\users\sam51\desktop\sr_team\client\code\cubeplayer.cpp(179): warning C4244: '인수': 'Engine::_int'에서 'FLOAT'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\sam51\desktop\sr_team\client\code\cubeplayer.cpp(182): warning C4244: '인수': 'Engine::_int'에서 'FLOAT'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\sam51\desktop\sr_team\client\code\cubeplayer.cpp(190): warning C4244: '=': 'const Engine::_float'에서 'Engine::_int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\decoyz\desktop\sr_team\client\code\cubeplayer.cpp(179): warning C4244: '인수': 'Engine::_int'에서 'FLOAT'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\decoyz\desktop\sr_team\client\code\cubeplayer.cpp(182): warning C4244: '인수': 'Engine::_int'에서 'FLOAT'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\decoyz\desktop\sr_team\client\code\cubeplayer.cpp(190): warning C4244: '=': 'const Engine::_float'에서 'Engine::_int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
   CubeLeg.cpp
   CubeHead.cpp
   CubeHand.cpp
@@ -161,5 +161,5 @@ c:\users\sam51\desktop\sr_team\client\code\cubeplayer.cpp(190): warning C4244: '
   GraphEditor.cpp
   코드를 생성하고 있습니다...
      ../Bin\Client.lib 라이브러리 및 ../Bin\Client.exp 개체를 생성하고 있습니다.
-  Client.vcxproj -> C:\Users\sam51\Desktop\SR_TEAM\Client\Default\../Bin\Client.exe
+  Client.vcxproj -> C:\Users\DecoyZ\Desktop\SR_TEAM\Client\Default\../Bin\Client.exe
   Client.vcxproj -> ../Bin\Client.pdb (Full PDB)

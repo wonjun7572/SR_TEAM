@@ -78,7 +78,7 @@ private:
 
 public:
 	CWeapon*		Get_Weapon() { return m_Weapon; }
-	
+	_int			Get_DmgItem() { return m_iDmgItem; }
 private:
 	map<const _tchar*, CGameObject*>	m_mapPlayerBody;
 
@@ -99,7 +99,7 @@ private:
 	void			Fire_Bullet(void);
 	void			Gun_Check(void);
 	void			Inventory_Check(void); //인벤토리관련 함수
-
+	
 private:
 	void			Jump(void);
 	_bool			m_bJump = false;
