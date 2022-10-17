@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "..\Header\Explosion.h"
 #include "TransAxisBox.h"
+#include "CubePlayer.h"
+#include "Monster.h"
 
 CExplosion::CExplosion(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
@@ -19,8 +21,8 @@ HRESULT CExplosion::Ready_Object(const _vec3 & vPos, _tchar * Name)
 
 	m_ANIMATION = EXPLOSION_1;
 
-	m_pTransCom->Set_Pos(vPos.x, 0.f, vPos.z);
-	m_pTransCom->Set_Scale(&_vec3(1.f, 1.f, 1.f));
+	m_pTransCom->Set_Pos(vPos.x, vPos.y, vPos.z);
+	m_pTransCom->Set_Scale(&_vec3(5.f, 5.f, 5.f));
 	m_pTransCom->Static_Update();
 
 	return S_OK;
@@ -37,12 +39,20 @@ _int CExplosion::Update_Object(const _float & fTimeDelta)
 	{
 		m_bFirst = false;
 
+		m_pPlayerTransCom = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_CHARACTER, L"PLAYER", TRANSFORM_COMP, ID_DYNAMIC));
+
 		Engine::Get_Scene()->New_Layer(m_AnimationName);
 		pMyLayer = Engine::Get_Layer(m_AnimationName);
 		FAILED_CHECK_RETURN(Build(), -1);
 
 		Load_Animation(L"../../Data/Explosion/EXPLOSION_ANIMATION_1.dat", 0);
 		Load_Animation(L"../../Data/Explosion/EXPLOSION_ANIMATION_2.dat", 1);
+	}
+
+	if (m_AnimationTime >= 1.f && m_ANIMATION == EXPLOSION_1)
+	{
+		Hit_Check_Player();
+		Hit_Check_Monster();
 	}
 
 	m_fTimeDelta = fTimeDelta;
@@ -72,7 +82,53 @@ HRESULT CExplosion::Add_Component(void)
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ TRANSFORM_COMP, pComponent });
 
+	pComponent = m_pCollision = dynamic_cast<CCollision*>(Engine::Clone_Proto(COLLISION_COMP));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[ID_STATIC].insert({ COLLISION_COMP, pComponent });
+
 	return S_OK;
+}
+
+void CExplosion::Hit_Check_Player(void)
+{
+
+	_vec3 vPlayerPos;
+	m_pPlayerTransCom->Get_Info(INFO_POS, &vPlayerPos);
+	_vec3 vPlayerScale;
+	m_pPlayerTransCom->Get_Scale(&vPlayerScale);
+	_vec3 vScale;
+	m_pTransCom->Get_Scale(&vScale);
+
+	if (m_pCollision->Sphere_Collision(this->m_pTransCom, m_pPlayerTransCom, vScale.x, vPlayerScale.x))
+	{
+		CLayer* pLayer = Engine::Get_Layer(STAGE_CHARACTER);
+		CCubePlayer* pPlayer = dynamic_cast<CCubePlayer*>(pLayer->Get_GameObject(L"PLAYER"));
+		pPlayer->KnuckDown(10.f, 15.f);
+	}
+	
+}
+
+void CExplosion::Hit_Check_Monster(void)
+{
+	CLayer*	pMonsterLayer = Engine::Get_Layer(STAGE_MONSTER);
+
+	_vec3 vScale;
+	m_pTransCom->Get_Scale(&vScale);
+
+	for (auto& iter : pMonsterLayer->Get_GameList())
+	{
+		CTransform* pTransform = dynamic_cast<CTransform*>(iter->Get_Component(TRANSFORM_COMP, ID_DYNAMIC));
+
+		_vec3 vMonsterScale;
+		pTransform->Get_Scale(&vMonsterScale);
+		_vec3 vMonsterPos;
+		pTransform->Get_Info(INFO_POS, &vMonsterPos);
+
+		if (m_pCollision->Sphere_Collision(this->m_pTransCom, pTransform, vScale.x, vMonsterScale.x))
+		{
+			dynamic_cast<CMonster*>(iter)->Set_Damaged(100.f);
+		}
+	}
 }
 
 HRESULT CExplosion::Build(void)

@@ -187,6 +187,7 @@
     <ClInclude Include="..\Header\CubeShop.h" />
     <ClInclude Include="..\Header\DynamicCamera.h" />
     <ClInclude Include="..\Header\EveryParticle.h" />
+    <ClInclude Include="..\Header\ExBullet.h" />
     <ClInclude Include="..\Header\Explosion.h" />
     <ClInclude Include="..\Header\FlameEffect.h" />
     <ClInclude Include="..\Header\Flight.h" />
@@ -341,6 +342,7 @@
     <ClCompile Include="..\Code\CubePlayer.cpp" />
     <ClCompile Include="..\Code\CubeShop.cpp" />
     <ClCompile Include="..\Code\DynamicCamera.cpp" />
+    <ClCompile Include="..\Code\ExBullet.cpp" />
     <ClCompile Include="..\Code\Explosion.cpp" />
     <ClCompile Include="..\Code\FlameEffect.cpp" />
     <ClCompile Include="..\Code\Flight.cpp" />

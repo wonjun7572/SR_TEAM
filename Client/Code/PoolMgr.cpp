@@ -4,6 +4,7 @@
 #include "Export_Function.h"
 #include "Bullet.h"
 #include "SpBullet.h"
+#include "ExBullet.h"
 
 IMPLEMENT_SINGLETON(CPoolMgr)
 
@@ -32,6 +33,14 @@ void CPoolMgr::Collect_PlayerBullet(CGameObject * pObj)
 	m_PlayerBulletPool.push_back(pObj);
 }
 
+void CPoolMgr::Collect_ExBullet(CGameObject * pObj)
+{
+	if (pObj == nullptr)
+		return;
+
+	m_ExBulletPool.push_back(pObj);
+}
+
 HRESULT CPoolMgr::Reuse_Obj(LPDIRECT3DDEVICE9& pGraphicDev, const _vec3* vPos, const _vec3* vDir, _float _fDamage)
 {
 	CGameObject* pObj = nullptr;
@@ -56,7 +65,7 @@ HRESULT CPoolMgr::Reuse_Obj(LPDIRECT3DDEVICE9& pGraphicDev, const _vec3* vPos, c
 	}
 
 	dynamic_cast<CBullet*>(pObj)->Set_Pos(*vPos);
-	dynamic_cast<CBullet*>(pObj)->MoveToDir(*vDir);
+	//dynamic_cast<CBullet*>(pObj)->MoveToDir(*vDir);
 
 	return S_OK;
 }
@@ -86,7 +95,36 @@ HRESULT CPoolMgr::Reuse_PlayerBullet(LPDIRECT3DDEVICE9 & pGraphicDev, const _vec
 	}
 
 	dynamic_cast<CSpBullet*>(pObj)->Set_Pos(*vPos);
-	dynamic_cast<CSpBullet*>(pObj)->MoveToDir(*vDir);
+	//dynamic_cast<CSpBullet*>(pObj)->MoveToDir(*vDir);
+
+	return S_OK;
+}
+
+HRESULT CPoolMgr::Reuse_ExBullet(LPDIRECT3DDEVICE9 & pGraphicDev, const _vec3 * vPos, const _vec3 * vDir, _float _fSpeed)
+{
+	CGameObject* pObj = nullptr;
+
+	if (m_ExBulletPool.empty())
+	{
+		pObj = CExBullet::Create(pGraphicDev, vPos, vDir, _fSpeed);
+		NULL_CHECK_RETURN(pObj, E_FAIL);
+
+		Engine::Get_Layer(STAGE_EXBULLET)->Add_GameList(pObj);
+	}
+	else
+	{
+		pObj = m_ExBulletPool.front();
+
+		NULL_CHECK_RETURN(pObj, E_FAIL);
+		m_ExBulletPool.pop_front();
+
+		dynamic_cast<CExBullet*>(pObj)->Set_Pos(*vPos);
+		dynamic_cast<CExBullet*>(pObj)->Set_Dir(*vDir);
+		//dynamic_cast<CExBullet*>(pObj)->MoveToDir(*vDir);
+		dynamic_cast<CExBullet*>(pObj)->Restore();
+
+		Engine::Get_Layer(STAGE_EXBULLET)->Add_GameList(pObj);
+	}
 
 	return S_OK;
 }
@@ -99,6 +137,11 @@ void CPoolMgr::Free()
 	}
 
 	for (auto& iter : m_PlayerBulletPool)
+	{
+		Safe_Release<CGameObject*>(iter);
+	}
+
+	for (auto& iter : m_ExBulletPool)
 	{
 		Safe_Release<CGameObject*>(iter);
 	}
