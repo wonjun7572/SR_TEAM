@@ -710,17 +710,17 @@ HRESULT CStage::Ready_Layer_GunItem(const _tchar * pLayerTag)
 
 	if (!vecGun.empty())
 	{
-		_vec3 vTemp = _vec3(1.f, 0.f, 0.f);
+		_vec3 vTemp = _vec3(1.f, 0.5f, 0.f);
 
-		pGameObject = CGetShotgun::Create(m_pGraphicDev, vecGun[1]+vTemp);
+		pGameObject = CGetShotgun::Create(m_pGraphicDev, vecGun[1]+ vTemp);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"GetShotgun", pGameObject), E_FAIL);
 
-		pGameObject = CGetUzi::Create(m_pGraphicDev, vecGun[0]);
+		pGameObject = CGetUzi::Create(m_pGraphicDev, vecGun[0] + vTemp);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"GetUzi", pGameObject), E_FAIL);
 
-		pGameObject = CGetSniper::Create(m_pGraphicDev, vecGun[2] + (vTemp * 2.f));
+		pGameObject = CGetSniper::Create(m_pGraphicDev, vecGun[2] + vTemp);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"GetSniper", pGameObject), E_FAIL);
 	}
