@@ -44,6 +44,7 @@ protected:
 
 public:
 	void			Kill_Obj(void) { m_bDead = true; }
+	SUPPORTER_ID		m_eSupporterID = SUPPORTER_END;
 
 protected:
 	_bool				m_bDead = false;

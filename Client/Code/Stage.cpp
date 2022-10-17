@@ -711,17 +711,17 @@ HRESULT CStage::Ready_Layer_GunItem(const _tchar * pLayerTag)
 
 	if (!vecGun.empty())
 	{
-		_vec3 vTemp = _vec3(1.f, 0.f, 0.f);
+		_vec3 vTemp = _vec3(1.f, 0.5f, 0.f);
 
-		pGameObject = CGetShotgun::Create(m_pGraphicDev, vecGun[1]+vTemp);
+		pGameObject = CGetShotgun::Create(m_pGraphicDev, vecGun[1]+ vTemp);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"GetShotgun", pGameObject), E_FAIL);
 
-		pGameObject = CGetUzi::Create(m_pGraphicDev, vecGun[0]);
+		pGameObject = CGetUzi::Create(m_pGraphicDev, vecGun[0] + vTemp);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"GetUzi", pGameObject), E_FAIL);
 
-		pGameObject = CGetSniper::Create(m_pGraphicDev, vecGun[2] + (vTemp * 2.f));
+		pGameObject = CGetSniper::Create(m_pGraphicDev, vecGun[2] + vTemp);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"GetSniper", pGameObject), E_FAIL);
 	}
@@ -851,8 +851,6 @@ HRESULT CStage::Ready_Layer_Trap(const _tchar * pLayerTag)
 	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	//FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
 
-
-
 	/*if (!vecThrone.empty())
 	{
 		for (size_t i = 0; i < vecThrone.size(); i++)
@@ -910,10 +908,6 @@ HRESULT CStage::Ready_Layer_Supporter(const _tchar * pLayerTag)
 
 	CGameObject*		pGameObject = nullptr;
 
-	pGameObject = CSupporter_Uzi::Create(m_pGraphicDev, _vec3(20.f, 0.5f, 20.f), L"SUPPORT_UZI");
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
-
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
 	return S_OK;
@@ -929,6 +923,10 @@ HRESULT CStage::Ready_Layer_PlayerFlight(const _tchar * pLayerTag)
 	pGameObject = CFlight::Create(m_pGraphicDev, _vec3(0, 30, 100), _vec3(0, 0, -2), L"FLIGHTPLAYER_ANI");
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"FLIGHTPLAYER", pGameObject), E_FAIL);
+
+	pGameObject = CFlight::Create(m_pGraphicDev, _vec3(0, 30, 100), _vec3(0, 0, -2), L"FLIGHTPLAYER_ANI2");
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"FLIGHTSHUTTLE", pGameObject), E_FAIL);
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 

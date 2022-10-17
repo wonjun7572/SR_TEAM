@@ -20,6 +20,7 @@ private:
 public:
 	static CGetSniper* Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3& vPos);
 
+
 protected:
 	void Free() override;
 };

@@ -43,6 +43,19 @@ public:
 	_bool			Get_Control() { return m_bControl; }
 	_bool			Get_Shoot() { return m_bShoot; }
 	void			Set_Shoot(_bool bShoot) { m_bShoot = bShoot; }
+
+	_bool			Get_ShuttleCam() { return m_bShuttleCam; }
+	void			Set_ShuttleCam(_bool bCam) { m_bShuttleCam = bCam; }
+
+	void			Set_Shuttle(_bool bShuttle , const _vec3& vDestination, SUPPORTER_ID eID) 
+	{
+		m_bShuttle = bShuttle; 
+		m_vDestination = vDestination; 
+		m_eSupporterID = eID;
+	}
+
+	_bool			Get_Shuttle() { return m_bShuttle; }
+	_vec3			Get_Desitination() { return m_vDestination; }
 private:
 	HRESULT			Build(void);
 	void			Key_Input(const _float& fTimeDelta);
@@ -50,15 +63,19 @@ private:
 	void			Fire_Bullet();
 	void			Bombing();
 	void			Move(const _float& fTimeDelta);
+	
 	_float			m_fRotX = 0.f;
 	_float			m_fRotY = 0.f;
 	_float			m_fTurn = 0.f;
 
+	_vec3			m_vDestination = _vec3(0.f, 0.f, 0.f);
 
 	_vec3			m_vDirection;
 	_vec3			m_vAngle;
 	_float			m_Frame = 0.f;
 
+	_bool			m_bShuttle;
+	_bool			m_bShuttleCam;
 	int iA = 0;
 
 	vector<_vec3>	m_ShufflePos;
@@ -77,6 +94,8 @@ private:
 	_float			m_fBulletTime = 0.f;
 	CFlightBulletParticle * m_pBulletParicle = nullptr;
 	
+	SUPPORTER_ID	m_eSupporterID;
+
 	list<_tchar*>	m_TcharList;
 
 public:

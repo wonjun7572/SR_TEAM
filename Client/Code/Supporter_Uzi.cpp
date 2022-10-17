@@ -81,6 +81,18 @@ _int CSupporter_Uzi::Update_Object(const _float & fTimeDelta)
 	_vec3 vPlayerPos;
 	m_pPlayerTransCom->Get_Info(INFO_POS, &vPlayerPos);
 
+	_vec3 vPosition;
+	m_pTransform->Get_Info(INFO_POS, &vPosition);
+
+	if (vPosition.y >= 0.6f)
+	{
+		m_pTransform->Move_Pos(&(_vec3(0.f, -1.f, 0.f) * fTimeDelta));
+	}
+	else if(vPosition.y <= 0.6f)
+	{
+		m_bSetCam = false;
+	}
+
 	//	플레이어가 근처에 없으면 따라가기
 	if (m_bGetOrder)
 	{
