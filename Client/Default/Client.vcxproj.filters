@@ -756,6 +756,24 @@
     <ClInclude Include="..\Header\ExBullet.h">
       <Filter>02. GameObject\01. For_Stage\06. Bullet\ExBullet</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CubeParticle.h">
+      <Filter>99. Default\헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\DashCube.h">
+      <Filter>99. Default\헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\DeffensiveMatrix.h">
+      <Filter>99. Default\헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\HyperionStrike.h">
+      <Filter>99. Default\헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Shield.h">
+      <Filter>99. Default\헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Supporter_Shotgun.h">
+      <Filter>02. GameObject\01. For_Stage\17. Supporter</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -1162,6 +1180,24 @@
     </ClCompile>
     <ClCompile Include="..\Code\ExBullet.cpp">
       <Filter>02. GameObject\01. For_Stage\06. Bullet\ExBullet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CubeParticle.cpp">
+      <Filter>99. Default\소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\DashCube.cpp">
+      <Filter>99. Default\소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\DeffensiveMatrix.cpp">
+      <Filter>99. Default\소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\HyperionStrike.cpp">
+      <Filter>99. Default\소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Shield.cpp">
+      <Filter>99. Default\소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Supporter_Shotgun.cpp">
+      <Filter>02. GameObject\01. For_Stage\17. Supporter</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

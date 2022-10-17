@@ -340,15 +340,15 @@ _int CMiddleBoss::Update_Pattern(_float fTimeDelta)
 					m_TcharList.push_back(szName);
 
 					_vec3 vRandom;
-					if (m_MissileCnt == 0)
+					if (m_MissileCnt % 5 == 0)
 						vRandom = _vec3(vPlayerPos.x + m_iRand, 30.f, vPlayerPos.z + m_iRand);
-					else if (m_MissileCnt == 1)
+					else if (m_MissileCnt % 5 == 1)
 						vRandom = _vec3(vPlayerPos.x + m_iRand, 30.f, vPlayerPos.z - m_iRand);
-					else if (m_MissileCnt == 2)
+					else if (m_MissileCnt % 5 == 2)
 						vRandom = _vec3(vPlayerPos.x - m_iRand, 30.f, vPlayerPos.z + m_iRand);
-					else if (m_MissileCnt == 3)
+					else if (m_MissileCnt % 5 == 3)
 						vRandom = _vec3(vPlayerPos.x - m_iRand, 30.f, vPlayerPos.z - m_iRand);
-					else if (m_MissileCnt == 4)
+					else if (m_MissileCnt % 5 == 4)
 						vRandom = _vec3(vPlayerPos.x + m_iRand, 30.f, vPlayerPos.z + m_iRand);
 
 
@@ -985,7 +985,7 @@ HRESULT CMiddleBoss::Add_Component(void)
 
 	pComponent = m_pTransCom = dynamic_cast<CTransform*>(Clone_Proto(TRANSFORM_COMP));
 	NULL_CHECK_RETURN(m_pTransCom, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ TRANSFORM_COMP, pComponent });
+	m_mapComponent[ID_DYNAMIC].insert({ TRANSFORM_COMP, pComponent });
 
 
 	pComponent = m_pHitBox = dynamic_cast<CHitBox*>(Engine::Clone_Proto(HITBOX_COMP));
