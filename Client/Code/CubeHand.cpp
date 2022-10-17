@@ -25,9 +25,7 @@ _int CCubeHand::Update_Object(const _float & fTimeDelta)
 
 	CGameObject::Update_Object(fTimeDelta);
 
-	
-	(RENDER_NONALPHA, this);
-
+	Add_RenderGroup(RENDER_NONALPHA, this);
 	return 0;
 }
 

@@ -33,7 +33,7 @@ HRESULT CTerret::Ready_Object(const _vec3 & vPos, _tchar * Name)
 	m_ATTACK = TERRETATTACK_START;
 
 	m_pTransCom->Set_Scale(&_vec3(1.f, 1.f, 1.f));
-	m_pTransCom->Set_Pos(vPos.x, vPos.y, vPos.z);
+	m_pTransCom->Set_Pos(vPos.x, vPos.y - 0.5f, vPos.z);
 	m_pTransCom->Static_Update();
 
 	m_pTransUICom->Set_Scale(0.1f, 0.1f, 0.1f);
@@ -166,13 +166,13 @@ void CTerret::LateUpdate_Object(void)
 		if (m_STATE == TERRET_IDLE)
 		{
 			Idle_Animation_Run();
-			Run_Animation(15.f);
+			Run_Animation(5.f);
 
 		}
 		else if (m_STATE == TERRET_SHOT)
 		{
 			Shoot_Animation_Run();
-			Run_Animation(15.f);
+			Run_Animation(5.f);
 
 		}
 	}

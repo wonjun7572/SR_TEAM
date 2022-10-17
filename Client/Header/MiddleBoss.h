@@ -1,6 +1,6 @@
 #pragma once
 #include "GameObject.h"
-
+#include "SparkEffect.h"
 class CMonsterUI;
 class CComboUI;
 
@@ -73,6 +73,7 @@ protected:
 	CComboUI*			m_pComboUI = nullptr;
 	CCubeCol*			m_pAnimationBox = nullptr;
 	CCalculator*	m_pCalculatorCom = nullptr;
+	CSparkEffect* m_pSparkEffectParticle = nullptr;
 	//CBrownCloudEffect* m_pBrownCloudEffectParticle = nullptr;
 	//#### 갈색구름
 //	if (!m_pBrownCloudEffectParticle)
@@ -94,7 +95,7 @@ private:
 	_vec3				vUIPos;
 	_bool				m_MappingInit = false;
 	TCHAR*				m_szCntName = new TCHAR[64];
-
+	_vec3		m_vDeadPos = { 0.f,0.f,0.f };
 	list<TCHAR*>		m_listMonsterCnt;
 private:
 	HRESULT				Add_Component(void);

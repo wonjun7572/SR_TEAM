@@ -1,7 +1,11 @@
 #pragma once
-#include "GameObject.h"
 
+#include "GameObject.h"
+#include "FlightBomb.h"
+#include "RcTex.h"
 class CFlightBulletParticle;
+
+
 
 class CFlight :
 	public CGameObject
@@ -20,6 +24,12 @@ private:
 	HRESULT			Add_Component(void);
 	CTransform*		m_pTransform = nullptr;
 	CCalculator*	m_pCalculator = nullptr;
+	CTransform*		m_pBomb = nullptr;
+
+	CTexture*		m_pBombTexture = nullptr;
+	CRcTex*			m_pBombBuffer = nullptr;
+	CRcTex*			m_pBufferCom = nullptr;
+
 
 public:
 	void			Replace(const _vec3& vPos, const _vec3& vAngle, const _vec3& vDir)
@@ -38,7 +48,7 @@ private:
 	void			Key_Input(const _float& fTimeDelta);
 	void			Look_Direction();
 	void			Fire_Bullet();
-
+	void			Bombing();
 	void			Move(const _float& fTimeDelta);
 	_float			m_fRotX = 0.f;
 	_float			m_fRotY = 0.f;
