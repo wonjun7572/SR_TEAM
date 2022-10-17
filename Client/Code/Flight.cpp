@@ -6,6 +6,7 @@
 #include "PoolMgr.h"
 #include "FlightCamera.h"
 #include "FlightSpot.h"
+#include "Supporter_Uzi.h"
 
 CFlight::CFlight(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
@@ -27,24 +28,6 @@ HRESULT CFlight::Ready_Object(const _vec3 & vPos, const _vec3 & vDir, _tchar * N
 	m_pTransform->Set_Scale(1.f, 1.f, 1.f);
 	m_pTransform->Set_Pos(vPos.x, vPos.y, vPos.z);
 	m_pTransform->Static_Update();
-	/*_vec3 vShuffle;
-	m_ShufflePos.reserve(24);
-	for (float i = 10.f; i <= 110.f; i += 10.f)
-	{
-		vShuffle = { i, 10.f, -50.f };
-		m_ShufflePos.push_back(vShuffle);
-
-		vShuffle = { -50.f, 15.f, i };
-		m_ShufflePos.push_back(vShuffle);
-
-		vShuffle = { i, 20.f, 170.f };
-		m_ShufflePos.push_back(vShuffle);
-
-		vShuffle = { 170.f, 25.f, i };
-		m_ShufflePos.push_back(vShuffle);
-	}*/
-
-
 
 	return S_OK;
 }
@@ -65,6 +48,48 @@ _int CFlight::Update_Object(const _float & fTimeDelta)
 	if (!m_pBulletParicle)
 		m_pBulletParicle = dynamic_cast<CFlightBulletParticle*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"FlightBulletParticle"));
 
+	if (m_bShuttle == true)
+	{
+		_vec3 vPos;
+		m_pTransform->Get_Info(INFO_POS, &vPos);
+
+		_vec3 vDesination;
+		vDesination.x = m_vDestination.x;
+		vDesination.y = 30.f;
+		vDesination.z = m_vDestination.y;
+
+		m_pTransform->Chase_Target(&vDesination, 15.f, fTimeDelta);
+		
+		if (fabs(vPos.x - vDesination.x) < 1.f && fabs(vPos.z - vDesination.z) < 1.f)
+		{
+			CLayer* pLayer = Get_Layer(STAGE_SUPPORTER);
+			if (m_eSupporterID == SUPPORTER_UZI)
+			{
+				CGameObject* pGameObject = CSupporter_Uzi::Create(m_pGraphicDev, vPos, L"SUPPORT_UZI");
+				NULL_CHECK_RETURN(pGameObject, E_FAIL);
+				FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"SUPPORT_UZI",pGameObject), E_FAIL);
+				dynamic_cast<CSupporter_Uzi*>(pGameObject)->Set_setcam(true);
+				m_bShuttle = false;
+			}
+			else if (m_eSupporterID == SUPPORTER_SHOTGUN)
+			{
+				// ±Â ÀßµÊ ¼­Æ÷ÅÍ ¼¦°ÇÀÌ¶û ½º³ª·Î ¸¸ ³ÖÀ¸¸é µÉµí.
+				CGameObject* pGameObject = CSupporter_Uzi::Create(m_pGraphicDev, vPos, L"SUPPORT_SHOTGUN");
+				NULL_CHECK_RETURN(pGameObject, E_FAIL);
+				FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"SUPPORT_SHOTGUN", pGameObject), E_FAIL);
+				m_bShuttle = false;
+			}
+			else if (m_eSupporterID == SUPPORTER_SNIPER)
+			{
+				// ±Â ÀßµÊ ¼­Æ÷ÅÍ ¼¦°ÇÀÌ¶û ½º³ª·Î ¸¸ ³ÖÀ¸¸é µÉµí.
+				CGameObject* pGameObject = CSupporter_Uzi::Create(m_pGraphicDev, vPos, L"SUPPORT_SNIPER");
+				NULL_CHECK_RETURN(pGameObject, E_FAIL);
+				FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"SUPPORT_SNIPER", pGameObject), E_FAIL);
+				m_bShuttle = false;
+			}
+		}
+	}
+	
 	if (m_bControl == true && static_cast<CFlightCamera*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"FlightCamera"))->Get_Maincam())
 	{
 		Key_Input(fTimeDelta);
@@ -121,7 +146,6 @@ HRESULT CFlight::Add_Component(void)
 	pComponent = m_pBombTexture = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Proto_CubePlayerTexture"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_CubePlayerTexture", pComponent });
-
 
 	pComponent = m_pBufferCom = dynamic_cast<CRcTex*>(Clone_Proto(L"Proto_RcTexCom"));
 	NULL_CHECK_RETURN(m_pBufferCom, E_FAIL);
@@ -264,19 +288,6 @@ HRESULT CFlight::Build(void)
 
 void CFlight::Key_Input(const _float& fTimeDelta)
 {
-	//m_pTransform->Move_Pos(&(-vLook * 1.f * fTimeDelta));
-
-	/*long		dwMouseMove = 0;
-
-	if (dwMouseMove = Engine::Get_DIMouseMove(DIMS_X))
-	{
-		m_pTransform->Rotation(ROT_Y, D3DXToRadian(dwMouseMove / 20.f));
-	}
-
-	if (dwMouseMove = Engine::Get_DIMouseMove(DIMS_Y))
-	{
-		m_pTransform->Rotation(ROT_X, D3DXToRadian(dwMouseMove / 20.f));
-	}*/
 
 	if (m_fBulletTime > 0.2f)
 	{
@@ -290,6 +301,7 @@ void CFlight::Key_Input(const _float& fTimeDelta)
 			m_fBulletTime = 0.f;
 		}
 	}
+
 	if (m_fBulletTime > 0.5f)
 	{
 		if (Get_DIMouseState(DIM_RB))
@@ -299,7 +311,6 @@ void CFlight::Key_Input(const _float& fTimeDelta)
 			m_fBulletTime = 0.f;
 		}
 	}
-
 }
 
 void CFlight::Look_Direction()
@@ -344,7 +355,6 @@ void CFlight::Fire_Bullet()
 
 	_vec3 vLook;
 	m_pTransform->Get_Info(INFO_LOOK, &vLook);
-	//vLook *= -1;
 	vPos += vLook;
 	CPoolMgr::GetInstance()->Reuse_PlayerBullet(m_pGraphicDev, &vPos, &vLook, 5, 50.f);
 }
@@ -357,9 +367,6 @@ void CFlight::Bombing()
 	NULL_CHECK_RETURN(pGameObject, );
 	CLayer* pLayer = Get_Layer(STAGE_SKILL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject),);
-
-
-	//cout << vDirection.x << " " << vDirection.y << " " << vDirection.z << " " << endl;
 }
 
 void CFlight::Move(const _float& fTimeDelta)

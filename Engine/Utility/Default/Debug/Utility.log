@@ -1,41 +1,5 @@
-﻿  VIBuffer.cpp
-  TriCol.cpp
-  Transform.cpp
-  Texture.cpp
-  TerrainTex.cpp
-  SphereTex.cpp
-  SoundMgr.cpp
-  Scene.cpp
-  Renderer.cpp
-  RcTex.cpp
-  RcRD.cpp
-  RcCol.cpp
-  Quarternion.cpp
-  ProtoMgr.cpp
-  PSystem.cpp
-  Management.cpp
-  LightMgr.cpp
-  Light.cpp
-  Layer.cpp
-  Interface.cpp
-  코드를 생성하고 있습니다...
-  컴파일하고 있습니다...
-  Hitbox.cpp
-  GameObject.cpp
-  FrustumCullMgr.cpp
-c:\users\beoms\onedrive\문서\github\sr_team\engine\utility\code\frustumcullmgr.cpp(37): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-  FlexibleAxisCube.cpp
-  DynamicBuffer.cpp
-  CubeTex.cpp
-  CubeCol.cpp
-  Component.cpp
-  Collision.cpp
-  Camera.cpp
-  Calculator.cpp
-  코드를 생성하고 있습니다...
-  LINK : ../Bin\Utility.dll을(를) 찾을 수 없거나 마지막 증분 링크에 의해 빌드되지 않았습니다. 전체 링크를 수행하고 있습니다.
-     ../Bin\Utility.lib 라이브러리 및 ../Bin\Utility.exp 개체를 생성하고 있습니다.
-  Utility.vcxproj -> C:\Users\beoms\OneDrive\문서\GitHub\SR_TEAM\Engine\Utility\Default\../Bin\Utility.dll
+﻿     ../Bin\Utility.lib 라이브러리 및 ../Bin\Utility.exp 개체를 생성하고 있습니다.
+  Utility.vcxproj -> C:\Users\sam51\Desktop\SR_TEAM\Engine\Utility\Default\../Bin\Utility.dll
   Utility.vcxproj -> ../Bin\Utility.pdb (Full PDB)
           1개 파일이 복사되었습니다.
           1개 파일이 복사되었습니다.

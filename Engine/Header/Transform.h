@@ -72,6 +72,11 @@ public:
 		m_vInfo[INFO_POS].z = fZ;
 	}
 
+	void				Set_PosY(const _float& fY)
+	{
+		m_vInfo[INFO_POS].y = fY;
+	}
+
 	_float				GetBoundingSphereRadius() 
 	{ 
 		_vec3 vScaleX, vScaleY, vScaleZ;

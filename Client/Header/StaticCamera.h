@@ -18,7 +18,7 @@ public:
 		const _float& fNear,
 		const _float& fFar);
 
-
+	void Update_NullCheck();
 	virtual _int Update_Object(const _float& fTimeDelta) override;
 	virtual void LateUpdate_Object(void) override;
 
@@ -31,6 +31,7 @@ public:
 public:
 	void		Set_MainCam(_bool is) { m_bMainCameraOn = is; }
 	_bool		Get_MainCam(void) { return m_bMainCameraOn; }
+
 private:
 	_bool		m_bMainCameraOn = true;
 
@@ -44,7 +45,15 @@ private:
 	CTransform*		m_pTransform_Target = nullptr;
 	CTransform*		m_pBombTransform	= nullptr;
 	CTransform*		m_pFlightTransform  = nullptr;
+	CTransform*		m_pShuttleTransform = nullptr;
 
+	CGameObject*	m_pSupUzi = nullptr;
+	CGameObject*	m_pSupShotgun = nullptr;
+	CGameObject*	m_pSupSniper = nullptr;
+
+	CTransform*		m_pSupporterUziTransform = nullptr;
+	CTransform*		m_pSupporterShotgunTransform = nullptr;
+	CTransform*		m_pSupporterSniperTransform = nullptr;
 
 	_float			m_fDistance;
 	_float			m_fSpeed = 10.f;
@@ -56,6 +65,7 @@ private:
 	_int			m_iReverse = 1;
 	_float			m_fFrame = 0.f;
 	_float			m_fFlightFrame = 0.f;
+	_float			m_fShuttleFrame = 0.f;
 	_bool			m_bPlayerHit = false;
 	_bool			m_bEarthQuake = false;
 

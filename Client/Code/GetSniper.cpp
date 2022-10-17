@@ -18,7 +18,7 @@ HRESULT CGetSniper::Ready_Object(const _vec3 & vPos)
 	m_pTransCom->Set_Rotation(ROT_Z, D3DXToRadian(270.f));
 	m_pTransCom->Set_Pos(vPos.x, vPos.y, vPos.z);
 	m_pTransCom->Static_Update();
-
+	m_eSupporterID = SUPPORTER_SNIPER;
 	m_pHitBoxTransCom->Set_Scale(0.5f, 0.5f, 0.5f);
 	m_pHitBoxTransCom->Set_Pos(vPos.x, vPos.y, vPos.z);
 	m_pHitBoxTransCom->Static_Update();
