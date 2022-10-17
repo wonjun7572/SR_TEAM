@@ -12,6 +12,7 @@
 #include "TransAxisBox.h"
 #include "FlightBomb.h"
 #include "Explosion.h"
+#include "Veneer.h"
 
 static _int m_iCnt = 0;
 
@@ -330,32 +331,33 @@ _int CMiddleBoss::Update_Pattern(_float fTimeDelta)
 			}
 			else if (m_PATTERN == MIDDLEBOSS_SKILL_BOMBING)
 			{
-
-
 				if (m_BOMBING == MIDDLEBOSS_BOMBING_3 && m_fMissileItv >= 1.f)
 				{
+					CLayer* pLayer = Get_Layer(STAGE_SKILL);
 					_tchar* szName = new _tchar[256]{};
 					wstring wName = L"Missile_%d";
 					wsprintfW(szName, wName.c_str(), m_MissileCnt);
 					m_TcharList.push_back(szName);
 
 					_vec3 vRandom;
-					if (m_MissileCnt == 0)
+					if (m_MissileCnt % 5 == 0)
 						vRandom = _vec3(vPlayerPos.x + m_iRand, 30.f, vPlayerPos.z + m_iRand);
-					else if (m_MissileCnt == 1)
+					else if (m_MissileCnt % 5 == 1)
 						vRandom = _vec3(vPlayerPos.x + m_iRand, 30.f, vPlayerPos.z - m_iRand);
-					else if (m_MissileCnt == 2)
+					else if (m_MissileCnt % 5 == 2)
 						vRandom = _vec3(vPlayerPos.x - m_iRand, 30.f, vPlayerPos.z + m_iRand);
-					else if (m_MissileCnt == 3)
+					else if (m_MissileCnt % 5 == 3)
 						vRandom = _vec3(vPlayerPos.x - m_iRand, 30.f, vPlayerPos.z - m_iRand);
-					else if (m_MissileCnt == 4)
+					else if (m_MissileCnt % 5 == 4)
 						vRandom = _vec3(vPlayerPos.x + m_iRand, 30.f, vPlayerPos.z + m_iRand);
 
+					CGameObject* pGameObject = CVeneer::Create(m_pGraphicDev, vRandom);
+					NULL_CHECK_RETURN(pGameObject, -1);
+					FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), -1);
 
 					// À§Ä¡ ¹Ù²ãÁà¾ßÇÔ
-					CGameObject* pGameObject = CFlightBomb::Create(m_pGraphicDev, vRandom, szName);
+					pGameObject = CFlightBomb::Create(m_pGraphicDev, vRandom, szName);
 					NULL_CHECK_RETURN(pGameObject, -1);
-					CLayer* pLayer = Get_Layer(STAGE_SKILL);
 					FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), -1);
 
 					m_fMissileItv = 0.f;
@@ -985,8 +987,7 @@ HRESULT CMiddleBoss::Add_Component(void)
 
 	pComponent = m_pTransCom = dynamic_cast<CTransform*>(Clone_Proto(TRANSFORM_COMP));
 	NULL_CHECK_RETURN(m_pTransCom, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ TRANSFORM_COMP, pComponent });
-
+	m_mapComponent[ID_DYNAMIC].insert({ TRANSFORM_COMP, pComponent });
 
 	pComponent = m_pHitBox = dynamic_cast<CHitBox*>(Engine::Clone_Proto(HITBOX_COMP));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);

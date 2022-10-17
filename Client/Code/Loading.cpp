@@ -232,6 +232,8 @@ _uint CLoading::Loading_ForStage(void)
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Red_Tex", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Particle/StaticParticle/StaticParticle000.png", TEX_NORMAL)), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"LightRed_Tex", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Particle/StaticParticle/LightRed.png", TEX_NORMAL)), E_FAIL);
 
+		// ¿Â∆«
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Veneer_Tex", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Blue_Aim.png", TEX_NORMAL)), E_FAIL);
 	}
 
 	m_bFinish = true;
