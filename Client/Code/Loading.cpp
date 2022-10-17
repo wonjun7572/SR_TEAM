@@ -219,8 +219,8 @@ _uint CLoading::Loading_ForStage(void)
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_ButtonThreeformCom", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/UI/ShopUI/UI%d.png", TEX_NORMAL, 2)), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_LevelLaserCom", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/UI/ShopUI/Level%d.png", TEX_NORMAL, 2)), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_HeavyCom", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/UI/ShopUI/Level%d.png", TEX_NORMAL, 2)), E_FAIL);
-		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_RailGunCom", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/UI/ShopUI/RailGun.png", TEX_NORMAL)), E_FAIL);
-		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_BurstModeCom", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/UI/ShopUI/RailGun.png", TEX_NORMAL)), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_RailGunCom", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/UI/ShopUI/Level%d.png", TEX_NORMAL, 2)), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_BurstModeCom", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/UI/ShopUI/Level%d.png", TEX_NORMAL, 2)), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_UpgradeStringCom", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/UI/ShopUI/UIupgrade.png", TEX_NORMAL)), E_FAIL);
 	}
 
