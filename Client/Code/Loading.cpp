@@ -161,6 +161,7 @@ _uint CLoading::Loading_ForStage(void)
 	{
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Minimap", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Texture2D/hud_minimap_bg.png", TEX_NORMAL)), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Bomb_TEX", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/TargetAim.png", TEX_NORMAL)), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Missile_TEX", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Blue_Aim.png", TEX_NORMAL)), E_FAIL);
 	}
 
 	// PNGtoCube

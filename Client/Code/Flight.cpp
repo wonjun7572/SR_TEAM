@@ -353,7 +353,7 @@ void CFlight::Bombing()
 {
 	_vec3 vPos;
 	m_pTransform->Get_Info(INFO_POS, &vPos);
-	CGameObject* pGameObject = CFlightBomb::Create(m_pGraphicDev, vPos);
+	CGameObject* pGameObject = CFlightBomb::Create(m_pGraphicDev, vPos, L"Bomb");
 	NULL_CHECK_RETURN(pGameObject, );
 	CLayer* pLayer = Get_Layer(STAGE_SKILL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject),);

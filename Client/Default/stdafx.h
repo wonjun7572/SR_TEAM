@@ -57,5 +57,6 @@
 
 extern HWND			g_hWnd;
 extern HINSTANCE	g_hInst;
+extern _uint		g_iExplosion;
 
 using namespace std;
