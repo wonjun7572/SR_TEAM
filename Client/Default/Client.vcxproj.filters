@@ -322,6 +322,9 @@
     <Filter Include="02. GameObject\01. For_Stage\06. Bullet\Missile">
       <UniqueIdentifier>{f0dd0066-ee25-4045-a22e-ba735c290f5e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\08. Monster\06.Alien">
+      <UniqueIdentifier>{da470dd9-c0e7-46c9-b655-b78d7fd01278}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -729,9 +732,6 @@
     <ClInclude Include="..\Header\Key.h">
       <Filter>99. Default\헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\Alien.h">
-      <Filter>99. Default\헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\Terret.h">
       <Filter>02. GameObject\01. For_Stage\18. Trap</Filter>
     </ClInclude>
@@ -749,6 +749,9 @@
     </ClInclude>
     <ClInclude Include="..\Header\Explosion.h">
       <Filter>02. GameObject\01. For_Stage\06. Bullet\Missile</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Alien.h">
+      <Filter>02. GameObject\01. For_Stage\08. Monster\06.Alien</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1133,9 +1136,6 @@
     <ClCompile Include="..\Code\Key.cpp">
       <Filter>99. Default\소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\Alien.cpp">
-      <Filter>99. Default\소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\Terret.cpp">
       <Filter>02. GameObject\01. For_Stage\18. Trap</Filter>
     </ClCompile>
@@ -1153,6 +1153,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\Explosion.cpp">
       <Filter>02. GameObject\01. For_Stage\06. Bullet\Missile</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Alien.cpp">
+      <Filter>02. GameObject\01. For_Stage\08. Monster\06.Alien</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

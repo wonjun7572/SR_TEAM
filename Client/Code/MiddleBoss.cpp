@@ -265,6 +265,11 @@ _int CMiddleBoss::Update_Pattern(_float fTimeDelta)
 	m_pAttackRange_TransCom->Get_Scale(&vAttackScale);
 	
 	_float HP = m_tAbility->fCurrentHp / m_tAbility->fMaxHp;
+
+	srand((unsigned int)time(NULL) + m_iRandom);
+	m_iRandom = rand() % 1000;
+	
+	int m_iRand = rand() % 10;
 	
 	if (!m_pCollision->Sphere_Collision(this->m_pSearchRange_TransCom, m_pPlayerTransCom, vPlayerScale.x, vSearchScale.x)
 		&& (m_STATE != MIDDLEBOSS_ATTACK))
@@ -322,6 +327,8 @@ _int CMiddleBoss::Update_Pattern(_float fTimeDelta)
 			}
 			else if (m_PATTERN == MIDDLEBOSS_SKILL_BOMBING)
 			{
+
+
 				if (m_BOMBING == MIDDLEBOSS_BOMBING_3 && m_fMissileItv >= 1.f)
 				{
 					_tchar* szName = new _tchar[256]{};
@@ -329,8 +336,21 @@ _int CMiddleBoss::Update_Pattern(_float fTimeDelta)
 					wsprintfW(szName, wName.c_str(), m_MissileCnt);
 					m_TcharList.push_back(szName);
 
+					_vec3 vRandom;
+					if (m_MissileCnt == 0)
+						vRandom = _vec3(vPlayerPos.x + m_iRand, 30.f, vPlayerPos.z + m_iRand);
+					else if (m_MissileCnt == 1)
+						vRandom = _vec3(vPlayerPos.x + m_iRand, 30.f, vPlayerPos.z - m_iRand);
+					else if (m_MissileCnt == 2)
+						vRandom = _vec3(vPlayerPos.x - m_iRand, 30.f, vPlayerPos.z + m_iRand);
+					else if (m_MissileCnt == 3)
+						vRandom = _vec3(vPlayerPos.x - m_iRand, 30.f, vPlayerPos.z - m_iRand);
+					else if (m_MissileCnt == 4)
+						vRandom = _vec3(vPlayerPos.x + m_iRand, 30.f, vPlayerPos.z + m_iRand);
+
+
 					// À§Ä¡ ¹Ù²ãÁà¾ßÇÔ
-					CGameObject* pGameObject = CFlightBomb::Create(m_pGraphicDev, _vec3(20.f, 50.f, 20.f), szName);
+					CGameObject* pGameObject = CFlightBomb::Create(m_pGraphicDev, vRandom, szName);
 					NULL_CHECK_RETURN(pGameObject, -1);
 					CLayer* pLayer = Get_Layer(STAGE_SKILL);
 					FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), -1);
