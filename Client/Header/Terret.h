@@ -16,7 +16,7 @@ public:
 private:
 	HRESULT				Add_Component(void);
 	void				HitCheck(_float _deltaTime);
-
+	void				Look_Direction(void);
 private:
 	HRESULT				Build(void);
 	void				Load_Animation(wstring FileName, _uint AnimationID);
