@@ -58,7 +58,7 @@ public:
 	void				Quaternion_Transform(void);
 
 
-	const _matrix*		Get_WorldMatrixPointer()					 {	return &m_matWorld; }
+	const _matrix*		                                                                                                                                     Get_WorldMatrixPointer()					 {	return &m_matWorld; }
 	void				Move_Pos(const _vec3* const pDir)			 {	m_vInfo[INFO_POS] += *pDir; }
 	void				Rotation(ROTATIONID eID, const _float& fAngle){	*(((_float*)&m_vAngle) + eID) += fAngle;	}
 	void				Rotation_Fix(ROTATIONID eID, const _float& fAngle) { *(((_float*)&m_vAngle) + eID) = fAngle; }

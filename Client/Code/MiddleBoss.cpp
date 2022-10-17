@@ -10,6 +10,9 @@
 #include "ComboUI.h"
 #include "MonsterMapping.h"
 #include "TransAxisBox.h"
+#include "FlightBomb.h"
+#include "Explosion.h"
+
 static _int m_iCnt = 0;
 
 CMiddleBoss::CMiddleBoss(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -25,7 +28,7 @@ CMiddleBoss::~CMiddleBoss()
 HRESULT CMiddleBoss::Ready_Object(const _vec3 & vPos, _tchar * Name)
 {
 	m_tAbility = new MIDDLEBOSSABILITY;
-	m_tAbility->fMaxHp = 200.f;
+	m_tAbility->fMaxHp = 10000.f;
 	m_tAbility->fCurrentHp = m_tAbility->fMaxHp;
 	m_tAbility->fDamage = 5.f;
 	m_tAbility->strObjTag = L"MiddleBoss";
@@ -33,57 +36,42 @@ HRESULT CMiddleBoss::Ready_Object(const _vec3 & vPos, _tchar * Name)
 
 	m_MonsterName = Name;
 
-
 	m_STATE = MIDDLEBOSS_IDLE;
-	m_BeforeState = MIDDLEBOSS_IDLE;
-	m_WALK = MIDDLEBOSSWALK_START;
+	m_WALK = MIDDLEBOSSWALK_1;
 	m_IDLE = MIDDLEBOSSIDLE_1;
-	m_ATTACK = MIDDLEBOSSATTACK_START;
-	m_SHOT = MIDDLEBOSSSHOT_START;
+	m_NORMALATTACK = MIDDLEBOSS_NORMALATTACK_1;
+	m_BOMBING = MIDDLEBOSS_BOMBING_1;
+	m_CRASH = MIDDLEBOSS_CRASH_1;
+	m_PATTERN = MIDDLEBOSS_SKILL_END;
 
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
-	//크기 설정 및 위치설정.
-	m_pTransCom->Set_Scale(&_vec3(1.f, 1.f, 1.f));
+
+	m_pTransCom->Set_Scale(&_vec3(10.f, 10.f, 10.f));
 	m_pTransCom->Set_Pos(vPos.x, vPos.y, vPos.z);
 	m_pTransCom->Static_Update();
 
-
-	//UI가져와야하고 
 	m_pTransUICom->Set_Scale(3.f, 1.f, 1.5f);
 	
-
 	_vec3 vAnimationPos;
 	m_pTransCom->Get_Info(INFO_POS, &vAnimationPos);
 
-
-	//애니메이션 넣으려면 나중에 이쪽에 넣어주어야한다. 
 	m_pHitBoxTransCom->Set_Scale(&_vec3(1.f, 1.f, 1.f));
 	m_pHitBoxTransCom->Set_Pos(vAnimationPos.x, vAnimationPos.y, vAnimationPos.z);
 	m_pHitBoxTransCom->Static_Update();
 
-	m_pSphereTransCom->Set_Scale(&_vec3(30.f, 30.f, 30.f));
-	m_pSphereTransCom->Set_Pos(vAnimationPos.x, vAnimationPos.y, vAnimationPos.z);
-	m_pSphereTransCom->Static_Update();
-
-
-	m_pSearchRange_TransCom->Set_Scale(&_vec3(20.f, 20.f, 20.f));
+	m_pSearchRange_TransCom->Set_Scale(&_vec3(30.f, 30.f, 30.f));
 	m_pSearchRange_TransCom->Set_Pos(vAnimationPos.x, vAnimationPos.y, vAnimationPos.z);
 	m_pSearchRange_TransCom->Static_Update();
 
-	m_pAttackRange_TransCom->Set_Scale(&_vec3(15.f, 15.f, 15.f));
+	m_pAttackRange_TransCom->Set_Scale(&_vec3(10.f, 10.f, 10.f));
 	m_pAttackRange_TransCom->Set_Pos(vAnimationPos.x, vAnimationPos.y, vAnimationPos.z);
 	m_pAttackRange_TransCom->Static_Update();
-
-
-
-
 
 	return S_OK;
 }
 
 _int CMiddleBoss::Update_Object(const _float & fTimeDelta)
 {
-
 	if (m_bDead)
 	{
 		Create_Item();
@@ -100,6 +88,10 @@ _int CMiddleBoss::Update_Object(const _float & fTimeDelta)
 	if (m_bFirst)
 	{
 		m_bFirst = false;
+
+		m_vPattern.push_back(MIDDLEBOSS_SKILL_NORMALATTACK);
+		m_vPattern.push_back(MIDDLEBOSS_SKILL_BOMBING);
+
 		Engine::Get_Scene()->New_Layer(m_MonsterName);
 		pMyLayer = Engine::Get_Layer(m_MonsterName);
 		FAILED_CHECK_RETURN(Build(), -1);
@@ -118,16 +110,11 @@ _int CMiddleBoss::Update_Object(const _float & fTimeDelta)
 		Load_Animation(L"../../Data/MiddleMonster/MIDDLE_LEFTATTACKINGSTART.dat", 9);
 		Load_Animation(L"../../Data/MiddleMonster/MIDDLE2_LEFTATTACK1.dat", 10);
 
-
-		Load_Animation(L"../../Data/MiddleMonster/MIDDLE2_SHOOTING20.dat", 11);
-		Load_Animation(L"../../Data/MiddleMonster/MIDDLE2_SHOOTING21.dat", 12);
-		Load_Animation(L"../../Data/MiddleMonster/MIDDLE2_SHOOTING23.dat", 13);
-		Load_Animation(L"../../Data/MiddleMonster/MIDDLE2_SHOOTING22.dat", 14);
+		Load_Animation(L"../../Data/MiddleMonster/MIDDLE2_Bombing_1.dat", 11);
+		Load_Animation(L"../../Data/MiddleMonster/MIDDLE2_Bombing_2.dat", 12);
+		Load_Animation(L"../../Data/MiddleMonster/MIDDLE2_Bombing_3.dat", 13);
+		Load_Animation(L"../../Data/MiddleMonster/MIDDLE2_Bombing_4.dat", 14);
 	}
-
-
-
-
 
 	Update_Pattern(fTimeDelta);
 	
@@ -141,16 +128,23 @@ _int CMiddleBoss::Update_Object(const _float & fTimeDelta)
 	_vec3 vMonsterPos;
 	m_pTransCom->Get_Info(INFO_POS, &vMonsterPos);
 	m_pHitBoxTransCom->Set_Pos(vMonsterPos.x, vMonsterPos.y, vMonsterPos.z);
-	m_pSphereTransCom->Set_Pos(vMonsterPos.x, vMonsterPos.y, vMonsterPos.z);
+	
+	m_pSearchRange_TransCom->Set_Pos(vMonsterPos.x, 0.f, vMonsterPos.z);
+	m_pAttackRange_TransCom->Set_Pos(vMonsterPos.x, 0.f, vMonsterPos.z);
+
 	m_pTransCom->Get_Info(INFO_POS, &vUIPos);
 	m_pTransUICom->Set_Pos(vUIPos.x, vUIPos.y + 8.f, vUIPos.z);
+
 	return 0;
 }
 
 void CMiddleBoss::LateUpdate_Object(void)
 {
 	Monster_Mapping();
+
 	Set_OnTerrain();
+	m_pTransCom->Static_Update();
+
 	if (m_tAbility->fCurrentHp <= 0.f)
 	{
 		m_pMonsterUI->Off_Switch();
@@ -159,45 +153,42 @@ void CMiddleBoss::LateUpdate_Object(void)
 
 	if (!m_bFirst)
 	{
-
-		if (m_STATE == MIDDLEBOSS_WALK)
-		{
-			Walk_Animation_Run();
-			Run_Animation(60.f);
-		}
-		else if (m_STATE == MIDDLEBOSS_IDLE)
+		if (m_STATE == MIDDLEBOSS_IDLE)
 		{
 			Idle_Animation_Run();
-			Run_Animation(150.f);
+			Run_Animation(100.f);
 		}
 		else if (m_STATE == MIDDLEBOSS_ATTACK)
 		{
-			Attack_Animation_Run();
-			Run_Animation(90.f);
-		}
-		else if (m_STATE == MIDDLEBOSS_SHOT)
-		{
-			
-			Shot_Animation_Run();
-			if (m_SHOT == MIDDLEBOSSSHOT_START)
-			Run_Animation(100.f);
-			
-			if (m_SHOT == MIDDLEBOSSSHOT_1)
-			Run_Animation(70.f);
-			
-			if (m_SHOT == MIDDLEBOSSSHOT_2)
-			Run_Animation(200.f);
-			
-			if (m_SHOT == MIDDLEBOSSSHOT_3)
-			Run_Animation(100.f);
-			
+			if (m_PATTERN == MIDDLEBOSS_SKILL_NORMALATTACK)
+			{
+				NormalAttack_Animation_Run();
 
-			
+				if (m_NORMALATTACK == MIDDLEBOSS_NORMALATTACK_1 || m_NORMALATTACK == MIDDLEBOSS_NORMALATTACK_3)
+					Run_Animation(5.f);
+				if (m_NORMALATTACK == MIDDLEBOSS_NORMALATTACK_2 || m_NORMALATTACK == MIDDLEBOSS_NORMALATTACK_4)
+					Run_Animation(50.f);
+			}
+			else if (m_PATTERN == MIDDLEBOSS_SKILL_CRASH)
+			{
+				Bombing_Animation_Run();
+				Run_Animation(10.f);
+			}
+			else if (m_PATTERN == MIDDLEBOSS_SKILL_BOMBING)
+			{
+				Bombing_Animation_Run();
+				if (m_BOMBING == MIDDLEBOSS_BOMBING_3)
+					Run_Animation(200.f);
+				else
+					Run_Animation(100.f);
+			}
+		}
+		else if (m_STATE == MIDDLEBOSS_MOVE)
+		{
+			Walk_Animation_Run();
+			Run_Animation(10.f);
 		}
 	}
-
-
-
 
 	CGameObject::LateUpdate_Object();
 }
@@ -212,8 +203,6 @@ void CMiddleBoss::Render_Object(void)
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransCom->Get_WorldMatrixPointer());
 	m_pAnimationBox->Render_Buffer();
 
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pSphereTransCom->Get_WorldMatrixPointer());
-	m_pSphereBufferCom->Render_Buffer();
 	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransUICom->Get_WorldMatrixPointer());
@@ -231,9 +220,9 @@ _int CMiddleBoss::Update_Pattern(_float fTimeDelta)
 
 	_vec3 vShotgunLeft;
 	_vec3 vShotgunRight;
-	_vec3 vRocketPack;
 	_vec3 m_vDirectionLeft;
 	_vec3 m_vDirectionRight;
+
 	for (auto& iter : pMyLayer->Get_GamePair())
 	{
 		if (0 == _tcscmp(iter.first, L"LEFTSHOOTING"))
@@ -248,26 +237,18 @@ _int CMiddleBoss::Update_Pattern(_float fTimeDelta)
 			dynamic_cast<CTransAxisBox*>(iter.second)->Get_Final(&matBoss);
 			vShotgunRight = { matBoss.m[3][0], matBoss.m[3][1], matBoss.m[3][2] };
 		}
-
-		if (0 == _tcscmp(iter.first, L"Battery"))
-		{
-			_matrix matBoss;
-			dynamic_cast<CTransAxisBox*>(iter.second)->Get_Final(&matBoss);
-			vRocketPack = { matBoss.m[3][0], matBoss.m[3][1], matBoss.m[3][2] };
-		}
 	}
 
 	if (m_pPlayerTransCom == nullptr)
 	{
 		m_pPlayerTransCom = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_CHARACTER, L"PLAYER", TRANSFORM_COMP, ID_DYNAMIC));
 	}
+	
 	if (m_pMonsterUI == nullptr)
 		m_pMonsterUI = dynamic_cast<CMonsterUI*>(Engine::Get_GameObject(STAGE_UI, L"MonsterUI"));
 	
 	if (m_pComboUI == nullptr)
 		m_pComboUI = dynamic_cast<CComboUI*>(Engine::Get_GameObject(STAGE_UI, L"ComboUI"));
-
-
 
 	_vec3 vPlayerPos;
 	m_pPlayerTransCom->Get_Info(INFO_POS, &vPlayerPos);
@@ -287,92 +268,120 @@ _int CMiddleBoss::Update_Pattern(_float fTimeDelta)
 	m_pAttackRange_TransCom->Get_Scale(&vAttackScale);
 	
 	_float HP = m_tAbility->fCurrentHp / m_tAbility->fMaxHp;
+
+	srand((unsigned int)time(NULL) + m_iRandom);
+	m_iRandom = rand() % 1000;
 	
+	int m_iRand = rand() % 10;
+	
+	if (!m_pCollision->Sphere_Collision(this->m_pSearchRange_TransCom, m_pPlayerTransCom, vPlayerScale.x, vSearchScale.x)
+		&& (m_STATE != MIDDLEBOSS_ATTACK))
+	{
+		m_STATE = MIDDLEBOSS_MOVE;
+		m_pTransCom->Chase_Target(&vPlayerPos, 1.f, fTimeDelta);
+		m_ReloadTimer += fTimeDelta;
+	}
+	else if (m_pCollision->Sphere_Collision(this->m_pSearchRange_TransCom, m_pPlayerTransCom, vPlayerScale.x, vSearchScale.x))
+	{
+		if (m_STATE == MIDDLEBOSS_MOVE)
+			m_STATE = MIDDLEBOSS_IDLE;
 
-		if (HP >= 0.9f)
+		if (m_STATE == MIDDLEBOSS_IDLE)
 		{
+			//m_pTransCom->Chase_Target(&vPlayerPos, 0.f, fTimeDelta);
+			m_ReloadTimer += fTimeDelta;
 
-			if (m_pCollision->Sphere_Collision(this->m_pSphereTransCom, m_pPlayerTransCom, vPlayerScale.x, vScale.x) && m_fFrame < 2.f)
-			{//패턴1
-				m_pTransCom->Chase_Target(&vPlayerPos, 1, fTimeDelta);
-				m_STATE = MIDDLEBOSS_WALK;
-			}
-		}
-		else if (HP >= 0.6f)
-		{
-			if (m_pCollision->Sphere_Collision(this->m_pSphereTransCom, m_pPlayerTransCom, vPlayerScale.x, vScale.x) && m_fFrame < 2.f)
-			{//패턴2
-				{//_vec3 vDir{ 1.f, 0.f, 0.f };
-
-					m_STATE = MIDDLEBOSS_ATTACK;
-					m_pTransCom->Chase_Target(&vPlayerPos, 0, fTimeDelta);
-					_vec3 m_vDirectionLeft = vPlayerPos - vShotgunLeft;
-					_vec3 m_vDirectionRight = vPlayerPos - vShotgunRight;
-					D3DXVec3Normalize(&m_vDirectionLeft, &m_vDirectionLeft);
-					D3DXVec3Normalize(&m_vDirectionRight, &m_vDirectionRight);
-					if (m_AnimationTime > 0.f)
-					{
-						CPoolMgr::GetInstance()->Reuse_Obj(m_pGraphicDev, &vShotgunLeft, &m_vDirectionLeft, m_tAbility->fDamage);
-					}
-					else if (m_AnimationTime > 2.f)
-					{
-
-						CPoolMgr::GetInstance()->Reuse_Obj(m_pGraphicDev, &vShotgunRight, &m_vDirectionRight, m_tAbility->fDamage);
-				
-						if (!m_pSparkEffectParticle)
-							m_pSparkEffectParticle = dynamic_cast<CSparkEffect*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"SparkEffect"));
-						m_pSparkEffectParticle->Set_PclePos(m_vDeadPos);
-						for (_int i = 0; i < 70; ++i)
-						{
-							m_pSparkEffectParticle->addParticle();
-						}
-					}
-
-				}	
-			}
-		}
-		else if (HP >= 0.01f)
-		{
-			//패턴3
-
-			D3DXVECTOR3		vDir{ 1.f, 0.f, 0.f };
-			if (m_pCollision->Sphere_Collision(this->m_pSphereTransCom, m_pPlayerTransCom, vPlayerScale.x, vScale.x))
+			if (m_ReloadTimer >= 3.f)
 			{
-				m_STATE = MIDDLEBOSS_SHOT;
-		
-				m_pTransCom->Chase_Target(&vPlayerPos, 0, fTimeDelta);
-				m_fFrame += fTimeDelta;
-				_matrix matRotY, matTrans, matWorld;
+				m_STATE = MIDDLEBOSS_ATTACK;
 
-				if (m_fFrame >= 1.f)
+				if (m_pCollision->Sphere_Collision(this->m_pAttackRange_TransCom, m_pPlayerTransCom, vPlayerScale.x, vAttackScale.x))
 				{
+					m_PATTERN = MIDDLEBOSS_SKILL_CRASH;
+				}
+				else
+				{
+					random_shuffle(m_vPattern.begin(), m_vPattern.end());
+					m_PATTERN = m_vPattern.front();
+				}
 
-					for (m_fFireAngle = 0.f; m_fFireAngle < 360.f; m_fFireAngle += 2)
-					{
-						D3DXMatrixRotationY(&matRotY, D3DXToRadian(-m_fFireAngle));
-						D3DXMatrixTranslation(&matTrans, vPos.x, 0.f, vPos.y);
+				m_ReloadTimer = 0.f;
+			}
+		}
+		else if (m_STATE == MIDDLEBOSS_ATTACK)
+		{
+			//m_pTransCom->Chase_Target(&vPlayerPos, 0.f, fTimeDelta);
 
-						m_pTransCom->Get_WorldMatrix(&matWorld);
-						matWorld = matRotY * matTrans;
+			if (m_PATTERN == MIDDLEBOSS_SKILL_NORMALATTACK)
+			{
+				_vec3 m_vDirectionLeft = vPlayerPos - vShotgunLeft;
+				_vec3 m_vDirectionRight = vPlayerPos - vShotgunRight;
+				D3DXVec3Normalize(&m_vDirectionLeft, &m_vDirectionLeft);
+				D3DXVec3Normalize(&m_vDirectionRight, &m_vDirectionRight);
 
-						D3DXVec3TransformNormal(&vDir, &vDir, &matWorld);
-
-
-						CPoolMgr::GetInstance()->Reuse_Obj(m_pGraphicDev, &vPos, &vDir, m_tAbility->fDamage);
-						
-						
-					
-					}
-					m_fFrame = 0.f;
+				if ((m_NORMALATTACK == MIDDLEBOSS_NORMALATTACK_1) && m_AnimationTime >= 1.f)
+				{
+					CPoolMgr::GetInstance()->Reuse_ExBullet(m_pGraphicDev, &vShotgunRight, &m_vDirectionRight, 20.f);
+				}
+				if ((m_NORMALATTACK == MIDDLEBOSS_NORMALATTACK_3) && m_AnimationTime >= 1.f)
+				{
+					CPoolMgr::GetInstance()->Reuse_ExBullet(m_pGraphicDev, &vShotgunLeft, &m_vDirectionLeft, 20.f);
 				}
 			}
+			else if (m_PATTERN == MIDDLEBOSS_SKILL_BOMBING)
+			{
+
+
+				if (m_BOMBING == MIDDLEBOSS_BOMBING_3 && m_fMissileItv >= 1.f)
+				{
+					_tchar* szName = new _tchar[256]{};
+					wstring wName = L"Missile_%d";
+					wsprintfW(szName, wName.c_str(), m_MissileCnt);
+					m_TcharList.push_back(szName);
+
+					_vec3 vRandom;
+					if (m_MissileCnt == 0)
+						vRandom = _vec3(vPlayerPos.x + m_iRand, 30.f, vPlayerPos.z + m_iRand);
+					else if (m_MissileCnt == 1)
+						vRandom = _vec3(vPlayerPos.x + m_iRand, 30.f, vPlayerPos.z - m_iRand);
+					else if (m_MissileCnt == 2)
+						vRandom = _vec3(vPlayerPos.x - m_iRand, 30.f, vPlayerPos.z + m_iRand);
+					else if (m_MissileCnt == 3)
+						vRandom = _vec3(vPlayerPos.x - m_iRand, 30.f, vPlayerPos.z - m_iRand);
+					else if (m_MissileCnt == 4)
+						vRandom = _vec3(vPlayerPos.x + m_iRand, 30.f, vPlayerPos.z + m_iRand);
+
+
+					// 위치 바꿔줘야함
+					CGameObject* pGameObject = CFlightBomb::Create(m_pGraphicDev, vRandom, szName);
+					NULL_CHECK_RETURN(pGameObject, -1);
+					CLayer* pLayer = Get_Layer(STAGE_SKILL);
+					FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), -1);
+
+					m_fMissileItv = 0.f;
+					m_MissileCnt++;
+				}
+				else
+				{
+					m_fMissileItv += fTimeDelta;
+				}
+			}
+			else if (m_PATTERN == MIDDLEBOSS_SKILL_CRASH)
+			{
+				CLayer* pLayer = Engine::Get_Layer(STAGE_CHARACTER);
+				CCubePlayer* pPlayer = dynamic_cast<CCubePlayer*>(pLayer->Get_GameObject(L"PLAYER"));
+
+				pPlayer->KnuckDown(10.f, 20.f);
+			}
+		}
 	}
+
 	return 0;
 }
 
 void CMiddleBoss::Hit_Check(_float _deltaTime)
 {
-	m_pTransCom->Static_Update();
+	//m_pTransCom->Static_Update();
 
 	CCubePlayer* pPlayer = dynamic_cast<CCubePlayer*>(Engine::Get_GameObject(STAGE_CHARACTER, L"PLAYER"));
 	CWeapon* pWeapon = pPlayer->Get_Weapon();
@@ -469,7 +478,7 @@ HRESULT CMiddleBoss::Build(void)
 		pGameObject = CTransAxisBox::Create(m_pGraphicDev);
 		NULL_CHECK_RETURN(pMyLayer, E_FAIL);
 
-		FAILED_CHECK_RETURN(pMyLayer->Add_GamePair(LoadOrder.front(), pGameObject), E_FAIL);	//	Map을 쓰지 않는다!!!!! Layer/노트 참고
+		FAILED_CHECK_RETURN(pMyLayer->Add_GamePair(LoadOrder.front(), pGameObject), E_FAIL);
 
 		pGameObject->Set_DrawTexIndex(iDrawNum);
 
@@ -532,7 +541,7 @@ HRESULT CMiddleBoss::Build(void)
 			break;
 	}
 
-	for (auto& iter : *(pMyLayer->Get_GamePairPtr()))		//	List 개꿀
+	for (auto& iter : *(pMyLayer->Get_GamePairPtr()))
 	{
 		for (auto& List : dynamic_cast<CTransAxisBox*>(iter.second)->m_ParentKey)
 		{
@@ -694,7 +703,7 @@ void CMiddleBoss::Look_Direction(void)
 			_vec3 vAngle;
 			CTransform* Transform = dynamic_cast<CTransform*>(iter.second->Get_Component(L"Proto_TransformCom", ID_STATIC));
 			Transform->Get_Angle(&vAngle);
-			Transform->Set_Angle(&_vec3(yaw, vAngle.y, vAngle.z));
+			Transform->Set_Angle(&_vec3(yaw, vAngle.x, vAngle.z));
 		}
 	}
 }
@@ -710,11 +719,11 @@ void CMiddleBoss::Walk_Animation_Run(void)
 			CQuarternion* Qtan = dynamic_cast<CQuarternion*>(iter.second->Get_Component(L"Proto_QuaternionCom", ID_STATIC));
 			Qtan->Delete_WorldVector();
 		}
-		if (m_WALK == MIDDLEBOSSWALK_START)
-			m_WALK = MIDDLEBOSSWALK_1;
-		else if (m_WALK == MIDDLEBOSSWALK_1)
+		if (m_WALK == MIDDLEBOSSWALK_1)
 			m_WALK = MIDDLEBOSSWALK_2;
 		else if (m_WALK == MIDDLEBOSSWALK_2)
+			m_WALK = MIDDLEBOSSWALK_3;
+		else if (m_WALK == MIDDLEBOSSWALK_3)
 			m_WALK = MIDDLEBOSSWALK_1;
 
 		m_AnimationTime = 0.f;
@@ -727,70 +736,6 @@ void CMiddleBoss::Walk_Animation_Run(void)
 
 	
 }
-
-void CMiddleBoss::Attack_Animation_Run(void)
-{
-	list<pair<const _tchar*, CGameObject*>> ListBox = *(pMyLayer->Get_GamePairPtr());
-
-	if (m_AnimationTime >= 1.f)
-	{
-		for (auto& iter : ListBox)
-		{
-			CQuarternion* Qtan = dynamic_cast<CQuarternion*>(iter.second->Get_Component(L"Proto_QuaternionCom", ID_STATIC));
-			Qtan->Delete_WorldVector();
-		}
-		if (m_ATTACK == MIDDLEBOSSATTACK_START)
-			m_ATTACK = MIDDLEBOSSATTACK_1;
-		else if (m_ATTACK == MIDDLEBOSSATTACK_1)
-			m_ATTACK = MIDDLEBOSSATTACK_2;
-		else if (m_ATTACK == MIDDLEBOSSATTACK_2)
-			m_ATTACK = MIDDLEBOSSATTACK_3;
-		else if (m_ATTACK == MIDDLEBOSSATTACK_3)
-			m_ATTACK = MIDDLEBOSSATTACK_START;
-		m_AnimationTime = 0.f;
-
-
-	}
-
-	for (auto& iter : ListBox)	// 애니메이션 변경
-	{
-		CQuarternion* Qtan = dynamic_cast<CQuarternion*>(iter.second->Get_Component(L"Proto_QuaternionCom", ID_STATIC));
-		Qtan->Change_Animation(7 + m_ATTACK);
-	}
-}
-
-void CMiddleBoss::Shot_Animation_Run(void)
-{
-	list<pair<const _tchar*, CGameObject*>> ListBox = *(pMyLayer->Get_GamePairPtr());
-
-	if (m_AnimationTime >= 1.f)
-	{
-		for (auto& iter : ListBox)
-		{
-			CQuarternion* Qtan = dynamic_cast<CQuarternion*>(iter.second->Get_Component(L"Proto_QuaternionCom", ID_STATIC));
-			Qtan->Delete_WorldVector();
-		}
-		m_AnimationTime = 0.f;
-		if (m_SHOT == MIDDLEBOSSSHOT_START)
-			m_SHOT = MIDDLEBOSSSHOT_1;
-		else if (m_SHOT == MIDDLEBOSSSHOT_1)
-			m_SHOT = MIDDLEBOSSSHOT_2;
-		else if (m_SHOT == MIDDLEBOSSSHOT_2)
-			m_SHOT = MIDDLEBOSSSHOT_3;
-		else if (m_SHOT == MIDDLEBOSSSHOT_3)
-			m_SHOT = MIDDLEBOSSSHOT_START;
-
-
-	}
-
-	for (auto& iter : ListBox)	// 애니메이션 변경
-	{
-		CQuarternion* Qtan = dynamic_cast<CQuarternion*>(iter.second->Get_Component(L"Proto_QuaternionCom", ID_STATIC));
-		Qtan->Change_Animation(11 + m_SHOT);
-	}
-}
-
-
 
 void CMiddleBoss::Set_OnTerrain(void)
 {
@@ -875,6 +820,7 @@ void CMiddleBoss::Idle_Animation_Run(void)
 			CQuarternion* Qtan = dynamic_cast<CQuarternion*>(iter.second->Get_Component(L"Proto_QuaternionCom", ID_STATIC));
 			Qtan->Delete_WorldVector();
 		}
+
 		if (m_IDLE == MIDDLEBOSSIDLE_1)
 			m_IDLE = MIDDLEBOSSIDLE_2;
 		else if (m_IDLE == MIDDLEBOSSIDLE_2)
@@ -892,6 +838,72 @@ void CMiddleBoss::Idle_Animation_Run(void)
 		Qtan->Change_Animation(0 + m_IDLE);
 	}
 	
+}
+
+void CMiddleBoss::NormalAttack_Animation_Run(void)
+{
+	list<pair<const _tchar*, CGameObject*>> ListBox = *(pMyLayer->Get_GamePairPtr());
+
+	if (m_AnimationTime >= 1.f)
+	{
+		for (auto& iter : ListBox)
+		{
+			CQuarternion* Qtan = dynamic_cast<CQuarternion*>(iter.second->Get_Component(L"Proto_QuaternionCom", ID_STATIC));
+			Qtan->Delete_WorldVector();
+		}
+
+		if (m_NORMALATTACK == MIDDLEBOSS_NORMALATTACK_1)
+			m_NORMALATTACK = MIDDLEBOSS_NORMALATTACK_2;
+		else if(m_NORMALATTACK == MIDDLEBOSS_NORMALATTACK_2)
+			m_NORMALATTACK = MIDDLEBOSS_NORMALATTACK_3;
+		else if(m_NORMALATTACK == MIDDLEBOSS_NORMALATTACK_3)
+			m_NORMALATTACK = MIDDLEBOSS_NORMALATTACK_4;
+		else if (m_NORMALATTACK == MIDDLEBOSS_NORMALATTACK_4)
+		{
+			m_NORMALATTACK = MIDDLEBOSS_NORMALATTACK_1;
+			m_STATE = MIDDLEBOSS_IDLE;
+		}
+
+		m_AnimationTime = 0.f;
+	}
+	for (auto& iter : ListBox)
+	{
+		CQuarternion* Qtan = dynamic_cast<CQuarternion*>(iter.second->Get_Component(L"Proto_QuaternionCom", ID_STATIC));
+		Qtan->Change_Animation(7 + m_NORMALATTACK);
+	}
+}
+
+void CMiddleBoss::Bombing_Animation_Run(void)
+{
+	list<pair<const _tchar*, CGameObject*>> ListBox = *(pMyLayer->Get_GamePairPtr());
+
+	if (m_AnimationTime >= 1.f)
+	{
+		for (auto& iter : ListBox)
+		{
+			CQuarternion* Qtan = dynamic_cast<CQuarternion*>(iter.second->Get_Component(L"Proto_QuaternionCom", ID_STATIC));
+			Qtan->Delete_WorldVector();
+		}
+
+		if (m_BOMBING == MIDDLEBOSS_BOMBING_1)
+			m_BOMBING = MIDDLEBOSS_BOMBING_2;
+		else if (m_BOMBING == MIDDLEBOSS_BOMBING_2)
+			m_BOMBING = MIDDLEBOSS_BOMBING_3;
+		else if (m_BOMBING == MIDDLEBOSS_BOMBING_3)
+			m_BOMBING = MIDDLEBOSS_BOMBING_4;
+		else if (m_BOMBING == MIDDLEBOSS_BOMBING_4)
+		{
+			m_BOMBING = MIDDLEBOSS_BOMBING_1;
+			m_STATE = MIDDLEBOSS_IDLE;
+		}
+
+		m_AnimationTime = 0.f;
+	}
+	for (auto& iter : ListBox)
+	{
+		CQuarternion* Qtan = dynamic_cast<CQuarternion*>(iter.second->Get_Component(L"Proto_QuaternionCom", ID_STATIC));
+		Qtan->Change_Animation(11 + m_BOMBING);
+	}
 }
 
 HRESULT CMiddleBoss::Create_Item()
@@ -973,7 +985,7 @@ HRESULT CMiddleBoss::Add_Component(void)
 
 	pComponent = m_pTransCom = dynamic_cast<CTransform*>(Clone_Proto(TRANSFORM_COMP));
 	NULL_CHECK_RETURN(m_pTransCom, E_FAIL);
-	m_mapComponent[ID_DYNAMIC].insert({ TRANSFORM_COMP, pComponent });
+	m_mapComponent[ID_STATIC].insert({ TRANSFORM_COMP, pComponent });
 
 
 	pComponent = m_pHitBox = dynamic_cast<CHitBox*>(Engine::Clone_Proto(HITBOX_COMP));
@@ -1013,6 +1025,10 @@ HRESULT CMiddleBoss::Add_Component(void)
 	pComponent = m_pAttackRange_TransCom = dynamic_cast<CTransform*>(Clone_Proto(TRANSFORM_COMP));
 	NULL_CHECK_RETURN(m_pSphereBufferCom, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"AttackRange", pComponent });
+
+	pComponent = m_pRunawayRange_TransCom = dynamic_cast<CTransform*>(Clone_Proto(TRANSFORM_COMP));
+	NULL_CHECK_RETURN(m_pSphereBufferCom, E_FAIL);
+	m_mapComponent[ID_DYNAMIC].insert({ L"RunawayRange", pComponent });
 
 	pComponent = m_pSphereTransCom = dynamic_cast<CTransform*>(Clone_Proto(TRANSFORM_COMP));
 	NULL_CHECK_RETURN(m_pSphereBufferCom, E_FAIL);

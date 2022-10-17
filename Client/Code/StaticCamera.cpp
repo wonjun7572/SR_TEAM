@@ -145,6 +145,7 @@ CStaticCamera* CStaticCamera::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3*
 
 void CStaticCamera::Key_Input(const _float& fTimeDelta)
 {
+	
 	if (Key_Down(DIK_V))
 		m_bChangePOV = !m_bChangePOV;
 }
@@ -209,7 +210,7 @@ void CStaticCamera::Look_Target(const _float& _fTimeDelta)
 	{
 		_vec3 vLook;
 		m_pTransform_Target->Get_Info(INFO_LOOK, &vLook);
-
+		
 		_vec3 vRight;
 		m_pTransform_Target->Get_Info(INFO_RIGHT, &vRight);
 
@@ -428,6 +429,7 @@ void CStaticCamera::Look_Target(const _float& _fTimeDelta)
 
 void CStaticCamera::Camera_Shaking(const _float& _fTimeDelta)
 {
+	
 	if (m_bPlayerHit)
 	{
 		m_fFrame += 0.1f * _fTimeDelta;

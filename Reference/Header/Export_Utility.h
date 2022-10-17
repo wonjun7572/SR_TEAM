@@ -33,6 +33,8 @@
 #include "DynamicBuffer.h"
 #include "FrustumCullMgr.h"
 
+#include "Shader.h"
+
 BEGIN(Engine)
 
 // Management

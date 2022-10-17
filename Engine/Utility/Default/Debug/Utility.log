@@ -1,5 +1,5 @@
 ﻿     ../Bin\Utility.lib 라이브러리 및 ../Bin\Utility.exp 개체를 생성하고 있습니다.
-  Utility.vcxproj -> C:\Users\sam51\Desktop\SR_TEAM\Engine\Utility\Default\../Bin\Utility.dll
+  Utility.vcxproj -> C:\Users\beoms\OneDrive\문서\GitHub\SR_TEAM\Engine\Utility\Default\../Bin\Utility.dll
   Utility.vcxproj -> ../Bin\Utility.pdb (Full PDB)
           1개 파일이 복사되었습니다.
           1개 파일이 복사되었습니다.
@@ -52,6 +52,7 @@
   .\Engine\Header\RcTex.h
   .\Engine\Header\Renderer.h
   .\Engine\Header\Scene.h
+  .\Engine\Header\Shader.h
   .\Engine\Header\SoundMgr.h
   .\Engine\Header\SphereTex.h
   .\Engine\Header\stb_connected_components.h
@@ -81,4 +82,4 @@
   .\Engine\Header\Transform.h
   .\Engine\Header\TriCol.h
   .\Engine\Header\VIBuffer.h
-         78개 파일이 복사되었습니다.
+         79개 파일이 복사되었습니다.

@@ -102,15 +102,16 @@ _int CAlien::Update_Object(const _float & fTimeDelta)
 		FAILED_CHECK_RETURN(Build(), -1);
 
 		
-		Load_Animation(L"../../Data/Alien/ALIEN_IDLE.dat", 0);
-		Load_Animation(L"../../Data/Alien/ALIEN_IDLE2.dat", 1);
+		Load_Animation(L"../../Data/Alien11/ALIEN11_IDLESTART.dat", 0);
+		Load_Animation(L"../../Data/Alien11/ALIEN11_IDLE11.dat", 1);
 
-		Load_Animation(L"../../Data/Alien/ALIEN_WALKINGSTART.dat", 2);
-		Load_Animation(L"../../Data/Alien/ALIEN_WALKING1.dat", 3);
-		Load_Animation(L"../../Data/Alien/ALIEN_WALKING2.dat", 4);
+		Load_Animation(L"../../Data/Alien11/ALIEN11_WALKINGSTART11.dat", 2);
+		Load_Animation(L"../../Data/Alien11/ALIEN11_WALKING11.dat", 3);
+		Load_Animation(L"../../Data/Alien11/ALIEN11_WALKING12.dat", 4);
 
-		Load_Animation(L"../../Data/Alien/ALIEN_ATTACKINGSTART.dat", 5);
-		Load_Animation(L"../../Data/Alien/ALIEN_ATTACKING.dat", 6);
+		Load_Animation(L"../../Data/Alien11/ALIEN11_ATTACKINGSTART11.dat", 5);
+		Load_Animation(L"../../Data/Alien11/ALIEN11_ATTACKING11.dat", 6);
+		Load_Animation(L"../../Data/Alien11/ALIEN11_ATTACKING12.dat", 7);
 	}
 
 
@@ -225,18 +226,18 @@ void CAlien::LateUpdate_Object(void)
 
 void CAlien::Render_Object(void)
 {
-	//m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransCom->Get_WorldMatrixPointer());
-	//m_pTextureCom->Set_Texture(11);
-	//m_pBufferCom->Render_Buffer();
+	/*m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransCom->Get_WorldMatrixPointer());
+	m_pTextureCom->Set_Texture(11);
+	m_pBufferCom->Render_Buffer();
 
-	//m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
-	//m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pHitBoxTransCom->Get_WorldMatrixPointer());
-	//m_pHitBox->Render_Buffer();
+	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pHitBoxTransCom->Get_WorldMatrixPointer());
+	m_pHitBox->Render_Buffer();
 
-	//m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pSphereTransCom->Get_WorldMatrixPointer());
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pSphereTransCom->Get_WorldMatrixPointer());
 
-	//m_pSphereBufferCom->Render_Buffer();
-	//m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+	m_pSphereBufferCom->Render_Buffer();
+	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);*/
 
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransUICom->Get_WorldMatrixPointer());
 
@@ -429,7 +430,7 @@ void CAlien::Attack_Animation_Run(void)
 
 HRESULT CAlien::Build(void)
 {
-	HANDLE      hFile = CreateFile(L"../../Data/Alien/ALIEN.dat",      // 파일의 경로와 이름	
+	HANDLE      hFile = CreateFile(L"../../Data/Alien11/ALIEN11.dat",      // 파일의 경로와 이름	
 		GENERIC_READ,         // 파일 접근 모드 (GENERIC_WRITE : 쓰기 전용, GENERIC_READ : 읽기 전용)
 		NULL,               // 공유 방식(파일이 열려있는 상태에서 다른 프로세스가 오픈할 때 허용할 것인가)    
 		NULL,               // 보안 속성(NULL을 지정하면 기본값 상태)

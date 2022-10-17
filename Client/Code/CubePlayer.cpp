@@ -8,17 +8,16 @@
 #include "Uzi.h"
 #include "Shotgun.h"
 #include "Sniper.h"
-#include "ShotParticle.h"
-#include "BulletParticle.h"
-#include "ProjectileParticle.h"
-
-#include "RcEffect.h"
+#include "EveryParticle.h"
 #include "Inventory.h"
 #include "Shop.h"
 
 #include "Supporter_Uzi.h"
 #include "Ping.h"
 #include "Flight.h"
+
+#include "HyperionStrike.h"
+#include "Shield.h"
 
 #include "StaticCamera.h"
 #include "FlightCamera.h"
@@ -183,12 +182,12 @@ void CCubePlayer::CoolTimer(void)
 	m_pBodyWorld->Move_Pos(&(vLook * m_iKnuckStack * m_fTimeDelta));
 }
 
-void CCubePlayer::KnuckDown(const _float & fDamage)
+void CCubePlayer::KnuckDown(const _float & fDamage, const _float& fDistance)
 {
 	if (m_fGlobal_Cooltime >= 1.f)
 	{
 		m_tAbility->fHp -= fDamage;
-		m_iKnuckStack = 15;
+		m_iKnuckStack = fDistance;
 		m_fGlobal_Cooltime = 0;
 	}
 }
@@ -221,6 +220,11 @@ void CCubePlayer::Update_NullCheck()
 
 	if (!m_pProjectileParicle)
 		m_pProjectileParicle = dynamic_cast<CProjectileParticle*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"ProjectileParticle"));
+
+	if (!m_pCubeParticle)
+		m_pCubeParticle = dynamic_cast<CCubeParticle*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"CubeParticle"));
+	if (!m_pDashCube)
+		m_pDashCube = dynamic_cast<CDashCube*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"DashCube"));
 
 	Player_Mapping();
 
@@ -495,6 +499,7 @@ void CCubePlayer::Move()
 	{
 		m_pBodyWorld->Get_Info(INFO_LOOK, &vDir);
 		D3DXVec3Normalize(&vDir, &vDir);
+
 	}
 	else if (Get_DIKeyState(DIK_S))
 	{
@@ -514,35 +519,131 @@ void CCubePlayer::Move()
 		D3DXVec3Normalize(&vDir, &vDir);
 	}
 
-	
 
-	if (Key_Down(DIK_G)/* && m_iWeaponState == 3*/)
+
+	if (Key_Down(DIK_G) && m_iWeaponState == 3)
 	{
 		m_pProjectileParicle->addParticle();
 	}
 
-	if (Key_Down(DIK_T))
+	if (Key_Down(DIK_H))
 	{
-		CTerrainTex*	pTerrainBufferCom = dynamic_cast<CTerrainTex*>(Engine::Get_Component(STAGE_ENVIRONMENT, L"Terrain", L"Proto_TerrainTexCom", ID_STATIC));
-		NULL_CHECK_RETURN(pTerrainBufferCom, );
-
-		CTransform*		pTerrainTransformCom = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_ENVIRONMENT, L"Terrain", TRANSFORM_COMP, ID_DYNAMIC));
-		NULL_CHECK_RETURN(pTerrainTransformCom, );
-
 		_vec3 vPos;
-		vPos = m_pCalculatorCom->Peek_Target_Vector(g_hWnd, &_vec3(0.f, 0.f, 0.f), pTerrainBufferCom, pTerrainTransformCom);
-		_vec3 vSetPos = _vec3(vPos.x, vPos.y + 0.5f, vPos.z);
-
+		m_pTransform->Get_Info(INFO_POS, &vPos);
 		CLayer* pLayer = Get_Layer(STAGE_SKILL);
-		CGameObject* pGameObject = CPing::Create(m_pGraphicDev, vSetPos);
-		NULL_CHECK_RETURN(pGameObject, );
-		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), );
+		CGameObject* pGameObject = nullptr;
 
-		for (auto& iter : Get_Layer(STAGE_SUPPORTER)->Get_GameList())
+		if (Key_Pressing(DIK_W))
 		{
-			dynamic_cast<CSupporter_Uzi*>(iter)->SetOrdered(true);
+			CGameObject* pGameObject = CHyperionStrike::Create(m_pGraphicDev, vPos, DIR_PX);
+			NULL_CHECK_RETURN(pGameObject, );
+			FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), );
+		}
+		else if (Key_Pressing(DIK_S))
+		{
+			CGameObject* pGameObject = CHyperionStrike::Create(m_pGraphicDev, vPos, DIR_MX);
+			NULL_CHECK_RETURN(pGameObject, );
+			FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), );
+		}
+		else if (Key_Pressing(DIK_A))
+		{
+			CGameObject* pGameObject = CHyperionStrike::Create(m_pGraphicDev, vPos, DIR_PZ);
+			NULL_CHECK_RETURN(pGameObject, );
+			FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), );
+		}
+		else if (Key_Pressing(DIK_D))
+		{
+			CGameObject* pGameObject = CHyperionStrike::Create(m_pGraphicDev, vPos, DIR_MZ);
+			NULL_CHECK_RETURN(pGameObject, );
+			FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), );
+		}
+		else
+		{
+			CGameObject* pGameObject = CHyperionStrike::Create(m_pGraphicDev, vPos, DIR_END);
+			NULL_CHECK_RETURN(pGameObject, );
+			FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), );
 		}
 	}
+
+
+	
+		if (Key_Down(DIK_Z))								// 총알 멈추는거
+		{
+			if (m_pShield != nullptr)
+			{
+				m_pShield->Kill_Obj();
+			}
+			_vec3 vPos;
+			_vec3 vDir;
+			m_pTransform->Get_Info(INFO_POS, &vPos);
+			m_pBodyWorld->Get_Info(INFO_LOOK, &vDir);
+			CLayer* pLayer = Get_Layer(STAGE_SKILL);
+			m_pShield = CShield::Create(m_pGraphicDev, vPos, vDir);
+			NULL_CHECK_RETURN(m_pShield, );
+			FAILED_CHECK_RETURN(pLayer->Add_GameList(m_pShield), );			
+		}
+		if (Key_Pressing(DIK_Z))
+		{
+			if (m_pShield != nullptr)
+				m_pShield->On_Move();
+
+		}
+		if (!(Get_DIKeyState(DIK_Z)))
+		{
+			if (m_pShield != nullptr)
+
+				m_pShield->Off_Move();
+		}
+		if (Key_Pressing(DIK_C))
+		{
+			_vec3 vPos;															//불꽃이팩트
+			_vec3 vDir;
+			m_pTransform->Get_Info(INFO_POS, &vPos);
+			m_pBodyWorld->Get_Info(INFO_LOOK, &vDir);
+			vPos.y = 1.f;
+			dynamic_cast<CCubeParticle*>(m_pCubeParticle)->Set_PclePos(vPos);
+			dynamic_cast<CCubeParticle*>(m_pCubeParticle)->Set_PcleDir(vDir);
+			for (_int i = 0; i < 50; ++i)
+			{
+				m_pCubeParticle->addParticle();
+			}
+
+			/*_vec3 vPos;														//대쉬이펙트하려던것
+			_vec3 vDir;
+			m_pTransform->Get_Info(INFO_POS, &vPos);
+			m_pBodyWorld->Get_Info(INFO_LOOK, &vDir);
+			vPos.y = +0.45f;
+			dynamic_cast<CDashCube*>(m_pDashCube)->Set_PclePos(vPos);
+			dynamic_cast<CDashCube*>(m_pDashCube)->Set_PcleDir(vDir);
+			for (_int i = 0; i < 50; ++i)
+			{
+				m_pDashCube->addParticle();
+			}*/
+		}
+
+
+		if (Key_Down(DIK_T))
+		{
+			CTerrainTex*	pTerrainBufferCom = dynamic_cast<CTerrainTex*>(Engine::Get_Component(STAGE_ENVIRONMENT, L"Terrain", L"Proto_TerrainTexCom", ID_STATIC));
+			NULL_CHECK_RETURN(pTerrainBufferCom, );
+
+			CTransform*		pTerrainTransformCom = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_ENVIRONMENT, L"Terrain", TRANSFORM_COMP, ID_DYNAMIC));
+			NULL_CHECK_RETURN(pTerrainTransformCom, );
+
+			_vec3 vPos;
+			vPos = m_pCalculatorCom->Peek_Target_Vector(g_hWnd, &_vec3(0.f, 0.f, 0.f), pTerrainBufferCom, pTerrainTransformCom);
+			_vec3 vSetPos = _vec3(vPos.x, vPos.y + 0.5f, vPos.z);
+
+			CLayer* pLayer = Get_Layer(STAGE_SKILL);
+			CGameObject* pGameObject = CPing::Create(m_pGraphicDev, vSetPos);
+			NULL_CHECK_RETURN(pGameObject, );
+			FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), );
+
+			for (auto& iter : Get_Layer(STAGE_SUPPORTER)->Get_GameList())
+			{
+				dynamic_cast<CSupporter_Uzi*>(iter)->SetOrdered(true);
+			}
+		}
 
 	if (Get_DIKeyState(DIK_SPACE))
 	{
@@ -553,7 +654,6 @@ void CCubePlayer::Move()
 	{
 		m_bJump = false;
 	}
-
 	m_pCollision->Wall_Collision_Check(this->m_pTransform, this->m_pHitBox, &vDir);
 
 	m_pBodyWorld->Move_Pos(&(vDir * m_fSpeed * m_fTimeDelta));
@@ -725,7 +825,7 @@ void CCubePlayer::Gun_Check(void)
 				dynamic_cast<CUzi*>(Engine::Get_GameObject(STAGE_GUN, L"UZI2"))->Set_Uzi();
 				m_tAbility->iGunTexture = 0; // 혹여나 총 업그레이드해서 다른 총으로 보이게 된다면 이 숫자와 UI/Gun 에 들어있는 숫자와 비교해서 넣으면됨.
 				m_iSetWeaponState = 0;
-				//m_iWeaponState = 2;
+				//m_iWeaponState = 2;d
 			}
 		}
 	}

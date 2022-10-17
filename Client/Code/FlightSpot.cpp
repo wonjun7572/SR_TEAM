@@ -36,8 +36,8 @@ void CFlightSpot::LateUpdate_Object(void)
 
 void CFlightSpot::Render_Object(void)
 {
-	//m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
-	//m_pCube->Render_Buffer();
+	/*m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
+	m_pCube->Render_Buffer();*/
 }
 
 void CFlightSpot::Positioning(void)
@@ -55,7 +55,7 @@ void CFlightSpot::Positioning(void)
 
 	_vec3 vPos = vEye + (vCameraLook * 10.f);
 
-	m_pTransform->Set_Pos(vPos.x, vPos.y, vPos.z);
+	m_pTransform->Set_Pos(vPos.x, vPos.y - 2.f, vPos.z);
 }
 
 HRESULT CFlightSpot::Add_Component(void)

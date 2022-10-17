@@ -125,8 +125,16 @@ _int CTerret::Update_Object(const _float & fTimeDelta)
 	m_pAttackRange_TransCom->Get_Scale(&vAttackScale);
 	m_fFrame += fTimeDelta;
 	
-
-
+	_vec3 vBulletFire;
+	for (auto& iter : pMyLayer->Get_GamePair())
+	{
+		if (0 == _tcscmp(iter.first, L"BULLETFIRE"))
+		{
+			_matrix matFire;
+			dynamic_cast<CTransAxisBox*>(iter.second)->Get_Final(&matFire);
+			vBulletFire = { matFire.m[3][0], matFire.m[3][1], matFire.m[3][2] };
+		}
+	}
 	if (m_pCollision->Sphere_Collision(this->m_pAttackRange_TransCom, m_pPlayerTransCom, vPlayerScale.x, vAttackScale.x))
 	{
 		m_pCollision->Wall_Collision_Check(this->m_pTransCom, this->m_pHitBox, &vDir);
@@ -134,8 +142,10 @@ _int CTerret::Update_Object(const _float & fTimeDelta)
 
 		if (m_AnimationTime >= 1.f)
 		{
+			_vec3 vDirection;
+			vDirection = vPlayerPos - vBulletFire;
 			m_STATE = TERRET_SHOT;
-			CPoolMgr::GetInstance()->Reuse_Obj(m_pGraphicDev, &vPos, &vDir, 10);
+			CPoolMgr::GetInstance()->Reuse_Obj(m_pGraphicDev, &vBulletFire, &vDirection, 10);
 		
 		}
 	}
@@ -150,6 +160,9 @@ _int CTerret::Update_Object(const _float & fTimeDelta)
 	m_pSphereTransCom->Set_Pos(vMonsterPos.x, vMonsterPos.y, vMonsterPos.z);
 	m_pTransCom->Get_Info(INFO_POS, &vUIPos);
 	m_pTransUICom->Set_Pos(vUIPos.x, vUIPos.y, vUIPos.z);
+
+
+	Look_Direction();
 	return 0;
 }
 
@@ -186,18 +199,17 @@ void CTerret::Render_Object(void)
 	//m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransCom->Get_WorldMatrixPointer());
 	//m_pTextureCom->Set_Texture(10);
 	//m_pBufferCom->Render_Buffer();
+	
+	//m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+	//m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pHitBoxTransCom->Get_WorldMatrixPointer());
+	//m_pHitBox->Render_Buffer();
 
+	//m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransCom->Get_WorldMatrixPointer());
+	//m_pAnimationBox->Render_Buffer();
 
-	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pHitBoxTransCom->Get_WorldMatrixPointer());
-	m_pHitBox->Render_Buffer();
-
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransCom->Get_WorldMatrixPointer());
-	m_pAnimationBox->Render_Buffer();
-
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pSphereTransCom->Get_WorldMatrixPointer());
-	m_pSphereBufferCom->Render_Buffer();
-	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+	//m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pSphereTransCom->Get_WorldMatrixPointer());
+	//m_pSphereBufferCom->Render_Buffer();
+	//m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransUICom->Get_WorldMatrixPointer());
 
@@ -313,6 +325,39 @@ void CTerret::HitCheck(_float _deltaTime)
 				m_pMonsterUI->Off_Switch();
 				m_fUISwitchTime = 0.f;
 			}
+		}
+	}
+}
+
+void CTerret::Look_Direction(void)
+{
+	_matrix matWorld;
+	m_pTransCom->Get_WorldMatrix(&matWorld);
+
+	D3DXQUATERNION qRot;
+	D3DXMatrixDecompose(&_vec3(), &qRot, &_vec3(), &matWorld);
+
+	_float pitch, yaw, roll;
+
+	FLOAT sqw = qRot.w * qRot.w;
+	FLOAT sqx = qRot.x * qRot.x;
+	FLOAT sqy = qRot.y * qRot.y;
+	FLOAT sqz = qRot.z * qRot.z;
+
+	pitch = asinf(2.f * (qRot.w * qRot.x - qRot.y * qRot.z));
+	yaw = atan2f(2.0f * (qRot.x * qRot.z + qRot.w * qRot.y), (-sqx - sqy + sqz + sqw));
+	roll = atan2f(2.0f * (qRot.x * qRot.y + qRot.w * qRot.z), (-sqx + sqy - sqz + sqw));
+
+	list<pair<const _tchar*, CGameObject*>> ListBox = *(pMyLayer->Get_GamePairPtr());
+
+	for (auto& iter : ListBox)
+	{
+		if (0 == _tcscmp(iter.first, L"A_ROOT"))
+		{
+			_vec3 vAngle;
+			CTransform* Transform = dynamic_cast<CTransform*>(iter.second->Get_Component(L"Proto_TransformCom", ID_STATIC));
+			Transform->Get_Angle(&vAngle);
+			Transform->Set_Angle(&_vec3(yaw, vAngle.x, vAngle.z));
 		}
 	}
 }
@@ -608,6 +653,8 @@ void CTerret::Idle_Animation_Run(void)
 		}
 		if (m_IDLE == TERRETIDLE_START)
 			m_IDLE = TERRETIDLE_1;
+		else if (m_IDLE == TERRETIDLE_1)
+			m_IDLE = TERRETIDLE_START;
 		m_AnimationTime = 0;
 	}
 	for (auto& iter : ListBox)	

@@ -15,10 +15,10 @@ public:
 
 public:
 	HRESULT			Add_Component(void);
-	void Set_Pos(const _vec3& vPos);
-	void MoveToDir(const _vec3& vDir);
-	void Before_Update();
-	void Set_Dir(const _vec3& vDir) { m_vDirection = vDir; }
+	void			Set_Pos(const _vec3& vPos);
+	void			MoveToDir(const _vec3& vDir);
+	void			Before_Update();
+	void			Set_Dir(const _vec3& vDir) { m_vDirection = vDir; }
 
 public:
 	void				isAlive(bool is) { m_bDamage = is; }
@@ -32,6 +32,9 @@ private:
 	CHitBox*			m_pHitbox = nullptr;
 
 	CCollision*			m_pCollision = nullptr;
+
+	// ¼ÎÀÌ´õ ÄÄÆ÷³ÍÆ® ¿¹½Ã
+
 
 	_vec3				m_vDirection = _vec3(0.f, 0.f, 0.f);
 	_float				m_fSpeed = 50.f;

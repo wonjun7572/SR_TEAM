@@ -21,9 +21,9 @@ private:
 public:
 	void			Replace(const _vec3& vPos, const _vec3& vAngle, const _vec3& vDir)
 	{
-		m_pTransform->Set_Pos(vPos.x, vPos.y, vPos.z);
-		m_vAngle = vAngle;
 		m_vDirection = vDir;
+		m_vAngle = vAngle;
+		m_pTransform->Set_Pos(vPos.x, vPos.y, vPos.z);
 	}
 
 private:
