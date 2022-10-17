@@ -37,7 +37,7 @@ private:
 	CGameObject*		m_pHitBarUI = nullptr;
 
 	_vec3				m_vDirection = _vec3(0.f, 0.f, 0.f);
-	_float				m_fSpeed = 2.f;
+	_float				m_fSpeed = 20.f;
 	_float				m_fTimeDelta = 0.f;
 
 	_bool				m_bDamage = false;

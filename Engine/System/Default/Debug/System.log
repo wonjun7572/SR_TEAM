@@ -52,6 +52,7 @@
   .\Engine\Header\RcTex.h
   .\Engine\Header\Renderer.h
   .\Engine\Header\Scene.h
+  .\Engine\Header\Shader.h
   .\Engine\Header\SoundMgr.h
   .\Engine\Header\SphereTex.h
   .\Engine\Header\stb_connected_components.h
@@ -81,4 +82,4 @@
   .\Engine\Header\Transform.h
   .\Engine\Header\TriCol.h
   .\Engine\Header\VIBuffer.h
-         78개 파일이 복사되었습니다.
+         79개 파일이 복사되었습니다.

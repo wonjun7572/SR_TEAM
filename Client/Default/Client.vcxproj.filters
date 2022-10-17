@@ -202,6 +202,12 @@
     <Filter Include="02. GameObject\01. For_Stage\08. Monster\00. CubeMonster\01. CubeMonsterBody">
       <UniqueIdentifier>{3b25c52f-f049-4e41-a3c0-ce9b88128439}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\08. Monster\00. CubeMonster\02. CubeMonsterHead">
+      <UniqueIdentifier>{80b7f2de-099d-4a91-a98a-0fa97e81f1b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\08. Monster\01. Zombie">
+      <UniqueIdentifier>{b73bf1a3-5d54-4214-b883-9b9076a98984}</UniqueIdentifier>
+    </Filter>
     <Filter Include="02. GameObject\01. For_Stage\14. Crosshair">
       <UniqueIdentifier>{3f226a98-4f8f-4047-88ae-9e99d5ca4d7d}</UniqueIdentifier>
     </Filter>
@@ -310,29 +316,11 @@
     <Filter Include="02. GameObject\01. For_Stage\10. Item\Key">
       <UniqueIdentifier>{b2e09751-32a8-4e8e-be87-78466d0480d4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\01. For_Stage\16. Skill\01. Meteor">
-      <UniqueIdentifier>{a069899b-8334-4641-8288-65ba1105d546}</UniqueIdentifier>
+    <Filter Include="02. GameObject\02. For_Public\02. FlightCamera">
+      <UniqueIdentifier>{319f3c8e-a395-452a-8a7e-efed25a8b33b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\01. For_Stage\16. Skill\02. StaticField">
-      <UniqueIdentifier>{5484f6ee-add3-4c2d-8997-5d08f6e30662}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\01. For_Stage\16. Skill\03. HyperionStrike">
-      <UniqueIdentifier>{ccd5d999-aa50-4c60-baa2-fc4d07c5fe94}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\01. For_Stage\08. Monster\00. CubeMonster\02. CubeMonsterHead">
-      <UniqueIdentifier>{80b7f2de-099d-4a91-a98a-0fa97e81f1b9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\01. For_Stage\08. Monster\01. Zombie">
-      <UniqueIdentifier>{b73bf1a3-5d54-4214-b883-9b9076a98984}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\01. For_Stage\16. Skill\04. Shield">
-      <UniqueIdentifier>{3ab85c79-7ff4-4e71-b1b9-aad2f29871ca}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\01. For_Stage\16. Skill\04. Shield\DeffensiveMatrix">
-      <UniqueIdentifier>{11d6da9f-c2ec-4297-9153-9412fc94798e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\01. For_Stage\98. Particle\05. CubeParticle">
-      <UniqueIdentifier>{4a92083c-0e3a-4e3a-9857-c89fdeff8fdd}</UniqueIdentifier>
+    <Filter Include="02. GameObject\01. For_Stage\06. Bullet\Missile">
+      <UniqueIdentifier>{f0dd0066-ee25-4045-a22e-ba735c290f5e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -648,6 +636,9 @@
     <ClInclude Include="..\Header\ComboUI.h">
       <Filter>02. GameObject\01. For_Stage\09. UI\Player</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\Meteor.h">
+      <Filter>02. GameObject\01. For_Stage\16. Skill</Filter>
+    </ClInclude>
     <ClInclude Include="..\Header\Supporter.h">
       <Filter>02. GameObject\01. For_Stage\17. Supporter</Filter>
     </ClInclude>
@@ -741,35 +732,23 @@
     <ClInclude Include="..\Header\Alien.h">
       <Filter>99. Default\헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\FlightCamera.h">
-      <Filter>99. Default\헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\FlightSpot.h">
-      <Filter>99. Default\헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\Terret.h">
-      <Filter>99. Default\헤더 파일</Filter>
+      <Filter>02. GameObject\01. For_Stage\18. Trap</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\StaticField.h">
-      <Filter>02. GameObject\01. For_Stage\16. Skill\02. StaticField</Filter>
+      <Filter>99. Default\헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\Meteor.h">
-      <Filter>02. GameObject\01. For_Stage\16. Skill\01. Meteor</Filter>
+    <ClInclude Include="..\Header\FlightCamera.h">
+      <Filter>02. GameObject\02. For_Public\02. FlightCamera</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\HyperionStrike.h">
-      <Filter>02. GameObject\01. For_Stage\16. Skill\03. HyperionStrike</Filter>
+    <ClInclude Include="..\Header\FlightSpot.h">
+      <Filter>02. GameObject\01. For_Stage\21. Rocket</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\Shield.h">
-      <Filter>02. GameObject\01. For_Stage\16. Skill\04. Shield</Filter>
+    <ClInclude Include="..\Header\FlightBomb.h">
+      <Filter>02. GameObject\01. For_Stage\06. Bullet\Missile</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\DeffensiveMatrix.h">
-      <Filter>02. GameObject\01. For_Stage\16. Skill\04. Shield\DeffensiveMatrix</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CubeParticle.h">
-      <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\DashCube.h">
-      <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle</Filter>
+    <ClInclude Include="..\Header\Explosion.h">
+      <Filter>02. GameObject\01. For_Stage\06. Bullet\Missile</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1064,6 +1043,9 @@
     <ClCompile Include="..\Code\ComboUI.cpp">
       <Filter>02. GameObject\01. For_Stage\09. UI\Player</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\Meteor.cpp">
+      <Filter>02. GameObject\01. For_Stage\16. Skill</Filter>
+    </ClCompile>
     <ClCompile Include="..\Code\Supporter.cpp">
       <Filter>02. GameObject\01. For_Stage\17. Supporter</Filter>
     </ClCompile>
@@ -1154,35 +1136,23 @@
     <ClCompile Include="..\Code\Alien.cpp">
       <Filter>99. Default\소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\FlightCamera.cpp">
-      <Filter>99. Default\소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\FlightSpot.cpp">
-      <Filter>99. Default\소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\Terret.cpp">
-      <Filter>99. Default\소스 파일</Filter>
+      <Filter>02. GameObject\01. For_Stage\18. Trap</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\StaticField.cpp">
-      <Filter>02. GameObject\01. For_Stage\16. Skill\02. StaticField</Filter>
+      <Filter>99. Default\소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\Meteor.cpp">
-      <Filter>02. GameObject\01. For_Stage\16. Skill\01. Meteor</Filter>
+    <ClCompile Include="..\Code\FlightCamera.cpp">
+      <Filter>02. GameObject\02. For_Public\02. FlightCamera</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\HyperionStrike.cpp">
-      <Filter>02. GameObject\01. For_Stage\16. Skill\03. HyperionStrike</Filter>
+    <ClCompile Include="..\Code\FlightSpot.cpp">
+      <Filter>02. GameObject\01. For_Stage\21. Rocket</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\Shield.cpp">
-      <Filter>02. GameObject\01. For_Stage\16. Skill\04. Shield</Filter>
+    <ClCompile Include="..\Code\FlightBomb.cpp">
+      <Filter>02. GameObject\01. For_Stage\06. Bullet\Missile</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\DeffensiveMatrix.cpp">
-      <Filter>02. GameObject\01. For_Stage\16. Skill\04. Shield\DeffensiveMatrix</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\CubeParticle.cpp">
-      <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\DashCube.cpp">
-      <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle</Filter>
+    <ClCompile Include="..\Code\Explosion.cpp">
+      <Filter>02. GameObject\01. For_Stage\06. Bullet\Missile</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

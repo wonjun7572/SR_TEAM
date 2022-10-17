@@ -187,8 +187,10 @@
     <ClInclude Include="..\Header\CubeShop.h" />
     <ClInclude Include="..\Header\DynamicCamera.h" />
     <ClInclude Include="..\Header\EveryParticle.h" />
+    <ClInclude Include="..\Header\Explosion.h" />
     <ClInclude Include="..\Header\FlameEffect.h" />
     <ClInclude Include="..\Header\Flight.h" />
+    <ClInclude Include="..\Header\FlightBomb.h" />
     <ClInclude Include="..\Header\FlightBulletParticle.h" />
     <ClInclude Include="..\Header\FlightCamera.h" />
     <ClInclude Include="..\Header\FlightSpot.h" />
@@ -339,8 +341,10 @@
     <ClCompile Include="..\Code\CubePlayer.cpp" />
     <ClCompile Include="..\Code\CubeShop.cpp" />
     <ClCompile Include="..\Code\DynamicCamera.cpp" />
+    <ClCompile Include="..\Code\Explosion.cpp" />
     <ClCompile Include="..\Code\FlameEffect.cpp" />
     <ClCompile Include="..\Code\Flight.cpp" />
+    <ClCompile Include="..\Code\FlightBomb.cpp" />
     <ClCompile Include="..\Code\FlightBulletParticle.cpp" />
     <ClCompile Include="..\Code\FlightCamera.cpp" />
     <ClCompile Include="..\Code\FlightSpot.cpp" />

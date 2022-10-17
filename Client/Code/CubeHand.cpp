@@ -24,7 +24,6 @@ _int CCubeHand::Update_Object(const _float & fTimeDelta)
 	m_pMyLayer = Engine::Get_Layer(STAGE_CHARACTER);
 
 	CGameObject::Update_Object(fTimeDelta);
-
 	
 	Add_RenderGroup(RENDER_NONALPHA, this);
 
@@ -41,9 +40,9 @@ void CCubeHand::Render_Object(void)
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
 
 	if (m_pMyLayer->Get_GameObject(L"L_HAND") == this)
-		m_pTexture->Set_Texture(3);
+		m_pTexture->Set_Texture(1);
 	else if (m_pMyLayer->Get_GameObject(L"R_HAND") == this)
-		m_pTexture->Set_Texture(5);
+		m_pTexture->Set_Texture(1);
 
 	m_pCube->Render_Buffer();
 }

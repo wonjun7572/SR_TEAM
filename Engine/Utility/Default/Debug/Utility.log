@@ -1,5 +1,41 @@
-﻿     ../Bin\Utility.lib 라이브러리 및 ../Bin\Utility.exp 개체를 생성하고 있습니다.
-  Utility.vcxproj -> C:\Users\DecoyZ\Desktop\SR_TEAM\Engine\Utility\Default\../Bin\Utility.dll
+﻿  VIBuffer.cpp
+  TriCol.cpp
+  Transform.cpp
+  Texture.cpp
+  TerrainTex.cpp
+  SphereTex.cpp
+  SoundMgr.cpp
+  Shader.cpp
+  Scene.cpp
+  Renderer.cpp
+  RcTex.cpp
+  RcCol.cpp
+  ProtoMgr.cpp
+  Management.cpp
+  LightMgr.cpp
+  Light.cpp
+  Layer.cpp
+  Hitbox.cpp
+  GameObject.cpp
+  CubeTex.cpp
+  코드를 생성하고 있습니다...
+  컴파일하고 있습니다...
+  Component.cpp
+  Camera.cpp
+  Calculator.cpp
+  RcRD.cpp
+  Quarternion.cpp
+  PSystem.cpp
+  Interface.cpp
+  FrustumCullMgr.cpp
+c:\users\beoms\onedrive\문서\github\sr_team\engine\utility\code\frustumcullmgr.cpp(37): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+  FlexibleAxisCube.cpp
+  DynamicBuffer.cpp
+  CubeCol.cpp
+  Collision.cpp
+  코드를 생성하고 있습니다...
+     ../Bin\Utility.lib 라이브러리 및 ../Bin\Utility.exp 개체를 생성하고 있습니다.
+  Utility.vcxproj -> C:\Users\beoms\OneDrive\문서\GitHub\SR_TEAM\Engine\Utility\Default\../Bin\Utility.dll
   Utility.vcxproj -> ../Bin\Utility.pdb (Full PDB)
           1개 파일이 복사되었습니다.
           1개 파일이 복사되었습니다.
@@ -52,6 +88,7 @@
   .\Engine\Header\RcTex.h
   .\Engine\Header\Renderer.h
   .\Engine\Header\Scene.h
+  .\Engine\Header\Shader.h
   .\Engine\Header\SoundMgr.h
   .\Engine\Header\SphereTex.h
   .\Engine\Header\stb_connected_components.h
@@ -81,4 +118,4 @@
   .\Engine\Header\Transform.h
   .\Engine\Header\TriCol.h
   .\Engine\Header\VIBuffer.h
-         78개 파일이 복사되었습니다.
+         79개 파일이 복사되었습니다.
