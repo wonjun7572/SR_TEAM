@@ -280,7 +280,7 @@ void CSupporter_Uzi::Find_Target(void)
 
 	for (auto& iter : pMonsterLayer->Get_GameList())
 	{
-		CTransform* pTransform = dynamic_cast<CTransform*>(iter->Get_Component(TRANSFORM_COMP, ID_STATIC));
+		CTransform* pTransform = dynamic_cast<CTransform*>(iter->Get_Component(TRANSFORM_COMP, ID_DYNAMIC));
 
 		_vec3 vMonsterScale;
 		pTransform->Get_Scale(&vMonsterScale);

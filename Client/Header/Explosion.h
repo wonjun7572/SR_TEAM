@@ -16,6 +16,13 @@ public:
 private:
 	HRESULT					Add_Component(void);
 	CTransform*				m_pTransCom = nullptr;
+	CCollision*				m_pCollision = nullptr;
+
+	CTransform*				m_pPlayerTransCom = nullptr;
+
+private:
+	void					Hit_Check_Player(void);
+	void					Hit_Check_Monster(void);
 
 private:
 	HRESULT					Build(void);
