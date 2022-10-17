@@ -481,9 +481,9 @@ HRESULT CStage::Ready_Layer_Monster(const _tchar * pLayerTag)
 
 	CGameObject*		pGameObject = nullptr;
 
-	pGameObject = CFireMan::Create(m_pGraphicDev, _vec3(30.f, 0.6f, 30.f), L"FIREMAN");
+	/*pGameObject = CFireMan::Create(m_pGraphicDev, _vec3(30.f, 0.6f, 30.f), L"FIREMAN");
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);*/
 
 	//if (!vecFireMan.empty())
 	//{
@@ -702,11 +702,11 @@ HRESULT CStage::Ready_Layer_GunItem(const _tchar * pLayerTag)
 	{
 		_vec3 vTemp = _vec3(1.f, 0.f, 0.f);
 
-		pGameObject = CGetShotgun::Create(m_pGraphicDev, vecGun[2]+vTemp);
+		pGameObject = CGetShotgun::Create(m_pGraphicDev, vecGun[1]+vTemp);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"GetShotgun", pGameObject), E_FAIL);
 
-		pGameObject = CGetUzi::Create(m_pGraphicDev, vecGun[2]);
+		pGameObject = CGetUzi::Create(m_pGraphicDev, vecGun[0]);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"GetUzi", pGameObject), E_FAIL);
 
