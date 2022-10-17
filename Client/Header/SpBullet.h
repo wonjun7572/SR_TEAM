@@ -15,10 +15,10 @@ public:
 
 public:
 	HRESULT			Add_Component(void);
-	void Set_Pos(const _vec3& vPos);
-	void MoveToDir(const _vec3& vDir);
-	void Before_Update();
-	void Set_Dir(const _vec3& vDir) { m_vDirection = vDir; }
+	void			Set_Pos(const _vec3& vPos);
+	void			MoveToDir(const _vec3& vDir);
+	void			Before_Update();
+	void			Set_Dir(const _vec3& vDir) { m_vDirection = vDir; }
 
 public:
 	void				isAlive(bool is) { m_bDamage = is; }

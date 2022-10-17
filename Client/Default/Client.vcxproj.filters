@@ -322,6 +322,9 @@
     <Filter Include="02. GameObject\01. For_Stage\06. Bullet\Missile">
       <UniqueIdentifier>{f0dd0066-ee25-4045-a22e-ba735c290f5e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\06. Bullet\ExBullet">
+      <UniqueIdentifier>{41141aed-bba1-4d69-ac27-8bd2526a3042}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -750,6 +753,9 @@
     <ClInclude Include="..\Header\Explosion.h">
       <Filter>02. GameObject\01. For_Stage\06. Bullet\Missile</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\ExBullet.h">
+      <Filter>02. GameObject\01. For_Stage\06. Bullet\ExBullet</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -1153,6 +1159,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\Explosion.cpp">
       <Filter>02. GameObject\01. For_Stage\06. Bullet\Missile</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ExBullet.cpp">
+      <Filter>02. GameObject\01. For_Stage\06. Bullet\ExBullet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
