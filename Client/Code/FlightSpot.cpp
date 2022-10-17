@@ -36,8 +36,8 @@ void CFlightSpot::LateUpdate_Object(void)
 
 void CFlightSpot::Render_Object(void)
 {
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
-	m_pCube->Render_Buffer();
+	/*m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
+	m_pCube->Render_Buffer();*/
 }
 
 void CFlightSpot::Positioning(void)

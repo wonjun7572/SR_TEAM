@@ -33,6 +33,9 @@ private:
 
 	CCollision*			m_pCollision = nullptr;
 
+	// 셰이더 컴포넌트 예시
+
+
 	_vec3				m_vDirection = _vec3(0.f, 0.f, 0.f);
 	_float				m_fSpeed = 50.f;
 	_float				m_fTimeDelta = 0.f;

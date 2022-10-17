@@ -66,7 +66,7 @@ private:
 	void			CoolTimer(void);
 
 public:	//	상태이상, 외부에서 지정
-	void			KnuckDown(const _float& fDamage);	//	데미지 입으면서 밀려남
+	void			KnuckDown(const _float& fDamage, const _float& fDistance);	//	데미지 입으면서 밀려남
 	void			SlowDown(const _float& fDamage);	//	느려짐
 
 private:
