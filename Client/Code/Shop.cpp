@@ -159,10 +159,10 @@ HRESULT CShop::Ready_Object(void)
 	m_pUziRaffle = L"UziRaffle";
 	m_pShotGun = L"ShotGun";
 	m_pSniper = L"Sniper";
-	m_pLaser = L"LASER MODE";
-	m_pHeavy = L"HEAVY MODE";
-	m_pRailGun = L"RAILGUN MODE";
-	m_pBurst = L"BURST MODE";
+	m_pLaser = L"ATTACK SPEED";
+	m_pHeavy = L"ATTACK UP";
+	m_pRailGun = L"METEOR";
+	m_pBurst = L"CALL A FLIGHT";
 	return S_OK;
 
 }
