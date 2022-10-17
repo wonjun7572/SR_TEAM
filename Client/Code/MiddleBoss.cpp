@@ -119,8 +119,10 @@ _int CMiddleBoss::Update_Object(const _float & fTimeDelta)
 		Load_Animation(L"../../Data/MiddleMonster/MIDDLE2_LEFTATTACK1.dat", 10);
 
 
-		Load_Animation(L"../../Data/MiddleMonster/MIDDLE2_SHOOTINGSTART.dat", 11);
-		Load_Animation(L"../../Data/MiddleMonster/MIDDLE2_SHOOTING1.dat", 12);
+		Load_Animation(L"../../Data/MiddleMonster/MIDDLE2_SHOOTING20.dat", 11);
+		Load_Animation(L"../../Data/MiddleMonster/MIDDLE2_SHOOTING21.dat", 12);
+		Load_Animation(L"../../Data/MiddleMonster/MIDDLE2_SHOOTING23.dat", 13);
+		Load_Animation(L"../../Data/MiddleMonster/MIDDLE2_SHOOTING22.dat", 14);
 	}
 
 
@@ -175,8 +177,22 @@ void CMiddleBoss::LateUpdate_Object(void)
 		}
 		else if (m_STATE == MIDDLEBOSS_SHOT)
 		{
+			
 			Shot_Animation_Run();
-			Run_Animation(30.f);
+			if (m_SHOT == MIDDLEBOSSSHOT_START)
+			Run_Animation(100.f);
+			
+			if (m_SHOT == MIDDLEBOSSSHOT_1)
+			Run_Animation(70.f);
+			
+			if (m_SHOT == MIDDLEBOSSSHOT_2)
+			Run_Animation(200.f);
+			
+			if (m_SHOT == MIDDLEBOSSSHOT_3)
+			Run_Animation(100.f);
+			
+
+			
 		}
 	}
 
@@ -215,6 +231,7 @@ _int CMiddleBoss::Update_Pattern(_float fTimeDelta)
 
 	_vec3 vShotgunLeft;
 	_vec3 vShotgunRight;
+	_vec3 vRocketPack;
 	_vec3 m_vDirectionLeft;
 	_vec3 m_vDirectionRight;
 	for (auto& iter : pMyLayer->Get_GamePair())
@@ -231,18 +248,26 @@ _int CMiddleBoss::Update_Pattern(_float fTimeDelta)
 			dynamic_cast<CTransAxisBox*>(iter.second)->Get_Final(&matBoss);
 			vShotgunRight = { matBoss.m[3][0], matBoss.m[3][1], matBoss.m[3][2] };
 		}
+
+		if (0 == _tcscmp(iter.first, L"Battery"))
+		{
+			_matrix matBoss;
+			dynamic_cast<CTransAxisBox*>(iter.second)->Get_Final(&matBoss);
+			vRocketPack = { matBoss.m[3][0], matBoss.m[3][1], matBoss.m[3][2] };
+		}
 	}
 
 	if (m_pPlayerTransCom == nullptr)
 	{
 		m_pPlayerTransCom = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_CHARACTER, L"PLAYER", TRANSFORM_COMP, ID_DYNAMIC));
 	}
-	
 	if (m_pMonsterUI == nullptr)
 		m_pMonsterUI = dynamic_cast<CMonsterUI*>(Engine::Get_GameObject(STAGE_UI, L"MonsterUI"));
 	
 	if (m_pComboUI == nullptr)
 		m_pComboUI = dynamic_cast<CComboUI*>(Engine::Get_GameObject(STAGE_UI, L"ComboUI"));
+
+
 
 	_vec3 vPlayerPos;
 	m_pPlayerTransCom->Get_Info(INFO_POS, &vPlayerPos);
@@ -269,7 +294,7 @@ _int CMiddleBoss::Update_Pattern(_float fTimeDelta)
 
 			if (m_pCollision->Sphere_Collision(this->m_pSphereTransCom, m_pPlayerTransCom, vPlayerScale.x, vScale.x) && m_fFrame < 2.f)
 			{//ÆÐÅÏ1
-				m_pTransCom->Chase_Target(&vPlayerPos, 0, fTimeDelta);
+				m_pTransCom->Chase_Target(&vPlayerPos, 1, fTimeDelta);
 				m_STATE = MIDDLEBOSS_WALK;
 			}
 		}
@@ -285,16 +310,25 @@ _int CMiddleBoss::Update_Pattern(_float fTimeDelta)
 					_vec3 m_vDirectionRight = vPlayerPos - vShotgunRight;
 					D3DXVec3Normalize(&m_vDirectionLeft, &m_vDirectionLeft);
 					D3DXVec3Normalize(&m_vDirectionRight, &m_vDirectionRight);
-					if (m_AnimationTime >= 1)
+					if (m_AnimationTime > 0.f)
 					{
 						CPoolMgr::GetInstance()->Reuse_Obj(m_pGraphicDev, &vShotgunLeft, &m_vDirectionLeft, m_tAbility->fDamage);
-						CPoolMgr::GetInstance()->Reuse_Obj(m_pGraphicDev, &vShotgunRight, &m_vDirectionRight, m_tAbility->fDamage);
 					}
-					cout << m_vDirectionLeft.x << "," << m_vDirectionLeft.y << "," << m_vDirectionLeft.z << endl;
-				}	
+					else if (m_AnimationTime > 2.f)
+					{
 
-
+						CPoolMgr::GetInstance()->Reuse_Obj(m_pGraphicDev, &vShotgunRight, &m_vDirectionRight, m_tAbility->fDamage);
 				
+						if (!m_pSparkEffectParticle)
+							m_pSparkEffectParticle = dynamic_cast<CSparkEffect*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"SparkEffect"));
+						m_pSparkEffectParticle->Set_PclePos(m_vDeadPos);
+						for (_int i = 0; i < 70; ++i)
+						{
+							m_pSparkEffectParticle->addParticle();
+						}
+					}
+
+				}	
 			}
 		}
 		else if (HP >= 0.01f)
@@ -312,6 +346,7 @@ _int CMiddleBoss::Update_Pattern(_float fTimeDelta)
 
 				if (m_fFrame >= 1.f)
 				{
+
 					for (m_fFireAngle = 0.f; m_fFireAngle < 360.f; m_fFireAngle += 2)
 					{
 						D3DXMatrixRotationY(&matRotY, D3DXToRadian(-m_fFireAngle));
@@ -322,7 +357,11 @@ _int CMiddleBoss::Update_Pattern(_float fTimeDelta)
 
 						D3DXVec3TransformNormal(&vDir, &vDir, &matWorld);
 
+
 						CPoolMgr::GetInstance()->Reuse_Obj(m_pGraphicDev, &vPos, &vDir, m_tAbility->fDamage);
+						
+						
+					
 					}
 					m_fFrame = 0.f;
 				}
@@ -732,10 +771,14 @@ void CMiddleBoss::Shot_Animation_Run(void)
 			Qtan->Delete_WorldVector();
 		}
 		m_AnimationTime = 0.f;
-		if (m_SHOT == MIDDLEBOSSSHOT_1)
-			m_SHOT = MIDDLEBOSSSHOT_START;
-		else if (m_SHOT == MIDDLEBOSSSHOT_START)
+		if (m_SHOT == MIDDLEBOSSSHOT_START)
 			m_SHOT = MIDDLEBOSSSHOT_1;
+		else if (m_SHOT == MIDDLEBOSSSHOT_1)
+			m_SHOT = MIDDLEBOSSSHOT_2;
+		else if (m_SHOT == MIDDLEBOSSSHOT_2)
+			m_SHOT = MIDDLEBOSSSHOT_3;
+		else if (m_SHOT == MIDDLEBOSSSHOT_3)
+			m_SHOT = MIDDLEBOSSSHOT_START;
 
 
 	}

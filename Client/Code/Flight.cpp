@@ -44,6 +44,8 @@ HRESULT CFlight::Ready_Object(const _vec3 & vPos, const _vec3 & vDir, _tchar * N
 		m_ShufflePos.push_back(vShuffle);
 	}*/
 
+
+
 	return S_OK;
 }
 
@@ -99,6 +101,9 @@ void CFlight::LateUpdate_Object(void)
 
 void CFlight::Render_Object(void)
 {
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pBomb->Get_WorldMatrixPointer());
+	m_pBombTexture->Set_Texture();
+	m_pBombBuffer->Render_Buffer();
 }
 
 HRESULT CFlight::Add_Component(void)
@@ -112,6 +117,15 @@ HRESULT CFlight::Add_Component(void)
 	pComponent = m_pCalculator = dynamic_cast<CCalculator *>(Clone_Proto(CALCULATOR_COMP));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ CALCULATOR_COMP, pComponent });
+
+	pComponent = m_pBombTexture = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Proto_CubePlayerTexture"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[ID_STATIC].insert({ L"Proto_CubePlayerTexture", pComponent });
+
+
+	pComponent = m_pBufferCom = dynamic_cast<CRcTex*>(Clone_Proto(L"Proto_RcTexCom"));
+	NULL_CHECK_RETURN(m_pBufferCom, E_FAIL);
+	m_mapComponent[ID_STATIC].insert({ L"Proto_RcTexCom", pComponent });
 
 	return S_OK;
 }
@@ -276,6 +290,16 @@ void CFlight::Key_Input(const _float& fTimeDelta)
 			m_fBulletTime = 0.f;
 		}
 	}
+	if (m_fBulletTime > 0.5f)
+	{
+		if (Get_DIMouseState(DIM_RB))
+		{
+			Bombing();
+			Set_Shoot(true);
+			m_fBulletTime = 0.f;
+		}
+	}
+
 }
 
 void CFlight::Look_Direction()
@@ -323,6 +347,19 @@ void CFlight::Fire_Bullet()
 	//vLook *= -1;
 	vPos += vLook;
 	CPoolMgr::GetInstance()->Reuse_PlayerBullet(m_pGraphicDev, &vPos, &vLook, 5, 50.f);
+}
+
+void CFlight::Bombing()
+{
+	_vec3 vPos;
+	m_pTransform->Get_Info(INFO_POS, &vPos);
+	CGameObject* pGameObject = CFlightBomb::Create(m_pGraphicDev, vPos);
+	NULL_CHECK_RETURN(pGameObject, );
+	CLayer* pLayer = Get_Layer(STAGE_SKILL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject),);
+
+
+	//cout << vDirection.x << " " << vDirection.y << " " << vDirection.z << " " << endl;
 }
 
 void CFlight::Move(const _float& fTimeDelta)
