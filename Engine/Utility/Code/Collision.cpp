@@ -5,6 +5,8 @@
 #include "../../Client/Header/Item.h"
 #include "../../Client/Default/Define.h"
 
+#include "../../Client/Header/Flight.h"
+
 USING(Engine)
 
 CCollision::CCollision(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -1097,6 +1099,27 @@ void CCollision::Get_GunItem()
 			m_vMin1.z <= m_vMax2.z && m_vMax1.z >= m_vMin2.z)
 		{
 			iter.second->Kill_Obj();
+			// 여기서 함수 실행 합시다.
+			CGameObject* pGameObject = dynamic_cast<CFlight*>(Get_GameObject(STAGE_FLIGHTPLAYER, L"FLIGHTSHUTTLE"));
+
+			if (iter.second->m_eSupporterID == SUPPORTER_UZI)
+			{
+				_vec3 vDestionaion;
+				pItemTransform->Get_Info(INFO_POS, &vDestionaion);
+				dynamic_cast<CFlight*>(Get_GameObject(STAGE_FLIGHTPLAYER, L"FLIGHTSHUTTLE"))->Set_Shuttle(true, vDestionaion,SUPPORTER_UZI);
+			}
+			else if (iter.second->m_eSupporterID == SUPPORTER_SHOTGUN)
+			{
+				_vec3 vDestionaion;
+				pItemTransform->Get_Info(INFO_POS, &vDestionaion);
+				dynamic_cast<CFlight*>(Get_GameObject(STAGE_FLIGHTPLAYER, L"FLIGHTSHUTTLE"))->Set_Shuttle(true, vDestionaion, SUPPORTER_SHOTGUN);
+			}
+			else if (iter.second->m_eSupporterID == SUPPORTER_SNIPER)
+			{
+				_vec3 vDestionaion;
+				pItemTransform->Get_Info(INFO_POS, &vDestionaion);
+				dynamic_cast<CFlight*>(Get_GameObject(STAGE_FLIGHTPLAYER, L"FLIGHTSHUTTLE"))->Set_Shuttle(true, vDestionaion, SUPPORTER_SNIPER);
+			}
 		}
 	}
 }
