@@ -6,6 +6,7 @@
 #include "PoolMgr.h"
 #include "FlightCamera.h"
 #include "FlightSpot.h"
+#include "Supporter_Uzi.h"
 
 CFlight::CFlight(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
@@ -27,24 +28,6 @@ HRESULT CFlight::Ready_Object(const _vec3 & vPos, const _vec3 & vDir, _tchar * N
 	m_pTransform->Set_Scale(1.f, 1.f, 1.f);
 	m_pTransform->Set_Pos(vPos.x, vPos.y, vPos.z);
 	m_pTransform->Static_Update();
-	/*_vec3 vShuffle;
-	m_ShufflePos.reserve(24);
-	for (float i = 10.f; i <= 110.f; i += 10.f)
-	{
-		vShuffle = { i, 10.f, -50.f };
-		m_ShufflePos.push_back(vShuffle);
-
-		vShuffle = { -50.f, 15.f, i };
-		m_ShufflePos.push_back(vShuffle);
-
-		vShuffle = { i, 20.f, 170.f };
-		m_ShufflePos.push_back(vShuffle);
-
-		vShuffle = { 170.f, 25.f, i };
-		m_ShufflePos.push_back(vShuffle);
-	}*/
-
-
 
 	return S_OK;
 }
@@ -64,6 +47,46 @@ _int CFlight::Update_Object(const _float & fTimeDelta)
 
 	if (!m_pBulletParicle)
 		m_pBulletParicle = dynamic_cast<CFlightBulletParticle*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"FlightBulletParticle"));
+
+	if (m_bShuttle == true)
+	{
+		_vec3 vPos;
+		m_pTransform->Get_Info(INFO_POS, &vPos);
+
+		_vec3 vDesination;
+		vDesination.x = m_vDestination.x;
+		vDesination.y = 30.f;
+		vDesination.z = m_vDestination.y;
+
+		m_pTransform->Chase_Target(&vDesination, 15.f, fTimeDelta);
+
+		if (fabs(vPos.x - vDesination.x) < 1.f && fabs(vPos.z - vDesination.z) < 1.f)
+		{
+			CLayer* pLayer = Get_Layer(STAGE_SUPPORTER);
+			if (m_eSupporterID == SUPPORTER_UZI)
+			{
+				CGameObject* pGameObject = CSupporter_Uzi::Create(m_pGraphicDev, vDesination, L"SUPPORT_UZI");
+				NULL_CHECK_RETURN(pGameObject, E_FAIL);
+				FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"SUPPORT_UZI", pGameObject), E_FAIL);
+				dynamic_cast<CSupporter_Uzi*>(pGameObject)->Set_setcam(true);
+				m_bShuttle = false;
+			}
+			else if (m_eSupporterID == SUPPORTER_SHOTGUN)
+			{
+				CGameObject* pGameObject = CSupporter_Uzi::Create(m_pGraphicDev, vDesination, L"SUPPORT_SHOTGUN");
+				NULL_CHECK_RETURN(pGameObject, E_FAIL);
+				FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"SUPPORT_SHOTGUN", pGameObject), E_FAIL);
+				m_bShuttle = false;
+			}
+			else if (m_eSupporterID == SUPPORTER_SNIPER)
+			{
+				CGameObject* pGameObject = CSupporter_Uzi::Create(m_pGraphicDev, vDesination, L"SUPPORT_SNIPER");
+				NULL_CHECK_RETURN(pGameObject, E_FAIL);
+				FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"SUPPORT_SNIPER", pGameObject), E_FAIL);
+				m_bShuttle = false;
+			}
+		}
+	}
 
 	if (m_bControl == true && static_cast<CFlightCamera*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"FlightCamera"))->Get_Maincam())
 	{

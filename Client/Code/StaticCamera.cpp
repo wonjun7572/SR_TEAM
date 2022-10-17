@@ -7,6 +7,7 @@
 #include "PlayerMapping.h"
 #include "Flight.h"
 #include "FlightCamera.h"
+#include "Supporter_Uzi.h"
 
 CStaticCamera::CStaticCamera(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CCamera(pGraphicDev)
@@ -44,12 +45,58 @@ HRESULT CStaticCamera::Ready_Object(const _vec3* pEye,
 	return S_OK;
 }
 
+void CStaticCamera::Update_NullCheck()
+{
+	if (nullptr == m_pTransform_Target)
+	{
+		m_pTransform_Target = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_CHARACTER, L"HEAD", TRANSFORM_COMP, ID_DYNAMIC));
+		NULL_CHECK(m_pTransform_Target);
+	}
+
+	if (nullptr == m_pBombTransform)
+	{
+		m_pBombTransform = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_MAPPING, L"Map", L"Bomb_TransCom", ID_DYNAMIC));
+		NULL_CHECK(m_pBombTransform);
+	}
+
+	if (nullptr == m_pFlightTransform)
+	{
+		m_pFlightTransform = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_FLIGHTPLAYER, L"FLIGHTPLAYER", TRANSFORM_COMP, ID_STATIC));
+		NULL_CHECK(m_pFlightTransform);
+	}
+
+	if (nullptr == m_pShuttleTransform)
+	{
+		m_pShuttleTransform = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_FLIGHTPLAYER, L"FLIGHTSHUTTLE", TRANSFORM_COMP, ID_STATIC));
+		NULL_CHECK(m_pShuttleTransform);
+	}
+
+	if (nullptr == m_pSupporterUziTransform)
+	{
+		m_pSupporterUziTransform = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_SUPPORTER, L"SUPPORT_UZI", TRANSFORM_COMP, ID_DYNAMIC));
+		m_pSupUzi = dynamic_cast<CSupporter_Uzi*>(Get_GameObject(STAGE_SUPPORTER, L"SUPPORT_UZI"));
+	}
+
+	if (nullptr == m_pSupporterShotgunTransform)
+	{
+		m_pSupporterShotgunTransform = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_SUPPORTER, L"SUPPORT_SHOTGUN", TRANSFORM_COMP, ID_DYNAMIC));
+	}
+
+	if (nullptr == m_pSupporterSniperTransform)
+	{
+		m_pSupporterSniperTransform = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_SUPPORTER, L"SUPPORT_SNIPER", TRANSFORM_COMP, ID_DYNAMIC));
+	}
+
+}
+
 Engine::_int CStaticCamera::Update_Object(const _float& fTimeDelta)
 {
+	Update_NullCheck();
+
 	if (!m_bMainCameraOn)
 		return 0;
 
-	if (!(dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->Get_Switch()) 
+	if (!(dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->Get_Switch())
 		&& !(dynamic_cast<CShop*>(Engine::Get_GameObject(STAGE_UI, L"Shop"))->Get_Switch()))
 	{
 		Key_Input(fTimeDelta);
@@ -57,13 +104,14 @@ Engine::_int CStaticCamera::Update_Object(const _float& fTimeDelta)
 		Look_Target(fTimeDelta);
 
 		Camera_Shaking(fTimeDelta);
-	
+
 		Mouse_Fix();
 	}
 
 	m_fFrame += fTimeDelta * 0.5f;
 	m_fFlightFrame += fTimeDelta * 0.5f;
 	m_fBombFrame += fTimeDelta * 0.5f;
+	m_fShuttleFrame += fTimeDelta * 0.2f;
 
 	_int   iExit = CCamera::Update_Object(fTimeDelta);
 
@@ -116,23 +164,6 @@ void CStaticCamera::Mouse_Fix(void)
 
 void CStaticCamera::Look_Target(const _float& _fTimeDelta)
 {
-	if (nullptr == m_pTransform_Target)
-	{
-		m_pTransform_Target = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_CHARACTER, L"HEAD", TRANSFORM_COMP, ID_DYNAMIC));
-		NULL_CHECK(m_pTransform_Target);
-	}
-
-	if (nullptr == m_pBombTransform)
-	{
-		m_pBombTransform = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_MAPPING, L"Map", L"Bomb_TransCom", ID_DYNAMIC));
-		NULL_CHECK(m_pBombTransform);
-	}
-
-	if (nullptr == m_pFlightTransform)
-	{
-		m_pFlightTransform = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_FLIGHTPLAYER, L"FLIGHTPLAYER", TRANSFORM_COMP, ID_STATIC));
-		NULL_CHECK(m_pFlightTransform);
-	}
 
 	CGameObject* pPlayer = nullptr;
 	pPlayer = Engine::Get_GameObject(STAGE_CHARACTER, L"PLAYER");
@@ -143,9 +174,39 @@ void CStaticCamera::Look_Target(const _float& _fTimeDelta)
 	CGameObject* pFlight = nullptr;
 	pFlight = Engine::Get_GameObject(STAGE_FLIGHTPLAYER, L"FLIGHTPLAYER");
 
-	if (!m_bChangePOV && (dynamic_cast<CCubePlayer*>(pPlayer)->Get_Weapon() == dynamic_cast<CWeapon*>(Engine::Get_GameObject(STAGE_GUN, L"UZI1")) ||
-		dynamic_cast<CCubePlayer*>(pPlayer)->Get_Weapon() == dynamic_cast<CWeapon*>(Engine::Get_GameObject(STAGE_GUN, L"SHOTGUN"))) 
-		&& dynamic_cast<CPlayerMapping*>(pBomb)->Get_WorldMap() == false && dynamic_cast<CFlight*>(pFlight)->Get_Control() == false)
+	CGameObject* pShuttle = nullptr;
+	pShuttle = Engine::Get_GameObject(STAGE_FLIGHTPLAYER, L"FLIGHTSHUTTLE");
+
+	CGameObject* pUZI = nullptr;
+	pUZI = Engine::Get_GameObject(STAGE_SUPPORTER, L"FLIGHTSHUTTLE");
+
+	if (m_pSupporterUziTransform != nullptr && m_pSupUzi != nullptr
+		&& dynamic_cast<CSupporter_Uzi*>(m_pSupUzi)->Get_setcam() == true)
+	{
+		_vec3 vLook;
+		m_pSupporterUziTransform->Get_Info(INFO_LOOK, &vLook);
+
+		_vec3 vRight;
+		m_pSupporterUziTransform->Get_Info(INFO_RIGHT, &vRight);
+
+		_vec3 vUp;
+		m_pSupporterUziTransform->Get_Info(INFO_UP, &vUp);
+
+		m_vEye = (vLook * 1.f);
+		D3DXVec3Normalize(&m_vEye, &m_vEye);
+		m_vEye *= 2.f;
+
+		_vec3 vSupUziPos;
+		m_pSupporterUziTransform->Get_Info(INFO_POS, &vSupUziPos);
+
+		m_fFov = D3DXToRadian(60.f);
+		m_vEye += vSupUziPos + (vLook * 10.f);
+		m_vAt = vSupUziPos + (vLook * 2.f);
+	}
+	else if (!m_bChangePOV && (dynamic_cast<CCubePlayer*>(pPlayer)->Get_Weapon() == dynamic_cast<CWeapon*>(Engine::Get_GameObject(STAGE_GUN, L"UZI1")) ||
+		dynamic_cast<CCubePlayer*>(pPlayer)->Get_Weapon() == dynamic_cast<CWeapon*>(Engine::Get_GameObject(STAGE_GUN, L"SHOTGUN")))
+		&& dynamic_cast<CPlayerMapping*>(pBomb)->Get_WorldMap() == false && dynamic_cast<CFlight*>(pFlight)->Get_Control() == false
+		&& dynamic_cast<CFlight*>(pShuttle)->Get_Shuttle() == false)
 	{
 		_vec3 vLook;
 		m_pTransform_Target->Get_Info(INFO_LOOK, &vLook);
@@ -169,7 +230,8 @@ void CStaticCamera::Look_Target(const _float& _fTimeDelta)
 	}
 	else if (m_bChangePOV && (dynamic_cast<CCubePlayer*>(pPlayer)->Get_Weapon() == dynamic_cast<CWeapon*>(Engine::Get_GameObject(STAGE_GUN, L"UZI1")) ||
 		dynamic_cast<CCubePlayer*>(pPlayer)->Get_Weapon() == dynamic_cast<CWeapon*>(Engine::Get_GameObject(STAGE_GUN, L"SHOTGUN")))
-		&& dynamic_cast<CPlayerMapping*>(pBomb)->Get_WorldMap() == false && dynamic_cast<CFlight*>(pFlight)->Get_Control() == false)
+		&& dynamic_cast<CPlayerMapping*>(pBomb)->Get_WorldMap() == false && dynamic_cast<CFlight*>(pFlight)->Get_Control() == false
+		&& dynamic_cast<CFlight*>(pShuttle)->Get_Shuttle() == false)
 	{
 		_vec3 vLook;
 		m_pTransform_Target->Get_Info(INFO_LOOK, &vLook);
@@ -195,7 +257,8 @@ void CStaticCamera::Look_Target(const _float& _fTimeDelta)
 	}
 	else if (dynamic_cast<CCubePlayer*>(pPlayer)->Get_SniperZoom() == true
 		&& dynamic_cast<CPlayerMapping*>(pBomb)->Get_WorldMap() == false
-		&& dynamic_cast<CFlight*>(pFlight)->Get_Control() == false)
+		&& dynamic_cast<CFlight*>(pFlight)->Get_Control() == false
+		&& dynamic_cast<CFlight*>(pShuttle)->Get_Shuttle() == false)
 	{
 		_vec3 vLook;
 		m_pTransform_Target->Get_Info(INFO_LOOK, &vLook);
@@ -218,7 +281,8 @@ void CStaticCamera::Look_Target(const _float& _fTimeDelta)
 		m_vAt = vPos + (vLook * 10.f);
 	}
 	else if (dynamic_cast<CPlayerMapping*>(pBomb)->Get_WorldMap() == true
-		&& dynamic_cast<CFlight*>(pFlight)->Get_Control() == false)
+		&& dynamic_cast<CFlight*>(pFlight)->Get_Control() == false
+		&& dynamic_cast<CFlight*>(pShuttle)->Get_Shuttle() == false)
 	{
 		_vec3 vLook;
 		m_pBombTransform->Get_Info(INFO_LOOK, &vLook);
@@ -240,13 +304,13 @@ void CStaticCamera::Look_Target(const _float& _fTimeDelta)
 		m_pTransform_Target->Get_Info(INFO_POS, &vPlayerPos);
 
 		_vec3 vTransLerp;
-		D3DXVec3Lerp(&vTransLerp,&vPlayerPos,&vBombPos, m_fBombFrame);
+		D3DXVec3Lerp(&vTransLerp, &vPlayerPos, &vBombPos, m_fBombFrame);
 
 		if (m_fBombFrame < 1.f)
 		{
 			m_fFov = D3DXToRadian(60.f);
 			m_vEye += vTransLerp + (-vLook * m_fBombFrame * 20.f);
-			m_vAt =vTransLerp;
+			m_vAt = vTransLerp;
 		}
 		else
 		{
@@ -255,7 +319,8 @@ void CStaticCamera::Look_Target(const _float& _fTimeDelta)
 			m_vAt = vBombPos;
 		}
 	}
-	else if (dynamic_cast<CFlight*>(pFlight)->Get_Control() == true)
+	else if (dynamic_cast<CFlight*>(pFlight)->Get_Control() == true
+		&& dynamic_cast<CFlight*>(pShuttle)->Get_Shuttle() == false)
 	{
 		_vec3 vLook;
 		m_pFlightTransform->Get_Info(INFO_LOOK, &vLook);
@@ -293,6 +358,44 @@ void CStaticCamera::Look_Target(const _float& _fTimeDelta)
 			static_cast<CFlightCamera*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"FlightCamera"))->Set_Eye(&(vFlightPos + (vLook * -10.f) + (vUp * 3.f)));
 		}
 	}
+	else if (dynamic_cast<CFlight*>(pShuttle)->Get_Shuttle() == true)
+	{
+		_vec3 vLook;
+		m_pShuttleTransform->Get_Info(INFO_LOOK, &vLook);
+
+		_vec3 vRight;
+		m_pShuttleTransform->Get_Info(INFO_RIGHT, &vRight);
+
+		_vec3 vUp;
+		m_pShuttleTransform->Get_Info(INFO_UP, &vUp);
+
+		m_vEye = (vRight * 1.f);
+		D3DXVec3Normalize(&m_vEye, &m_vEye);
+		m_vEye *= 5.f;
+
+		_vec3 vShuttlePos;
+		m_pShuttleTransform->Get_Info(INFO_POS, &vShuttlePos);
+
+		_vec3 vPlayerPos;
+		m_pTransform_Target->Get_Info(INFO_POS, &vPlayerPos);
+
+		_vec3 vTransLerp;
+		D3DXVec3Lerp(&vTransLerp, &vPlayerPos, &vShuttlePos, m_fShuttleFrame);
+
+		if (m_fShuttleFrame < 1.f)
+		{
+			m_fFov = D3DXToRadian(60.f);
+			m_vEye += vTransLerp + (vRight * m_fShuttleFrame * 10.f);
+			m_vAt = vTransLerp + (vRight* m_fShuttleFrame * 2.f);
+		}
+		else
+		{
+			m_fFov = D3DXToRadian(60.f);
+			m_vEye += vShuttlePos + (vRight * 10.f);
+			m_vAt = vShuttlePos + (vRight * 2.f);
+		}
+	}
+
 	else
 	{
 		_vec3 vLook;
@@ -316,10 +419,12 @@ void CStaticCamera::Look_Target(const _float& _fTimeDelta)
 		m_vAt = vPos;
 	}
 
-	if(dynamic_cast<CPlayerMapping*>(pBomb)->Get_WorldMap() == false)
+	if (dynamic_cast<CPlayerMapping*>(pBomb)->Get_WorldMap() == false)
 		m_fBombFrame = 0.f;
 	if (dynamic_cast<CFlight*>(pFlight)->Get_Control() == false)
 		m_fFlightFrame = 0.f;
+	if (dynamic_cast<CFlight*>(pShuttle)->Get_Shuttle() == false)
+		m_fShuttleFrame = 0.f;
 }
 
 void CStaticCamera::Camera_Shaking(const _float& _fTimeDelta)
@@ -337,7 +442,7 @@ void CStaticCamera::Camera_Shaking(const _float& _fTimeDelta)
 			m_bPlayerHit = false;
 		}
 	}
-	
+
 	if (m_bEarthQuake)
 	{
 		m_fFrame += 0.1f * _fTimeDelta;

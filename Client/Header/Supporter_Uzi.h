@@ -13,11 +13,12 @@ public:
 	virtual void		Render_Object(void);
 	void				SetOrdered(_bool bGetOrder) { m_bGetOrder = bGetOrder; }
 
+	_bool				Get_setcam() { return m_bSetCam; }
+	void				Set_setcam(_bool bcam) { m_bSetCam = bcam; }
 private:
 	HRESULT				Add_Component(void);
 	void				Look_Direction(void);
 	void				Find_Target(void);
-
 
 private:	//	애니메이션 관련
 	HRESULT				Build(void);
@@ -40,6 +41,8 @@ private:	//	애니메이션 관련
 	_bool				m_bOrdering = false;
 
 	_vec3				m_vOrderPos = _vec3(0.f, 0.f, 0.f);
+
+	_bool				m_bSetCam = true;
 
 	UZISUPPORTSTATEID	m_STATE;
 	UZISUPPORTIDLEID	m_IDLE;
