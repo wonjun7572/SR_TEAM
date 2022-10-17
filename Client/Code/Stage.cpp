@@ -512,7 +512,7 @@ HRESULT CStage::Ready_Layer_Monster(const _tchar * pLayerTag)
 	//	}
 	//}
 
-	pGameObject = CMiddleBoss::Create(m_pGraphicDev, _vec3(30.f, 2.6f, 30.f), L"MiddleBoss");
+	pGameObject = CMiddleBoss::Create(m_pGraphicDev, _vec3(10.f, 2.6f, 10.f), L"MiddleBoss");
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
 	

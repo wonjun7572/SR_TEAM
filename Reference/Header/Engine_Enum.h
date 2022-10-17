@@ -118,6 +118,8 @@ namespace Engine
 
 	enum SCENE_ID {LOGO_SCENE, STAGE_SCENE, TOOL_SCENE ,SCENE_END};
 	enum COLOR_ID { COLOR_BLUE, COLOR_RED, COLOR_YELLOW, COLOR_END };
+
+	enum EXPLOSIONID { EXPLOSION_1, EXPLOSION_2 };
 }
 
 #endif // Engine_Enum_h__

@@ -10,6 +10,8 @@
 #include "ComboUI.h"
 #include "MonsterMapping.h"
 #include "TransAxisBox.h"
+#include "FlightBomb.h"
+#include "Explosion.h"
 
 static _int m_iCnt = 0;
 
@@ -26,7 +28,7 @@ CMiddleBoss::~CMiddleBoss()
 HRESULT CMiddleBoss::Ready_Object(const _vec3 & vPos, _tchar * Name)
 {
 	m_tAbility = new MIDDLEBOSSABILITY;
-	m_tAbility->fMaxHp = 200.f;
+	m_tAbility->fMaxHp = 10000.f;
 	m_tAbility->fCurrentHp = m_tAbility->fMaxHp;
 	m_tAbility->fDamage = 5.f;
 	m_tAbility->strObjTag = L"MiddleBoss";
@@ -166,23 +168,16 @@ void CMiddleBoss::LateUpdate_Object(void)
 			}
 			else if (m_PATTERN == MIDDLEBOSS_SKILL_CRASH)
 			{
-				NormalAttack_Animation_Run();
-
-				if (m_NORMALATTACK == MIDDLEBOSS_NORMALATTACK_1 || m_NORMALATTACK == MIDDLEBOSS_NORMALATTACK_3)
-					Run_Animation(5.f);
-				if (m_NORMALATTACK == MIDDLEBOSS_NORMALATTACK_2 || m_NORMALATTACK == MIDDLEBOSS_NORMALATTACK_4)
-					Run_Animation(50.f);
-
-				//	충돌 애니메이션때 밀려나는 코드
-				CLayer* pLayer = Engine::Get_Layer(STAGE_CHARACTER);
-				CCubePlayer* pPlayer = dynamic_cast<CCubePlayer*>(pLayer->Get_GameObject(L"PLAYER"));
-
-				pPlayer->KnuckDown(10.f, 20.f);
+				Bombing_Animation_Run();
+				Run_Animation(10.f);
 			}
 			else if (m_PATTERN == MIDDLEBOSS_SKILL_BOMBING)
 			{
 				Bombing_Animation_Run();
-				Run_Animation(50.f);
+				if (m_BOMBING == MIDDLEBOSS_BOMBING_3)
+					Run_Animation(200.f);
+				else
+					Run_Animation(100.f);
 			}
 		}
 		else if (m_STATE == MIDDLEBOSS_MOVE)
@@ -308,6 +303,53 @@ _int CMiddleBoss::Update_Pattern(_float fTimeDelta)
 		else if (m_STATE == MIDDLEBOSS_ATTACK)
 		{
 			m_pTransCom->Chase_Target(&vPlayerPos, 0.f, fTimeDelta);
+
+			if (m_PATTERN == MIDDLEBOSS_SKILL_NORMALATTACK)
+			{
+				_vec3 m_vDirectionLeft = vPlayerPos - vShotgunLeft;
+				_vec3 m_vDirectionRight = vPlayerPos - vShotgunRight;
+				D3DXVec3Normalize(&m_vDirectionLeft, &m_vDirectionLeft);
+				D3DXVec3Normalize(&m_vDirectionRight, &m_vDirectionRight);
+
+				if ((m_NORMALATTACK == MIDDLEBOSS_NORMALATTACK_1))
+				{
+					CPoolMgr::GetInstance()->Reuse_Obj(m_pGraphicDev, &vShotgunRight, &m_vDirectionRight, m_tAbility->fDamage);
+				}
+				if ((m_NORMALATTACK == MIDDLEBOSS_NORMALATTACK_3))
+				{
+					CPoolMgr::GetInstance()->Reuse_Obj(m_pGraphicDev, &vShotgunLeft, &m_vDirectionLeft, m_tAbility->fDamage);
+				}
+			}
+			else if (m_PATTERN == MIDDLEBOSS_SKILL_BOMBING)
+			{
+				if (m_BOMBING == MIDDLEBOSS_BOMBING_3 && m_fMissileItv >= 1.f)
+				{
+					_tchar* szName = new _tchar[256]{};
+					wstring wName = L"Missile_%d";
+					wsprintfW(szName, wName.c_str(), m_MissileCnt);
+					m_TcharList.push_back(szName);
+
+					// 위치 바꿔줘야함
+					CGameObject* pGameObject = CFlightBomb::Create(m_pGraphicDev, _vec3(20.f, 50.f, 20.f), szName);
+					NULL_CHECK_RETURN(pGameObject, -1);
+					CLayer* pLayer = Get_Layer(STAGE_SKILL);
+					FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), -1);
+
+					m_fMissileItv = 0.f;
+					m_MissileCnt++;
+				}
+				else
+				{
+					m_fMissileItv += fTimeDelta;
+				}
+			}
+			else if (m_PATTERN == MIDDLEBOSS_SKILL_CRASH)
+			{
+				CLayer* pLayer = Engine::Get_Layer(STAGE_CHARACTER);
+				CCubePlayer* pPlayer = dynamic_cast<CCubePlayer*>(pLayer->Get_GameObject(L"PLAYER"));
+
+				pPlayer->KnuckDown(10.f, 20.f);
+			}
 		}
 	}
 

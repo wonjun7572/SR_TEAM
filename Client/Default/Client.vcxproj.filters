@@ -316,6 +316,12 @@
     <Filter Include="02. GameObject\01. For_Stage\10. Item\Key">
       <UniqueIdentifier>{b2e09751-32a8-4e8e-be87-78466d0480d4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\02. For_Public\02. FlightCamera">
+      <UniqueIdentifier>{319f3c8e-a395-452a-8a7e-efed25a8b33b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\06. Bullet\Missile">
+      <UniqueIdentifier>{f0dd0066-ee25-4045-a22e-ba735c290f5e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -726,17 +732,23 @@
     <ClInclude Include="..\Header\Alien.h">
       <Filter>99. Default\헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\FlightCamera.h">
-      <Filter>99. Default\헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\FlightSpot.h">
-      <Filter>99. Default\헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\Terret.h">
       <Filter>02. GameObject\01. For_Stage\18. Trap</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\FlightBomb.h">
+    <ClInclude Include="..\Header\StaticField.h">
+      <Filter>99. Default\헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\FlightCamera.h">
+      <Filter>02. GameObject\02. For_Public\02. FlightCamera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\FlightSpot.h">
       <Filter>02. GameObject\01. For_Stage\21. Rocket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\FlightBomb.h">
+      <Filter>02. GameObject\01. For_Stage\06. Bullet\Missile</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Explosion.h">
+      <Filter>02. GameObject\01. For_Stage\06. Bullet\Missile</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1124,17 +1136,23 @@
     <ClCompile Include="..\Code\Alien.cpp">
       <Filter>99. Default\소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\FlightCamera.cpp">
-      <Filter>99. Default\소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\FlightSpot.cpp">
-      <Filter>99. Default\소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\Terret.cpp">
       <Filter>02. GameObject\01. For_Stage\18. Trap</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\FlightBomb.cpp">
+    <ClCompile Include="..\Code\StaticField.cpp">
+      <Filter>99. Default\소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\FlightCamera.cpp">
+      <Filter>02. GameObject\02. For_Public\02. FlightCamera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\FlightSpot.cpp">
       <Filter>02. GameObject\01. For_Stage\21. Rocket</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\FlightBomb.cpp">
+      <Filter>02. GameObject\01. For_Stage\06. Bullet\Missile</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Explosion.cpp">
+      <Filter>02. GameObject\01. For_Stage\06. Bullet\Missile</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
