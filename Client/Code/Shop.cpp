@@ -155,7 +155,7 @@ HRESULT CShop::Ready_Object(void)
 	}
 
 	m_pUpgrade = L"UPGRADE";
-	m_pInformation = L"Press [Return] And Hold to Buy Upgrade";
+	m_pInformation = L"Press  [Return] And Hold to Buy Upgrade";
 	m_pUziRaffle = L"UziRaffle";
 	m_pShotGun = L"ShotGun";
 	m_pSniper = L"Sniper";
@@ -273,10 +273,10 @@ void CShop::Render_Object()
 	Engine::Render_Font(L"UziRaffle", m_pUziRaffle.c_str(), &_vec2(219.f, 47.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
 	Engine::Render_Font(L"ShotGun", m_pShotGun.c_str(), &_vec2(522.f, 47.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
 	Engine::Render_Font(L"Sniper", m_pSniper.c_str(), &_vec2(843.f, 47.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
-	Engine::Render_Font(L"LASER MODE", m_pLaser.c_str(), &_vec2(890.f, 223.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
-	Engine::Render_Font(L"HEAVY MODE", m_pHeavy.c_str(), &_vec2(1150.f, 223.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
-	Engine::Render_Font(L"RAILGUN MODE", m_pRailGun.c_str(), &_vec2(875.f, 331.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
-	Engine::Render_Font(L"BURST MODE", m_pBurst.c_str(), &_vec2(1148.f, 331.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+	Engine::Render_Font(L"LASER MODE", m_pLaser.c_str(), &_vec2(880.f, 223.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+	Engine::Render_Font(L"HEAVY MODE", m_pHeavy.c_str(), &_vec2(1160.f, 223.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+	Engine::Render_Font(L"RAILGUN MODE", m_pRailGun.c_str(), &_vec2(905.f, 321.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+	Engine::Render_Font(L"BURST MODE", m_pBurst.c_str(), &_vec2(1148.f, 325.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
 }
 
 void CShop::Render_Ortho(CTransform * pTransform, CTexture * pTexture, _int iIndex)
@@ -423,8 +423,8 @@ _bool CShop::PointMouse(const _vec3& vPos)
 	GetCursorPos(&pt);
 	ScreenToClient(g_hWnd, &pt);
 
-	_long lLeft, lRight, lUp, lDown;
 
+	_long lLeft, lRight, lUp, lDown;
 	lLeft = _long((0.5 * WINCX) * (1 + m_TranformCom->m_vInfo[INFO_POS].x) - (m_TranformCom->m_vScale.x  * (0.5 * WINCX)));
 	lRight = _long((0.5 * WINCX) * (1 + m_TranformCom->m_vInfo[INFO_POS].x) + (m_TranformCom->m_vScale.x   * (0.5 * WINCX)));
 	lUp = _long((0.5 * WINCY) * (1 - m_TranformCom->m_vInfo[INFO_POS].y) - (m_TranformCom->m_vScale.y  * (WINCY * 0.5)));

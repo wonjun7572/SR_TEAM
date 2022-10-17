@@ -106,6 +106,8 @@ private:
 	_float				m_fSpeed = 1.f;
 	_vec3				vUIPos;
 	_bool				m_MappingInit = false;
+
+	_int				m_iRandom = 0;
 	TCHAR*				m_szCntName = new TCHAR[64];
 
 	vector<MIDDLEBOSSSKILLID>	m_vPattern;

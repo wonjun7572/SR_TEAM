@@ -1,5 +1,5 @@
 #pragma once
-#include "C:\Users\DecoyZ\Desktop\SR_TEAM\Reference\Header\GameObject.h"
+#include "GameObject.h"
 
 class CDeffensiveMatrix;
 class CShield :
