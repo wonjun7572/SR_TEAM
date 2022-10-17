@@ -183,12 +183,12 @@ void CCubePlayer::CoolTimer(void)
 	m_pBodyWorld->Move_Pos(&(vLook * m_iKnuckStack * m_fTimeDelta));
 }
 
-void CCubePlayer::KnuckDown(const _float & fDamage)
+void CCubePlayer::KnuckDown(const _float & fDamage, const _float& fDistance)
 {
 	if (m_fGlobal_Cooltime >= 1.f)
 	{
 		m_tAbility->fHp -= fDamage;
-		m_iKnuckStack = 15;
+		m_iKnuckStack = fDistance;
 		m_fGlobal_Cooltime = 0;
 	}
 }
