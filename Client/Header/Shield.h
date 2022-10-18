@@ -36,6 +36,9 @@ private:
 	CCollision*				m_pCollision = nullptr;
 	CHitBox*				m_pHitBox = nullptr;
 	CDeffensiveMatrix*		m_pDeffensiveMatrix = nullptr;
+	CGameObject*			m_pEffect = nullptr;
+
+
 private:
 	_vec3					m_vPos = { 0.f,0.f,0.f };
 	_vec3					m_vDir = { 0.f,0.f,0.f };

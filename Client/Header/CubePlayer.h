@@ -14,6 +14,9 @@ class CShield;
 class CCubeParticle;
 class CDashCube;
 class CCartridgeParticle;
+class CTriggerParticle;
+class CTriggerFront;
+
 
 class CCubePlayer : public CGameObject
 {
@@ -134,12 +137,15 @@ private:
 	CPlayerMapping* m_pBomb = nullptr;
 	CFlight*		m_pFlight = nullptr;
 
-private:
+private: // 파티클관련 포인터입니다.
 	CBulletParticle* m_pBulletParicle = nullptr;
 	CShotParticle*	 m_pShotParicle = nullptr;
 	CProjectileParticle* m_pProjectileParicle = nullptr;
 	CCubeParticle* m_pCubeParticle = nullptr;
 	CDashCube*		m_pDashCube = nullptr;
+	CTriggerParticle* m_pTriggerParticle = nullptr;
+	CTriggerFront* m_pTriggerFront = nullptr;
+
 	CCartridgeParticle*		m_pCartridgeParticle = nullptr;
 
 private:

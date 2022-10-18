@@ -15,6 +15,8 @@
 #include "CubeParticle.h"
 #include "DashCube.h"
 #include "CartridgeParticle.h"
+#include "TriggerParticle.h"
+#include "TriggerFront.h"
 
 /*	
 CFlameEffect* m_pFlameEffectParticle = nullptr;

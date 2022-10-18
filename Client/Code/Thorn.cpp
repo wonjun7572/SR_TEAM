@@ -106,7 +106,7 @@ void CThorn::HitCheck(void)
 	CHitBox* pPlayerHitbox = dynamic_cast<CHitBox*>(Engine::Get_Component(STAGE_CHARACTER, L"PLAYER", HITBOX_COMP, ID_STATIC));
 
 	if (m_pCollision->Collision_Square(pPlayerTransform, pPlayerHitbox, m_pTransCom, m_pHitBox))
-		pPlayer->KnuckDown(10.f, 15.f);
+		pPlayer->KnuckDown(10.f, 7.5f);
 }
 
 HRESULT CThorn::Build(void)

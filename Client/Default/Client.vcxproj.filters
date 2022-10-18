@@ -355,8 +355,17 @@
     <Filter Include="02. GameObject\01. For_Stage\16. Skill\Shield\DeffensiveMatrix">
       <UniqueIdentifier>{47ba5b1f-d677-4cdc-a5bd-26a960a33048}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01. Scene\03. FinalStage">
-      <UniqueIdentifier>{2b97cc97-6ed0-4416-8304-de5fa1f27bae}</UniqueIdentifier>
+    <Filter Include="02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\GunEffect">
+      <UniqueIdentifier>{5de82fb7-cd8a-4ff3-9776-3401ee6a6fd6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\GunEffect\Cartridge">
+      <UniqueIdentifier>{81ac8440-cab9-413a-a932-3c3fe53aaec1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\GunEffect\Smoke">
+      <UniqueIdentifier>{a72ef9b2-f6ee-485f-b55f-81c531b5b1e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\GunEffect\Fire">
+      <UniqueIdentifier>{3b8f1cc0-9058-4d6c-a37f-c35fade87a49}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -774,9 +783,6 @@
     <ClInclude Include="..\Header\CubeParticle.h">
       <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\CartridgeParticle.h">
-      <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle</Filter>
-    </ClInclude>
     <ClInclude Include="KrakenBoss.h">
       <Filter>02. GameObject\01. For_Stage\21. Boss\02. Kraken</Filter>
     </ClInclude>
@@ -807,17 +813,23 @@
     <ClInclude Include="..\Header\StaticField.h">
       <Filter>02. GameObject\01. For_Stage\16. Skill\StaticField</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\Supporter_Shotgun.h">
+      <Filter>99. Default\헤더 파일</Filter>
+    </ClInclude>
     <ClInclude Include="..\Header\Veneer.h">
       <Filter>99. Default\헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\Supporter_Shotgun.h">
-      <Filter>02. GameObject\01. For_Stage\17. Supporter</Filter>
-    </ClInclude>
     <ClInclude Include="Supporter_Sniper.h">
-      <Filter>02. GameObject\01. For_Stage\17. Supporter</Filter>
+      <Filter>99. Default\헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\FinalStage.h">
-      <Filter>01. Scene\03. FinalStage</Filter>
+    <ClInclude Include="..\Header\CartridgeParticle.h">
+      <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\GunEffect\Cartridge</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\TriggerParticle.h">
+      <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\GunEffect\Smoke</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\TriggerFront.h">
+      <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\GunEffect\Fire</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1211,9 +1223,6 @@
     <ClCompile Include="..\Code\DashCube.cpp">
       <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\CartridgeParticle.cpp">
-      <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle</Filter>
-    </ClCompile>
     <ClCompile Include="KrakenBoss.cpp">
       <Filter>02. GameObject\01. For_Stage\21. Boss\02. Kraken</Filter>
     </ClCompile>
@@ -1244,17 +1253,23 @@
     <ClCompile Include="..\Code\StaticField.cpp">
       <Filter>02. GameObject\01. For_Stage\16. Skill\StaticField</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\Supporter_Shotgun.cpp">
+      <Filter>99. Default\소스 파일</Filter>
+    </ClCompile>
     <ClCompile Include="..\Code\Veneer.cpp">
       <Filter>99. Default\소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\Supporter_Shotgun.cpp">
-      <Filter>02. GameObject\01. For_Stage\17. Supporter</Filter>
-    </ClCompile>
     <ClCompile Include="Supporter_Sniper.cpp">
-      <Filter>02. GameObject\01. For_Stage\17. Supporter</Filter>
+      <Filter>99. Default\소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\FinalStage.cpp">
-      <Filter>01. Scene\03. FinalStage</Filter>
+    <ClCompile Include="..\Code\CartridgeParticle.cpp">
+      <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\GunEffect\Cartridge</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\TriggerParticle.cpp">
+      <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\GunEffect\Smoke</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\TriggerFront.cpp">
+      <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\GunEffect\Fire</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

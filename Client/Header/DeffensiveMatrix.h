@@ -38,5 +38,9 @@ private:
 	_bool					m_bShield = false;
 	_float					m_fSpeed = 1.f;
 	_float					m_fTimer = 0.f;
+
+	_int iT = 0;
+
+
 };
 
