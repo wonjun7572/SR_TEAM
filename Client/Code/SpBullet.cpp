@@ -71,7 +71,6 @@ _int CSpBullet::Update_Object(const _float & fTimeDelta)
 				CHitBox* pHitbox = dynamic_cast<CHitBox*>(iter->Get_Component(HITBOX_COMP, ID_STATIC));
 				if (m_pCollision->Collision_Square(this->m_pTransCom, this->m_pHitbox, pTransform, pHitbox))
 				{
-					cout << 1 << endl;
 					this->m_fTimeDelta = 10;
 					break;
 				}

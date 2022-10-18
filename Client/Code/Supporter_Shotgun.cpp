@@ -36,7 +36,7 @@ HRESULT CSupporter_Shotgun::Ready_Object(const _vec3 & vPos, _tchar * Name)
 	m_pHitBoxTransform->Set_Pos(vAnimationPos.x, vAnimationPos.y, vAnimationPos.z);
 	m_pHitBoxTransform->Static_Update();
 
-	m_pSphereTransCom->Set_Scale(&_vec3(3.f, 3.f, 3.f));
+	m_pSphereTransCom->Set_Scale(&_vec3(7.f, 7.f, 7.f));
 	m_pSphereTransCom->Set_Pos(vAnimationPos.x, vAnimationPos.y, vAnimationPos.z);
 	m_pSphereTransCom->Static_Update();
 
@@ -66,6 +66,9 @@ _int CSupporter_Shotgun::Update_Object(const _float & fTimeDelta)
 
 		Load_Animation(L"../../Data/Supporter_Shotgun/SHOUGUN_ATTACK_1.dat", 4);
 		Load_Animation(L"../../Data/Supporter_Shotgun/SHOUGUN_ATTACK_2.dat", 5);
+
+		Load_Animation(L"../../Data/Supporter_Shotgun/SHOUGUN_DROP.dat", 6);
+		Load_Animation(L"../../Data/Supporter_Shotgun/SHOUGUN_DROP_COMPLETE.dat", 7);
 	}
 
 	_vec3 vPlayerScale;
@@ -80,15 +83,18 @@ _int CSupporter_Shotgun::Update_Object(const _float & fTimeDelta)
 
 	if (vPosition.y >= 0.6f)
 	{
-		m_pTransform->Move_Pos(&(_vec3(0.f, -1.f, 0.f) * fTimeDelta));
+		m_pTransform->Move_Pos(&(_vec3(0.f, -2.f, 0.f) * fTimeDelta));
 	}
 	else if (vPosition.y <= 0.6f)
 	{
 		m_bSetCam = false;
 	}
 
-	//	플레이어가 근처에 없으면 따라가기
-	if (m_bGetOrder)
+	if (vPosition.y >= 0.6f)
+	{
+		m_STATE = SHOTGUNSUPPORT_DROP;
+	}
+	else if (m_bGetOrder)
 	{
 		if (!m_bOrdering)
 		{
@@ -168,7 +174,7 @@ void CSupporter_Shotgun::LateUpdate_Object(void)
 			if (m_ATTACK == SHOTGUNSUPPORT_ATTACK_1)
 				Run_Animation(0.5f);
 			else
-				Run_Animation(5.f);
+				Run_Animation(10.f);
 		}
 	}
 
@@ -637,6 +643,37 @@ void CSupporter_Shotgun::ATTACK_Animation_Run(void)
 			Qtan->Change_Animation(4);
 		else if (m_ATTACK == SHOTGUNSUPPORT_ATTACK_2)
 			Qtan->Change_Animation(5);
+	}
+}
+
+void CSupporter_Shotgun::DROP_Animation_Run(void)
+{
+	list<pair<const _tchar*, CGameObject*>> ListBox = *(pMyLayer->Get_GamePairPtr());
+
+	_vec3 vPosition;
+	m_pTransform->Get_Info(INFO_POS, &vPosition);
+
+	if (m_AnimationTime >= 1.f)
+	{
+		for (auto& iter : ListBox)
+		{
+			CQuarternion* Qtan = dynamic_cast<CQuarternion*>(iter.second->Get_Component(L"Proto_QuaternionCom", ID_STATIC));
+			Qtan->Delete_WorldVector();
+		}
+
+		if (vPosition.y >= 0.6f)
+			m_DROP = SPDROP_1;
+		else
+			m_DROP = SPDROP_2;
+
+		m_AnimationTime = 0.f;
+	}
+
+	for (auto& iter : ListBox)	// 애니메이션 변경
+	{
+		CQuarternion* Qtan = dynamic_cast<CQuarternion*>(iter.second->Get_Component(L"Proto_QuaternionCom", ID_STATIC));
+		Qtan->Change_Animation(6 + m_DROP);
+
 	}
 }
 

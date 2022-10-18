@@ -24,6 +24,7 @@ HRESULT CShader::Ready_Shader(const _tchar* ShaderFileName)
 void CShader::Begin_Shader(void)
 {
 	m_pEffect->Begin(nullptr, 0);
+	m_pEffect->BeginPass(0);
 }
 
 void CShader::End_Shader(void)

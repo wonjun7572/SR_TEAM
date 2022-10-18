@@ -1,176 +1,6 @@
-﻿빌드 시작: 2022-10-18 오전 12:06:20
+﻿빌드 시작: 2022-10-18 오후 3:41:30
      1>2 노드의 "D:\GitHub\SR_TEAM\Client\Default\Client.vcxproj" 프로젝트(Build 대상)입니다.
-     1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /I../Default /I../Header /I../Code /I../../Reference/Header /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Yc"stdafx.h" /Fp"Debug\Client.pch" /Fo"Debug\\" /Fd"Debug\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt stdafx.cpp
-         stdafx.cpp
-         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /I../Default /I../Header /I../Code /I../../Reference/Header /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Yu"stdafx.h" /Fp"Debug\Client.pch" /Fo"Debug\\" /Fd"Debug\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt ..\Code\Alien.cpp ..\Code\AnimationPlayer.cpp ..\Code\CubeParticle.cpp ..\Code\DashCube.cpp ..\Code\DeffensiveMatrix.cpp ..\Code\BaseMapping.cpp ..\Code\BattleCursier.cpp ..\Code\BrownCloudEffect.cpp ..\Code\BubbleEffect.cpp ..\Code\Bullet.cpp ..\Code\BulletParicle.cpp ..\Code\BulletUI.cpp ..\Code\ComboUI.cpp ..\Code\CrossHeader.cpp ..\Code\CubeArm.cpp ..\Code\CubeBody.cpp ..\Code\CubeFoot.cpp ..\Code\CubeHand.cpp ..\Code\CubeHead.cpp ..\Code\CubeLeg.cpp ..\Code\CubePlayer.cpp ..\Code\CubeShop.cpp ..\Code\DynamicCamera.cpp ..\Code\ExBullet.cpp ..\Code\Explosion.cpp ..\Code\FlameEffect.cpp ..\Code\Flight.cpp ..\Code\FlightBomb.cpp ..\Code\FlightBulletParticle.cpp ..\Code\FlightCamera.cpp ..\Code\FlightSpot.cpp ..\Code\HyperionStrike.cpp ..\Code\IceEffect.cpp ..\Code\Key.cpp ..\Code\MiddleBoss.cpp ..\Code\ObjectCube.cpp ..\Code\Ping.cpp ..\Code\RcEffect.cpp ..\Code\Shield.cpp ..\Code\SparkEffect.cpp ..\Code\ExitButton.cpp ..\Code\FireMan.cpp ..\Code\GetShotgun.cpp ..\Code\GetSniper.cpp ..\Code\GetUzi.cpp ..\Code\GunUI.cpp ..\Code\HealthPotion.cpp ..\Code\HitBarUI.cpp ..\Code\Illusioner.cpp ..\Code\ImguiMgr.cpp ..\Code\Inventory.cpp ..\Code\Item.cpp ..\Code\ItemBox.cpp ..\Code\ItemIcon.cpp ..\Code\ItemParticle.cpp ..\Code\LetterBox.cpp ..\Code\Loading.cpp ..\Code\Logo.cpp ..\Code\LogoBilboard.cpp ..\Code\LogoUI.cpp ..\Code\Magma.cpp ..\Code\MainApp.cpp ..\Code\MaxPlusHp.cpp ..\Code\Meteor.cpp ..\Code\Monster.cpp ..\Code\MonsterMapping.cpp ..\Code\MonsterParticle.cpp ..\Code\MonsterUI.cpp ..\Code\ObtainBullet.cpp ..\Code\ObtainDefense.cpp ..\Code\OptionButton.cpp ..\Code\PlayButton.cpp ..\Code\PlayerHpUI.cpp ..\Code\PlayerMapping.cpp ..\Code\PlayerUI.cpp ..\Code\PoolMgr.cpp ..\Code\ProjectileParticle.cpp ..\Code\Shop.cpp ..\Code\Shotgun.cpp ..\Code\ShotgunPart1.cpp ..\Code\ShotgunPart2.cpp ..\Code\ShotgunPart3.cpp ..\Code\ShotgunPart4.cpp ..\Code\Skeleton.cpp ..\Code\SkyBox.cpp ..\Code\Slime.cpp ..\Code\Sniper.cpp ..\Code\SniperPart1.cpp ..\Code\SniperPart2.cpp ..\Code\SniperPart3.cpp ..\Code\SniperPart4.cpp ..\Code\SpBullet.cpp ..\Code\Stage.cpp ..\Code\StaticCamera.cpp ..\Code\RainbowCloudEffect.cpp ..\Code\StaticField.cpp ..\Code\Supporter.cpp ..\Code\Supporter_Shotgun.cpp ..\Code\Supporter_Uzi.cpp ..\Code\TargetCube.cpp ..\Code\Terrain.cpp ..\Code\Terret.cpp ..\Code\TestCube.cpp ..\Code\Thorn.cpp ..\Code\ToolScene.cpp ..\Code\TransAxisBox.cpp ..\Code\Trap.cpp ..\Code\Uzi.cpp ..\Code\UziPart1.cpp ..\Code\UziPart2.cpp ..\Code\UziPart3.cpp ..\Code\UziPart4.cpp ..\Code\UziPart5.cpp ..\Code\Veneer.cpp ..\Code\Wall.cpp ..\Code\WallMapping.cpp ..\Code\Weapon.cpp ..\Code\WeaponUI.cpp ..\Code\ShotParticle.cpp ..\Code\Zombie.cpp Client.cpp ..\Code\PlayerDefenseUI.cpp ..\Code\PlayerFaceUI.cpp KrakenBoss.cpp
-         KrakenBoss.cpp
-         PlayerFaceUI.cpp
-         PlayerDefenseUI.cpp
-         Client.cpp
-         Zombie.cpp
-         ShotParticle.cpp
-         WeaponUI.cpp
-         Weapon.cpp
-         WallMapping.cpp
-         Wall.cpp
-         Veneer.cpp
-         UziPart5.cpp
-         UziPart4.cpp
-         UziPart3.cpp
-         UziPart2.cpp
-         UziPart1.cpp
-         Uzi.cpp
-         Trap.cpp
-         TransAxisBox.cpp
-         ToolScene.cpp
-         코드를 생성하고 있습니다...
-         컴파일하고 있습니다...
-         Thorn.cpp
-         TestCube.cpp
-         Terret.cpp
-         Terrain.cpp
-     1>d:\github\sr_team\client\code\terrain.cpp(78): warning C4101: 'expn' :참조되지 않은 지역 변수입니다.
-         TargetCube.cpp
-         Supporter_Uzi.cpp
-         Supporter_Shotgun.cpp
-         Supporter.cpp
-         StaticField.cpp
-         RainbowCloudEffect.cpp
-         StaticCamera.cpp
-         Stage.cpp
-         SpBullet.cpp
-         SniperPart4.cpp
-         SniperPart3.cpp
-         SniperPart2.cpp
-         SniperPart1.cpp
-         Sniper.cpp
-         Slime.cpp
-         SkyBox.cpp
-         코드를 생성하고 있습니다...
-         컴파일하고 있습니다...
-         Skeleton.cpp
-         ShotgunPart4.cpp
-         ShotgunPart3.cpp
-         ShotgunPart2.cpp
-         ShotgunPart1.cpp
-         Shotgun.cpp
-         Shop.cpp
-         ProjectileParticle.cpp
-     1>d:\github\sr_team\client\code\projectileparticle.cpp(73): warning C4035: 'CProjectileParticle::Update_Object': 반환 값이 없습니다.
-         PoolMgr.cpp
-         PlayerUI.cpp
-         PlayerMapping.cpp
-         PlayerHpUI.cpp
-         PlayButton.cpp
-         OptionButton.cpp
-         ObtainDefense.cpp
-         ObtainBullet.cpp
-         MonsterUI.cpp
-         MonsterParticle.cpp
-         MonsterMapping.cpp
-         Monster.cpp
-         코드를 생성하고 있습니다...
-         컴파일하고 있습니다...
-         Meteor.cpp
-         MaxPlusHp.cpp
-         MainApp.cpp
-         Magma.cpp
-         LogoUI.cpp
-         LogoBilboard.cpp
-         Logo.cpp
-         Loading.cpp
-         LetterBox.cpp
-         ItemParticle.cpp
-         ItemIcon.cpp
-         ItemBox.cpp
-         Item.cpp
-         Inventory.cpp
-     1>d:\github\sr_team\client\code\inventory.cpp(416): warning C4018: '>': signed 또는 unsigned가 일치하지 않습니다.
-         ImguiMgr.cpp
-         Illusioner.cpp
-         HitBarUI.cpp
-         HealthPotion.cpp
-         GunUI.cpp
-         GetUzi.cpp
-         코드를 생성하고 있습니다...
-         컴파일하고 있습니다...
-         GetSniper.cpp
-         GetShotgun.cpp
-         FireMan.cpp
-         ExitButton.cpp
-         SparkEffect.cpp
-         Shield.cpp
-         RcEffect.cpp
-         Ping.cpp
-         ObjectCube.cpp
-         MiddleBoss.cpp
-         Key.cpp
-         IceEffect.cpp
-         HyperionStrike.cpp
-         FlightSpot.cpp
-         FlightCamera.cpp
-         FlightBulletParticle.cpp
-         FlightBomb.cpp
-         Flight.cpp
-         FlameEffect.cpp
-     1>d:\github\sr_team\client\code\flameeffect.cpp(120): warning C4305: '인수': 'double'에서 'Engine::_float'(으)로 잘립니다.
-         Explosion.cpp
-         코드를 생성하고 있습니다...
-         컴파일하고 있습니다...
-         ExBullet.cpp
-         DynamicCamera.cpp
-         CubeShop.cpp
-         CubePlayer.cpp
-     1>d:\github\sr_team\client\code\cubeplayer.cpp(179): warning C4244: '인수': 'Engine::_int'에서 'FLOAT'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-     1>d:\github\sr_team\client\code\cubeplayer.cpp(182): warning C4244: '인수': 'Engine::_int'에서 'FLOAT'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-         CubeLeg.cpp
-         CubeHead.cpp
-         CubeHand.cpp
-         CubeFoot.cpp
-         CubeBody.cpp
-         CubeArm.cpp
-         CrossHeader.cpp
-         ComboUI.cpp
-         BulletUI.cpp
-         BulletParicle.cpp
-         Bullet.cpp
-         BubbleEffect.cpp
-         BrownCloudEffect.cpp
-         BattleCursier.cpp
-         BaseMapping.cpp
-         DeffensiveMatrix.cpp
-         코드를 생성하고 있습니다...
-         컴파일하고 있습니다...
-         DashCube.cpp
-         CubeParticle.cpp
-         AnimationPlayer.cpp
-         Alien.cpp
-         코드를 생성하고 있습니다...
-         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /I../Default /I../Header /I../Code /I../../Reference/Header /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Yu"stdafx.h" /Fp"Debug\Client.pch" /Fo"Debug\\" /Fd"Debug\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt ..\Code\CloudEffect.cpp ..\Code\SoundWave.cpp ..\Code\LogoCamera.cpp
-         LogoCamera.cpp
-         SoundWave.cpp
-         CloudEffect.cpp
-         코드를 생성하고 있습니다...
-         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /I../Default /I../Header /I../Code /I../../Reference/Header /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\" /Fd"Debug\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt GraphEditor.cpp ImCurveEdit.cpp ImGradient.cpp imgui.cpp ImGuiFileBrowser.cpp ImGuiFileDialog.cpp ImGuizmo.cpp imgui_demo.cpp imgui_draw.cpp imgui_impl_dx9.cpp imgui_impl_win32.cpp imgui_tables.cpp imgui_widgets.cpp ImSequencer.cpp
-         ImSequencer.cpp
-         imgui_widgets.cpp
-         imgui_tables.cpp
-         imgui_impl_win32.cpp
-         imgui_impl_dx9.cpp
-         imgui_draw.cpp
-         imgui_demo.cpp
-         ImGuizmo.cpp
-         ImGuiFileDialog.cpp
-         ImGuiFileBrowser.cpp
-         imgui.cpp
-         ImGradient.cpp
-         ImCurveEdit.cpp
-         GraphEditor.cpp
-         코드를 생성하고 있습니다...
-       ResourceCompile:
-         C:\Program Files (x86)\Windows Kits\8.1\bin\x86\rc.exe /D _UNICODE /D UNICODE /l"0x0409" /nologo /fo"Debug\Client.res" Client.rc 
-       Link:
+     1>Link:
          C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"../Bin\Client.exe" /INCREMENTAL /NOLOGO /LIBPATH:../../Reference/Library d3d9.lib d3dx9.lib dxguid.lib System.lib Utility.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"../Bin\Client.pdb" /SUBSYSTEM:WINDOWS /LARGEADDRESSAWARE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"../Bin\Client.lib" /MACHINE:X86 Debug\Client.res
          Debug\Alien.obj
          Debug\AnimationPlayer.obj
@@ -311,6 +141,7 @@
          Debug\PlayerFaceUI.obj
          Debug\KrakenBoss.obj
          Debug\stdafx.obj
+         Debug\Supporter_Sniper.obj
          Debug\CloudEffect.obj
          Debug\SoundWave.obj
          Debug\LogoCamera.obj
@@ -320,4 +151,4 @@
 
 빌드했습니다.
 
-경과 시간: 00:01:33.20
+경과 시간: 00:00:01.97

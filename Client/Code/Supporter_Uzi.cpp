@@ -24,6 +24,7 @@ HRESULT CSupporter_Uzi::Ready_Object(const _vec3 & vPos, _tchar * Name)
 	m_WALK = UZISUPPORT_WALK_1;
 	m_ATTACK = UZISUPPORT_ATTACK_1;
 	m_ULTI = UZIULT_1;
+	m_DROP = SPDROP_1;
 
 	m_pTransform->Set_Scale(0.3f, 0.3f, 0.3f);
 	m_pTransform->Set_Pos(vPos.x, vPos.y, vPos.z);
@@ -72,6 +73,9 @@ _int CSupporter_Uzi::Update_Object(const _float & fTimeDelta)
 		Load_Animation(L"../../Data/Supporter_Uzi/UZI_ULTIMATE_3.dat", 8);
 		Load_Animation(L"../../Data/Supporter_Uzi/UZI_ULTIMATE_4.dat", 9);
 		Load_Animation(L"../../Data/Supporter_Uzi/UZI_ULTIMATE_5.dat", 10);
+
+		Load_Animation(L"../../Data/Supporter_Uzi/SUPPORTER_UZI_DROP.dat", 11);
+		Load_Animation(L"../../Data/Supporter_Uzi/SUPPORTER_DROP_COMPLETE.dat", 12);
 	}
 
 	_vec3 vPlayerScale;
@@ -86,15 +90,19 @@ _int CSupporter_Uzi::Update_Object(const _float & fTimeDelta)
 
 	if (vPosition.y >= 0.6f)
 	{
-		m_pTransform->Move_Pos(&(_vec3(0.f, -1.f, 0.f) * fTimeDelta));
+		m_pTransform->Move_Pos(&(_vec3(0.f, -1.f, 0.f) * 10.f * fTimeDelta));
 	}
 	else if(vPosition.y <= 0.6f)
 	{
 		m_bSetCam = false;
 	}
 
-	//	플레이어가 근처에 없으면 따라가기
-	if (m_bGetOrder)
+
+	if (vPosition.y >= 0.6f)
+	{
+		m_STATE = UZISUPPORTER_DROP;
+	}
+	else if (m_bGetOrder)
 	{
 		if (!m_bOrdering)
 		{
@@ -139,10 +147,12 @@ _int CSupporter_Uzi::Update_Object(const _float & fTimeDelta)
 	}
 	// 여기서 good
 
-	Find_Target();	//	맨 아래에 둘 것, 주변 적 탐색하여 공격하는 기능임
-	//	Look_Direction 지금 yaw만 적용시킨 상태
+	if (vPosition.y <= 0.6f)
+	{
+		Find_Target();
 
-	Look_Direction();
+		Look_Direction();
+	}
 
 	CSupporter::Update_Object(fTimeDelta);
 
@@ -158,7 +168,12 @@ void CSupporter_Uzi::LateUpdate_Object(void)
 {
 	if (!m_bFirst)
 	{
-		if (m_STATE == UZISUPPORT_IDLE)
+		if (m_STATE == UZISUPPORTER_DROP)
+		{
+			DROP_Animation_Run();
+			Run_Animation(10.f);
+		}
+		else if (m_STATE == UZISUPPORT_IDLE)
 		{
 			IDLE_Animation_Run();
 			Run_Animation(10.f);
@@ -690,6 +705,37 @@ void CSupporter_Uzi::ULTI_Animation_Run(void)
 	{
 		CQuarternion* Qtan = dynamic_cast<CQuarternion*>(iter.second->Get_Component(L"Proto_QuaternionCom", ID_STATIC));
 		Qtan->Change_Animation(m_ULTI + 6);
+	}
+}
+
+void CSupporter_Uzi::DROP_Animation_Run(void)
+{
+	list<pair<const _tchar*, CGameObject*>> ListBox = *(pMyLayer->Get_GamePairPtr());
+
+	_vec3 vPosition;
+	m_pTransform->Get_Info(INFO_POS, &vPosition);
+
+	if (m_AnimationTime >= 1.f)
+	{
+		for (auto& iter : ListBox)
+		{
+			CQuarternion* Qtan = dynamic_cast<CQuarternion*>(iter.second->Get_Component(L"Proto_QuaternionCom", ID_STATIC));
+			Qtan->Delete_WorldVector();
+		}
+
+		if (vPosition.y >= 0.6f)
+			m_DROP = SPDROP_1;
+		else
+			m_DROP = SPDROP_2;
+
+		m_AnimationTime = 0.f;
+	}
+
+	for (auto& iter : ListBox)	// 애니메이션 변경
+	{
+		CQuarternion* Qtan = dynamic_cast<CQuarternion*>(iter.second->Get_Component(L"Proto_QuaternionCom", ID_STATIC));
+		Qtan->Change_Animation(11 + m_DROP);
+		
 	}
 }
 

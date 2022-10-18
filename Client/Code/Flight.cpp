@@ -53,10 +53,13 @@ _int CFlight::Update_Object(const _float & fTimeDelta)
 		_vec3 vPos;
 		m_pTransform->Get_Info(INFO_POS, &vPos);
 
+		m_vDestination.x = 10.f;
+		m_vDestination.z = 10.f;
+
 		_vec3 vDesination;
 		vDesination.x = m_vDestination.x;
 		vDesination.y = 30.f;
-		vDesination.z = m_vDestination.y;
+		vDesination.z = m_vDestination.z;
 
 		m_pTransform->Chase_Target(&vDesination, 15.f, fTimeDelta);
 
