@@ -1106,7 +1106,7 @@ void CCollision::Get_GunItem()
 			{
 				_vec3 vDestionaion;
 				pItemTransform->Get_Info(INFO_POS, &vDestionaion);
-				dynamic_cast<CFlight*>(Get_GameObject(STAGE_FLIGHTPLAYER, L"FLIGHTSHUTTLE"))->Set_Shuttle(true, vDestionaion,SUPPORTER_UZI);
+				dynamic_cast<CFlight*>(Get_GameObject(STAGE_FLIGHTPLAYER, L"FLIGHTSHUTTLE"))->Set_Shuttle(true, vDestionaion, SUPPORTER_UZI);
 			}
 			else if (iter.second->m_eSupporterID == SUPPORTER_SHOTGUN)
 			{
@@ -1120,6 +1120,7 @@ void CCollision::Get_GunItem()
 				pItemTransform->Get_Info(INFO_POS, &vDestionaion);
 				dynamic_cast<CFlight*>(Get_GameObject(STAGE_FLIGHTPLAYER, L"FLIGHTSHUTTLE"))->Set_Shuttle(true, vDestionaion, SUPPORTER_SNIPER);
 			}
+
 		}
 	}
 }

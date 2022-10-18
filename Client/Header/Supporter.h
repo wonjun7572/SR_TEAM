@@ -16,6 +16,9 @@ protected:
 	virtual void		LateUpdate_Object(void) override;
 	virtual void		Render_Object(void) override;
 
+public:
+	void				SetOrdered(_bool bGetOrder) { m_bGetOrder = bGetOrder; }
+
 protected:
 	CTransform*			m_pTransform = nullptr;
 
@@ -33,6 +36,9 @@ protected:
 
 	CBulletParticle*	m_pBulletParicle = nullptr;
 	CShotParticle*		m_pShotParicle = nullptr;
+
+	_bool				m_bGetOrder = false;
+	_bool				m_bOrdering = false;
 
 protected:
 	list<_tchar*>		m_TcharList;

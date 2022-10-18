@@ -8,6 +8,8 @@
 #include "Flight.h"
 #include "FlightCamera.h"
 #include "Supporter_Uzi.h"
+#include "Supporter_Shotgun.h"
+#include "Supporter_Sniper.h"
 
 CStaticCamera::CStaticCamera(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CCamera(pGraphicDev)
@@ -80,13 +82,14 @@ void CStaticCamera::Update_NullCheck()
 	if (nullptr == m_pSupporterShotgunTransform)
 	{
 		m_pSupporterShotgunTransform = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_SUPPORTER, L"SUPPORT_SHOTGUN", TRANSFORM_COMP, ID_DYNAMIC));
+		m_pSupShotgun = dynamic_cast<CSupporter_Shotgun*>(Get_GameObject(STAGE_SUPPORTER, L"SUPPORT_SHOTGUN"));
 	}
 
 	if (nullptr == m_pSupporterSniperTransform)
 	{
 		m_pSupporterSniperTransform = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_SUPPORTER, L"SUPPORT_SNIPER", TRANSFORM_COMP, ID_DYNAMIC));
+		m_pSupSniper = dynamic_cast<CSupporter_Sniper*>(Get_GameObject(STAGE_SUPPORTER, L"SUPPORT_SNIPER"));
 	}
-
 }
 
 Engine::_int CStaticCamera::Update_Object(const _float& fTimeDelta)
@@ -145,7 +148,6 @@ CStaticCamera* CStaticCamera::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3*
 
 void CStaticCamera::Key_Input(const _float& fTimeDelta)
 {
-	
 	if (Key_Down(DIK_V))
 		m_bChangePOV = !m_bChangePOV;
 }
@@ -202,6 +204,52 @@ void CStaticCamera::Look_Target(const _float& _fTimeDelta)
 		m_fFov = D3DXToRadian(60.f);
 		m_vEye += vSupUziPos + (vLook * 10.f);
 		m_vAt = vSupUziPos + (vLook * 2.f);
+	}
+	else if (m_pSupporterShotgunTransform != nullptr && m_pSupShotgun != nullptr
+		&& dynamic_cast<CSupporter_Shotgun*>(m_pSupShotgun)->Get_setcam() == true)
+	{
+		_vec3 vLook;
+		m_pSupporterShotgunTransform->Get_Info(INFO_LOOK, &vLook);
+
+		_vec3 vRight;
+		m_pSupporterShotgunTransform->Get_Info(INFO_RIGHT, &vRight);
+
+		_vec3 vUp;
+		m_pSupporterShotgunTransform->Get_Info(INFO_UP, &vUp);
+
+		m_vEye = (vLook * 1.f);
+		D3DXVec3Normalize(&m_vEye, &m_vEye);
+		m_vEye *= 2.f;
+
+		_vec3 vSupShotgunPos;
+		m_pSupporterShotgunTransform->Get_Info(INFO_POS, &vSupShotgunPos);
+
+		m_fFov = D3DXToRadian(60.f);
+		m_vEye += vSupShotgunPos + (vLook * 10.f);
+		m_vAt = vSupShotgunPos + (vLook * 2.f);
+	}
+	else if (m_pSupporterSniperTransform != nullptr && m_pSupSniper != nullptr
+		&& dynamic_cast<CSupporter_Sniper*>(m_pSupSniper)->Get_setcam() == true)
+	{
+		_vec3 vLook;
+		m_pSupporterSniperTransform->Get_Info(INFO_LOOK, &vLook);
+
+		_vec3 vRight;
+		m_pSupporterSniperTransform->Get_Info(INFO_RIGHT, &vRight);
+
+		_vec3 vUp;
+		m_pSupporterSniperTransform->Get_Info(INFO_UP, &vUp);
+
+		m_vEye = (vLook * 1.f);
+		D3DXVec3Normalize(&m_vEye, &m_vEye);
+		m_vEye *= 2.f;
+
+		_vec3 vSupSniperPos;
+		m_pSupporterSniperTransform->Get_Info(INFO_POS, &vSupSniperPos);
+
+		m_fFov = D3DXToRadian(60.f);
+		m_vEye += vSupSniperPos + (vLook * 10.f);
+		m_vAt = vSupSniperPos + (vLook * 2.f);
 	}
 	else if (!m_bChangePOV && (dynamic_cast<CCubePlayer*>(pPlayer)->Get_Weapon() == dynamic_cast<CWeapon*>(Engine::Get_GameObject(STAGE_GUN, L"UZI1")) ||
 		dynamic_cast<CCubePlayer*>(pPlayer)->Get_Weapon() == dynamic_cast<CWeapon*>(Engine::Get_GameObject(STAGE_GUN, L"SHOTGUN")))

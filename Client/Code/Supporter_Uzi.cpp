@@ -97,7 +97,6 @@ _int CSupporter_Uzi::Update_Object(const _float & fTimeDelta)
 		m_bSetCam = false;
 	}
 
-
 	if (vPosition.y >= 0.6f)
 	{
 		m_STATE = UZISUPPORTER_DROP;

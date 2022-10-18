@@ -83,7 +83,7 @@ _int CSupporter_Sniper::Update_Object(const _float & fTimeDelta)
 
 	if (vPosition.y >= 0.6f)
 	{
-		m_pTransform->Move_Pos(&(_vec3(0.f, -2.f, 0.f) * fTimeDelta));
+		m_pTransform->Move_Pos(&(_vec3(0.f, -1.f, 0.f) * 10.f * fTimeDelta));
 	}
 	else if (vPosition.y <= 0.6f)
 	{
@@ -158,7 +158,12 @@ void CSupporter_Sniper::LateUpdate_Object(void)
 {
 	if (!m_bFirst)
 	{
-		if (m_STATE == SNIPERSUPPORT_IDLE)
+		if (m_STATE == UZISUPPORTER_DROP)
+		{
+			DROP_Animation_Run();
+			Run_Animation(10.f);
+		}
+		else if (m_STATE == SNIPERSUPPORT_IDLE)
 		{
 			IDLE_Animation_Run();
 			Run_Animation(10.f);
