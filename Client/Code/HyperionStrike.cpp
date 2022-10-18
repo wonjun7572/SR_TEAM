@@ -17,8 +17,8 @@ HRESULT CHyperionStrike::Ready_Object(const _vec3 & Position, DIRRECTIONSTATE _e
 	m_eDir = _eDir;
 	m_iSphereSkillTag = SKILL_HYPERIONSTRIKE;
 	m_fSphereScale = 20.f;							//크기
-	m_fDuration = 15.f;								//지속시간
-	m_fSpeed = 0.1f;								//속도
+	m_fDuration = 10.f;								//지속시간
+	m_fSpeed = 0.05f;								//속도
 	m_vDirection = { 1.f,0.f,0.f };					//방향
 	if (m_eDir == DIR_PX)
 		m_vDirection = { 1.f,0.f,0.f };					//방향
@@ -52,8 +52,12 @@ _int CHyperionStrike::Update_Object(const _float & fTimeDelta)
 	
 
 	if (m_fAge > m_fDuration)
-	{
+	{			
 		m_bDead = true;
+		for (auto& iter : Engine::Get_Layer(STAGE_SKILLCRUISER)->Get_GameList())
+		{
+			dynamic_cast<CBattleCursier*>(iter)->Replace({ 0.f,0.f,0.f }, { 3.f,0.f, 3.f }, m_vDirection);//Z축-
+		}
 		return -1;
 	}
 	return 0;
@@ -139,7 +143,7 @@ void CHyperionStrike::Bullet_Rain(void)
 	_vec3 vDir = { fRnd, -1.f, fRnd2 };	
 
 	//CPoolMgr::GetInstance()->Reuse_Obj(m_pGraphicDev, &m_vBattlePos, &vDir, 10.f);
-	CPoolMgr::GetInstance()->Reuse_PlayerBullet(m_pGraphicDev, &m_vBattlePos, &vDir, 5, 10.f);
+	CPoolMgr::GetInstance()->Reuse_ExBullet(m_pGraphicDev, &(m_vBattlePos+ m_vDirection*100.f), &vDir, 5);
 
 }
 

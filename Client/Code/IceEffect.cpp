@@ -123,7 +123,7 @@ void CIceEffect::resetParticle(ATTRIBUTE * attribute)
 	_vec3 min = _vec3(-1.0f, -1.0f, -1.0f);
 	_vec3 max = _vec3(1.0f, 1.0f, 1.0f);
 	GetRandomVector(&attribute->vVelocity, &min, &max);
-	attribute->vPos = vIceEffectPos + attribute->vVelocity / .2f;
+	attribute->vPos = vIceEffectPos + attribute->vVelocity / .325f;
 	attribute->vVelocity *= 10.f;
 	attribute->dwColor = D3DXCOLOR(GetRandomFloat(0.8f, 0.9f), GetRandomFloat(0.8f, 1.0f), GetRandomFloat(0.8f, 1.f), 1.0f);
 

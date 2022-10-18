@@ -25,6 +25,9 @@ private:
 	HRESULT			Add_Component(void);
 	CTransform*		m_pTransCom = nullptr;
 	CCubeCol*		m_pCubeCol = nullptr;
+	CCubeTex*				m_pCube = nullptr;
+
+	CTexture*				m_pTexture = nullptr;
 
 	CTransform*		m_pHitboxTransCom = nullptr;
 	CHitBox*		m_pHitbox = nullptr;

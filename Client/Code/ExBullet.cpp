@@ -67,7 +67,7 @@ _int CExBullet::Update_Object(const _float & fTimeDelta)
 
 	m_pTransCom->Chase_Target_By_Direction(&m_vDirection, 0.f, fTimeDelta);
 
-	Engine::Add_RenderGroup(RENDER_NONALPHA, this);
+	Engine::Add_RenderGroup(RENDER_UI, this);
 
 	return 0;
 }
@@ -81,13 +81,17 @@ void CExBullet::LateUpdate_Object(void)
 
 void CExBullet::Render_Object(void)
 {
+	m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+	m_pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_DESTALPHA);
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransCom->Get_WorldMatrixPointer());
-	m_pCubeCol->Render_Buffer();
+	m_pTexture->Set_Texture();
+	m_pCube->Render_Buffer();
 
 	//m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 	//m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pHitboxTransCom->Get_WorldMatrixPointer());
 	//m_pHitbox->Render_Buffer();
 	//m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+	m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
 }
 
 void CExBullet::Set_Pos(const _vec3 & vPos)
@@ -132,9 +136,10 @@ HRESULT CExBullet::Add_Component(void)
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ TRANSFORM_COMP, pComponent });
 
-	pComponent = m_pCubeCol = dynamic_cast<CCubeCol*>(Clone_Proto(CUBECOL_COMP));
+
+	pComponent = m_pCube = dynamic_cast<CCubeTex*>(Engine::Clone_Proto(CUBETEX_COMP));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ CUBECOL_COMP, pComponent });
+	m_mapComponent[ID_STATIC].insert({ CUBETEX_COMP, pComponent });
 
 	pComponent = m_pHitboxTransCom = dynamic_cast<CTransform*>(Clone_Proto(TRANSFORM_COMP));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
@@ -147,6 +152,15 @@ HRESULT CExBullet::Add_Component(void)
 	pComponent = m_pCollision = dynamic_cast<CCollision*>(Engine::Clone_Proto(COLLISION_COMP));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ COLLISION_COMP, pComponent });
+
+
+
+
+
+	pComponent = m_pTexture = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"ExBullet_Tex"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[ID_STATIC].insert({ L"ExBullet_Tex", pComponent });
+
 
 	return S_OK;
 }
