@@ -24,6 +24,7 @@ public:
 	virtual		_int		Update_Object(const _float& fTimeDelta);
 	virtual		void		LateUpdate_Object(void);
 	virtual		void		Render_Object(void);
+	virtual		HRESULT		Set_Material();
 
 	void	SetCheckFrustum(_bool Frustum) { m_bFrustumCheck = Frustum; }
 	_bool	GetCheckFrustum() { return m_bFrustumCheck; }

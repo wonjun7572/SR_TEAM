@@ -15,12 +15,10 @@ private:
 	virtual ~CLightMgr();
 
 public:
-	HRESULT			Ready_Light(LPDIRECT3DDEVICE9 pGraphicDev, const D3DLIGHT9* tLightInfo, const _uint& iIndex);
-
+	HRESULT				Ready_Light(LPDIRECT3DDEVICE9 pGraphicDev, const D3DLIGHT9* tLightInfo, const _uint& iIndex);
+	
 private:
-	list<CLight*>	m_LightList;
-
-private:
+	list<CLight*>	m_Lightlist;
 	virtual void Free(void);
 };
 

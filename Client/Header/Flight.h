@@ -22,6 +22,7 @@ public:
 
 private:
 	HRESULT			Add_Component(void);
+	HRESULT			Set_Material();
 	CTransform*		m_pTransform = nullptr;
 	CCalculator*	m_pCalculator = nullptr;
 	CTransform*		m_pBomb = nullptr;

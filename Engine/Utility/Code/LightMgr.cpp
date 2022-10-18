@@ -17,13 +17,13 @@ HRESULT CLightMgr::Ready_Light(LPDIRECT3DDEVICE9 pGraphicDev, const D3DLIGHT9 * 
 	CLight*	pInstance = CLight::Create(pGraphicDev, tLightInfo, iIndex);
 	NULL_CHECK_RETURN(pInstance, E_FAIL);
 
-	m_LightList.push_back(pInstance);
+	m_Lightlist.push_back(pInstance);
 
 	return S_OK;
 }
 
 void CLightMgr::Free(void)
 {
-	for_each(m_LightList.begin(), m_LightList.end(), CDeleteObj());
-	m_LightList.clear();
+	for_each(m_Lightlist.begin(), m_Lightlist.end(), CDeleteObj());
+	m_Lightlist.clear();
 }

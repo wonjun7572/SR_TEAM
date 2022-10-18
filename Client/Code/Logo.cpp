@@ -25,8 +25,9 @@ HRESULT CLogo::Ready_Scene(void)
 {
 	if (FAILED(Engine::CScene::Ready_Scene()))
 		return E_FAIL;
-
+	FAILED_CHECK_RETURN(Ready_Light(), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Proto(), E_FAIL);
+
 	FAILED_CHECK_RETURN(Ready_Layer_Environment(L"Ready_Layer_Environment"), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Layer_UI(L"Ready_Layer_UI"), E_FAIL);
 
@@ -153,6 +154,32 @@ void CLogo::Free(void)
 	Safe_Release(m_pLoading);
 
 	Engine::CScene::Free();
+}
+
+HRESULT CLogo::Ready_Light(void)
+{
+	D3DLIGHT9	Light;
+	ZeroMemory(&Light, sizeof(D3DLIGHT9));
+
+	Light.Type = D3DLIGHT_DIRECTIONAL;
+	Light.Diffuse = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+	Light.Specular = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+	Light.Ambient = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+	Light.Direction = _vec3(0.f, -1.f, 0.f);
+
+	/*	Light.Position =
+	Light.Range =
+	Light.Falloff =
+	Light.Attenuation0 =
+	Light.Attenuation1 =
+	Light.Attenuation2 =
+	Light.Theta
+	Light.Phi =
+	*/
+
+	FAILED_CHECK_RETURN(Engine::Ready_Light(m_pGraphicDev, &Light, 0), E_FAIL);
+
+	return S_OK;
 }
 
 
