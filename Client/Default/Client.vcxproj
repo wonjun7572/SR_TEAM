@@ -162,6 +162,7 @@
   <ItemGroup>
     <ClInclude Include="..\Header\Alien.h" />
     <ClInclude Include="..\Header\AnimationPlayer.h" />
+    <ClInclude Include="..\Header\CartridgeParticle.h" />
     <ClInclude Include="..\Header\CubeParticle.h" />
     <ClInclude Include="..\Header\DashCube.h" />
     <ClInclude Include="..\Header\DeffensiveMatrix.h" />
@@ -318,6 +319,7 @@
   <ItemGroup>
     <ClCompile Include="..\Code\Alien.cpp" />
     <ClCompile Include="..\Code\AnimationPlayer.cpp" />
+    <ClCompile Include="..\Code\CartridgeParticle.cpp" />
     <ClCompile Include="..\Code\CubeParticle.cpp" />
     <ClCompile Include="..\Code\DashCube.cpp" />
     <ClCompile Include="..\Code\DeffensiveMatrix.cpp" />

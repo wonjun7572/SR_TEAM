@@ -117,7 +117,7 @@ void CFlameEffect::resetParticle(ATTRIBUTE * attribute)
 	attribute->vPos.y = 0.3f + (rand()%2)*0.1f;
 	
 	attribute->vVelocity *= .1f;
-	attribute->dwColor = D3DXCOLOR(GetRandomFloat(0.8f, 1.f), GetRandomFloat(0.1f, .3f), GetRandomFloat(0.1, 3.f), 1.0f);
+	attribute->dwColor = D3DXCOLOR(GetRandomFloat(0.8f, 1.f), GetRandomFloat(0.1f, 0.3f), GetRandomFloat(0.1, 0.3f), 1.0f);
 
 	//attribute->vPos.z = vFlameEffectPos.z + 0.5f;
 	//attribute->vVelocity = vDir * 5000.f;

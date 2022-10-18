@@ -48,7 +48,7 @@ _uint CLoading::Loading_ForStage(void)
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(SHOTPARTICLE_TEX, CTexture::Create(m_pGraphicDev, SHOTPARTICLE_TEX_PATH, TEX_NORMAL)), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(BULLETPARTICLE_TEX, CTexture::Create(m_pGraphicDev, BULLETPARTICLE_TEX_PATH, TEX_NORMAL)), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(PROJECTILEPARTICLE_TEX, CTexture::Create(m_pGraphicDev, PROJECTILEPARTICLE_TEX_PATH, TEX_NORMAL)), E_FAIL);
-		FAILED_CHECK_RETURN(Engine::Ready_Proto(STATICPARTICLE_TEX, CTexture::Create(m_pGraphicDev, STATICPARTICLE_TEX_PATH, TEX_NORMAL,8)), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(STATICPARTICLE_TEX, CTexture::Create(m_pGraphicDev, STATICPARTICLE_TEX_PATH, TEX_NORMAL,9)), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_MonsterParticle", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Particle/blood.png", TEX_NORMAL)), E_FAIL);
 	}
 	//¿Ã∆Â∆Æ

@@ -70,7 +70,10 @@ HRESULT CCubeParticle::Add_Component(void)
 	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Clone_Proto(L"LightRed_Tex"));
 	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"LightRed_Tex", pComponent });
-
+	
+	/*pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Clone_Proto(L"STATICPARTICLE_TEX"));
+	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
+	m_mapComponent[ID_STATIC].insert({ L"STATICPARTICLE_TEX", pComponent });*/
 	return S_OK;
 }
 
@@ -102,7 +105,6 @@ void CCubeParticle::resetParticle(ATTRIBUTE * attribute)
 	GetRandomVector(&attribute->vVelocity, &min, &max);
 	D3DXVec3Normalize(&attribute->vVelocity, &attribute->vVelocity);
 	attribute->vPos = m_vCubePatriclePos + attribute->vVelocity / 500.f;
-	attribute->vPos += m_vDir*1.6f;
 	attribute->vPos.y -= attribute->vVelocity.y / 500.f;
 	attribute->dwColor = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
 	attribute->fAge = 0.0f;

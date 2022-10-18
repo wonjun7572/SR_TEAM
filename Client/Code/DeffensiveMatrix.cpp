@@ -17,10 +17,11 @@ HRESULT CDeffensiveMatrix::Ready_Object(const _vec3 & Position)
 	m_iSphereSkillTag = SKILL_SHIELD;
 
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
-
+	_float fGunSound = 1.f;
+	Engine::PlaySoundGun(L"DeffensiveMatrix.wav", SOUND_EFFECT, fGunSound);
 	m_vPos = Position;	
-	m_vScale = { 2.2f,2.2f,2.2f };
-	m_fSpeed = 0.5f;
+	m_vScale = { 1.f,1.f,1.f };
+	m_fSpeed = 2.f;
 	m_pTransCom->Set_Pos(m_vPos.x, m_vPos.y, m_vPos.z);
 	m_pTransCom->Set_Scale(m_vScale.x, m_vScale.y, m_vScale.z);
 	return S_OK;
@@ -32,7 +33,7 @@ _int CDeffensiveMatrix::Update_Object(const _float & fTimeDelta)
 	Add_RenderGroup(RENDER_UI, this);
 	m_fTimer += fTimeDelta;
 
-	if (m_fSpeed*m_fTimer < .3f)
+	if (m_fTimer < .5f)
 	{
 		m_pTransCom->Set_Angle(&m_vDir);
 

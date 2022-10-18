@@ -141,7 +141,11 @@ void CCubePlayer::Key_Skill()
 	if (Key_Down(DIK_F))
 	{
 		if (m_Weapon == Engine::Get_GameObject(STAGE_GUN, L"SNIPER"))
+		{
+			_float fGunSound = 1.f;
+			Engine::PlaySoundGun(L"Meteor.wav", SOUND_EFFECT, fGunSound);
 			dynamic_cast<CBaseMapping*>(Engine::Get_GameObject(STAGE_MAPPING, L"BaseMapping"))->Switch_Worldmap();
+		}
 
 		if (m_Weapon == Engine::Get_GameObject(STAGE_GUN, L"UZI1"))
 		{
@@ -223,6 +227,10 @@ void CCubePlayer::Update_NullCheck()
 
 	if (!m_pCubeParticle)
 		m_pCubeParticle = dynamic_cast<CCubeParticle*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"CubeParticle"));
+
+	if (!m_pCartridgeParticle)
+		m_pCartridgeParticle = dynamic_cast<CCartridgeParticle*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"CartridgeParticle"));
+	
 	if (!m_pDashCube)
 		m_pDashCube = dynamic_cast<CDashCube*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"DashCube"));
 
@@ -523,6 +531,8 @@ void CCubePlayer::Move()
 
 	if (Key_Down(DIK_G) && m_iWeaponState == 3)
 	{
+		_float fGunSound = 1.f;
+		Engine::PlaySoundGun(L"Grenade.wav", SOUND_EFFECT, fGunSound);
 		m_pProjectileParicle->addParticle();
 	}
 
@@ -596,29 +606,33 @@ void CCubePlayer::Move()
 		}
 		if (Key_Pressing(DIK_C))
 		{
-			_vec3 vPos;															//ºÒ²ÉÀÌÆÑÆ®
-			_vec3 vDir;
-			m_pTransform->Get_Info(INFO_POS, &vPos);
-			m_pBodyWorld->Get_Info(INFO_LOOK, &vDir);
-			vPos.y = 1.f;
-			dynamic_cast<CCubeParticle*>(m_pCubeParticle)->Set_PclePos(vPos);
-			dynamic_cast<CCubeParticle*>(m_pCubeParticle)->Set_PcleDir(vDir);
-			for (_int i = 0; i < 50; ++i)
-			{
-				m_pCubeParticle->addParticle();
-			}
+			//_vec3 vPos;															//ºÒ²ÉÀÌÆÑÆ®
+			//_vec3 vDir;
+			//m_pTransform->Get_Info(INFO_POS, &vPos);
+			//m_pBodyWorld->Get_Info(INFO_LOOK, &vDir);
+			//vPos += vDir*20.5f;
+			//vPos.y = .5f;
+			//dynamic_cast<CCubeParticle*>(m_pCubeParticle)->Set_PclePos(vPos);
+			//dynamic_cast<CCubeParticle*>(m_pCubeParticle)->Set_PcleDir(vDir);
+			//for (_int i = 0; i < 50; ++i)
+			//{
+			//	m_pCubeParticle->addParticle();
+			//}
 
-			/*_vec3 vPos;														//´ë½¬ÀÌÆåÆ®ÇÏ·Á´ø°Í
-			_vec3 vDir;
-			m_pTransform->Get_Info(INFO_POS, &vPos);
-			m_pBodyWorld->Get_Info(INFO_LOOK, &vDir);
-			vPos.y = +0.45f;
-			dynamic_cast<CDashCube*>(m_pDashCube)->Set_PclePos(vPos);
-			dynamic_cast<CDashCube*>(m_pDashCube)->Set_PcleDir(vDir);
-			for (_int i = 0; i < 50; ++i)
-			{
-				m_pDashCube->addParticle();
-			}*/
+			
+			
+
+			//_vec3 vPos;														//´ë½¬ÀÌÆåÆ®ÇÏ·Á´ø°Í
+			//_vec3 vDir;
+			//m_pTransform->Get_Info(INFO_POS, &vPos);
+			//m_pBodyWorld->Get_Info(INFO_LOOK, &vDir);
+			//vPos.y = +0.45f;
+			//dynamic_cast<CDashCube*>(m_pDashCube)->Set_PclePos(vPos);
+			//dynamic_cast<CDashCube*>(m_pDashCube)->Set_PcleDir(vDir);
+			//for (_int i = 0; i < 150; ++i)
+			//{
+			//	m_pDashCube->addParticle();
+			//}
 		}
 
 
@@ -761,11 +775,47 @@ void CCubePlayer::Fire_Bullet(void)
 				m_pBulletParicle->addParticle();
 				m_pShotParicle->addParticle();
 				
-				_float fGunSound = 1.f;
-				Engine::PlaySoundGun(L"RifleShot.mp3", SOUND_EFFECT, fGunSound);
+			
 				m_Weapon->Set_MinusBullet();
 				m_Weapon->Set_Shoot(true);
 				m_fBulletTime = 0.f;
+
+				_vec3 vBPos;																//ÅºÇÇ
+				_vec3 vLHPos;
+				_vec3 vLDir;
+
+				m_pTransform->Get_Info(INFO_POS, &vBPos);
+				m_pLeftHandWorld->Get_Info(INFO_POS, &vLHPos);
+				vLDir = vLHPos - vBPos;
+				vLDir.y *= -1.f;
+				dynamic_cast<CCartridgeParticle*>(m_pCartridgeParticle)->Set_PcleDir(vLDir);
+				if (m_iWeaponState == 2)
+				{
+					_float fGunSound = 1.f;
+					Engine::PlaySoundGun(L"RifleShot.mp3", SOUND_EFFECT, fGunSound);
+					for (_int i = 0; i < 2; ++i)
+					{
+						m_pCartridgeParticle->addParticle();
+					}
+				}
+				if (m_iWeaponState == 3)
+				{
+					_float fGunSound = 1.f;
+					Engine::PlaySoundGun(L"ShotgunSound.wav", SOUND_EFFECT, fGunSound);
+					for (_int i = 0; i < 64; ++i)
+					{
+						m_pCartridgeParticle->addParticle();
+					}
+				}
+				if (m_iWeaponState == 4)
+				{
+					_float fGunSound = 1.f;
+					Engine::PlaySoundGun(L"SniperSound.wav", SOUND_EFFECT, fGunSound);
+					for (_int i = 0; i < 1; ++i)
+					{
+						m_pCartridgeParticle->addParticle();
+					}
+				}
 			}
 		}
 	}

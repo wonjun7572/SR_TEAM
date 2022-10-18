@@ -64,7 +64,7 @@ _int CMeteor::Update_Object(const _float & fTimeDelta)
 
 		_float fGunSound = .3f;
 		Engine::PlaySoundGun(L"MeteorBomb.wav", SOUND_EFFECT, fGunSound);
-		dynamic_cast<CStaticCamera*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"StaticCamera"))->HitPlayer();
+		dynamic_cast<CStaticCamera*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"StaticCamera"))->CameraShaking();
 		return -1;
 	}
 	Meteor_Effect();
