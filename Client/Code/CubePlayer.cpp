@@ -641,7 +641,7 @@ void CCubePlayer::Move()
 
 			for (auto& iter : Get_Layer(STAGE_SUPPORTER)->Get_GameObjectMap())
 			{
-				dynamic_cast<CSupporter_Uzi*>(iter.second)->SetOrdered(true);
+				dynamic_cast<CSupporter*>(iter.second)->SetOrdered(true);
 			}
 		}
 
