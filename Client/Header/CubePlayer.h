@@ -104,10 +104,9 @@ private:
 	void			Jump(void);
 	_bool			m_bJump = false;
 	_bool			m_bFirst = true;
-
 private:
 	HRESULT			Add_Component(void);
-
+	HRESULT			Lighting();
 	CTransform*		m_pTransform = nullptr;
 
 	CTransform*		m_pHeadWorld = nullptr;
@@ -142,6 +141,7 @@ private:
 	CCartridgeParticle*		m_pCartridgeParticle = nullptr;
 
 private:
+	_float			m_fRed = 0.f;
 	_float			m_fLookAngle = 0.f;
 	_float			m_fDownAngle = 0.f;
 

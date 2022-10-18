@@ -37,17 +37,13 @@ void CTerrain::Render_Object(void)
 {
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransCom->Get_WorldMatrixPointer());
 
-	//m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
-
 	if (m_bWireFrame)
-		m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 
-	//////////////////////////////////	클라이언트<->툴 변경작업 ///////////////////////////////////////////////////////
 	if (nullptr == m_pTextureCom_Tool)
-		m_pTextureCom->Set_Texture(m_iTerrainIdx);	// 텍스처 정보 세팅을 우선적으로 한다.
+		m_pTextureCom->Set_Texture(m_iTerrainIdx);	
 	else
 		m_pTextureCom_Tool->Set_Texture(m_iTerrainIdx);
-	//////////////////////////////////	클라이언트<->툴 변경작업 ///////////////////////////////////////////////////////
 
 	FAILED_CHECK_RETURN(Set_Material(), );
 
@@ -55,8 +51,6 @@ void CTerrain::Render_Object(void)
 
 	if (m_bWireFrame)
 		m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
-
-	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
 }
 
 HRESULT CTerrain::Add_Component(void)

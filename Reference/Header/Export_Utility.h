@@ -67,6 +67,8 @@ inline list<CGameObject*>			Get_GameObjectGroup(RENDERID eId);
 
 // LightMgr
 inline HRESULT			Ready_Light(LPDIRECT3DDEVICE9 pGraphicDev, const D3DLIGHT9* tLightInfo, const _uint& iIndex);
+inline vector<CLight*>	Get_Light();
+inline void				Set_Light(int iIndex, const _vec3& vPos, _float fRange);
 
 // SoundMgr
 inline void Initialize();

@@ -25,7 +25,7 @@ private:
 	HRESULT         Ready_Layer_GameLogic(const _tchar* pLayerTag) { return S_OK; }
 	HRESULT         Ready_Layer_UI(const _tchar* pLayerTag);
 	HRESULT         Ready_Proto(void);
-
+	HRESULT			Ready_Light();
 private:
 	CLoading*         m_pLoading = nullptr;
 	CPlayButton*      m_PlayButton = nullptr;

@@ -113,6 +113,7 @@ void CTransAxisBox::Render_Object(void)
 
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, &m_FinalWorldMatrix);
 	m_pTextureCom->Set_Texture(m_iTexIndex);
+	FAILED_CHECK_RETURN(Set_Material(), );
 	m_pBufferCom->Render_Buffer();
 	//m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
 	// 설치물이면 그 설치하기전까지는 알파먹고 설치되면 알파꺼져서 그 위치 생성되고
@@ -153,6 +154,22 @@ HRESULT CTransAxisBox::Add_Component(void)
 	pComponent = m_pQuaternion = dynamic_cast<CQuarternion*>(Clone_Proto(L"Proto_QuaternionCom"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_QuaternionCom", pComponent });
+
+	return S_OK;
+}
+
+HRESULT CTransAxisBox::Set_Material()
+{
+	D3DMATERIAL9 Material;
+	ZeroMemory(&Material, sizeof(D3DMATERIAL9));
+
+	Material.Diffuse = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+	Material.Specular = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+	Material.Ambient = D3DXCOLOR(0.3f, 0.3f, 0.3f, 1.f);
+	Material.Emissive = D3DXCOLOR(0.f, 0.f, 0.f, 1.f);
+	Material.Power = 0.f;
+
+	m_pGraphicDev->SetMaterial(&Material);
 
 	return S_OK;
 }

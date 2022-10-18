@@ -39,6 +39,7 @@ public:
 
 private:
 	HRESULT				Add_Component(void);
+	HRESULT				Set_Material();
 
 private:
 	CCubeTex*			m_pBufferCom = nullptr;
