@@ -34,7 +34,6 @@ HRESULT CTestCube::Ready_Object(int PosX, int PosY)
 	return S_OK;
 }
 
-
 _int CTestCube::Update_Object(const _float& fTimeDelta)
 {
 	if (m_bDead)
@@ -63,7 +62,6 @@ _int CTestCube::Update_Object(const _float& fTimeDelta)
 		Add_RenderGroup(RENDER_NONALPHA, this);
 	}
 
-	
 	return 0;
 }
 
@@ -93,7 +91,6 @@ void CTestCube::Render_Object()
 
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransCom->Get_WorldMatrixPointer());
 	m_pTextureCom->Set_Texture(m_iTexIndex);
-	FAILED_CHECK_RETURN(Set_Material(), );
 	m_pBufferCom->Render_Buffer();
 
 	if (m_bWireFrame)
@@ -171,7 +168,6 @@ HRESULT CTestCube::Interact(void)
 		if (m_iTexIndex == 37 || m_iTexIndex == 99)
 		{
 			m_bLetterboxInit = true;
-
 			m_pLetterBox = CLetterBox::Create(m_pGraphicDev, L"Press [E] to Interact", sizeof(L"Press [E] to Interact"), 0);
 
 			TCHAR* szCntName = new TCHAR[64];
@@ -316,9 +312,9 @@ HRESULT CTestCube::Set_Material()
 	D3DMATERIAL9 Material;
 	ZeroMemory(&Material, sizeof(D3DMATERIAL9));
 
-	Material.Diffuse = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
-	Material.Specular = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
-	Material.Ambient = D3DXCOLOR(0.2f, 0.2f, 0.2f, 1.f);
+	Material.Diffuse = D3DXCOLOR(0.2f, 0.2f, 0.2f, 1.f);
+	Material.Specular = D3DXCOLOR(0.2f, 0.2f, 0.2f, 1.f);
+	Material.Ambient = D3DXCOLOR(0.5f, 0.5f, 0.5f, 1.f);
 	Material.Emissive = D3DXCOLOR(0.f, 0.f, 0.f, 1.f);
 	Material.Power = 0.f;
 
