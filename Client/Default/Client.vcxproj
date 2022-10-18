@@ -278,6 +278,8 @@
     <ClInclude Include="..\Header\ToolScene.h" />
     <ClInclude Include="..\Header\TransAxisBox.h" />
     <ClInclude Include="..\Header\Trap.h" />
+    <ClInclude Include="..\Header\TriggerFront.h" />
+    <ClInclude Include="..\Header\TriggerParticle.h" />
     <ClInclude Include="..\Header\Uzi.h" />
     <ClInclude Include="..\Header\UziPart1.h" />
     <ClInclude Include="..\Header\UziPart2.h" />
@@ -437,6 +439,8 @@
     <ClCompile Include="..\Code\ToolScene.cpp" />
     <ClCompile Include="..\Code\TransAxisBox.cpp" />
     <ClCompile Include="..\Code\Trap.cpp" />
+    <ClCompile Include="..\Code\TriggerFront.cpp" />
+    <ClCompile Include="..\Code\TriggerParticle.cpp" />
     <ClCompile Include="..\Code\Uzi.cpp" />
     <ClCompile Include="..\Code\UziPart1.cpp" />
     <ClCompile Include="..\Code\UziPart2.cpp" />

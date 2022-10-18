@@ -20,8 +20,8 @@ HRESULT CDeffensiveMatrix::Ready_Object(const _vec3 & Position)
 	_float fGunSound = 1.f;
 	Engine::PlaySoundGun(L"DeffensiveMatrix.wav", SOUND_EFFECT, fGunSound);
 	m_vPos = Position;	
-	m_vScale = { 1.f,1.f,1.f };
-	m_fSpeed = 2.f;
+	m_vScale = { .5f,.5f,.5f };
+	m_fSpeed = 5.f;
 	m_pTransCom->Set_Pos(m_vPos.x, m_vPos.y, m_vPos.z);
 	m_pTransCom->Set_Scale(m_vScale.x, m_vScale.y, m_vScale.z);
 	return S_OK;
@@ -54,24 +54,39 @@ void CDeffensiveMatrix::LateUpdate_Object(void)
 void CDeffensiveMatrix::Render_Object(void)
 {
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransCom->Get_WorldMatrixPointer());
-	//m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
-	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
-
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CW);
-	m_pHitBox->Render_Buffer();
-	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+	m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+	m_pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_DESTALPHA);
 	
+	/*m_pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ZERO);
+	m_pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_INVDESTCOLOR);*/
 
 	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+	m_pTexture->Set_Texture(0);
+	iT++;
+	if (iT > 5)
+		iT = 0;
+
+	m_pCube->Render_Buffer();
+	//m_pHitBox->Render_Buffer();
+	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);	
+	m_pCube->Render_Buffer();
+	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+	m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
+
 }
 
 HRESULT CDeffensiveMatrix::Add_Component(void)
 {
 	CComponent* pInstance = nullptr;	
 
-	pInstance = m_pTexture = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Red_Tex"));
+	pInstance = m_pTexture = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Shield_Tex"));
 	NULL_CHECK_RETURN(pInstance, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Red_Tex", pInstance });
+	m_mapComponent[ID_STATIC].insert({ L"Shield_Tex", pInstance });
+
+	pInstance = m_pCube = dynamic_cast<CCubeTex*>(Engine::Clone_Proto(CUBETEX_COMP));
+	NULL_CHECK_RETURN(pInstance, E_FAIL);
+	m_mapComponent[ID_STATIC].insert({ CUBETEX_COMP, pInstance });
 
 	pInstance = m_pTransCom = dynamic_cast<CTransform*>(Engine::Clone_Proto(TRANSFORM_COMP));
 	NULL_CHECK_RETURN(pInstance, E_FAIL);

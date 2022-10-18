@@ -234,6 +234,12 @@ void CCubePlayer::Update_NullCheck()
 	if (!m_pDashCube)
 		m_pDashCube = dynamic_cast<CDashCube*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"DashCube"));
 
+	if (!m_pTriggerParticle)
+		m_pTriggerParticle = dynamic_cast<CTriggerParticle*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"TriggerParticle"));
+
+	if (!m_pTriggerFront)
+		m_pTriggerFront = dynamic_cast<CTriggerFront*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"TriggerFront"));
+
 	Player_Mapping();
 
 	if (m_pBomb == nullptr)
@@ -606,21 +612,9 @@ void CCubePlayer::Move()
 		}
 		if (Key_Pressing(DIK_C))
 		{
-			//_vec3 vPos;															//∫“≤…¿Ã∆—∆Æ
-			//_vec3 vDir;
-			//m_pTransform->Get_Info(INFO_POS, &vPos);
-			//m_pBodyWorld->Get_Info(INFO_LOOK, &vDir);
-			//vPos += vDir*20.5f;
-			//vPos.y = .5f;
-			//dynamic_cast<CCubeParticle*>(m_pCubeParticle)->Set_PclePos(vPos);
-			//dynamic_cast<CCubeParticle*>(m_pCubeParticle)->Set_PcleDir(vDir);
-			//for (_int i = 0; i < 50; ++i)
-			//{
-			//	m_pCubeParticle->addParticle();
-			//}
+			
 
-			
-			
+
 
 			//_vec3 vPos;														//¥ÎΩ¨¿Ã∆Â∆Æ«œ∑¡¥¯∞Õ
 			//_vec3 vDir;
@@ -779,12 +773,24 @@ void CCubePlayer::Fire_Bullet(void)
 				m_Weapon->Set_MinusBullet();
 				m_Weapon->Set_Shoot(true);
 				m_fBulletTime = 0.f;
-
-				_vec3 vBPos;																//≈∫««
-				_vec3 vLHPos;
+				_vec3 vBPos;									  //∫“≤…¿Ã∆—∆Æ
+				_vec3 vRHPos;									
+				_vec3 vBDir;
+				m_pTransform->Get_Info(INFO_POS, &vBPos);
+				m_pRightHandWorld->Get_Info(INFO_POS, &vRHPos);
+				m_pBodyWorld->Get_Info(INFO_LOOK, &vBDir);
+				vRHPos += vBDir*10.f;
+				vRHPos.y += 0.1f;
+				dynamic_cast<CTriggerParticle*>(m_pTriggerParticle)->Set_PclePos(vRHPos);
+				dynamic_cast<CTriggerParticle*>(m_pTriggerParticle)->Set_PcleDir(vBDir);
+												  //∫“≤…¿Ã∆—∆Æ
+		
+				dynamic_cast<CTriggerFront*>(m_pTriggerFront)->Set_PclePos(vRHPos);
+				
+				
+				_vec3 vLHPos;									//≈∫««¿Ã∆—∆Æ
 				_vec3 vLDir;
 
-				m_pTransform->Get_Info(INFO_POS, &vBPos);
 				m_pLeftHandWorld->Get_Info(INFO_POS, &vLHPos);
 				vLDir = vLHPos - vBPos;
 				vLDir.y *= -1.f;
@@ -797,6 +803,15 @@ void CCubePlayer::Fire_Bullet(void)
 					{
 						m_pCartridgeParticle->addParticle();
 					}
+					for (_int i = 0; i < 3; ++i)
+					{
+						m_pTriggerParticle->addParticle();
+					}
+					for (_int i = 0; i < 25; ++i)
+					{
+						m_pTriggerFront->addParticle();
+					}
+
 				}
 				if (m_iWeaponState == 3)
 				{
@@ -806,6 +821,15 @@ void CCubePlayer::Fire_Bullet(void)
 					{
 						m_pCartridgeParticle->addParticle();
 					}
+					for (_int i = 0; i < 25; ++i)
+					{
+						m_pTriggerParticle->addParticle();
+					}
+					for (_int i = 0; i < 100; ++i)
+					{
+						m_pTriggerFront->addParticle();
+					}
+
 				}
 				if (m_iWeaponState == 4)
 				{
@@ -814,6 +838,14 @@ void CCubePlayer::Fire_Bullet(void)
 					for (_int i = 0; i < 1; ++i)
 					{
 						m_pCartridgeParticle->addParticle();
+					}
+					for (_int i = 0; i < 25; ++i)
+					{
+						m_pTriggerParticle->addParticle();
+					}
+					for (_int i = 0; i < 100; ++i)
+					{
+						m_pTriggerFront->addParticle();
 					}
 				}
 			}

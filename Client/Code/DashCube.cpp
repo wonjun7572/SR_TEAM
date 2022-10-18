@@ -183,9 +183,9 @@ HRESULT CDashCube::Add_Component(void)
 {
 CComponent* pComponent = nullptr;
 
-pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Clone_Proto(L"LightRed_Tex"));
+pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Clone_Proto(L"LightGreen_Tex"));
 NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
-m_mapComponent[ID_STATIC].insert({ L"LightRed_Tex", pComponent });
+m_mapComponent[ID_STATIC].insert({ L"LightGreen_Tex", pComponent });
 
 return S_OK;
 }
