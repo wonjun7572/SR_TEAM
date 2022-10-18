@@ -21,6 +21,9 @@ HRESULT CShield::Ready_Object(const _vec3 & Position, const _vec3& Direction)
 	m_fSpeed = 0.25f;
 	m_pTransCom->Set_Pos(m_vPos.x, m_vPos.y, m_vPos.z);
 	m_pTransCom->Set_Scale(m_vScale.x, m_vScale.y, m_vScale.z);
+
+	_float fGunSound = 1.f;
+	Engine::PlaySoundGun(L"Shield.wav", SOUND_EFFECT, fGunSound);
 	return S_OK;
 }
 

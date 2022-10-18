@@ -14,6 +14,7 @@
 #include "SoundWave.h"
 #include "CubeParticle.h"
 #include "DashCube.h"
+#include "CartridgeParticle.h"
 
 /*	
 CFlameEffect* m_pFlameEffectParticle = nullptr;

@@ -13,7 +13,7 @@ class CFlight;
 class CShield;
 class CCubeParticle;
 class CDashCube;
-
+class CCartridgeParticle;
 
 class CCubePlayer : public CGameObject
 {
@@ -139,6 +139,8 @@ private:
 	CProjectileParticle* m_pProjectileParicle = nullptr;
 	CCubeParticle* m_pCubeParticle = nullptr;
 	CDashCube*		m_pDashCube = nullptr;
+	CCartridgeParticle*		m_pCartridgeParticle = nullptr;
+
 private:
 	_float			m_fLookAngle = 0.f;
 	_float			m_fDownAngle = 0.f;
