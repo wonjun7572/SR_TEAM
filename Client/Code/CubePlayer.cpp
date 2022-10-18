@@ -138,6 +138,23 @@ void CCubePlayer::LateUpdate_Object(void)
 
 void CCubePlayer::Render_Object(void)
 {
+	FAILED_CHECK_RETURN(Set_Material(), );
+}
+
+HRESULT CCubePlayer::Set_Material()
+{
+	D3DMATERIAL9 Material;
+	ZeroMemory(&Material, sizeof(D3DMATERIAL9));
+
+	Material.Diffuse = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+	Material.Specular = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+	Material.Ambient = D3DXCOLOR(0.3f, 0.3f, 0.3f, 1.f);
+	Material.Emissive = D3DXCOLOR(0.f, 0.f, 0.f, 1.f);
+	Material.Power = 0.f;
+
+	m_pGraphicDev->SetMaterial(&Material);
+
+	return S_OK;
 }
 
 void CCubePlayer::Key_Skill()

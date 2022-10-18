@@ -61,7 +61,6 @@ void CMainApp::Render_MainApp(void)
 	Engine::Render_Begin(D3DXCOLOR(0.5f, 0.5f, 0.5f, 1.f));
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
 	m_pManagementClass->Render_Scene(m_pGraphicDev);
-	
 	// 툴 그리기
 	ImGui::Render();
 	ImGui_ImplDX9_RenderDrawData(ImGui::GetDrawData());

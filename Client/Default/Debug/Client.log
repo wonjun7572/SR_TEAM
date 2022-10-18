@@ -1,9 +1,4 @@
-﻿  TestCube.cpp
-  Stage.cpp
-  CubePlayer.cpp
-c:\users\sam51\desktop\sr_team\client\code\cubeplayer.cpp(187): warning C4244: '인수': 'Engine::_int'에서 'FLOAT'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\sam51\desktop\sr_team\client\code\cubeplayer.cpp(190): warning C4244: '인수': 'Engine::_int'에서 'FLOAT'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-  코드를 생성하고 있습니다...
+﻿  Ping.cpp
      ../Bin\Client.lib 라이브러리 및 ../Bin\Client.exp 개체를 생성하고 있습니다.
   Client.vcxproj -> C:\Users\sam51\Desktop\SR_TEAM\Client\Default\../Bin\Client.exe
   Client.vcxproj -> ../Bin\Client.pdb (Full PDB)

@@ -23,7 +23,7 @@ private:
 public:
 	HRESULT				Ready_Object(int PosX, int PosY);
 	HRESULT				Wall_Mapping(void);
-
+	virtual HRESULT		Set_Material()override;
 	virtual _int		Update_Object(const _float& fTimeDelta) override;
 	virtual void		Render_Object(void) override;
 
@@ -39,7 +39,6 @@ public:
 
 private:
 	HRESULT				Add_Component(void);
-	HRESULT				Set_Material();
 
 private:
 	CCubeTex*			m_pBufferCom = nullptr;
@@ -76,7 +75,8 @@ private: // 문 상호작용 관련
 
 	wstring				m_strPress;
 	CGameObject*		m_pLetterBox = nullptr;
-	CBrownCloudEffect* m_pBrownCloudEffect = nullptr;
+	CBrownCloudEffect*  m_pBrownCloudEffect = nullptr;
+
 	CStaticCamera*		m_pStaticCam = nullptr;
 	CProjectileParticle* m_pProjectileParicle = nullptr;
 
