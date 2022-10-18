@@ -32,7 +32,9 @@ HRESULT CHyperionStrike::Ready_Object(const _vec3 & Position, DIRRECTIONSTATE _e
 	m_pTransCom->Set_Pos(Position.x, Position.y, Position.z);
 	m_pTransCom->Set_Scale(&_vec3(m_fSphereScale, m_fSphereScale, m_fSphereScale));
 	m_pTransCom->Get_Info(INFO_POS, &m_vPos);
-
+	_float fGunSound = 1.f;
+	Engine::PlaySoundGun(L"BattleCruiser.wav", SOUND_EFFECT, fGunSound);
+	Engine::PlaySoundGun(L"BattleCruiser2.wav", SOUND_EFFECT, fGunSound);
 	return S_OK;
 }
 

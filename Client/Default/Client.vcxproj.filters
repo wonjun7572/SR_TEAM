@@ -241,9 +241,6 @@
     <Filter Include="02. GameObject\01. For_Stage\02 Wall">
       <UniqueIdentifier>{139b70e2-b611-4471-8714-9c310caac6a9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\01. For_Stage\08. Monster\05.Illusioner">
-      <UniqueIdentifier>{19cb1c5a-db84-437d-8e2d-d73850d02be6}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. GameObject\01. For_Stage\16. Skill">
       <UniqueIdentifier>{b7353904-ea38-453f-9793-d3a8ad2631b7}</UniqueIdentifier>
     </Filter>
@@ -255,9 +252,6 @@
     </Filter>
     <Filter Include="02. GameObject\01. For_Stage\20. BillBoard">
       <UniqueIdentifier>{97ebe466-2b13-4a05-8c1a-2b85aa2672b3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\01. For_Stage\21. MiddleBoss">
-      <UniqueIdentifier>{0091e28e-b692-45e6-8762-b8ba0717f441}</UniqueIdentifier>
     </Filter>
     <Filter Include="02. GameObject\01. For_Stage\21. Rocket">
       <UniqueIdentifier>{9cb28303-2be4-4a5b-aa55-51f86d88d953}</UniqueIdentifier>
@@ -324,6 +318,42 @@
     </Filter>
     <Filter Include="02. GameObject\01. For_Stage\06. Bullet\ExBullet">
       <UniqueIdentifier>{41141aed-bba1-4d69-ac27-8bd2526a3042}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\98. Particle\05. CubeParticle">
+      <UniqueIdentifier>{fdf2dd7d-1ee3-4e56-80af-859db3e175a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\21. Boss">
+      <UniqueIdentifier>{0091e28e-b692-45e6-8762-b8ba0717f441}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\21. Boss\01. MiddleBoss">
+      <UniqueIdentifier>{f9679fc9-f9df-4237-9620-637d27d7b237}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\21. Boss\02. Kraken">
+      <UniqueIdentifier>{5869ba77-0d58-4782-9842-337b3b1cc769}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\99. TestCube\ObjectCube">
+      <UniqueIdentifier>{7d2a3a76-264c-406d-8871-25c389389598}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\08. Monster\06. Alien">
+      <UniqueIdentifier>{2c43a5b4-e017-4c87-bfcb-4ccef3bf147d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\08. Monster\05. Illusioner">
+      <UniqueIdentifier>{19cb1c5a-db84-437d-8e2d-d73850d02be6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\16. Skill\HyperionStrike">
+      <UniqueIdentifier>{9d34736e-d396-41f3-a137-5ec8399eb154}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\16. Skill\Meteor">
+      <UniqueIdentifier>{b8a186e1-549d-42f7-a074-3d318a13980e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\16. Skill\Shield">
+      <UniqueIdentifier>{bca41265-61ab-4798-9ed1-24c890369b80}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\16. Skill\StaticField">
+      <UniqueIdentifier>{e883894a-da23-4adf-aed2-c83be0030cde}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\16. Skill\Shield\DeffensiveMatrix">
+      <UniqueIdentifier>{47ba5b1f-d677-4cdc-a5bd-26a960a33048}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -634,13 +664,10 @@
       <Filter>02. GameObject\01. For_Stage\08. Monster\04. Fireman</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Illusioner.h">
-      <Filter>02. GameObject\01. For_Stage\08. Monster\05.Illusioner</Filter>
+      <Filter>02. GameObject\01. For_Stage\08. Monster\05. Illusioner</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\ComboUI.h">
       <Filter>02. GameObject\01. For_Stage\09. UI\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\Meteor.h">
-      <Filter>02. GameObject\01. For_Stage\16. Skill</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Supporter.h">
       <Filter>02. GameObject\01. For_Stage\17. Supporter</Filter>
@@ -665,9 +692,6 @@
     </ClInclude>
     <ClInclude Include="..\Header\Ping.h">
       <Filter>02. GameObject\01. For_Stage\20. BillBoard</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\MiddleBoss.h">
-      <Filter>02. GameObject\01. For_Stage\21. MiddleBoss</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\BattleCursier.h">
       <Filter>02. GameObject\01. For_Stage\21. Rocket</Filter>
@@ -720,23 +744,11 @@
     <ClInclude Include="..\Header\ItemParticle.h">
       <Filter>02. GameObject\01. For_Stage\98. Particle\02. SparkEffect</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\ObjectCube.h">
-      <Filter>99. Default\헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="KrakenBoss.h">
-      <Filter>99. Default\헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\FlightBulletParticle.h">
       <Filter>02. GameObject\01. For_Stage\98. Particle\01. EllipseParticle\FlightBulletParticle</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\Alien.h">
-      <Filter>99. Default\헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\Terret.h">
       <Filter>02. GameObject\01. For_Stage\18. Trap</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\StaticField.h">
-      <Filter>99. Default\헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\FlightCamera.h">
       <Filter>02. GameObject\02. For_Public\02. FlightCamera</Filter>
@@ -753,32 +765,44 @@
     <ClInclude Include="..\Header\ExBullet.h">
       <Filter>02. GameObject\01. For_Stage\06. Bullet\ExBullet</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\CubeParticle.h">
-      <Filter>99. Default\헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\DashCube.h">
-      <Filter>99. Default\헤더 파일</Filter>
+      <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\DeffensiveMatrix.h">
-      <Filter>99. Default\헤더 파일</Filter>
+    <ClInclude Include="..\Header\CubeParticle.h">
+      <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\HyperionStrike.h">
-      <Filter>99. Default\헤더 파일</Filter>
+    <ClInclude Include="..\Header\CartridgeParticle.h">
+      <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\Shield.h">
-      <Filter>99. Default\헤더 파일</Filter>
+    <ClInclude Include="KrakenBoss.h">
+      <Filter>02. GameObject\01. For_Stage\21. Boss\02. Kraken</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\MiddleBoss.h">
+      <Filter>02. GameObject\01. For_Stage\21. Boss\01. MiddleBoss</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Key.h">
       <Filter>02. GameObject\01. For_Stage\10. Item\Key</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\Veneer.h">
-      <Filter>99. Default\헤더 파일</Filter>
+    <ClInclude Include="..\Header\ObjectCube.h">
+      <Filter>02. GameObject\01. For_Stage\99. TestCube\ObjectCube</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\Supporter_Shotgun.h">
-      <Filter>02. GameObject\01. For_Stage\17. Supporter</Filter>
+    <ClInclude Include="..\Header\Alien.h">
+      <Filter>02. GameObject\01. For_Stage\08. Monster\06. Alien</Filter>
     </ClInclude>
-    <ClInclude Include="Supporter_Sniper.h">
-      <Filter>02. GameObject\01. For_Stage\17. Supporter</Filter>
+    <ClInclude Include="..\Header\DeffensiveMatrix.h">
+      <Filter>02. GameObject\01. For_Stage\16. Skill\Shield\DeffensiveMatrix</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\HyperionStrike.h">
+      <Filter>02. GameObject\01. For_Stage\16. Skill\HyperionStrike</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Meteor.h">
+      <Filter>02. GameObject\01. For_Stage\16. Skill\Meteor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Shield.h">
+      <Filter>02. GameObject\01. For_Stage\16. Skill\Shield</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\StaticField.h">
+      <Filter>02. GameObject\01. For_Stage\16. Skill\StaticField</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1068,13 +1092,10 @@
       <Filter>02. GameObject\01. For_Stage\08. Monster\04. Fireman</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Illusioner.cpp">
-      <Filter>02. GameObject\01. For_Stage\08. Monster\05.Illusioner</Filter>
+      <Filter>02. GameObject\01. For_Stage\08. Monster\05. Illusioner</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\ComboUI.cpp">
       <Filter>02. GameObject\01. For_Stage\09. UI\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\Meteor.cpp">
-      <Filter>02. GameObject\01. For_Stage\16. Skill</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Supporter.cpp">
       <Filter>02. GameObject\01. For_Stage\17. Supporter</Filter>
@@ -1099,9 +1120,6 @@
     </ClCompile>
     <ClCompile Include="..\Code\Ping.cpp">
       <Filter>02. GameObject\01. For_Stage\20. BillBoard</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\MiddleBoss.cpp">
-      <Filter>02. GameObject\01. For_Stage\21. MiddleBoss</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\BattleCursier.cpp">
       <Filter>02. GameObject\01. For_Stage\21. Rocket</Filter>
@@ -1151,23 +1169,11 @@
     <ClCompile Include="..\Code\ItemParticle.cpp">
       <Filter>02. GameObject\01. For_Stage\98. Particle\02. SparkEffect</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\ObjectCube.cpp">
-      <Filter>99. Default\소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="KrakenBoss.cpp">
-      <Filter>99. Default\소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\FlightBulletParticle.cpp">
       <Filter>02. GameObject\01. For_Stage\98. Particle\01. EllipseParticle\FlightBulletParticle</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\Alien.cpp">
-      <Filter>99. Default\소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\Terret.cpp">
       <Filter>02. GameObject\01. For_Stage\18. Trap</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\StaticField.cpp">
-      <Filter>99. Default\소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\FlightCamera.cpp">
       <Filter>02. GameObject\02. For_Public\02. FlightCamera</Filter>
@@ -1185,31 +1191,43 @@
       <Filter>02. GameObject\01. For_Stage\06. Bullet\ExBullet</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CubeParticle.cpp">
-      <Filter>99. Default\소스 파일</Filter>
+      <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\DashCube.cpp">
-      <Filter>99. Default\소스 파일</Filter>
+      <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\DeffensiveMatrix.cpp">
-      <Filter>99. Default\소스 파일</Filter>
+    <ClCompile Include="..\Code\CartridgeParticle.cpp">
+      <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\HyperionStrike.cpp">
-      <Filter>99. Default\소스 파일</Filter>
+    <ClCompile Include="KrakenBoss.cpp">
+      <Filter>02. GameObject\01. For_Stage\21. Boss\02. Kraken</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\Shield.cpp">
-      <Filter>99. Default\소스 파일</Filter>
+    <ClCompile Include="..\Code\MiddleBoss.cpp">
+      <Filter>02. GameObject\01. For_Stage\21. Boss\01. MiddleBoss</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Key.cpp">
       <Filter>02. GameObject\01. For_Stage\10. Item\Key</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\Veneer.cpp">
-      <Filter>99. Default\소스 파일</Filter>
+    <ClCompile Include="..\Code\ObjectCube.cpp">
+      <Filter>02. GameObject\01. For_Stage\99. TestCube\ObjectCube</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\Supporter_Shotgun.cpp">
-      <Filter>02. GameObject\01. For_Stage\17. Supporter</Filter>
+    <ClCompile Include="..\Code\Alien.cpp">
+      <Filter>02. GameObject\01. For_Stage\08. Monster\06. Alien</Filter>
     </ClCompile>
-    <ClCompile Include="Supporter_Sniper.cpp">
-      <Filter>02. GameObject\01. For_Stage\17. Supporter</Filter>
+    <ClCompile Include="..\Code\DeffensiveMatrix.cpp">
+      <Filter>02. GameObject\01. For_Stage\16. Skill\Shield\DeffensiveMatrix</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\HyperionStrike.cpp">
+      <Filter>02. GameObject\01. For_Stage\16. Skill\HyperionStrike</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Meteor.cpp">
+      <Filter>02. GameObject\01. For_Stage\16. Skill\Meteor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Shield.cpp">
+      <Filter>02. GameObject\01. For_Stage\16. Skill\Shield</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\StaticField.cpp">
+      <Filter>02. GameObject\01. For_Stage\16. Skill\StaticField</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

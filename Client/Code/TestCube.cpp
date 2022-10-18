@@ -215,11 +215,13 @@ HRESULT CTestCube::Interact(void)
 		}
 	}
 
-	if (m_bSwitch && Get_DIKeyState(DIK_E))
+	if (m_bSwitch && Key_Down(DIK_E))
 	{
 		if (m_iTexIndex == 37 || m_iTexIndex == 99) //초록색문
 			if (vPos.y < 15)
 			{
+				_float fGunSound = 1.f;
+				Engine::PlaySoundGun(L"portal_2.wav", SOUND_EFFECT, fGunSound);
 				m_bDoorOpen = true;
 			}
 	}	

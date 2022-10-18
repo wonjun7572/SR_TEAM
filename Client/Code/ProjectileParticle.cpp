@@ -148,9 +148,7 @@ void CProjectileParticle::resetParticle(ATTRIBUTE * attribute)
 		
 		attribute->vPos = vPos ;
 		attribute->vVelocity = (vDir * 150.f);
-
 		attribute->dwColor = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
-
 		attribute->fAge = 0.0f;
 		attribute->fLifeTime = 5.f;
 		
