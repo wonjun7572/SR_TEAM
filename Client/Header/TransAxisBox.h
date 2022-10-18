@@ -22,6 +22,7 @@ public:
 	virtual _int	Update_Object(const _float& fTimeDelta) override;
 	virtual void	LateUpdate_Object(void) override;
 	virtual void	Render_Object(void) override;
+	virtual HRESULT	Set_Material()override;
 
 public:
 	bool			Set_SelectGizmo(void);

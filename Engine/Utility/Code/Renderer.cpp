@@ -69,18 +69,12 @@ void CRenderer::Add_RenderGroup(RENDERID eID, CGameObject * pGameObject)
 
 void CRenderer::Render_GameObject(LPDIRECT3DDEVICE9 & pGraphicDev)
 {
-	//cout << "Priority : " << m_RenderGroup[RENDER_PRIORITY].size() << endl;
-	//cout << "Nonalpha : " << m_RenderGroup[RENDER_NONALPHA].size() << endl;
-	//cout << "Alpha : " << m_RenderGroup[RENDER_ALPHA].size() << endl;
-	//cout << "Animation : " << m_RenderGroup[RENDER_ANIOBJ].size() << endl;
-	//cout << "Map : " << m_RenderGroup[RENDER_MAPSETTING].size() << endl;
-	//cout << "Ui : " << m_RenderGroup[RENDER_UI].size() << endl;
-	//cout << endl;
-
 	for (auto& iter : m_RenderGroup[RENDER_PRIORITY])
 	{
+		pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
 		iter->Render_Object();
 		Safe_Release(iter);			
+		pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
 	}
 	m_RenderGroup[RENDER_PRIORITY].clear();
 	
@@ -107,13 +101,16 @@ void CRenderer::Render_GameObject(LPDIRECT3DDEVICE9 & pGraphicDev)
 
 	for (auto& iter : m_RenderGroup[RENDER_MAPSETTING])
 	{
+		pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
 		iter->Render_Object();
 		Safe_Release(iter);
+		pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
 	}
 	m_RenderGroup[RENDER_MAPSETTING].clear();
 
 	for (auto& iter : m_RenderGroup[RENDER_UI])
 	{
+		pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
 		pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
 		pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
 		pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
@@ -123,6 +120,7 @@ void CRenderer::Render_GameObject(LPDIRECT3DDEVICE9 & pGraphicDev)
 		iter->Render_Object();
 		pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
 		pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
+		pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
 		Safe_Release(iter);
 	}
 	m_RenderGroup[RENDER_UI].clear();

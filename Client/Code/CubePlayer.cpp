@@ -61,8 +61,12 @@ HRESULT CCubePlayer::Ready_Object(void)
 
 _int CCubePlayer::Update_Object(const _float & fTimeDelta)
 {
+	m_fRed += fTimeDelta;
+	if (m_fRed >= 1.f)
+		m_fRed = 0.f;
+
 	Update_NullCheck();
-	
+
 	m_fTimeDelta = fTimeDelta;
 	m_fBulletTime += fTimeDelta;
 
@@ -101,8 +105,8 @@ _int CCubePlayer::Update_Object(const _float & fTimeDelta)
 		//	대시 테스트, 몬스터 방향으로만 가능하게 변경 예정
 		Dash();
 	}
-
-
+	
+	Lighting();
 	CGameObject::Update_Object(fTimeDelta);
 
 	Engine::Add_RenderGroup(RENDER_NONALPHA, this);
@@ -134,6 +138,23 @@ void CCubePlayer::LateUpdate_Object(void)
 
 void CCubePlayer::Render_Object(void)
 {
+	FAILED_CHECK_RETURN(Set_Material(), );
+}
+
+HRESULT CCubePlayer::Set_Material()
+{
+	D3DMATERIAL9 Material;
+	ZeroMemory(&Material, sizeof(D3DMATERIAL9));
+
+	Material.Diffuse = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+	Material.Specular = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+	Material.Ambient = D3DXCOLOR(0.3f, 0.3f, 0.3f, 1.f);
+	Material.Emissive = D3DXCOLOR(0.f, 0.f, 0.f, 1.f);
+	Material.Power = 0.f;
+
+	m_pGraphicDev->SetMaterial(&Material);
+
+	return S_OK;
 }
 
 void CCubePlayer::Key_Skill()
@@ -1068,6 +1089,48 @@ HRESULT CCubePlayer::Add_Component(void)
 	pInstance = m_pSphereTransCom = dynamic_cast<CTransform*>(Engine::Clone_Proto(TRANSFORM_COMP));
 	NULL_CHECK_RETURN(m_pSphereBufferCom, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Sphere_TransCom", pInstance });
+
+	return S_OK;
+}
+
+HRESULT CCubePlayer::Lighting()
+{
+	D3DLIGHT9 d3dLight;
+	// Initialize the structure.
+	ZeroMemory(&d3dLight, sizeof(d3dLight));
+
+	// Set up a white point light.
+	d3dLight.Type = D3DLIGHT_POINT;
+
+	d3dLight.Diffuse.r = m_fRed;
+	d3dLight.Diffuse.g = 0.0f;
+	d3dLight.Diffuse.b = 0.0f;
+	d3dLight.Ambient.r = 1.0f;
+	d3dLight.Ambient.g = 1.0f;
+	d3dLight.Ambient.b = 1.0f;
+	d3dLight.Specular.r = 1.0f;
+	d3dLight.Specular.g = 1.0f;
+	d3dLight.Specular.b = 1.0f;
+
+	// Position it high in the scene and behind the user.
+	// Remember, these coordinates are in world space, so
+	// the user could be anywhere in world space, too. 
+	// For the purposes of this example, assume the user
+	// is at the origin of world space.
+
+	_vec3 vPos;
+	m_pTransform->Get_Info(INFO_POS, &vPos);
+
+	d3dLight.Position.x = vPos.x;
+	d3dLight.Position.y = vPos.y;
+	d3dLight.Position.z = vPos.z;
+
+	// Don't attenuate.
+	d3dLight.Attenuation0 = 1.0f;
+	d3dLight.Range = 10.0f;
+
+	// Set the property information for the first light.
+	FAILED_CHECK_RETURN(m_pGraphicDev->SetLight(2, &d3dLight),E_FAIL);
 
 	return S_OK;
 }

@@ -69,11 +69,9 @@ void CMainApp::LateUpdate_MainApp(void)
 
 void CMainApp::Render_MainApp(void)
 {
-	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
 	Engine::Render_Begin(D3DXCOLOR(0.5f, 0.5f, 0.5f, 1.f));
-	
+	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
 	m_pManagementClass->Render_Scene(m_pGraphicDev);
-	
 	// 툴 그리기
 	ImGui::Render();
 	ImGui_ImplDX9_RenderDrawData(ImGui::GetDrawData());
@@ -127,7 +125,7 @@ HRESULT CMainApp::SetUp_DefaultSetting(LPDIRECT3DDEVICE9 * ppGraphicDev)
 	// Setup Platform/Renderer backends
 	ImGui_ImplWin32_Init(g_hWnd);
 	ImGui_ImplDX9_Init(m_pGraphicDev);
-	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
+
 
 #ifdef _DEBUG
 	if (::AllocConsole() == TRUE)

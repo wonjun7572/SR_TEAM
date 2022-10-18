@@ -31,29 +31,6 @@ HRESULT CFlight::Ready_Object(const _vec3 & vPos, const _vec3 & vDir, _tchar * N
 	m_pTransform->Set_Pos(vPos.x, vPos.y, vPos.z);
 	m_pTransform->Static_Update();
 
-	_vec3 vShuffle;
-	m_ShufflePos.reserve(24);
-	for (float i = 10.f; i <= 110.f; i += 20.f)
-	{
-		vShuffle = { i, 20.f, -50.f };
-		m_ShufflePos.push_back(vShuffle);
-
-		vShuffle = { -50.f, 25.f, i };
-		m_ShufflePos.push_back(vShuffle);
-
-		vShuffle = { i, 30.f, 170.f };
-		m_ShufflePos.push_back(vShuffle);
-
-		vShuffle = { 170.f, 35.f, i };
-		m_ShufflePos.push_back(vShuffle);
-	}
-
-	m_ShuffleSpeed.reserve(10);
-	for (_uint i = 20; i < 30; ++i)
-	{
-		m_ShuffleSpeed.push_back(i);
-	}
-
 	return S_OK;
 }
 
@@ -69,15 +46,6 @@ _int CFlight::Update_Object(const _float & fTimeDelta)
 
 		FAILED_CHECK_RETURN(Build(), -1);
 	}
-
-	_vec3 vPos;
-	m_pTransform->Get_Info(INFO_POS, &vPos);
-
-	if (vPos.x > 170.f || vPos.x < -50.f || vPos.z > 170.f || vPos.z < -50.f)
-	{
-		Random();
-	}
-
 
 	if (!m_pBulletParicle)
 		m_pBulletParicle = dynamic_cast<CFlightBulletParticle*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"FlightBulletParticle"));
@@ -133,24 +101,22 @@ _int CFlight::Update_Object(const _float & fTimeDelta)
 	}
 	else
 	{
+		_vec3 vPos;
+		m_pTransform->Get_Info(INFO_POS, &vPos);
+
 		_vec3 vLook;
 		m_pTransform->Get_Info(INFO_LOOK, &vLook);
 		D3DXVec3Normalize(&vLook, &vLook);
-		m_pTransform->Move_Pos(&(vLook * 10.f * fTimeDelta));
-		m_pTransform->Static_Update();
-	}
+		m_pTransform->Move_Pos(&(-vLook * 1.f * fTimeDelta));
+		for (auto& iter : *(pMyLayer->Get_GamePairPtr()))
+		{
+			CTransform*	BoxTransform = dynamic_cast<CTransform*>(iter.second->Get_Component(L"Proto_TransformCom", ID_STATIC));
 
+			if (0 == _tcscmp(iter.first, L"A_ROOT"))
+				BoxTransform->Set_Pos(vPos.x, vPos.y, vPos.z);
+		}
+	}
 	CGameObject::Update_Object(fTimeDelta);
-
-	m_pTransform->Get_Info(INFO_POS, &vPos);
-
-	for (auto& iter : *(pMyLayer->Get_GamePairPtr()))
-	{
-		CTransform*	BoxTransform = dynamic_cast<CTransform*>(iter.second->Get_Component(L"Proto_TransformCom", ID_STATIC));
-
-		if (0 == _tcscmp(iter.first, L"A_ROOT"))
-			BoxTransform->Set_Pos(vPos.x, vPos.y, vPos.z);
-	}
 
 	return 0;
 }
@@ -191,44 +157,20 @@ HRESULT CFlight::Add_Component(void)
 	return S_OK;
 }
 
-void CFlight::Random(void)
+HRESULT CFlight::Set_Material()
 {
-	random_shuffle(m_ShufflePos.begin(), m_ShufflePos.end());
-	random_shuffle(m_ShuffleSpeed.begin(), m_ShuffleSpeed.end());
+	D3DMATERIAL9 Material;
+	ZeroMemory(&Material, sizeof(D3DMATERIAL9));
 
-	_vec3 vAngle, vDir;
+	Material.Diffuse = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+	Material.Specular = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+	Material.Ambient = D3DXCOLOR(0.1f, 0.1f, 0.1f, 1.f);
+	Material.Emissive = D3DXCOLOR(0.f, 0.f, 0.f, 1.f);
+	Material.Power = 0.f;
 
-	/*
-	谅>快	1	0	0	90
-	快>谅	-1	0	0	270
-	第>菊	0	0	1	0
-	菊>第	0	0	-1	180
-	*/
+	m_pGraphicDev->SetMaterial(&Material);
 
-	if (m_ShufflePos.front().z == -50.f)	//	第>菊
-	{
-		vAngle = { 0.f, D3DXToRadian(0.f) ,0.f };
-		vDir = { 0.f, 0.f, 1.f };
-	}
-	else if (m_ShufflePos.front().x == -50.f)	//	谅>快
-	{
-		vAngle = { 0.f, D3DXToRadian(90.f) ,0.f };
-		vDir = { 1.f, 0.f, 0.f };
-	}
-	else if (m_ShufflePos.front().z == 170.f)	//	菊>第
-	{
-		vAngle = { 0.f, D3DXToRadian(180.f) ,0.f };
-		vDir = { 0.f, 0.f, -1.f };
-	}
-	else if (m_ShufflePos.front().x == 170.f)	//	快>谅
-	{
-		vAngle = { 0.f, D3DXToRadian(270.f) ,0.f };
-		vDir = { -1.f, 0.f, 0.f };
-	}
-
-	Replace(m_ShufflePos.front(), vAngle, vDir);
-
-	Set_Speed(m_ShuffleSpeed.front());
+	return S_OK;
 }
 
 HRESULT CFlight::Build(void)
@@ -365,6 +307,20 @@ HRESULT CFlight::Build(void)
 
 void CFlight::Key_Input(const _float& fTimeDelta)
 {
+	//m_pTransform->Move_Pos(&(-vLook * 1.f * fTimeDelta));
+
+	/*long		dwMouseMove = 0;
+
+	if (dwMouseMove = Engine::Get_DIMouseMove(DIMS_X))
+	{
+		m_pTransform->Rotation(ROT_Y, D3DXToRadian(dwMouseMove / 20.f));
+	}
+
+	if (dwMouseMove = Engine::Get_DIMouseMove(DIMS_Y))
+	{
+		m_pTransform->Rotation(ROT_X, D3DXToRadian(dwMouseMove / 20.f));
+	}*/
+
 	if (m_fBulletTime > 0.2f)
 	{
 		if (Get_DIMouseState(DIM_LB))
@@ -386,6 +342,7 @@ void CFlight::Key_Input(const _float& fTimeDelta)
 			m_fBulletTime = 0.f;
 		}
 	}
+
 }
 
 void CFlight::Look_Direction()
@@ -445,6 +402,9 @@ void CFlight::Bombing()
 	NULL_CHECK_RETURN(pGameObject, );
 	CLayer* pLayer = Get_Layer(STAGE_SKILL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject),);
+
+
+	//cout << vDirection.x << " " << vDirection.y << " " << vDirection.z << " " << endl;
 }
 
 void CFlight::Move(const _float& fTimeDelta)

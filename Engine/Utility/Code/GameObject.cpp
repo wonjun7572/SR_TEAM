@@ -42,6 +42,11 @@ void CGameObject::Render_Object(void)
 {
 }
 
+HRESULT CGameObject::Set_Material()
+{
+	return S_OK;
+}
+
 CComponent * CGameObject::Get_Component(const _tchar * pComponentTag, COMPONENTID eID)
 {
 	CComponent*		pComponent = Find_Component(pComponentTag, eID);
