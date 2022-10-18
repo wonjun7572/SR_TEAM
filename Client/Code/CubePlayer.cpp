@@ -191,7 +191,7 @@ void CCubePlayer::KnuckDown(const _float & fDamage, const _float& fDistance)
 	if (m_fGlobal_Cooltime >= 1.f)
 	{
 		m_tAbility->fHp -= fDamage;
-		m_iKnuckStack = fDistance;
+		m_iKnuckStack = _int(fDistance);
 		m_fGlobal_Cooltime = 0;
 	}
 }
@@ -653,9 +653,9 @@ void CCubePlayer::Move()
 			NULL_CHECK_RETURN(pGameObject, );
 			FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), );
 
-			for (auto& iter : Get_Layer(STAGE_SUPPORTER)->Get_GameList())
+			for (auto& iter : Get_Layer(STAGE_SUPPORTER)->Get_GameObjectMap())
 			{
-				dynamic_cast<CSupporter_Uzi*>(iter)->SetOrdered(true);
+				dynamic_cast<CSupporter*>(iter.second)->SetOrdered(true);
 			}
 		}
 

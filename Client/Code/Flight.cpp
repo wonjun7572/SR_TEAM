@@ -7,6 +7,8 @@
 #include "FlightCamera.h"
 #include "FlightSpot.h"
 #include "Supporter_Uzi.h"
+#include "Supporter_Shotgun.h"
+#include "Supporter_Sniper.h"
 
 CFlight::CFlight(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
@@ -56,7 +58,7 @@ _int CFlight::Update_Object(const _float & fTimeDelta)
 		_vec3 vDesination;
 		vDesination.x = m_vDestination.x;
 		vDesination.y = 30.f;
-		vDesination.z = m_vDestination.y;
+		vDesination.z = m_vDestination.z;
 
 		m_pTransform->Chase_Target(&vDesination, 15.f, fTimeDelta);
 
@@ -73,16 +75,18 @@ _int CFlight::Update_Object(const _float & fTimeDelta)
 			}
 			else if (m_eSupporterID == SUPPORTER_SHOTGUN)
 			{
-				CGameObject* pGameObject = CSupporter_Uzi::Create(m_pGraphicDev, vDesination, L"SUPPORT_SHOTGUN");
+				CGameObject* pGameObject = CSupporter_Shotgun::Create(m_pGraphicDev, vDesination, L"SUPPORT_SHOTGUN");
 				NULL_CHECK_RETURN(pGameObject, E_FAIL);
 				FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"SUPPORT_SHOTGUN", pGameObject), E_FAIL);
+				dynamic_cast<CSupporter_Shotgun*>(pGameObject)->Set_setcam(true);
 				m_bShuttle = false;
 			}
 			else if (m_eSupporterID == SUPPORTER_SNIPER)
 			{
-				CGameObject* pGameObject = CSupporter_Uzi::Create(m_pGraphicDev, vDesination, L"SUPPORT_SNIPER");
+				CGameObject* pGameObject = CSupporter_Sniper::Create(m_pGraphicDev, vDesination, L"SUPPORT_SNIPER");
 				NULL_CHECK_RETURN(pGameObject, E_FAIL);
 				FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"SUPPORT_SNIPER", pGameObject), E_FAIL);
+				dynamic_cast<CSupporter_Sniper*>(pGameObject)->Set_setcam(true);
 				m_bShuttle = false;
 			}
 		}

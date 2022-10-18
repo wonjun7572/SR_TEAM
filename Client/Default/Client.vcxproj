@@ -268,6 +268,7 @@
     <ClInclude Include="..\Header\RainbowCloudEffect.h" />
     <ClInclude Include="..\Header\StaticField.h" />
     <ClInclude Include="..\Header\Supporter.h" />
+    <ClInclude Include="..\Header\Supporter_Shotgun.h" />
     <ClInclude Include="..\Header\Supporter_Uzi.h" />
     <ClInclude Include="..\Header\TargetCube.h" />
     <ClInclude Include="..\Header\Terrain.h" />
@@ -283,6 +284,7 @@
     <ClInclude Include="..\Header\UziPart3.h" />
     <ClInclude Include="..\Header\UziPart4.h" />
     <ClInclude Include="..\Header\UziPart5.h" />
+    <ClInclude Include="..\Header\Veneer.h" />
     <ClInclude Include="..\Header\Wall.h" />
     <ClInclude Include="..\Header\WallMapping.h" />
     <ClInclude Include="..\Header\Weapon.h" />
@@ -314,6 +316,7 @@
     <ClInclude Include="KrakenBoss.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="Supporter_Sniper.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
@@ -424,6 +427,7 @@
     <ClCompile Include="..\Code\RainbowCloudEffect.cpp" />
     <ClCompile Include="..\Code\StaticField.cpp" />
     <ClCompile Include="..\Code\Supporter.cpp" />
+    <ClCompile Include="..\Code\Supporter_Shotgun.cpp" />
     <ClCompile Include="..\Code\Supporter_Uzi.cpp" />
     <ClCompile Include="..\Code\TargetCube.cpp" />
     <ClCompile Include="..\Code\Terrain.cpp" />
@@ -439,6 +443,7 @@
     <ClCompile Include="..\Code\UziPart3.cpp" />
     <ClCompile Include="..\Code\UziPart4.cpp" />
     <ClCompile Include="..\Code\UziPart5.cpp" />
+    <ClCompile Include="..\Code\Veneer.cpp" />
     <ClCompile Include="..\Code\Wall.cpp" />
     <ClCompile Include="..\Code\WallMapping.cpp" />
     <ClCompile Include="..\Code\Weapon.cpp" />
@@ -511,6 +516,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Supporter_Sniper.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc" />

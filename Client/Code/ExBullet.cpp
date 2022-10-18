@@ -43,8 +43,6 @@ _int CExBullet::Update_Object(const _float & fTimeDelta)
 		wsprintfW(szName, wName.c_str(), g_iExplosion);
 		m_TcharList.push_back(szName);
 
-		cout << g_iExplosion << endl;
-
 		g_iExplosion++;
 
 		// À§Ä¡ ¹Ù²ãÁà¾ßÇÔ
@@ -67,8 +65,6 @@ _int CExBullet::Update_Object(const _float & fTimeDelta)
 	m_pTransCom->Get_Info(INFO_POS, &vPos);
 	m_pHitboxTransCom->Set_Pos(vPos.x, vPos.y, vPos.z);
 
-	cout << vPos.y << endl;
-
 	m_pTransCom->Chase_Target_By_Direction(&m_vDirection, 0.f, fTimeDelta);
 
 	Engine::Add_RenderGroup(RENDER_NONALPHA, this);
@@ -88,10 +84,10 @@ void CExBullet::Render_Object(void)
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransCom->Get_WorldMatrixPointer());
 	m_pCubeCol->Render_Buffer();
 
-	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pHitboxTransCom->Get_WorldMatrixPointer());
-	m_pHitbox->Render_Buffer();
-	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+	//m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+	//m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pHitboxTransCom->Get_WorldMatrixPointer());
+	//m_pHitbox->Render_Buffer();
+	//m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 }
 
 void CExBullet::Set_Pos(const _vec3 & vPos)

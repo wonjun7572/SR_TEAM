@@ -11,7 +11,7 @@ public:
 	virtual _int		Update_Object(const _float& fTimeDelta);
 	virtual void		LateUpdate_Object(void);
 	virtual void		Render_Object(void);
-	void				SetOrdered(_bool bGetOrder) { m_bGetOrder = bGetOrder; }
+
 
 	_bool				Get_setcam() { return m_bSetCam; }
 	void				Set_setcam(_bool bcam) { m_bSetCam = bcam; }
@@ -30,16 +30,14 @@ private:	//	애니메이션 관련
 	void				ATTACK_Animation_Run(void);
 	void				ULTI_Animation_Run(void);
 
+	void				DROP_Animation_Run(void);
+
 	_float				m_fTimeDelta = 0.f;
 	_bool				m_bFirst = true;
 	_float				m_AnimationTime = 0.f;
 
 	CLayer*				pMyLayer;
 	_tchar*				m_SupporterName;
-
-	_bool				m_bGetOrder = false;
-	_bool				m_bOrdering = false;
-
 	_vec3				m_vOrderPos = _vec3(0.f, 0.f, 0.f);
 
 	_bool				m_bSetCam = true;
@@ -49,6 +47,7 @@ private:	//	애니메이션 관련
 	UZISUPPORTWALKID	m_WALK;
 	UZISUPPORTATTACKID	m_ATTACK;
 	UZISUPPORTULTID		m_ULTI;
+	SUPPORTDROPID		m_DROP;
 
 public:
 	static CSupporter_Uzi* Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3& vPos, _tchar* Name);
