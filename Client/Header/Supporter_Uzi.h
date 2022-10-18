@@ -38,8 +38,6 @@ private:	//	애니메이션 관련
 
 	CLayer*				pMyLayer;
 	_tchar*				m_SupporterName;
-
-
 	_vec3				m_vOrderPos = _vec3(0.f, 0.f, 0.f);
 
 	_bool				m_bSetCam = true;
