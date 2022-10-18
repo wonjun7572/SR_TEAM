@@ -30,6 +30,8 @@ private:	//	애니메이션 관련
 	void				ATTACK_Animation_Run(void);
 	void				ULTI_Animation_Run(void);
 
+	void				DROP_Animation_Run(void);
+
 	_float				m_fTimeDelta = 0.f;
 	_bool				m_bFirst = true;
 	_float				m_AnimationTime = 0.f;
@@ -47,6 +49,7 @@ private:	//	애니메이션 관련
 	UZISUPPORTWALKID	m_WALK;
 	UZISUPPORTATTACKID	m_ATTACK;
 	UZISUPPORTULTID		m_ULTI;
+	SUPPORTDROPID		m_DROP;
 
 public:
 	static CSupporter_Uzi* Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3& vPos, _tchar* Name);

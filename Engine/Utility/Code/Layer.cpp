@@ -143,7 +143,7 @@ _int CLayer::Update_Layer(const _float & fTimeDelta)
 		}
 	}
 
-	return iResult;
+	return 0;
 }
 
 void CLayer::LateUpdate_Layer(void)

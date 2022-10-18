@@ -774,6 +774,12 @@
     <ClInclude Include="..\Header\Veneer.h">
       <Filter>99. Default\헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\Supporter_Shotgun.h">
+      <Filter>02. GameObject\01. For_Stage\17. Supporter</Filter>
+    </ClInclude>
+    <ClInclude Include="Supporter_Sniper.h">
+      <Filter>02. GameObject\01. For_Stage\17. Supporter</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -1198,6 +1204,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\Veneer.cpp">
       <Filter>99. Default\소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Supporter_Shotgun.cpp">
+      <Filter>02. GameObject\01. For_Stage\17. Supporter</Filter>
+    </ClCompile>
+    <ClCompile Include="Supporter_Sniper.cpp">
+      <Filter>02. GameObject\01. For_Stage\17. Supporter</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

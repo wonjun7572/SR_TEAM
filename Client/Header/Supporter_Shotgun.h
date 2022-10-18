@@ -29,6 +29,8 @@ private:	//	애니메이션 관련
 	void				WALK_Animation_Run(void);
 	void				ATTACK_Animation_Run(void);
 
+	void				DROP_Animation_Run(void);
+
 	_float				m_fTimeDelta = 0.f;
 	_bool				m_bFirst = true;
 	_float				m_AnimationTime = 0.f;
