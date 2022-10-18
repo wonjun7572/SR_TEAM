@@ -43,8 +43,6 @@ _int CExBullet::Update_Object(const _float & fTimeDelta)
 		wsprintfW(szName, wName.c_str(), g_iExplosion);
 		m_TcharList.push_back(szName);
 
-		cout << g_iExplosion << endl;
-
 		g_iExplosion++;
 
 		// À§Ä¡ ¹Ù²ãÁà¾ßÇÔ
@@ -66,8 +64,6 @@ _int CExBullet::Update_Object(const _float & fTimeDelta)
 	_vec3 vPos;
 	m_pTransCom->Get_Info(INFO_POS, &vPos);
 	m_pHitboxTransCom->Set_Pos(vPos.x, vPos.y, vPos.z);
-
-	cout << vPos.y << endl;
 
 	m_pTransCom->Chase_Target_By_Direction(&m_vDirection, 0.f, fTimeDelta);
 

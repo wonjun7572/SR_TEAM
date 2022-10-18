@@ -79,6 +79,7 @@
 
 #include "Supporter_Uzi.h"
 #include "Supporter_Shotgun.h"
+#include "Supporter_Sniper.h"
 
 #include "MiddleBoss.h"
 #include "KrakenBoss.h"
@@ -913,6 +914,10 @@ HRESULT CStage::Ready_Layer_Supporter(const _tchar * pLayerTag)
 	pGameObject = CSupporter_Shotgun::Create(m_pGraphicDev, _vec3(10.f, 0.5f, 10.f), L"SUPPORTER_SHOTGUN");
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"SUPPORTER_SHOTGUN", pGameObject), E_FAIL);
+
+	pGameObject = CSupporter_Sniper::Create(m_pGraphicDev, _vec3(15.f, 0.5f, 15.f), L"SUPPORTER_SNIPER");
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"SUPPORTER_SNIPER", pGameObject), E_FAIL);
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
