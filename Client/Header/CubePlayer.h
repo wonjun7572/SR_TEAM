@@ -61,6 +61,7 @@ public:
 	virtual _int	Update_Object(const _float& fTimeDelta) override;
 	virtual void	LateUpdate_Object(void) override;
 	virtual void	Render_Object(void) override;
+	virtual HRESULT		Set_Material()override;
 
 	void			Key_Skill();
 private:
@@ -99,7 +100,8 @@ private:
 	void			Fire_Bullet(void);
 	void			Gun_Check(void);
 	void			Inventory_Check(void); //인벤토리관련 함수
-	
+
+
 private:
 	void			Jump(void);
 	_bool			m_bJump = false;

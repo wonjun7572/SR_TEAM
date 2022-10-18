@@ -91,6 +91,7 @@ void CTestCube::Render_Object()
 
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransCom->Get_WorldMatrixPointer());
 	m_pTextureCom->Set_Texture(m_iTexIndex);
+	FAILED_CHECK_RETURN(Set_Material(), );
 	m_pBufferCom->Render_Buffer();
 
 	if (m_bWireFrame)
@@ -312,7 +313,7 @@ HRESULT CTestCube::Set_Material()
 	D3DMATERIAL9 Material;
 	ZeroMemory(&Material, sizeof(D3DMATERIAL9));
 
-	Material.Diffuse = D3DXCOLOR(0.2f, 0.2f, 0.2f, 1.f);
+	Material.Diffuse = D3DXCOLOR(1.f, 0.f, 0.f, 1.f);
 	Material.Specular = D3DXCOLOR(0.2f, 0.2f, 0.2f, 1.f);
 	Material.Ambient = D3DXCOLOR(0.5f, 0.5f, 0.5f, 1.f);
 	Material.Emissive = D3DXCOLOR(0.f, 0.f, 0.f, 1.f);
