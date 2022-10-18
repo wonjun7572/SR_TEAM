@@ -495,7 +495,7 @@ HRESULT CStage::Ready_Layer_Monster(const _tchar * pLayerTag)
 
 	CGameObject*		pGameObject = nullptr;
 
-	pGameObject = CFireMan::Create(m_pGraphicDev, _vec3(30.f, 0.6f, 30.f), L"FIREMAN");
+	/*pGameObject = CFireMan::Create(m_pGraphicDev, _vec3(30.f, 0.6f, 30.f), L"FIREMAN");
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
 
@@ -511,7 +511,7 @@ HRESULT CStage::Ready_Layer_Monster(const _tchar * pLayerTag)
 			NULL_CHECK_RETURN(pGameObject, E_FAIL);
 			FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
 		}
-	}
+	}*/
 
 	//if (!vecSlime.empty())
 	//{
@@ -527,9 +527,9 @@ HRESULT CStage::Ready_Layer_Monster(const _tchar * pLayerTag)
 	//	}
 	//}
 
-	pGameObject = CMiddleBoss::Create(m_pGraphicDev, _vec3(20.f, 2.6f, 10.f), L"MiddleBoss");
+	/*pGameObject = CMiddleBoss::Create(m_pGraphicDev, _vec3(20.f, 2.6f, 10.f), L"MiddleBoss");
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);*/
 	
 	//pGameObject = CKrakenBoss::Create(m_pGraphicDev, _vec3(10.f, 5.6f, 10.f), L"Kraken");
 	//NULL_CHECK_RETURN(pGameObject, E_FAIL);

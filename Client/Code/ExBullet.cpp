@@ -84,10 +84,10 @@ void CExBullet::Render_Object(void)
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransCom->Get_WorldMatrixPointer());
 	m_pCubeCol->Render_Buffer();
 
-	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pHitboxTransCom->Get_WorldMatrixPointer());
-	m_pHitbox->Render_Buffer();
-	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+	//m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+	//m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pHitboxTransCom->Get_WorldMatrixPointer());
+	//m_pHitbox->Render_Buffer();
+	//m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 }
 
 void CExBullet::Set_Pos(const _vec3 & vPos)

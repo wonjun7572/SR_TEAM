@@ -87,11 +87,13 @@ void CManagement::LateUpdate_Scene(void)
 
 void CManagement::Render_Scene(LPDIRECT3DDEVICE9 pGraphicDev)
 {
-	Engine::Render_GameObject(pGraphicDev);
+	//Engine::Render_GameObject(pGraphicDev);
 
 
 	if (nullptr == m_pScene)
 		return;
+
+	Engine::Render_GameObject(pGraphicDev);
 
 	m_pScene->Render_Scene();
 }

@@ -40,36 +40,36 @@ HRESULT CCubeCol::Ready_Buffer(void)
 
 	// ¾Õ¸é
 	pVertex[0].vPos = { -1.f, 1.f, -1.f };
-	pVertex[0].dwColor = D3DXCOLOR(0.f, 1.f, 0.f, 1.f);
+	pVertex[0].dwColor = D3DXCOLOR(1.f, 0.f, 0.f, 1.f);
 	m_vPos[0] = pVertex[0].vPos;
 
 	pVertex[1].vPos = { 1.f, 1.f, -1.f };
-	pVertex[1].dwColor = D3DXCOLOR(0.f, 1.f, 0.f, 1.f);
+	pVertex[1].dwColor = D3DXCOLOR(1.f, 0.f, 0.f, 1.f);
 	m_vPos[1] = pVertex[1].vPos;
 
 	pVertex[2].vPos = { 1.f, -1.f, -1.f };
-	pVertex[2].dwColor = D3DXCOLOR(0.f, 1.f, 0.f, 1.f);
+	pVertex[2].dwColor = D3DXCOLOR(1.f, 0.f, 0.f, 1.f);
 	m_vPos[2] = pVertex[2].vPos;
 
 	pVertex[3].vPos = { -1.f, -1.f, -1.f };
-	pVertex[3].dwColor = D3DXCOLOR(0.f, 1.f, 0.f, 1.f);
+	pVertex[3].dwColor = D3DXCOLOR(1.f, 0.f, 0.f, 1.f);
 	m_vPos[3] = pVertex[3].vPos;
 
 	// µÞ¸é
 	pVertex[4].vPos = { -1.f, 1.f, 1.f };
-	pVertex[4].dwColor = D3DXCOLOR(0.f, 1.f, 0.f, 1.f);
+	pVertex[4].dwColor = D3DXCOLOR(1.f, 0.f, 0.f, 1.f);
 	m_vPos[4] = pVertex[4].vPos;
 
 	pVertex[5].vPos = { 1.f, 1.f, 1.f };
-	pVertex[5].dwColor = D3DXCOLOR(0.f, 1.f, 0.f, 1.f);
+	pVertex[5].dwColor = D3DXCOLOR(1.f, 0.f, 0.f, 1.f);
 	m_vPos[5] = pVertex[5].vPos;
 
 	pVertex[6].vPos = { 1.f, -1.f, 1.f };
-	pVertex[6].dwColor = D3DXCOLOR(0.f, 1.f, 0.f, 1.f);
+	pVertex[6].dwColor = D3DXCOLOR(1.f, 0.f, 0.f, 1.f);
 	m_vPos[6] = pVertex[6].vPos;
 
 	pVertex[7].vPos = { -1.f, -1.f, 1.f };
-	pVertex[7].dwColor = D3DXCOLOR(0.f, 1.f, 0.f, 1.f);
+	pVertex[7].dwColor = D3DXCOLOR(1.f, 0.f, 0.f, 1.f);
 	m_vPos[7] = pVertex[7].vPos;
 
 	m_pVB->Unlock();
