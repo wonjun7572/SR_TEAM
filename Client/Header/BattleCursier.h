@@ -25,6 +25,8 @@ public:
 		m_vAngle = vAngle;
 		m_pTransform->Set_Pos(vPos.x, vPos.y, vPos.z);
 	}
+	void			Random(void);
+	void			Set_Speed(_float fSpeed) { m_fSpeed = fSpeed; }
 
 private:
 	HRESULT			Build(void);
@@ -34,6 +36,7 @@ private:
 	_vec3			m_vAngle;
 
 	vector<_vec3>	m_ShufflePos;
+	vector<_uint>	m_ShuffleSpeed;
 
 	_float			m_fTimeDelta = 0.f;
 	_bool			m_bFirst = true;
@@ -41,6 +44,8 @@ private:
 
 	CLayer*			pMyLayer;
 	_tchar*			m_RocketName;
+
+	_float			m_fSpeed;
 
 	list<_tchar*>	m_TcharList;
 

@@ -4,6 +4,7 @@
 #include "ImGuiMgr.h"
 #include "Logo.h"
 #include "PoolMgr.h"
+#include "FinalStage.h"
 
 USING(Engine)
 CMainApp::CMainApp()	
@@ -31,6 +32,16 @@ _int CMainApp::Update_MainApp(const _float & fTimeDelta)
 	Engine::SetUp_InputDev();
 
 	NULL_CHECK_RETURN(m_pManagementClass, -1);
+
+	if (Get_DIKeyState(DIK_Y))
+	{
+		Engine::CScene*			pScene = nullptr;
+
+		pScene = CFinalStage::Create(m_pGraphicDev);
+		NULL_CHECK_RETURN(pScene, E_FAIL);
+
+		FAILED_CHECK_RETURN(m_pManagementClass->Set_Scene(pScene), E_FAIL);
+	}
 
 	/*_float fX = Get_DIMouseMove(DIMS_X);
 	_float fY = Get_DIMouseMove(DIMS_Y);

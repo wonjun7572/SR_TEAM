@@ -47,7 +47,6 @@ private:	//	애니메이션 관련
 	UZISUPPORTWALKID	m_WALK;
 	UZISUPPORTATTACKID	m_ATTACK;
 	UZISUPPORTULTID		m_ULTI;
-	SUPPORTDROPID		m_DROP;
 
 public:
 	static CSupporter_Uzi* Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3& vPos, _tchar* Name);

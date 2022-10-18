@@ -19,7 +19,7 @@ HRESULT CFontMgr::Ready_Font(LPDIRECT3DDEVICE9 pGraphicDev, const _tchar * pFont
 	CMyFont*	pMyFont = Find_Font(pFontTag);
 
 	if (nullptr != pMyFont)
-		return E_FAIL;
+		return S_OK;
 
 	pMyFont = CMyFont::Create(pGraphicDev, pFontType, iWidth, iHeight, iWeight);
 	NULL_CHECK_RETURN(pMyFont, E_FAIL);

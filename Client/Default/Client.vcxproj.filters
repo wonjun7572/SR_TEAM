@@ -355,6 +355,9 @@
     <Filter Include="02. GameObject\01. For_Stage\16. Skill\Shield\DeffensiveMatrix">
       <UniqueIdentifier>{47ba5b1f-d677-4cdc-a5bd-26a960a33048}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. Scene\03. FinalStage">
+      <UniqueIdentifier>{2b97cc97-6ed0-4416-8304-de5fa1f27bae}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -804,6 +807,18 @@
     <ClInclude Include="..\Header\StaticField.h">
       <Filter>02. GameObject\01. For_Stage\16. Skill\StaticField</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\Veneer.h">
+      <Filter>99. Default\헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Supporter_Shotgun.h">
+      <Filter>02. GameObject\01. For_Stage\17. Supporter</Filter>
+    </ClInclude>
+    <ClInclude Include="Supporter_Sniper.h">
+      <Filter>02. GameObject\01. For_Stage\17. Supporter</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\FinalStage.h">
+      <Filter>01. Scene\03. FinalStage</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -1228,6 +1243,18 @@
     </ClCompile>
     <ClCompile Include="..\Code\StaticField.cpp">
       <Filter>02. GameObject\01. For_Stage\16. Skill\StaticField</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Veneer.cpp">
+      <Filter>99. Default\소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Supporter_Shotgun.cpp">
+      <Filter>02. GameObject\01. For_Stage\17. Supporter</Filter>
+    </ClCompile>
+    <ClCompile Include="Supporter_Sniper.cpp">
+      <Filter>02. GameObject\01. For_Stage\17. Supporter</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\FinalStage.cpp">
+      <Filter>01. Scene\03. FinalStage</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
