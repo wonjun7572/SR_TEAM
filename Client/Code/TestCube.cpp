@@ -88,42 +88,16 @@ _int CTestCube::Update_Object(const _float& fTimeDelta)
 
 void CTestCube::Render_Object()
 {
-	//빛표현 블랜딩
-	//		m_pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ONE);
-	//		m_pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+	if (m_bWireFrame)
+		m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 
-	//간단한 그림자
-	//m_pGraphicDev->SetRenderState(D3DRS_BLENDOP, D3DBLENDOP_REVSUBTRACT);
-	//m_pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
-	//m_pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransCom->Get_WorldMatrixPointer());
+	m_pTextureCom->Set_Texture(m_iTexIndex);
+	FAILED_CHECK_RETURN(Set_Material(), );
+	m_pBufferCom->Render_Buffer();
 
-	//곱셈합성 스킬뷰에 쓰면 좋을듯
-	//m_pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_SRCCOLOR);
-	//m_pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_ZERO);
-
-	//제곱합성 밝은색은 그대로, 어두운색은 더 어둡게 ( 보스전 방 꾸미는 데 쓰면 좋을듯)
-	//m_pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_DESTCOLOR);
-	//m_pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_ZERO);
-
-	//네거티브, 포지티브 합성 (검<->흰)
-	//m_pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ZERO);
-	//m_pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_INVDESTCOLOR);
-
-	//불투명
-	//m_pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ZERO);
-	//m_pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_ONE);
-	//if(! (dynamic_cast<CBaseMapping*>(Engine::Get_GameObject(STAGE_MAPPING, L"BaseMapping"))->Get_Worldmap()))
-	{
-		if (m_bWireFrame)
-			m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
-
-		m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransCom->Get_WorldMatrixPointer());
-		m_pTextureCom->Set_Texture(m_iTexIndex);
-		m_pBufferCom->Render_Buffer();
-
-		if (m_bWireFrame)
-			m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
-	}
+	if (m_bWireFrame)
+		m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 }
 
 // 큐브를 선택 후 터레인 자리위에 올려 놓는 함수
@@ -154,7 +128,6 @@ void CTestCube::Update_NullCheck()
 		m_pMonsterParticle = dynamic_cast<CMonsterParticle*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"MonsterParticle"));
 }
 
-
 HRESULT CTestCube::Interact(void)
 {
 	CGameObject*		pGameObject = nullptr;
@@ -165,9 +138,6 @@ HRESULT CTestCube::Interact(void)
 	if (!m_pProjectileParicle)
 		m_pProjectileParicle = dynamic_cast<CProjectileParticle*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"ProjectileParticle"));
 	
-	
-
-
 	_vec3		vPlayerPos;
 	_vec3		vPos;
 	_vec3		vDir;
@@ -335,6 +305,22 @@ HRESULT CTestCube::Add_Component()
 	pComponent = m_pHitBox = dynamic_cast<CHitBox*>(Clone_Proto(HITBOX_COMP));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ HITBOX_COMP, pComponent });
+
+	return S_OK;
+}
+
+HRESULT CTestCube::Set_Material()
+{
+	D3DMATERIAL9 Material;
+	ZeroMemory(&Material, sizeof(D3DMATERIAL9));
+
+	Material.Diffuse = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+	Material.Specular = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+	Material.Ambient = D3DXCOLOR(0.2f, 0.2f, 0.2f, 1.f);
+	Material.Emissive = D3DXCOLOR(0.f, 0.f, 0.f, 1.f);
+	Material.Power = 0.f;
+
+	m_pGraphicDev->SetMaterial(&Material);
 
 	return S_OK;
 }

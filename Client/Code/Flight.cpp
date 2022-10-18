@@ -157,6 +157,22 @@ HRESULT CFlight::Add_Component(void)
 	return S_OK;
 }
 
+HRESULT CFlight::Set_Material()
+{
+	D3DMATERIAL9 Material;
+	ZeroMemory(&Material, sizeof(D3DMATERIAL9));
+
+	Material.Diffuse = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+	Material.Specular = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+	Material.Ambient = D3DXCOLOR(0.1f, 0.1f, 0.1f, 1.f);
+	Material.Emissive = D3DXCOLOR(0.f, 0.f, 0.f, 1.f);
+	Material.Power = 0.f;
+
+	m_pGraphicDev->SetMaterial(&Material);
+
+	return S_OK;
+}
+
 HRESULT CFlight::Build(void)
 {
 	HANDLE      hFile = CreateFile(L"../../Data/Rocket/ROCKET_2.dat",      // 파일의 경로와 이름	
