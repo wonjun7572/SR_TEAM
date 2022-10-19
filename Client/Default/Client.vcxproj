@@ -190,6 +190,7 @@
     <ClInclude Include="..\Header\EveryParticle.h" />
     <ClInclude Include="..\Header\ExBullet.h" />
     <ClInclude Include="..\Header\Explosion.h" />
+    <ClInclude Include="..\Header\FinalStage.h" />
     <ClInclude Include="..\Header\FlameEffect.h" />
     <ClInclude Include="..\Header\Flight.h" />
     <ClInclude Include="..\Header\FlightBomb.h" />
@@ -351,6 +352,7 @@
     <ClCompile Include="..\Code\DynamicCamera.cpp" />
     <ClCompile Include="..\Code\ExBullet.cpp" />
     <ClCompile Include="..\Code\Explosion.cpp" />
+    <ClCompile Include="..\Code\FinalStage.cpp" />
     <ClCompile Include="..\Code\FlameEffect.cpp" />
     <ClCompile Include="..\Code\Flight.cpp" />
     <ClCompile Include="..\Code\FlightBomb.cpp" />

@@ -31,6 +31,29 @@ HRESULT CFlight::Ready_Object(const _vec3 & vPos, const _vec3 & vDir, _tchar * N
 	m_pTransform->Set_Pos(vPos.x, vPos.y, vPos.z);
 	m_pTransform->Static_Update();
 
+	_vec3 vShuffle;
+	m_ShufflePos.reserve(24);
+	for (float i = 10.f; i <= 110.f; i += 20.f)
+	{
+		vShuffle = { i, 20.f, -50.f };
+		m_ShufflePos.push_back(vShuffle);
+
+		vShuffle = { -50.f, 25.f, i };
+		m_ShufflePos.push_back(vShuffle);
+
+		vShuffle = { i, 30.f, 170.f };
+		m_ShufflePos.push_back(vShuffle);
+
+		vShuffle = { 170.f, 35.f, i };
+		m_ShufflePos.push_back(vShuffle);
+	}
+
+	m_ShuffleSpeed.reserve(10);
+	for (_uint i = 20; i < 30; ++i)
+	{
+		m_ShuffleSpeed.push_back(i);
+	}
+
 	return S_OK;
 }
 
@@ -47,6 +70,14 @@ _int CFlight::Update_Object(const _float & fTimeDelta)
 		FAILED_CHECK_RETURN(Build(), -1);
 	}
 
+	_vec3 vPos;
+	m_pTransform->Get_Info(INFO_POS, &vPos);
+
+	if (vPos.x > 170.f || vPos.x < -50.f || vPos.z > 170.f || vPos.z < -50.f)
+	{
+		Random();
+	}
+
 	if (!m_pBulletParicle)
 		m_pBulletParicle = dynamic_cast<CFlightBulletParticle*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"FlightBulletParticle"));
 
@@ -60,7 +91,9 @@ _int CFlight::Update_Object(const _float & fTimeDelta)
 		vDesination.y = 30.f;
 		vDesination.z = m_vDestination.z;
 
-		m_pTransform->Chase_Target(&vDesination, 15.f, fTimeDelta);
+		m_pTransform->Chase_Target(&vDesination, 5.f, fTimeDelta);
+
+		Look_Direction_Only_Y();
 
 		if (fabs(vPos.x - vDesination.x) < 1.f && fabs(vPos.z - vDesination.z) < 1.f)
 		{
@@ -101,22 +134,23 @@ _int CFlight::Update_Object(const _float & fTimeDelta)
 	}
 	else
 	{
-		_vec3 vPos;
-		m_pTransform->Get_Info(INFO_POS, &vPos);
-
 		_vec3 vLook;
 		m_pTransform->Get_Info(INFO_LOOK, &vLook);
 		D3DXVec3Normalize(&vLook, &vLook);
-		m_pTransform->Move_Pos(&(-vLook * 1.f * fTimeDelta));
-		for (auto& iter : *(pMyLayer->Get_GamePairPtr()))
-		{
-			CTransform*	BoxTransform = dynamic_cast<CTransform*>(iter.second->Get_Component(L"Proto_TransformCom", ID_STATIC));
-
-			if (0 == _tcscmp(iter.first, L"A_ROOT"))
-				BoxTransform->Set_Pos(vPos.x, vPos.y, vPos.z);
-		}
+		m_pTransform->Move_Pos(&(vLook * 10.f * fTimeDelta));
+		m_pTransform->Static_Update();
 	}
 	CGameObject::Update_Object(fTimeDelta);
+
+	m_pTransform->Get_Info(INFO_POS, &vPos);
+
+	for (auto& iter : *(pMyLayer->Get_GamePairPtr()))
+	{
+		CTransform*	BoxTransform = dynamic_cast<CTransform*>(iter.second->Get_Component(L"Proto_TransformCom", ID_STATIC));
+
+		if (0 == _tcscmp(iter.first, L"A_ROOT"))
+			BoxTransform->Set_Pos(vPos.x, vPos.y, vPos.z);
+	}
 
 	return 0;
 }
@@ -171,6 +205,46 @@ HRESULT CFlight::Set_Material()
 	m_pGraphicDev->SetMaterial(&Material);
 
 	return S_OK;
+}
+
+void CFlight::Random(void)
+{
+	random_shuffle(m_ShufflePos.begin(), m_ShufflePos.end());
+	random_shuffle(m_ShuffleSpeed.begin(), m_ShuffleSpeed.end());
+
+	_vec3 vAngle, vDir;
+
+	/*
+	谅>快	1	0	0	90
+	快>谅	-1	0	0	270
+	第>菊	0	0	1	0
+	菊>第	0	0	-1	180
+	*/
+
+	if (m_ShufflePos.front().z == -50.f)	//	第>菊
+	{
+		vAngle = { 0.f, D3DXToRadian(0.f) ,0.f };
+		vDir = { 0.f, 0.f, 1.f };
+	}
+	else if (m_ShufflePos.front().x == -50.f)	//	谅>快
+	{
+		vAngle = { 0.f, D3DXToRadian(90.f) ,0.f };
+		vDir = { 1.f, 0.f, 0.f };
+	}
+	else if (m_ShufflePos.front().z == 170.f)	//	菊>第
+	{
+		vAngle = { 0.f, D3DXToRadian(180.f) ,0.f };
+		vDir = { 0.f, 0.f, -1.f };
+	}
+	else if (m_ShufflePos.front().x == 170.f)	//	快>谅
+	{
+		vAngle = { 0.f, D3DXToRadian(270.f) ,0.f };
+		vDir = { -1.f, 0.f, 0.f };
+	}
+
+	Replace(m_ShufflePos.front(), vAngle, vDir);
+
+	Set_Speed(m_ShuffleSpeed.front());
 }
 
 HRESULT CFlight::Build(void)
@@ -374,6 +448,39 @@ void CFlight::Look_Direction()
 			CTransform* Transform = dynamic_cast<CTransform*>(iter.second->Get_Component(L"Proto_TransformCom", ID_STATIC));
 			Transform->Get_Angle(&vAngle);
 			Transform->Set_Angle(&_vec3(yaw, pitch, roll));
+		}
+	}
+}
+
+void CFlight::Look_Direction_Only_Y()
+{
+	_matrix matWorld;
+	m_pTransform->Get_WorldMatrix(&matWorld);
+
+	D3DXQUATERNION qRot;
+	D3DXMatrixDecompose(&_vec3(), &qRot, &_vec3(), &matWorld);
+
+	_float pitch, yaw, roll;
+
+	FLOAT sqw = qRot.w * qRot.w;
+	FLOAT sqx = qRot.x * qRot.x;
+	FLOAT sqy = qRot.y * qRot.y;
+	FLOAT sqz = qRot.z * qRot.z;
+
+	pitch = asinf(2.f * (qRot.w * qRot.x - qRot.y * qRot.z));
+	yaw = atan2f(2.0f * (qRot.x * qRot.z + qRot.w * qRot.y), (-sqx - sqy + sqz + sqw));
+	roll = atan2f(2.0f * (qRot.x * qRot.y + qRot.w * qRot.z), (-sqx + sqy - sqz + sqw));
+
+	list<pair<const _tchar*, CGameObject*>> ListBox = *(pMyLayer->Get_GamePairPtr());
+
+	for (auto& iter : ListBox)
+	{
+		if (0 == _tcscmp(iter.first, L"A_ROOT"))
+		{
+			_vec3 vAngle;
+			CTransform* Transform = dynamic_cast<CTransform*>(iter.second->Get_Component(L"Proto_TransformCom", ID_STATIC));
+			Transform->Get_Angle(&vAngle);
+			Transform->Set_Angle(&_vec3(yaw, 0.f, 0.f));
 		}
 	}
 }

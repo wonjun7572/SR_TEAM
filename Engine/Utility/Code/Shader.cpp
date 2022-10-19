@@ -29,6 +29,7 @@ void CShader::Begin_Shader(void)
 
 void CShader::End_Shader(void)
 {
+	m_pEffect->EndPass();
 	m_pEffect->End();
 }
 
