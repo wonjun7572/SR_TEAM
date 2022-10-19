@@ -5,6 +5,11 @@
 #include "CubePlayer.h"
 #include "Weapon.h"
 #include "TransAxisBox.h"
+#include "MonsterMapping.h"
+#include "PoolMgr.h"
+#include "KrakenBullet.h"
+static	_int m_iCnt = 0;
+
 CKrakenBoss::CKrakenBoss(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CGameObject(pGraphicDev)
 {
@@ -18,7 +23,7 @@ CKrakenBoss::~CKrakenBoss()
 HRESULT CKrakenBoss::Ready_Object(const _vec3 & vPos, _tchar * Name)
 {
 	m_tAbility = new KRAKENABILITY;
-	m_tAbility->fMaxHp = 500.f;
+	m_tAbility->fMaxHp = 20000.f;
 	m_tAbility->fCurrentHp = m_tAbility->fMaxHp;
 	m_tAbility->fDamage = 20.f;
 	m_tAbility->strObjTag = L"Kraken";
@@ -55,7 +60,13 @@ HRESULT CKrakenBoss::Ready_Object(const _vec3 & vPos, _tchar * Name)
 	m_pSphereTransCom->Set_Pos(vAnimationPos.x, vAnimationPos.y, vAnimationPos.z);
 	m_pSphereTransCom->Static_Update();
 
+	m_pSearchRange_TransCom->Set_Scale(&_vec3(30.f, 30.f, 30.f));
+	m_pSearchRange_TransCom->Set_Pos(vAnimationPos.x, vAnimationPos.y, vAnimationPos.z);
+	m_pSearchRange_TransCom->Static_Update();
 
+	m_pAttackRange_TransCom->Set_Scale(&_vec3(10.f, 10.f, 10.f));
+	m_pAttackRange_TransCom->Set_Pos(vAnimationPos.x, vAnimationPos.y, vAnimationPos.z);
+	m_pAttackRange_TransCom->Static_Update();
 
 	return S_OK;
 }
@@ -66,7 +77,7 @@ _int CKrakenBoss::Update_Object(const _float & fTimeDelta)
 	if (m_bDead)
 	{
 		m_pComboUI->KillCntPlus();
-
+		Monster_DeleteMapping();
 		return -1;
 	}
 
@@ -79,11 +90,25 @@ _int CKrakenBoss::Update_Object(const _float & fTimeDelta)
 		Engine::Get_Scene()->New_Layer(m_MonsterName);
 		pMyLayer = Engine::Get_Layer(m_MonsterName);
 		FAILED_CHECK_RETURN(Build(), -1);
+
+
+		/*Load_Animation(L"../../Data//.dat", 0);
+		Load_Animation(L"../../Data//.dat", 0);
+		Load_Animation(L"../../Data//.dat", 0);
+		Load_Animation(L"../../Data//.dat", 0);
+		Load_Animation(L"../../Data//.dat", 0);
+		Load_Animation(L"../../Data//.dat", 0);
+		Load_Animation(L"../../Data//.dat", 0);
+		Load_Animation(L"../../Data//.dat", 0);
+		Load_Animation(L"../../Data//.dat", 0);
+		Load_Animation(L"../../Data//.dat", 0);
+		Load_Animation(L"../../Data//.dat", 0);
+*/
 	}
 
 	Update_Pattern(fTimeDelta);
 
-
+	
 
 	CGameObject::Update_Object(fTimeDelta);
 	Add_RenderGroup(RENDER_NONALPHA, this);
@@ -93,9 +118,13 @@ _int CKrakenBoss::Update_Object(const _float & fTimeDelta)
 	_vec3 vMonsterPos;
 	m_pTransCom->Get_Info(INFO_POS, &vMonsterPos);
 	m_pHitBoxTransCom->Set_Pos(vMonsterPos.x, vMonsterPos.y, vMonsterPos.z);
-	m_pSphereTransCom->Set_Pos(vMonsterPos.x, vMonsterPos.y, vMonsterPos.z);
+
+
+	m_pSearchRange_TransCom->Set_Pos(vMonsterPos.x, 0.f, vMonsterPos.z);
+	m_pAttackRange_TransCom->Set_Pos(vMonsterPos.x, 0.f, vMonsterPos.z);
+
 	m_pTransCom->Get_Info(INFO_POS, &vUIPos);
-	m_pTransUICom->Set_Pos(vUIPos.x, vUIPos.y + 2.4f, vUIPos.z);
+	m_pTransUICom->Set_Pos(vUIPos.x, vUIPos.y + 5.f, vUIPos.z);
 	
 	
 	
@@ -104,7 +133,7 @@ _int CKrakenBoss::Update_Object(const _float & fTimeDelta)
 
 void CKrakenBoss::Render_Object(void)
 {
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransCom->Get_WorldMatrixPointer());
+	/*m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransCom->Get_WorldMatrixPointer());
 	m_pTextureCom->Set_Texture(11);
 	m_pBufferCom->Render_Buffer();
 
@@ -115,7 +144,7 @@ void CKrakenBoss::Render_Object(void)
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pSphereTransCom->Get_WorldMatrixPointer());
 
 	m_pSphereBufferCom->Render_Buffer();
-	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);*/
 
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransUICom->Get_WorldMatrixPointer());
 
@@ -126,8 +155,10 @@ void CKrakenBoss::Render_Object(void)
 
 void CKrakenBoss::LateUpdate_Object(void)
 {
+	Monster_Mapping();
 
 	Set_OnTerrain();
+	
 	if (m_tAbility->fCurrentHp <= 0.f)
 	{
 		m_pMonsterUI->Off_Switch();
@@ -142,19 +173,23 @@ void CKrakenBoss::LateUpdate_Object(void)
 	{
 		if (m_STATE == KRAKEN_WALK)
 		{
-
+			Walk_Animation_Run();
+			Run_Animation(30.f);
 		}
 		else if (m_STATE == KRAKEN_IDLE)
 		{
-
+			Idle_Animation_Run();
+			Run_Animation(30.f);
 		}
 		else if (m_STATE == KRAKEN_ATTACK)
 		{
-
+			Attack_Animation_Run();
+			Run_Animation(30.f);
 		}
 		else if (m_STATE == KRAKEN_SHOT)
 		{
-
+			Shot_Animation_Run();
+			Run_Animation(30.f);
 		}
 	}
 
@@ -181,7 +216,6 @@ void CKrakenBoss::Look_Direction(void)
 	yaw = atan2f(2.0f * (qRot.x * qRot.z + qRot.w * qRot.y), (-sqx - sqy + sqz + sqw));
 	roll = atan2f(2.0f * (qRot.x * qRot.y + qRot.w * qRot.z), (-sqx + sqy - sqz + sqw));
 
-
 	list<pair<const _tchar*, CGameObject*>> ListBox = *(pMyLayer->Get_GamePairPtr());
 
 	for (auto& iter : ListBox)
@@ -191,7 +225,7 @@ void CKrakenBoss::Look_Direction(void)
 			_vec3 vAngle;
 			CTransform* Transform = dynamic_cast<CTransform*>(iter.second->Get_Component(L"Proto_TransformCom", ID_STATIC));
 			Transform->Get_Angle(&vAngle);
-			Transform->Set_Angle(&_vec3(yaw, vAngle.y, vAngle.z));
+			Transform->Set_Angle(&_vec3(yaw, vAngle.x, vAngle.z));
 		}
 	}
 }
@@ -207,33 +241,47 @@ _int CKrakenBoss::Update_Pattern(_float fTimeDelta)
 	if (m_pComboUI == nullptr)
 		m_pComboUI = dynamic_cast<CComboUI*>(Engine::Get_GameObject(STAGE_UI, L"ComboUI"));
 
-
-
 	_float Hp = m_tAbility->fCurrentHp / m_tAbility->fMaxHp;
-	//rand함수를 통해서 or  체력별 패턴을 넣을것
-	//if(Hp >= 0.8)
+
+	_vec3 vPlayerPos;
+	m_pPlayerTransCom->Get_Info(INFO_POS, &vPlayerPos);
+	_vec3 vPlayerScale;
+	m_pPlayerTransCom->Get_Scale(&vPlayerScale);
+	_vec3 vScale;
+	m_pSphereTransCom->Get_Scale(&vScale);
+	_vec3 vPos;
+	m_pTransCom->Get_Info(INFO_POS, &vPos);
+	_vec3 vSearchScale;
+	_vec3 vAttackScale;
+	m_pSearchRange_TransCom->Get_Scale(&vSearchScale);
+	m_pAttackRange_TransCom->Get_Scale(&vAttackScale);
+
+	//D3DXVECTOR3		vDir{ 1.f, 0.f, 0.f };
+	//if (m_pCollision->Sphere_Collision(this->m_pSphereTransCom, m_pPlayerTransCom, vPlayerScale.x, vScale.x))
 	//{
-	//	m_STATE = KRAKEN_ATTACK;
-	//	//패턴 
-	//}
-	//else if (Hp >= 0.6f)
-	//{
-	//	m_STATE = KRAKEN_ATTACK;
-	//}
-	//else if (Hp >= 0.4f)
-	//{
-	//	m_STATE = KRAKEN_ATTACK;
-	//}
-	//else if (Hp >= 0.2f)
-	//{
-	//	m_STATE = KRAKEN_ATTACK;
-	//}
-	//else if (Hp <= 0.f)
-	//{
-	//	m_STATE = KRAKEN_ATTACK;
+	//	_matrix matRotY, matTrans, matWorld;
+	//	m_fFrame += fTimeDelta;
+
+	//	if (m_fFrame >= 2.f)
+	//	{
+	//		for (m_fFireAngle = 0.f; m_fFireAngle < 360.f; m_fFireAngle += 2)
+	//		{
+	//			D3DXMatrixRotationY(&matRotY, D3DXToRadian(-m_fFireAngle));
+	//			D3DXMatrixTranslation(&matTrans, vPos.x, 0.f, vPos.y);
+
+	//			m_pTransCom->Get_WorldMatrix(&matWorld);
+	//			matWorld = matRotY * matTrans;
+
+	//			D3DXVec3TransformNormal(&vDir, &vDir, &matWorld);
+
+	//			CPoolMgr::GetInstance()->Reuse_Obj(m_pGraphicDev, &vPos, &vDir, m_tAbility->fDamage);
+	//		}
+	//		m_fFrame = 0.f;
+	//	}
 	//}
 
-
+ShootInk();
+	
 	return 0;
 }
 
@@ -288,10 +336,55 @@ HRESULT CKrakenBoss::Add_Component(void)
 	NULL_CHECK_RETURN(m_pSphereBufferCom, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Sphere_TransCom", pComponent });
 
+
+	//공격 탐지범위
+
+	pComponent = m_pAttackRange_TransCom = dynamic_cast<CTransform*>(Clone_Proto(TRANSFORM_COMP));
+	NULL_CHECK_RETURN(m_pAttackRange_TransCom, E_FAIL);
+	m_mapComponent[ID_DYNAMIC].insert({ L"AttackRange" , pComponent });
+
+
+	pComponent = m_pSearchRange_TransCom = dynamic_cast<CTransform*>(Clone_Proto(TRANSFORM_COMP));
+	NULL_CHECK_RETURN(m_pSearchRange_TransCom, E_FAIL);
+	m_mapComponent[ID_DYNAMIC].insert({ L"SearchRange" , pComponent });
+	//
+
+
 	pComponent = m_pAnimationBox = dynamic_cast<CCubeCol*>(Clone_Proto(CUBECOL_COMP));
 	NULL_CHECK_RETURN(m_pSphereBufferCom, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ CUBECOL_COMP, pComponent });
 
+
+	return S_OK;
+}
+
+HRESULT CKrakenBoss::Monster_Mapping(void)
+{
+	_vec3		vPos;
+	m_pHitBoxTransCom->Get_Info(INFO_POS, &vPos);
+	if (!m_MappingInit)
+	{
+		CGameObject*	m_pMapMonster = CMonsterMapping::Create(m_pGraphicDev);
+		wsprintf(m_szCntName, L"");
+		const _tchar*	szNumbering = L"MapMonster_%d";
+		wsprintf(m_szCntName, szNumbering, m_iCnt);
+		Engine::Add_GameObject(STAGE_MAPPING, m_pMapMonster, m_szCntName);
+		m_listMonsterCnt.push_back(m_szCntName);
+
+		m_pMonsterMapping = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_MAPPING, m_szCntName, TRANSFORM_COMP, ID_DYNAMIC));
+		NULL_CHECK_RETURN(m_pMonsterMapping, E_FAIL);
+		++m_iCnt;
+		m_MappingInit = true;
+
+	}
+	m_pMonsterMapping->Set_Pos(vPos.x, vPos.y, vPos.z);
+	return S_OK;
+}
+
+
+HRESULT CKrakenBoss::Monster_DeleteMapping(void)
+{
+	Delete_GameObject(STAGE_MAPPING, m_szCntName);
 
 	return S_OK;
 }
@@ -314,12 +407,20 @@ CKrakenBoss * CKrakenBoss::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3 & v
 
 void CKrakenBoss::Free(void)
 {
+	//for (auto& iter : *(pMyLayer->Get_GamePairPtr()))
+	//{
+	//	iter.second->Kill_Obj();
+	//}
+
 	for (auto iter : m_TcharList)
 	{
 		Safe_Delete_Array(iter);
 	}
 
+	Safe_Delete_Array(m_szCntName);
 
+	m_listMonsterCnt.clear();
+	
 	CGameObject::Free();
 	Safe_Delete<KRAKENABILITY*>(m_tAbility);
 }
@@ -369,9 +470,26 @@ void CKrakenBoss::Hit_Check(_float _deltaTime)
 
 }
 
+void CKrakenBoss::ShootInk(void)
+{
+	
+
+
+	_vec3 vPos;
+	m_pTransCom->Get_Info(INFO_POS, &vPos);
+	CGameObject*	pGameObject = CKrakenBullet::Create(m_pGraphicDev, vPos, L"INK");
+	NULL_CHECK_RETURN(pGameObject, );
+	CLayer* pLayer = Get_Layer(STAGE_SKILL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), );
+
+
+
+
+}
+
 HRESULT CKrakenBoss::Build(void)
 {
-	HANDLE      hFile = CreateFile(L"../../Data/Kraken/KRAKEN_RELOAD10.dat",      // 파일의 경로와 이름	
+	HANDLE      hFile = CreateFile(L"../../Data/Kraken/KRAKEN_PARTLEG1.dat",      // 파일의 경로와 이름	
 		GENERIC_READ,         // 파일 접근 모드 (GENERIC_WRITE : 쓰기 전용, GENERIC_READ : 읽기 전용)
 		NULL,               // 공유 방식(파일이 열려있는 상태에서 다른 프로세스가 오픈할 때 허용할 것인가)    
 		NULL,               // 보안 속성(NULL을 지정하면 기본값 상태)

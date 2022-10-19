@@ -22,6 +22,9 @@ private:
 	void				Look_Direction(void);
 	virtual _int		Update_Pattern(_float fTimeDelta);
 	void				Hit_Check(_float _deltaTime);
+	void				ShootInk(void);
+
+
 	//애니메이션 관련
 private:
 	KRAKENSTATEID	m_STATE;
@@ -46,6 +49,8 @@ protected:
 	CTransform*			m_pSphereTransCom = nullptr;
 	CTransform*			m_pMonsterMapping = nullptr;
 	CTransform*			m_pPlayerTransCom = nullptr;
+	CTransform*			m_pSearchRange_TransCom = nullptr;
+	CTransform*			m_pAttackRange_TransCom = nullptr;
 	CTexture*			m_pTextureCom = nullptr;
 	CCubeTex*			m_pBufferCom = nullptr;
 	CSphereTex*			m_pSphereBufferCom = nullptr;
@@ -61,15 +66,23 @@ protected:
 	//기능관련 
 private:
 	HRESULT				Add_Component(void);
+	HRESULT				Monster_Mapping(void);
+	HRESULT				Monster_DeleteMapping(void);
+	
+private:
 	KRAKENABILITY*		m_tAbility;
 	_tchar*				m_MonsterName;
+	TCHAR*				m_szCntName = new TCHAR[64];
 	_bool				m_bFirst = true;
+	_bool				m_MappingInit = false;
 	list<_tchar*>		m_TcharList;
+	list<TCHAR*>		m_listMonsterCnt;
 	_float				m_AnimationTime = 0.f;
 	_float				m_fTimeDelta = 0.f;
 	_float				m_fUISwitchTime = 0.f;
+	_float				m_fFrame = 0.f;
+	_float				m_fFireAngle = 0.f;
 	_vec3				vUIPos;
-
 public:
 	static CKrakenBoss*	Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3& vPos, _tchar* Name);
 	virtual void	Free(void);

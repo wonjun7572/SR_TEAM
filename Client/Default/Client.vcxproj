@@ -212,6 +212,8 @@
     <ClInclude Include="..\Header\HyperionStrike.h" />
     <ClInclude Include="..\Header\IceEffect.h" />
     <ClInclude Include="..\Header\Key.h" />
+    <ClInclude Include="..\Header\KrakenBullet.h" />
+    <ClInclude Include="..\Header\LoadingBar.h" />
     <ClInclude Include="..\Header\MiddleBoss.h" />
     <ClInclude Include="..\Header\ObjectCube.h" />
     <ClInclude Include="..\Header\Ping.h" />
@@ -374,6 +376,8 @@
     <ClCompile Include="..\Code\HyperionStrike.cpp" />
     <ClCompile Include="..\Code\IceEffect.cpp" />
     <ClCompile Include="..\Code\Key.cpp" />
+    <ClCompile Include="..\Code\KrakenBullet.cpp" />
+    <ClCompile Include="..\Code\LoadingBar.cpp" />
     <ClCompile Include="..\Code\MiddleBoss.cpp" />
     <ClCompile Include="..\Code\ObjectCube.cpp" />
     <ClCompile Include="..\Code\Ping.cpp" />
