@@ -1,5 +1,8 @@
 #pragma once
 
+// Shader Name
+#define RCTEX_SHADER	L"Proto_ShaderRect"
+#define CUBETEX_SHADER	L"Proto_ShaderCube"
 
 // 컴포넌트 이름
 #define RCTEX_COMP	    L"Proto_RcTexCom"
