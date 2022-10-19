@@ -95,7 +95,6 @@ CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 }
 
-
 CStage::~CStage()
 {
 }
@@ -107,8 +106,8 @@ HRESULT CStage::Ready_Scene(void)
 
 	CGameObject*		pGameObject = nullptr;
 
-	//_float fBGMSound = 1.f;
-	//PlayBGM(L"Track_01.mp3", fBGMSound);
+	_float fBGMSound = 1.f;
+	PlayBGM(L"Track_01.mp3", fBGMSound);
 
 	FAILED_CHECK_RETURN(Ready_Proto(), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Light(), E_FAIL);
@@ -951,7 +950,7 @@ HRESULT CStage::Ready_Light(void)
 	ZeroMemory(&Light, sizeof(D3DLIGHT9));
 
 	Light.Type = D3DLIGHT_DIRECTIONAL;
-	Light.Diffuse = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+	Light.Diffuse = D3DXCOLOR(0.2f, 0.2f, 0.2f, 1.f);
 	Light.Specular = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
 	Light.Ambient = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
 	Light.Direction = _vec3(0.f, -1.f, 0.f);
@@ -966,6 +965,44 @@ HRESULT CStage::Ready_Light(void)
 		Light.Phi =
 	*/
 	FAILED_CHECK_RETURN(Engine::Ready_Light(m_pGraphicDev, &Light, 0), E_FAIL);
+
+	D3DLIGHT9	Light2;
+	ZeroMemory(&Light2, sizeof(D3DLIGHT9));
+
+	Light2.Type = D3DLIGHT_POINT;
+	Light2.Position = _vec3(14.f, 0.6f, 10.f);
+	Light2.Range = 3.f;
+	Light2.Diffuse = D3DXCOLOR(0.5f, 0.5f, 0.5f, 0.5f);
+	Light2.Specular = D3DXCOLOR(0.5f, 0.5f, 0.5f, 0.5f);
+	Light2.Ambient = D3DXCOLOR(0.5f, 0.5f, 0.5f, 0.5f);
+	Light2.Direction = _vec3(1.f, -1.f, 0.f);
+
+	//Light.Falloff =
+	//Light.Attenuation0 =
+	//Light.Attenuation1 =
+	//Light.Attenuation2 =
+	//Light.Theta
+	//Light.Phi =	
+	FAILED_CHECK_RETURN(Engine::Ready_Light(m_pGraphicDev, &Light2, 1), E_FAIL);
+
+	D3DLIGHT9	Light3;
+	ZeroMemory(&Light3, sizeof(D3DLIGHT9));
+
+	Light3.Type = D3DLIGHT_POINT;
+	Light3.Position = _vec3(14.f, 0.6f, 10.f);
+	Light3.Range = 3.f;
+	Light3.Diffuse = D3DXCOLOR(0.5f, 0.5f, 0.5f, 0.5f);
+	Light3.Specular = D3DXCOLOR(0.5f, 0.5f, 0.5f, 0.5f);
+	Light3.Ambient = D3DXCOLOR(0.5f, 0.5f, 0.5f, 0.5f);
+	Light3.Direction = _vec3(1.f, -1.f, 0.f);
+
+	//Light.Falloff =
+	//Light.Attenuation0 =
+	//Light.Attenuation1 =
+	//Light.Attenuation2 =
+	//Light.Theta
+	//Light.Phi =	
+	FAILED_CHECK_RETURN(Engine::Ready_Light(m_pGraphicDev, &Light3, 2), E_FAIL);
 
 	return S_OK;
 }
