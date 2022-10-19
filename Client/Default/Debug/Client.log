@@ -1,4 +1,192 @@
-﻿  Ping.cpp
+﻿FXC : warning X4717: Effects deprecated for D3DCompiler_47
+  
+  compilation object save succeeded; see C:\Users\sam51\Desktop\SR_TEAM\Client\Bin\Shader_Rect.cso
+  stdafx.cpp
+cl : 명령줄 warning D9028: 최소 다시 빌드에 실패했습니다. 정상 빌드로 되돌립니다.
+  Alien.cpp
+  AnimationPlayer.cpp
+  CartridgeParticle.cpp
+c:\users\sam51\desktop\sr_team\client\code\cartridgeparticle.cpp(129): warning C4305: '인수': 'double'에서 'FLOAT'(으)로 잘립니다.
+c:\users\sam51\desktop\sr_team\client\code\cartridgeparticle.cpp(130): warning C4305: '인수': 'double'에서 'FLOAT'(으)로 잘립니다.
+c:\users\sam51\desktop\sr_team\client\code\cartridgeparticle.cpp(139): warning C4305: '인수': 'double'에서 'FLOAT'(으)로 잘립니다.
+c:\users\sam51\desktop\sr_team\client\code\cartridgeparticle.cpp(140): warning C4305: '인수': 'double'에서 'FLOAT'(으)로 잘립니다.
+c:\users\sam51\desktop\sr_team\client\code\cartridgeparticle.cpp(150): warning C4305: '인수': 'double'에서 'FLOAT'(으)로 잘립니다.
+  CubeParticle.cpp
+  DashCube.cpp
+  DeffensiveMatrix.cpp
+  BaseMapping.cpp
+  BattleCursier.cpp
+  BrownCloudEffect.cpp
+  BubbleEffect.cpp
+  Bullet.cpp
+  BulletParicle.cpp
+  BulletUI.cpp
+  ComboUI.cpp
+  CrossHeader.cpp
+  CubeArm.cpp
+  CubeBody.cpp
+  CubeFoot.cpp
+  CubeHand.cpp
+  CubeHead.cpp
+  코드를 생성하고 있습니다...
+  컴파일하고 있습니다...
+  CubeLeg.cpp
+  CubePlayer.cpp
+c:\users\sam51\desktop\sr_team\client\code\cubeplayer.cpp(204): warning C4244: '인수': 'Engine::_int'에서 'FLOAT'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\sam51\desktop\sr_team\client\code\cubeplayer.cpp(207): warning C4244: '인수': 'Engine::_int'에서 'FLOAT'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  CubeShop.cpp
+  DynamicCamera.cpp
+  ExBullet.cpp
+  Explosion.cpp
+  FlameEffect.cpp
+c:\users\sam51\desktop\sr_team\client\code\flameeffect.cpp(120): warning C4305: '인수': 'double'에서 'Engine::_float'(으)로 잘립니다.
+  Flight.cpp
+  FlightBomb.cpp
+  FlightBulletParticle.cpp
+  FlightCamera.cpp
+  FlightSpot.cpp
+  HyperionStrike.cpp
+  IceEffect.cpp
+  Key.cpp
+  MiddleBoss.cpp
+  ObjectCube.cpp
+  Ping.cpp
+  RcEffect.cpp
+  Shield.cpp
+  코드를 생성하고 있습니다...
+  컴파일하고 있습니다...
+  SparkEffect.cpp
+  ExitButton.cpp
+  FireMan.cpp
+  GetShotgun.cpp
+  GetSniper.cpp
+  GetUzi.cpp
+  GunUI.cpp
+  HealthPotion.cpp
+  HitBarUI.cpp
+  Illusioner.cpp
+  ImguiMgr.cpp
+  Inventory.cpp
+c:\users\sam51\desktop\sr_team\client\code\inventory.cpp(416): warning C4018: '>': signed 또는 unsigned가 일치하지 않습니다.
+  Item.cpp
+  ItemBox.cpp
+  ItemIcon.cpp
+  ItemParticle.cpp
+  LetterBox.cpp
+  Loading.cpp
+  Logo.cpp
+  LogoBilboard.cpp
+  코드를 생성하고 있습니다...
+  컴파일하고 있습니다...
+  LogoUI.cpp
+  Magma.cpp
+  MainApp.cpp
+  MaxPlusHp.cpp
+  Meteor.cpp
+  Monster.cpp
+  MonsterMapping.cpp
+  MonsterParticle.cpp
+  MonsterUI.cpp
+  ObtainBullet.cpp
+  ObtainDefense.cpp
+  OptionButton.cpp
+  PlayButton.cpp
+  PlayerHpUI.cpp
+  PlayerMapping.cpp
+  PlayerUI.cpp
+  PoolMgr.cpp
+  ProjectileParticle.cpp
+c:\users\sam51\desktop\sr_team\client\code\projectileparticle.cpp(73): warning C4035: 'CProjectileParticle::Update_Object': 반환 값이 없습니다.
+  Shop.cpp
+  Shotgun.cpp
+  코드를 생성하고 있습니다...
+  컴파일하고 있습니다...
+  ShotgunPart1.cpp
+  ShotgunPart2.cpp
+  ShotgunPart3.cpp
+  ShotgunPart4.cpp
+  Skeleton.cpp
+  SkyBox.cpp
+  Slime.cpp
+  Sniper.cpp
+  SniperPart1.cpp
+  SniperPart2.cpp
+  SniperPart3.cpp
+  SniperPart4.cpp
+  SpBullet.cpp
+  Stage.cpp
+  StaticCamera.cpp
+  RainbowCloudEffect.cpp
+  StaticField.cpp
+  Supporter.cpp
+  Supporter_Shotgun.cpp
+  Supporter_Uzi.cpp
+  코드를 생성하고 있습니다...
+  컴파일하고 있습니다...
+  TargetCube.cpp
+  Terrain.cpp
+c:\users\sam51\desktop\sr_team\client\code\terrain.cpp(72): warning C4101: 'expn' :참조되지 않은 지역 변수입니다.
+  Terret.cpp
+  TestCube.cpp
+  Thorn.cpp
+  ToolScene.cpp
+  TransAxisBox.cpp
+  Trap.cpp
+  TriggerFront.cpp
+c:\users\sam51\desktop\sr_team\client\code\triggerfront.cpp(43): warning C4244: '인수': 'int'에서 'FLOAT'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\sam51\desktop\sr_team\client\code\triggerfront.cpp(43): warning C4305: '인수': 'double'에서 'FLOAT'(으)로 잘립니다.
+c:\users\sam51\desktop\sr_team\client\code\triggerfront.cpp(115): warning C4244: '초기화 중': 'double'에서 'Engine::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\sam51\desktop\sr_team\client\code\triggerfront.cpp(120): warning C4305: '인수': 'double'에서 'FLOAT'(으)로 잘립니다.
+c:\users\sam51\desktop\sr_team\client\code\triggerfront.cpp(142): warning C4305: '인수': 'double'에서 'FLOAT'(으)로 잘립니다.
+c:\users\sam51\desktop\sr_team\client\code\triggerfront.cpp(143): warning C4305: '인수': 'double'에서 'FLOAT'(으)로 잘립니다.
+c:\users\sam51\desktop\sr_team\client\code\triggerfront.cpp(157): warning C4305: '인수': 'double'에서 'FLOAT'(으)로 잘립니다.
+c:\users\sam51\desktop\sr_team\client\code\triggerfront.cpp(158): warning C4305: '인수': 'double'에서 'FLOAT'(으)로 잘립니다.
+c:\users\sam51\desktop\sr_team\client\code\triggerfront.cpp(172): warning C4305: '인수': 'double'에서 'FLOAT'(으)로 잘립니다.
+c:\users\sam51\desktop\sr_team\client\code\triggerfront.cpp(173): warning C4305: '인수': 'double'에서 'FLOAT'(으)로 잘립니다.
+  TriggerParticle.cpp
+c:\users\sam51\desktop\sr_team\client\code\triggerparticle.cpp(33): warning C4244: '인수': 'int'에서 'FLOAT'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\sam51\desktop\sr_team\client\code\triggerparticle.cpp(106): warning C4244: '초기화 중': 'double'에서 'Engine::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\sam51\desktop\sr_team\client\code\triggerparticle.cpp(110): warning C4305: '인수': 'double'에서 'FLOAT'(으)로 잘립니다.
+  Uzi.cpp
+  UziPart1.cpp
+  UziPart2.cpp
+  UziPart3.cpp
+  UziPart4.cpp
+  UziPart5.cpp
+  Veneer.cpp
+  Wall.cpp
+  WallMapping.cpp
+  Weapon.cpp
+  코드를 생성하고 있습니다...
+  컴파일하고 있습니다...
+  WeaponUI.cpp
+  ShotParticle.cpp
+  Zombie.cpp
+  Client.cpp
+  PlayerDefenseUI.cpp
+  PlayerFaceUI.cpp
+  KrakenBoss.cpp
+  Supporter_Sniper.cpp
+  코드를 생성하고 있습니다...
+  SoundWave.cpp
+  LogoCamera.cpp
+  CloudEffect.cpp
+  코드를 생성하고 있습니다...
+  imgui_widgets.cpp
+  imgui_tables.cpp
+  imgui_impl_win32.cpp
+  imgui_impl_dx9.cpp
+  imgui_draw.cpp
+  imgui_demo.cpp
+  imgui.cpp
+  ImSequencer.cpp
+  ImGuizmo.cpp
+  ImGuiFileDialog.cpp
+  ImGuiFileBrowser.cpp
+  ImGradient.cpp
+  ImCurveEdit.cpp
+  GraphEditor.cpp
+  코드를 생성하고 있습니다...
      ../Bin\Client.lib 라이브러리 및 ../Bin\Client.exp 개체를 생성하고 있습니다.
   Client.vcxproj -> C:\Users\sam51\Desktop\SR_TEAM\Client\Default\../Bin\Client.exe
   Client.vcxproj -> ../Bin\Client.pdb (Full PDB)
