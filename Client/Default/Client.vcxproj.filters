@@ -1304,4 +1304,9 @@
       <Filter>99. Default\Imgui</Filter>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_Rect.hlsl">
+      <Filter>99. Default</Filter>
+    </FxCompile>
+  </ItemGroup>
 </Project>
