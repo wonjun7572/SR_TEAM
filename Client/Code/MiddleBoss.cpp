@@ -164,7 +164,7 @@ void CMiddleBoss::LateUpdate_Object(void)
 			if (m_PATTERN == MIDDLEBOSS_SKILL_NORMALATTACK)
 			{
 				NormalAttack_Animation_Run();
-
+				PlaySoundW(L"shambler_attack_1.wav", SOUND_EFFECT, 1.f);
 				if (m_NORMALATTACK == MIDDLEBOSS_NORMALATTACK_1 || m_NORMALATTACK == MIDDLEBOSS_NORMALATTACK_3)
 					Run_Animation(5.f);
 				if (m_NORMALATTACK == MIDDLEBOSS_NORMALATTACK_2 || m_NORMALATTACK == MIDDLEBOSS_NORMALATTACK_4)
@@ -172,11 +172,13 @@ void CMiddleBoss::LateUpdate_Object(void)
 			}
 			else if (m_PATTERN == MIDDLEBOSS_SKILL_CRASH)
 			{
+				PlaySoundW(L"shambler_attack_2.wav", SOUND_EFFECT, 1.f);
 				Bombing_Animation_Run();
 				Run_Animation(10.f);
 			}
 			else if (m_PATTERN == MIDDLEBOSS_SKILL_BOMBING)
 			{
+				PlaySoundW(L"shambler_attack_3.wav", SOUND_EFFECT, 1.f);
 				Bombing_Animation_Run();
 				if (m_BOMBING == MIDDLEBOSS_BOMBING_3)
 					Run_Animation(200.f);
