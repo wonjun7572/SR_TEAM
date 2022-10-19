@@ -91,7 +91,9 @@ _int CFlight::Update_Object(const _float & fTimeDelta)
 		vDesination.y = 30.f;
 		vDesination.z = m_vDestination.z;
 
-		m_pTransform->Chase_Target(&vDesination, 15.f, fTimeDelta);
+		m_pTransform->Chase_Target(&vDesination, 5.f, fTimeDelta);
+
+		Look_Direction_Only_Y();
 
 		if (fabs(vPos.x - vDesination.x) < 1.f && fabs(vPos.z - vDesination.z) < 1.f)
 		{
@@ -446,6 +448,39 @@ void CFlight::Look_Direction()
 			CTransform* Transform = dynamic_cast<CTransform*>(iter.second->Get_Component(L"Proto_TransformCom", ID_STATIC));
 			Transform->Get_Angle(&vAngle);
 			Transform->Set_Angle(&_vec3(yaw, pitch, roll));
+		}
+	}
+}
+
+void CFlight::Look_Direction_Only_Y()
+{
+	_matrix matWorld;
+	m_pTransform->Get_WorldMatrix(&matWorld);
+
+	D3DXQUATERNION qRot;
+	D3DXMatrixDecompose(&_vec3(), &qRot, &_vec3(), &matWorld);
+
+	_float pitch, yaw, roll;
+
+	FLOAT sqw = qRot.w * qRot.w;
+	FLOAT sqx = qRot.x * qRot.x;
+	FLOAT sqy = qRot.y * qRot.y;
+	FLOAT sqz = qRot.z * qRot.z;
+
+	pitch = asinf(2.f * (qRot.w * qRot.x - qRot.y * qRot.z));
+	yaw = atan2f(2.0f * (qRot.x * qRot.z + qRot.w * qRot.y), (-sqx - sqy + sqz + sqw));
+	roll = atan2f(2.0f * (qRot.x * qRot.y + qRot.w * qRot.z), (-sqx + sqy - sqz + sqw));
+
+	list<pair<const _tchar*, CGameObject*>> ListBox = *(pMyLayer->Get_GamePairPtr());
+
+	for (auto& iter : ListBox)
+	{
+		if (0 == _tcscmp(iter.first, L"A_ROOT"))
+		{
+			_vec3 vAngle;
+			CTransform* Transform = dynamic_cast<CTransform*>(iter.second->Get_Component(L"Proto_TransformCom", ID_STATIC));
+			Transform->Get_Angle(&vAngle);
+			Transform->Set_Angle(&_vec3(yaw, 0.f, 0.f));
 		}
 	}
 }

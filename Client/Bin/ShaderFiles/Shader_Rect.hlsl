@@ -47,7 +47,12 @@ struct PS_OUT
 
 PS_OUT PS_MAIN(PS_IN in) : COLOR0	//	반환값 방식2
 {
+	PS_OUT Out = (PS_OUT)0;
 
+	Out.vColor.r = 1.f;
+	Out.vColor.a = 0.2f;
+
+	return Out;
 }
 
 //vector PS_MAIN(PS_IN in) : COLOR0

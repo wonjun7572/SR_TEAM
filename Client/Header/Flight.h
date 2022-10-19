@@ -62,7 +62,10 @@ public:
 private:
 	HRESULT			Build(void);
 	void			Key_Input(const _float& fTimeDelta);
+
 	void			Look_Direction();
+	void			Look_Direction_Only_Y();
+
 	void			Fire_Bullet();
 	void			Bombing();
 	void			Move(const _float& fTimeDelta);

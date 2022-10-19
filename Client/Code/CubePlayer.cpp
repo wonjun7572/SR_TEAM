@@ -788,9 +788,8 @@ void CCubePlayer::Fire_Bullet(void)
 			if (m_Weapon->Get_Ability()->fRemainBulletCnt > 0)
 			{
 				m_pBulletParicle->addParticle();
-				m_pShotParicle->addParticle();
+				//m_pShotParicle->addParticle();
 				
-			
 				m_Weapon->Set_MinusBullet();
 				m_Weapon->Set_Shoot(true);
 				m_fBulletTime = 0.f;
