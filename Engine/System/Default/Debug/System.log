@@ -1,105 +1,85 @@
-﻿빌드 시작: 2022-10-19 오후 9:47:54
-     1>2 노드의 "D:\GitHub\SR_TEAM\Engine\System\Default\System.vcxproj" 프로젝트(Build 대상)입니다.
-     1>Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"../Bin\System.dll" /INCREMENTAL /NOLOGO /LIBPATH:../../../Reference/Library d3d9.lib d3dx9.lib dxguid.lib dinput8.lib Utility.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"../Bin\System.pdb" /SUBSYSTEM:WINDOWS /LARGEADDRESSAWARE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"../Bin\System.lib" /MACHINE:X86 /DLL Debug\FontMgr.obj
-         Debug\Frame.obj
-         Debug\FrameMgr.obj
-         Debug\GraphicDev.obj
-         Debug\InputDev.obj
-         Debug\InputMgr.obj
-         Debug\MyFont.obj
-         Debug\Timer.obj
-         Debug\TimerMgr.obj
-            ../Bin\System.lib 라이브러리 및 ../Bin\System.exp 개체를 생성하고 있습니다.
-         System.vcxproj -> D:\GitHub\SR_TEAM\Engine\System\Default\../Bin\System.dll
-       PostBuildEvent:
-         cd /d D:\GitHub\SR_TEAM\
-         call CopySystem.bat
-         :VCEnd
-                 1개 파일이 복사되었습니다.
-                 1개 파일이 복사되었습니다.
-         .\Engine\Header\Calculator.h
-         .\Engine\Header\Camera.h
-         .\Engine\Header\Collision.h
-         .\Engine\Header\Component.h
-         .\Engine\Header\CubeCol.h
-         .\Engine\Header\CubeTex.h
-         .\Engine\Header\DynamicBuffer.h
-         .\Engine\Header\Engine_Enum.h
-         .\Engine\Header\Engine_Include.h
-         .\Engine\Header\Engine_Macro.h
-         .\Engine\Header\Engine_Struct.h
-         .\Engine\Header\Engine_Template.h
-         .\Engine\Header\Engine_Typedef.h
-         .\Engine\Header\Export_Function.h
-         .\Engine\Header\Export_System.h
-         .\Engine\Header\Export_System.inl
-         .\Engine\Header\Export_Utility.h
-         .\Engine\Header\Export_Utility.inl
-         .\Engine\Header\FlexibleAxisCube.h
-         .\Engine\Header\fmod.h
-         .\Engine\Header\fmod.hpp
-         .\Engine\Header\fmod_codec.h
-         .\Engine\Header\fmod_dsp.h
-         .\Engine\Header\fmod_errors.h
-         .\Engine\Header\fmod_memoryinfo.h
-         .\Engine\Header\fmod_output.h
-         .\Engine\Header\FontMgr.h
-         .\Engine\Header\Frame.h
-         .\Engine\Header\FrameMgr.h
-         .\Engine\Header\FrustumCullMgr.h
-         .\Engine\Header\GameObject.h
-         .\Engine\Header\GraphicDev.h
-         .\Engine\Header\Hitbox.h
-         .\Engine\Header\InputDev.h
-         .\Engine\Header\InputMgr.h
-         .\Engine\Header\Interface.h
-         .\Engine\Header\Layer.h
-         .\Engine\Header\Light.h
-         .\Engine\Header\LightMgr.h
-         .\Engine\Header\Management.h
-         .\Engine\Header\MyFont.h
-         .\Engine\Header\ProtoMgr.h
-         .\Engine\Header\PSystem.h
-         .\Engine\Header\Quarternion.h
-         .\Engine\Header\RcCol.h
-         .\Engine\Header\RcRD.h
-         .\Engine\Header\RcTex.h
-         .\Engine\Header\Renderer.h
-         .\Engine\Header\Scene.h
-         .\Engine\Header\Shader.h
-         .\Engine\Header\SoundMgr.h
-         .\Engine\Header\SphereTex.h
-         .\Engine\Header\stb_connected_components.h
-         .\Engine\Header\stb_c_lexer.h
-         .\Engine\Header\stb_divide.h
-         .\Engine\Header\stb_ds.h
-         .\Engine\Header\stb_dxt.h
-         .\Engine\Header\stb_easy_font.h
-         .\Engine\Header\stb_herringbone_wang_tile.h
-         .\Engine\Header\stb_hexwave.h
-         .\Engine\Header\stb_image.h
-         .\Engine\Header\stb_image_resize.h
-         .\Engine\Header\stb_image_write.h
-         .\Engine\Header\stb_include.h
-         .\Engine\Header\stb_leakcheck.h
-         .\Engine\Header\stb_perlin.h
-         .\Engine\Header\stb_rect_pack.h
-         .\Engine\Header\stb_sprintf.h
-         .\Engine\Header\stb_textedit.h
-         .\Engine\Header\stb_tilemap_editor.h
-         .\Engine\Header\stb_truetype.h
-         .\Engine\Header\stb_voxel_render.h
-         .\Engine\Header\TerrainTex.h
-         .\Engine\Header\Texture.h
-         .\Engine\Header\Timer.h
-         .\Engine\Header\TimerMgr.h
-         .\Engine\Header\Transform.h
-         .\Engine\Header\TriCol.h
-         .\Engine\Header\VIBuffer.h
-                79개 파일이 복사되었습니다.
-     1>"D:\GitHub\SR_TEAM\Engine\System\Default\System.vcxproj" 프로젝트를 빌드했습니다(Build 대상).
-
-빌드했습니다.
-
-경과 시간: 00:00:01.12
+﻿     ../Bin\System.lib 라이브러리 및 ../Bin\System.exp 개체를 생성하고 있습니다.
+  System.vcxproj -> C:\Users\beoms\OneDrive\문서\GitHub\SR_TEAM\Engine\System\Default\../Bin\System.dll
+  System.vcxproj -> ../Bin\System.pdb (Full PDB)
+          1개 파일이 복사되었습니다.
+          1개 파일이 복사되었습니다.
+  .\Engine\Header\Calculator.h
+  .\Engine\Header\Camera.h
+  .\Engine\Header\Collision.h
+  .\Engine\Header\Component.h
+  .\Engine\Header\CubeCol.h
+  .\Engine\Header\CubeTex.h
+  .\Engine\Header\DynamicBuffer.h
+  .\Engine\Header\Engine_Enum.h
+  .\Engine\Header\Engine_Include.h
+  .\Engine\Header\Engine_Macro.h
+  .\Engine\Header\Engine_Struct.h
+  .\Engine\Header\Engine_Template.h
+  .\Engine\Header\Engine_Typedef.h
+  .\Engine\Header\Export_Function.h
+  .\Engine\Header\Export_System.h
+  .\Engine\Header\Export_System.inl
+  .\Engine\Header\Export_Utility.h
+  .\Engine\Header\Export_Utility.inl
+  .\Engine\Header\FlexibleAxisCube.h
+  .\Engine\Header\fmod.h
+  .\Engine\Header\fmod.hpp
+  .\Engine\Header\fmod_codec.h
+  .\Engine\Header\fmod_dsp.h
+  .\Engine\Header\fmod_errors.h
+  .\Engine\Header\fmod_memoryinfo.h
+  .\Engine\Header\fmod_output.h
+  .\Engine\Header\FontMgr.h
+  .\Engine\Header\Frame.h
+  .\Engine\Header\FrameMgr.h
+  .\Engine\Header\FrustumCullMgr.h
+  .\Engine\Header\GameObject.h
+  .\Engine\Header\GraphicDev.h
+  .\Engine\Header\Hitbox.h
+  .\Engine\Header\InputDev.h
+  .\Engine\Header\InputMgr.h
+  .\Engine\Header\Interface.h
+  .\Engine\Header\Layer.h
+  .\Engine\Header\Light.h
+  .\Engine\Header\LightMgr.h
+  .\Engine\Header\Management.h
+  .\Engine\Header\MyFont.h
+  .\Engine\Header\ProtoMgr.h
+  .\Engine\Header\PSystem.h
+  .\Engine\Header\Quarternion.h
+  .\Engine\Header\RcCol.h
+  .\Engine\Header\RcRD.h
+  .\Engine\Header\RcTex.h
+  .\Engine\Header\Renderer.h
+  .\Engine\Header\Scene.h
+  .\Engine\Header\Shader.h
+  .\Engine\Header\SoundMgr.h
+  .\Engine\Header\SphereTex.h
+  .\Engine\Header\stb_connected_components.h
+  .\Engine\Header\stb_c_lexer.h
+  .\Engine\Header\stb_divide.h
+  .\Engine\Header\stb_ds.h
+  .\Engine\Header\stb_dxt.h
+  .\Engine\Header\stb_easy_font.h
+  .\Engine\Header\stb_herringbone_wang_tile.h
+  .\Engine\Header\stb_hexwave.h
+  .\Engine\Header\stb_image.h
+  .\Engine\Header\stb_image_resize.h
+  .\Engine\Header\stb_image_write.h
+  .\Engine\Header\stb_include.h
+  .\Engine\Header\stb_leakcheck.h
+  .\Engine\Header\stb_perlin.h
+  .\Engine\Header\stb_rect_pack.h
+  .\Engine\Header\stb_sprintf.h
+  .\Engine\Header\stb_textedit.h
+  .\Engine\Header\stb_tilemap_editor.h
+  .\Engine\Header\stb_truetype.h
+  .\Engine\Header\stb_voxel_render.h
+  .\Engine\Header\TerrainTex.h
+  .\Engine\Header\Texture.h
+  .\Engine\Header\Timer.h
+  .\Engine\Header\TimerMgr.h
+  .\Engine\Header\Transform.h
+  .\Engine\Header\TriCol.h
+  .\Engine\Header\VIBuffer.h
+         79개 파일이 복사되었습니다.

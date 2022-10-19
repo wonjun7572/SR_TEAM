@@ -11,6 +11,7 @@
 #include "OptionButton.h"
 #include "LogoUI.h"
 #include "ExitButton.h"
+#include "LoadingBar.h"
 
 CLogo::CLogo(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CScene(pGraphicDev)
@@ -41,6 +42,19 @@ Engine::_int CLogo::Update_Scene(const _float& fTimeDelta)
 {
 	_int iResult = Engine::CScene::Update_Scene(fTimeDelta);
 
+	m_Min = (_float)m_pLoading->Get_CurPercentage();
+	m_Max = (_float)m_pLoading->Get_MaxPercentage();
+
+	if (m_pLoadingBar == nullptr)
+		m_pLoadingBar = dynamic_cast<CLoadingBar*>(Engine::Get_GameObject(L"Ready_Layer_UI", L"LoadingBar"));
+
+	if (m_pLoadingBar != nullptr)
+	{
+		dynamic_cast<CLoadingBar*>(m_pLoadingBar)->Set_Min(m_Min);
+		dynamic_cast<CLoadingBar*>(m_pLoadingBar)->Set_Max(m_Max);
+
+	}
+
 	if (m_pLoading->Get_Finish())
 	{
 		if (m_PlayButton->Get_MouseCheck())
@@ -67,6 +81,16 @@ Engine::_int CLogo::Update_Scene(const _float& fTimeDelta)
 
 void CLogo::LateUpdate_Scene(void)
 {
+
+
+	if (m_pLoadingBar == nullptr)
+		m_pLoadingBar = dynamic_cast<CLoadingBar*>(Engine::Get_GameObject(L"Ready_Layer_UI", L"LoadingBar"));
+	if (m_Max = m_Min)
+	{
+		m_pLoadingBar->Power_Off();
+		m_pLoadingBar->Kill_Obj();
+
+	}
 	Engine::CScene::LateUpdate_Scene();
 }
 
@@ -82,7 +106,7 @@ HRESULT CLogo::Ready_Layer_Environment(const _tchar * pLayerTag)
 
 	CGameObject*      pGameObject = nullptr;
 
-	pGameObject = CLogoCamera::Create(m_pGraphicDev, &_vec3(0.f, 10.f, -20.f), &_vec3(0.f, 10.f, 0.f), &_vec3(0.f, 1.f, 0.f));
+	pGameObject = CLogoCamera::Create(m_pGraphicDev, &_vec3(45.f, 10.f, 55.f), &_vec3(45.f, 0.f, 45.f), &_vec3(0.f, 1.f, 0.f));
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"DynamicCamera", pGameObject), E_FAIL);
 
@@ -97,7 +121,7 @@ HRESULT CLogo::Ready_Layer_Environment(const _tchar * pLayerTag)
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"SkyBox", pGameObject), E_FAIL);
 
 	//Billboard
-	pGameObject = CLogoBilboard::Create(m_pGraphicDev, _vec3(15.f, 1.f, 15.f));
+	pGameObject = CLogoBilboard::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"LogoBilboard", pGameObject), E_FAIL);
 
@@ -131,6 +155,13 @@ HRESULT CLogo::Ready_Layer_UI(const _tchar * pLayerTag)
 	m_ExitButton = dynamic_cast<CExitButton*>(pGameObject = CExitButton::Create(m_pGraphicDev));
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"ExitButton", pGameObject), E_FAIL);
+
+	//LoadingBar
+	m_pLoadingBar = dynamic_cast<CLoadingBar*>(pGameObject = CLoadingBar::Create(m_pGraphicDev));
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"LoadingBar", pGameObject), E_FAIL);
+
+
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
@@ -187,6 +218,18 @@ HRESULT CLogo::Ready_Proto(void)
 {
 	{
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(RCTEX_COMP, CRcTex::Create(m_pGraphicDev)), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_LoadingBar", CRcTex::Create(m_pGraphicDev)), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_HudLoading", CRcTex::Create(m_pGraphicDev)), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_MemorialRC", CRcTex::Create(m_pGraphicDev)), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_AnubisRC", CRcTex::Create(m_pGraphicDev)), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_MageRC", CRcTex::Create(m_pGraphicDev)), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_TreeRC", CRcTex::Create(m_pGraphicDev)), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_SocerRC", CRcTex::Create(m_pGraphicDev)), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_NewRC", CRcTex::Create(m_pGraphicDev)), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_GlcierRC", CRcTex::Create(m_pGraphicDev)), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_ProRC", CRcTex::Create(m_pGraphicDev)), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_HandRC", CRcTex::Create(m_pGraphicDev)), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_EgyptRC", CRcTex::Create(m_pGraphicDev)), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(TRANSFORM_COMP, CTransform::Create(m_pGraphicDev)), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(CUBETEX_COMP, CCubeTex::Create(m_pGraphicDev)), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(TERRAINTEX_COMP, CTerrainTex::Create(m_pGraphicDev, VTXCNTX, VTXCNTZ, VTXITV)), E_FAIL);
@@ -207,10 +250,27 @@ HRESULT CLogo::Ready_Proto(void)
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_ButtonPlayTexture", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/UI/MenuUI/UI%d.png", TEX_NORMAL, 2)), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_ExitButton", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/UI/MenuUI/UI%d.png", TEX_NORMAL, 2)), E_FAIL);
 	}
+	{
+
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_HudLoadinga", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/UI/LoadingUI/perk_selected.png", TEX_NORMAL)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_ReadyLoading", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/UI/LoadingUI/perk_unlocked.png", TEX_NORMAL)), E_FAIL);
+
+	}
+
 
 	//Menu Bilboard
 	{
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_LogoBil", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Texture2D/amidevil.png", TEX_NORMAL)), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_Memorial", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Texture2D/memorial_broken0001.png", TEX_NORMAL)), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_Anubis", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Texture2D/anubis_attack.png", TEX_NORMAL)), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_Mage", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Texture2D/mage_attack0000.png", TEX_NORMAL)), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_Tree", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Texture2D/tex_forest_dead.png", TEX_NORMAL)), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_Socer", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Texture2D/sorcererboss_damage_first0003.png", TEX_NORMAL)), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_New", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Texture2D/newshambler_bash0010.png", TEX_NORMAL)), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_Glcier", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Texture2D/glacier_hurt_idle.png", TEX_NORMAL)), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_Pro", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Texture2D/proteus.png", TEX_NORMAL)), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_Hand", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Texture2D/proteus.png", TEX_NORMAL)), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_Egypt", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Texture2D/texture_egypt_palmtree_1.png", TEX_NORMAL)), E_FAIL);
 	}
 
 	return S_OK;

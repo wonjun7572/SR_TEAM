@@ -1,5 +1,5 @@
 #pragma once
-#include "C:\Users\beoms\OneDrive\¹®¼­\GitHub\SR_TEAM\Reference\Header\GameObject.h"
+#include "GameObject.h"
 #include "Engine_Include.h"
 BEGIN(Engine)
 
@@ -17,41 +17,53 @@ class CLoadingBar :
 	public CGameObject
 {
 public:
-public:
-	explicit CLoadingBar(LPDIRECT3DDEVICE9 pGraphicDev, wstring wstrTex, _vec3 vPos, _float fScale, _int iPivot, _float fLoad);
+	explicit CLoadingBar(LPDIRECT3DDEVICE9 pGraphicDev);
 	virtual ~CLoadingBar(void);
-public:
-	void     Set_Load(const float& fLoad);
+
 public:
 	virtual HRESULT Ready_Object() override;
 	virtual _int Update_Object(const _float& fTimeDelta) override;
+	virtual		void		LateUpdate_Object(void) override;
 	virtual void Render_Object(void) override;
 
 private:
 	HRESULT		Add_Component(void);
-	void		CalculateTransform();
-	void		SetPivot();
-	void		SetScale();
-	void		SetPos();
-
-private:
-	Engine::CRcTex*			m_pBufferCom = nullptr;
-	Engine::CTexture*		m_pTextureCom = nullptr;
-	Engine::CRenderer*		m_pRendererCom = nullptr;
-	Engine::CCalculator*	m_pCalculatorCom = nullptr;
-
-	wstring					m_wstrTexture = L"";
-	_matrix					m_MatWorld;
-	_matrix					m_MatView;
-	_vec3					m_vPos;
-	_int					m_iPivot;
-	_float					m_fScale;
-	_float                  m_fLoad;
+	void		Begin_OrthoProj();
+	void		End_OrthoProj();
+	void		Begin_HudOrthoProj();
+	void		End_HudOrthoProj();
 
 public:
-	static CLoadingBar*		Create(LPDIRECT3DDEVICE9 pGraphicDev, wstring wstrTex, _vec3 vPos, _float fScale = 1.0f, _int iPivot = 3, _float Load = 0.f);
+	void		Set_Min(_float Min) {m_fMin = Min; }
+	void		Set_Max(_float Max) { m_fMax = Max; }
+	void		Power_On() { m_bPower = true; }
+	void		Power_Off() { m_bPower = false; }
 
 private:
-	virtual void Free(void) override;
+	CRcTex*			m_pBufferUICom = nullptr;
+	CTransform*		m_pUITransCom = nullptr;
+	CTexture*		m_pUITextureCom = nullptr;
+	
+
+	CRcTex*			m_pHUDBufferCom = nullptr;
+	CTransform*		m_pHUDTransCom = nullptr;
+	CTexture*		m_pHUDTextureCom = nullptr;
+
+
+	_matrix	m_matWorld;
+	_matrix m_matView;
+	_matrix m_matProj;
+
+
+	_float  m_fX, m_fY, m_fSizeX, m_fSizeY;
+	_float  m_fSizeHUDX, m_fSizeHUDY;
+
+	_float	m_fMin = 0;
+	_float	m_fMax = 0;
+	_bool	m_bPower = false;
+
+public:
+	static CLoadingBar*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	virtual void Free(void);
 };
 

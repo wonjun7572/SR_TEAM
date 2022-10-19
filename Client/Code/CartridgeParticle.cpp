@@ -126,7 +126,7 @@ void CCartridgeParticle::resetParticle(ATTRIBUTE * attribute)
 		D3DXVECTOR3 vPos;
 		pTransform->Get_Info(INFO_POS, &vPos);
 		
-		attribute->vPos = vPos - ((vRand)*0.05);
+		attribute->vPos = vPos - ((vRand)*0.05f);
 		attribute->vVelocity = m_vDir* 1.f + ((vRand)*0.05);
 	}
 	else if (dynamic_cast<CCubePlayer*>(pPlayer)->Get_Weapon() == dynamic_cast<CWeapon*>(Engine::Get_GameObject(STAGE_GUN, L"SHOTGUN")))
@@ -147,7 +147,7 @@ void CCartridgeParticle::resetParticle(ATTRIBUTE * attribute)
 		D3DXVECTOR3 vPos;
 		pTransform->Get_Info(INFO_POS, &vPos);
 
-		attribute->vPos = vPos - ((vRand)*0.05);
+		attribute->vPos = vPos - ((vRand)*0.05f);
 	}
 }
 
