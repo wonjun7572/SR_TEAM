@@ -1,4 +1,195 @@
-﻿  FinalStage.cpp
+﻿FXC : warning X4717: Effects deprecated for D3DCompiler_47
+  
+  compilation object save succeeded; see C:\Users\beoms\OneDrive\문서\GitHub\SR_TEAM\Client\Bin\Shader_Rect.cso
+  stdafx.cpp
+  Supporter_Sniper.cpp
+  KrakenBoss.cpp
+  PlayerFaceUI.cpp
+  PlayerDefenseUI.cpp
+  Client.cpp
+  Zombie.cpp
+  ShotParticle.cpp
+  WeaponUI.cpp
+  Weapon.cpp
+  WallMapping.cpp
+  Wall.cpp
+  Veneer.cpp
+  UziPart5.cpp
+  UziPart4.cpp
+  UziPart3.cpp
+  UziPart2.cpp
+  UziPart1.cpp
+  Uzi.cpp
+  TriggerParticle.cpp
+c:\users\beoms\onedrive\문서\github\sr_team\client\code\triggerparticle.cpp(33): warning C4244: '인수': 'int'에서 'FLOAT'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\beoms\onedrive\문서\github\sr_team\client\code\triggerparticle.cpp(106): warning C4244: '초기화 중': 'double'에서 'Engine::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\beoms\onedrive\문서\github\sr_team\client\code\triggerparticle.cpp(110): warning C4305: '인수': 'double'에서 'FLOAT'(으)로 잘립니다.
+  TriggerFront.cpp
+c:\users\beoms\onedrive\문서\github\sr_team\client\code\triggerfront.cpp(43): warning C4244: '인수': 'int'에서 'FLOAT'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\beoms\onedrive\문서\github\sr_team\client\code\triggerfront.cpp(43): warning C4305: '인수': 'double'에서 'FLOAT'(으)로 잘립니다.
+c:\users\beoms\onedrive\문서\github\sr_team\client\code\triggerfront.cpp(115): warning C4244: '초기화 중': 'double'에서 'Engine::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\beoms\onedrive\문서\github\sr_team\client\code\triggerfront.cpp(120): warning C4305: '인수': 'double'에서 'FLOAT'(으)로 잘립니다.
+c:\users\beoms\onedrive\문서\github\sr_team\client\code\triggerfront.cpp(142): warning C4305: '인수': 'double'에서 'FLOAT'(으)로 잘립니다.
+c:\users\beoms\onedrive\문서\github\sr_team\client\code\triggerfront.cpp(143): warning C4305: '인수': 'double'에서 'FLOAT'(으)로 잘립니다.
+c:\users\beoms\onedrive\문서\github\sr_team\client\code\triggerfront.cpp(157): warning C4305: '인수': 'double'에서 'FLOAT'(으)로 잘립니다.
+c:\users\beoms\onedrive\문서\github\sr_team\client\code\triggerfront.cpp(158): warning C4305: '인수': 'double'에서 'FLOAT'(으)로 잘립니다.
+c:\users\beoms\onedrive\문서\github\sr_team\client\code\triggerfront.cpp(172): warning C4305: '인수': 'double'에서 'FLOAT'(으)로 잘립니다.
+c:\users\beoms\onedrive\문서\github\sr_team\client\code\triggerfront.cpp(173): warning C4305: '인수': 'double'에서 'FLOAT'(으)로 잘립니다.
+  코드를 생성하고 있습니다...
+  컴파일하고 있습니다...
+  Trap.cpp
+  TransAxisBox.cpp
+  ToolScene.cpp
+  Thorn.cpp
+  TestCube.cpp
+  Terret.cpp
+  Terrain.cpp
+c:\users\beoms\onedrive\문서\github\sr_team\client\code\terrain.cpp(72): warning C4101: 'expn' :참조되지 않은 지역 변수입니다.
+  TargetCube.cpp
+  Supporter_Uzi.cpp
+  Supporter_Shotgun.cpp
+  Supporter.cpp
+  StaticField.cpp
+  RainbowCloudEffect.cpp
+  StaticCamera.cpp
+  Stage.cpp
+  SpBullet.cpp
+  SniperPart4.cpp
+  SniperPart3.cpp
+  SniperPart2.cpp
+  SniperPart1.cpp
+  코드를 생성하고 있습니다...
+  컴파일하고 있습니다...
+  Sniper.cpp
+  Slime.cpp
+  SkyBox.cpp
+  Skeleton.cpp
+  ShotgunPart4.cpp
+  ShotgunPart3.cpp
+  ShotgunPart2.cpp
+  ShotgunPart1.cpp
+  Shotgun.cpp
+  Shop.cpp
+  ProjectileParticle.cpp
+c:\users\beoms\onedrive\문서\github\sr_team\client\code\projectileparticle.cpp(73): warning C4035: 'CProjectileParticle::Update_Object': 반환 값이 없습니다.
+  PoolMgr.cpp
+  PlayerUI.cpp
+  PlayerMapping.cpp
+  PlayerHpUI.cpp
+  PlayButton.cpp
+  OptionButton.cpp
+  ObtainDefense.cpp
+  ObtainBullet.cpp
+  MonsterUI.cpp
+  코드를 생성하고 있습니다...
+  컴파일하고 있습니다...
+  MonsterParticle.cpp
+  MonsterMapping.cpp
+  Monster.cpp
+  Meteor.cpp
+  MaxPlusHp.cpp
+  MainApp.cpp
+  Magma.cpp
+  LogoUI.cpp
+  LogoBilboard.cpp
+  Logo.cpp
+  Loading.cpp
+  LetterBox.cpp
+  ItemParticle.cpp
+  ItemIcon.cpp
+  ItemBox.cpp
+  Item.cpp
+  Inventory.cpp
+c:\users\beoms\onedrive\문서\github\sr_team\client\code\inventory.cpp(416): warning C4018: '>': signed 또는 unsigned가 일치하지 않습니다.
+  ImguiMgr.cpp
+  Illusioner.cpp
+  HitBarUI.cpp
+  코드를 생성하고 있습니다...
+  컴파일하고 있습니다...
+  HealthPotion.cpp
+  GunUI.cpp
+  GetUzi.cpp
+  GetSniper.cpp
+  GetShotgun.cpp
+  FireMan.cpp
+  ExitButton.cpp
+  SparkEffect.cpp
+  Shield.cpp
+  RcEffect.cpp
+  Ping.cpp
+  ObjectCube.cpp
+  MiddleBoss.cpp
+  LoadingBar.cpp
+  KrakenBullet.cpp
+c:\users\beoms\onedrive\문서\github\sr_team\client\code\krakenbullet.cpp(17): warning C4002: 'FAILED' 매크로의 실제 매개 변수가 너무 많습니다.
+  Key.cpp
+  IceEffect.cpp
+  HyperionStrike.cpp
+  FlightSpot.cpp
+  FlightCamera.cpp
+  코드를 생성하고 있습니다...
+  컴파일하고 있습니다...
+  FlightBulletParticle.cpp
+  FlightBomb.cpp
+  Flight.cpp
+c:\users\beoms\onedrive\문서\github\sr_team\client\code\flight.cpp(247): warning C4244: '인수': 'unsigned int'에서 'Engine::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  FlameEffect.cpp
+c:\users\beoms\onedrive\문서\github\sr_team\client\code\flameeffect.cpp(120): warning C4305: '인수': 'double'에서 'Engine::_float'(으)로 잘립니다.
+  FinalStage.cpp
+  Explosion.cpp
+  ExBullet.cpp
+  DynamicCamera.cpp
+  CubeShop.cpp
+  CubePlayer.cpp
+c:\users\beoms\onedrive\문서\github\sr_team\client\code\cubeplayer.cpp(204): warning C4244: '인수': 'Engine::_int'에서 'FLOAT'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\beoms\onedrive\문서\github\sr_team\client\code\cubeplayer.cpp(207): warning C4244: '인수': 'Engine::_int'에서 'FLOAT'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  CubeLeg.cpp
+  CubeHead.cpp
+  CubeHand.cpp
+  CubeFoot.cpp
+  CubeBody.cpp
+  CubeArm.cpp
+  CrossHeader.cpp
+  ComboUI.cpp
+  BulletUI.cpp
+  BulletParicle.cpp
+  코드를 생성하고 있습니다...
+  컴파일하고 있습니다...
+  Bullet.cpp
+  BubbleEffect.cpp
+  BrownCloudEffect.cpp
+  BattleCursier.cpp
+c:\users\beoms\onedrive\문서\github\sr_team\client\code\battlecursier.cpp(151): warning C4244: '인수': 'unsigned int'에서 'Engine::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  BaseMapping.cpp
+  DeffensiveMatrix.cpp
+  DashCube.cpp
+  CubeParticle.cpp
+  CartridgeParticle.cpp
+c:\users\beoms\onedrive\문서\github\sr_team\client\code\cartridgeparticle.cpp(130): warning C4305: '인수': 'double'에서 'FLOAT'(으)로 잘립니다.
+c:\users\beoms\onedrive\문서\github\sr_team\client\code\cartridgeparticle.cpp(139): warning C4305: '인수': 'double'에서 'FLOAT'(으)로 잘립니다.
+c:\users\beoms\onedrive\문서\github\sr_team\client\code\cartridgeparticle.cpp(140): warning C4305: '인수': 'double'에서 'FLOAT'(으)로 잘립니다.
+  AnimationPlayer.cpp
+  Alien.cpp
+  코드를 생성하고 있습니다...
+  LogoCamera.cpp
+  SoundWave.cpp
+  CloudEffect.cpp
+  코드를 생성하고 있습니다...
+  ImSequencer.cpp
+  imgui_widgets.cpp
+  imgui_tables.cpp
+  imgui_impl_win32.cpp
+  imgui_impl_dx9.cpp
+  imgui_draw.cpp
+  imgui_demo.cpp
+  ImGuizmo.cpp
+  ImGuiFileDialog.cpp
+  ImGuiFileBrowser.cpp
+  imgui.cpp
+  ImGradient.cpp
+  ImCurveEdit.cpp
+  GraphEditor.cpp
+  코드를 생성하고 있습니다...
      ../Bin\Client.lib 라이브러리 및 ../Bin\Client.exp 개체를 생성하고 있습니다.
   Client.vcxproj -> C:\Users\beoms\OneDrive\문서\GitHub\SR_TEAM\Client\Default\../Bin\Client.exe
   Client.vcxproj -> ../Bin\Client.pdb (Full PDB)
