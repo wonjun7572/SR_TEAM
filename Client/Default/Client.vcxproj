@@ -213,6 +213,7 @@
     <ClInclude Include="..\Header\IceEffect.h" />
     <ClInclude Include="..\Header\Key.h" />
     <ClInclude Include="..\Header\KrakenBullet.h" />
+    <ClInclude Include="..\Header\KrakenLeg.h" />
     <ClInclude Include="..\Header\LoadingBar.h" />
     <ClInclude Include="..\Header\MiddleBoss.h" />
     <ClInclude Include="..\Header\ObjectCube.h" />
@@ -472,6 +473,7 @@
     <ClCompile Include="..\Code\WeaponUI.cpp" />
     <ClCompile Include="..\Code\ShotParticle.cpp" />
     <ClCompile Include="..\Code\Zombie.cpp" />
+    <ClCompile Include="KrakenLeg.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="GraphEditor.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>

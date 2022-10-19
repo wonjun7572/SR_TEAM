@@ -85,12 +85,12 @@ _int CSupporter_Sniper::Update_Object(const _float & fTimeDelta)
 	{
 		m_pTransform->Move_Pos(&(_vec3(0.f, -1.f, 0.f) * 10.f * fTimeDelta));
 	}
-	else if (vPosition.y <= 0.6f)
+	else if (vPosition.y <= 0.7f)
 	{
 		m_bSetCam = false;
 	}
 
-	if (vPosition.y >= 0.6f)
+	if (vPosition.y > 0.6f)
 	{
 		m_STATE = SNIPERSUPPORT_DROP;
 	}
@@ -139,10 +139,13 @@ _int CSupporter_Sniper::Update_Object(const _float & fTimeDelta)
 	}
 	// 여기서 good
 
-	Find_Target();	//	맨 아래에 둘 것, 주변 적 탐색하여 공격하는 기능임
-					//	Look_Direction 지금 yaw만 적용시킨 상태
+	if (vPosition.y <= 0.6f)
+	{
+		Find_Target();	//	맨 아래에 둘 것, 주변 적 탐색하여 공격하는 기능임
+						//	Look_Direction 지금 yaw만 적용시킨 상태
 
-	Look_Direction();
+		Look_Direction();
+	}
 
 	CSupporter::Update_Object(fTimeDelta);
 
