@@ -149,8 +149,15 @@ c:\users\beoms\onedrive\문서\github\sr_team\client\default\debug\imgui_impl_wi
 c:\users\beoms\onedrive\문서\github\sr_team\client\default\debug\imgui_tables.obj
 c:\users\beoms\onedrive\문서\github\sr_team\client\default\debug\imgui_widgets.obj
 c:\users\beoms\onedrive\문서\github\sr_team\client\default\debug\imsequencer.obj
+c:\users\beoms\onedrive\문서\github\sr_team\client\default\debug\loadingbar.obj
 c:\users\beoms\onedrive\문서\github\sr_team\client\bin\shader_rect.cso
+c:\users\beoms\onedrive\문서\github\sr_team\client\bin\client.lib
+c:\users\beoms\onedrive\문서\github\sr_team\client\bin\client.exp
+c:\users\beoms\onedrive\문서\github\sr_team\client\bin\client.ilk
+c:\users\beoms\onedrive\문서\github\sr_team\client\bin\client.exe
+c:\users\beoms\onedrive\문서\github\sr_team\client\bin\client.pdb
 c:\users\beoms\onedrive\문서\github\sr_team\client\default\debug\client.res
+c:\users\beoms\onedrive\문서\github\sr_team\client\default\../bin\client.exe
 c:\users\beoms\onedrive\문서\github\sr_team\client\default\debug\client.tlog\cl.command.1.tlog
 c:\users\beoms\onedrive\문서\github\sr_team\client\default\debug\client.tlog\cl.read.1.tlog
 c:\users\beoms\onedrive\문서\github\sr_team\client\default\debug\client.tlog\cl.write.1.tlog
@@ -158,10 +165,6 @@ c:\users\beoms\onedrive\문서\github\sr_team\client\default\debug\client.tlog\c
 c:\users\beoms\onedrive\문서\github\sr_team\client\default\debug\client.tlog\fxc.command.1.tlog
 c:\users\beoms\onedrive\문서\github\sr_team\client\default\debug\client.tlog\fxc.read.1.tlog
 c:\users\beoms\onedrive\문서\github\sr_team\client\default\debug\client.tlog\fxc.write.1.tlog
-c:\users\beoms\onedrive\문서\github\sr_team\client\default\debug\client.tlog\link-cvtres.read.1.tlog
-c:\users\beoms\onedrive\문서\github\sr_team\client\default\debug\client.tlog\link-cvtres.write.1.tlog
-c:\users\beoms\onedrive\문서\github\sr_team\client\default\debug\client.tlog\link-rc.read.1.tlog
-c:\users\beoms\onedrive\문서\github\sr_team\client\default\debug\client.tlog\link-rc.write.1.tlog
 c:\users\beoms\onedrive\문서\github\sr_team\client\default\debug\client.tlog\link.command.1.tlog
 c:\users\beoms\onedrive\문서\github\sr_team\client\default\debug\client.tlog\link.read.1.tlog
 c:\users\beoms\onedrive\문서\github\sr_team\client\default\debug\client.tlog\link.write.1.tlog
