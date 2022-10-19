@@ -24,22 +24,29 @@ private:
 	void				Hit_Check(_float _deltaTime);
 	//애니메이션 관련
 private:
-	KRAKENSTATEID	m_STATE;
-	KRAKENSTATEID   m_BeforeState;
-	KRAKENWALKID	m_WALK;
-	KRAKENIDLEID	m_IDLE;
-	KRAKENATTACKID	m_ATTACK;
-	KRAKENSHOTID	m_SHOT;
 	HRESULT				Build(void);
 	void				Load_Animation(wstring FileName, _uint AnimationID);
 	void				Run_Animation(const _float& AnimationSpeed);
+
+private:
 	void				Walk_Animation_Run(void);
 	void				Idle_Animation_Run(void);
 	void				Attack_Animation_Run(void);
 	void				Shot_Animation_Run(void);
+
+private:
+	KRAKENSTATEID		m_STATE;
+	KRAKENSTATEID		m_BeforeState;
+	KRAKENWALKID		m_WALK;
+	KRAKENIDLEID		m_IDLE;
+	KRAKENATTACKID		m_ATTACK;
+	KRAKENSHOTID		m_SHOT;
+
+private:
 	void				Set_OnTerrain(void);
 
 protected:
+	HRESULT				Add_Component(void);
 	CTransform*			m_pTransCom = nullptr;
 	CTransform*			m_pTransUICom = nullptr;
 	CTransform*			m_pHitBoxTransCom = nullptr;
@@ -58,13 +65,14 @@ protected:
 	CComboUI*			m_pComboUI = nullptr;
 	CLayer*				pMyLayer;
 	CCubeCol*			m_pAnimationBox = nullptr;
-	//기능관련 
+	
 private:
-	HRESULT				Add_Component(void);
 	KRAKENABILITY*		m_tAbility;
 	_tchar*				m_MonsterName;
 	_bool				m_bFirst = true;
 	list<_tchar*>		m_TcharList;
+
+private:
 	_float				m_AnimationTime = 0.f;
 	_float				m_fTimeDelta = 0.f;
 	_float				m_fUISwitchTime = 0.f;
