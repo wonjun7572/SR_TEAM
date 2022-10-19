@@ -212,6 +212,7 @@
     <ClInclude Include="..\Header\HyperionStrike.h" />
     <ClInclude Include="..\Header\IceEffect.h" />
     <ClInclude Include="..\Header\Key.h" />
+    <ClInclude Include="..\Header\KrakenLeg.h" />
     <ClInclude Include="..\Header\MiddleBoss.h" />
     <ClInclude Include="..\Header\ObjectCube.h" />
     <ClInclude Include="..\Header\Ping.h" />
@@ -328,7 +329,9 @@
     <ClInclude Include="ImZoomSlider.h" />
     <ClInclude Include="..\Header\PlayerDefenseUI.h" />
     <ClInclude Include="..\Header\PlayerFaceUI.h" />
-    <ClInclude Include="KrakenBoss.h" />
+    <ClInclude Include="KrakenBoss.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Supporter_Sniper.h" />
@@ -374,6 +377,7 @@
     <ClCompile Include="..\Code\HyperionStrike.cpp" />
     <ClCompile Include="..\Code\IceEffect.cpp" />
     <ClCompile Include="..\Code\Key.cpp" />
+    <ClCompile Include="..\Code\KrakenLeg.cpp" />
     <ClCompile Include="..\Code\MiddleBoss.cpp" />
     <ClCompile Include="..\Code\ObjectCube.cpp" />
     <ClCompile Include="..\Code\Ping.cpp" />
@@ -527,7 +531,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\PlayerDefenseUI.cpp" />
     <ClCompile Include="..\Code\PlayerFaceUI.cpp" />
-    <ClCompile Include="KrakenBoss.cpp" />
+    <ClCompile Include="KrakenBoss.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

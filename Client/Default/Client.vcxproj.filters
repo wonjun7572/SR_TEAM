@@ -370,6 +370,9 @@
     <Filter Include="01. Scene\03. FinalStage">
       <UniqueIdentifier>{4d8426b7-b55a-4193-9a78-a35ddf50f476}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\21. Boss\02. Kraken\KrakenLeg">
+      <UniqueIdentifier>{87016a0a-dfe1-48c5-8344-71e7ca4168ab}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -837,6 +840,9 @@
     <ClInclude Include="..\Header\FinalStage.h">
       <Filter>01. Scene\03. FinalStage</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\KrakenLeg.h">
+      <Filter>02. GameObject\01. For_Stage\21. Boss\02. Kraken\KrakenLeg</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -1279,6 +1285,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\FinalStage.cpp">
       <Filter>01. Scene\03. FinalStage</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\KrakenLeg.cpp">
+      <Filter>02. GameObject\01. For_Stage\21. Boss\02. Kraken\KrakenLeg</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
