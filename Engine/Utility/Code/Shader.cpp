@@ -1,45 +1,73 @@
 #include "..\..\Header\Shader.h"
 
+#include "Export_Function.h"
 
+USING(Engine)
 
-CShader::CShader(LPDIRECT3DDEVICE9 pGraphicDev)
-	:CComponent(pGraphicDev)
+CShader::CShader(LPDIRECT3DDEVICE9 pDevice)
+	: CComponent(pDevice)
 {
 }
 
-CShader::CShader(const CShader & rhs)
-	:CComponent(rhs), m_pEffect(rhs.m_pEffect)
+Engine::CShader::CShader(const CShader& rhs)
+	: CComponent(rhs)
+	, m_pEffect(rhs.m_pEffect)
 {
 	m_pEffect->AddRef();
 }
 
-HRESULT CShader::Ready_Shader(const _tchar* ShaderFileName)
+HRESULT CShader::Ready_Shader(const _tchar * pShaderFilePath)
 {
-	D3DXCreateEffectFromFile(m_pGraphicDev, ShaderFileName, nullptr, nullptr, 0, nullptr, &m_pEffect, nullptr);
-	NULL_CHECK_RETURN(m_pEffect, E_FAIL);
+	if (FAILED(D3DXCreateEffectFromFile(m_pGraphicDev, pShaderFilePath, nullptr, nullptr, 0, nullptr, &m_pEffect, nullptr)))
+		return E_FAIL;
 
 	return S_OK;
 }
 
-void CShader::Begin_Shader(void)
+HRESULT CShader::Begin_Shader(_uint iPassIndex)
 {
+	if (nullptr == m_pEffect)
+		return E_FAIL;
+
 	m_pEffect->Begin(nullptr, 0);
-	m_pEffect->BeginPass(0);
+	m_pEffect->BeginPass(iPassIndex);
+
+	return S_OK;
 }
 
-void CShader::End_Shader(void)
+HRESULT CShader::End_Shader()
 {
+	if (nullptr == m_pEffect)
+		return E_FAIL;
+
 	m_pEffect->EndPass();
 	m_pEffect->End();
+
+	return S_OK;
 }
 
-CShader * CShader::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _tchar* ShaderFileName)
+HRESULT CShader::Set_RawValue(D3DXHANDLE hHandle, const void* pData, _uint iLength)
 {
-	CShader* pInstance = new CShader(pGraphicDev);
+	if (nullptr == m_pEffect)
+		return E_FAIL;
 
-	if (FAILED(pInstance->Ready_Shader(ShaderFileName)))
+	return m_pEffect->SetRawValue(hHandle, pData, 0, iLength);
+}
+
+HRESULT CShader::Set_Texture(D3DXHANDLE hHandle, IDirect3DBaseTexture9 * pTexture)
+{
+	if (nullptr == m_pEffect)
+		return E_FAIL;
+
+	return m_pEffect->SetTexture(hHandle, pTexture);
+}
+
+CShader * CShader::Create(LPDIRECT3DDEVICE9 pDevice, const _tchar * pShaderFilePath)
+{
+	CShader* pInstance = new CShader(pDevice);
+
+	if (FAILED(pInstance->Ready_Shader(pShaderFilePath)))
 	{
-		MSG_BOX("Shader Component Create Fail");
 		Safe_Release(pInstance);
 		return nullptr;
 	}
@@ -47,13 +75,14 @@ CShader * CShader::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _tchar* ShaderFil
 	return pInstance;
 }
 
-CComponent * CShader::Clone(void)
+CComponent* Engine::CShader::Clone(void)
 {
 	return new CShader(*this);
 }
 
 void CShader::Free(void)
 {
-	Safe_Release(m_pEffect);
 	CComponent::Free();
+
+	Safe_Release(m_pEffect);
 }

@@ -106,8 +106,8 @@ HRESULT CStage::Ready_Scene(void)
 
 	CGameObject*		pGameObject = nullptr;
 
-	_float fBGMSound = 1.f;
-	PlayBGM(L"Track_01.mp3", fBGMSound);
+	//_float fBGMSound = 1.f;
+	//PlayBGM(L"Track_01.mp3", fBGMSound);
 
 	FAILED_CHECK_RETURN(Ready_Proto(), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Light(), E_FAIL);
@@ -137,7 +137,6 @@ HRESULT CStage::Ready_Scene(void)
 	FAILED_CHECK_RETURN(Ready_Layer_DestroyWall(STAGE_DESTORYWALL), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Layer_Skill(STAGE_SKILL), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Layer_SkillCruiser(STAGE_SKILLCRUISER), E_FAIL);
-
 	FAILED_CHECK_RETURN(Ready_Layer_Trap(STAGE_TRAP), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Layer_Supporter(STAGE_SUPPORTER), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Layer_PlayerBullet(STAGE_BULLETPLAYER), E_FAIL);
@@ -1003,6 +1002,8 @@ HRESULT CStage::Ready_Light(void)
 	//Light.Theta
 	//Light.Phi =	
 	FAILED_CHECK_RETURN(Engine::Ready_Light(m_pGraphicDev, &Light3, 2), E_FAIL);
+
+	
 
 	return S_OK;
 }

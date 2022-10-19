@@ -370,6 +370,9 @@
     <Filter Include="01. Scene\03. FinalStage">
       <UniqueIdentifier>{4d8426b7-b55a-4193-9a78-a35ddf50f476}</UniqueIdentifier>
     </Filter>
+    <Filter Include="98. ShaderFile">
+      <UniqueIdentifier>{aff839f9-734e-4660-af07-a4d3c0ceb0fb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -816,9 +819,6 @@
     <ClInclude Include="..\Header\StaticField.h">
       <Filter>02. GameObject\01. For_Stage\16. Skill\StaticField</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\Veneer.h">
-      <Filter>99. Default\헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\CartridgeParticle.h">
       <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\GunEffect\Cartridge</Filter>
     </ClInclude>
@@ -836,6 +836,9 @@
     </ClInclude>
     <ClInclude Include="..\Header\FinalStage.h">
       <Filter>01. Scene\03. FinalStage</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Veneer.h">
+      <Filter>02. GameObject\01. For_Stage\20. BillBoard</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1259,9 +1262,6 @@
     <ClCompile Include="..\Code\StaticField.cpp">
       <Filter>02. GameObject\01. For_Stage\16. Skill\StaticField</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\Veneer.cpp">
-      <Filter>99. Default\소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\CartridgeParticle.cpp">
       <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\GunEffect\Cartridge</Filter>
     </ClCompile>
@@ -1279,6 +1279,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\FinalStage.cpp">
       <Filter>01. Scene\03. FinalStage</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Veneer.cpp">
+      <Filter>02. GameObject\01. For_Stage\20. BillBoard</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1306,7 +1309,10 @@
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="..\Bin\ShaderFiles\Shader_Rect.hlsl">
-      <Filter>99. Default</Filter>
+      <Filter>98. ShaderFile</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_Cube.hlsl">
+      <Filter>98. ShaderFile</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

@@ -213,5 +213,12 @@ HRESULT CLogo::Ready_Proto(void)
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_LogoBil", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Texture2D/amidevil.png", TEX_NORMAL)), E_FAIL);
 	}
 
+	{
+		//Shader
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(RCTEX_SHADER, CShader::Create(m_pGraphicDev, TEXT("../Bin/ShaderFiles/Shader_Rect.hlsl"))), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(CUBETEX_SHADER, CShader::Create(m_pGraphicDev, TEXT("../Bin/ShaderFiles/Shader_Cube.hlsl"))), E_FAIL);
+		
+		
+	}
 	return S_OK;
 }

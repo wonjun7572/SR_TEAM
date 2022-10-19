@@ -22,40 +22,31 @@ private:
 	HRESULT			Ready_Layer_Environment(const _tchar* pLayerTag);
 	HRESULT			Ready_Layer_GameLogic(const _tchar* pLayerTag);
 	HRESULT			Ready_Layer_UI(const _tchar* pLayerTag);
-
 	HRESULT			Ready_Layer_Wall(const _tchar* pLayerTag);
 	HRESULT			Ready_Layer_Character(const _tchar* pLayerTag);
 	HRESULT			Ready_Layer_Monster(const _tchar* pLayerTag);
 	HRESULT			Ready_Layer_Bullet(const _tchar* pLayerTag);
 	HRESULT			Ready_Layer_PlayerBullet(const _tchar* pLayerTag);
 	HRESULT			Ready_Layer_ExBullet(const _tchar* pLayerTag);
-
 	HRESULT			Ready_Layer_Mapping(const _tchar* pLayerTag);
 	HRESULT			Ready_Layer_Gun(const _tchar* pLayerTag);
-
 	HRESULT			Ready_Layer_Item(const _tchar* pLayerTag);
-
 	HRESULT			Ready_Layer_GunItem(const _tchar* pLayerTag);
-
 	HRESULT			Ready_Layer_DestroyWall(const _tchar* pLayerTag);
 	HRESULT			Ready_Layer_Skill(const _tchar* pLayerTag);
 	HRESULT			Ready_Layer_SkillCruiser(const _tchar* pLayerTag);
-
 	HRESULT			Ready_Layer_Creature(const _tchar* pLayerTag);
 
 	//	ÆÄÃ÷ ·¹ÀÌ¾î
 	HRESULT			Ready_Layer_Player(const _tchar* pLayerTag);
-
 	HRESULT			Ready_Layer_Slime(const _tchar* pLayerTag);
-
 	HRESULT			Ready_Layer_Trap(const _tchar* pLayerTag);
 	HRESULT			Ready_Layer_Supporter(const _tchar* pLayerTag);
-
 	HRESULT			Ready_Layer_PlayerFlight(const _tchar* pLayerTag);
+	HRESULT			Ready_Layer_Light(const _tchar* pLayerTag);
 
 	HRESULT			Ready_Proto(void);
 	HRESULT			Ready_Light(void);
-
 	HRESULT			Load_Position(OBJECT_ID eID,wstring strDirectory);
 	
 private:

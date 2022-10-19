@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "..\Header\Loading.h"
-
 #include "Export_Function.h"
 #include "..\..\Engine\Header\Engine_Macro.h"
 
@@ -237,10 +236,11 @@ _uint CLoading::Loading_ForStage(void)
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"ExBullet_Tex", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Particle/StaticParticle/ExBullet.png", TEX_NORMAL)), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Trigger_Tex", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Particle/StaticParticle/Trigger.png", TEX_NORMAL)), E_FAIL);
 
-
-		// 장판
+				// 장판
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Veneer_Tex", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Blue_Aim.png", TEX_NORMAL)), E_FAIL);
 	}
+	// Shader, Lighting
+
 
 	m_bFinish = true;
 

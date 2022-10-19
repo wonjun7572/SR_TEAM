@@ -4,6 +4,7 @@
 #include "LetterBox.h"
 #include "Export_Function.h"
 #include "CubePlayer.h"
+#include "StaticCamera.h"
 
 static _int m_iMappingCnt = 0;
 static _int m_iLetterCnt = 0;
@@ -43,7 +44,8 @@ _int CTestCube::Update_Object(const _float& fTimeDelta)
 		m_pStaticCam->CameraShaking();
 		return -1;
 	}
-
+	_vec3 vPos;
+	m_pTransCom->Get_Info(INFO_POS, &vPos);
 	if (Engine::Get_Scene()->Get_SceneId() == STAGE_SCENE)
 	{
 		Update_NullCheck();
@@ -86,16 +88,43 @@ _int CTestCube::Update_Object(const _float& fTimeDelta)
 
 void CTestCube::Render_Object()
 {
-	if (m_bWireFrame)
-		m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+	CCamera* pCam = dynamic_cast<CCamera*>(Get_GameObject(STAGE_ENVIRONMENT, L"StaticCamera"));
+	_vec4 vCamPos = { pCam->GetEye().x,pCam->GetEye().y,pCam->GetEye().z, 1.f };
+	_vec4 vLightPos = { 50.f, 50.f, -50.f, 1.f };
+	D3DXVECTOR4      gLightColor(0.7f, 0.7f, 1.f, 1.f);
 
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransCom->Get_WorldMatrixPointer());
-	m_pTextureCom->Set_Texture(m_iTexIndex);
-	FAILED_CHECK_RETURN(Set_Material(), );
+	_matrix         matWorld, matView, matProj;
+	matWorld = *m_pTransCom->Get_WorldMatrixPointer();
+	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
+	m_pGraphicDev->GetTransform(D3DTS_PROJECTION, &matProj);
+
+	D3DXMatrixTranspose(&matWorld, &matWorld);
+	D3DXMatrixTranspose(&matView, &matView);
+	D3DXMatrixTranspose(&matProj, &matProj);
+
+	if (FAILED(m_pShaderCom->Set_RawValue("g_WorldMatrix", matWorld, sizeof(_matrix))))
+		return;
+	if (FAILED(m_pShaderCom->Set_RawValue("g_ViewMatrix", &matView, sizeof(_matrix))))
+		return;
+	if (FAILED(m_pShaderCom->Set_RawValue("g_ProjMatrix", &matProj, sizeof(_matrix))))
+		return;
+	if (FAILED(m_pShaderCom->Set_RawValue("gWorldLightPosition", &vLightPos, sizeof(_vec4))))
+		return;
+	if (FAILED(m_pShaderCom->Set_RawValue("gWorldCameraPosition", &vCamPos, sizeof(_vec4))))
+		return;
+	if (FAILED(m_pShaderCom->Set_RawValue("gLightColor", &gLightColor, sizeof(_vec4))))
+		return;
+
+	m_pTextureCom->Set_Texture(m_pShaderCom, "g_DefaultTexture", m_iTexIndex);
+
+	m_pShaderCom->Begin_Shader(0);
+
 	m_pBufferCom->Render_Buffer();
 
-	if (m_bWireFrame)
-		m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+	m_pShaderCom->End_Shader();
+
+	//if (m_bWireFrame)
+	//	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 }
 
 // 큐브를 선택 후 터레인 자리위에 올려 놓는 함수
@@ -304,6 +333,10 @@ HRESULT CTestCube::Add_Component()
 	pComponent = m_pHitBox = dynamic_cast<CHitBox*>(Clone_Proto(HITBOX_COMP));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ HITBOX_COMP, pComponent });
+
+	pComponent = m_pShaderCom = dynamic_cast<CShader*>(Clone_Proto(CUBETEX_SHADER));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[ID_STATIC].insert({ CUBETEX_SHADER, pComponent });
 
 	return S_OK;
 }
