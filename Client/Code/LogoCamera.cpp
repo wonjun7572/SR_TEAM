@@ -75,8 +75,8 @@ void CLogoCamera::RightCamera(const _float& fTimeDelta)
 	_vec3		vRight;
 	memcpy(&vRight, &matCamWorld.m[0][0], sizeof(_vec3));
 
-	_vec3		vLength = *D3DXVec3Normalize(&vRight, &vRight)  * 2.f * fTimeDelta;
+	_vec3		vLength = *D3DXVec3Normalize(&vRight, &vRight) * fTimeDelta;
 
 	m_vEye.y = m_fDistnace;
-	m_vEye -= vLength;
+	m_vEye += vLength;
 }

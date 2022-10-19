@@ -186,6 +186,8 @@ void CMiddleBoss::LateUpdate_Object(void)
 		}
 		else if (m_STATE == MIDDLEBOSS_MOVE)
 		{
+
+			PlaySoundW(L"shambler_detect.wav", SOUND_EFFECT, 1.f);
 			Walk_Animation_Run();
 			Run_Animation(10.f);
 		}

@@ -89,6 +89,8 @@
 #include "Key.h"
 #include "FlightSpot.h"
 
+#include "KrakenLeg.h"
+
 CFinalStage::CFinalStage(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CScene(pGraphicDev)
 {
@@ -539,10 +541,44 @@ HRESULT CFinalStage::Ready_Layer_Monster(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);*/
 
-	//pGameObject = CKrakenBoss::Create(m_pGraphicDev, _vec3(10.f, 5.6f, 10.f), L"Kraken");
-	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+	pGameObject = CKrakenBoss::Create(m_pGraphicDev, _vec3(65.f, 10.f, 65.f), L"Kraken");
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+	
 
+	{
+		pGameObject = CKrakenLeg::Create(m_pGraphicDev, _vec3(95.f, -30.f, 35.f), L"LEG_1");
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+
+		pGameObject = CKrakenLeg::Create(m_pGraphicDev, _vec3(95.f, -30.f, 65.f), L"LEG_2");
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+
+		pGameObject = CKrakenLeg::Create(m_pGraphicDev, _vec3(95.f, -30.f, 95.f), L"LEG_3");
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+
+		pGameObject = CKrakenLeg::Create(m_pGraphicDev, _vec3(65.f, -30.f, 35.f), L"LEG_4");
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+
+		pGameObject = CKrakenLeg::Create(m_pGraphicDev, _vec3(65.f, -30.f, 95.f), L"LEG_5");
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+
+		pGameObject = CKrakenLeg::Create(m_pGraphicDev, _vec3(35.f, -30.f, 35.f), L"LEG_6");
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+
+		pGameObject = CKrakenLeg::Create(m_pGraphicDev, _vec3(35.f, -30.f, 65.f), L"LEG_7");
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+
+		pGameObject = CKrakenLeg::Create(m_pGraphicDev, _vec3(35.f, -30.f, 95.f), L"LEG_8");
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+	}
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 

@@ -25,14 +25,14 @@ HRESULT CKrakenBoss::Ready_Object(const _vec3 & vPos, _tchar * Name)
 
 	m_MonsterName = Name;
 
-	m_STATE = KRAKEN_IDLE;
-	m_BeforeState = KRAKEN_IDLE;
-	m_WALK = KRAKENWALK_START;
+	m_STATE = KRAKEN_APPEAR;
 	m_IDLE = KRAKENIDLE_1;
-	m_ATTACK = KRAKENATTACK_START;
-	m_SHOT = KRAKENSHOT_START;
-
-
+	m_APPEAR = KRAKENAPPEAR_1;
+	m_SMASH = KRAKENSMASH_1;
+	m_INKSHOT = KRAKENINKSHOT_1;
+	m_ROLLING = KRAKENROLLING_1;
+	m_LURKER = KRAKENLURKER_1;
+	m_PATTERN = KRAKEN_SKILL_END;
 
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
@@ -55,14 +55,11 @@ HRESULT CKrakenBoss::Ready_Object(const _vec3 & vPos, _tchar * Name)
 	m_pSphereTransCom->Set_Pos(vAnimationPos.x, vAnimationPos.y, vAnimationPos.z);
 	m_pSphereTransCom->Static_Update();
 
-
-
 	return S_OK;
 }
 
 _int CKrakenBoss::Update_Object(const _float & fTimeDelta)
 {
-
 	if (m_bDead)
 	{
 		m_pComboUI->KillCntPlus();
@@ -76,14 +73,22 @@ _int CKrakenBoss::Update_Object(const _float & fTimeDelta)
 	if (m_bFirst)
 	{
 		m_bFirst = false;
+
+		m_vPattern.push_back(KRAKEN_SKILL_SMASH);
+		m_vPattern.push_back(KRAKEN_SKILL_INKSHOT);
+		m_vPattern.push_back(KRAKEN_SKILL_ROLLING);
+		m_vPattern.push_back(KRAKEN_SKILL_LURKER);
+		m_vPattern.push_back(KRAKEN_SKILL_5);
+
 		Engine::Get_Scene()->New_Layer(m_MonsterName);
 		pMyLayer = Engine::Get_Layer(m_MonsterName);
 		FAILED_CHECK_RETURN(Build(), -1);
+
+		Load_Animation(L"../../Data/KraKen/KRAKEN_IDLE_1.dat", 0);
+		Load_Animation(L"../../Data/KraKen/KRAKEN_IDLE_2.dat", 1);
 	}
 
 	Update_Pattern(fTimeDelta);
-
-
 
 	CGameObject::Update_Object(fTimeDelta);
 	Add_RenderGroup(RENDER_NONALPHA, this);
@@ -96,8 +101,6 @@ _int CKrakenBoss::Update_Object(const _float & fTimeDelta)
 	m_pSphereTransCom->Set_Pos(vMonsterPos.x, vMonsterPos.y, vMonsterPos.z);
 	m_pTransCom->Get_Info(INFO_POS, &vUIPos);
 	m_pTransUICom->Set_Pos(vUIPos.x, vUIPos.y + 2.4f, vUIPos.z);
-	
-	
 	
 	return 0;
 }
@@ -126,21 +129,21 @@ void CKrakenBoss::Render_Object(void)
 
 void CKrakenBoss::LateUpdate_Object(void)
 {
+	//Set_OnTerrain();
 
-	Set_OnTerrain();
 	if (m_tAbility->fCurrentHp <= 0.f)
 	{
 		m_pMonsterUI->Off_Switch();
 		this->Kill_Obj();
 	}
 
-
-
-
 	//애니메이션 관련해서 run animation 이랑 각자 상황에 맞는 애니메이션 넣어주면됨.
 	if (!m_bFirst)
 	{
-		if (m_STATE == KRAKEN_WALK)
+		IDLE_Animation_Run();
+		Run_Animation(50.f);
+
+		/*if (m_STATE == KRAKEN_APPEAR)
 		{
 
 		}
@@ -151,11 +154,7 @@ void CKrakenBoss::LateUpdate_Object(void)
 		else if (m_STATE == KRAKEN_ATTACK)
 		{
 
-		}
-		else if (m_STATE == KRAKEN_SHOT)
-		{
-
-		}
+		}*/
 	}
 
 	CGameObject::LateUpdate_Object();
@@ -204,35 +203,38 @@ _int CKrakenBoss::Update_Pattern(_float fTimeDelta)
 	}
 	if (m_pMonsterUI == nullptr)
 		m_pMonsterUI = dynamic_cast<CMonsterUI*>(Engine::Get_GameObject(STAGE_UI, L"MonsterUI"));
+
 	if (m_pComboUI == nullptr)
 		m_pComboUI = dynamic_cast<CComboUI*>(Engine::Get_GameObject(STAGE_UI, L"ComboUI"));
 
-
-
 	_float Hp = m_tAbility->fCurrentHp / m_tAbility->fMaxHp;
-	//rand함수를 통해서 or  체력별 패턴을 넣을것
-	//if(Hp >= 0.8)
-	//{
-	//	m_STATE = KRAKEN_ATTACK;
-	//	//패턴 
-	//}
-	//else if (Hp >= 0.6f)
-	//{
-	//	m_STATE = KRAKEN_ATTACK;
-	//}
-	//else if (Hp >= 0.4f)
-	//{
-	//	m_STATE = KRAKEN_ATTACK;
-	//}
-	//else if (Hp >= 0.2f)
-	//{
-	//	m_STATE = KRAKEN_ATTACK;
-	//}
-	//else if (Hp <= 0.f)
-	//{
-	//	m_STATE = KRAKEN_ATTACK;
-	//}
+	
 
+	if (m_STATE == KRAKEN_IDLE)
+	{
+		m_ReloadTimer += fTimeDelta;
+
+		if (m_ReloadTimer >= 2.f)
+		{
+			m_STATE = KRAKEN_ATTACK;
+
+			random_shuffle(m_vPattern.begin(), m_vPattern.end());
+			m_PATTERN = m_vPattern.front();
+
+			m_ReloadTimer = 0.f;
+		}
+	}
+	else if (m_STATE == KRAKEN_ATTACK)
+	{
+		if (m_PATTERN == KRAKEN_SKILL_INKSHOT)
+		{
+			// 전방향 먹물탄
+		}
+		if (m_PATTERN == KRAKEN_SKILL_5)
+		{
+
+		}
+	}
 
 	return 0;
 }
@@ -371,7 +373,7 @@ void CKrakenBoss::Hit_Check(_float _deltaTime)
 
 HRESULT CKrakenBoss::Build(void)
 {
-	HANDLE      hFile = CreateFile(L"../../Data/Kraken/KRAKEN_RELOAD10.dat",      // 파일의 경로와 이름	
+	HANDLE      hFile = CreateFile(L"../../Data/Kraken/KRAKEN_TEST.dat",      // 파일의 경로와 이름	
 		GENERIC_READ,         // 파일 접근 모드 (GENERIC_WRITE : 쓰기 전용, GENERIC_READ : 읽기 전용)
 		NULL,               // 공유 방식(파일이 열려있는 상태에서 다른 프로세스가 오픈할 때 허용할 것인가)    
 		NULL,               // 보안 속성(NULL을 지정하면 기본값 상태)
@@ -621,21 +623,11 @@ void CKrakenBoss::Run_Animation(const _float & AnimationSpeed)
 	}
 }
 
-void CKrakenBoss::Walk_Animation_Run(void)
+void CKrakenBoss::APPEAR(void)
 {
-	list<pair<const _tchar*, CGameObject*>> ListBox = *(pMyLayer->Get_GamePairPtr());
-
-	if (m_AnimationTime >= 1.f)
-	{
-		for (auto& iter : ListBox)
-		{
-			CQuarternion* Qtan = dynamic_cast<CQuarternion*>(iter.second->Get_Component(L"Proto_QuaternionCom", ID_STATIC));
-			Qtan->Delete_WorldVector();
-		}
-	}
 }
 
-void CKrakenBoss::Idle_Animation_Run(void)
+void CKrakenBoss::IDLE_Animation_Run(void)
 {
 	list<pair<const _tchar*, CGameObject*>> ListBox = *(pMyLayer->Get_GamePairPtr());
 
@@ -646,35 +638,18 @@ void CKrakenBoss::Idle_Animation_Run(void)
 			CQuarternion* Qtan = dynamic_cast<CQuarternion*>(iter.second->Get_Component(L"Proto_QuaternionCom", ID_STATIC));
 			Qtan->Delete_WorldVector();
 		}
+
+		if (m_IDLE == KRAKENIDLE_1)
+			m_IDLE = KRAKENIDLE_2;
+		else if (m_IDLE == KRAKENIDLE_2)
+			m_IDLE = KRAKENIDLE_1;
+
+		m_AnimationTime = 0.f;
 	}
-}
-
-void CKrakenBoss::Attack_Animation_Run(void)
-{
-	list<pair<const _tchar*, CGameObject*>> ListBox = *(pMyLayer->Get_GamePairPtr());
-
-	if (m_AnimationTime >= 1.f)
+	for (auto& iter : ListBox)
 	{
-		for (auto& iter : ListBox)
-		{
-			CQuarternion* Qtan = dynamic_cast<CQuarternion*>(iter.second->Get_Component(L"Proto_QuaternionCom", ID_STATIC));
-			Qtan->Delete_WorldVector();
-		}
-	}
-}
-
-void CKrakenBoss::Shot_Animation_Run(void)
-{
-	list<pair<const _tchar*, CGameObject*>> ListBox = *(pMyLayer->Get_GamePairPtr());
-
-	if (m_AnimationTime >= 1.f)
-	{
-		for (auto& iter : ListBox)
-		{
-			CQuarternion* Qtan = dynamic_cast<CQuarternion*>(iter.second->Get_Component(L"Proto_QuaternionCom", ID_STATIC));
-			Qtan->Delete_WorldVector();
-		}
-
+		CQuarternion* Qtan = dynamic_cast<CQuarternion*>(iter.second->Get_Component(L"Proto_QuaternionCom", ID_STATIC));
+		Qtan->Change_Animation(0 + m_IDLE);
 	}
 }
 
@@ -682,13 +657,12 @@ void CKrakenBoss::Set_OnTerrain(void)
 {
 	_vec3 vAnimationPos;
 
-
-	m_pTransCom->Get_BeforeInfo(INFO_POS, &vAnimationPos);
+	m_pTransCom->Get_Info(INFO_POS, &vAnimationPos);
 
 	Engine::CTerrainTex*	pTerrainTexCom = dynamic_cast<Engine::CTerrainTex*>(Engine::Get_Component(STAGE_ENVIRONMENT, L"Terrain", TERRAINTEX_COMP, ID_STATIC));
 	NULL_CHECK(pTerrainTexCom);
 
-	_float fHeight = m_pCalculatorCom->HeightOnTerrain(&vAnimationPos, pTerrainTexCom->Get_VtxPos(), VTXCNTX, VTXCNTZ);
+	_float fHeight = m_pCalculatorCom->HeightOnTerrain(&vAnimationPos, pTerrainTexCom->Get_VtxPos(), VTXCNTX, VTXCNTZ) + 10.f;;
 
 	m_pTransCom->Set_Pos(vAnimationPos.x, fHeight, vAnimationPos.z);
 }
