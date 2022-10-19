@@ -564,7 +564,7 @@ void CSlime::Look_Direction(void)
 		{
 			_vec3 vAngle;
 			CTransform* Transform = dynamic_cast<CTransform*>(iter.second->Get_Component(L"Proto_TransformCom", ID_STATIC));
-			Transform->Set_Angle(&_vec3(yaw, pitch, roll));
+			Transform->Set_Angle(&_vec3(yaw, 0.f, 0.f));
 		}
 	}
 }

@@ -23,6 +23,8 @@ HRESULT CBattleCursier::Ready_Object(const _vec3 & vPos, const _vec3 & vDir, _tc
 	m_pTransform->Set_Pos(vPos.x, vPos.y, vPos.z);
 	m_pTransform->Static_Update();
 
+	m_fSpeed = 1.f;
+
 	_vec3 vShuffle;
 	m_ShufflePos.reserve(24);
 	for (float i = 10.f; i <= 110.f; i += 20.f)
@@ -38,6 +40,12 @@ HRESULT CBattleCursier::Ready_Object(const _vec3 & vPos, const _vec3 & vDir, _tc
 
 		vShuffle = { 170.f, 35.f, i };
 		m_ShufflePos.push_back(vShuffle);
+	}
+
+	m_ShuffleSpeed.reserve(10);
+	for (_uint i = 5; i < 15; ++i)
+	{
+		m_ShuffleSpeed.push_back(i);
 	}
 
 	return S_OK;
@@ -61,47 +69,14 @@ _int CBattleCursier::Update_Object(const _float & fTimeDelta)
 
 	if (vPos.x > 170.f || vPos.x < -50.f || vPos.z > 170.f || vPos.z < -50.f)
 	{
-		random_shuffle(m_ShufflePos.begin(), m_ShufflePos.end());
-
-		_vec3 vAngle, vDir;
-
-		/*
-		谅>快	1	0	0	90
-		快>谅	-1	0	0	270
-		第>菊	0	0	1	0
-		菊>第	0	0	-1	180
-		*/
-
-		if (m_ShufflePos.front().z == -50.f)	//	第>菊
-		{
-			vAngle = { 0.f, D3DXToRadian(0.f) ,0.f };
-			vDir = { 0.f, 0.f, 1.f };
-		}
-		else if (m_ShufflePos.front().x == -50.f)	//	谅>快
-		{
-			vAngle = { 0.f, D3DXToRadian(90.f) ,0.f };
-			vDir = { 1.f, 0.f, 0.f };
-		}
-		else if (m_ShufflePos.front().z == 170.f)	//	菊>第
-		{
-			vAngle = { 0.f, D3DXToRadian(180.f) ,0.f };
-			vDir = { 0.f, 0.f, -1.f };
-		}
-		else if (m_ShufflePos.front().x == 170.f)	//	快>谅
-		{
-			vAngle = { 0.f, D3DXToRadian(270.f) ,0.f };
-			vDir = { -1.f, 0.f, 0.f };
-		}
-
-		Replace(m_ShufflePos.front(), vAngle, vDir);
-
+		Random();
 	}
 
 	m_pTransform->Set_Angle(&m_vAngle);
 
 	Look_Direction();
 
-	m_pTransform->Move_Pos(&(m_vDirection * 5.f * fTimeDelta));
+	m_pTransform->Move_Pos(&(m_vDirection * m_fSpeed * fTimeDelta));
 
 	for (auto& iter : *(pMyLayer->Get_GamePairPtr()))
 	{
@@ -134,6 +109,47 @@ HRESULT CBattleCursier::Add_Component(void)
 	m_mapComponent[ID_DYNAMIC].insert({ TRANSFORM_COMP, pComponent });
 
 	return S_OK;
+}
+
+void CBattleCursier::Random(void)
+{
+	random_shuffle(m_ShufflePos.begin(), m_ShufflePos.end());
+	random_shuffle(m_ShuffleSpeed.begin(), m_ShuffleSpeed.end());
+
+	_vec3 vAngle, vDir;
+
+	/*
+	谅>快	1	0	0	90
+	快>谅	-1	0	0	270
+	第>菊	0	0	1	0
+	菊>第	0	0	-1	180
+	*/
+
+	if (m_ShufflePos.front().z == -50.f)	//	第>菊
+	{
+		vAngle = { 0.f, D3DXToRadian(0.f) ,0.f };
+		vDir = { 0.f, 0.f, 1.f };
+	}
+	else if (m_ShufflePos.front().x == -50.f)	//	谅>快
+	{
+		vAngle = { 0.f, D3DXToRadian(90.f) ,0.f };
+		vDir = { 1.f, 0.f, 0.f };
+	}
+	else if (m_ShufflePos.front().z == 170.f)	//	菊>第
+	{
+		vAngle = { 0.f, D3DXToRadian(180.f) ,0.f };
+		vDir = { 0.f, 0.f, -1.f };
+	}
+	else if (m_ShufflePos.front().x == 170.f)	//	快>谅
+	{
+		vAngle = { 0.f, D3DXToRadian(270.f) ,0.f };
+		vDir = { -1.f, 0.f, 0.f };
+	}
+
+	Replace(m_ShufflePos.front(), vAngle, vDir);
+
+	Set_Speed(m_ShuffleSpeed.front());
+	
 }
 
 HRESULT CBattleCursier::Build(void)

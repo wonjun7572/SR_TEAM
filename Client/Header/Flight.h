@@ -39,6 +39,8 @@ public:
 		m_vAngle = vAngle;
 		m_vDirection = vDir;
 	}
+	void			Random(void);
+	void			Set_Speed(_float fSpeed) { m_fSpeed = fSpeed; }
 
 	void			Set_Control() { m_bControl = !m_bControl; }
 	_bool			Get_Control() { return m_bControl; }
@@ -60,7 +62,10 @@ public:
 private:
 	HRESULT			Build(void);
 	void			Key_Input(const _float& fTimeDelta);
+
 	void			Look_Direction();
+	void			Look_Direction_Only_Y();
+
 	void			Fire_Bullet();
 	void			Bombing();
 	void			Move(const _float& fTimeDelta);
@@ -75,11 +80,12 @@ private:
 	_vec3			m_vAngle;
 	_float			m_Frame = 0.f;
 
+	vector<_vec3>	m_ShufflePos;
+	vector<_uint>	m_ShuffleSpeed;
+	_float			m_fSpeed;
+
 	_bool			m_bShuttle;
 	_bool			m_bShuttleCam;
-	int iA = 0;
-
-	vector<_vec3>	m_ShufflePos;
 
 	_int			m_iPosSet = -1;
 

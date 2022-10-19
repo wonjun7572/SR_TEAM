@@ -20,6 +20,9 @@ public:
 	void				SetOrdered(_bool bGetOrder) { m_bGetOrder = bGetOrder; }
 
 protected:
+	void				Set_On_Terrain(void);
+
+protected:
 	CTransform*			m_pTransform = nullptr;
 
 	CHitBox*			m_pHitBox = nullptr;
@@ -41,6 +44,7 @@ protected:
 	_bool				m_bOrdering = false;
 
 protected:
+	SUPPORTDROPID		m_DROP;
 	list<_tchar*>		m_TcharList;
 
 protected:

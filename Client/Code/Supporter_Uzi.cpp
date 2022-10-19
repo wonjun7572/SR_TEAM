@@ -722,7 +722,7 @@ void CSupporter_Uzi::DROP_Animation_Run(void)
 			Qtan->Delete_WorldVector();
 		}
 
-		if (vPosition.y >= 0.6f)
+		if (vPosition.y >= 2.f)
 			m_DROP = SPDROP_1;
 		else
 			m_DROP = SPDROP_2;

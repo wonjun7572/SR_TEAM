@@ -49,7 +49,6 @@ private:	//	애니메이션 관련
 	SNIPERSUPPORTIDLEID		m_IDLE;
 	SNIPERSUPPORTWALKID		m_WALK;
 	SNIPERSUPPORTATTACKID	m_ATTACK;
-	SUPPORTDROPID			m_DROP;
 
 public:
 	static CSupporter_Sniper*	Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3& vPos, _tchar* Name);

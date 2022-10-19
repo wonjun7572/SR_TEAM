@@ -48,7 +48,6 @@ private:	//	애니메이션 관련
 	SHOTGUNSUPPORTIDLEID	m_IDLE;
 	SHOTGUNSUPPORTWALKID	m_WALK;
 	SHOTGUNSUPPORTATTACKID	m_ATTACK;
-	SUPPORTDROPID			m_DROP;
 
 public:
 	static CSupporter_Shotgun* Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3& vPos, _tchar* Name);
