@@ -94,6 +94,8 @@ private:
 	_bool				m_bAnihilate_Second = true;
 	_bool				m_bAnihilate_Third = true;
 	_float				m_BeforeHp = 0.f;
+	_float				m_fInterval;
+	_float				 m_fFireAngle = 0.f;
 
 public:
 	static CKrakenBoss*	Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3& vPos, _tchar* Name);
