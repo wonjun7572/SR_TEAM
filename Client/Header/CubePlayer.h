@@ -16,7 +16,7 @@ class CDashCube;
 class CCartridgeParticle;
 class CTriggerParticle;
 class CTriggerFront;
-
+class CRoundEffect;
 
 class CCubePlayer : public CGameObject
 {
@@ -109,6 +109,8 @@ private:
 	void			Jump(void);
 	_bool			m_bJump = false;
 	_bool			m_bFirst = true;
+
+
 private:
 	HRESULT			Add_Component(void);
 	HRESULT			Lighting();
@@ -145,11 +147,17 @@ private: // 파티클관련 포인터입니다.
 	CDashCube*		m_pDashCube = nullptr;
 	CTriggerParticle* m_pTriggerParticle = nullptr;
 	CTriggerFront* m_pTriggerFront = nullptr;
+	CRoundEffect* m_pRoundEffect = nullptr;
 
 	CCartridgeParticle*		m_pCartridgeParticle = nullptr;
 
 private:
 	_float			m_fRed = 0.f;
+	_float			m_fBlue = 0.f;
+
+
+	_bool			m_bColorLighting = false;
+
 	_float			m_fLookAngle = 0.f;
 	_float			m_fDownAngle = 0.f;
 

@@ -26,7 +26,7 @@ public:
 private:
 	HRESULT					Add_Component(void);
 	HRESULT					Create_Item();
-
+	void					Sound();
 	CCubeCol*				m_pAnimationBox = nullptr;
 
 	_float					m_fFrame = 0.f;

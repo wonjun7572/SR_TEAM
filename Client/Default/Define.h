@@ -1,5 +1,8 @@
 #pragma once
 
+// Shader Name
+#define RCTEX_SHADER	L"Proto_ShaderRect"
+#define CUBETEX_SHADER	L"Proto_ShaderCube"
 
 // 컴포넌트 이름
 #define RCTEX_COMP	    L"Proto_RcTexCom"
@@ -79,6 +82,7 @@
 #define STAGE_CREATURE		L"STAGE_CREATURE_Layer"
 #define STAGE_FLIGHTPLAYER L"STAGE_PLAYERFLIGHT_Layer"
 #define STAGE_EXBULLET		L"STAGE_EXBULLET_Layer"
+#define STAGE_LASER		L"STAGE_LASER_Layer"
 
 #define STAGE_TENTACLE		L"STAGE_TENTACLE_Layer"
 

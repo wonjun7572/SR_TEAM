@@ -17,6 +17,7 @@
 #include "CartridgeParticle.h"
 #include "TriggerParticle.h"
 #include "TriggerFront.h"
+#include "RoundEffect.h"
 
 /*	
 CFlameEffect* m_pFlameEffectParticle = nullptr;

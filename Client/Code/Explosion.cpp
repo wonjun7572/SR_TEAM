@@ -91,7 +91,6 @@ HRESULT CExplosion::Add_Component(void)
 
 void CExplosion::Hit_Check_Player(void)
 {
-
 	_vec3 vPlayerPos;
 	m_pPlayerTransCom->Get_Info(INFO_POS, &vPlayerPos);
 	_vec3 vPlayerScale;
@@ -105,7 +104,6 @@ void CExplosion::Hit_Check_Player(void)
 		CCubePlayer* pPlayer = dynamic_cast<CCubePlayer*>(pLayer->Get_GameObject(L"PLAYER"));
 		pPlayer->KnuckDown(10.f, 15.f);
 	}
-	
 }
 
 void CExplosion::Hit_Check_Monster(void)

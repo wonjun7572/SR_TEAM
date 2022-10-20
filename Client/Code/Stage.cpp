@@ -137,7 +137,6 @@ HRESULT CStage::Ready_Scene(void)
 	FAILED_CHECK_RETURN(Ready_Layer_DestroyWall(STAGE_DESTORYWALL), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Layer_Skill(STAGE_SKILL), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Layer_SkillCruiser(STAGE_SKILLCRUISER), E_FAIL);
-
 	FAILED_CHECK_RETURN(Ready_Layer_Trap(STAGE_TRAP), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Layer_Supporter(STAGE_SUPPORTER), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Layer_PlayerBullet(STAGE_BULLETPLAYER), E_FAIL);
@@ -506,37 +505,70 @@ HRESULT CStage::Ready_Layer_Monster(const _tchar * pLayerTag)
 
 	CGameObject*      pGameObject = nullptr;
 
-	/*if (!vecFireMan.empty())
+	if (!vecFireMan.empty())
 	{
-	for (size_t i = 0; i < vecFireMan.size(); i++)
-	{
-	_tchar* szName = new _tchar[256]{};
-	wstring wName = L"Fireman_%d";
-	wsprintfW(szName, wName.c_str(), i);
-	NameList.push_back(szName);
-	pGameObject = CFireMan::Create(m_pGraphicDev, vecFireMan[i], szName);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
-	}
+		for (size_t i = 0; i < vecFireMan.size(); i++)
+		{
+			_tchar* szName = new _tchar[256]{};
+			wstring wName = L"Fireman_%d";
+			wsprintfW(szName, wName.c_str(), i);
+			NameList.push_back(szName);
+			vecFireMan[i].y += 0.5f;
+			pGameObject = CFireMan::Create(m_pGraphicDev, vecFireMan[i], szName);
+			NULL_CHECK_RETURN(pGameObject, E_FAIL);
+			FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+		}
 	}
 
 	if (!vecSlime.empty())
 	{
-	for (size_t i = 0; i < vecSlime.size(); i++)
+		for (size_t i = 0; i < vecSlime.size(); i++)
+		{
+			_tchar* szName = new _tchar[256]{};
+			wstring wName = L"Slime_%d";
+			wsprintfW(szName, wName.c_str(), i);
+			NameList.push_back(szName);
+			vecSlime[i].y += 0.5f;
+			pGameObject = CSlime::Create(m_pGraphicDev, vecSlime[i], szName);
+			NULL_CHECK_RETURN(pGameObject, E_FAIL);
+			FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+		}
+	}
+
+	if (!vecIllusioner.empty())
 	{
-	_tchar* szName = new _tchar[256]{};
-	wstring wName = L"Slime_%d";
-	wsprintfW(szName, wName.c_str(), i);
-	NameList.push_back(szName);
-	pGameObject = CSlime::Create(m_pGraphicDev, vecSlime[i], szName);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+		for (size_t i = 0; i < vecIllusioner.size(); i++)
+		{
+			_tchar* szName = new _tchar[256]{};
+			wstring wName = L"Illusioner_%d";
+			wsprintfW(szName, wName.c_str(), i);
+			NameList.push_back(szName);
+			vecIllusioner[i].y += 0.5f;
+			pGameObject = CIllusioner::Create(m_pGraphicDev, vecIllusioner[i], szName);
+			NULL_CHECK_RETURN(pGameObject, E_FAIL);
+			FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+		}
 	}
+
+	if (!vecZombie.empty())
+	{
+		for (size_t i = 0; i < vecZombie.size(); i++)
+		{
+			_tchar* szName = new _tchar[256]{};
+			wstring wName = L"Zombie_%d";
+			wsprintfW(szName, wName.c_str(), i);
+			NameList.push_back(szName);
+			vecZombie[i].y += 0.5f;
+			pGameObject = CZombie::Create(m_pGraphicDev, vecZombie[i], szName);
+			NULL_CHECK_RETURN(pGameObject, E_FAIL);
+			FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+		}
 	}
-	*/
-	pGameObject = CMiddleBoss::Create(m_pGraphicDev, _vec3(109.f, 0.6f, 10.f), L"MiddleBoss");
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+
+
+	//pGameObject = CMiddleBoss::Create(m_pGraphicDev, _vec3(109.f, 0.6f, 10.f), L"MiddleBoss");
+	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
 
 	//pGameObject = CKrakenBoss::Create(m_pGraphicDev, _vec3(10.f, 5.6f, 10.f), L"Kraken");
 	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
@@ -854,51 +886,52 @@ HRESULT CStage::Ready_Layer_Trap(const _tchar * pLayerTag)
 
 	CGameObject*      pGameObject = nullptr;
 
-	/*pGameObject = CTerret::Create(m_pGraphicDev, _vec3(14.f, 0.6f, 10.f), L"Terret");
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+	//pGameObject = CTerret::Create(m_pGraphicDev, _vec3(14.f, 0.6f, 10.f), L"Terret");
+	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
 
 	if (!vecThrone.empty())
 	{
-	for (size_t i = 0; i < vecThrone.size(); i++)
-	{
-	_tchar* szName = new _tchar[256]{};
-	wstring wName = L"Thorn_%d";
-	wsprintfW(szName, wName.c_str(), i);
-	NameList.push_back(szName);
-	pGameObject = CThorn::Create(m_pGraphicDev, vecThrone[i], szName);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
-	}
+		for (size_t i = 0; i < vecThrone.size(); i++)
+		{
+		_tchar* szName = new _tchar[256]{};
+		wstring wName = L"Thorn_%d";
+		wsprintfW(szName, wName.c_str(), i);
+		NameList.push_back(szName);
+		pGameObject = CThorn::Create(m_pGraphicDev, vecThrone[i], szName);
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+		}
 	}
 
 	if (!vecLava.empty())
 	{
-	for (size_t i = 0; i < vecLava.size(); i++)
-	{
-	_tchar* szName = new _tchar[256]{};
-	wstring wName = L"Magma_%d";
-	wsprintfW(szName, wName.c_str(), i);
-	NameList.push_back(szName);
-	pGameObject = CMagma::Create(m_pGraphicDev, vecLava[i], szName);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
-	}
+		for (size_t i = 0; i < vecLava.size(); i++)
+		{
+		_tchar* szName = new _tchar[256]{};
+		wstring wName = L"Magma_%d";
+		wsprintfW(szName, wName.c_str(), i);
+		NameList.push_back(szName);
+		pGameObject = CMagma::Create(m_pGraphicDev, vecLava[i], szName);
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+		}
 	}
 
 	if (!vecItem.empty())
 	{
-	for (size_t i = 0; i < vecItem.size(); i++)
-	{
-	_tchar* szName = new _tchar[256]{};
-	wstring wName = L"Magma_%d";
-	wsprintfW(szName, wName.c_str(), i);
-	NameList.push_back(szName);
-	pGameObject = CItemBox::Create(m_pGraphicDev, vecItem[i], szName);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+		for (size_t i = 0; i < vecItem.size(); i++)
+		{
+			_tchar* szName = new _tchar[256]{};
+			wstring wName = L"Item_%d";
+			wsprintfW(szName, wName.c_str(), i);
+			NameList.push_back(szName);
+			vecItem[i].y += 0.5f;
+			pGameObject = CItemBox::Create(m_pGraphicDev, vecItem[i], szName);
+			NULL_CHECK_RETURN(pGameObject, E_FAIL);
+			FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+		}
 	}
-	}*/
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
@@ -950,7 +983,7 @@ HRESULT CStage::Ready_Light(void)
 	ZeroMemory(&Light, sizeof(D3DLIGHT9));
 
 	Light.Type = D3DLIGHT_DIRECTIONAL;
-	Light.Diffuse = D3DXCOLOR(0.2f, 0.2f, 0.2f, 1.f);
+	Light.Diffuse = D3DXCOLOR(0.5f, 0.5f, 0.5f, 1.f);
 	Light.Specular = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
 	Light.Ambient = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
 	Light.Direction = _vec3(0.f, -1.f, 0.f);
@@ -969,32 +1002,30 @@ HRESULT CStage::Ready_Light(void)
 	D3DLIGHT9   Light2;
 	ZeroMemory(&Light2, sizeof(D3DLIGHT9));
 
-	Light2.Type = D3DLIGHT_POINT;
-	Light2.Position = _vec3(14.f, 0.6f, 10.f);
-	Light2.Range = 3.f;
-	Light2.Diffuse = D3DXCOLOR(0.5f, 0.5f, 0.5f, 0.5f);
-	Light2.Specular = D3DXCOLOR(0.5f, 0.5f, 0.5f, 0.5f);
-	Light2.Ambient = D3DXCOLOR(0.5f, 0.5f, 0.5f, 0.5f);
-	Light2.Direction = _vec3(1.f, -1.f, 0.f);
+	//Light2.Type = D3DLIGHT_POINT;
+	//Light2.Position = _vec3(14.f, 0.6f, 10.f);
+	//Light2.Range = 3.f;
+	//Light2.Diffuse = D3DXCOLOR(0.5f, 0.5f, 0.5f, 0.5f);
+	//Light2.Specular = D3DXCOLOR(0.5f, 0.5f, 0.5f, 0.5f);
+	//Light2.Ambient = D3DXCOLOR(0.5f, 0.5f, 0.5f, 0.5f);
 
-	//Light.Falloff =
-	//Light.Attenuation0 =
-	//Light.Attenuation1 =
-	//Light.Attenuation2 =
-	//Light.Theta
-	//Light.Phi =   
-	FAILED_CHECK_RETURN(Engine::Ready_Light(m_pGraphicDev, &Light2, 1), E_FAIL);
+	////Light.Falloff =
+	////Light.Attenuation0 =
+	////Light.Attenuation1 =
+	////Light.Attenuation2 =
+	////Light.Theta
+	////Light.Phi =   
+	//FAILED_CHECK_RETURN(Engine::Ready_Light(m_pGraphicDev, &Light2, 1), E_FAIL);
 
 	D3DLIGHT9   Light3;
 	ZeroMemory(&Light3, sizeof(D3DLIGHT9));
 
 	Light3.Type = D3DLIGHT_POINT;
 	Light3.Position = _vec3(14.f, 0.6f, 10.f);
-	Light3.Range = 3.f;
+	Light3.Range = 10.f;
 	Light3.Diffuse = D3DXCOLOR(0.5f, 0.5f, 0.5f, 0.5f);
 	Light3.Specular = D3DXCOLOR(0.5f, 0.5f, 0.5f, 0.5f);
 	Light3.Ambient = D3DXCOLOR(0.5f, 0.5f, 0.5f, 0.5f);
-	Light3.Direction = _vec3(1.f, -1.f, 0.f);
 
 	//Light.Falloff =
 	//Light.Attenuation0 =
@@ -1002,7 +1033,7 @@ HRESULT CStage::Ready_Light(void)
 	//Light.Attenuation2 =
 	//Light.Theta
 	//Light.Phi =   
-	FAILED_CHECK_RETURN(Engine::Ready_Light(m_pGraphicDev, &Light3, 2), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Light(m_pGraphicDev, &Light3, 1), E_FAIL);
 
 	return S_OK;
 }

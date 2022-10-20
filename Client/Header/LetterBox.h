@@ -17,7 +17,10 @@ public:
 public:
 	void			On_Switch() { m_bPowerSwitch = true; };
 	void			Off_Switch() { m_bPowerSwitch = false; };
-
+	void		Maker(CLetterBox* pInstance)
+	{
+		Engine::Add_GameObject(STAGE_UI, pInstance, m_strLetterName);
+	}
 private:
 	HRESULT			Add_Component(void);
 	void			Alpha_Effect();
@@ -28,6 +31,8 @@ private:
 	// 1 : 화면 오른쪽 위에서 점멸하는 문자열 (콤보 띄워주는 문자)
 	// 2 : 화면 아래쪽에서 직교투영된 텍스쳐 위에 떠오르는 문자열 (대화문, 퀘스트)
 	void			PlayerNotice();
+	void			BoxText();
+	void			Index1();
 	void			HitCombo();
 	void			DialogueBox();
 	
@@ -49,9 +54,7 @@ private:
 	_bool			m_bAlphaSwitch = false;
 	_int			m_iTextAmount;
 	_int			m_iIndex; 
-	
-	
-	
+
 public:
 	static CLetterBox*	Create(LPDIRECT3DDEVICE9 pGraphicDev, _tchar* tDialogue, _int iSize, _int iIndex);
 	virtual void Free(void) override;

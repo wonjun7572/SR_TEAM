@@ -93,8 +93,8 @@ HRESULT CTerrain::Set_Material(void)
 	D3DMATERIAL9 Material;
 	ZeroMemory(&Material, sizeof(D3DMATERIAL9));
 
-	Material.Diffuse = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
-	Material.Specular = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+	Material.Diffuse = D3DXCOLOR(0.3f, 0.3f, 0.3f, 1.f);
+	Material.Specular = D3DXCOLOR(0.2f, 0.2f, 0.2f, 1.f);
 	Material.Ambient = D3DXCOLOR(0.1f, 0.1f, 0.1f, 1.f);
 	Material.Emissive = D3DXCOLOR(0.f, 0.f, 0.f, 1.f);
 	Material.Power = 0.f;
