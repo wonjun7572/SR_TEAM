@@ -41,10 +41,10 @@ private:
 	HRESULT				Add_Component(void);
 
 private:
-	CCubeTex*			m_pBufferCom = nullptr;
-	CTransform*			m_pTransCom = nullptr;
+	CCubeTex*			m_pBufferCom  = nullptr;
+	CTransform*			m_pTransCom   = nullptr;
 	CTexture*			m_pTextureCom = nullptr;
-	
+	CShader*			m_pShaderCom  = nullptr;
 
 	CCalculator*		m_pCalculatorCom = nullptr;
 	//CProjectileParticle* m_pProjectileParicle = nullptr;

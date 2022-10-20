@@ -17,9 +17,9 @@ private:
 	HRESULT Add_Component();
 
 private:
-	CRcTex*   m_pBufferCom = nullptr;
+	CRcTex*		m_pBufferCom = nullptr;
 	CTransform* m_pTransCom = nullptr;
-	CTexture* m_pTextureCom = nullptr;
+	CTexture*	m_pTextureCom = nullptr;
 
 	_matrix m_ProjMatrix;
 

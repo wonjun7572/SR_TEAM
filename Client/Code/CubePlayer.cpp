@@ -61,10 +61,26 @@ HRESULT CCubePlayer::Ready_Object(void)
 
 _int CCubePlayer::Update_Object(const _float & fTimeDelta)
 {
-	m_fRed += fTimeDelta;
-	if (m_fRed >= 1.f)
-		m_fRed = 0.f;
+	if (!m_bColorLighting)
+	{
+		m_fRed += fTimeDelta;
+		if (m_fRed > 1.f)
+		{
+			m_bColorLighting = true;
+			m_fRed = 0.f;
+		}
+	}
 
+	if (m_bColorLighting)
+	{
+		m_fBlue += fTimeDelta;
+		if (m_fBlue > 1.f)
+		{
+			m_bColorLighting = false;
+			m_fBlue = 0.f;
+		}
+	}
+	
 	Update_NullCheck();
 
 	m_fTimeDelta = fTimeDelta;
@@ -1159,10 +1175,10 @@ HRESULT CCubePlayer::Lighting()
 
 	d3dLight.Diffuse.r = m_fRed;
 	d3dLight.Diffuse.g = 0.0f;
-	d3dLight.Diffuse.b = 0.0f;
-	d3dLight.Ambient.r = 1.0f;
-	d3dLight.Ambient.g = 1.0f;
-	d3dLight.Ambient.b = 1.0f;
+	d3dLight.Diffuse.b = m_fBlue;
+	d3dLight.Ambient.r = m_fRed;
+	d3dLight.Ambient.g = 0.0f;
+	d3dLight.Ambient.b = m_fBlue;
 	d3dLight.Specular.r = 1.0f;
 	d3dLight.Specular.g = 1.0f;
 	d3dLight.Specular.b = 1.0f;
@@ -1177,15 +1193,15 @@ HRESULT CCubePlayer::Lighting()
 	m_pTransform->Get_Info(INFO_POS, &vPos);
 
 	d3dLight.Position.x = vPos.x;
-	d3dLight.Position.y = vPos.y;
+	d3dLight.Position.y = vPos.y + 3.f;
 	d3dLight.Position.z = vPos.z;
 
 	// Don't attenuate.
-	d3dLight.Attenuation0 = 1.0f;
-	d3dLight.Range = 10.0f;
+	d3dLight.Attenuation0 = 0.5f;
+	d3dLight.Range = 50.0f;
 
 	// Set the property information for the first light.
-	FAILED_CHECK_RETURN(m_pGraphicDev->SetLight(2, &d3dLight),E_FAIL);
+	FAILED_CHECK_RETURN(m_pGraphicDev->SetLight(1, &d3dLight),E_FAIL);
 
 	return S_OK;
 }

@@ -43,12 +43,6 @@ _int CMainApp::Update_MainApp(const _float & fTimeDelta)
 		FAILED_CHECK_RETURN(m_pManagementClass->Set_Scene(pScene), E_FAIL);
 	}
 
-	/*_float fX = Get_DIMouseMove(DIMS_X);
-	_float fY = Get_DIMouseMove(DIMS_Y);
-	_float fZ = Get_DIMouseMove(DIMS_Z);
-
-	cout << fX << " " << fY << " " << fZ << endl;*/
-
 	// 툴 프레임 업데이트 
 	ImGui_ImplDX9_NewFrame();
 	ImGui_ImplWin32_NewFrame();

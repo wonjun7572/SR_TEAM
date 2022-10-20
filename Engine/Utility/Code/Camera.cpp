@@ -19,7 +19,6 @@ void Engine::CCamera::Free(void)
 
 void Engine::CCamera::LateUpdate_Object(void)
 {
-
 }
 
 Engine::_int Engine::CCamera::Update_Object(const _float& fTimeDelta)

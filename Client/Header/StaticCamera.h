@@ -61,7 +61,6 @@ private:
 	_bool			m_bChangePOV = false;
 	_float			m_fBombFrame = 0.f;
 
-
 	_int			m_iReverse = 1;
 	_float			m_fFrame = 0.f;
 	_float			m_fFlightFrame = 0.f;

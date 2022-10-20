@@ -104,7 +104,7 @@ HRESULT CStage::Ready_Scene(void)
 	if (FAILED(Engine::CScene::Ready_Scene()))
 		return E_FAIL;
 
-	CGameObject*		pGameObject = nullptr;
+	CGameObject*      pGameObject = nullptr;
 
 	_float fBGMSound = 1.f;
 	PlayBGM(L"Track_01.mp3", fBGMSound);
@@ -126,7 +126,7 @@ HRESULT CStage::Ready_Scene(void)
 	FAILED_CHECK_RETURN(Ready_Layer_GameLogic(STAGE_GAMELOGIC), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Layer_UI(STAGE_UI), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Layer_Character(STAGE_CHARACTER), E_FAIL);
-	FAILED_CHECK_RETURN(Ready_Layer_Monster(STAGE_MONSTER), E_FAIL);		//	몬스터 본체 관리 레이어
+	FAILED_CHECK_RETURN(Ready_Layer_Monster(STAGE_MONSTER), E_FAIL);      //   몬스터 본체 관리 레이어
 	FAILED_CHECK_RETURN(Ready_Layer_Mapping(STAGE_MAPPING), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Layer_Bullet(STAGE_BULLET), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Layer_Wall(STAGE_WALL), E_FAIL);
@@ -137,13 +137,10 @@ HRESULT CStage::Ready_Scene(void)
 	FAILED_CHECK_RETURN(Ready_Layer_DestroyWall(STAGE_DESTORYWALL), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Layer_Skill(STAGE_SKILL), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Layer_SkillCruiser(STAGE_SKILLCRUISER), E_FAIL);
-
 	FAILED_CHECK_RETURN(Ready_Layer_Trap(STAGE_TRAP), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Layer_Supporter(STAGE_SUPPORTER), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Layer_PlayerBullet(STAGE_BULLETPLAYER), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Layer_ExBullet(STAGE_EXBULLET), E_FAIL);
-	FAILED_CHECK_RETURN(Ready_Layer_Laser(STAGE_LASER), E_FAIL);
-
 	FAILED_CHECK_RETURN(Ready_Layer_Creature(STAGE_CREATURE), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Layer_PlayerFlight(STAGE_FLIGHTPLAYER), E_FAIL);
 
@@ -166,10 +163,10 @@ void CStage::Render_Scene(void)
 
 HRESULT CStage::Ready_Layer_Environment(const _tchar * pLayerTag)
 {
-	Engine::CLayer*		pLayer = Engine::CLayer::Create();
+	Engine::CLayer*      pLayer = Engine::CLayer::Create();
 	NULL_CHECK_RETURN(pLayer, E_FAIL);
 
-	CGameObject*		pGameObject = nullptr;
+	CGameObject*      pGameObject = nullptr;
 
 	pGameObject = CFlightSpot::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
@@ -194,10 +191,6 @@ HRESULT CStage::Ready_Layer_Environment(const _tchar * pLayerTag)
 	pGameObject = CShotParticle::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"ShotParticle", pGameObject), E_FAIL);
-	
-	pGameObject = CRoundEffect::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"RoundEffect", pGameObject), E_FAIL);
 
 	pGameObject = CTriggerParticle::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
@@ -267,14 +260,14 @@ HRESULT CStage::Ready_Layer_Environment(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"DashCube", pGameObject), E_FAIL);
 
-	pGameObject = CKey::Create(m_pGraphicDev, _vec3(20.f,0.6f,10.f), COLOR_BLUE);
+	pGameObject = CKey::Create(m_pGraphicDev, _vec3(20.f, 0.6f, 10.f), COLOR_BLUE);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"BLUEKEY", pGameObject), E_FAIL);
-	
+
 	pGameObject = CKey::Create(m_pGraphicDev, _vec3(24.f, 0.6f, 10.f), COLOR_RED);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"REDKEY", pGameObject), E_FAIL);
-	
+
 	pGameObject = CKey::Create(m_pGraphicDev, _vec3(28.f, 0.6f, 10.f), COLOR_YELLOW);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"YELLOWKEY", pGameObject), E_FAIL);
@@ -290,10 +283,10 @@ HRESULT CStage::Ready_Layer_Environment(const _tchar * pLayerTag)
 
 HRESULT CStage::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 {
-	Engine::CLayer*		pLayer = Engine::CLayer::Create();
+	Engine::CLayer*      pLayer = Engine::CLayer::Create();
 	NULL_CHECK_RETURN(pLayer, E_FAIL);
 
-	CGameObject*		pGameObject = nullptr;
+	CGameObject*      pGameObject = nullptr;
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
@@ -302,10 +295,10 @@ HRESULT CStage::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 
 HRESULT CStage::Ready_Layer_UI(const _tchar * pLayerTag)
 {
-	Engine::CLayer*		pLayer = Engine::CLayer::Create();
+	Engine::CLayer*      pLayer = Engine::CLayer::Create();
 	NULL_CHECK_RETURN(pLayer, E_FAIL);
 
-	CGameObject*		pGameObject = nullptr;
+	CGameObject*      pGameObject = nullptr;
 
 	pGameObject = CPlayerUI::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
@@ -366,13 +359,13 @@ HRESULT CStage::Ready_Layer_UI(const _tchar * pLayerTag)
 
 HRESULT CStage::Ready_Layer_Wall(const _tchar * pLayerTag)
 {
-	Engine::CLayer*		pLayer = Engine::CLayer::Create();
+	Engine::CLayer*      pLayer = Engine::CLayer::Create();
 	NULL_CHECK_RETURN(pLayer, E_FAIL);
 
-	CGameObject*		pGameObject = nullptr;
+	CGameObject*      pGameObject = nullptr;
 
 	HANDLE      hFile = CreateFile(L"../../Data/Map1.dat",      // 파일의 경로와 이름
-		GENERIC_READ,									 // 파일 접근 모드 (GENERIC_WRITE : 쓰기 전용, GENERIC_READ : 읽기 전용)
+		GENERIC_READ,                            // 파일 접근 모드 (GENERIC_WRITE : 쓰기 전용, GENERIC_READ : 읽기 전용)
 		NULL,               // 공유 방식(파일이 열려있는 상태에서 다른 프로세스가 오픈할 때 허용할 것인가)    
 		NULL,               // 보안 속성(NULL을 지정하면 기본값 상태)
 		OPEN_EXISTING,         // CREATE_ALWAYS : 파일이 없다면 생성, 있다면 덮어쓰기, OPEN_EXISTING  : 파일이 있을 경우에만 열기
@@ -387,7 +380,7 @@ HRESULT CStage::Ready_Layer_Wall(const _tchar * pLayerTag)
 	DWORD   dwByte = 0;
 
 	_vec3   vRight, vUp, vLook, vPos, vScale, vAngle;
-	_int	iDrawIndex = 0;
+	_int   iDrawIndex = 0;
 	CLayer* pMyLayer = nullptr;
 
 	while (true)
@@ -437,7 +430,7 @@ HRESULT CStage::Ready_Layer_Wall(const _tchar * pLayerTag)
 			wstring wName = L"CubeShop_%d";
 			wsprintfW(szName, wName.c_str(), i);
 			NameList.push_back(szName);
-			pGameObject = CCubeShop::Create(m_pGraphicDev, vecShop[i]+ vShop);
+			pGameObject = CCubeShop::Create(m_pGraphicDev, vecShop[i] + vShop);
 			NULL_CHECK_RETURN(pGameObject, E_FAIL);
 			FAILED_CHECK_RETURN(pLayer->Add_GameObject(szName, pGameObject), E_FAIL);
 		}
@@ -450,52 +443,52 @@ HRESULT CStage::Ready_Layer_Wall(const _tchar * pLayerTag)
 
 HRESULT CStage::Ready_Layer_Character(const _tchar * pLayerTag)
 {
-	Engine::CLayer*		pLayer = Engine::CLayer::Create();
+	Engine::CLayer*      pLayer = Engine::CLayer::Create();
 	NULL_CHECK_RETURN(pLayer, E_FAIL);
 
-	CGameObject*		pGameObject = nullptr;
+	CGameObject*      pGameObject = nullptr;
 
-	//	머리
+	//   머리
 	pGameObject = CCubeHead::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"HEAD", pGameObject), E_FAIL);
-	//	몸통
+	//   몸통
 	pGameObject = CCubeBody::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"BODY", pGameObject), E_FAIL);
-	//	왼팔
+	//   왼팔
 	pGameObject = CCubeArm::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"L_ARM", pGameObject), E_FAIL);
-	//	오른팔
+	//   오른팔
 	pGameObject = CCubeArm::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"R_ARM", pGameObject), E_FAIL);
-	//	왼다리
+	//   왼다리
 	pGameObject = CCubeLeg::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"L_LEG", pGameObject), E_FAIL);
-	//	오른다리
+	//   오른다리
 	pGameObject = CCubeLeg::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"R_LEG", pGameObject), E_FAIL);
-	//	왼손
+	//   왼손
 	pGameObject = CCubeHand::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"L_HAND", pGameObject), E_FAIL);
-	//	오른손
+	//   오른손
 	pGameObject = CCubeHand::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"R_HAND", pGameObject), E_FAIL);
-	//	왼발
+	//   왼발
 	pGameObject = CCubeFoot::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"L_FOOT", pGameObject), E_FAIL);
-	//	오른발
+	//   오른발
 	pGameObject = CCubeFoot::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"R_FOOT", pGameObject), E_FAIL);
-	//	조립과 히트박스
+	//   조립과 히트박스
 	pGameObject = CCubePlayer::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"PLAYER", pGameObject), E_FAIL);
@@ -507,10 +500,10 @@ HRESULT CStage::Ready_Layer_Character(const _tchar * pLayerTag)
 
 HRESULT CStage::Ready_Layer_Monster(const _tchar * pLayerTag)
 {
-	Engine::CLayer*		pLayer = Engine::CLayer::Create();
+	Engine::CLayer*      pLayer = Engine::CLayer::Create();
 	NULL_CHECK_RETURN(pLayer, E_FAIL);
 
-	CGameObject*		pGameObject = nullptr;
+	CGameObject*      pGameObject = nullptr;
 
 	if (!vecFireMan.empty())
 	{
@@ -520,6 +513,7 @@ HRESULT CStage::Ready_Layer_Monster(const _tchar * pLayerTag)
 			wstring wName = L"Fireman_%d";
 			wsprintfW(szName, wName.c_str(), i);
 			NameList.push_back(szName);
+			vecFireMan[i].y += 0.5f;
 			pGameObject = CFireMan::Create(m_pGraphicDev, vecFireMan[i], szName);
 			NULL_CHECK_RETURN(pGameObject, E_FAIL);
 			FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
@@ -534,16 +528,48 @@ HRESULT CStage::Ready_Layer_Monster(const _tchar * pLayerTag)
 			wstring wName = L"Slime_%d";
 			wsprintfW(szName, wName.c_str(), i);
 			NameList.push_back(szName);
+			vecSlime[i].y += 0.5f;
 			pGameObject = CSlime::Create(m_pGraphicDev, vecSlime[i], szName);
 			NULL_CHECK_RETURN(pGameObject, E_FAIL);
 			FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
 		}
 	}
 
-	pGameObject = CMiddleBoss::Create(m_pGraphicDev, _vec3(109.f, 0.6f, 10.f), L"MiddleBoss");
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
-	
+	if (!vecIllusioner.empty())
+	{
+		for (size_t i = 0; i < vecIllusioner.size(); i++)
+		{
+			_tchar* szName = new _tchar[256]{};
+			wstring wName = L"Illusioner_%d";
+			wsprintfW(szName, wName.c_str(), i);
+			NameList.push_back(szName);
+			vecIllusioner[i].y += 0.5f;
+			pGameObject = CIllusioner::Create(m_pGraphicDev, vecIllusioner[i], szName);
+			NULL_CHECK_RETURN(pGameObject, E_FAIL);
+			FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+		}
+	}
+
+	if (!vecZombie.empty())
+	{
+		for (size_t i = 0; i < vecZombie.size(); i++)
+		{
+			_tchar* szName = new _tchar[256]{};
+			wstring wName = L"Zombie_%d";
+			wsprintfW(szName, wName.c_str(), i);
+			NameList.push_back(szName);
+			vecZombie[i].y += 0.5f;
+			pGameObject = CZombie::Create(m_pGraphicDev, vecZombie[i], szName);
+			NULL_CHECK_RETURN(pGameObject, E_FAIL);
+			FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+		}
+	}
+
+
+	//pGameObject = CMiddleBoss::Create(m_pGraphicDev, _vec3(109.f, 0.6f, 10.f), L"MiddleBoss");
+	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+
 	//pGameObject = CKrakenBoss::Create(m_pGraphicDev, _vec3(10.f, 5.6f, 10.f), L"Kraken");
 	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	//FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
@@ -554,12 +580,12 @@ HRESULT CStage::Ready_Layer_Monster(const _tchar * pLayerTag)
 	return S_OK;
 }
 
-HRESULT	CStage::Ready_Layer_Bullet(const _tchar* pLayerTag)
+HRESULT   CStage::Ready_Layer_Bullet(const _tchar* pLayerTag)
 {
-	Engine::CLayer*		pLayer = Engine::CLayer::Create();
+	Engine::CLayer*      pLayer = Engine::CLayer::Create();
 	NULL_CHECK_RETURN(pLayer, E_FAIL);
 
-	CGameObject*		pGameObject = nullptr;
+	CGameObject*      pGameObject = nullptr;
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
@@ -568,10 +594,10 @@ HRESULT	CStage::Ready_Layer_Bullet(const _tchar* pLayerTag)
 
 HRESULT CStage::Ready_Layer_PlayerBullet(const _tchar * pLayerTag)
 {
-	Engine::CLayer*		pLayer = Engine::CLayer::Create();
+	Engine::CLayer*      pLayer = Engine::CLayer::Create();
 	NULL_CHECK_RETURN(pLayer, E_FAIL);
 
-	CGameObject*		pGameObject = nullptr;
+	CGameObject*      pGameObject = nullptr;
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
@@ -580,21 +606,10 @@ HRESULT CStage::Ready_Layer_PlayerBullet(const _tchar * pLayerTag)
 
 HRESULT CStage::Ready_Layer_ExBullet(const _tchar * pLayerTag)
 {
-	Engine::CLayer*		pLayer = Engine::CLayer::Create();
+	Engine::CLayer*      pLayer = Engine::CLayer::Create();
 	NULL_CHECK_RETURN(pLayer, E_FAIL);
 
-	CGameObject*		pGameObject = nullptr;
-
-	m_mapLayer.insert({ pLayerTag, pLayer });
-
-	return S_OK;
-}
-HRESULT CStage::Ready_Layer_Laser(const _tchar * pLayerTag)
-{
-	Engine::CLayer*		pLayer = Engine::CLayer::Create();
-	NULL_CHECK_RETURN(pLayer, E_FAIL);
-
-	CGameObject*		pGameObject = nullptr;
+	CGameObject*      pGameObject = nullptr;
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
@@ -603,10 +618,10 @@ HRESULT CStage::Ready_Layer_Laser(const _tchar * pLayerTag)
 
 HRESULT CStage::Ready_Layer_Mapping(const _tchar * pLayerTag)
 {
-	Engine::CLayer*		pLayer = Engine::CLayer::Create();
+	Engine::CLayer*      pLayer = Engine::CLayer::Create();
 	NULL_CHECK_RETURN(pLayer, E_FAIL);
 
-	CGameObject*		pGameObject = nullptr;
+	CGameObject*      pGameObject = nullptr;
 
 	pGameObject = CBaseMapping::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
@@ -619,10 +634,10 @@ HRESULT CStage::Ready_Layer_Mapping(const _tchar * pLayerTag)
 
 HRESULT CStage::Ready_Layer_Gun(const _tchar * pLayerTag)
 {
-	Engine::CLayer*		pLayer = Engine::CLayer::Create();
+	Engine::CLayer*      pLayer = Engine::CLayer::Create();
 	NULL_CHECK_RETURN(pLayer, E_FAIL);
 
-	CGameObject*		pGameObject = nullptr;
+	CGameObject*      pGameObject = nullptr;
 
 	pGameObject = CUzi::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
@@ -719,10 +734,10 @@ HRESULT CStage::Ready_Layer_Gun(const _tchar * pLayerTag)
 
 HRESULT CStage::Ready_Layer_Item(const _tchar * pLayerTag)
 {
-	Engine::CLayer*		pLayer = Engine::CLayer::Create();
+	Engine::CLayer*      pLayer = Engine::CLayer::Create();
 	NULL_CHECK_RETURN(pLayer, E_FAIL);
 
-	CGameObject*		pGameObject = nullptr;
+	CGameObject*      pGameObject = nullptr;
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
@@ -731,16 +746,16 @@ HRESULT CStage::Ready_Layer_Item(const _tchar * pLayerTag)
 
 HRESULT CStage::Ready_Layer_GunItem(const _tchar * pLayerTag)
 {
-	Engine::CLayer*		pLayer = Engine::CLayer::Create();
+	Engine::CLayer*      pLayer = Engine::CLayer::Create();
 	NULL_CHECK_RETURN(pLayer, E_FAIL);
 
-	CGameObject*		pGameObject = nullptr;
+	CGameObject*      pGameObject = nullptr;
 
 	if (!vecGun.empty())
 	{
 		_vec3 vTemp = _vec3(1.f, 0.5f, 0.f);
 
-		pGameObject = CGetShotgun::Create(m_pGraphicDev, vecGun[1]+ vTemp);
+		pGameObject = CGetShotgun::Create(m_pGraphicDev, vecGun[1] + vTemp);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"GetShotgun", pGameObject), E_FAIL);
 
@@ -760,10 +775,10 @@ HRESULT CStage::Ready_Layer_GunItem(const _tchar * pLayerTag)
 
 HRESULT CStage::Ready_Layer_DestroyWall(const _tchar * pLayerTag)
 {
-	Engine::CLayer*		pLayer = Engine::CLayer::Create();
+	Engine::CLayer*      pLayer = Engine::CLayer::Create();
 	NULL_CHECK_RETURN(pLayer, E_FAIL);
 
-	CGameObject*		pGameObject = nullptr;
+	CGameObject*      pGameObject = nullptr;
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
@@ -772,11 +787,11 @@ HRESULT CStage::Ready_Layer_DestroyWall(const _tchar * pLayerTag)
 
 HRESULT CStage::Ready_Layer_Skill(const _tchar * pLayerTag)
 {
-	Engine::CLayer*		pLayer = Engine::CLayer::Create();
+	Engine::CLayer*      pLayer = Engine::CLayer::Create();
 	NULL_CHECK_RETURN(pLayer, E_FAIL);
 
-	CGameObject*		pGameObject = nullptr;
-	
+	CGameObject*      pGameObject = nullptr;
+
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
@@ -785,10 +800,10 @@ HRESULT CStage::Ready_Layer_Skill(const _tchar * pLayerTag)
 
 HRESULT CStage::Ready_Layer_SkillCruiser(const _tchar * pLayerTag)
 {
-	Engine::CLayer*		pLayer = Engine::CLayer::Create();
+	Engine::CLayer*      pLayer = Engine::CLayer::Create();
 	NULL_CHECK_RETURN(pLayer, E_FAIL);
 
-	CGameObject*		pGameObject = nullptr;
+	CGameObject*      pGameObject = nullptr;
 
 	pGameObject = CBattleCursier::Create(m_pGraphicDev, _vec3(10, 20, -10), _vec3(0, 0, 1), L"BattleCruiser_Skill");
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
@@ -802,10 +817,10 @@ HRESULT CStage::Ready_Layer_SkillCruiser(const _tchar * pLayerTag)
 
 HRESULT CStage::Ready_Layer_Creature(const _tchar * pLayerTag)
 {
-	Engine::CLayer*		pLayer = Engine::CLayer::Create();
+	Engine::CLayer*      pLayer = Engine::CLayer::Create();
 	NULL_CHECK_RETURN(pLayer, E_FAIL);
 
-	CGameObject*		pGameObject = nullptr;
+	CGameObject*      pGameObject = nullptr;
 
 	for (int i = 0; i < 10; ++i)
 	{
@@ -842,10 +857,10 @@ HRESULT CStage::Ready_Layer_Creature(const _tchar * pLayerTag)
 
 HRESULT CStage::Ready_Layer_Player(const _tchar * pLayerTag)
 {
-	Engine::CLayer*		pLayer = Engine::CLayer::Create();
+	Engine::CLayer*      pLayer = Engine::CLayer::Create();
 	NULL_CHECK_RETURN(pLayer, E_FAIL);
 
-	CGameObject*		pGameObject = nullptr;
+	CGameObject*      pGameObject = nullptr;
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
@@ -854,10 +869,10 @@ HRESULT CStage::Ready_Layer_Player(const _tchar * pLayerTag)
 
 HRESULT CStage::Ready_Layer_Slime(const _tchar * pLayerTag)
 {
-	Engine::CLayer*		pLayer = Engine::CLayer::Create();
+	Engine::CLayer*      pLayer = Engine::CLayer::Create();
 	NULL_CHECK_RETURN(pLayer, E_FAIL);
 
-	CGameObject*		pGameObject = nullptr;
+	CGameObject*      pGameObject = nullptr;
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
@@ -866,26 +881,26 @@ HRESULT CStage::Ready_Layer_Slime(const _tchar * pLayerTag)
 
 HRESULT CStage::Ready_Layer_Trap(const _tchar * pLayerTag)
 {
-	Engine::CLayer*		pLayer = Engine::CLayer::Create();
+	Engine::CLayer*      pLayer = Engine::CLayer::Create();
 	NULL_CHECK_RETURN(pLayer, E_FAIL);
 
-	CGameObject*		pGameObject = nullptr;
+	CGameObject*      pGameObject = nullptr;
 
-	/*pGameObject = CTerret::Create(m_pGraphicDev, _vec3(14.f, 0.6f, 10.f), L"Terret");
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+	//pGameObject = CTerret::Create(m_pGraphicDev, _vec3(14.f, 0.6f, 10.f), L"Terret");
+	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
 
 	if (!vecThrone.empty())
 	{
 		for (size_t i = 0; i < vecThrone.size(); i++)
 		{
-			_tchar* szName = new _tchar[256]{};
-			wstring wName = L"Thorn_%d";
-			wsprintfW(szName, wName.c_str(), i);
-			NameList.push_back(szName);
-			pGameObject = CThorn::Create(m_pGraphicDev, vecThrone[i], szName);
-			NULL_CHECK_RETURN(pGameObject, E_FAIL);
-			FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+		_tchar* szName = new _tchar[256]{};
+		wstring wName = L"Thorn_%d";
+		wsprintfW(szName, wName.c_str(), i);
+		NameList.push_back(szName);
+		pGameObject = CThorn::Create(m_pGraphicDev, vecThrone[i], szName);
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
 		}
 	}
 
@@ -893,29 +908,30 @@ HRESULT CStage::Ready_Layer_Trap(const _tchar * pLayerTag)
 	{
 		for (size_t i = 0; i < vecLava.size(); i++)
 		{
-			_tchar* szName = new _tchar[256]{};
-			wstring wName = L"Magma_%d";
-			wsprintfW(szName, wName.c_str(), i);
-			NameList.push_back(szName);
-			pGameObject = CMagma::Create(m_pGraphicDev, vecLava[i], szName);
-			NULL_CHECK_RETURN(pGameObject, E_FAIL);
-			FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+		_tchar* szName = new _tchar[256]{};
+		wstring wName = L"Magma_%d";
+		wsprintfW(szName, wName.c_str(), i);
+		NameList.push_back(szName);
+		pGameObject = CMagma::Create(m_pGraphicDev, vecLava[i], szName);
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
 		}
 	}
-	
+
 	if (!vecItem.empty())
 	{
 		for (size_t i = 0; i < vecItem.size(); i++)
 		{
 			_tchar* szName = new _tchar[256]{};
-			wstring wName = L"Magma_%d";
+			wstring wName = L"Item_%d";
 			wsprintfW(szName, wName.c_str(), i);
 			NameList.push_back(szName);
+			vecItem[i].y += 0.5f;
 			pGameObject = CItemBox::Create(m_pGraphicDev, vecItem[i], szName);
 			NULL_CHECK_RETURN(pGameObject, E_FAIL);
 			FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
 		}
-	}*/
+	}
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
@@ -924,10 +940,10 @@ HRESULT CStage::Ready_Layer_Trap(const _tchar * pLayerTag)
 
 HRESULT CStage::Ready_Layer_Supporter(const _tchar * pLayerTag)
 {
-	Engine::CLayer*		pLayer = Engine::CLayer::Create();
+	Engine::CLayer*      pLayer = Engine::CLayer::Create();
 	NULL_CHECK_RETURN(pLayer, E_FAIL);
 
-	CGameObject*		pGameObject = nullptr;
+	CGameObject*      pGameObject = nullptr;
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
@@ -936,10 +952,10 @@ HRESULT CStage::Ready_Layer_Supporter(const _tchar * pLayerTag)
 
 HRESULT CStage::Ready_Layer_PlayerFlight(const _tchar * pLayerTag)
 {
-	Engine::CLayer*		pLayer = Engine::CLayer::Create();
+	Engine::CLayer*      pLayer = Engine::CLayer::Create();
 	NULL_CHECK_RETURN(pLayer, E_FAIL);
 
-	CGameObject*		pGameObject = nullptr;
+	CGameObject*      pGameObject = nullptr;
 
 	pGameObject = CFlight::Create(m_pGraphicDev, _vec3(0, 30, 100), _vec3(0, 0, -2), L"FLIGHTPLAYER_ANI");
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
@@ -963,63 +979,61 @@ HRESULT CStage::Ready_Proto(void)
 
 HRESULT CStage::Ready_Light(void)
 {
-	D3DLIGHT9	Light;
+	D3DLIGHT9   Light;
 	ZeroMemory(&Light, sizeof(D3DLIGHT9));
 
 	Light.Type = D3DLIGHT_DIRECTIONAL;
-	Light.Diffuse = D3DXCOLOR(0.2f, 0.2f, 0.2f, 1.f);
+	Light.Diffuse = D3DXCOLOR(0.5f, 0.5f, 0.5f, 1.f);
 	Light.Specular = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
 	Light.Ambient = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
 	Light.Direction = _vec3(0.f, -1.f, 0.f);
 
-	/*	Light.Position =
-		Light.Range =
-		Light.Falloff =
-		Light.Attenuation0 =
-		Light.Attenuation1 =
-		Light.Attenuation2 =
-		Light.Theta
-		Light.Phi =
+	/*   Light.Position =
+	Light.Range =
+	Light.Falloff =
+	Light.Attenuation0 =
+	Light.Attenuation1 =
+	Light.Attenuation2 =
+	Light.Theta
+	Light.Phi =
 	*/
 	FAILED_CHECK_RETURN(Engine::Ready_Light(m_pGraphicDev, &Light, 0), E_FAIL);
 
-	D3DLIGHT9	Light2;
+	D3DLIGHT9   Light2;
 	ZeroMemory(&Light2, sizeof(D3DLIGHT9));
 
-	Light2.Type = D3DLIGHT_POINT;
-	Light2.Position = _vec3(14.f, 0.6f, 10.f);
-	Light2.Range = 3.f;
-	Light2.Diffuse = D3DXCOLOR(0.5f, 0.5f, 0.5f, 0.5f);
-	Light2.Specular = D3DXCOLOR(0.5f, 0.5f, 0.5f, 0.5f);
-	Light2.Ambient = D3DXCOLOR(0.5f, 0.5f, 0.5f, 0.5f);
-	Light2.Direction = _vec3(1.f, -1.f, 0.f);
+	//Light2.Type = D3DLIGHT_POINT;
+	//Light2.Position = _vec3(14.f, 0.6f, 10.f);
+	//Light2.Range = 3.f;
+	//Light2.Diffuse = D3DXCOLOR(0.5f, 0.5f, 0.5f, 0.5f);
+	//Light2.Specular = D3DXCOLOR(0.5f, 0.5f, 0.5f, 0.5f);
+	//Light2.Ambient = D3DXCOLOR(0.5f, 0.5f, 0.5f, 0.5f);
 
-	//Light.Falloff =
-	//Light.Attenuation0 =
-	//Light.Attenuation1 =
-	//Light.Attenuation2 =
-	//Light.Theta
-	//Light.Phi =	
-	FAILED_CHECK_RETURN(Engine::Ready_Light(m_pGraphicDev, &Light2, 1), E_FAIL);
+	////Light.Falloff =
+	////Light.Attenuation0 =
+	////Light.Attenuation1 =
+	////Light.Attenuation2 =
+	////Light.Theta
+	////Light.Phi =   
+	//FAILED_CHECK_RETURN(Engine::Ready_Light(m_pGraphicDev, &Light2, 1), E_FAIL);
 
-	D3DLIGHT9	Light3;
+	D3DLIGHT9   Light3;
 	ZeroMemory(&Light3, sizeof(D3DLIGHT9));
 
 	Light3.Type = D3DLIGHT_POINT;
 	Light3.Position = _vec3(14.f, 0.6f, 10.f);
-	Light3.Range = 3.f;
+	Light3.Range = 10.f;
 	Light3.Diffuse = D3DXCOLOR(0.5f, 0.5f, 0.5f, 0.5f);
 	Light3.Specular = D3DXCOLOR(0.5f, 0.5f, 0.5f, 0.5f);
 	Light3.Ambient = D3DXCOLOR(0.5f, 0.5f, 0.5f, 0.5f);
-	Light3.Direction = _vec3(1.f, -1.f, 0.f);
 
 	//Light.Falloff =
 	//Light.Attenuation0 =
 	//Light.Attenuation1 =
 	//Light.Attenuation2 =
 	//Light.Theta
-	//Light.Phi =	
-	FAILED_CHECK_RETURN(Engine::Ready_Light(m_pGraphicDev, &Light3, 2), E_FAIL);
+	//Light.Phi =   
+	FAILED_CHECK_RETURN(Engine::Ready_Light(m_pGraphicDev, &Light3, 1), E_FAIL);
 
 	return S_OK;
 }
@@ -1027,7 +1041,7 @@ HRESULT CStage::Ready_Light(void)
 HRESULT CStage::Load_Position(OBJECT_ID eID, wstring strDirectory)
 {
 	HANDLE      hFile = CreateFile(strDirectory.c_str(),      // 파일의 경로와 이름
-		GENERIC_READ,									 // 파일 접근 모드 (GENERIC_WRITE : 쓰기 전용, GENERIC_READ : 읽기 전용)
+		GENERIC_READ,                            // 파일 접근 모드 (GENERIC_WRITE : 쓰기 전용, GENERIC_READ : 읽기 전용)
 		NULL,               // 공유 방식(파일이 열려있는 상태에서 다른 프로세스가 오픈할 때 허용할 것인가)    
 		NULL,               // 보안 속성(NULL을 지정하면 기본값 상태)
 		OPEN_EXISTING,         // CREATE_ALWAYS : 파일이 없다면 생성, 있다면 덮어쓰기, OPEN_EXISTING  : 파일이 있을 경우에만 열기
@@ -1095,7 +1109,7 @@ HRESULT CStage::Load_Position(OBJECT_ID eID, wstring strDirectory)
 
 CStage * CStage::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
-	CStage *	pInstance = new CStage(pGraphicDev);
+	CStage *   pInstance = new CStage(pGraphicDev);
 
 	if (FAILED(pInstance->Ready_Scene()))
 	{

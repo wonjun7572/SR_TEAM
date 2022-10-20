@@ -98,6 +98,14 @@ void CTexture::Set_Texture(const _uint & iIndex)
 	m_pGraphicDev->SetTexture(0, m_vecTexture[iIndex]);
 }
 
+void CTexture::Set_Texture(CShader * pShaderCom, D3DXHANDLE hHandle, const _uint & iIndex)
+{
+	if (nullptr == pShaderCom)
+		return;
+
+	pShaderCom->Set_Texture(hHandle, m_vecTexture[iIndex]);
+}
+
 const D3DXIMAGE_INFO & CTexture::Get_ImageInfo(const _uint & iIndex) const
 {
 	if (iIndex < 0 || iIndex >= m_vecImageInfo.size())

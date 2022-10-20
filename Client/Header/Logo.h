@@ -7,7 +7,7 @@ class CPlayButton;
 class COptionButton;
 class CExitButton;
 class CLogoUI;
-
+class CLoadingBar;
 class CLogo : public Engine::CScene
 {
 private:
@@ -32,10 +32,13 @@ private:
 	COptionButton*    m_OptionButton = nullptr;
 	CExitButton*      m_ExitButton = nullptr;
 	CLogoUI*          m_LogoUI = nullptr;
-
+	CLoadingBar*	  m_pLoadingBar = nullptr;
 	_bool            m_bWireFrame = false;
 
 	wstring			 m_strPB;
+
+	_float			m_Min = 0;
+	_float			m_Max = 0;
 public:
 	static CLogo*      Create(LPDIRECT3DDEVICE9 pGraphicDev);
 

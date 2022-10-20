@@ -4,8 +4,10 @@
 #include "LetterBox.h"
 #include "Export_Function.h"
 #include "CubePlayer.h"
+#include "StaticCamera.h"
 
 static _int m_iMappingCnt = 0;
+static _int m_iLetterCnt = 0;
 
 CTestCube::CTestCube(LPDIRECT3DDEVICE9 pGraphicDev) : CGameObject(pGraphicDev)
 
@@ -42,7 +44,8 @@ _int CTestCube::Update_Object(const _float& fTimeDelta)
 		m_pStaticCam->CameraShaking();
 		return -1;
 	}
-
+	_vec3 vPos;
+	m_pTransCom->Get_Info(INFO_POS, &vPos);
 	if (Engine::Get_Scene()->Get_SceneId() == STAGE_SCENE)
 	{
 		Update_NullCheck();
@@ -85,16 +88,49 @@ _int CTestCube::Update_Object(const _float& fTimeDelta)
 
 void CTestCube::Render_Object()
 {
-	if (m_bWireFrame)
-		m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+#pragma region 쉐이더
+	//CCamera* pCam = dynamic_cast<CCamera*>(Get_GameObject(STAGE_ENVIRONMENT, L"StaticCamera"));
+	//_vec4 vCamPos = { pCam->GetEye().x,pCam->GetEye().y,pCam->GetEye().z, 1.f };
+	//_vec4 vLightPos = { 50.f, 50.f, -50.f, 1.f };
+	//D3DXVECTOR4      gLightColor(0.7f, 0.7f, 1.f, 1.f);
 
+	//_matrix         matWorld, matView, matProj;
+	//matWorld = *m_pTransCom->Get_WorldMatrixPointer();
+	//m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
+	//m_pGraphicDev->GetTransform(D3DTS_PROJECTION, &matProj);
+
+	//D3DXMatrixTranspose(&matWorld, &matWorld);
+	//D3DXMatrixTranspose(&matView, &matView);
+	//D3DXMatrixTranspose(&matProj, &matProj);
+
+	//if (FAILED(m_pShaderCom->Set_RawValue("g_WorldMatrix", matWorld, sizeof(_matrix))))
+	//	return;
+	//if (FAILED(m_pShaderCom->Set_RawValue("g_ViewMatrix", &matView, sizeof(_matrix))))
+	//	return;
+	//if (FAILED(m_pShaderCom->Set_RawValue("g_ProjMatrix", &matProj, sizeof(_matrix))))
+	//	return;
+	//if (FAILED(m_pShaderCom->Set_RawValue("gWorldLightPosition", &vLightPos, sizeof(_vec4))))
+	//	return;
+	//if (FAILED(m_pShaderCom->Set_RawValue("gWorldCameraPosition", &vCamPos, sizeof(_vec4))))
+	//	return;
+	//if (FAILED(m_pShaderCom->Set_RawValue("gLightColor", &gLightColor, sizeof(_vec4))))
+	//	return;
+
+	//m_pTextureCom->Set_Texture(m_pShaderCom, "g_DefaultTexture", m_iTexIndex);
+
+	//m_pShaderCom->Begin_Shader(0);
+
+	//m_pBufferCom->Render_Buffer();
+
+	//m_pShaderCom->End_Shader();
+
+	//if (m_bWireFrame)
+	//	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+#pragma endregion
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransCom->Get_WorldMatrixPointer());
-	m_pTextureCom->Set_Texture(m_iTexIndex);
 	FAILED_CHECK_RETURN(Set_Material(), );
+	m_pTextureCom->Set_Texture(m_iTexIndex);
 	m_pBufferCom->Render_Buffer();
-
-	if (m_bWireFrame)
-		m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 }
 
 // 큐브를 선택 후 터레인 자리위에 올려 놓는 함수
@@ -168,11 +204,20 @@ HRESULT CTestCube::Interact(void)
 		if (m_iTexIndex == 37 || m_iTexIndex == 99)
 		{
 			m_bLetterboxInit = true;
-			m_pLetterBox = CLetterBox::Create(m_pGraphicDev, L"Press [E] to Interact", sizeof(L"Press [E] to Interact"), 0);		
+			m_pLetterBox = CLetterBox::Create(m_pGraphicDev, L"Press [E] to Interact", sizeof(L"Press [E] to Interact"), 0);
+
+			TCHAR* szCntName = new TCHAR[64];
+			wsprintf(szCntName, L"");
+			const _tchar*	szNumbering = L"WallLetter_%d";
+			wsprintf(szCntName, szNumbering, m_iLetterCnt);
+			Engine::Add_GameObject(STAGE_MAPPING, m_pLetterBox, szCntName);
+			m_listWallCnt.push_back(szCntName);
+
+			++m_iLetterCnt;
 		}
 	}
 
-	if (m_bSwitch && Get_DIKeyState(DIK_E) && !m_bDoorOpen)
+	if (m_bSwitch && Key_Down(DIK_E))
 	{
 		if (m_iTexIndex == 37 || m_iTexIndex == 99) //초록색문
 			if (vPos.y < 15)
@@ -295,6 +340,10 @@ HRESULT CTestCube::Add_Component()
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ HITBOX_COMP, pComponent });
 
+	pComponent = m_pShaderCom = dynamic_cast<CShader*>(Clone_Proto(CUBETEX_SHADER));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[ID_STATIC].insert({ CUBETEX_SHADER, pComponent });
+
 	return S_OK;
 }
 
@@ -303,10 +352,10 @@ HRESULT CTestCube::Set_Material()
 	D3DMATERIAL9 Material;
 	ZeroMemory(&Material, sizeof(D3DMATERIAL9));
 
-	Material.Diffuse = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
-	Material.Specular = D3DXCOLOR(0.f, 0.f, 0.f, 1.f);
-	Material.Ambient = D3DXCOLOR(.1f, .1f, .1f, 1.f);
-	Material.Emissive = D3DXCOLOR(.0f, 0.f, 0.f, 1.f);
+	Material.Diffuse = D3DXCOLOR(1.f, 0.5f, 0.5f, 1.f);
+	Material.Specular = D3DXCOLOR(1.f, 0.4f, 0.4f, 1.f);
+	Material.Ambient = D3DXCOLOR(0.3f, 0.3f, 0.4f, 1.f);
+	Material.Emissive = D3DXCOLOR(0.f, 0.f, 0.f, 1.f);
 	Material.Power = 0.f;
 
 	m_pGraphicDev->SetMaterial(&Material);
@@ -370,6 +419,7 @@ void CTestCube::Free()
 	}
 
 	m_listWallCnt.clear();	
+	m_listLetterCnt.clear();
 	CGameObject::Free();
 }
 
