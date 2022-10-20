@@ -206,14 +206,14 @@ HRESULT CTestCube::Interact(void)
 			m_bLetterboxInit = true;
 			m_pLetterBox = CLetterBox::Create(m_pGraphicDev, L"Press [E] to Interact", sizeof(L"Press [E] to Interact"), 0);
 
-			TCHAR* szCntName = new TCHAR[64];
-			wsprintf(szCntName, L"");
-			const _tchar*	szNumbering = L"WallLetter_%d";
-			wsprintf(szCntName, szNumbering, m_iLetterCnt);
-			Engine::Add_GameObject(STAGE_MAPPING, m_pLetterBox, szCntName);
-			m_listWallCnt.push_back(szCntName);
+			//TCHAR* szCntName = new TCHAR[64];
+			//wsprintf(szCntName, L"");
+			//const _tchar*	szNumbering = L"WallLetter_%d";
+			//wsprintf(szCntName, szNumbering, m_iLetterCnt);
+			//Engine::Add_GameObject(STAGE_MAPPING, m_pLetterBox, szCntName);
+			//m_listWallCnt.push_back(szCntName);
 
-			++m_iLetterCnt;
+			//++m_iLetterCnt;
 		}
 	}
 

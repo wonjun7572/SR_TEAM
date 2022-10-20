@@ -85,7 +85,7 @@ _int CCubePlayer::Update_Object(const _float & fTimeDelta)
 
 	m_fTimeDelta = fTimeDelta;
 	m_fBulletTime += fTimeDelta;
-
+	m_fLaserTimer += fTimeDelta;
 	FAILED_CHECK_RETURN(Get_BodyTransform(), -1);
 	Inventory_Check();
 	CoolTimer();
@@ -120,6 +120,7 @@ _int CCubePlayer::Update_Object(const _float & fTimeDelta)
 	{
 		//	대시 테스트, 몬스터 방향으로만 가능하게 변경 예정
 		Dash();
+
 	}
 	
 	Lighting();
@@ -177,14 +178,8 @@ void CCubePlayer::Key_Skill()
 {
 	if (Key_Down(DIK_F))
 	{
-		if (m_Weapon == Engine::Get_GameObject(STAGE_GUN, L"SNIPER"))
-		{
-			_float fGunSound = 1.f;
-			Engine::PlaySoundGun(L"Meteor.wav", SOUND_EFFECT, fGunSound);
-			dynamic_cast<CBaseMapping*>(Engine::Get_GameObject(STAGE_MAPPING, L"BaseMapping"))->Switch_Worldmap();
-		}
 
-		if (m_Weapon == Engine::Get_GameObject(STAGE_GUN, L"UZI1"))
+		if (m_Weapon == Engine::Get_GameObject(STAGE_GUN, L"UZI1")&& m_iSkillEnforce==1)
 		{
 			if (static_cast<CStaticCamera*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"StaticCamera"))->Get_MainCam())
 				static_cast<CFlight*>(Engine::Get_GameObject(STAGE_FLIGHTPLAYER, L"FLIGHTPLAYER"))->Set_Control();
@@ -195,7 +190,51 @@ void CCubePlayer::Key_Skill()
 				static_cast<CFlightCamera*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"FlightCamera"))->Set_MainCam(false);
 			}
 		}
-	}
+		if (m_Weapon == Engine::Get_GameObject(STAGE_GUN, L"SHOTGUN")&& m_iSkillEnforce==3)
+		{
+			_vec3 vPos;
+			m_pTransform->Get_Info(INFO_POS, &vPos);
+			CLayer* pLayer = Get_Layer(STAGE_SKILL);
+			CGameObject* pGameObject = nullptr;
+
+			if (Key_Pressing(DIK_W))
+			{
+				CGameObject* pGameObject = CHyperionStrike::Create(m_pGraphicDev, vPos, DIR_PX);
+				NULL_CHECK_RETURN(pGameObject, );
+				FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), );
+			}
+			else if (Key_Pressing(DIK_S))
+			{
+				CGameObject* pGameObject = CHyperionStrike::Create(m_pGraphicDev, vPos, DIR_MX);
+				NULL_CHECK_RETURN(pGameObject, );
+				FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), );
+			}
+			else if (Key_Pressing(DIK_A))
+			{
+				CGameObject* pGameObject = CHyperionStrike::Create(m_pGraphicDev, vPos, DIR_PZ);
+				NULL_CHECK_RETURN(pGameObject, );
+				FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), );
+			}
+			else if (Key_Pressing(DIK_D))
+			{
+				CGameObject* pGameObject = CHyperionStrike::Create(m_pGraphicDev, vPos, DIR_MZ);
+				NULL_CHECK_RETURN(pGameObject, );
+				FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), );
+			}
+			else
+			{
+				CGameObject* pGameObject = CHyperionStrike::Create(m_pGraphicDev, vPos, DIR_END);
+				NULL_CHECK_RETURN(pGameObject, );
+				FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), );
+			}
+		}
+		if (m_Weapon == Engine::Get_GameObject(STAGE_GUN, L"SNIPER") && m_iSkillEnforce==5)
+		{
+			_float fGunSound = 1.f;
+			Engine::PlaySoundGun(L"Meteor.wav", SOUND_EFFECT, fGunSound);
+			dynamic_cast<CBaseMapping*>(Engine::Get_GameObject(STAGE_MAPPING, L"BaseMapping"))->Switch_Worldmap();
+		}
+	}	
 }
 
 void CCubePlayer::CoolTimer(void)
@@ -248,6 +287,17 @@ void CCubePlayer::Dash(void)
 	if (D3DXVec3Length(&m_vDirection) != 0)
 	{
 		m_iDashStack = 10;
+		_vec3 vPos;														//대쉬이펙트
+		_vec3 vDir;
+		m_pTransform->Get_Info(INFO_POS, &vPos);
+		m_pBodyWorld->Get_Info(INFO_LOOK, &vDir);
+		vPos.y = +0.45f;
+		dynamic_cast<CDashCube*>(m_pDashCube)->Set_PclePos(vPos);
+		dynamic_cast<CDashCube*>(m_pDashCube)->Set_PcleDir(vDir);
+		for (_int i = 0; i < 150; ++i)
+		{
+			m_pDashCube->addParticle();
+		}
 	}
 }
 
@@ -278,6 +328,11 @@ void CCubePlayer::Update_NullCheck()
 
 	if (!m_pTriggerFront)
 		m_pTriggerFront = dynamic_cast<CTriggerFront*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"TriggerFront"));
+
+	if (!m_pTraceEffect)
+		m_pTraceEffect = dynamic_cast<CTraceEffect*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"TraceEffect"));
+	if (!m_pLaserPoint)
+		m_pLaserPoint = dynamic_cast<CLaserPoint*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"LaserPoint"));
 
 	Player_Mapping();
 
@@ -574,55 +629,18 @@ void CCubePlayer::Move()
 
 
 
-	if (Key_Down(DIK_G) && m_iWeaponState == 3)
+	if (m_bCanStaticField)
 	{
-		_float fGunSound = 1.f;
-		Engine::PlaySoundGun(L"Grenade.wav", SOUND_EFFECT, fGunSound);
-		m_pProjectileParicle->addParticle();
-	}
-
-	if (Key_Down(DIK_H))
-	{
-		_vec3 vPos;
-		m_pTransform->Get_Info(INFO_POS, &vPos);
-		CLayer* pLayer = Get_Layer(STAGE_SKILL);
-		CGameObject* pGameObject = nullptr;
-
-		if (Key_Pressing(DIK_W))
+		if (Key_Down(DIK_G))
 		{
-			CGameObject* pGameObject = CHyperionStrike::Create(m_pGraphicDev, vPos, DIR_PX);
-			NULL_CHECK_RETURN(pGameObject, );
-			FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), );
-		}
-		else if (Key_Pressing(DIK_S))
-		{
-			CGameObject* pGameObject = CHyperionStrike::Create(m_pGraphicDev, vPos, DIR_MX);
-			NULL_CHECK_RETURN(pGameObject, );
-			FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), );
-		}
-		else if (Key_Pressing(DIK_A))
-		{
-			CGameObject* pGameObject = CHyperionStrike::Create(m_pGraphicDev, vPos, DIR_PZ);
-			NULL_CHECK_RETURN(pGameObject, );
-			FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), );
-		}
-		else if (Key_Pressing(DIK_D))
-		{
-			CGameObject* pGameObject = CHyperionStrike::Create(m_pGraphicDev, vPos, DIR_MZ);
-			NULL_CHECK_RETURN(pGameObject, );
-			FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), );
-		}
-		else
-		{
-			CGameObject* pGameObject = CHyperionStrike::Create(m_pGraphicDev, vPos, DIR_END);
-			NULL_CHECK_RETURN(pGameObject, );
-			FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), );
+			_float fGunSound = 1.f;
+			Engine::PlaySoundGun(L"Grenade.wav", SOUND_EFFECT, fGunSound);
+			m_pProjectileParicle->addParticle();
 		}
 	}
-
-
-	
-		if (Key_Down(DIK_Z))								// 총알 멈추는거
+	if ( m_bCanShield )
+	{
+		if (Key_Down(DIK_H))								// 총알 멈추는거
 		{
 			if (m_pShield != nullptr)
 			{
@@ -635,59 +653,62 @@ void CCubePlayer::Move()
 			CLayer* pLayer = Get_Layer(STAGE_SKILL);
 			m_pShield = CShield::Create(m_pGraphicDev, vPos, vDir);
 			NULL_CHECK_RETURN(m_pShield, );
-			FAILED_CHECK_RETURN(pLayer->Add_GameList(m_pShield), );			
+			FAILED_CHECK_RETURN(pLayer->Add_GameList(m_pShield), );
 		}
-		if (Key_Pressing(DIK_Z))
+		if (Key_Pressing(DIK_H))
 		{
 			if (m_pShield != nullptr)
 				m_pShield->On_Move();
 
 		}
-		if (!(Get_DIKeyState(DIK_Z)))
+		if (!(Get_DIKeyState(DIK_H)))
 		{
 			if (m_pShield != nullptr)
 
 				m_pShield->Off_Move();
 		}
+	}
 		if (Key_Pressing(DIK_C))
 		{
-			_vec3 vPos;														//대쉬이펙트하려던것
-			_vec3 vDir;
-			m_pTransform->Get_Info(INFO_POS, &vPos);
-			_vec3 min = { -1.0f ,-1.0f ,-1.0f };
-			m_pTransform->Get_Info(INFO_POS, &vPos);
-			vPos.x -= 5.f;
-			vPos.y += 5.f;
-			vPos.z -= 5.f;
-			for (_int i = -5; i < 5; i++)
-			{
-				for (_int j = -5; j < 5; j++)
-				{
-					for (_int k = -5; k < 5; k++)
-					{
-						//D3DXVec3Normalize(&min, &_vec3(i, j, k));						
-					
-						dynamic_cast<CRoundEffect*>(m_pRoundEffect)->Set_PclePos(vPos + _vec3(i, j, k)*0.1);
-
-						dynamic_cast<CRoundEffect*>(m_pRoundEffect)->Set_PcleDir(-min);
-
-						m_pRoundEffect->addParticle();
-					}
-				}
-			}
-
-
-			//_vec3 vPos;														//대쉬이펙트하려던것
+			//_vec3 vPos;														//보스죽는이팩트
 			//_vec3 vDir;
 			//m_pTransform->Get_Info(INFO_POS, &vPos);
-			//m_pBodyWorld->Get_Info(INFO_LOOK, &vDir);
-			//vPos.y = +0.45f;
-			//dynamic_cast<CDashCube*>(m_pDashCube)->Set_PclePos(vPos);
-			//dynamic_cast<CDashCube*>(m_pDashCube)->Set_PcleDir(vDir);
-			//for (_int i = 0; i < 150; ++i)
+			//_vec3 min = { -1.0f ,-1.0f ,-1.0f };
+			//m_pTransform->Get_Info(INFO_POS, &vPos);
+			//vPos.x -= 5.f;
+			//vPos.y += 5.f;
+			//vPos.z -= 5.f;
+			//for (_int i = -5; i < 5; i++)
 			//{
-			//	m_pDashCube->addParticle();
+			//	for (_int j = -5; j < 5; j++)
+			//	{
+			//		for (_int k = -5; k < 5; k++)
+			//		{
+			//			D3DXVec3Normalize(&min, &_vec3(i, j, k));						
+
+			//			dynamic_cast<CRoundEffect*>(m_pRoundEffect)->Set_PclePos(vPos + _vec3(i, j, k)*0.1);
+
+			//			dynamic_cast<CRoundEffect*>(m_pRoundEffect)->Set_PcleDir(-min);
+
+			//			m_pRoundEffect->addParticle();
+			//		}
+			//	}
 			//}
+			dynamic_cast<CSniper*>(Engine::Get_GameObject(STAGE_GUN, L"SNIPER"));
+			CTransform* pTransform = nullptr;
+			pTransform = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_GUN, L"Sniper_Part_2", TRANSFORM_COMP, ID_DYNAMIC));
+			NULL_CHECK_RETURN(pTransform, );
+			pTransform->Get_Info(INFO_POS, &vPos);
+			_vec3 vPos;
+			_vec3 vDir;
+			m_pBodyWorld->Get_Info(INFO_POS, &vPos);
+			m_pHeadWorld->Get_Info(INFO_LOOK, &vDir);
+			dynamic_cast<CTraceEffect*>(m_pTraceEffect)->Set_PclePos(vPos);
+			dynamic_cast<CTraceEffect*>(m_pTraceEffect)->Set_PcleDir(vDir);
+			for (_int i = 0; i < 150; ++i)
+			{
+				m_pTraceEffect->addParticle();
+			}
 		}
 
 
@@ -834,8 +855,10 @@ void CCubePlayer::Fire_Bullet(void)
 				m_Weapon->Set_Shoot(true);
 				m_fBulletTime = 0.f;
 				_vec3 vBPos;									  //불꽃이팩트
-				_vec3 vRHPos;									
+				_vec3 vRHPos;	
+
 				_vec3 vBDir;
+				
 				m_pTransform->Get_Info(INFO_POS, &vBPos);
 				m_pRightHandWorld->Get_Info(INFO_POS, &vRHPos);
 				m_pBodyWorld->Get_Info(INFO_LOOK, &vBDir);
@@ -845,7 +868,7 @@ void CCubePlayer::Fire_Bullet(void)
 				dynamic_cast<CTriggerParticle*>(m_pTriggerParticle)->Set_PcleDir(vBDir);
 												  //불꽃이팩트
 		
-				dynamic_cast<CTriggerFront*>(m_pTriggerFront)->Set_PclePos(vRHPos);
+				//dynamic_cast<CTriggerFront*>(m_pTriggerFront)->Set_PclePos(vRHPos);
 				
 				
 				_vec3 vLHPos;									//탄피이팩트
@@ -853,10 +876,12 @@ void CCubePlayer::Fire_Bullet(void)
 
 				m_pLeftHandWorld->Get_Info(INFO_POS, &vLHPos);
 				vLDir = vLHPos - vBPos;
-				vLDir.y *= -1.f;
+				vLDir.y *= -1.f;				
 				dynamic_cast<CCartridgeParticle*>(m_pCartridgeParticle)->Set_PcleDir(vLDir);
+
+
 				if (m_iWeaponState == 2)
-				{
+				{					
 					_float fGunSound = .3f;
 					Engine::PlaySoundGun(L"RifleShot.wav", SOUND_EFFECT, fGunSound);
 					for (_int i = 0; i < 2; ++i)
@@ -865,6 +890,11 @@ void CCubePlayer::Fire_Bullet(void)
 					}
 					for (_int i = 0; i < 3; ++i)
 					{
+						m_pTriggerParticle->addParticle();
+					}
+					dynamic_cast<CTriggerParticle*>(m_pTriggerParticle)->Set_PclePos(vLHPos+ vBDir*10.f);
+					for (_int i = 0; i < 3; ++i)
+					{				
 						m_pTriggerParticle->addParticle();
 					}
 					for (_int i = 0; i < 25; ++i)
@@ -906,8 +936,34 @@ void CCubePlayer::Fire_Bullet(void)
 					for (_int i = 0; i < 100; ++i)
 					{
 						m_pTriggerFront->addParticle();
-					}
+					}				
+					m_bSniperEffect = true;
 				}
+			}
+		}
+	}
+
+	if(m_bSniperEffect)
+	{
+		m_bSniperEffect = false;
+		_vec3 vPos;														//대쉬이펙트하려던것
+		_vec3 vDir;
+		dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_GUN, L"Sniper_Part_2", TRANSFORM_COMP, ID_DYNAMIC))->Get_Info(INFO_POS, &vPos);
+		m_pHeadWorld->Get_Info(INFO_LOOK, &vDir);
+		dynamic_cast<CLaserPoint*>(m_pLaserPoint)->Set_PclePos(vPos);
+		dynamic_cast<CLaserPoint*>(m_pLaserPoint)->Set_PcleDir(vDir);
+		
+		m_fLaserTimer = 0.f;
+
+		for (_int i = 0; i < 150; ++i)
+		{
+			m_pLaserPoint->addParticle();
+		}
+		if (m_fLaserTimer <= 10.f)
+		{
+			for (_int i = 0; i < 150; ++i)
+			{
+				m_pLaserPoint->addParticle();
 			}
 		}
 	}

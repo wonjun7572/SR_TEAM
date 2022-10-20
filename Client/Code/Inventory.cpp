@@ -428,6 +428,8 @@ void CInventory::Mouse()
 
 								m_pIconGrab = dynamic_cast<CItemIcon*>(iter);
 								m_pIconGrab->Cursor_fix();
+								_float fSound = 1.f;
+								Engine::PlaySoundGun(L"Button.wav", SOUND_EFFECT, fSound);
 							}
 							if (Mouse_Down(DIM_RB) && m_pIconGrab == nullptr)
 							{
@@ -481,6 +483,8 @@ void CInventory::Mouse()
 				m_pIconGrab->Cursor_free();
 				if (1025 < pt.x && pt.x < 1075 && 215 < pt.y && pt.y < 280) // 맨왼쪽인벤토리
 				{
+					_float fSound = 1.f;
+					Engine::PlaySoundGun(L"Equipped.wav", SOUND_EFFECT, fSound);
 					if (m_vecEquipments[0] != nullptr)
 					{
 						for (_int i = 1; i < 5; i++)

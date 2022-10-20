@@ -11,6 +11,7 @@ CCartridgeParticle::CCartridgeParticle(LPDIRECT3DDEVICE9 pGraphicDev)
 	m_vbSize = 2048;
 	m_vbOffset = 0;
 	m_vbBatchSize = 512;
+
 }
 
 CCartridgeParticle::~CCartridgeParticle()
@@ -96,6 +97,8 @@ void CCartridgeParticle::Free(void)
 
 void CCartridgeParticle::resetParticle(ATTRIBUTE * attribute)
 {
+	_float m_fHand = rand() % 2;
+
 	attribute->bAlive = true;
 	CTransform* pTransform = nullptr;
 	m_fGravity = 85.f;
@@ -114,20 +117,32 @@ void CCartridgeParticle::resetParticle(ATTRIBUTE * attribute)
 
 
 
-
 	CGameObject* pPlayer = nullptr;
 	pPlayer = Engine::Get_GameObject(STAGE_CHARACTER, L"PLAYER");
 	NULL_CHECK_RETURN(pPlayer, );
 
 	if (dynamic_cast<CCubePlayer*>(pPlayer)->Get_Weapon() == dynamic_cast<CWeapon*>(Engine::Get_GameObject(STAGE_GUN, L"UZI1")))
-	{
-		pTransform = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_GUN, L"Uzi_Part_1_1", TRANSFORM_COMP, ID_DYNAMIC));
-		NULL_CHECK_RETURN(pTransform, );
-		D3DXVECTOR3 vPos;
-		pTransform->Get_Info(INFO_POS, &vPos);
-		
-		attribute->vPos = vPos - ((vRand)*0.05f);
-		attribute->vVelocity = m_vDir* 1.f + ((vRand)*0.05);
+	{		
+		if (m_fHand == 0)
+		{
+			pTransform = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_GUN, L"Uzi_Part_1_1", TRANSFORM_COMP, ID_DYNAMIC));
+			NULL_CHECK_RETURN(pTransform, );
+			D3DXVECTOR3 vPos;
+			pTransform->Get_Info(INFO_POS, &vPos);
+
+			attribute->vPos = vPos - ((vRand)*0.05f);
+			attribute->vVelocity = m_vDir* 1.f + ((vRand)*0.05);
+		}
+		if (m_fHand == 1)
+		{
+			pTransform = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_GUN, L"Uzi_Part_2_1", TRANSFORM_COMP, ID_DYNAMIC));
+			NULL_CHECK_RETURN(pTransform, );
+			D3DXVECTOR3 vPos1;
+			pTransform->Get_Info(INFO_POS, &vPos1);
+
+			attribute->vPos = vPos1 - ((vRand)*0.05f);
+			attribute->vVelocity = m_vDir* 1.f + ((vRand)*0.05);
+		}
 	}
 	else if (dynamic_cast<CCubePlayer*>(pPlayer)->Get_Weapon() == dynamic_cast<CWeapon*>(Engine::Get_GameObject(STAGE_GUN, L"SHOTGUN")))
 	{

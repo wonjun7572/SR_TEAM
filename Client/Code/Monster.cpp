@@ -8,8 +8,9 @@
 #include "MonsterMapping.h"
 #include "Meteor.h"
 #include "Flight.h"
-
+#include "Inventory.h"
 static _int m_iCnt = 0;
+static _bool m_bShieldInit = false;
 
 CMonster::CMonster(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
@@ -59,6 +60,12 @@ void CMonster::LateUpdate_Object(void)
 	{
 		m_pMonsterUI->Off_Switch();
 		this->Kill_Obj();
+		
+		if (!m_bShieldInit)
+		{
+			m_bShieldInit = true;
+			dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->ItemCreate(1);
+		}
 	}
 }
 

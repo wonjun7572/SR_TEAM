@@ -224,6 +224,7 @@ void CShop::Render_Object()
 		}
 	}
 
+				_float fBuyingSound = 1.f;
 	if (PointTest(m_vPos_ButtonFour))
 	{
 
@@ -234,6 +235,8 @@ void CShop::Render_Object()
 			{
 				dynamic_cast<CUzi*>(Engine::Get_GameObject(STAGE_GUN, L"UZI1"))->Get_UziUpgrade();
 				dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->ItemCreate(5);			
+
+				Engine::PlaySoundGun(L"Button.wav", SOUND_EFFECT, fBuyingSound);
 
 				CLetterBox* m_pLetterBox = nullptr;
 				m_pLetterBox = CLetterBox::Create(m_pGraphicDev, L"Speed Part Get!!!", sizeof(L"Speed Part Get!!!"), 1);				
@@ -248,6 +251,8 @@ void CShop::Render_Object()
 			if (m_pHeavyRaffle || m_eLevelUP == LEVEL_HEAVY)
 			{
 				dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->ItemCreate(6);
+				Engine::PlaySoundGun(L"Button.wav", SOUND_EFFECT, fBuyingSound);
+
 				CLetterBox* m_pLetterBox = nullptr;
 				m_pLetterBox = CLetterBox::Create(m_pGraphicDev, L"DMG Part Get!!!", sizeof(L"DMG Part Get!!!"), 1);
 			}
@@ -261,6 +266,9 @@ void CShop::Render_Object()
 			if (m_pRailGunScope || m_eLevelUP == LEVEL_RAIL)
 			{
 				dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->ItemCreate(7);
+				Engine::PlaySoundGun(L"Button.wav", SOUND_EFFECT, fBuyingSound);
+
+				Engine::PlaySoundGun(L"Buying2.wav", SOUND_EFFECT, fBuyingSound);
 				CLetterBox* m_pLetterBox = nullptr;
 				m_pLetterBox = CLetterBox::Create(m_pGraphicDev, L"RED GEM Get!!!", sizeof(L"RED GEM Get!!!"), 1);
 			}
@@ -274,8 +282,11 @@ void CShop::Render_Object()
 			if (m_pRailGunScope || m_eLevelUP == LEVEL_BURST)
 			{
 				dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->ItemCreate(8);
+				Engine::PlaySoundGun(L"Button.wav", SOUND_EFFECT, fBuyingSound);
+
+				Engine::PlaySoundGun(L"Buying.wav", SOUND_EFFECT, fBuyingSound);
 				CLetterBox* m_pLetterBox = nullptr;
-				m_pLetterBox = CLetterBox::Create(m_pGraphicDev, L"BLUE GEM Get!!!", sizeof(L"BLUE GEM Get!!!"), 1);
+				m_pLetterBox = CLetterBox::Create(m_pGraphicDev, L"BLUE GEM Get!!!", sizeof(L"BLUE GEM Get!!!"), 2);
 			}
 		}
 	}

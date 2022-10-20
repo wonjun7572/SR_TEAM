@@ -22,13 +22,9 @@ HRESULT CLetterBox::Ready_Object(_tchar* tDialogue, _int iSize, _int iIndex)
 	m_iIndex = iIndex;
 
 
-
-	m_strLetterName = new TCHAR[64];
-	wsprintf(m_strLetterName, L"LetterBox%d",iLetterBoxCnt);
-	
-
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, m_strLetterName, L"Roboto-Bold", _uint(m_fFontSize), 40, FW_HEAVY), E_FAIL);
+	wsprintf(szCntName, L"LetterBox%d",iLetterBoxCnt);	
+	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, szCntName, L"Roboto-Bold", _uint(m_fFontSize), 40, FW_HEAVY), E_FAIL);
 	iLetterBoxCnt++;
 	
 
@@ -168,13 +164,13 @@ void CLetterBox::PlayerNotice()
 {
 	if (m_bPowerSwitch)
 	{
-		Engine::Render_Font(m_strLetterName, m_strLetterContents.c_str(), &(_vec2((WINCX / 2.f) - (m_iTextAmount)*(m_fFontSize / 4.f), (WINCY / 1.5f)  * (WINCX / WINCY))), D3DXCOLOR(1.f, 1.f, 1.f, m_fFontAlpha));
+		Engine::Render_Font(szCntName, m_strLetterContents.c_str(), &(_vec2((WINCX / 2.f) - (m_iTextAmount)*(m_fFontSize / 4.f), (WINCY / 1.5f)  * (WINCX / WINCY))), D3DXCOLOR(1.f, 1.f, 1.f, m_fFontAlpha));
 	}
 }
 
 void CLetterBox::BoxText()
 {
-	Engine::Render_Font(m_strLetterName, m_strLetterContents.c_str(), &(_vec2((WINCX / 2.f) - (m_iTextAmount)*(m_fFontSize / 2.f), (WINCY / 1.5f)  * (WINCX / WINCY))), D3DXCOLOR(1.f, 1.f, 1.f, m_fFontAlpha));
+	Engine::Render_Font(szCntName, m_strLetterContents.c_str(), &(_vec2((WINCX / 2.f) - (m_iTextAmount)*(m_fFontSize / 2.f), (WINCY / 1.5f)  * (WINCX / WINCY))), D3DXCOLOR(1.f, 1.f, 1.f, m_fFontAlpha));
 }
 
 void CLetterBox::Index1()
@@ -208,7 +204,6 @@ CLetterBox * CLetterBox::Create(LPDIRECT3DDEVICE9 pGraphicDev, _tchar* tDialogue
 
 void CLetterBox::Free(void)
 {
-	Safe_Delete(m_strLetterName);	
 	CGameObject::Free();
 }
 

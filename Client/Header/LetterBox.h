@@ -19,7 +19,7 @@ public:
 	void			Off_Switch() { m_bPowerSwitch = false; };
 	void		Maker(CLetterBox* pInstance)
 	{
-		Engine::Add_GameObject(STAGE_UI, pInstance, m_strLetterName);
+		Engine::Add_GameObject(STAGE_UI, pInstance, szCntName);
 	}
 private:
 	HRESULT			Add_Component(void);
@@ -46,10 +46,11 @@ private:
 	_matrix			m_matView;
 	_matrix			m_matProj;
 	wstring			m_strLetterContents;
-	_tchar*			m_strLetterName;
 	_float			m_fFontSize;
 	_float			m_fFontAlpha;
-	
+	//_tchar			 m_strLetterName[64];
+	_tchar			 szCntName[64];
+
 	_bool			m_bPowerSwitch = true;
 	_bool			m_bAlphaSwitch = false;
 	_int			m_iTextAmount;

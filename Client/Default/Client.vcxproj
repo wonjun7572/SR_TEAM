@@ -177,6 +177,7 @@
     <ClInclude Include="..\Header\CartridgeParticle.h" />
     <ClInclude Include="..\Header\CubeParticle.h" />
     <ClInclude Include="..\Header\DashCube.h" />
+    <ClInclude Include="..\Header\DefensiveEffect.h" />
     <ClInclude Include="..\Header\DeffensiveMatrix.h" />
     <ClInclude Include="..\Header\BaseMapping.h" />
     <ClInclude Include="..\Header\BattleCursier.h" />
@@ -213,12 +214,19 @@
     <ClInclude Include="..\Header\IceEffect.h" />
     <ClInclude Include="..\Header\Key.h" />
     <ClInclude Include="..\Header\KrakenBullet.h" />
+    <ClInclude Include="..\Header\KrakenEffect.h" />
     <ClInclude Include="..\Header\KrakenLeg.h" />
+    <ClInclude Include="..\Header\Laser.h" />
+    <ClInclude Include="..\Header\LaserEffect.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="..\Header\LaserPoint.h" />
     <ClInclude Include="..\Header\LoadingBar.h" />
     <ClInclude Include="..\Header\MiddleBoss.h" />
     <ClInclude Include="..\Header\ObjectCube.h" />
     <ClInclude Include="..\Header\Ping.h" />
     <ClInclude Include="..\Header\RcEffect.h" />
+    <ClInclude Include="..\Header\RoundEffect.h" />
     <ClInclude Include="..\Header\Shield.h" />
     <ClInclude Include="..\Header\SoundWave.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
@@ -292,6 +300,7 @@
     <ClInclude Include="..\Header\TestCube.h" />
     <ClInclude Include="..\Header\Thorn.h" />
     <ClInclude Include="..\Header\ToolScene.h" />
+    <ClInclude Include="..\Header\TraceEffect.h" />
     <ClInclude Include="..\Header\TransAxisBox.h" />
     <ClInclude Include="..\Header\Trap.h" />
     <ClInclude Include="..\Header\TriggerFront.h" />
@@ -303,6 +312,7 @@
     <ClInclude Include="..\Header\UziPart4.h" />
     <ClInclude Include="..\Header\UziPart5.h" />
     <ClInclude Include="..\Header\Veneer.h" />
+    <ClInclude Include="..\Header\VerticalLine.h" />
     <ClInclude Include="..\Header\Wall.h" />
     <ClInclude Include="..\Header\WallMapping.h" />
     <ClInclude Include="..\Header\Weapon.h" />
@@ -343,6 +353,7 @@
     <ClCompile Include="..\Code\CartridgeParticle.cpp" />
     <ClCompile Include="..\Code\CubeParticle.cpp" />
     <ClCompile Include="..\Code\DashCube.cpp" />
+    <ClCompile Include="..\Code\DefensiveEffect.cpp" />
     <ClCompile Include="..\Code\DeffensiveMatrix.cpp" />
     <ClCompile Include="..\Code\BaseMapping.cpp" />
     <ClCompile Include="..\Code\BattleCursier.cpp" />
@@ -378,11 +389,18 @@
     <ClCompile Include="..\Code\IceEffect.cpp" />
     <ClCompile Include="..\Code\Key.cpp" />
     <ClCompile Include="..\Code\KrakenBullet.cpp" />
+    <ClCompile Include="..\Code\KrakenEffect.cpp" />
+    <ClCompile Include="..\Code\Laser.cpp" />
+    <ClCompile Include="..\Code\LaserEffect.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\Code\LaserPoint.cpp" />
     <ClCompile Include="..\Code\LoadingBar.cpp" />
     <ClCompile Include="..\Code\MiddleBoss.cpp" />
     <ClCompile Include="..\Code\ObjectCube.cpp" />
     <ClCompile Include="..\Code\Ping.cpp" />
     <ClCompile Include="..\Code\RcEffect.cpp" />
+    <ClCompile Include="..\Code\RoundEffect.cpp" />
     <ClCompile Include="..\Code\Shield.cpp" />
     <ClCompile Include="..\Code\SoundWave.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
@@ -456,6 +474,7 @@
     <ClCompile Include="..\Code\TestCube.cpp" />
     <ClCompile Include="..\Code\Thorn.cpp" />
     <ClCompile Include="..\Code\ToolScene.cpp" />
+    <ClCompile Include="..\Code\TraceEffect.cpp" />
     <ClCompile Include="..\Code\TransAxisBox.cpp" />
     <ClCompile Include="..\Code\Trap.cpp" />
     <ClCompile Include="..\Code\TriggerFront.cpp" />
@@ -467,6 +486,7 @@
     <ClCompile Include="..\Code\UziPart4.cpp" />
     <ClCompile Include="..\Code\UziPart5.cpp" />
     <ClCompile Include="..\Code\Veneer.cpp" />
+    <ClCompile Include="..\Code\VerticalLine.cpp" />
     <ClCompile Include="..\Code\Wall.cpp" />
     <ClCompile Include="..\Code\WallMapping.cpp" />
     <ClCompile Include="..\Code\Weapon.cpp" />

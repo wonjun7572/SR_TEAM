@@ -17,6 +17,8 @@ class CCartridgeParticle;
 class CTriggerParticle;
 class CTriggerFront;
 class CRoundEffect;
+class CTraceEffect;
+class CLaserPoint;
 
 class CCubePlayer : public CGameObject
 {
@@ -83,6 +85,11 @@ private:
 public:
 	CWeapon*		Get_Weapon() { return m_Weapon; }
 	_int			Get_DmgItem() { return m_iDmgItem; }
+	void			On_StaticField() { m_bCanStaticField = true; }
+	void			On_Shield() { m_bCanShield = true; }
+	
+
+
 private:
 	map<const _tchar*, CGameObject*>	m_mapPlayerBody;
 
@@ -148,14 +155,17 @@ private: // 파티클관련 포인터입니다.
 	CTriggerParticle* m_pTriggerParticle = nullptr;
 	CTriggerFront* m_pTriggerFront = nullptr;
 	CRoundEffect* m_pRoundEffect = nullptr;
+	CTraceEffect* m_pTraceEffect = nullptr;
+	CLaserPoint* m_pLaserPoint = nullptr;
 
 	CCartridgeParticle*		m_pCartridgeParticle = nullptr;
 
 private:
 	_float			m_fRed = 0.f;
 	_float			m_fBlue = 0.f;
+	_float			m_fLaserTimer = 0.f;
 
-
+	_bool			m_bSniperEffect = 0.f;
 	_bool			m_bColorLighting = false;
 
 	_float			m_fLookAngle = 0.f;
@@ -204,6 +214,9 @@ private:
 	_int			m_iSetWeaponState = 0;
 	_int			m_iDmgItem = 0;
 	_int			m_iSpeedItem = 0;
+	_bool			m_bCanStaticField = false;
+	_bool			m_bCanShield = false;
+
 
 	//방벽관련 변수입니다
 	_bool			m_bShield = false;

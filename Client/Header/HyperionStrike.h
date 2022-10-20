@@ -40,7 +40,7 @@ private:
 	_vec3					m_vBattlePos = { 0.f, 0.f, 0.f };
 	_vec3					m_vDirection = { 0.f,0.f,0.f };
 	_float					m_fSpeed = 0.f;
-
+	_float					m_fBulletTimer = 0.f;
 	_bool					m_bMove = false;
 	DIRRECTIONSTATE			m_eDir = DIR_END;
 public:

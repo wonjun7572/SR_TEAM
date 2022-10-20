@@ -40,7 +40,7 @@ _int CTriggerFront::Update_Object(const _float & fTimeDelta)
 		}*/
 
 		iter->fAge += fTimeDelta;
-		iter->vPos += (iter->vVelocity) * fTimeDelta * m_fSpeed *(rand()%50)*0.1;
+		iter->vPos += (iter->vVelocity) * fTimeDelta * m_fSpeed *(rand()%50)*0.1f;
 		iter->vPos.y += 0.01f* (m_fGravity*iter->fAge)*(m_fGravity* iter->fAge) * fTimeDelta;
 
 		if (iter->fAge > iter->fLifeTime)
@@ -112,8 +112,9 @@ void CTriggerFront::resetParticle(ATTRIBUTE * attribute)
 	_vec3 min = _vec3(-1.0f, -1.0f, -1.0f);
 	_vec3 max = _vec3(1.0f, 1.0f, 1.0f);
 	_vec3 vRand = { 0.f,0.f ,0.f };
-	_float fRand = (rand() % 5)*0.1;
-	
+	_float fRand = (rand() % 5)*0.1f;
+	_float m_fHand = rand() % 2;
+
 	GetRandomVector(&vRand, &min, &max);
 	m_fGravity = 10.f;
 
@@ -131,17 +132,36 @@ void CTriggerFront::resetParticle(ATTRIBUTE * attribute)
 
 	if (dynamic_cast<CCubePlayer*>(pPlayer)->Get_Weapon() == dynamic_cast<CWeapon*>(Engine::Get_GameObject(STAGE_GUN, L"UZI1")))
 	{
-		pTransform = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_GUN, L"Uzi_Part_1_1", TRANSFORM_COMP, ID_DYNAMIC));
-		NULL_CHECK_RETURN(pTransform, );
-		D3DXVECTOR3 vPos;
-		pTransform->Get_Info(INFO_POS, &vPos);
-		D3DXVECTOR3 vDir;
-		pTransform->Get_Info(INFO_LOOK, &m_vDir);
+		
 
-		m_fSpeed = 10.f;
-		attribute->vPos = vPos - ((vRand)*0.05);
-		attribute->vVelocity = m_vDir* 1.f + ((vRand)*0.02);
-		attribute->fLifeTime = .25f;
+		if (m_fHand == 0)
+		{
+			pTransform = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_GUN, L"Uzi_Part_1_1", TRANSFORM_COMP, ID_DYNAMIC));
+			NULL_CHECK_RETURN(pTransform, );
+			D3DXVECTOR3 vPos;
+			pTransform->Get_Info(INFO_POS, &vPos);
+			D3DXVECTOR3 vDir;
+			pTransform->Get_Info(INFO_LOOK, &m_vDir);
+
+			m_fSpeed = 10.f;
+			attribute->vPos = vPos - ((vRand)*0.05);
+			attribute->vVelocity = m_vDir* 1.f + ((vRand)*0.02);
+			attribute->fLifeTime = .25f;
+		}
+		if (m_fHand == 1)
+		{
+			pTransform = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_GUN, L"Uzi_Part_2_1", TRANSFORM_COMP, ID_DYNAMIC));
+			NULL_CHECK_RETURN(pTransform, );
+			D3DXVECTOR3 vPos1;
+			pTransform->Get_Info(INFO_POS, &vPos1);
+			D3DXVECTOR3 vDir1;
+			pTransform->Get_Info(INFO_LOOK, &vDir1);
+
+			m_fSpeed = 10.f;
+			attribute->vPos = vPos1 - ((vRand)*0.05);
+			attribute->vVelocity = vDir1* 1.f + ((vRand)*0.02);
+			attribute->fLifeTime = .25f;
+		}
 	}
 	else if (dynamic_cast<CCubePlayer*>(pPlayer)->Get_Weapon() == dynamic_cast<CWeapon*>(Engine::Get_GameObject(STAGE_GUN, L"SHOTGUN")))
 	{

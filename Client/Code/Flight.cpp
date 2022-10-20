@@ -10,6 +10,8 @@
 #include "Supporter_Shotgun.h"
 #include "Supporter_Sniper.h"
 
+#include "VerticalLine.h"
+#include "CubeParticle.h"
 CFlight::CFlight(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
 {
@@ -104,7 +106,7 @@ _int CFlight::Update_Object(const _float & fTimeDelta)
 				NULL_CHECK_RETURN(pGameObject, E_FAIL);
 				FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"SUPPORT_UZI", pGameObject), E_FAIL);
 				dynamic_cast<CSupporter_Uzi*>(pGameObject)->Set_setcam(true);
-				m_bShuttle = false;
+				m_bShuttle = false;			
 			}
 			else if (m_eSupporterID == SUPPORTER_SHOTGUN)
 			{
@@ -152,6 +154,7 @@ _int CFlight::Update_Object(const _float & fTimeDelta)
 			BoxTransform->Set_Pos(vPos.x, vPos.y, vPos.z);
 	}
 
+	Fly_Effect();
 	return 0;
 }
 
@@ -205,6 +208,50 @@ HRESULT CFlight::Set_Material()
 	m_pGraphicDev->SetMaterial(&Material);
 
 	return S_OK;
+}
+
+void CFlight::Fly_Effect()
+{
+	_vec3 vPos;														// บา
+	_vec3 vDir;
+	CCubeParticle* m_pCubeParticle = nullptr;
+	if (!m_pCubeParticle)
+		m_pCubeParticle = dynamic_cast<CCubeParticle*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"CubeParticle"));
+	for (auto& iter : *(pMyLayer->Get_GamePairPtr()))
+	{
+		if (0 == _tcscmp(iter.first, L"FIRE2"))
+		{
+			CTransAxisBox* m_pFireBox = dynamic_cast<CTransAxisBox*>(iter.second);
+			_matrix matFinal;
+			m_pFireBox->Get_Final(&matFinal); // 30 31 32 << pos
+			vPos.x=matFinal.m[3][0];
+			vPos.y=matFinal.m[3][1];
+			vPos.z=matFinal.m[3][2];
+				dynamic_cast<CCubeParticle*>(m_pCubeParticle)->Set_PclePos(vPos);
+			//	dynamic_cast<CCubeParticle*>(m_pCubeParticle)->Set_PcleDir(vDir);
+				for (_int i = 0; i < 50; ++i)
+				{
+					m_pCubeParticle->addParticle();
+				}
+		}
+		if (0 == _tcscmp(iter.first, L"FIRE4"))
+		{
+			CTransAxisBox* m_pFireBox = dynamic_cast<CTransAxisBox*>(iter.second);
+			_matrix matFinal;
+			m_pFireBox->Get_Final(&matFinal); // 30 31 32 << pos
+			vPos.x = matFinal.m[3][0];
+			vPos.y = matFinal.m[3][1];
+			vPos.z = matFinal.m[3][2];
+			dynamic_cast<CCubeParticle*>(m_pCubeParticle)->Set_PclePos(vPos);
+			//	dynamic_cast<CCubeParticle*>(m_pCubeParticle)->Set_PcleDir(vDir);
+			for (_int i = 0; i < 50; ++i)
+			{
+				m_pCubeParticle->addParticle();
+			}
+		}
+	}
+	
+	
 }
 
 void CFlight::Random(void)

@@ -20,6 +20,7 @@ public:
 
 private:
 	void			Collision_check(void);
+	void			Bomb_effect(void);
 
 private:
 	HRESULT			Add_Component(void);

@@ -141,6 +141,8 @@ HRESULT CStage::Ready_Scene(void)
 	FAILED_CHECK_RETURN(Ready_Layer_Supporter(STAGE_SUPPORTER), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Layer_PlayerBullet(STAGE_BULLETPLAYER), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Layer_ExBullet(STAGE_EXBULLET), E_FAIL);
+	FAILED_CHECK_RETURN(Ready_Layer_Laser(STAGE_LASER), E_FAIL);
+
 	FAILED_CHECK_RETURN(Ready_Layer_Creature(STAGE_CREATURE), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Layer_PlayerFlight(STAGE_FLIGHTPLAYER), E_FAIL);
 
@@ -255,6 +257,30 @@ HRESULT CStage::Ready_Layer_Environment(const _tchar * pLayerTag)
 	pGameObject = CCubeParticle::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"CubeParticle", pGameObject), E_FAIL);
+
+	pGameObject = CVerticalLine::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"VerticalLine", pGameObject), E_FAIL);
+
+	pGameObject = CTraceEffect::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"TraceEffect", pGameObject), E_FAIL);
+
+	pGameObject = CRoundEffect::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"RoundEffect", pGameObject), E_FAIL);
+
+	pGameObject = CLaserEffect::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"LaserEffect", pGameObject), E_FAIL);
+
+	pGameObject = CLaserPoint::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"LaserPoint", pGameObject), E_FAIL);
+
+	pGameObject = CDefensiveEffect::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"DefensiveEffect", pGameObject), E_FAIL);
 
 	pGameObject = CDashCube::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
@@ -535,7 +561,7 @@ HRESULT CStage::Ready_Layer_Monster(const _tchar * pLayerTag)
 		}
 	}
 
-	if (!vecIllusioner.empty())
+	/*if (!vecIllusioner.empty())
 	{
 		for (size_t i = 0; i < vecIllusioner.size(); i++)
 		{
@@ -548,7 +574,7 @@ HRESULT CStage::Ready_Layer_Monster(const _tchar * pLayerTag)
 			NULL_CHECK_RETURN(pGameObject, E_FAIL);
 			FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
 		}
-	}
+	}*/
 
 	if (!vecZombie.empty())
 	{
@@ -613,6 +639,17 @@ HRESULT CStage::Ready_Layer_ExBullet(const _tchar * pLayerTag)
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
+	return S_OK;
+}
+
+HRESULT CStage::Ready_Layer_Laser(const _tchar * pLayerTag)
+{
+	Engine::CLayer*      pLayer = Engine::CLayer::Create();
+	NULL_CHECK_RETURN(pLayer, E_FAIL);
+
+	CGameObject*      pGameObject = nullptr;
+
+	m_mapLayer.insert({ pLayerTag, pLayer });
 	return S_OK;
 }
 

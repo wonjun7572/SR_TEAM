@@ -60,23 +60,7 @@ _int CSpBullet::Update_Object(const _float & fTimeDelta)
 		}
 	}
 	
-	if (!Get_Layer(STAGE_SKILL)->Get_GameList().empty())
-	{
-		m_pTransCom->Static_Update();
-		for (auto& iter : Get_Layer(STAGE_SKILL)->Get_GameList())
-		{
-			if (iter->GetSphereSkillTag() == SKILL_SHIELD)
-			{
-				CTransform* pTransform = dynamic_cast<CTransform*>(iter->Get_Component(TRANSFORM_COMP, ID_DYNAMIC));
-				CHitBox* pHitbox = dynamic_cast<CHitBox*>(iter->Get_Component(HITBOX_COMP, ID_STATIC));
-				if (m_pCollision->Collision_Square(this->m_pTransCom, this->m_pHitbox, pTransform, pHitbox))
-				{
-					this->m_fTimeDelta = 10;
-					break;
-				}
-			}
-		}
-	}
+	
 
 
 
