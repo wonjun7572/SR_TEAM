@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "..\Header\Key.h"
 
-
 CKey::CKey(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CItem(pGraphicDev)
 {
@@ -17,7 +16,6 @@ HRESULT CKey::Ready_Object(const _vec3 & vPos, COLOR_ID eID)
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
 	m_pTransCom->Set_Scale(1.f, 1.f, 1.f);
-	m_pTransCom->Set_Rotation(ROT_Z, D3DXToRadian(270.f));
 	m_pTransCom->Set_Pos(vPos.x, vPos.y, vPos.z);
 	m_pTransCom->Static_Update();
 
@@ -32,6 +30,7 @@ _int CKey::Update_Object(const _float & fTimeDelta)
 {
 	if (m_bDead)
 	{
+		MSG_BOX("Ãæµ¹");
 		return -1;
 	}
 

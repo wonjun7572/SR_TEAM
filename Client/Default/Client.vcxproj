@@ -217,6 +217,7 @@
     <ClInclude Include="..\Header\Laser.h" />
     <ClInclude Include="..\Header\LoadingBar.h" />
     <ClInclude Include="..\Header\MiddleBoss.h" />
+    <ClInclude Include="..\Header\Npc.h" />
     <ClInclude Include="..\Header\ObjectCube.h" />
     <ClInclude Include="..\Header\Ping.h" />
     <ClInclude Include="..\Header\RcEffect.h" />
@@ -382,6 +383,7 @@
     <ClCompile Include="..\Code\Laser.cpp" />
     <ClCompile Include="..\Code\LoadingBar.cpp" />
     <ClCompile Include="..\Code\MiddleBoss.cpp" />
+    <ClCompile Include="..\Code\Npc.cpp" />
     <ClCompile Include="..\Code\ObjectCube.cpp" />
     <ClCompile Include="..\Code\Ping.cpp" />
     <ClCompile Include="..\Code\RcEffect.cpp" />

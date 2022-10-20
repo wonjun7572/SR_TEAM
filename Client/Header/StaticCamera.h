@@ -5,6 +5,8 @@
 #include "Export_Function.h"
 #include "FrustumCullMgr.h"
 
+class CLetterBox;
+
 class CStaticCamera : public Engine::CCamera
 {
 private:
@@ -60,11 +62,15 @@ private:
 	_float			m_fAngle = 0.f;
 	_bool			m_bChangePOV = false;
 	_float			m_fBombFrame = 0.f;
+	_bool			m_bLetterBox = false;
+
+	CLetterBox*		m_pLetterBox;
 
 	_int			m_iReverse = 1;
 	_float			m_fFrame = 0.f;
 	_float			m_fFlightFrame = 0.f;
 	_float			m_fShuttleFrame = 0.f;
+	_float			m_fPlayerFrame = 0.f;
 	_bool			m_bPlayerHit = false;
 	_bool			m_bEarthQuake = false;
 

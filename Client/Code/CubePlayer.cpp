@@ -61,27 +61,39 @@ HRESULT CCubePlayer::Ready_Object(void)
 
 _int CCubePlayer::Update_Object(const _float & fTimeDelta)
 {
-	if (!m_bColorLighting)
-	{
-		m_fRed += fTimeDelta;
-		if (m_fRed > 1.f)
-		{
-			m_bColorLighting = true;
-			m_fRed = 0.f;
-		}
-	}
+	Update_NullCheck();
 
-	if (m_bColorLighting)
+	if (!m_bDoorOpen)
 	{
-		m_fBlue += fTimeDelta;
-		if (m_fBlue > 1.f)
+		m_fRed	 = 0.5f;
+		m_fGreen = 0.5f;
+		m_fBlue	 = 0.5f;
+		m_fRange = 25.f;
+	}
+	else
+	{
+		m_fGreen = 0.f;
+		m_fRange = 40.f;
+		if (!m_bColorLighting)
 		{
-			m_bColorLighting = false;
-			m_fBlue = 0.f;
+			m_fRed += fTimeDelta;
+			if (m_fRed > 1.f)
+			{
+				m_bColorLighting = true;
+				m_fRed = 0.f;
+			}
+		}
+		if (m_bColorLighting)
+		{
+			m_fBlue += fTimeDelta;
+			if (m_fBlue > 1.f)
+			{
+				m_bColorLighting = false;
+				m_fBlue = 0.f;
+			}
 		}
 	}
 	
-	Update_NullCheck();
 
 	m_fTimeDelta = fTimeDelta;
 	m_fBulletTime += fTimeDelta;
@@ -216,11 +228,10 @@ void CCubePlayer::CoolTimer(void)
 	_vec3 vLook;
 	m_pBodyWorld->Get_Info(INFO_LOOK, &vLook);
 	D3DXVec3Normalize(&vLook, &vLook);
-
-	m_pBodyWorld->Move_Pos(&(vLook* m_iDashStack * m_fTimeDelta));
+	m_pBodyWorld->Move_Pos(&(vLook* _float(m_iDashStack) * m_fTimeDelta));
 
 	vLook *= -1.f;
-	m_pBodyWorld->Move_Pos(&(vLook * m_iKnuckStack * m_fTimeDelta));
+	m_pBodyWorld->Move_Pos(&(vLook * _float(m_iKnuckStack) * m_fTimeDelta));
 }
 
 void CCubePlayer::KnuckDown(const _float & fDamage, const _float& fDistance)
@@ -667,7 +678,7 @@ void CCubePlayer::Move()
 					{
 						//D3DXVec3Normalize(&min, &_vec3(i, j, k));						
 					
-						dynamic_cast<CRoundEffect*>(m_pRoundEffect)->Set_PclePos(vPos + _vec3(i, j, k)*0.1);
+						dynamic_cast<CRoundEffect*>(m_pRoundEffect)->Set_PclePos(vPos + _vec3(i, j, k)*0.1f);
 
 						dynamic_cast<CRoundEffect*>(m_pRoundEffect)->Set_PcleDir(-min);
 
@@ -1174,10 +1185,10 @@ HRESULT CCubePlayer::Lighting()
 	d3dLight.Type = D3DLIGHT_POINT;
 
 	d3dLight.Diffuse.r = m_fRed;
-	d3dLight.Diffuse.g = 0.0f;
+	d3dLight.Diffuse.g = m_fGreen;
 	d3dLight.Diffuse.b = m_fBlue;
 	d3dLight.Ambient.r = m_fRed;
-	d3dLight.Ambient.g = 0.0f;
+	d3dLight.Ambient.g = m_fGreen;
 	d3dLight.Ambient.b = m_fBlue;
 	d3dLight.Specular.r = 1.0f;
 	d3dLight.Specular.g = 1.0f;
@@ -1198,7 +1209,7 @@ HRESULT CCubePlayer::Lighting()
 
 	// Don't attenuate.
 	d3dLight.Attenuation0 = 0.5f;
-	d3dLight.Range = 50.0f;
+	d3dLight.Range = m_fRange;
 
 	// Set the property information for the first light.
 	FAILED_CHECK_RETURN(m_pGraphicDev->SetLight(1, &d3dLight),E_FAIL);

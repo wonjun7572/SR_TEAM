@@ -148,7 +148,7 @@ void CBattleCursier::Random(void)
 
 	Replace(m_ShufflePos.front(), vAngle, vDir);
 
-	Set_Speed(m_ShuffleSpeed.front());
+	Set_Speed(_float(m_ShuffleSpeed.front()));
 	
 }
 
