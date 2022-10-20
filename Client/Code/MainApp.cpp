@@ -32,15 +32,28 @@ _int CMainApp::Update_MainApp(const _float & fTimeDelta)
 	Engine::SetUp_InputDev();
 
 	NULL_CHECK_RETURN(m_pManagementClass, -1);
-
-	if (Get_DIKeyState(DIK_Y))
+	
+	if (m_pManagementClass->Get_Scene()->Get_SceneId() == STAGE_SCENE)
 	{
-		Engine::CScene*			pScene = nullptr;
+		if (Get_Layer(L"STAGE_KEY")->Get_GameList().size() == 0)
+		{
+			Engine::CScene*			pScene = nullptr;
 
-		pScene = CFinalStage::Create(m_pGraphicDev);
-		NULL_CHECK_RETURN(pScene, E_FAIL);
+			pScene = CFinalStage::Create(m_pGraphicDev);
+			NULL_CHECK_RETURN(pScene, E_FAIL);
 
-		FAILED_CHECK_RETURN(m_pManagementClass->Set_Scene(pScene), E_FAIL);
+			FAILED_CHECK_RETURN(m_pManagementClass->Set_Scene(pScene), E_FAIL);
+		}
+
+		if (Get_Layer(STAGE_GUNITEM)->Get_GameObjectMap().size() == 0)
+		{
+			Engine::CScene*			pScene = nullptr;
+
+			pScene = CFinalStage::Create(m_pGraphicDev);
+			NULL_CHECK_RETURN(pScene, E_FAIL);
+
+			FAILED_CHECK_RETURN(m_pManagementClass->Set_Scene(pScene), E_FAIL);
+		}
 	}
 
 	// 툴 프레임 업데이트 

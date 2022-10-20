@@ -40,7 +40,7 @@ private:
 	_int			m_iTextureIndex = 0;
 
 	_bool			m_bWorldmap = false;
-	_bool			m_bMinimap = true;
+	_bool			m_bMinimap = false;
 	_bool			m_bKeyDown = false;
 public:
 	static CBaseMapping*	Create(LPDIRECT3DDEVICE9 pGraphicDev);

@@ -61,27 +61,37 @@ HRESULT CCubePlayer::Ready_Object(void)
 
 _int CCubePlayer::Update_Object(const _float & fTimeDelta)
 {
-	if (!m_bColorLighting)
-	{
-		m_fRed += fTimeDelta;
-		if (m_fRed > 1.f)
-		{
-			m_bColorLighting = true;
-			m_fRed = 0.f;
-		}
-	}
+	Update_NullCheck();
 
-	if (m_bColorLighting)
+	if (!m_bDoorOpen)
 	{
-		m_fBlue += fTimeDelta;
-		if (m_fBlue > 1.f)
+		m_fRed	 = 0.5f;
+		m_fGreen = 0.5f;
+		m_fBlue	 = 0.5f;
+	}
+	else
+	{
+		m_fGreen = 0.f;
+		if (!m_bColorLighting)
 		{
-			m_bColorLighting = false;
-			m_fBlue = 0.f;
+			m_fRed += fTimeDelta;
+			if (m_fRed > 1.f)
+			{
+				m_bColorLighting = true;
+				m_fRed = 0.f;
+			}
+		}
+		if (m_bColorLighting)
+		{
+			m_fBlue += fTimeDelta;
+			if (m_fBlue > 1.f)
+			{
+				m_bColorLighting = false;
+				m_fBlue = 0.f;
+			}
 		}
 	}
 	
-	Update_NullCheck();
 
 	m_fTimeDelta = fTimeDelta;
 	m_fBulletTime += fTimeDelta;
@@ -666,7 +676,7 @@ void CCubePlayer::Move()
 					{
 						//D3DXVec3Normalize(&min, &_vec3(i, j, k));						
 					
-						dynamic_cast<CRoundEffect*>(m_pRoundEffect)->Set_PclePos(vPos + _vec3(i, j, k)*0.1);
+						dynamic_cast<CRoundEffect*>(m_pRoundEffect)->Set_PclePos(vPos + _vec3(i, j, k)*0.1f);
 
 						dynamic_cast<CRoundEffect*>(m_pRoundEffect)->Set_PcleDir(-min);
 
@@ -1173,10 +1183,10 @@ HRESULT CCubePlayer::Lighting()
 	d3dLight.Type = D3DLIGHT_POINT;
 
 	d3dLight.Diffuse.r = m_fRed;
-	d3dLight.Diffuse.g = 0.0f;
+	d3dLight.Diffuse.g = m_fGreen;
 	d3dLight.Diffuse.b = m_fBlue;
 	d3dLight.Ambient.r = m_fRed;
-	d3dLight.Ambient.g = 0.0f;
+	d3dLight.Ambient.g = m_fGreen;
 	d3dLight.Ambient.b = m_fBlue;
 	d3dLight.Specular.r = 1.0f;
 	d3dLight.Specular.g = 1.0f;

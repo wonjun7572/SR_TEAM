@@ -214,8 +214,10 @@
     <ClInclude Include="..\Header\Key.h" />
     <ClInclude Include="..\Header\KrakenBullet.h" />
     <ClInclude Include="..\Header\KrakenLeg.h" />
+    <ClInclude Include="..\Header\Laser.h" />
     <ClInclude Include="..\Header\LoadingBar.h" />
     <ClInclude Include="..\Header\MiddleBoss.h" />
+    <ClInclude Include="..\Header\Npc.h" />
     <ClInclude Include="..\Header\ObjectCube.h" />
     <ClInclude Include="..\Header\Ping.h" />
     <ClInclude Include="..\Header\RcEffect.h" />
@@ -378,8 +380,10 @@
     <ClCompile Include="..\Code\IceEffect.cpp" />
     <ClCompile Include="..\Code\Key.cpp" />
     <ClCompile Include="..\Code\KrakenBullet.cpp" />
+    <ClCompile Include="..\Code\Laser.cpp" />
     <ClCompile Include="..\Code\LoadingBar.cpp" />
     <ClCompile Include="..\Code\MiddleBoss.cpp" />
+    <ClCompile Include="..\Code\Npc.cpp" />
     <ClCompile Include="..\Code\ObjectCube.cpp" />
     <ClCompile Include="..\Code\Ping.cpp" />
     <ClCompile Include="..\Code\RcEffect.cpp" />

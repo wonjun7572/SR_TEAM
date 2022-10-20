@@ -37,6 +37,7 @@ public:
 	
 private:
 	CScene*		m_pScene;
+
 public:
 	virtual void Free(void);
 };

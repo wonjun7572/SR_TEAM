@@ -233,6 +233,8 @@ _uint CLoading::Loading_ForStage(void)
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Shield_Tex", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Particle/StaticParticle/Shield.png", TEX_NORMAL)), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Shield2_Tex", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Particle/StaticParticle/Shield2.png", TEX_NORMAL)), E_FAIL);
 
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"LetterBox_Tex", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/UI/Sprite/Tutorialscreen_UI_0.png", TEX_NORMAL)), E_FAIL);
+
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Black_Tex", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Particle/StaticParticle/Black.png", TEX_NORMAL)), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Brown_Tex", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Particle/StaticParticle/Brown.png", TEX_NORMAL)), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"LightGreen_Tex", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Particle/StaticParticle/LightGreen.png", TEX_NORMAL)), E_FAIL);

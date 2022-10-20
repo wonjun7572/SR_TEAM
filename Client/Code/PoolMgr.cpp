@@ -48,6 +48,7 @@ void CPoolMgr::Collect_Laser(CGameObject * pObj)
 
 	m_LaserPool.push_back(pObj);
 }
+
 HRESULT CPoolMgr::Reuse_Obj(LPDIRECT3DDEVICE9& pGraphicDev, const _vec3* vPos, const _vec3* vDir, _float _fDamage)
 {
 	CGameObject* pObj = nullptr;

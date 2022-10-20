@@ -376,6 +376,9 @@
     <Filter Include="02. GameObject\01. For_Stage\06. Bullet\Laser">
       <UniqueIdentifier>{97dc89cc-42c4-423f-853c-0d623c22f11c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\22. NPC">
+      <UniqueIdentifier>{d0c80056-61c3-4e5a-8baf-868b95b85aca}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -843,11 +846,20 @@
     <ClInclude Include="..\Header\FinalStage.h">
       <Filter>01. Scene\03. FinalStage</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\RoundEffect.h">
-      <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\RoundEffect</Filter>
+    <ClInclude Include="..\Header\KrakenBullet.h">
+      <Filter>99. Default\헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\KrakenLeg.h">
+      <Filter>99. Default\헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\LoadingBar.h">
+      <Filter>99. Default\헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Laser.h">
       <Filter>02. GameObject\01. For_Stage\06. Bullet\Laser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Npc.h">
+      <Filter>02. GameObject\01. For_Stage\22. NPC</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1292,11 +1304,20 @@
     <ClCompile Include="..\Code\FinalStage.cpp">
       <Filter>01. Scene\03. FinalStage</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\RoundEffect.cpp">
-      <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\RoundEffect</Filter>
+    <ClCompile Include="..\Code\KrakenBullet.cpp">
+      <Filter>99. Default\소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\LoadingBar.cpp">
+      <Filter>99. Default\소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="KrakenLeg.cpp">
+      <Filter>99. Default\소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Laser.cpp">
       <Filter>02. GameObject\01. For_Stage\06. Bullet\Laser</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Npc.cpp">
+      <Filter>02. GameObject\01. For_Stage\22. NPC</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1326,5 +1347,6 @@
     <FxCompile Include="..\Bin\ShaderFiles\Shader_Rect.hlsl">
       <Filter>99. Default</Filter>
     </FxCompile>
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_Cube.hlsl" />
   </ItemGroup>
 </Project>

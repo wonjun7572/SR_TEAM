@@ -10,6 +10,7 @@
 #include "Supporter_Uzi.h"
 #include "Supporter_Shotgun.h"
 #include "Supporter_Sniper.h"
+#include "LetterBox.h"
 
 CStaticCamera::CStaticCamera(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CCamera(pGraphicDev)
@@ -115,6 +116,7 @@ Engine::_int CStaticCamera::Update_Object(const _float& fTimeDelta)
 	m_fFlightFrame += fTimeDelta * 0.5f;
 	m_fBombFrame += fTimeDelta * 0.5f;
 	m_fShuttleFrame += fTimeDelta * 0.15f;
+	m_fPlayerFrame += fTimeDelta * 0.05f;
 
 	_int   iExit = CCamera::Update_Object(fTimeDelta);
 
@@ -166,7 +168,6 @@ void CStaticCamera::Mouse_Fix(void)
 
 void CStaticCamera::Look_Target(const _float& _fTimeDelta)
 {
-
 	CGameObject* pPlayer = nullptr;
 	pPlayer = Engine::Get_GameObject(STAGE_CHARACTER, L"PLAYER");
 
@@ -182,6 +183,7 @@ void CStaticCamera::Look_Target(const _float& _fTimeDelta)
 	CGameObject* pUZI = nullptr;
 	pUZI = Engine::Get_GameObject(STAGE_SUPPORTER, L"FLIGHTSHUTTLE");
 
+	
 	if (m_pSupporterUziTransform != nullptr && m_pSupUzi != nullptr
 		&& dynamic_cast<CSupporter_Uzi*>(m_pSupUzi)->Get_setcam() == true)
 	{
@@ -462,9 +464,40 @@ void CStaticCamera::Look_Target(const _float& _fTimeDelta)
 		_vec3 vPos;
 		m_pTransform_Target->Get_Info(INFO_POS, &vPos);
 
-		m_fFov = D3DXToRadian(60.f);
-		m_vEye += vPos;
-		m_vAt = vPos;
+		_vec3 vTransLerp;
+		D3DXVec3Lerp(&vTransLerp, &_vec3(0.f, 50.f, -10.f), &vPos, m_fPlayerFrame);
+
+		if (m_fPlayerFrame < 1.f)
+		{
+			if (!m_bLetterBox)
+			{
+				if (0.f < m_fPlayerFrame && m_fPlayerFrame < 0.3f)
+				{
+					m_pLetterBox = CLetterBox::Create(m_pGraphicDev, L"Where am I?", sizeof(L"Where am I?"), 0);
+					m_bLetterBox = true;
+				}
+			}
+			else if (0.3f < m_fPlayerFrame && m_fPlayerFrame < 0.6f)
+			{
+				m_pLetterBox->ChangeLetterContents(L"Is it a dream or a reality?", sizeof(L"Is it a dream or a reality?"));
+			}
+			else if (0.89f > m_fPlayerFrame && m_fPlayerFrame > 0.6f)
+				m_pLetterBox->ChangeLetterContents(L"Oh my god!!!", sizeof(L"Oh my god!!!"));
+			else if (m_fPlayerFrame > 0.9f)
+			{
+				m_pLetterBox->LetterDead();
+			}
+
+			m_fFov = D3DXToRadian(60.f);
+			m_vEye += vTransLerp * m_fPlayerFrame;
+			m_vAt = vTransLerp + (-vUp * m_fPlayerFrame * 2.f);
+		}
+		else
+		{
+			m_fFov = D3DXToRadian(60.f);
+			m_vEye += vPos;
+			m_vAt = vPos;
+		}
 	}
 
 	if (dynamic_cast<CPlayerMapping*>(pBomb)->Get_WorldMap() == false)

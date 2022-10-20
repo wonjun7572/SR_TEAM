@@ -352,8 +352,6 @@ HRESULT CShop::Add_Component(void)
 	NULL_CHECK_RETURN(m_pButtonThreeform, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_ButtonThreeformCom", pComponent });
 
-
-
 	//Levelup
 	pComponent = m_pLaserRaffle = dynamic_cast<CTexture*>(Clone_Proto(L"Proto_LevelLaserCom"));
 	NULL_CHECK_RETURN(m_pLaserRaffle, E_FAIL);
@@ -487,5 +485,4 @@ CShop * CShop::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 void CShop::Free()
 {
 	CGameObject::Free();
-
 }
