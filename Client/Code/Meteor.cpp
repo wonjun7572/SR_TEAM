@@ -45,7 +45,7 @@ _int CMeteor::Update_Object(const _float & fTimeDelta)
 
 	m_pTransCom->Get_Info(INFO_POS, &m_vPos);
 	// 범위안에 여러개
-	Add_RenderGroup(RENDER_NONALPHA,this);
+	Add_RenderGroup(RENDER_ALPHA,this);
 
 	if (m_vPos.y <= 1.f)
 	{

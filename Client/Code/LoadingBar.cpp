@@ -112,7 +112,7 @@ void CLoadingBar::Begin_OrthoProj()
 	D3DXMatrixIdentity(&matWorld);
 	D3DXMatrixIdentity(&matView);
 
-	matView.m[0][0] = 400.f; // 이미지 가로
+	matView.m[0][0] = 390.f; // 이미지 가로
 	matView.m[1][1] = 150.f; // 이미지 세로
 	matView.m[2][2] = 1.f;
 	matView.m[3][0] = m_pUITransCom->m_vInfo[INFO_POS].x;

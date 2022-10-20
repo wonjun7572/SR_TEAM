@@ -288,10 +288,10 @@ void CFlight::Random(void)
 		vAngle = { 0.f, D3DXToRadian(270.f) ,0.f };
 		vDir = { -1.f, 0.f, 0.f };
 	}
-
+	
 	Replace(m_ShufflePos.front(), vAngle, vDir);
 
-	Set_Speed(m_ShuffleSpeed.front());
+	Set_Speed(_float(m_ShuffleSpeed.front()));
 }
 
 HRESULT CFlight::Build(void)

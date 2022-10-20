@@ -17,8 +17,6 @@ class CCartridgeParticle;
 class CTriggerParticle;
 class CTriggerFront;
 class CRoundEffect;
-class CTraceEffect;
-class CLaserPoint;
 
 class CCubePlayer : public CGameObject
 {
@@ -69,6 +67,7 @@ public:
 	virtual HRESULT		Set_Material()override;
 
 	void			Key_Skill();
+
 private:
 	_int			m_iKnuckStack = 0;
 	_int			m_iDashStack = 0;
@@ -85,10 +84,7 @@ private:
 public:
 	CWeapon*		Get_Weapon() { return m_Weapon; }
 	_int			Get_DmgItem() { return m_iDmgItem; }
-	void			On_StaticField() { m_bCanStaticField = true; }
-	void			On_Shield() { m_bCanShield = true; }
-	
-
+	void			Set_DoorOpen(_bool bDoorOpen) { m_bDoorOpen = bDoorOpen; }
 
 private:
 	map<const _tchar*, CGameObject*>	m_mapPlayerBody;
@@ -111,12 +107,10 @@ private:
 	void			Gun_Check(void);
 	void			Inventory_Check(void); //인벤토리관련 함수
 
-
 private:
 	void			Jump(void);
 	_bool			m_bJump = false;
 	_bool			m_bFirst = true;
-
 
 private:
 	HRESULT			Add_Component(void);
@@ -155,17 +149,15 @@ private: // 파티클관련 포인터입니다.
 	CTriggerParticle* m_pTriggerParticle = nullptr;
 	CTriggerFront* m_pTriggerFront = nullptr;
 	CRoundEffect* m_pRoundEffect = nullptr;
-	CTraceEffect* m_pTraceEffect = nullptr;
-	CLaserPoint* m_pLaserPoint = nullptr;
 
 	CCartridgeParticle*		m_pCartridgeParticle = nullptr;
 
 private:
 	_float			m_fRed = 0.f;
+	_float			m_fGreen = 0.f;
 	_float			m_fBlue = 0.f;
-	_float			m_fLaserTimer = 0.f;
+	_float			m_fRange = 0.f;
 
-	_bool			m_bSniperEffect = 0.f;
 	_bool			m_bColorLighting = false;
 
 	_float			m_fLookAngle = 0.f;
@@ -196,8 +188,9 @@ private:
 	_bool			m_bSniper;
 	_bool			m_bSinperZoom = false;
 	
-
 	vector<CWeapon*> m_vecWeapon;
+
+	_bool			m_bDoorOpen = false;
 
 	// 총관련 변수
 	_float			m_fBulletTime = 0.f;
@@ -214,9 +207,6 @@ private:
 	_int			m_iSetWeaponState = 0;
 	_int			m_iDmgItem = 0;
 	_int			m_iSpeedItem = 0;
-	_bool			m_bCanStaticField = false;
-	_bool			m_bCanShield = false;
-
 
 	//방벽관련 변수입니다
 	_bool			m_bShield = false;

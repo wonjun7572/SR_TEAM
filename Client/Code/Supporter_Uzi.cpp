@@ -88,7 +88,7 @@ _int CSupporter_Uzi::Update_Object(const _float & fTimeDelta)
 	_vec3 vPosition;
 	m_pTransform->Get_Info(INFO_POS, &vPosition);
 
-	if (vPosition.y >= 0.6f)
+	if (vPosition.y > 0.6f)
 	{
 		m_pTransform->Move_Pos(&(_vec3(0.f, -1.f, 0.f) * 10.f * fTimeDelta));
 
@@ -128,12 +128,12 @@ _int CSupporter_Uzi::Update_Object(const _float & fTimeDelta)
 		//	pVerticalLine->addParticle();
 		//}
 	}
-	else if(vPosition.y <= 0.6f)
+	else if(vPosition.y < 0.6f)
 	{
 		m_bSetCam = false;
 	}
 
-	if (vPosition.y >= 0.6f)
+	if (vPosition.y > 0.6f)
 	{
 		m_STATE = UZISUPPORTER_DROP;
 	}
@@ -182,7 +182,7 @@ _int CSupporter_Uzi::Update_Object(const _float & fTimeDelta)
 	}
 	// ¿©±â¼­ good
 
-	if (vPosition.y <= 0.6f)
+	if (vPosition.y < 0.6f)
 	{
 		Find_Target();
 

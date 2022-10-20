@@ -70,7 +70,7 @@ _int CProjectileParticle::Update_Object(const _float & fTimeDelta)
 			CLayer* pLayer = Get_Layer(STAGE_SKILL);			
 			CGameObject* pGameObject = CStaticField::Create(m_pGraphicDev, m_vDeadPos);
 			NULL_CHECK_RETURN(pGameObject, E_FAIL);
-			FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), );
+			FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), 0);
 		}
 		
 	}

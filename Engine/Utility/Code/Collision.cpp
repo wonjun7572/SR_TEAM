@@ -54,6 +54,32 @@ _bool CCollision::Sphere_Collision(CTransform* pTempTransform, CTransform* pSour
 		return true;
 }
 
+_bool CCollision::Animation_Collision(CTransform * pTempTransform, _matrix * AnimationFinalMatrix, _float fTemp, _float fAnimationScale)
+{
+	_vec3 vTemp, vSour;
+
+	pTempTransform->Get_Info(INFO_POS, &vTemp);
+	vSour = { AnimationFinalMatrix->m[3][0], AnimationFinalMatrix->m[3][1] ,AnimationFinalMatrix->m[3][2] };
+
+	_float fTempX, fTempY, fTempZ;
+	_float fSourX, fSourY, fSourZ;
+
+	fTempX = vTemp.x;
+	fTempY = vTemp.y;
+	fTempZ = vTemp.z;
+
+	fSourX = vSour.x;
+	fSourY = vSour.y;
+	fSourZ = vSour.z;
+
+	_float fDistance = sqrtf((fTempX - fSourX) * (fTempX - fSourX) + (fTempY - fSourY) * (fTempY - fSourY) + (fTempZ - fSourZ) * (fTempZ - fSourZ));
+
+	if (fDistance > fTemp + fAnimationScale)
+		return false;
+	else
+		return true;
+}
+
 _int CCollision::Wall_Collision(_vec3* vNorm)
 {
 	CLayer* pLayer = Engine::Get_Layer(STAGE_WALL);
@@ -1027,12 +1053,43 @@ _bool CCollision::Collision_Square(CTransform * pSrcTrans, CHitBox * pSrcHit, CT
 
 void CCollision::Get_Item(void)
 {
-	CLayer* pLayer = Engine::Get_Layer(STAGE_ITEM);
-	list<CGameObject*> ItemList = pLayer->Get_GameList();
-	
 	CTransform*	pPlayerTransform = dynamic_cast<CTransform*>(Get_Component(STAGE_CHARACTER, L"PLAYER", TRANSFORM_COMP, ID_DYNAMIC));
 	CHitBox* pPlayerBox = dynamic_cast<CHitBox*>(Get_Component(STAGE_CHARACTER, L"PLAYER", HITBOX_COMP, ID_STATIC));
 	CTransform* pPlayerBodyTransform = dynamic_cast<CTransform*>(Get_Component(STAGE_CHARACTER, L"BODY", TRANSFORM_COMP, ID_DYNAMIC));
+	if (Get_Scene()->Get_SceneId() == STAGE_SCENE)
+	{
+		CLayer* pLayer = Engine::Get_Layer(L"STAGE_KEY");
+		list<CGameObject*> KeyList = pLayer->Get_GameList();
+		
+		if (KeyList.empty())
+			return;
+
+		for (auto iter : KeyList)
+		{
+			CTransform* pItemTransform = dynamic_cast<CTransform*>(iter->Get_Component(ITEM_TRANSFORM_COMP, ID_DYNAMIC));
+			NULL_CHECK_RETURN(pItemTransform, );
+			CHitBox* pItemBox = dynamic_cast<CHitBox*>(iter->Get_Component(HITBOX_COMP, ID_STATIC));
+			NULL_CHECK_RETURN(pItemBox, );
+
+			pPlayerBox->Get_MinMax(&m_vMin1, &m_vMax1);
+			pItemBox->Get_MinMax(&m_vMin2, &m_vMax2);
+
+			D3DXVec3TransformCoord(&m_vMin1, &m_vMin1, pPlayerTransform->Get_WorldMatrixPointer());
+			D3DXVec3TransformCoord(&m_vMax1, &m_vMax1, pPlayerTransform->Get_WorldMatrixPointer());
+			D3DXVec3TransformCoord(&m_vMin2, &m_vMin2, pItemTransform->Get_WorldMatrixPointer());
+			D3DXVec3TransformCoord(&m_vMax2, &m_vMax2, pItemTransform->Get_WorldMatrixPointer());
+
+			if (m_vMin1.x <= m_vMax2.x && m_vMax1.x >= m_vMin2.x &&
+				m_vMin1.y <= m_vMax2.y && m_vMax1.y >= m_vMin2.y &&
+				m_vMin1.z <= m_vMax2.z && m_vMax1.z >= m_vMin2.z)
+			{
+				iter->Kill_Obj();
+			}
+		}
+	}
+
+	CLayer* pLayer = Engine::Get_Layer(STAGE_ITEM);
+	list<CGameObject*> ItemList = pLayer->Get_GameList();
 
 	if (ItemList.empty())
 		return;
@@ -1062,6 +1119,9 @@ void CCollision::Get_Item(void)
 			iter->Kill_Obj();
 		}
 	}
+
+
+	
 }
 
 void CCollision::Get_GunItem()

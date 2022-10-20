@@ -410,9 +410,9 @@ void CInventory::Mouse()
 	}
 
 	//인벤토리 기능
-	for (_int i = 0; i < 9; ++i)
+	for (size_t i = 0; i < 9; ++i)
 	{
-		for (_int j = 0; j < 9; ++j)
+		for (size_t j = 0; j < 9; ++j)
 		{
 			for (auto& iter : m_vecContents)
 			{
@@ -437,7 +437,6 @@ void CInventory::Mouse()
 								iter->Kill_Obj();
 								iter = nullptr;
 							}
-
 						}
 					}
 				}

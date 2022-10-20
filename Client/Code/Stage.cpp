@@ -88,7 +88,7 @@
 #include "Flight.h"
 #include "Key.h"
 #include "FlightSpot.h"
-
+#include "Npc.h"
 
 CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CScene(pGraphicDev)
@@ -106,8 +106,8 @@ HRESULT CStage::Ready_Scene(void)
 
 	CGameObject*      pGameObject = nullptr;
 
-	_float fBGMSound = 1.f;
-	PlayBGM(L"Track_01.mp3", fBGMSound);
+	_float fBGMSound = 0.5f;
+	PlayBGM(L"Track_02.mp3", fBGMSound);
 
 	FAILED_CHECK_RETURN(Ready_Proto(), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Light(), E_FAIL);
@@ -142,9 +142,9 @@ HRESULT CStage::Ready_Scene(void)
 	FAILED_CHECK_RETURN(Ready_Layer_PlayerBullet(STAGE_BULLETPLAYER), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Layer_ExBullet(STAGE_EXBULLET), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Layer_Laser(STAGE_LASER), E_FAIL);
-
 	FAILED_CHECK_RETURN(Ready_Layer_Creature(STAGE_CREATURE), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Layer_PlayerFlight(STAGE_FLIGHTPLAYER), E_FAIL);
+	FAILED_CHECK_RETURN(Ready_Layer_KEY(L"STAGE_KEY"), E_FAIL);
 
 	return S_OK;
 }
@@ -258,49 +258,17 @@ HRESULT CStage::Ready_Layer_Environment(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"CubeParticle", pGameObject), E_FAIL);
 
-	pGameObject = CVerticalLine::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"VerticalLine", pGameObject), E_FAIL);
-
-	pGameObject = CTraceEffect::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"TraceEffect", pGameObject), E_FAIL);
-
-	pGameObject = CRoundEffect::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"RoundEffect", pGameObject), E_FAIL);
-
-	pGameObject = CLaserEffect::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"LaserEffect", pGameObject), E_FAIL);
-
-	pGameObject = CLaserPoint::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"LaserPoint", pGameObject), E_FAIL);
-
-	pGameObject = CDefensiveEffect::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"DefensiveEffect", pGameObject), E_FAIL);
-
 	pGameObject = CDashCube::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"DashCube", pGameObject), E_FAIL);
 
-	pGameObject = CKey::Create(m_pGraphicDev, _vec3(20.f, 0.6f, 10.f), COLOR_BLUE);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"BLUEKEY", pGameObject), E_FAIL);
-
-	pGameObject = CKey::Create(m_pGraphicDev, _vec3(24.f, 0.6f, 10.f), COLOR_RED);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"REDKEY", pGameObject), E_FAIL);
-
-	pGameObject = CKey::Create(m_pGraphicDev, _vec3(28.f, 0.6f, 10.f), COLOR_YELLOW);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"YELLOWKEY", pGameObject), E_FAIL);
-
 	pGameObject = CCartridgeParticle::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"CartridgeParticle", pGameObject), E_FAIL);
+
+	pGameObject = CNpc::Create(m_pGraphicDev, _vec3(14.f, 0.5f, 10.f));
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"NPC", pGameObject), E_FAIL);
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
@@ -531,70 +499,70 @@ HRESULT CStage::Ready_Layer_Monster(const _tchar * pLayerTag)
 
 	CGameObject*      pGameObject = nullptr;
 
-	if (!vecFireMan.empty())
-	{
-		for (size_t i = 0; i < vecFireMan.size(); i++)
-		{
-			_tchar* szName = new _tchar[256]{};
-			wstring wName = L"Fireman_%d";
-			wsprintfW(szName, wName.c_str(), i);
-			NameList.push_back(szName);
-			vecFireMan[i].y += 0.5f;
-			pGameObject = CFireMan::Create(m_pGraphicDev, vecFireMan[i], szName);
-			NULL_CHECK_RETURN(pGameObject, E_FAIL);
-			FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
-		}
-	}
+	//if (!vecFireMan.empty())
+	//{
+	//	for (size_t i = 0; i < vecFireMan.size(); i++)
+	//	{
+	//		_tchar* szName = new _tchar[128]{};
+	//		wstring wName = L"Fireman_%d";
+	//		wsprintfW(szName, wName.c_str(), i);
+	//		NameList.push_back(szName);
+	//		vecFireMan[i].y += 0.5f;
+	//		pGameObject = CFireMan::Create(m_pGraphicDev, vecFireMan[i], szName);
+	//		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+	//	}
+	//}
+	//
+	//if (!vecSlime.empty())
+	//{
+	//	for (size_t i = 0; i < vecSlime.size(); i++)
+	//	{
+	//		_tchar* szName = new _tchar[128]{};
+	//		wstring wName = L"Slime_%d";
+	//		wsprintfW(szName, wName.c_str(), i);
+	//		NameList.push_back(szName);
+	//		vecSlime[i].y += 0.5f;
+	//		pGameObject = CSlime::Create(m_pGraphicDev, vecSlime[i], szName);
+	//		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+	//	}
+	//}
+	//
+	//if (!vecIllusioner.empty())
+	//{
+	//	for (size_t i = 0; i < vecIllusioner.size(); i++)
+	//	{
+	//		_tchar* szName = new _tchar[128]{};
+	//		wstring wName = L"Illusioner_%d";
+	//		wsprintfW(szName, wName.c_str(), i);
+	//		NameList.push_back(szName);
+	//		vecIllusioner[i].y += 0.5f;
+	//		pGameObject = CIllusioner::Create(m_pGraphicDev, vecIllusioner[i], szName);
+	//		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+	//	}
+	//}
+	//
+	//if (!vecZombie.empty())
+	//{
+	//	for (size_t i = 0; i < vecZombie.size(); i++)
+	//	{
+	//		_tchar* szName = new _tchar[128]{};
+	//		wstring wName = L"Zombie_%d";
+	//		wsprintfW(szName, wName.c_str(), i);
+	//		NameList.push_back(szName);
+	//		vecZombie[i].y += 0.5f;
+	//		pGameObject = CZombie::Create(m_pGraphicDev, vecZombie[i], szName);
+	//		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+	//	}
+	//}
 
-	if (!vecSlime.empty())
-	{
-		for (size_t i = 0; i < vecSlime.size(); i++)
-		{
-			_tchar* szName = new _tchar[256]{};
-			wstring wName = L"Slime_%d";
-			wsprintfW(szName, wName.c_str(), i);
-			NameList.push_back(szName);
-			vecSlime[i].y += 0.5f;
-			pGameObject = CSlime::Create(m_pGraphicDev, vecSlime[i], szName);
-			NULL_CHECK_RETURN(pGameObject, E_FAIL);
-			FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
-		}
-	}
 
-	/*if (!vecIllusioner.empty())
-	{
-		for (size_t i = 0; i < vecIllusioner.size(); i++)
-		{
-			_tchar* szName = new _tchar[256]{};
-			wstring wName = L"Illusioner_%d";
-			wsprintfW(szName, wName.c_str(), i);
-			NameList.push_back(szName);
-			vecIllusioner[i].y += 0.5f;
-			pGameObject = CIllusioner::Create(m_pGraphicDev, vecIllusioner[i], szName);
-			NULL_CHECK_RETURN(pGameObject, E_FAIL);
-			FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
-		}
-	}*/
-
-	if (!vecZombie.empty())
-	{
-		for (size_t i = 0; i < vecZombie.size(); i++)
-		{
-			_tchar* szName = new _tchar[256]{};
-			wstring wName = L"Zombie_%d";
-			wsprintfW(szName, wName.c_str(), i);
-			NameList.push_back(szName);
-			vecZombie[i].y += 0.5f;
-			pGameObject = CZombie::Create(m_pGraphicDev, vecZombie[i], szName);
-			NULL_CHECK_RETURN(pGameObject, E_FAIL);
-			FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
-		}
-	}
-
-
-	//pGameObject = CMiddleBoss::Create(m_pGraphicDev, _vec3(109.f, 0.6f, 10.f), L"MiddleBoss");
-	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+	pGameObject = CMiddleBoss::Create(m_pGraphicDev, _vec3(109.f, 0.6f, 10.f), L"MiddleBoss");
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
 
 	//pGameObject = CKrakenBoss::Create(m_pGraphicDev, _vec3(10.f, 5.6f, 10.f), L"Kraken");
 	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
@@ -650,8 +618,35 @@ HRESULT CStage::Ready_Layer_Laser(const _tchar * pLayerTag)
 	CGameObject*      pGameObject = nullptr;
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
+
 	return S_OK;
 }
+
+HRESULT CStage::Ready_Layer_KEY(const _tchar * pLayerTag)
+{
+	Engine::CLayer*      pLayer = Engine::CLayer::Create();
+	NULL_CHECK_RETURN(pLayer, E_FAIL);
+
+	CGameObject*      pGameObject = nullptr;
+
+	pGameObject = CKey::Create(m_pGraphicDev, _vec3(20.f, 0.6f, 10.f), COLOR_BLUE);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+
+	pGameObject = CKey::Create(m_pGraphicDev, _vec3(24.f, 0.6f, 10.f), COLOR_RED);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+
+	// 키 하나 미들보스가 죽었을때로 옮겨줘야함
+	pGameObject = CKey::Create(m_pGraphicDev, _vec3(28.f, 0.6f, 10.f), COLOR_YELLOW);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+	
+	m_mapLayer.insert({ pLayerTag, pLayer });
+
+	return S_OK;
+}
+
 
 HRESULT CStage::Ready_Layer_Mapping(const _tchar * pLayerTag)
 {
@@ -775,6 +770,7 @@ HRESULT CStage::Ready_Layer_Item(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pLayer, E_FAIL);
 
 	CGameObject*      pGameObject = nullptr;
+
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
@@ -927,48 +923,48 @@ HRESULT CStage::Ready_Layer_Trap(const _tchar * pLayerTag)
 	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	//FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
 
-	if (!vecThrone.empty())
-	{
-		for (size_t i = 0; i < vecThrone.size(); i++)
-		{
-		_tchar* szName = new _tchar[256]{};
-		wstring wName = L"Thorn_%d";
-		wsprintfW(szName, wName.c_str(), i);
-		NameList.push_back(szName);
-		pGameObject = CThorn::Create(m_pGraphicDev, vecThrone[i], szName);
-		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
-		}
-	}
-
-	if (!vecLava.empty())
-	{
-		for (size_t i = 0; i < vecLava.size(); i++)
-		{
-		_tchar* szName = new _tchar[256]{};
-		wstring wName = L"Magma_%d";
-		wsprintfW(szName, wName.c_str(), i);
-		NameList.push_back(szName);
-		pGameObject = CMagma::Create(m_pGraphicDev, vecLava[i], szName);
-		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
-		}
-	}
-
-	if (!vecItem.empty())
-	{
-		for (size_t i = 0; i < vecItem.size(); i++)
-		{
-			_tchar* szName = new _tchar[256]{};
-			wstring wName = L"Item_%d";
-			wsprintfW(szName, wName.c_str(), i);
-			NameList.push_back(szName);
-			vecItem[i].y += 0.5f;
-			pGameObject = CItemBox::Create(m_pGraphicDev, vecItem[i], szName);
-			NULL_CHECK_RETURN(pGameObject, E_FAIL);
-			FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
-		}
-	}
+	//if (!vecThrone.empty())
+	//{
+	//	for (size_t i = 0; i < vecThrone.size(); i++)
+	//	{
+	//	_tchar* szName = new _tchar[256]{};
+	//	wstring wName = L"Thorn_%d";
+	//	wsprintfW(szName, wName.c_str(), i);
+	//	NameList.push_back(szName);
+	//	pGameObject = CThorn::Create(m_pGraphicDev, vecThrone[i], szName);
+	//	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+	//	}
+	//}
+	//
+	//if (!vecLava.empty())
+	//{
+	//	for (size_t i = 0; i < vecLava.size(); i++)
+	//	{
+	//	_tchar* szName = new _tchar[256]{};
+	//	wstring wName = L"Magma_%d";
+	//	wsprintfW(szName, wName.c_str(), i);
+	//	NameList.push_back(szName);
+	//	pGameObject = CMagma::Create(m_pGraphicDev, vecLava[i], szName);
+	//	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+	//	}
+	//}
+	//
+	//if (!vecItem.empty())
+	//{
+	//	for (size_t i = 0; i < vecItem.size(); i++)
+	//	{
+	//		_tchar* szName = new _tchar[256]{};
+	//		wstring wName = L"Item_%d";
+	//		wsprintfW(szName, wName.c_str(), i);
+	//		NameList.push_back(szName);
+	//		vecItem[i].y += 0.5f;
+	//		pGameObject = CItemBox::Create(m_pGraphicDev, vecItem[i], szName);
+	//		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+	//	}
+	//}
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 

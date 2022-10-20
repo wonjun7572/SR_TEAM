@@ -45,7 +45,7 @@ _int CMonster::Update_Object(const _float & fTimeDelta)
 
 	Engine::CGameObject::Update_Object(fTimeDelta);
 	m_pTransUICom->Billboard_Transform(fTimeDelta);
-	Add_RenderGroup(RENDER_ALPHA, this);
+	Add_RenderGroup(RENDER_UI, this);
 	Hit_Check(fTimeDelta);
 	Hit_SphereCheck(fTimeDelta);
 	Skill_SphereCheck(fTimeDelta);
@@ -215,40 +215,6 @@ void CMonster::Hit_Check(_float _deltaTime)
 			}
 		}
 	} 
-
-	//CFlight* pFlight = dynamic_cast<CFlight*>(Engine::Get_GameObject(STAGE_FLIGHTPLAYER, L"FLIGHTPLAYER"));
-	//CTransform* pFlightTransform = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_FLIGHTPLAYER, L"FLIGHTPLAYER", TRANSFORM_COMP, ID_DYNAMIC));
-	//if (pFlight)
-	//{
-	//	_vec3 vDir;
-	//	if (m_pCollision->HitScan(g_hWnd, &_vec3(0.f, 0.f, 0.f), this->m_pBufferCom, this->m_pTransCom, &vDir))
-	//	{
-	//		m_pMonsterUI->Set_Name(m_tAbility->strObjTag);
-	//		m_pMonsterUI->Set_Hp(m_tAbility->fCurrentHp);
-	//		m_pMonsterUI->Set_MaxHp(m_tAbility->fMaxHp);
-	//		m_pMonsterUI->On_Switch();
-	//		if (pFlight->Get_Shoot() == true)
-	//		{
-	//			m_tAbility->fCurrentHp -= 20.f;
-	//			Hit_Effect();
-	//			pFlight->Set_Shoot(false);
-	//		}
-
-	//		if (m_tAbility->fCurrentHp <= 0.f)
-	//		{
-	//			m_tAbility->fCurrentHp = 0.f;
-	//		}
-	//	}
-	//	else
-	//	{
-	//		m_fUISwitchTime += _deltaTime;
-	//		if (m_fUISwitchTime >= 5.f)
-	//		{
-	//			m_pMonsterUI->Off_Switch();
-	//			m_fUISwitchTime = 0.f;
-	//		}
-	//	}
-	//}
 }
 
 void CMonster::Hit_SphereCheck(_float _deltaTime)

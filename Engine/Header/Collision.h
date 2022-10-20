@@ -19,6 +19,9 @@ public:
 	HRESULT		Ready_Collision(void);
 	
 	_bool		Sphere_Collision(CTransform* pTempTransform, CTransform* pSourTransform, _float fTemp, _float fSour);
+	_bool		Animation_Collision(CTransform* pTempTransform, _matrix* AnimationFinalMatrix, _float fTemp, _float fAnimationScale);
+
+
 	_int		Wall_Collision(_vec3* vNorm);
 	_int		Wall_Collision_By_DotSliding(_vec3* vChangeDir);
 

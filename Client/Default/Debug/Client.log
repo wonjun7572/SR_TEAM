@@ -1,6 +1,180 @@
-﻿  CubePlayer.cpp
-c:\users\decoyz\desktop\sr_team\client\code\cubeplayer.cpp(259): warning C4244: '인수': 'Engine::_int'에서 'FLOAT'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\decoyz\desktop\sr_team\client\code\cubeplayer.cpp(262): warning C4244: '인수': 'Engine::_int'에서 'FLOAT'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+﻿C:\Users\beoms\OneDrive\����\GitHub\SR_TEAM\Client\Bin\ShaderFiles\Shader_Cube.hlsl(102,19-51): warning X3206: implicit truncation of vector type
+FXC : warning X4717: Effects deprecated for D3DCompiler_47
+  
+  compilation object save succeeded; see C:\Users\beoms\OneDrive\문서\GitHub\SR_TEAM\Client\Bin\Shader_Cube.cso
+FXC : warning X4717: Effects deprecated for D3DCompiler_47
+  
+  compilation object save succeeded; see C:\Users\beoms\OneDrive\문서\GitHub\SR_TEAM\Client\Bin\Shader_Rect.cso
+  stdafx.cpp
+  Supporter_Sniper.cpp
+  KrakenBoss.cpp
+  PlayerFaceUI.cpp
+  PlayerDefenseUI.cpp
+  Client.cpp
+  KrakenLeg.cpp
+  Zombie.cpp
+  ShotParticle.cpp
+  WeaponUI.cpp
+  Weapon.cpp
+  WallMapping.cpp
+  Wall.cpp
+  Veneer.cpp
+  UziPart5.cpp
+  UziPart4.cpp
+  UziPart3.cpp
+  UziPart2.cpp
+  UziPart1.cpp
+  Uzi.cpp
+  TriggerParticle.cpp
+  코드를 생성하고 있습니다...
+  컴파일하고 있습니다...
+  TriggerFront.cpp
+  Trap.cpp
+  TransAxisBox.cpp
+  ToolScene.cpp
+  Thorn.cpp
+  TestCube.cpp
+  Terret.cpp
+  Terrain.cpp
+c:\users\beoms\onedrive\문서\github\sr_team\client\code\terrain.cpp(72): warning C4101: 'expn' :참조되지 않은 지역 변수입니다.
+  TargetCube.cpp
+  Supporter_Uzi.cpp
+  Supporter_Shotgun.cpp
+  Supporter.cpp
+  StaticField.cpp
+  RainbowCloudEffect.cpp
+  StaticCamera.cpp
+  Stage.cpp
+  SpBullet.cpp
+  SniperPart4.cpp
+  SniperPart3.cpp
+  SniperPart2.cpp
+  코드를 생성하고 있습니다...
+  컴파일하고 있습니다...
+  SniperPart1.cpp
+  Sniper.cpp
+  Slime.cpp
+  SkyBox.cpp
+  Skeleton.cpp
+  ShotgunPart4.cpp
+  ShotgunPart3.cpp
+  ShotgunPart2.cpp
+  ShotgunPart1.cpp
+  Shotgun.cpp
+  Shop.cpp
+  ProjectileParticle.cpp
+  PoolMgr.cpp
+  PlayerUI.cpp
+  PlayerMapping.cpp
+  PlayerHpUI.cpp
+  PlayButton.cpp
+  OptionButton.cpp
+  ObtainDefense.cpp
+  ObtainBullet.cpp
+  코드를 생성하고 있습니다...
+  컴파일하고 있습니다...
+  MonsterUI.cpp
+  MonsterParticle.cpp
+  MonsterMapping.cpp
+  Monster.cpp
+  Meteor.cpp
+  MaxPlusHp.cpp
+  MainApp.cpp
+  Magma.cpp
+  LogoUI.cpp
+  LogoBilboard.cpp
+  Logo.cpp
+  Loading.cpp
+  LetterBox.cpp
+c:\users\beoms\onedrive\문서\github\sr_team\client\code\letterbox.cpp(144): warning C4305: '=': 'double'에서 'float'(으)로 잘립니다.
+  ItemParticle.cpp
+  ItemIcon.cpp
+  ItemBox.cpp
+  Item.cpp
+  Inventory.cpp
+  ImguiMgr.cpp
+  Illusioner.cpp
+  코드를 생성하고 있습니다...
+  컴파일하고 있습니다...
+  HitBarUI.cpp
+  HealthPotion.cpp
+  GunUI.cpp
+  GetUzi.cpp
+  GetSniper.cpp
+  GetShotgun.cpp
+  FireMan.cpp
+  ExitButton.cpp
+  SparkEffect.cpp
+  Shield.cpp
+  RcEffect.cpp
+  Ping.cpp
+  ObjectCube.cpp
+  Npc.cpp
+  MiddleBoss.cpp
+  LoadingBar.cpp
+  Laser.cpp
+  KrakenBullet.cpp
+  Key.cpp
+  IceEffect.cpp
+  코드를 생성하고 있습니다...
+  컴파일하고 있습니다...
+  HyperionStrike.cpp
+  FlightSpot.cpp
+  FlightCamera.cpp
+  FlightBulletParticle.cpp
+  FlightBomb.cpp
+  Flight.cpp
+  FlameEffect.cpp
+  FinalStage.cpp
+  Explosion.cpp
+  ExBullet.cpp
+  DynamicCamera.cpp
+  CubeShop.cpp
+  CubePlayer.cpp
+c:\users\beoms\onedrive\문서\github\sr_team\client\code\cubeplayer.cpp(681): warning C4244: '인수': 'Engine::_int'에서 'FLOAT'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  CubeLeg.cpp
+  CubeHead.cpp
+  CubeHand.cpp
+  CubeFoot.cpp
+  CubeBody.cpp
+  CubeArm.cpp
+  CrossHeader.cpp
+  코드를 생성하고 있습니다...
+  컴파일하고 있습니다...
+  ComboUI.cpp
+  BulletUI.cpp
+  BulletParicle.cpp
+  Bullet.cpp
+  BubbleEffect.cpp
+  BrownCloudEffect.cpp
+  BattleCursier.cpp
+  BaseMapping.cpp
+  DeffensiveMatrix.cpp
+  DashCube.cpp
+  CubeParticle.cpp
+  CartridgeParticle.cpp
+  AnimationPlayer.cpp
+  Alien.cpp
+  코드를 생성하고 있습니다...
+  LogoCamera.cpp
+  SoundWave.cpp
+  CloudEffect.cpp
+  코드를 생성하고 있습니다...
+  ImSequencer.cpp
+  imgui_widgets.cpp
+  imgui_tables.cpp
+  imgui_impl_win32.cpp
+  imgui_impl_dx9.cpp
+  imgui_draw.cpp
+  imgui_demo.cpp
+  ImGuizmo.cpp
+  ImGuiFileDialog.cpp
+  ImGuiFileBrowser.cpp
+  imgui.cpp
+  ImGradient.cpp
+  ImCurveEdit.cpp
+  GraphEditor.cpp
+  코드를 생성하고 있습니다...
      ../Bin\Client.lib 라이브러리 및 ../Bin\Client.exp 개체를 생성하고 있습니다.
-  Client.vcxproj -> C:\Users\DecoyZ\Desktop\SR_TEAM\Client\Default\../Bin\Client.exe
+  Client.vcxproj -> C:\Users\beoms\OneDrive\문서\GitHub\SR_TEAM\Client\Default\../Bin\Client.exe
   Client.vcxproj -> ../Bin\Client.pdb (Full PDB)
