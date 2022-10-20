@@ -58,7 +58,7 @@ private:
 	HRESULT			Ready_Light(void);
 
 	HRESULT			Load_Position(OBJECT_ID eID, wstring strDirectory);
-
+	HRESULT         Ready_Layer_KraKenBullet(const _tchar* pLayerTag);
 private:
 	////////////¸Ê ÆÄ½Ì
 	_int			m_iIndex = 0;
@@ -83,6 +83,8 @@ private:
 	vector<_vec3> vecFireMan;
 	vector<_vec3> vecZombie;
 	vector<_vec3> vecIllusioner;
+
+	SCENE_ID m_eID = FINAL_SCENE;
 
 public:
 	static CFinalStage*		Create(LPDIRECT3DDEVICE9 pGraphicDev);

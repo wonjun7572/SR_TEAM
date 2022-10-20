@@ -253,7 +253,7 @@ HRESULT CLogo::Ready_Proto(void)
 	{
 
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_HudLoadinga", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/UI/LoadingUI/perk_selected.png", TEX_NORMAL)), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_ReadyLoading", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/UI/LoadingUI/perk_unlocked.png", TEX_NORMAL)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_ReadyLoading", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/UI/LoadingUI/theHUDui_10.png", TEX_NORMAL)), E_FAIL);
 
 	}
 

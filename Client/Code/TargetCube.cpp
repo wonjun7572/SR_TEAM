@@ -49,8 +49,6 @@ _int CTargetCube::Update_Object(const _float & fTimeDelta)
 	if(vCenter.y < 0.f)
 		m_pTransCom->Move_Pos(&(m_vDir * fTimeDelta));
 
-	
-
 	m_fFrame += fTimeDelta;
 
 	_vec3 vUIPos;
@@ -58,7 +56,7 @@ _int CTargetCube::Update_Object(const _float & fTimeDelta)
 	m_pTransUICom->Set_Pos(vUIPos.x, vUIPos.y + 0.5f, vUIPos.z);
 	Engine::CGameObject::Update_Object(fTimeDelta);
 	m_pTransUICom->Billboard_Transform(fTimeDelta);
-	Add_RenderGroup(RENDER_NONALPHA, this);
+	Add_RenderGroup(RENDER_ALPHA, this);
 	Hit_Check(fTimeDelta);
 
 	if (m_bDead)
@@ -70,7 +68,6 @@ _int CTargetCube::Update_Object(const _float & fTimeDelta)
 		{
 			m_pRainbowCloudEffectParticle->addParticle();
 		}
-		// 파티클 추가?
 		return -1;
 	}
 	return 0;

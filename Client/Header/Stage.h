@@ -29,6 +29,7 @@ private:
 	HRESULT         Ready_Layer_Bullet(const _tchar* pLayerTag);
 	HRESULT         Ready_Layer_PlayerBullet(const _tchar* pLayerTag);
 	HRESULT         Ready_Layer_ExBullet(const _tchar* pLayerTag);
+	HRESULT			Ready_Layer_Laser(const _tchar* pLayerTag);
 
 	HRESULT         Ready_Layer_Mapping(const _tchar* pLayerTag);
 	HRESULT         Ready_Layer_Gun(const _tchar* pLayerTag);
@@ -52,6 +53,7 @@ private:
 	HRESULT         Ready_Layer_Supporter(const _tchar* pLayerTag);
 
 	HRESULT         Ready_Layer_PlayerFlight(const _tchar* pLayerTag);
+	HRESULT			Ready_Layer_KEY(const _tchar* pLayerTag);
 
 	HRESULT         Ready_Proto(void);
 	HRESULT         Ready_Light(void);

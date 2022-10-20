@@ -20,6 +20,7 @@ private:
 	explicit CTestCube(LPDIRECT3DDEVICE9 pGraphicDev);
 	explicit CTestCube(const CGameObject& rhs);
 	virtual ~CTestCube();
+
 public:
 	HRESULT				Ready_Object(int PosX, int PosY);
 	HRESULT				Wall_Mapping(void);
@@ -36,6 +37,8 @@ public:
 	void				Update_NullCheck();
 	
 	HRESULT				Interact(void);
+
+	_bool				Get_DoorOpen() { return m_bDoorOpen; }
 
 private:
 	HRESULT				Add_Component(void);

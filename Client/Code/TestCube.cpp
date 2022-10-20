@@ -27,11 +27,13 @@ HRESULT CTestCube::Ready_Object(int PosX, int PosY)
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 	if (PosX == 0 && PosY == 0) {}
 	else
-	{ Set_TransformPositon(); }
-	
+	{
+		Set_TransformPositon();
+	}
+
 	_vec3 vScale = { 0.5f, 0.5f, 0.5f };
 	m_pTransCom->Set_Scale(&vScale);
-	
+
 	return S_OK;
 }
 
@@ -70,20 +72,20 @@ _int CTestCube::Update_Object(const _float& fTimeDelta)
 // 툴쓸때는 이거꺼주고 위에꺼 써야함
 //_int CTestCube::Update_Object(const _float& fTimeDelta)
 //{
-//	if (m_bDead)
-//	{
-//		return -1;
-//	}
-//	Update_NullCheck();
-//	CGameObject::Update_Object(fTimeDelta);
-//	if (!(dynamic_cast<CBaseMapping*>(Engine::Get_GameObject(STAGE_MAPPING, L"BaseMapping"))->Get_Worldmap()))
-//	{
-//		Add_RenderGroup(RENDER_NONALPHA, this);
-//	}
-//	Wall_Mapping();
-//	Interact();
-//	m_fTimer += fTimeDelta;
-//	return 0;
+//   if (m_bDead)
+//   {
+//      return -1;
+//   }
+//   Update_NullCheck();
+//   CGameObject::Update_Object(fTimeDelta);
+//   if (!(dynamic_cast<CBaseMapping*>(Engine::Get_GameObject(STAGE_MAPPING, L"BaseMapping"))->Get_Worldmap()))
+//   {
+//      Add_RenderGroup(RENDER_NONALPHA, this);
+//   }
+//   Wall_Mapping();
+//   Interact();
+//   m_fTimer += fTimeDelta;
+//   return 0;
 //}
 
 void CTestCube::Render_Object()
@@ -104,17 +106,17 @@ void CTestCube::Render_Object()
 	//D3DXMatrixTranspose(&matProj, &matProj);
 
 	//if (FAILED(m_pShaderCom->Set_RawValue("g_WorldMatrix", matWorld, sizeof(_matrix))))
-	//	return;
+	//   return;
 	//if (FAILED(m_pShaderCom->Set_RawValue("g_ViewMatrix", &matView, sizeof(_matrix))))
-	//	return;
+	//   return;
 	//if (FAILED(m_pShaderCom->Set_RawValue("g_ProjMatrix", &matProj, sizeof(_matrix))))
-	//	return;
+	//   return;
 	//if (FAILED(m_pShaderCom->Set_RawValue("gWorldLightPosition", &vLightPos, sizeof(_vec4))))
-	//	return;
+	//   return;
 	//if (FAILED(m_pShaderCom->Set_RawValue("gWorldCameraPosition", &vCamPos, sizeof(_vec4))))
-	//	return;
+	//   return;
 	//if (FAILED(m_pShaderCom->Set_RawValue("gLightColor", &gLightColor, sizeof(_vec4))))
-	//	return;
+	//   return;
 
 	//m_pTextureCom->Set_Texture(m_pShaderCom, "g_DefaultTexture", m_iTexIndex);
 
@@ -125,7 +127,7 @@ void CTestCube::Render_Object()
 	//m_pShaderCom->End_Shader();
 
 	//if (m_bWireFrame)
-	//	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+	//   m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 #pragma endregion
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransCom->Get_WorldMatrixPointer());
 	FAILED_CHECK_RETURN(Set_Material(), );
@@ -136,13 +138,13 @@ void CTestCube::Render_Object()
 // 큐브를 선택 후 터레인 자리위에 올려 놓는 함수
 void CTestCube::Set_TransformPositon()
 {
-	CTerrainTex*	pTerrainBufferCom = dynamic_cast<CTerrainTex*>(Engine::Get_Component(L"Layer_MapTool", L"TerrainByTool", L"Proto_TerrainTexCom", ID_STATIC));
+	CTerrainTex*   pTerrainBufferCom = dynamic_cast<CTerrainTex*>(Engine::Get_Component(L"Layer_MapTool", L"TerrainByTool", L"Proto_TerrainTexCom", ID_STATIC));
 	NULL_CHECK_RETURN(pTerrainBufferCom, );
 
-	CTransform*		pTerrainTransformCom = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_MapTool", L"TerrainByTool", TRANSFORM_COMP, ID_DYNAMIC));
+	CTransform*      pTerrainTransformCom = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_MapTool", L"TerrainByTool", TRANSFORM_COMP, ID_DYNAMIC));
 	NULL_CHECK_RETURN(pTerrainTransformCom, );
 
-	_vec3 Temp = m_pCalculatorCom->Peek_Target_Vector(g_hWnd, &(_vec3(0.f,0.f,0.f)), pTerrainBufferCom, pTerrainTransformCom);
+	_vec3 Temp = m_pCalculatorCom->Peek_Target_Vector(g_hWnd, &(_vec3(0.f, 0.f, 0.f)), pTerrainBufferCom, pTerrainTransformCom);
 
 	m_pTransCom->Set_Pos(Temp.x, Temp.y, Temp.z);
 }
@@ -163,30 +165,30 @@ void CTestCube::Update_NullCheck()
 
 HRESULT CTestCube::Interact(void)
 {
-	CGameObject*		pGameObject = nullptr;
+	CGameObject*      pGameObject = nullptr;
 	CProjectileParticle* m_pProjectileParicle = nullptr;
 
-	CTransform*		pPlayerTransformCom = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_CHARACTER, L"BODY", TRANSFORM_COMP, ID_DYNAMIC));
+	CTransform*      pPlayerTransformCom = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_CHARACTER, L"BODY", TRANSFORM_COMP, ID_DYNAMIC));
 	NULL_CHECK_RETURN(pPlayerTransformCom, E_FAIL);
 	if (!m_pProjectileParicle)
 		m_pProjectileParicle = dynamic_cast<CProjectileParticle*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"ProjectileParticle"));
-	
-	_vec3		vPlayerPos;
-	_vec3		vPos;
-	_vec3		vDir;
-	_float		fDistance;
+
+	_vec3      vPlayerPos;
+	_vec3      vPos;
+	_vec3      vDir;
+	_float      fDistance;
 	m_pTransCom->Get_Info(INFO_POS, &vPos);
 	pPlayerTransformCom->Get_Info(Engine::INFO_POS, &vPlayerPos);
 	vDir = vPos - vPlayerPos;
 	fDistance = D3DXVec3Length(&vDir);
 
-	_vec3		vGrenadePos;
-	_vec3		vGPos;
-	_vec3		vGDir;
-	_float		fGDistance;
+	_vec3      vGrenadePos;
+	_vec3      vGPos;
+	_vec3      vGDir;
+	_float      fGDistance;
 	vGPos = m_pProjectileParicle->Get_DeadPos();
 	pPlayerTransformCom->Get_Info(Engine::INFO_POS, &vGrenadePos);
-	vGDir = vPos- vGPos ;
+	vGDir = vPos - vGPos;
 	fGDistance = D3DXVec3Length(&vGDir);
 
 
@@ -206,18 +208,18 @@ HRESULT CTestCube::Interact(void)
 			m_bLetterboxInit = true;
 			m_pLetterBox = CLetterBox::Create(m_pGraphicDev, L"Press [E] to Interact", sizeof(L"Press [E] to Interact"), 0);
 
-			TCHAR* szCntName = new TCHAR[64];
-			wsprintf(szCntName, L"");
-			const _tchar*	szNumbering = L"WallLetter_%d";
-			wsprintf(szCntName, szNumbering, m_iLetterCnt);
-			Engine::Add_GameObject(STAGE_MAPPING, m_pLetterBox, szCntName);
-			m_listWallCnt.push_back(szCntName);
+			//TCHAR* szCntName = new TCHAR[64];
+			//wsprintf(szCntName, L"");
+			//const _tchar*   szNumbering = L"WallLetter_%d";
+			//wsprintf(szCntName, szNumbering, m_iLetterCnt);
+			//Engine::Add_GameObject(STAGE_MAPPING, m_pLetterBox, szCntName);
+			//m_listWallCnt.push_back(szCntName);
 
-			++m_iLetterCnt;
+			//++m_iLetterCnt;
 		}
 	}
 
-	if (m_bSwitch && Key_Down(DIK_E))
+	if (m_bSwitch && Get_DIKeyState(DIK_E))
 	{
 		if (m_iTexIndex == 37 || m_iTexIndex == 99) //초록색문
 			if (vPos.y < 15)
@@ -225,8 +227,9 @@ HRESULT CTestCube::Interact(void)
 				_float fGunSound = 1.f;
 				Engine::PlaySoundGun(L"portal_2.wav", SOUND_EFFECT, fGunSound);
 				m_bDoorOpen = true;
+				dynamic_cast<CCubePlayer*>(Get_GameObject(STAGE_CHARACTER, L"PLAYER"))->Set_DoorOpen(true);
 			}
-	}	
+	}
 
 	if (fGDistance < 5)
 	{
@@ -249,7 +252,7 @@ HRESULT CTestCube::Interact(void)
 	{
 		dynamic_cast<CLetterBox*>(m_pLetterBox)->On_Switch();
 	}
-	if (!m_bSwitch && m_pLetterBox !=nullptr)
+	if (!m_bSwitch && m_pLetterBox != nullptr)
 	{
 		dynamic_cast<CLetterBox*>(m_pLetterBox)->Off_Switch();
 	}
@@ -262,8 +265,8 @@ HRESULT CTestCube::Interact(void)
 	{
 		m_bDoorUp = true;
 	}
-	if(m_bDoorOpen)
-	{ 
+	if (m_bDoorOpen)
+	{
 		if (vPos.y > -15)
 		{
 			vPos.y -= 0.1f;
@@ -271,7 +274,7 @@ HRESULT CTestCube::Interact(void)
 		}
 	}
 
-	if (m_bDoorFall&&!m_bDoorUp)
+	if (m_bDoorFall && !m_bDoorUp)
 	{
 		if (m_pStaticCam == nullptr)
 			m_pStaticCam = dynamic_cast<CStaticCamera*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"StaticCamera"));
@@ -286,22 +289,22 @@ HRESULT CTestCube::Interact(void)
 		}
 		if (vPos.y <= 5)
 		{
-		
-			m_bDoorFall = false;	
+
+			m_bDoorFall = false;
 
 			if (m_bCameraShaking)
 			{
 				m_pStaticCam->CameraShaking();
 				for (_int i = 0; i < 15; ++i)
-					{
-						m_pBrownCloudEffect->addParticle();
-					}
+				{
+					m_pBrownCloudEffect->addParticle();
+				}
 				if (m_fTimer > 0.5f)
 					m_bCameraShaking = false;
 			}
 		}
 	}
-	if (m_bDoorUp&&!m_bDoorFall)
+	if (m_bDoorUp && !m_bDoorFall)
 	{
 		if (vPos.y < 10)
 		{
@@ -365,42 +368,42 @@ HRESULT CTestCube::Set_Material()
 
 HRESULT CTestCube::Wall_Mapping(void)
 {
-	_vec3		vPos;
-	_vec3		vSize;
+	_vec3      vPos;
+	_vec3      vSize;
 	m_pTransCom->Get_Info(INFO_POS, &vPos);
 	m_pTransCom->Get_Scale(&vSize);
 	if (!m_bMappingInit)
 	{
 		m_bMappingInit = true;
 
-		CGameObject*	m_pMapWall = CWallMapping::Create(m_pGraphicDev);
+		CGameObject*   m_pMapWall = CWallMapping::Create(m_pGraphicDev);
 		if (m_pMapWall != nullptr && m_iTexIndex == 37 || m_iTexIndex == 45 || m_iTexIndex == 99)
 		{
-			
+
 			dynamic_cast<CWallMapping*>(m_pMapWall)->Set_Texture(37);
 		}
 		TCHAR* szCntName = new TCHAR[64];
 		wsprintf(szCntName, L"");
-		const _tchar*	szNumbering = L"MapWall_%d";
+		const _tchar*   szNumbering = L"MapWall_%d";
 		wsprintf(szCntName, szNumbering, m_iMappingCnt);
 		Engine::Add_GameObject(STAGE_MAPPING, m_pMapWall, szCntName);
 		m_listWallCnt.push_back(szCntName);
 
-		
+
 		m_pWallMapping = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_MAPPING, szCntName, TRANSFORM_COMP, ID_DYNAMIC));
 		NULL_CHECK_RETURN(m_pWallMapping, E_FAIL);
 		++m_iMappingCnt;
-		
+
 	}
 
 	m_pWallMapping->Set_Pos(vPos.x, vPos.y, vPos.z);
 	m_pWallMapping->Set_Scale(vSize.x, vSize.y, vSize.z);
-	
+
 	return S_OK;
 }
 CTestCube* CTestCube::Create(LPDIRECT3DDEVICE9 pGraphicDev, int Posx, int Posy)
 {
-	CTestCube*	pInstance = new CTestCube(pGraphicDev);
+	CTestCube*   pInstance = new CTestCube(pGraphicDev);
 
 	if (FAILED(pInstance->Ready_Object(Posx, Posy)))
 	{
@@ -418,8 +421,7 @@ void CTestCube::Free()
 			delete iter;
 	}
 
-	m_listWallCnt.clear();	
+	m_listWallCnt.clear();
 	m_listLetterCnt.clear();
 	CGameObject::Free();
 }
-
