@@ -23,6 +23,9 @@ public:
 private:
 	HRESULT			Add_Component(void);
 	HRESULT			Set_Material();
+
+	void			Fly_Effect();
+
 	CTransform*		m_pTransform = nullptr;
 	CCalculator*	m_pCalculator = nullptr;
 	CTransform*		m_pBomb = nullptr;

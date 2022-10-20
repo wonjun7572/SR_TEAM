@@ -61,9 +61,6 @@
     <Filter Include="02. GameObject\01. For_Stage\05. CubePlayer\Head">
       <UniqueIdentifier>{4c596655-6eef-4602-a3c1-423dfbe90103}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\01. For_Stage\06. Bullet">
-      <UniqueIdentifier>{e5424f61-e480-4334-a082-ad86a0d49d51}</UniqueIdentifier>
-    </Filter>
     <Filter Include="03. PoolMgr">
       <UniqueIdentifier>{5906fc40-e537-40ed-a3d5-246624daf111}</UniqueIdentifier>
     </Filter>
@@ -313,12 +310,6 @@
     <Filter Include="02. GameObject\02. For_Public\02. FlightCamera">
       <UniqueIdentifier>{319f3c8e-a395-452a-8a7e-efed25a8b33b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\01. For_Stage\06. Bullet\Missile">
-      <UniqueIdentifier>{f0dd0066-ee25-4045-a22e-ba735c290f5e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\01. For_Stage\06. Bullet\ExBullet">
-      <UniqueIdentifier>{41141aed-bba1-4d69-ac27-8bd2526a3042}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. GameObject\01. For_Stage\98. Particle\05. CubeParticle">
       <UniqueIdentifier>{fdf2dd7d-1ee3-4e56-80af-859db3e175a1}</UniqueIdentifier>
     </Filter>
@@ -373,11 +364,35 @@
     <Filter Include="02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\RoundEffect">
       <UniqueIdentifier>{7f0d0054-ce76-4a98-a0fb-23dfb696c68a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\01. For_Stage\06. Bullet\Laser">
-      <UniqueIdentifier>{97dc89cc-42c4-423f-853c-0d623c22f11c}</UniqueIdentifier>
+    <Filter Include="02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\DefensiveEffect">
+      <UniqueIdentifier>{edb8693f-8440-47e6-8c1c-385563282345}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\01. For_Stage\08. Monster\07. Mob">
-      <UniqueIdentifier>{6b5d8b24-a12f-4eaa-87de-3c5cff1513c1}</UniqueIdentifier>
+    <Filter Include="02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\LaserEffect">
+      <UniqueIdentifier>{1108afb3-c831-4821-91bb-df6c0d2ca205}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\KrakenEffect">
+      <UniqueIdentifier>{decc3d2b-2ce8-48ed-8eb2-45af8b960b3d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\VerticalLine">
+      <UniqueIdentifier>{cc4c2dd8-9bb1-45ea-8229-edf6c9b44c2b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\TraceEffect">
+      <UniqueIdentifier>{8db007b5-4d11-4de5-a05c-3ffc29b0ca09}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\LaserEffect\LaserPoint">
+      <UniqueIdentifier>{39cd4dfc-2eda-44e6-aa1b-11df62d6a94f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\05. CubePlayer\06. Bullet">
+      <UniqueIdentifier>{e5424f61-e480-4334-a082-ad86a0d49d51}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\05. CubePlayer\06. Bullet\Missile">
+      <UniqueIdentifier>{f0dd0066-ee25-4045-a22e-ba735c290f5e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\05. CubePlayer\06. Bullet\ExBullet">
+      <UniqueIdentifier>{41141aed-bba1-4d69-ac27-8bd2526a3042}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\05. CubePlayer\06. Bullet\Laser">
+      <UniqueIdentifier>{97dc89cc-42c4-423f-853c-0d623c22f11c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -436,7 +451,7 @@
       <Filter>03. PoolMgr</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Bullet.h">
-      <Filter>02. GameObject\01. For_Stage\06. Bullet</Filter>
+      <Filter>02. GameObject\01. For_Stage\05. CubePlayer\06. Bullet</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\ImguiMgr.h">
       <Filter>04. ToolMgr</Filter>
@@ -712,7 +727,7 @@
       <Filter>02. GameObject\01. For_Stage\18. Trap</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\SpBullet.h">
-      <Filter>02. GameObject\01. For_Stage\06. Bullet</Filter>
+      <Filter>02. GameObject\01. For_Stage\05. CubePlayer\06. Bullet</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Ping.h">
       <Filter>02. GameObject\01. For_Stage\20. BillBoard</Filter>
@@ -781,13 +796,13 @@
       <Filter>02. GameObject\01. For_Stage\21. Rocket</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\FlightBomb.h">
-      <Filter>02. GameObject\01. For_Stage\06. Bullet\Missile</Filter>
+      <Filter>02. GameObject\01. For_Stage\05. CubePlayer\06. Bullet\Missile</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Explosion.h">
-      <Filter>02. GameObject\01. For_Stage\06. Bullet\Missile</Filter>
+      <Filter>02. GameObject\01. For_Stage\05. CubePlayer\06. Bullet\Missile</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\ExBullet.h">
-      <Filter>02. GameObject\01. For_Stage\06. Bullet\ExBullet</Filter>
+      <Filter>02. GameObject\01. For_Stage\05. CubePlayer\06. Bullet\ExBullet</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\DashCube.h">
       <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle</Filter>
@@ -797,6 +812,9 @@
     </ClInclude>
     <ClInclude Include="KrakenBoss.h">
       <Filter>02. GameObject\01. For_Stage\21. Boss\02. Kraken</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\MiddleBoss.h">
+      <Filter>02. GameObject\01. For_Stage\21. Boss\01. MiddleBoss</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Key.h">
       <Filter>02. GameObject\01. For_Stage\10. Item\Key</Filter>
@@ -844,22 +862,40 @@
       <Filter>01. Scene\03. FinalStage</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\KrakenBullet.h">
-      <Filter>02. GameObject\01. For_Stage\21. Boss\02. Kraken</Filter>
+      <Filter>99. Default\헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\KrakenLeg.h">
-      <Filter>02. GameObject\01. For_Stage\21. Boss\02. Kraken</Filter>
+      <Filter>99. Default\헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\LoadingBar.h">
+      <Filter>99. Default\헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Laser.h">
-      <Filter>02. GameObject\01. For_Stage\06. Bullet\Laser</Filter>
+      <Filter>02. GameObject\01. For_Stage\05. CubePlayer\06. Bullet\Laser</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Npc.h">
       <Filter>99. Default\헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\LoadingBar.h">
-      <Filter>01. Scene\00. Logo</Filter>
+    <ClInclude Include="..\Header\DefensiveEffect.h">
+      <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\DefensiveEffect</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\MiddleBoss.h">
-      <Filter>02. GameObject\01. For_Stage\21. Boss\01. MiddleBoss</Filter>
+    <ClInclude Include="..\Header\KrakenEffect.h">
+      <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\KrakenEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\LaserEffect.h">
+      <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\LaserEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\LaserPoint.h">
+      <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\LaserEffect\LaserPoint</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\RoundEffect.h">
+      <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\RoundEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\TraceEffect.h">
+      <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\TraceEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\VerticalLine.h">
+      <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\VerticalLine</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Mob.h">
       <Filter>02. GameObject\01. For_Stage\08. Monster\07. Mob</Filter>
@@ -918,7 +954,7 @@
       <Filter>03. PoolMgr</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Bullet.cpp">
-      <Filter>02. GameObject\01. For_Stage\06. Bullet</Filter>
+      <Filter>02. GameObject\01. For_Stage\05. CubePlayer\06. Bullet</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\ImguiMgr.cpp">
       <Filter>04. ToolMgr</Filter>
@@ -1176,7 +1212,7 @@
       <Filter>02. GameObject\01. For_Stage\18. Trap</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\SpBullet.cpp">
-      <Filter>02. GameObject\01. For_Stage\06. Bullet</Filter>
+      <Filter>02. GameObject\01. For_Stage\05. CubePlayer\06. Bullet</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Ping.cpp">
       <Filter>02. GameObject\01. For_Stage\20. BillBoard</Filter>
@@ -1242,13 +1278,13 @@
       <Filter>02. GameObject\01. For_Stage\21. Rocket</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\FlightBomb.cpp">
-      <Filter>02. GameObject\01. For_Stage\06. Bullet\Missile</Filter>
+      <Filter>02. GameObject\01. For_Stage\05. CubePlayer\06. Bullet\Missile</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Explosion.cpp">
-      <Filter>02. GameObject\01. For_Stage\06. Bullet\Missile</Filter>
+      <Filter>02. GameObject\01. For_Stage\05. CubePlayer\06. Bullet\Missile</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\ExBullet.cpp">
-      <Filter>02. GameObject\01. For_Stage\06. Bullet\ExBullet</Filter>
+      <Filter>02. GameObject\01. For_Stage\05. CubePlayer\06. Bullet\ExBullet</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CubeParticle.cpp">
       <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle</Filter>
@@ -1308,19 +1344,40 @@
       <Filter>01. Scene\03. FinalStage</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\KrakenBullet.cpp">
-      <Filter>02. GameObject\01. For_Stage\21. Boss\02. Kraken</Filter>
+      <Filter>99. Default\소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\LoadingBar.cpp">
+      <Filter>99. Default\소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="KrakenLeg.cpp">
-      <Filter>02. GameObject\01. For_Stage\21. Boss\02. Kraken</Filter>
+      <Filter>99. Default\소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Laser.cpp">
-      <Filter>02. GameObject\01. For_Stage\06. Bullet\Laser</Filter>
+      <Filter>02. GameObject\01. For_Stage\05. CubePlayer\06. Bullet\Laser</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Npc.cpp">
       <Filter>99. Default\소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\LoadingBar.cpp">
-      <Filter>01. Scene\00. Logo</Filter>
+    <ClCompile Include="..\Code\DefensiveEffect.cpp">
+      <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\DefensiveEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\KrakenEffect.cpp">
+      <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\KrakenEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\LaserEffect.cpp">
+      <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\LaserEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\LaserPoint.cpp">
+      <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\LaserEffect\LaserPoint</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\RoundEffect.cpp">
+      <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\RoundEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\TraceEffect.cpp">
+      <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\TraceEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\VerticalLine.cpp">
+      <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\VerticalLine</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Mob.cpp">
       <Filter>02. GameObject\01. For_Stage\08. Monster\07. Mob</Filter>

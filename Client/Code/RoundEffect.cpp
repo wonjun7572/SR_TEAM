@@ -6,7 +6,7 @@
 CRoundEffect::CRoundEffect(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CPSystem(pGraphicDev)
 {
-	m_fSize = .505f;
+	m_fSize = .05f;
 	m_vbSize = 2048;
 	m_vbOffset = 0;
 	m_vbBatchSize = 512;

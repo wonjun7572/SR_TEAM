@@ -18,7 +18,12 @@
 #include "TriggerParticle.h"
 #include "TriggerFront.h"
 #include "RoundEffect.h"
-
+#include "DefensiveEffect.h"
+#include "VerticalLine.h"
+#include "KrakenEffect.h"
+#include "LaserEffect.h"
+#include "TraceEffect.h"
+#include "LaserPoint.h"
 /*	
 CFlameEffect* m_pFlameEffectParticle = nullptr;
 CIceEffect* m_pIceEffectParticle = nullptr;

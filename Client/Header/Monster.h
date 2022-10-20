@@ -88,7 +88,7 @@ protected:
 	_float				m_fDeadSound = 1.f;
 
 	_vec3				m_vDirection;
-
+	
 protected:
 	virtual void	Free(void)override;
 };
