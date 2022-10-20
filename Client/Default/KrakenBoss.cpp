@@ -109,18 +109,18 @@ _int CKrakenBoss::Update_Object(const _float & fTimeDelta)
 
 void CKrakenBoss::Render_Object(void)
 {
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransCom->Get_WorldMatrixPointer());
+	/*m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransCom->Get_WorldMatrixPointer());
 	m_pTextureCom->Set_Texture(11);
-	m_pBufferCom->Render_Buffer();
+	m_pBufferCom->Render_Buffer();*/
 
-	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+	/*m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pHitBoxTransCom->Get_WorldMatrixPointer());
-	m_pHitBox->Render_Buffer();
+	m_pHitBox->Render_Buffer();*/
 
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pSphereTransCom->Get_WorldMatrixPointer());
+	/*m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pSphereTransCom->Get_WorldMatrixPointer());
 
 	m_pSphereBufferCom->Render_Buffer();
-	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);*/
 
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransUICom->Get_WorldMatrixPointer());
 
@@ -136,7 +136,14 @@ void CKrakenBoss::LateUpdate_Object(void)
 	if (m_tAbility->fCurrentHp <= 0.f)
 	{
 		m_pMonsterUI->Off_Switch();
-		this->Kill_Obj();
+
+		_vec3 vPos;
+		m_pTransCom->Get_Info(INFO_POS, &vPos);
+
+		m_pTransCom->Set_Pos(vPos.x, vPos.y - 0.1f, vPos.z);
+		m_pTransCom->Static_Update();
+
+		//this->Kill_Obj();
 	}
 
 	//애니메이션 관련해서 run animation 이랑 각자 상황에 맞는 애니메이션 넣어주면됨.
@@ -238,7 +245,16 @@ _int CKrakenBoss::Update_Pattern(_float fTimeDelta)
 			pPlayer->KnuckDown(10.f, 20.f);
 		}
 	}*/
-	if ((Hp <= 0.9f && Hp >= 0.6f && m_bAnihilate_First) 
+	if (Hp <= 0.f)
+	{
+		CLayer* pLayer = Engine::Get_Layer(STAGE_TENTACLE);
+
+		for (auto& iter : *(pLayer->Get_GameListPtr()))
+		{
+			dynamic_cast<CKrakenLeg*>(iter)->Set_Dead();
+		}
+	}
+	else if ((Hp <= 0.9f && Hp >= 0.6f && m_bAnihilate_First) 
 		|| (Hp <= 0.6f && Hp >= 0.3f && m_bAnihilate_Second) 
 		|| (Hp <= 0.3f && Hp >= 0.f && m_bAnihilate_Third))
 	{
@@ -423,6 +439,18 @@ void CKrakenBoss::Hit_Check(_float _deltaTime)
 			{
 				m_tAbility->fCurrentHp = 0.f;
 			}
+		}
+		else if (m_BeforeHp != m_tAbility->fCurrentHp)
+		{
+			m_BeforeHp = m_tAbility->fCurrentHp;
+
+			m_pMonsterUI->Set_Name(m_tAbility->strObjTag);
+			m_pMonsterUI->Set_Hp(m_tAbility->fCurrentHp);
+			m_pMonsterUI->Set_MaxHp(m_tAbility->fMaxHp);
+			m_pMonsterUI->On_Switch();
+
+			m_pComboUI->On_Switch();
+			m_pComboUI->ComboCntPlus();
 		}
 		else
 		{

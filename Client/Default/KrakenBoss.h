@@ -19,11 +19,14 @@ public:
 	virtual void	LateUpdate_Object(void) override;
 
 public:
-	void          Set_Damaged(_float iDamage)
+	void			Set_Damaged(_float iDamage)
 	{
 		if (this != nullptr)
 			m_tAbility->fCurrentHp -= iDamage;
 	}
+
+public:
+	_float				Get_Hp(void) { return m_tAbility->fCurrentHp; }
 
 private:
 	void				Look_Direction(void);
@@ -90,6 +93,7 @@ private:
 	_bool				m_bAnihilate_First = true;
 	_bool				m_bAnihilate_Second = true;
 	_bool				m_bAnihilate_Third = true;
+	_float				m_BeforeHp = 0.f;
 
 public:
 	static CKrakenBoss*	Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3& vPos, _tchar* Name);
