@@ -798,9 +798,6 @@
     <ClInclude Include="KrakenBoss.h">
       <Filter>02. GameObject\01. For_Stage\21. Boss\02. Kraken</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\MiddleBoss.h">
-      <Filter>02. GameObject\01. For_Stage\21. Boss\01. MiddleBoss</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\Key.h">
       <Filter>02. GameObject\01. For_Stage\10. Item\Key</Filter>
     </ClInclude>
@@ -846,9 +843,6 @@
     <ClInclude Include="..\Header\FinalStage.h">
       <Filter>01. Scene\03. FinalStage</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\LoadingBar.h">
-      <Filter>99. Default\헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\KrakenBullet.h">
       <Filter>02. GameObject\01. For_Stage\21. Boss\02. Kraken</Filter>
     </ClInclude>
@@ -858,8 +852,14 @@
     <ClInclude Include="..\Header\Laser.h">
       <Filter>02. GameObject\01. For_Stage\06. Bullet\Laser</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\Mob.h">
-      <Filter>02. GameObject\01. For_Stage\08. Monster\07. Mob</Filter>
+    <ClInclude Include="..\Header\Npc.h">
+      <Filter>99. Default\헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\LoadingBar.h">
+      <Filter>01. Scene\00. Logo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\MiddleBoss.h">
+      <Filter>02. GameObject\01. For_Stage\21. Boss\01. MiddleBoss</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1304,9 +1304,6 @@
     <ClCompile Include="..\Code\FinalStage.cpp">
       <Filter>01. Scene\03. FinalStage</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\LoadingBar.cpp">
-      <Filter>99. Default\소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\KrakenBullet.cpp">
       <Filter>02. GameObject\01. For_Stage\21. Boss\02. Kraken</Filter>
     </ClCompile>
@@ -1316,8 +1313,11 @@
     <ClCompile Include="..\Code\Laser.cpp">
       <Filter>02. GameObject\01. For_Stage\06. Bullet\Laser</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\Mob.cpp">
-      <Filter>02. GameObject\01. For_Stage\08. Monster\07. Mob</Filter>
+    <ClCompile Include="..\Code\Npc.cpp">
+      <Filter>99. Default\소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\LoadingBar.cpp">
+      <Filter>01. Scene\00. Logo</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

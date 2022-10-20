@@ -39,6 +39,8 @@ private:
 	void				APPEAR(void);
 	void				IDLE_Animation_Run(void);
 
+	void				Ready_Annihilate(void) { m_bAnnihilateReady = true; }
+	void				Start_Annihilate(void) { m_STATE = KRAKEN_ATTACK, m_PATTERN = KRAKEN_SKILL_5, m_bAnnihilateReady = false; }
 private:
 	KRAKENSTATEID		m_STATE;
 	KRAKENIDLEID		m_IDLE;
@@ -80,7 +82,7 @@ private:
 	_tchar*				m_MonsterName;
 	_bool				m_bFirst = true;
 	list<_tchar*>		m_TcharList;
-
+	_bool				m_bAnnihilateReady = false;
 	vector<KRAKENSKILLID>	m_vPattern;
 
 private:
@@ -94,6 +96,7 @@ private:
 	_bool				m_bAnihilate_First = true;
 	_bool				m_bAnihilate_Second = true;
 	_bool				m_bAnihilate_Third = true;
+	_float				m_fInterval;
 
 public:
 	static CKrakenBoss*	Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3& vPos, _tchar* Name);

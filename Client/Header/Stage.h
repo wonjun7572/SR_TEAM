@@ -53,7 +53,6 @@ private:
 	HRESULT         Ready_Layer_Supporter(const _tchar* pLayerTag);
 
 	HRESULT         Ready_Layer_PlayerFlight(const _tchar* pLayerTag);
-	HRESULT			Ready_Layer_Laser(const _tchar* pLayerTag);
 	HRESULT			Ready_Layer_KEY(const _tchar* pLayerTag);
 
 	HRESULT         Ready_Proto(void);

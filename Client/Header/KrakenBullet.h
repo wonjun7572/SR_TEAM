@@ -17,7 +17,7 @@ public:
 	virtual		void		Render_Object(void);
 private:
 	HRESULT					Add_Component(void);
-	
+
 public:
 	void			Set_Pos(const _vec3& vPos);
 	void			Set_Dir(const _vec3& vDir) { m_vDir = vDir; }
@@ -27,14 +27,14 @@ protected:
 	CTransform*			m_pKrakenBullet;
 	CSphereTex*				m_pSphereTex;
 	CTexture*				m_pTexture = nullptr;
-	
+
 	CTransform*				m_pHitBoxCom;
 	CHitBox*				m_pHitBox;
 	CCollision*				m_pCollision = nullptr;
 	CTransform*			m_pPlayerTransCom = nullptr;
 private:
 	_tchar*					m_KrakenInk;
-	_vec3					m_vDir = {0.f, 0.f, 0.f};
+	_vec3					m_vDir = { 0.f, 0.f, 0.f };
 	_vec3					m_vPos;
 	_float					m_fSpeed = 10.f;
 

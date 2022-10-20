@@ -219,6 +219,7 @@ _int CKrakenBoss::Update_Pattern(_float fTimeDelta)
 
 	if (m_STATE == KRAKEN_IDLE)
 	{
+		if(false == m_bAnnihilateReady)
 		m_ReloadTimer += fTimeDelta;
 
 		if (m_ReloadTimer >= 2.f)
@@ -228,17 +229,41 @@ _int CKrakenBoss::Update_Pattern(_float fTimeDelta)
 			random_shuffle(m_vPattern.begin(), m_vPattern.end());
 
 			m_PATTERN = m_vPattern.front();
-			//m_i++;
+			
+			/*m_i++;
 
-			//if (m_i % 2 == 0)
+			if (m_i % 2 == 0)
+			{
+				m_PATTERN = m_vPattern.front();
+			}
+			else
+			{
+				m_PATTERN = m_vPattern.back();
+				
+			}*/
+		
+			//if (m_PATTERN == KRAKEN_SKILL_INKSHOT)
 			//{
-			//	m_PATTERN = m_vPattern.front();
+			//	m_PATTERN = KRAKEN_SKILL_5;
 			//}
-			//else
+			//else if (m_PATTERN == KRAKEN_SKILL_5)
 			//{
-			//	m_PATTERN = m_vPattern.back();
+			//	m_PATTERN = KRAKEN_SKILL_INKSHOT;
 			//}
+			
+			
+			/*	if (m_PATTERN = m_vPattern.front())
+			{
+				m_PATTERN = m_vPattern.back();
+			}
+			else if (m_PATTERN = m_vPattern.back())
+			{
+				m_PATTERN = m_vPattern.front();
+			}
 
+
+
+*/
 			m_ReloadTimer = 0.f;
 		}
 	}
@@ -249,7 +274,7 @@ _int CKrakenBoss::Update_Pattern(_float fTimeDelta)
 		if (m_PATTERN == KRAKEN_SKILL_INKSHOT)
 		{
 			_matrix matRotY, matTrans, matWorld;
-			if (m_AnimationTime >= 1)
+			if (m_AnimationTime >= 1.f)
 			{
 				if (!m_pCollision->Sphere_Collision(this->m_pSphereTransCom, m_pPlayerTransCom, vPlayerScale.x, vScale.x))
 				{
@@ -263,11 +288,11 @@ _int CKrakenBoss::Update_Pattern(_float fTimeDelta)
 
 						D3DXVec3TransformNormal(&vDir, &vDir, &matWorld);
 
-						vPos.y = 1.f;
-						CPoolMgr::GetInstance()->Reuse_KrakenBullet(m_pGraphicDev, &vPos, &vDir, 10.f, 50.f);
+						vPos.y = 1.6f;
+						CPoolMgr::GetInstance()->Reuse_KrakenBullet(m_pGraphicDev, &vPos, &vDir, 10.f, 10.f);
 					}
 				}
-
+				m_STATE = KRAKEN_IDLE;
 			}
 
 		}
@@ -275,16 +300,18 @@ _int CKrakenBoss::Update_Pattern(_float fTimeDelta)
 		{
 			if (m_AnimationTime >= 1.f)
 			{
-					vPos.y = 1.f;
+					vPos.y = 1.6f;
 				if (!m_pCollision->Sphere_Collision(this->m_pSphereTransCom, m_pPlayerTransCom, vPlayerScale.x, vScale.x))
 				{
 					_vec3 vDirection;
 					vDirection = vPlayerPos - vPos;
-					CPoolMgr::GetInstance()->Reuse_KrakenBullet(m_pGraphicDev, &vPos, &vDirection, 10.f, 50.f);
-
+	
+						CPoolMgr::GetInstance()->Reuse_KrakenBullet(m_pGraphicDev, &vPos, &vDirection, 10.f, 10.f);
+	
 				}
+				m_STATE = KRAKEN_IDLE;
 			}
-
+			
 		}
 	}
 	return 0;
