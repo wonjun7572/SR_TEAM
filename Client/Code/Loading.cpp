@@ -229,13 +229,16 @@ _uint CLoading::Loading_ForStage(void)
 		// Skiil
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Lava_Tex", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Skill/Lava.png", TEX_NORMAL)), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Ping_Tex", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Skill/locationPin.png", TEX_NORMAL)), E_FAIL);
-		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"White_Tex", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Particle/StaticParticle/StaticParticle00.png", TEX_NORMAL)), E_FAIL);
-		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Red_Tex", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Particle/StaticParticle/StaticParticle000.png", TEX_NORMAL)), E_FAIL);
-		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"LightGreen_Tex", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Particle/StaticParticle/LightGreen.png", TEX_NORMAL)), E_FAIL);
+
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Shield_Tex", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Particle/StaticParticle/Shield.png", TEX_NORMAL)), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Shield2_Tex", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Particle/StaticParticle/Shield2.png", TEX_NORMAL)), E_FAIL);
-		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"ExBullet_Tex", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Particle/StaticParticle/ExBullet.png", TEX_NORMAL)), E_FAIL);
-		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Trigger_Tex", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Particle/StaticParticle/Trigger.png", TEX_NORMAL)), E_FAIL);
+
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Black_Tex", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Particle/StaticParticle/Black.png", TEX_NORMAL)), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Brown_Tex", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Particle/StaticParticle/Brown.png", TEX_NORMAL)), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"LightGreen_Tex", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Particle/StaticParticle/LightGreen.png", TEX_NORMAL)), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"White_Tex", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Particle/StaticParticle/White.png", TEX_NORMAL)), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Red_Tex", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Particle/StaticParticle/Red.png", TEX_NORMAL)), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Orange_Tex", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Particle/StaticParticle/Orange.png", TEX_NORMAL)), E_FAIL);
 
 
 		// ¿Â∆«

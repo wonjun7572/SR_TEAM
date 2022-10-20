@@ -17,17 +17,20 @@ HRESULT CLetterBox::Ready_Object(_tchar* tDialogue, _int iSize, _int iIndex)
 {
 	m_fFontAlpha = 1.f;
 	m_fFontSize = 25.f;
-
+	m_strLetterContents = tDialogue;
+	m_iTextAmount = iSize - 3;
 	m_iIndex = iIndex;
+
+
+
 	m_strLetterName = new TCHAR[64];
 	wsprintf(m_strLetterName, L"LetterBox%d",iLetterBoxCnt);
 	
-	m_strLetterContents = tDialogue;
-	m_iTextAmount = iSize - 3;
 
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, m_strLetterName, L"Roboto-Bold", _uint(m_fFontSize), 40, FW_HEAVY), E_FAIL);
 	iLetterBoxCnt++;
+	
 
 	return S_OK;
 }
@@ -36,23 +39,48 @@ _int CLetterBox::Update_Object(const _float & fTimeDelta)
 {
 	CGameObject::Update_Object(fTimeDelta);
 	 Add_RenderGroup(RENDER_UI, this);
-	 Alpha_Effect();
+
+	 if (m_bDead)
+	 {
+		 return -1;
+	 }
 
 	return 0;
 }
 
 void CLetterBox::LateUpdate_Object(void)
 {
+	
 	CGameObject::LateUpdate_Object();
 }
 
 void CLetterBox::Render_Object(void)
 {
 	if (m_iIndex == 0)
+	{
 		PlayerNotice();
+		Alpha_Effect();
+	}
 
+	if (m_iIndex == 1)
+	{
+		PlayerNotice();
+		Index1();
+	}
 
+	if (m_iIndex == 2)
+	{
+		BoxText();
 		
+		m_pTexture->Set_Texture(0);
+
+		m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+		m_pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_DESTALPHA);
+		Begin_OrthoProj();
+		m_pRcCom->Render_Buffer();
+		End_OrthoProj();
+
+	}
 	//m_pGraphicDev->SetTransform(D3DTS_WORLD, m_TranformCom->Get_WorldMatrixPointer());
 	//m_pRcCom->Render_Buffer();
 	//Begin_OrthoProj();
@@ -67,8 +95,8 @@ HRESULT CLetterBox::Add_Component(void)
 	NULL_CHECK_RETURN(m_pRcCom, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_RcTexCom", pComponent });
 
-	pComponent = m_pFontTexture = dynamic_cast<CTexture*>(Clone_Proto(L"Proto_ButtonPlayTexture"));
-	NULL_CHECK_RETURN(m_pFontTexture, E_FAIL);
+	pComponent = m_pTexture = dynamic_cast<CTexture*>(Clone_Proto(L"Shield_Tex"));
+	NULL_CHECK_RETURN(m_pTexture, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ STAGE_MAPPING, pComponent });
 
 	pComponent = m_TranformCom = dynamic_cast<CTransform*>(Clone_Proto(TRANSFORM_COMP));
@@ -114,11 +142,13 @@ void CLetterBox::Begin_OrthoProj()
 	D3DXMatrixIdentity(&matWorld);
 	D3DXMatrixIdentity(&matView);
 
-	matView.m[0][0] = 55.f; // 이미지 가로
-	matView.m[1][1] = 55.f;   // 이미지 세로
+	matView.m[0][0] = WINCX/2; // 이미지 가로
+	matView.m[1][1] = WINCY/8;   // 이미지 세로
 	matView.m[2][2] = 1.f;
-	matView.m[3][0] = m_TranformCom->m_vInfo[INFO_POS].x ;
-	matView.m[3][1] = m_TranformCom->m_vInfo[INFO_POS].y ;
+	//matView.m[3][0] = m_TranformCom->m_vInfo[INFO_POS].x ;
+	matView.m[3][1] = -WINCY/4 +50 ;
+	matView.m[3][2] = 0.001;
+
 	
 
 	D3DXMatrixOrthoLH(&matOrtho, WINCX, WINCY, 0.f, 1.f);
@@ -138,8 +168,20 @@ void CLetterBox::PlayerNotice()
 {
 	if (m_bPowerSwitch)
 	{
-		Engine::Render_Font(m_strLetterName, m_strLetterContents.c_str(), &(_vec2((WINCX / 2) - (m_iTextAmount)*(m_fFontSize / 4), (WINCY / 2) + 150 * (WINCX / WINCY))), D3DXCOLOR(1.f, 1.f, 1.f, m_fFontAlpha));
+		Engine::Render_Font(m_strLetterName, m_strLetterContents.c_str(), &(_vec2((WINCX / 2.f) - (m_iTextAmount)*(m_fFontSize / 4.f), (WINCY / 1.5f)  * (WINCX / WINCY))), D3DXCOLOR(1.f, 1.f, 1.f, m_fFontAlpha));
 	}
+}
+
+void CLetterBox::BoxText()
+{
+	Engine::Render_Font(m_strLetterName, m_strLetterContents.c_str(), &(_vec2((WINCX / 2.f) - (m_iTextAmount)*(m_fFontSize / 2.f), (WINCY / 1.5f)  * (WINCX / WINCY))), D3DXCOLOR(1.f, 1.f, 1.f, m_fFontAlpha));
+}
+
+void CLetterBox::Index1()
+{	
+	m_fFontAlpha -= 0.03f;
+	if (m_fFontAlpha <= 0)
+		m_bDead = true;	
 }
 
 void CLetterBox::HitCombo()
@@ -159,6 +201,7 @@ CLetterBox * CLetterBox::Create(LPDIRECT3DDEVICE9 pGraphicDev, _tchar* tDialogue
 		Safe_Release(pInstance);
 		return nullptr;
 	}
+	pInstance->Maker(pInstance);
 
 	return pInstance;
 }

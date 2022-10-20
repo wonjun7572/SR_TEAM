@@ -6,7 +6,6 @@
 #include "CubePlayer.h"
 
 static _int m_iMappingCnt = 0;
-static _int m_iLetterCnt = 0;
 
 CTestCube::CTestCube(LPDIRECT3DDEVICE9 pGraphicDev) : CGameObject(pGraphicDev)
 
@@ -169,20 +168,11 @@ HRESULT CTestCube::Interact(void)
 		if (m_iTexIndex == 37 || m_iTexIndex == 99)
 		{
 			m_bLetterboxInit = true;
-			m_pLetterBox = CLetterBox::Create(m_pGraphicDev, L"Press [E] to Interact", sizeof(L"Press [E] to Interact"), 0);
-
-			TCHAR* szCntName = new TCHAR[64];
-			wsprintf(szCntName, L"");
-			const _tchar*	szNumbering = L"WallLetter_%d";
-			wsprintf(szCntName, szNumbering, m_iLetterCnt);
-			Engine::Add_GameObject(STAGE_MAPPING, m_pLetterBox, szCntName);
-			m_listWallCnt.push_back(szCntName);
-
-			++m_iLetterCnt;
+			m_pLetterBox = CLetterBox::Create(m_pGraphicDev, L"Press [E] to Interact", sizeof(L"Press [E] to Interact"), 0);		
 		}
 	}
 
-	if (m_bSwitch && Key_Down(DIK_E))
+	if (m_bSwitch && Get_DIKeyState(DIK_E) && !m_bDoorOpen)
 	{
 		if (m_iTexIndex == 37 || m_iTexIndex == 99) //초록색문
 			if (vPos.y < 15)
@@ -313,10 +303,10 @@ HRESULT CTestCube::Set_Material()
 	D3DMATERIAL9 Material;
 	ZeroMemory(&Material, sizeof(D3DMATERIAL9));
 
-	Material.Diffuse = D3DXCOLOR(1.f, 0.f, 0.f, 1.f);
-	Material.Specular = D3DXCOLOR(0.2f, 0.2f, 0.2f, 1.f);
-	Material.Ambient = D3DXCOLOR(0.5f, 0.5f, 0.5f, 1.f);
-	Material.Emissive = D3DXCOLOR(0.f, 0.f, 0.f, 1.f);
+	Material.Diffuse = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+	Material.Specular = D3DXCOLOR(0.f, 0.f, 0.f, 1.f);
+	Material.Ambient = D3DXCOLOR(.1f, .1f, .1f, 1.f);
+	Material.Emissive = D3DXCOLOR(.0f, 0.f, 0.f, 1.f);
 	Material.Power = 0.f;
 
 	m_pGraphicDev->SetMaterial(&Material);
@@ -380,7 +370,6 @@ void CTestCube::Free()
 	}
 
 	m_listWallCnt.clear();	
-	m_listLetterCnt.clear();
 	CGameObject::Free();
 }
 

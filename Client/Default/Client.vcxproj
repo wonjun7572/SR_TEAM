@@ -212,10 +212,12 @@
     <ClInclude Include="..\Header\HyperionStrike.h" />
     <ClInclude Include="..\Header\IceEffect.h" />
     <ClInclude Include="..\Header\Key.h" />
+    <ClInclude Include="..\Header\Laser.h" />
     <ClInclude Include="..\Header\MiddleBoss.h" />
     <ClInclude Include="..\Header\ObjectCube.h" />
     <ClInclude Include="..\Header\Ping.h" />
     <ClInclude Include="..\Header\RcEffect.h" />
+    <ClInclude Include="..\Header\RoundEffect.h" />
     <ClInclude Include="..\Header\Shield.h" />
     <ClInclude Include="..\Header\SoundWave.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
@@ -374,10 +376,12 @@
     <ClCompile Include="..\Code\HyperionStrike.cpp" />
     <ClCompile Include="..\Code\IceEffect.cpp" />
     <ClCompile Include="..\Code\Key.cpp" />
+    <ClCompile Include="..\Code\Laser.cpp" />
     <ClCompile Include="..\Code\MiddleBoss.cpp" />
     <ClCompile Include="..\Code\ObjectCube.cpp" />
     <ClCompile Include="..\Code\Ping.cpp" />
     <ClCompile Include="..\Code\RcEffect.cpp" />
+    <ClCompile Include="..\Code\RoundEffect.cpp" />
     <ClCompile Include="..\Code\Shield.cpp" />
     <ClCompile Include="..\Code\SoundWave.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>

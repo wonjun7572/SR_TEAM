@@ -254,7 +254,9 @@ void CCubePlayer::Update_NullCheck()
 	
 	if (!m_pDashCube)
 		m_pDashCube = dynamic_cast<CDashCube*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"DashCube"));
-
+	if (!m_pRoundEffect)
+		m_pRoundEffect = dynamic_cast<CRoundEffect*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"RoundEffect"));
+	
 	if (!m_pTriggerParticle)
 		m_pTriggerParticle = dynamic_cast<CTriggerParticle*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"TriggerParticle"));
 
@@ -633,8 +635,30 @@ void CCubePlayer::Move()
 		}
 		if (Key_Pressing(DIK_C))
 		{
-			
+			_vec3 vPos;														//대쉬이펙트하려던것
+			_vec3 vDir;
+			m_pTransform->Get_Info(INFO_POS, &vPos);
+			_vec3 min = { -1.0f ,-1.0f ,-1.0f };
+			m_pTransform->Get_Info(INFO_POS, &vPos);
+			vPos.x -= 5.f;
+			vPos.y += 5.f;
+			vPos.z -= 5.f;
+			for (_int i = -5; i < 5; i++)
+			{
+				for (_int j = -5; j < 5; j++)
+				{
+					for (_int k = -5; k < 5; k++)
+					{
+						//D3DXVec3Normalize(&min, &_vec3(i, j, k));						
+					
+						dynamic_cast<CRoundEffect*>(m_pRoundEffect)->Set_PclePos(vPos + _vec3(i, j, k)*0.1);
 
+						dynamic_cast<CRoundEffect*>(m_pRoundEffect)->Set_PcleDir(-min);
+
+						m_pRoundEffect->addParticle();
+					}
+				}
+			}
 
 
 			//_vec3 vPos;														//대쉬이펙트하려던것
@@ -817,8 +841,8 @@ void CCubePlayer::Fire_Bullet(void)
 				dynamic_cast<CCartridgeParticle*>(m_pCartridgeParticle)->Set_PcleDir(vLDir);
 				if (m_iWeaponState == 2)
 				{
-					_float fGunSound = 1.f;
-					Engine::PlaySoundGun(L"RifleShot.mp3", SOUND_EFFECT, fGunSound);
+					_float fGunSound = .3f;
+					Engine::PlaySoundGun(L"RifleShot.wav", SOUND_EFFECT, fGunSound);
 					for (_int i = 0; i < 2; ++i)
 					{
 						m_pCartridgeParticle->addParticle();
@@ -835,7 +859,7 @@ void CCubePlayer::Fire_Bullet(void)
 				}
 				if (m_iWeaponState == 3)
 				{
-					_float fGunSound = 1.f;
+					_float fGunSound = .3f;
 					Engine::PlaySoundGun(L"ShotgunSound.wav", SOUND_EFFECT, fGunSound);
 					for (_int i = 0; i < 64; ++i)
 					{

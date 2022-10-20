@@ -142,6 +142,8 @@ HRESULT CStage::Ready_Scene(void)
 	FAILED_CHECK_RETURN(Ready_Layer_Supporter(STAGE_SUPPORTER), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Layer_PlayerBullet(STAGE_BULLETPLAYER), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Layer_ExBullet(STAGE_EXBULLET), E_FAIL);
+	FAILED_CHECK_RETURN(Ready_Layer_Laser(STAGE_LASER), E_FAIL);
+
 	FAILED_CHECK_RETURN(Ready_Layer_Creature(STAGE_CREATURE), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Layer_PlayerFlight(STAGE_FLIGHTPLAYER), E_FAIL);
 
@@ -192,6 +194,10 @@ HRESULT CStage::Ready_Layer_Environment(const _tchar * pLayerTag)
 	pGameObject = CShotParticle::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"ShotParticle", pGameObject), E_FAIL);
+	
+	pGameObject = CRoundEffect::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"RoundEffect", pGameObject), E_FAIL);
 
 	pGameObject = CTriggerParticle::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
@@ -506,7 +512,7 @@ HRESULT CStage::Ready_Layer_Monster(const _tchar * pLayerTag)
 
 	CGameObject*		pGameObject = nullptr;
 
-	/*if (!vecFireMan.empty())
+	if (!vecFireMan.empty())
 	{
 		for (size_t i = 0; i < vecFireMan.size(); i++)
 		{
@@ -536,7 +542,7 @@ HRESULT CStage::Ready_Layer_Monster(const _tchar * pLayerTag)
 
 	pGameObject = CMiddleBoss::Create(m_pGraphicDev, _vec3(109.f, 0.6f, 10.f), L"MiddleBoss");
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);*/
+	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
 	
 	//pGameObject = CKrakenBoss::Create(m_pGraphicDev, _vec3(10.f, 5.6f, 10.f), L"Kraken");
 	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
@@ -573,6 +579,17 @@ HRESULT CStage::Ready_Layer_PlayerBullet(const _tchar * pLayerTag)
 }
 
 HRESULT CStage::Ready_Layer_ExBullet(const _tchar * pLayerTag)
+{
+	Engine::CLayer*		pLayer = Engine::CLayer::Create();
+	NULL_CHECK_RETURN(pLayer, E_FAIL);
+
+	CGameObject*		pGameObject = nullptr;
+
+	m_mapLayer.insert({ pLayerTag, pLayer });
+
+	return S_OK;
+}
+HRESULT CStage::Ready_Layer_Laser(const _tchar * pLayerTag)
 {
 	Engine::CLayer*		pLayer = Engine::CLayer::Create();
 	NULL_CHECK_RETURN(pLayer, E_FAIL);

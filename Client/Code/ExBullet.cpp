@@ -157,9 +157,9 @@ HRESULT CExBullet::Add_Component(void)
 
 
 
-	pComponent = m_pTexture = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"ExBullet_Tex"));
+	pComponent = m_pTexture = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Orange_Tex"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"ExBullet_Tex", pComponent });
+	m_mapComponent[ID_STATIC].insert({ L"Orange_Tex", pComponent });
 
 
 	return S_OK;
