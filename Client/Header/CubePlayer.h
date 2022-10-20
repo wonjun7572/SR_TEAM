@@ -150,6 +150,11 @@ private: // 파티클관련 포인터입니다.
 
 private:
 	_float			m_fRed = 0.f;
+	_float			m_fBlue = 0.f;
+
+
+	_bool			m_bColorLighting = false;
+
 	_float			m_fLookAngle = 0.f;
 	_float			m_fDownAngle = 0.f;
 
