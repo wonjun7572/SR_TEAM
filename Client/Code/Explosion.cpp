@@ -132,9 +132,9 @@ void CExplosion::Hit_Check_Monster(void)
 		}
 	}
 
-	pMonsterLayer = Engine::Get_Layer(STAGE_TENTACLE);
+	CLayer* pTentacleLayer = Engine::Get_Layer(STAGE_TENTACLE);
 
-	for (auto& iter : pMonsterLayer->Get_GameList())
+	for (auto& iter : pTentacleLayer->Get_GameList())
 	{
 		CTransform* pTransform = dynamic_cast<CTransform*>(iter->Get_Component(TRANSFORM_COMP, ID_DYNAMIC));
 

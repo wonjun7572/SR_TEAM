@@ -142,9 +142,9 @@ void CExBullet::Collision_check(void)
 		}
 	}
 
-	pKrakenLayer = Engine::Get_Layer(STAGE_TENTACLE);
+	CLayer* pTentacleLayer = Engine::Get_Layer(STAGE_TENTACLE);
 
-	for (auto& iter : *(pKrakenLayer->Get_GameListPtr()))
+	for (auto& iter : *(pTentacleLayer->Get_GameListPtr()))
 	{
 		CTransform* pIterTransform = dynamic_cast<CTransform*>(iter->Get_Component(TRANSFORM_COMP, ID_DYNAMIC));
 		NULL_CHECK_RETURN(pIterTransform, );
