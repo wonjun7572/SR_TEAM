@@ -1032,8 +1032,8 @@ HRESULT CStage::Ready_Light(void)
 	*/
 	FAILED_CHECK_RETURN(Engine::Ready_Light(m_pGraphicDev, &Light, 0), E_FAIL);
 
-	D3DLIGHT9   Light2;
-	ZeroMemory(&Light2, sizeof(D3DLIGHT9));
+	//D3DLIGHT9   Light2;
+	//ZeroMemory(&Light2, sizeof(D3DLIGHT9));
 
 	//Light2.Type = D3DLIGHT_POINT;
 	//Light2.Position = _vec3(14.f, 0.6f, 10.f);

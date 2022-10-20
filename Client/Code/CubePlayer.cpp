@@ -65,9 +65,9 @@ _int CCubePlayer::Update_Object(const _float & fTimeDelta)
 
 	if (!m_bDoorOpen)
 	{
-		m_fRed	 = 0.5f;
+		m_fRed = 0.5f;
 		m_fGreen = 0.5f;
-		m_fBlue	 = 0.5f;
+		m_fBlue = 0.5f;
 		m_fRange = 25.f;
 	}
 	else
@@ -93,7 +93,7 @@ _int CCubePlayer::Update_Object(const _float & fTimeDelta)
 			}
 		}
 	}
-	
+
 
 	m_fTimeDelta = fTimeDelta;
 	m_fBulletTime += fTimeDelta;
@@ -113,7 +113,7 @@ _int CCubePlayer::Update_Object(const _float & fTimeDelta)
 	}
 	Key_Skill();
 	Look_Direction();
-	
+
 	if (!(dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->Get_Switch())
 		&& !(dynamic_cast<CShop*>(Engine::Get_GameObject(STAGE_UI, L"Shop"))->Get_Switch()))
 	{
@@ -133,7 +133,7 @@ _int CCubePlayer::Update_Object(const _float & fTimeDelta)
 		//	¥ÎΩ√ ≈◊Ω∫∆Æ, ∏ÛΩ∫≈Õ πÊ«‚¿∏∑Œ∏∏ ∞°¥…«œ∞‘ ∫Ø∞Ê øπ¡§
 		Dash();
 	}
-	
+
 	Lighting();
 	CGameObject::Update_Object(fTimeDelta);
 
@@ -150,12 +150,12 @@ void CCubePlayer::LateUpdate_Object(void)
 
 	if (m_Weapon)
 	{
-		if (m_Weapon->Get_Ability()->fBulletRate - (m_fBulletTime*(m_iSpeedItem+1)) <= 0.f)
+		if (m_Weapon->Get_Ability()->fBulletRate - (m_fBulletTime*(m_iSpeedItem + 1)) <= 0.f)
 		{
 			Fire_Bullet();
 		}
 	}
-	
+
 	m_pCollision->Get_Item();
 	m_pCollision->Get_GunItem();
 
@@ -278,12 +278,12 @@ void CCubePlayer::Update_NullCheck()
 
 	if (!m_pCartridgeParticle)
 		m_pCartridgeParticle = dynamic_cast<CCartridgeParticle*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"CartridgeParticle"));
-	
+
 	if (!m_pDashCube)
 		m_pDashCube = dynamic_cast<CDashCube*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"DashCube"));
 	if (!m_pRoundEffect)
 		m_pRoundEffect = dynamic_cast<CRoundEffect*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"RoundEffect"));
-	
+
 	if (!m_pTriggerParticle)
 		m_pTriggerParticle = dynamic_cast<CTriggerParticle*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"TriggerParticle"));
 
@@ -295,7 +295,7 @@ void CCubePlayer::Update_NullCheck()
 	if (m_pBomb == nullptr)
 		m_pBomb = dynamic_cast<CPlayerMapping*>(Engine::Get_GameObject(STAGE_MAPPING, L"Map"));
 
-	if(m_pFlight == nullptr)
+	if (m_pFlight == nullptr)
 		m_pFlight = dynamic_cast<CFlight*>(Engine::Get_GameObject(STAGE_FLIGHTPLAYER, L"FLIGHTPLAYER"));
 }
 
@@ -347,8 +347,8 @@ void CCubePlayer::Assemble(void)
 		m_pLeftHandWorld->Static_Update();
 		m_pRightHandWorld->Static_Update();
 		m_pLeftFootWorld->Static_Update();
-		m_pRightHandWorld->Static_Update();	
-	}		
+		m_pRightHandWorld->Static_Update();
+	}
 }
 
 void CCubePlayer::Animation(void)
@@ -382,9 +382,9 @@ void CCubePlayer::Animation(void)
 		if (m_fHandAngle > -D3DX_PI / 2.f)
 			m_fHandAngle -= m_fTimeDelta * 4;
 	}
-	if (Get_DIMouseState(DIM_RB) || 
-			(m_Weapon == Engine::Get_GameObject(STAGE_GUN, L"SHOTGUN")) ||
-			(m_Weapon == Engine::Get_GameObject(STAGE_GUN, L"SNIPER"))	)
+	if (Get_DIMouseState(DIM_RB) ||
+		(m_Weapon == Engine::Get_GameObject(STAGE_GUN, L"SHOTGUN")) ||
+		(m_Weapon == Engine::Get_GameObject(STAGE_GUN, L"SNIPER")))
 	{
 		// øÏ¡ˆ ∞ﬂ¬¯
 		if ((m_Weapon == Engine::Get_GameObject(STAGE_GUN, L"UZI1")))
@@ -392,7 +392,7 @@ void CCubePlayer::Animation(void)
 			m_fLeftArmAngle = D3DXToRadian(-90.f) + m_fDownAngle;
 			m_fRightArmAngle = D3DXToRadian(-90.f) + m_fDownAngle;
 			m_fHandAngle = 0.f;
-		
+
 		}
 		// º¶∞« / Ω∫≥™ ∞ﬂ¬¯
 		if ((m_Weapon == Engine::Get_GameObject(STAGE_GUN, L"SHOTGUN")) ||
@@ -630,100 +630,99 @@ void CCubePlayer::Move()
 			FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), );
 		}
 	}
-
-
-	
-		if (Key_Down(DIK_Z))								// √—æÀ ∏ÿ√ﬂ¥¬∞≈
+	if (Key_Down(DIK_Z))								// √—æÀ ∏ÿ√ﬂ¥¬∞≈
+	{
+		if (m_pShield != nullptr)
 		{
-			if (m_pShield != nullptr)
+			m_pShield->Kill_Obj();
+		}
+		_vec3 vPos;
+		_vec3 vDir;
+		m_pTransform->Get_Info(INFO_POS, &vPos);
+		m_pBodyWorld->Get_Info(INFO_LOOK, &vDir);
+		CLayer* pLayer = Get_Layer(STAGE_SKILL);
+		m_pShield = CShield::Create(m_pGraphicDev, vPos, vDir);
+		NULL_CHECK_RETURN(m_pShield, );
+		FAILED_CHECK_RETURN(pLayer->Add_GameList(m_pShield), );
+	}
+	if (Key_Pressing(DIK_Z))
+	{
+		if (m_pShield != nullptr)
+			m_pShield->On_Move();
+	}
+	if (!(Get_DIKeyState(DIK_Z)))
+	{
+		if (m_pShield != nullptr)
+
+			m_pShield->Off_Move();
+	}
+
+
+
+	if (Key_Pressing(DIK_C))
+	{
+		_vec3 vPos;														//¥ÎΩ¨¿Ã∆Â∆Æ«œ∑¡¥¯∞Õ
+		_vec3 vDir;
+		m_pTransform->Get_Info(INFO_POS, &vPos);
+		_vec3 min = { -1.0f ,-1.0f ,-1.0f };
+		m_pTransform->Get_Info(INFO_POS, &vPos);
+		vPos.x -= 5.f;
+		vPos.y += 5.f;
+		vPos.z -= 5.f;
+		for (_int i = -5; i < 5; i++)
+		{
+			for (_int j = -5; j < 5; j++)
 			{
-				m_pShield->Kill_Obj();
-			}
-			_vec3 vPos;
-			_vec3 vDir;
-			m_pTransform->Get_Info(INFO_POS, &vPos);
-			m_pBodyWorld->Get_Info(INFO_LOOK, &vDir);
-			CLayer* pLayer = Get_Layer(STAGE_SKILL);
-			m_pShield = CShield::Create(m_pGraphicDev, vPos, vDir);
-			NULL_CHECK_RETURN(m_pShield, );
-			FAILED_CHECK_RETURN(pLayer->Add_GameList(m_pShield), );			
-		}
-		if (Key_Pressing(DIK_Z))
-		{
-			if (m_pShield != nullptr)
-				m_pShield->On_Move();
-
-		}
-		if (!(Get_DIKeyState(DIK_Z)))
-		{
-			if (m_pShield != nullptr)
-
-				m_pShield->Off_Move();
-		}
-		if (Key_Pressing(DIK_C))
-		{
-			_vec3 vPos;														//¥ÎΩ¨¿Ã∆Â∆Æ«œ∑¡¥¯∞Õ
-			_vec3 vDir;
-			m_pTransform->Get_Info(INFO_POS, &vPos);
-			_vec3 min = { -1.0f ,-1.0f ,-1.0f };
-			m_pTransform->Get_Info(INFO_POS, &vPos);
-			vPos.x -= 5.f;
-			vPos.y += 5.f;
-			vPos.z -= 5.f;
-			for (_int i = -5; i < 5; i++)
-			{
-				for (_int j = -5; j < 5; j++)
+				for (_int k = -5; k < 5; k++)
 				{
-					for (_int k = -5; k < 5; k++)
-					{
-						//D3DXVec3Normalize(&min, &_vec3(i, j, k));						
-					
-						dynamic_cast<CRoundEffect*>(m_pRoundEffect)->Set_PclePos(vPos + _vec3(i, j, k)*0.1f);
+					//D3DXVec3Normalize(&min, &_vec3(i, j, k));						
 
-						dynamic_cast<CRoundEffect*>(m_pRoundEffect)->Set_PcleDir(-min);
+					dynamic_cast<CRoundEffect*>(m_pRoundEffect)->Set_PclePos(vPos + _vec3(i, j, k)*0.1f);
 
-						m_pRoundEffect->addParticle();
-					}
+					dynamic_cast<CRoundEffect*>(m_pRoundEffect)->Set_PcleDir(-min);
+
+					m_pRoundEffect->addParticle();
 				}
 			}
-
-
-			//_vec3 vPos;														//¥ÎΩ¨¿Ã∆Â∆Æ«œ∑¡¥¯∞Õ
-			//_vec3 vDir;
-			//m_pTransform->Get_Info(INFO_POS, &vPos);
-			//m_pBodyWorld->Get_Info(INFO_LOOK, &vDir);
-			//vPos.y = +0.45f;
-			//dynamic_cast<CDashCube*>(m_pDashCube)->Set_PclePos(vPos);
-			//dynamic_cast<CDashCube*>(m_pDashCube)->Set_PcleDir(vDir);
-			//for (_int i = 0; i < 150; ++i)
-			//{
-			//	m_pDashCube->addParticle();
-			//}
 		}
 
 
-		if (Key_Down(DIK_T))
+		//_vec3 vPos;														//¥ÎΩ¨¿Ã∆Â∆Æ«œ∑¡¥¯∞Õ
+		//_vec3 vDir;
+		//m_pTransform->Get_Info(INFO_POS, &vPos);
+		//m_pBodyWorld->Get_Info(INFO_LOOK, &vDir);
+		//vPos.y = +0.45f;
+		//dynamic_cast<CDashCube*>(m_pDashCube)->Set_PclePos(vPos);
+		//dynamic_cast<CDashCube*>(m_pDashCube)->Set_PcleDir(vDir);
+		//for (_int i = 0; i < 150; ++i)
+		//{
+		//	m_pDashCube->addParticle();
+		//}
+	}
+
+
+	if (Key_Down(DIK_T))
+	{
+		CTerrainTex*	pTerrainBufferCom = dynamic_cast<CTerrainTex*>(Engine::Get_Component(STAGE_ENVIRONMENT, L"Terrain", L"Proto_TerrainTexCom", ID_STATIC));
+		NULL_CHECK_RETURN(pTerrainBufferCom, );
+
+		CTransform*		pTerrainTransformCom = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_ENVIRONMENT, L"Terrain", TRANSFORM_COMP, ID_DYNAMIC));
+		NULL_CHECK_RETURN(pTerrainTransformCom, );
+
+		_vec3 vPos;
+		vPos = m_pCalculatorCom->Peek_Target_Vector(g_hWnd, &_vec3(0.f, 0.f, 0.f), pTerrainBufferCom, pTerrainTransformCom);
+		_vec3 vSetPos = _vec3(vPos.x, vPos.y + 0.5f, vPos.z);
+
+		CLayer* pLayer = Get_Layer(STAGE_SKILL);
+		CGameObject* pGameObject = CPing::Create(m_pGraphicDev, vSetPos);
+		NULL_CHECK_RETURN(pGameObject, );
+		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), );
+
+		for (auto& iter : Get_Layer(STAGE_SUPPORTER)->Get_GameObjectMap())
 		{
-			CTerrainTex*	pTerrainBufferCom = dynamic_cast<CTerrainTex*>(Engine::Get_Component(STAGE_ENVIRONMENT, L"Terrain", L"Proto_TerrainTexCom", ID_STATIC));
-			NULL_CHECK_RETURN(pTerrainBufferCom, );
-
-			CTransform*		pTerrainTransformCom = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_ENVIRONMENT, L"Terrain", TRANSFORM_COMP, ID_DYNAMIC));
-			NULL_CHECK_RETURN(pTerrainTransformCom, );
-
-			_vec3 vPos;
-			vPos = m_pCalculatorCom->Peek_Target_Vector(g_hWnd, &_vec3(0.f, 0.f, 0.f), pTerrainBufferCom, pTerrainTransformCom);
-			_vec3 vSetPos = _vec3(vPos.x, vPos.y + 0.5f, vPos.z);
-
-			CLayer* pLayer = Get_Layer(STAGE_SKILL);
-			CGameObject* pGameObject = CPing::Create(m_pGraphicDev, vSetPos);
-			NULL_CHECK_RETURN(pGameObject, );
-			FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), );
-
-			for (auto& iter : Get_Layer(STAGE_SUPPORTER)->Get_GameObjectMap())
-			{
-				dynamic_cast<CSupporter*>(iter.second)->SetOrdered(true);
-			}
+			dynamic_cast<CSupporter*>(iter.second)->SetOrdered(true);
 		}
+	}
 
 	if (Get_DIKeyState(DIK_SPACE))
 	{
@@ -790,7 +789,7 @@ void CCubePlayer::TransAxis(void)
 
 	m_pBodyWorld->Get_Info(INFO_POS, &vBefore);
 	m_pBodyWorld->Get_BeforeInfo(INFO_POS, &vAfter);
-	
+
 	m_pLeftArmWorld->Rotation_Axis_Animation(-0.1f, -0.15f, m_fLeftArmAngle, -m_fLookAngle);
 	m_pRightArmWorld->Rotation_Axis_Animation(-0.1f, 0.15f, m_fRightArmAngle, -m_fLookAngle);
 
@@ -831,7 +830,7 @@ void CCubePlayer::Look_Direction(void)
 
 void CCubePlayer::Fire_Bullet(void)
 {
-	
+
 	if (Get_DIMouseState(DIM_RB))
 	{
 		if (Get_DIMouseState(DIM_LB))
@@ -840,12 +839,12 @@ void CCubePlayer::Fire_Bullet(void)
 			{
 				m_pBulletParicle->addParticle();
 				//m_pShotParicle->addParticle();
-				
+
 				m_Weapon->Set_MinusBullet();
 				m_Weapon->Set_Shoot(true);
 				m_fBulletTime = 0.f;
 				_vec3 vBPos;									  //∫“≤…¿Ã∆—∆Æ
-				_vec3 vRHPos;									
+				_vec3 vRHPos;
 				_vec3 vBDir;
 				m_pTransform->Get_Info(INFO_POS, &vBPos);
 				m_pRightHandWorld->Get_Info(INFO_POS, &vRHPos);
@@ -854,11 +853,11 @@ void CCubePlayer::Fire_Bullet(void)
 				vRHPos.y += 0.1f;
 				dynamic_cast<CTriggerParticle*>(m_pTriggerParticle)->Set_PclePos(vRHPos);
 				dynamic_cast<CTriggerParticle*>(m_pTriggerParticle)->Set_PcleDir(vBDir);
-												  //∫“≤…¿Ã∆—∆Æ
-		
+				//∫“≤…¿Ã∆—∆Æ
+
 				dynamic_cast<CTriggerFront*>(m_pTriggerFront)->Set_PclePos(vRHPos);
-				
-				
+
+
 				_vec3 vLHPos;									//≈∫««¿Ã∆—∆Æ
 				_vec3 vLDir;
 
@@ -964,7 +963,7 @@ void CCubePlayer::Gun_Check(void)
 		m_tAbility->iGunTexture = 4;
 		m_bSniper = false;
 	}
-	
+
 	if (Get_DIKeyState(DIK_1) & 0x80 || m_iSetWeaponState == 2)
 	{
 		if (!m_vecWeapon.empty())
@@ -999,7 +998,7 @@ void CCubePlayer::Gun_Check(void)
 			}
 		}
 	}
-	if (Get_DIKeyState(DIK_3) & 0x80 || m_iSetWeaponState ==4)
+	if (Get_DIKeyState(DIK_3) & 0x80 || m_iSetWeaponState == 4)
 	{
 		if (m_vecWeapon.size() >= 3)
 		{
@@ -1073,7 +1072,7 @@ void CCubePlayer::Inventory_Check(void)
 		break;
 	}
 
-	
+
 	{
 		if (m_Weapon == Engine::Get_GameObject(STAGE_GUN, L"UZI1"))
 		{
@@ -1089,7 +1088,7 @@ void CCubePlayer::Inventory_Check(void)
 		}
 		else
 			m_iWeaponState = 0;
-	}	
+	}
 }
 
 void CCubePlayer::Jump(void)
@@ -1212,7 +1211,7 @@ HRESULT CCubePlayer::Lighting()
 	d3dLight.Range = m_fRange;
 
 	// Set the property information for the first light.
-	FAILED_CHECK_RETURN(m_pGraphicDev->SetLight(1, &d3dLight),E_FAIL);
+	FAILED_CHECK_RETURN(m_pGraphicDev->SetLight(1, &d3dLight), E_FAIL);
 
 	return S_OK;
 }
@@ -1222,11 +1221,11 @@ CCubePlayer * CCubePlayer::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 	CCubePlayer* pInstance = new CCubePlayer(pGraphicDev);
 
 	if (FAILED(pInstance->Ready_Object()))
-	Safe_Release(pInstance);
+		Safe_Release(pInstance);
 
 	return pInstance;
 }
-     
+
 void CCubePlayer::Free(void)
 {
 	CGameObject::Free();

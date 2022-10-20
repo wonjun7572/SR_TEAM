@@ -855,6 +855,9 @@
     <ClInclude Include="..\Header\Laser.h">
       <Filter>02. GameObject\01. For_Stage\06. Bullet\Laser</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\Npc.h">
+      <Filter>99. Default\헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -1310,6 +1313,9 @@
     <ClCompile Include="..\Code\Laser.cpp">
       <Filter>02. GameObject\01. For_Stage\06. Bullet\Laser</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\Npc.cpp">
+      <Filter>99. Default\소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">
@@ -1338,6 +1344,8 @@
     <FxCompile Include="..\Bin\ShaderFiles\Shader_Rect.hlsl">
       <Filter>99. Default</Filter>
     </FxCompile>
-    <FxCompile Include="..\Bin\ShaderFiles\Shader_Cube.hlsl" />
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_Cube.hlsl">
+      <Filter>99. Default</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>
