@@ -60,12 +60,12 @@ HRESULT CMiddleBoss::Ready_Object(const _vec3 & vPos, _tchar * Name)
 	m_pHitBoxTransCom->Set_Pos(vAnimationPos.x, vAnimationPos.y, vAnimationPos.z);
 	m_pHitBoxTransCom->Static_Update();
 
-	m_pSearchRange_TransCom->Set_Scale(&_vec3(30.f, 30.f, 30.f));
-	m_pSearchRange_TransCom->Set_Pos(vAnimationPos.x, vAnimationPos.y, vAnimationPos.z);
+	m_pSearchRange_TransCom->Set_Scale(&_vec3(50.f, 50.f, 50.f));
+	m_pSearchRange_TransCom->Set_Pos(vAnimationPos.x, 0.f, vAnimationPos.z);
 	m_pSearchRange_TransCom->Static_Update();
 
 	m_pAttackRange_TransCom->Set_Scale(&_vec3(10.f, 10.f, 10.f));
-	m_pAttackRange_TransCom->Set_Pos(vAnimationPos.x, vAnimationPos.y, vAnimationPos.z);
+	m_pAttackRange_TransCom->Set_Pos(vAnimationPos.x, 0.f, vAnimationPos.z);
 	m_pAttackRange_TransCom->Static_Update();
 
 	return S_OK;
@@ -90,31 +90,34 @@ _int CMiddleBoss::Update_Object(const _float & fTimeDelta)
 	{
 		m_bFirst = false;
 
-		//m_vPattern.push_back(MIDDLEBOSS_SKILL_NORMALATTACK);
-		m_vPattern.push_back(MIDDLEBOSS_SKILL_BOMBING);
+		m_vPattern.push_back(MIDDLEBOSS_SKILL_NORMALATTACK);
+		//m_vPattern.push_back(MIDDLEBOSS_SKILL_BOMBING);
 
 		Engine::Get_Scene()->New_Layer(m_MonsterName);
 		pMyLayer = Engine::Get_Layer(m_MonsterName);
 		FAILED_CHECK_RETURN(Build(), -1);
 
-		Load_Animation(L"../../Data/MiddleMonster/MIDDLE_IDLESTART10.dat", 0);
-		Load_Animation(L"../../Data/MiddleMonster/MIDDLE_IDLESTART11.dat", 1);
-		Load_Animation(L"../../Data/MiddleMonster/MIDDLE_IDLESTART12.dat", 2);
-		Load_Animation(L"../../Data/MiddleMonster/MIDDLE_IDLESTART13.dat", 3);
+		Load_Animation(L"../../Data/Thor/THOR_IDLE_1.dat", 0);
+		Load_Animation(L"../../Data/Thor/THOR_IDLE_2.dat", 1);
+		Load_Animation(L"../../Data/Thor/THOR_IDLE_3.dat", 2);
+		Load_Animation(L"../../Data/Thor/THOR_IDLE_4.dat", 3);
 
-		Load_Animation(L"../../Data/MiddleMonster/MIDDLE2_WALKINGSTART.dat", 4);
-		Load_Animation(L"../../Data/MiddleMonster/MIDDLE2_WALKING1.dat", 5);
-		Load_Animation(L"../../Data/MiddleMonster/MIDDLE2_WALKING2.dat", 6);
+		Load_Animation(L"../../Data/Thor/THOR_NORMALATTACK_1.dat", 4);
+		Load_Animation(L"../../Data/Thor/THOR_NORMALATTACK_2.dat", 5);
+		Load_Animation(L"../../Data/Thor/THOR_NORMALATTACK_3.dat", 6);
+		Load_Animation(L"../../Data/Thor/THOR_NORMALATTACK_4.dat", 7);
 
-		Load_Animation(L"../../Data/MiddleMonster/MIDDLE2_RIGHTATTACKINGSTART.dat", 7);
-		Load_Animation(L"../../Data/MiddleMonster/MIDDLE2_RIGHTATTACK1.dat", 8);
-		Load_Animation(L"../../Data/MiddleMonster/MIDDLE_LEFTATTACKINGSTART.dat", 9);
-		Load_Animation(L"../../Data/MiddleMonster/MIDDLE2_LEFTATTACK1.dat", 10);
-
-		Load_Animation(L"../../Data/MiddleMonster/MIDDLE2_Bombing_1.dat", 11);
-		Load_Animation(L"../../Data/MiddleMonster/MIDDLE2_Bombing_2.dat", 12);
-		Load_Animation(L"../../Data/MiddleMonster/MIDDLE2_Bombing_3.dat", 13);
-		Load_Animation(L"../../Data/MiddleMonster/MIDDLE2_Bombing_4.dat", 14);
+		Load_Animation(L"../../Data/Thor/THOR_BOMBING_1.dat", 11);
+		Load_Animation(L"../../Data/Thor/THOR_BOMBING_2.dat", 12);
+		Load_Animation(L"../../Data/Thor/THOR_BOMBING_3.dat", 13);
+		Load_Animation(L"../../Data/Thor/THOR_BOMBING_4.dat", 14);
+		Load_Animation(L"../../Data/Thor/THOR_BOMBING_5.dat", 15);
+		Load_Animation(L"../../Data/Thor/THOR_BOMBING_6.dat", 16);
+		Load_Animation(L"../../Data/Thor/THOR_BOMBING_7.dat", 17);
+		Load_Animation(L"../../Data/Thor/THOR_BOMBING_8.dat", 18);
+		Load_Animation(L"../../Data/Thor/THOR_BOMBING_9.dat", 19);
+		Load_Animation(L"../../Data/Thor/THOR_BOMBING_10.dat", 20);
+		Load_Animation(L"../../Data/Thor/THOR_BOMBING_11.dat", 21);
 	}
 
 	Update_Pattern(fTimeDelta);
@@ -166,9 +169,9 @@ void CMiddleBoss::LateUpdate_Object(void)
 				NormalAttack_Animation_Run();
 
 				if (m_NORMALATTACK == MIDDLEBOSS_NORMALATTACK_1 || m_NORMALATTACK == MIDDLEBOSS_NORMALATTACK_3)
-					Run_Animation(5.f);
+					Run_Animation(1.f);
 				if (m_NORMALATTACK == MIDDLEBOSS_NORMALATTACK_2 || m_NORMALATTACK == MIDDLEBOSS_NORMALATTACK_4)
-					Run_Animation(50.f);
+					Run_Animation(20.f);
 			}
 			else if (m_PATTERN == MIDDLEBOSS_SKILL_CRASH)
 			{
@@ -178,8 +181,8 @@ void CMiddleBoss::LateUpdate_Object(void)
 			else if (m_PATTERN == MIDDLEBOSS_SKILL_BOMBING)
 			{
 				Bombing_Animation_Run();
-				if (m_BOMBING == MIDDLEBOSS_BOMBING_3)
-					Run_Animation(200.f);
+				if (m_BOMBING >= MIDDLEBOSS_BOMBING_4 && m_BOMBING <= MIDDLEBOSS_BOMBING_9)
+					Run_Animation(10.f);
 				else
 					Run_Animation(100.f);
 			}
@@ -228,17 +231,27 @@ _int CMiddleBoss::Update_Pattern(_float fTimeDelta)
 
 	for (auto& iter : pMyLayer->Get_GamePair())
 	{
-		if (0 == _tcscmp(iter.first, L"LEFTSHOOTING"))
+		if (0 == _tcscmp(iter.first, L"LEFTCANNON2"))
 		{
 			_matrix matBoss;
 			dynamic_cast<CTransAxisBox*>(iter.second)->Get_Final(&matBoss);
+
 			vShotgunLeft = { matBoss.m[3][0], matBoss.m[3][1], matBoss.m[3][2] };
+
+
+
+			_vec3 vLook = { matBoss.m[2][0], matBoss.m[2][1], matBoss.m[2][2] };
+			vShotgunLeft += vLook;
+			
 		}
-		if (0 == _tcscmp(iter.first, L"RIGHTSHOOTING"))
+		if (0 == _tcscmp(iter.first, L"RIGHTCANNON2"))
 		{
 			_matrix matBoss;
 			dynamic_cast<CTransAxisBox*>(iter.second)->Get_Final(&matBoss);
 			vShotgunRight = { matBoss.m[3][0], matBoss.m[3][1], matBoss.m[3][2] };
+
+			_vec3 vLook = { matBoss.m[2][0], matBoss.m[2][1], matBoss.m[2][2] };
+			vShotgunRight += vLook;
 		}
 	}
 
@@ -277,14 +290,14 @@ _int CMiddleBoss::Update_Pattern(_float fTimeDelta)
 	
 	int m_iRand = rand() % 10;
 	
-	if (!m_pCollision->Sphere_Collision(this->m_pSearchRange_TransCom, m_pPlayerTransCom, vPlayerScale.x, vSearchScale.x)
+	/*if (!m_pCollision->Sphere_Collision(this->m_pSearchRange_TransCom, m_pPlayerTransCom, vPlayerScale.x, vSearchScale.x)
 		&& (m_STATE != MIDDLEBOSS_ATTACK))
 	{
 		m_STATE = MIDDLEBOSS_MOVE;
 		m_pTransCom->Chase_Target(&vPlayerPos, 1.f, fTimeDelta);
 		m_ReloadTimer += fTimeDelta;
-	}
-	else if (m_pCollision->Sphere_Collision(this->m_pSearchRange_TransCom, m_pPlayerTransCom, vPlayerScale.x, vSearchScale.x))
+	}*/
+	if (m_pCollision->Sphere_Collision(this->m_pSearchRange_TransCom, m_pPlayerTransCom, vPlayerScale.x, vSearchScale.x))
 	{
 		if (m_STATE == MIDDLEBOSS_MOVE)
 			m_STATE = MIDDLEBOSS_IDLE;
@@ -324,16 +337,44 @@ _int CMiddleBoss::Update_Pattern(_float fTimeDelta)
 
 				if ((m_NORMALATTACK == MIDDLEBOSS_NORMALATTACK_1) && m_AnimationTime >= 1.f)
 				{
-					CPoolMgr::GetInstance()->Reuse_ExBullet(m_pGraphicDev, &vShotgunRight, &m_vDirectionRight, 20.f);
+					_tchar* szName = new _tchar[256]{};
+					wstring wName = L"Explosion_%d";
+
+					wsprintfW(szName, wName.c_str(), g_iExplosion);
+					m_TcharList.push_back(szName);
+
+					g_iExplosion++;
+
+					// 위치 바꿔줘야함
+					CGameObject* pGameObject = CExplosion::Create(m_pGraphicDev, _vec3(vShotgunLeft.x, vShotgunLeft.y, vShotgunLeft.z), szName);
+					NULL_CHECK_RETURN(pGameObject, -1);
+					CLayer* pLayer = Get_Layer(STAGE_SKILL);
+					FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), -1);
+
+					CPoolMgr::GetInstance()->Reuse_ExBullet(m_pGraphicDev, &vShotgunLeft, &m_vDirectionLeft, 20.f);
 				}
 				if ((m_NORMALATTACK == MIDDLEBOSS_NORMALATTACK_3) && m_AnimationTime >= 1.f)
 				{
-					CPoolMgr::GetInstance()->Reuse_ExBullet(m_pGraphicDev, &vShotgunLeft, &m_vDirectionLeft, 20.f);
+					_tchar* szName = new _tchar[256]{};
+					wstring wName = L"Explosion_%d";
+
+					wsprintfW(szName, wName.c_str(), g_iExplosion);
+					m_TcharList.push_back(szName);
+
+					g_iExplosion++;
+
+					// 위치 바꿔줘야함
+					CGameObject* pGameObject = CExplosion::Create(m_pGraphicDev, _vec3(vShotgunRight.x, vShotgunRight.y, vShotgunRight.z), szName);
+					NULL_CHECK_RETURN(pGameObject, -1);
+					CLayer* pLayer = Get_Layer(STAGE_SKILL);
+					FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), -1);
+
+					CPoolMgr::GetInstance()->Reuse_ExBullet(m_pGraphicDev, &vShotgunRight, &m_vDirectionRight, 20.f);
 				}
 			}
 			else if (m_PATTERN == MIDDLEBOSS_SKILL_BOMBING)
 			{
-				if (m_BOMBING == MIDDLEBOSS_BOMBING_3 && m_fMissileItv >= 1.f)
+				if ((m_BOMBING >= MIDDLEBOSS_BOMBING_4 && m_BOMBING >= MIDDLEBOSS_BOMBING_7) && m_AnimationTime >= 1.f)
 				{
 					CLayer* pLayer = Get_Layer(STAGE_SKILL);
 					_tchar* szName = new _tchar[256]{};
@@ -350,8 +391,8 @@ _int CMiddleBoss::Update_Pattern(_float fTimeDelta)
 						vRandom = _vec3(vPlayerPos.x - m_iRand, 30.f, vPlayerPos.z + m_iRand);
 					else if (m_MissileCnt % 5 == 3)
 						vRandom = _vec3(vPlayerPos.x - m_iRand, 30.f, vPlayerPos.z - m_iRand);
-					else if (m_MissileCnt % 5 == 4)
-						vRandom = _vec3(vPlayerPos.x + m_iRand, 30.f, vPlayerPos.z + m_iRand);
+					/*else if (m_MissileCnt % 5 == 4)
+						vRandom = _vec3(vPlayerPos.x + m_iRand, 30.f, vPlayerPos.z + m_iRand);*/
 
 					CGameObject* pGameObject = CVeneer::Create(m_pGraphicDev, vRandom);
 					NULL_CHECK_RETURN(pGameObject, -1);
@@ -362,13 +403,13 @@ _int CMiddleBoss::Update_Pattern(_float fTimeDelta)
 					NULL_CHECK_RETURN(pGameObject, -1);
 					FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), -1);
 
-					m_fMissileItv = 0.f;
+				//	m_fMissileItv = 0.f;
 					m_MissileCnt++;
 				}
-				else
+				/*else
 				{
 					m_fMissileItv += fTimeDelta;
-				}
+				}*/
 			}
 			else if (m_PATTERN == MIDDLEBOSS_SKILL_CRASH)
 			{
@@ -429,7 +470,7 @@ void CMiddleBoss::Hit_Check(_float _deltaTime)
 
 HRESULT CMiddleBoss::Build(void)
 {
-	HANDLE      hFile = CreateFile(L"../../Data/MiddleMonster/MIDDLE2_FINAL.dat",      // 파일의 경로와 이름	
+	HANDLE      hFile = CreateFile(L"../../Data/Thor/THOR.dat",      // 파일의 경로와 이름	
 		GENERIC_READ,         // 파일 접근 모드 (GENERIC_WRITE : 쓰기 전용, GENERIC_READ : 읽기 전용)
 		NULL,               // 공유 방식(파일이 열려있는 상태에서 다른 프로세스가 오픈할 때 허용할 것인가)    
 		NULL,               // 보안 속성(NULL을 지정하면 기본값 상태)
@@ -753,7 +794,7 @@ void CMiddleBoss::Set_OnTerrain(void)
 
 	_float fHeight = m_pCalculatorCom->HeightOnTerrain(&vAnimationPos, pTerrainTexCom->Get_VtxPos(), VTXCNTX, VTXCNTZ) + 0.6f;
 
-	m_pTransCom->Set_Pos(vAnimationPos.x, fHeight + 10.f, vAnimationPos.z);
+	m_pTransCom->Set_Pos(vAnimationPos.x, fHeight + 12.f, vAnimationPos.z);
 }
 
 _bool CMiddleBoss::Collision_Wall(const _float & fTimeDelta)
@@ -873,7 +914,7 @@ void CMiddleBoss::NormalAttack_Animation_Run(void)
 	for (auto& iter : ListBox)
 	{
 		CQuarternion* Qtan = dynamic_cast<CQuarternion*>(iter.second->Get_Component(L"Proto_QuaternionCom", ID_STATIC));
-		Qtan->Change_Animation(7 + m_NORMALATTACK);
+		Qtan->Change_Animation(4 + m_NORMALATTACK);
 	}
 }
 
@@ -896,6 +937,20 @@ void CMiddleBoss::Bombing_Animation_Run(void)
 		else if (m_BOMBING == MIDDLEBOSS_BOMBING_3)
 			m_BOMBING = MIDDLEBOSS_BOMBING_4;
 		else if (m_BOMBING == MIDDLEBOSS_BOMBING_4)
+			m_BOMBING = MIDDLEBOSS_BOMBING_5;
+		else if (m_BOMBING == MIDDLEBOSS_BOMBING_5)
+			m_BOMBING = MIDDLEBOSS_BOMBING_6;
+		else if (m_BOMBING == MIDDLEBOSS_BOMBING_6)
+			m_BOMBING = MIDDLEBOSS_BOMBING_7;
+		else if (m_BOMBING == MIDDLEBOSS_BOMBING_7)
+			m_BOMBING = MIDDLEBOSS_BOMBING_8;
+		else if (m_BOMBING == MIDDLEBOSS_BOMBING_8)
+			m_BOMBING = MIDDLEBOSS_BOMBING_9;
+		else if (m_BOMBING == MIDDLEBOSS_BOMBING_9)
+			m_BOMBING = MIDDLEBOSS_BOMBING_10;
+		else if (m_BOMBING == MIDDLEBOSS_BOMBING_10)
+			m_BOMBING = MIDDLEBOSS_BOMBING_11;
+		else if (m_BOMBING == MIDDLEBOSS_BOMBING_11)
 		{
 			m_BOMBING = MIDDLEBOSS_BOMBING_1;
 			m_STATE = MIDDLEBOSS_IDLE;

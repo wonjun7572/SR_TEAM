@@ -18,6 +18,13 @@ public:
 	virtual void	Render_Object(void) override;
 	virtual void	LateUpdate_Object(void) override;
 
+public:
+	void          Set_Damaged(_float iDamage)
+	{
+		if (this != nullptr)
+			m_tAbility->fCurrentHp -= iDamage;
+	}
+
 private:
 	void				Look_Direction(void);
 	virtual _int		Update_Pattern(_float fTimeDelta);
@@ -80,6 +87,9 @@ private:
 	_float				m_fTimeDelta = 0.f;
 	_float				m_fUISwitchTime = 0.f;
 	_vec3				vUIPos;
+	_bool				m_bAnihilate_First = true;
+	_bool				m_bAnihilate_Second = true;
+	_bool				m_bAnihilate_Third = true;
 
 public:
 	static CKrakenBoss*	Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3& vPos, _tchar* Name);

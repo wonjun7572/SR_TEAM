@@ -3,6 +3,8 @@
 #include "TransAxisBox.h"
 #include "CubePlayer.h"
 #include "Monster.h"
+#include "KrakenBoss.h"
+#include "KrakenLeg.h"
 
 CExplosion::CExplosion(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
@@ -125,6 +127,25 @@ void CExplosion::Hit_Check_Monster(void)
 		if (m_pCollision->Sphere_Collision(this->m_pTransCom, pTransform, vScale.x, vMonsterScale.x))
 		{
 			dynamic_cast<CMonster*>(iter)->Set_Damaged(100.f);
+			dynamic_cast<CKrakenBoss*>(iter)->Set_Damaged(100.f);
+			dynamic_cast<CKrakenLeg*>(iter)->Set_Damaged(100.f);
+		}
+	}
+
+	CLayer* pTentacleLayer = Engine::Get_Layer(STAGE_TENTACLE);
+
+	for (auto& iter : pTentacleLayer->Get_GameList())
+	{
+		CTransform* pTransform = dynamic_cast<CTransform*>(iter->Get_Component(TRANSFORM_COMP, ID_DYNAMIC));
+
+		_vec3 vMonsterScale;
+		pTransform->Get_Scale(&vMonsterScale);
+		_vec3 vMonsterPos;
+		pTransform->Get_Info(INFO_POS, &vMonsterPos);
+
+		if (m_pCollision->Sphere_Collision(this->m_pTransCom, pTransform, vScale.x, vMonsterScale.x))
+		{
+			dynamic_cast<CKrakenLeg*>(iter)->Set_Damaged(100.f);
 		}
 	}
 }

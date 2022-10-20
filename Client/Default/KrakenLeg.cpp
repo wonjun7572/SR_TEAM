@@ -20,7 +20,7 @@ HRESULT CKrakenLeg::Ready_Object(const _vec3 & vPos, _tchar * Name)
 	m_MonsterName = Name;
 
 	m_tAbility = new KRAKENABILITY;
-	m_tAbility->fMaxHp = 500.f;
+	m_tAbility->fMaxHp = 1.f;
 	m_tAbility->fCurrentHp = m_tAbility->fMaxHp;
 	m_tAbility->fDamage = 20.f;
 	m_tAbility->strObjTag = m_MonsterName;
@@ -36,10 +36,12 @@ HRESULT CKrakenLeg::Ready_Object(const _vec3 & vPos, _tchar * Name)
 
 	m_LEGIDLE = LEGIDLE_6;
 	m_LEGSHAKE = LEGSHAKE_1;
+	m_LEGSWING = LEGSWING_1;
+	m_LEGREVIVE = LEGREVIVE_1;
 
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
-	m_pTransCom->Set_Scale(&_vec3(1.f, 20.f, 1.f));
+	m_pTransCom->Set_Scale(&_vec3(0.f, 0.f, 0.f));
 	m_pTransCom->Set_Pos(vPos.x, vPos.y, vPos.z);
 	m_pTransCom->Static_Update();
 
@@ -50,7 +52,7 @@ HRESULT CKrakenLeg::Ready_Object(const _vec3 & vPos, _tchar * Name)
 	_vec3 vAnimationPos;
 	m_pTransCom->Get_Info(INFO_POS, &vAnimationPos);
 
-	m_pHitBoxTransCom->Set_Scale(&_vec3(1.f, 1.f, 1.f));
+	m_pHitBoxTransCom->Set_Scale(&_vec3(0.f, 0.f, 0.f));
 	m_pHitBoxTransCom->Set_Pos(vAnimationPos.x, vAnimationPos.y, vAnimationPos.z);
 	m_pHitBoxTransCom->Static_Update();
 
@@ -70,6 +72,7 @@ _int CKrakenLeg::Update_Object(const _float & fTimeDelta)
 		return -1;
 	}
 
+	cout << 21 + m_LEGSWING << endl;
 
 	m_fTimeDelta = fTimeDelta;
 
@@ -115,9 +118,52 @@ _int CKrakenLeg::Update_Object(const _float & fTimeDelta)
 		Load_Animation(L"../../Data/KrakenLeg/KRAKEN_SHAKE1.dat", 18);
 		Load_Animation(L"../../Data/KrakenLeg/KRAKEN_SHAKE2.dat", 19);
 		Load_Animation(L"../../Data/KrakenLeg/KRAKEN_SHAKE3.dat", 20);
+
+
+		Load_Animation(L"../../Data/KrakenLeg/KRAKEN_SMASH1.dat", 21);
+		Load_Animation(L"../../Data/KrakenLeg/KRAKEN_SMASH2.dat", 22);
+		Load_Animation(L"../../Data/KrakenLeg/KRAKEN_SMASH3.dat", 23);
+		Load_Animation(L"../../Data/KrakenLeg/KRAKEN_SMASH4.dat", 24);
+		Load_Animation(L"../../Data/KrakenLeg/KRAKEN_SMASH5.dat", 25);
+		Load_Animation(L"../../Data/KrakenLeg/KRAKEN_SMASH6.dat", 26);
+
+		Load_Animation(L"../../Data/KrakenLeg/KRAKEN_SWING1.dat", 27);
+		Load_Animation(L"../../Data/KrakenLeg/KRAKEN_SWING2.dat", 28);
+		Load_Animation(L"../../Data/KrakenLeg/KRAKEN_SWING3.dat", 29);
+		Load_Animation(L"../../Data/KrakenLeg/KRAKEN_SWING4.dat", 30);
+		Load_Animation(L"../../Data/KrakenLeg/KRAKEN_SWING5.dat", 31);
+		Load_Animation(L"../../Data/KrakenLeg/KRAKEN_SWING6.dat", 32);
+		Load_Animation(L"../../Data/KrakenLeg/KRAKEN_SWING7.dat", 33);
+		Load_Animation(L"../../Data/KrakenLeg/KRAKEN_SWING8.dat", 34);
+		Load_Animation(L"../../Data/KrakenLeg/KRAKEN_SWING9.dat", 35);
+		Load_Animation(L"../../Data/KrakenLeg/KRAKEN_SWING10.dat", 36);
+		Load_Animation(L"../../Data/KrakenLeg/KRAKEN_SWING11.dat", 37);
+
+		Load_Animation(L"../../Data/KrakenLeg/KRAKEN_SMASH7.dat", 38);
+		Load_Animation(L"../../Data/KrakenLeg/KRAKEN_SMASH8.dat", 39);
+		Load_Animation(L"../../Data/KrakenLeg/KRAKEN_SMASH9.dat", 40);
+		Load_Animation(L"../../Data/KrakenLeg/KRAKEN_SMASH10.dat", 41);
+		Load_Animation(L"../../Data/KrakenLeg/KRAKEN_SMASH11.dat", 42);
+
+
 	}
 
 	Update_Pattern(fTimeDelta);
+
+	if ((m_LURKER == KRAKENLURKER_3) && (m_STATE != KRAKEN_REVIVE))
+	{
+		m_pTransCom->Set_Scale(4.f, 40.f, 4.f);
+		m_pTransCom->Static_Update();
+		m_pHitBoxTransCom->Set_Scale(4.f, 40.f, 4.f);
+		m_pHitBoxTransCom->Static_Update();
+	}
+	else
+	{
+		m_pTransCom->Set_Scale(0.f, 0.f, 0.f);
+		m_pTransCom->Static_Update();
+		m_pHitBoxTransCom->Set_Scale(0.f, 0.f, 0.f);
+		m_pHitBoxTransCom->Static_Update();
+	}
 
 	_vec3 vMainBodyPos, vPos, vPlayerPos;
 	vMainBodyPos = { 65.f, 0.f, 65.f };
@@ -129,7 +175,16 @@ _int CKrakenLeg::Update_Object(const _float & fTimeDelta)
 
 	_vec3 vNewDir;
 
-	if (m_PATTERN == KRAKEN_SKILL_SMASH)
+	if (m_tAbility->fCurrentHp <= 0)
+	{
+		m_STATE = KRAKEN_REVIVE;
+	}
+
+	if (m_STATE == KRAKEN_REVIVE)
+	{
+		Revive_Pattern();
+	}
+	else if (m_PATTERN == KRAKEN_SKILL_SMASH)
 	{
 		if ((m_SMASH == KRAKENSMASH_1 || m_SMASH == KRAKENSMASH_2)
 			&& fabs(fDistance) <= 50.f)
@@ -176,22 +231,25 @@ _int CKrakenLeg::Update_Object(const _float & fTimeDelta)
 
 void CKrakenLeg::Render_Object(void)
 {
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pHitBoxTransCom->Get_WorldMatrixPointer());
+	m_pHitBox->Render_Buffer();
 }
 
 void CKrakenLeg::LateUpdate_Object(void)
 {
-	if (m_tAbility->fCurrentHp <= 0.f)
+	/*if (m_tAbility->fCurrentHp <= 0.f)
 	{
 		m_pMonsterUI->Off_Switch();
 		this->Kill_Obj();
-	}
+	}*/
 
 	//애니메이션 관련해서 run animation 이랑 각자 상황에 맞는 애니메이션 넣어주면됨.
 	if (!m_bFirst)
 	{
 		//IDLE_Animation_Run();
 		////SMASH_Animation_Run();
-		//Run_Animation(20.f);
+		/*SWING_Animation_Run();
+		Run_Animation(20.f);*/
 
 		if (m_STATE == KRAKEN_APPEAR)
 		{
@@ -209,6 +267,11 @@ void CKrakenLeg::LateUpdate_Object(void)
 			{
 				m_STATE = KRAKEN_IDLE;
 			}
+		}
+		else if (m_STATE == KRAKEN_REVIVE)
+		{
+			IDLE_Animation_Run();
+			Run_Animation(15.f);
 		}
 		else if (m_STATE == KRAKEN_IDLE)
 		{
@@ -228,7 +291,8 @@ void CKrakenLeg::LateUpdate_Object(void)
 			}
 			if (m_PATTERN == KRAKEN_SKILL_ROLLING)
 			{
-
+				ANIHILATE_Animation_Run();
+				Run_Animation(5.f);
 			}
 			if (m_PATTERN == KRAKEN_SKILL_LURKER)
 			{
@@ -290,9 +354,8 @@ void CKrakenLeg::Look_Direction(void)
 _int CKrakenLeg::Update_Pattern(_float fTimeDelta)
 {
 	if (m_pPlayerTransCom == nullptr)
-	{
 		m_pPlayerTransCom = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_CHARACTER, L"PLAYER", TRANSFORM_COMP, ID_DYNAMIC));
-	}
+
 	if (m_pMonsterUI == nullptr)
 		m_pMonsterUI = dynamic_cast<CMonsterUI*>(Engine::Get_GameObject(STAGE_UI, L"MonsterUI"));
 
@@ -301,9 +364,14 @@ _int CKrakenLeg::Update_Pattern(_float fTimeDelta)
 
 	_float Hp = m_tAbility->fCurrentHp / m_tAbility->fMaxHp;
 
-	if (m_STATE == KRAKEN_IDLE)
+	if (m_STATE == KRAKEN_REVIVE)
 	{
-		m_ReloadTimer += fTimeDelta;
+		Revive_Pattern();
+	}
+	else if (m_STATE == KRAKEN_IDLE)
+	{
+		if (false == m_bAnnihilateReady)
+			m_ReloadTimer += fTimeDelta;
 
 		if (m_ReloadTimer >= 2.f)
 		{
@@ -320,6 +388,8 @@ _int CKrakenLeg::Update_Pattern(_float fTimeDelta)
 		if (m_PATTERN == KRAKEN_SKILL_SMASH)
 		{
 			// 플레이어랑 가까운 촉수 내려찍기
+			if (m_SMASH == KRAKENSMASH_6)
+				AttackHit(10.f, 30.f);
 		}
 		if (m_PATTERN == KRAKEN_SKILL_INKSHOT)
 		{
@@ -328,11 +398,16 @@ _int CKrakenLeg::Update_Pattern(_float fTimeDelta)
 		if (m_PATTERN == KRAKEN_SKILL_ROLLING)
 		{
 			// 촉수 뻗고 한바퀴 돌기
+			if (m_LEGSWING >= LEGSWING_6 && m_LEGSWING <= LEGSWING_17)
+				AttackHit(10.f, 40.f);
 		}
 		if (m_PATTERN == KRAKEN_SKILL_LURKER)
 		{
 			// 럴커
 			Lurker_Pattern();
+
+			if (m_LURKER == KRAKENLURKER_2)
+				AttackHit(10.f, 30.f);
 		}
 		if (m_PATTERN == KRAKEN_SKILL_5)
 		{
@@ -383,6 +458,38 @@ void CKrakenLeg::Hit_Check(_float _deltaTime)
 				m_pMonsterUI->Off_Switch();
 				m_fUISwitchTime = 0.f;
 			}
+		}
+	}
+}
+
+void CKrakenLeg::AttackHit(_float fDamage, _float fKnuckback)
+{
+	for (auto& iter : *(pMyLayer->Get_GamePairPtr()))
+	{
+		_vec3 vPlayerScale;
+		m_pPlayerTransCom->Get_Scale(&vPlayerScale);
+
+		CTransform* m_pLeg = dynamic_cast<CTransform*>(iter.second->Get_Component(TRANSFORM_COMP, ID_STATIC));
+		CTransAxisBox* m_pLegBox = dynamic_cast<CTransAxisBox*>(iter.second);
+
+		_matrix matFinal;
+		m_pLegBox->Get_Final(&matFinal);
+
+		_vec3 vScale;
+		m_pLeg->Get_Scale(&vScale);
+		vScale.x += 2.f;
+		vScale.y += 2.f;
+		vScale.z += 2.f;
+
+		_vec3 vPlayerPos;
+		m_pPlayerTransCom->Get_Info(INFO_POS, &vPlayerPos);
+
+		if (m_pCollision->Animation_Collision(m_pPlayerTransCom, &matFinal, vPlayerScale.x, vScale.x))
+		{
+			CLayer* pLayer = Engine::Get_Layer(STAGE_CHARACTER);
+			CCubePlayer* pPlayer = dynamic_cast<CCubePlayer*>(pLayer->Get_GameObject(L"PLAYER"));
+
+			pPlayer->KnuckDown(fDamage, fKnuckback);
 		}
 	}
 }
@@ -705,6 +812,41 @@ void CKrakenLeg::Lurker_Pattern(void)
 	}
 }
 
+void CKrakenLeg::Swing_Pattern(void)
+{
+}
+
+void CKrakenLeg::Revive_Pattern(void)
+{
+	_vec3 vPos;
+	m_pTransCom->Get_Info(INFO_POS, &vPos);
+
+	if (m_LEGREVIVE == LEGREVIVE_1)
+	{
+		m_pTransCom->Set_Pos(vPos.x, vPos.y - 0.5f, vPos.z);
+		m_pTransCom->Static_Update();
+	}
+	else if (m_LEGREVIVE == LEGREVIVE_2)
+	{
+		m_pTransCom->Set_Pos(m_vOriginPos.x, vPos.y + 0.5f, m_vOriginPos.z);
+		m_pTransCom->Static_Update();
+	}
+	
+
+	if (vPos.y < -300.f)
+	{
+		if (m_LEGREVIVE == LEGREVIVE_1)
+			m_LEGREVIVE = LEGREVIVE_2;
+	}
+	if (vPos.y > 0.f && m_LEGREVIVE == LEGREVIVE_2)
+	{
+		m_tAbility->fCurrentHp = m_tAbility->fMaxHp;
+		m_STATE = KRAKEN_IDLE;
+		m_LEGIDLE = LEGIDLE_6;
+		m_LEGREVIVE = LEGREVIVE_1;
+	}
+}
+
 void CKrakenLeg::APPEAR(void)
 {
 }
@@ -819,6 +961,130 @@ void CKrakenLeg::SHAKE_Animation_Run(void)
 	{
 		CQuarternion* Qtan = dynamic_cast<CQuarternion*>(iter.second->Get_Component(L"Proto_QuaternionCom", ID_STATIC));
 		Qtan->Change_Animation(18 + m_LEGSHAKE);
+	}
+}
+
+void CKrakenLeg::SWING_Animation_Run(void)
+{
+	list<pair<const _tchar*, CGameObject*>> ListBox = *(pMyLayer->Get_GamePairPtr());
+
+	if (m_AnimationTime >= 1.f)
+	{
+		for (auto& iter : ListBox)
+		{
+			CQuarternion* Qtan = dynamic_cast<CQuarternion*>(iter.second->Get_Component(L"Proto_QuaternionCom", ID_STATIC));
+			Qtan->Delete_WorldVector();
+		}
+
+		if (m_LEGSWING == LEGSWING_1)
+			m_LEGSWING = LEGSWING_2;
+		else if (m_LEGSWING == LEGSWING_2)
+			m_LEGSWING = LEGSWING_3;
+		else if (m_LEGSWING == LEGSWING_3)
+			m_LEGSWING = LEGSWING_4;
+		else if (m_LEGSWING == LEGSWING_4)
+			m_LEGSWING = LEGSWING_5;
+		else if (m_LEGSWING == LEGSWING_5)
+			m_LEGSWING = LEGSWING_6;
+		else if (m_LEGSWING == LEGSWING_6)
+			m_LEGSWING = LEGSWING_7;
+		else if (m_LEGSWING == LEGSWING_7)
+			m_LEGSWING = LEGSWING_8;
+		else if (m_LEGSWING == LEGSWING_8)
+			m_LEGSWING = LEGSWING_9;
+		else if (m_LEGSWING == LEGSWING_9)
+			m_LEGSWING = LEGSWING_10;
+		else if (m_LEGSWING == LEGSWING_10)
+			m_LEGSWING = LEGSWING_11;
+		else if (m_LEGSWING == LEGSWING_11)
+		{
+			m_LEGSWING = LEGSWING_1;
+
+			m_PATTERN = KRAKEN_SKILL_SMASH;
+			m_SMASH = KRAKENSMASH_7;
+
+			/*m_STATE = KRAKEN_IDLE;
+			m_LEGIDLE = LEGIDLE_1;*/
+		}
+
+		m_AnimationTime = 0.f;
+	}
+	for (auto& iter : ListBox)
+	{
+		CQuarternion* Qtan = dynamic_cast<CQuarternion*>(iter.second->Get_Component(L"Proto_QuaternionCom", ID_STATIC));
+		Qtan->Change_Animation(21 + m_LEGSWING);
+	}
+}
+
+void CKrakenLeg::ANIHILATE_Animation_Run(void)
+{
+	list<pair<const _tchar*, CGameObject*>> ListBox = *(pMyLayer->Get_GamePairPtr());
+
+	if (m_AnimationTime >= 1.f)
+	{
+		for (auto& iter : ListBox)
+		{
+			CQuarternion* Qtan = dynamic_cast<CQuarternion*>(iter.second->Get_Component(L"Proto_QuaternionCom", ID_STATIC));
+			Qtan->Delete_WorldVector();
+		}
+
+		if (m_LEGSWING == LEGSWING_1)
+			m_LEGSWING = LEGSWING_2;
+		else if (m_LEGSWING == LEGSWING_2)
+			m_LEGSWING = LEGSWING_3;
+		else if (m_LEGSWING == LEGSWING_3)
+			m_LEGSWING = LEGSWING_4;
+		else if (m_LEGSWING == LEGSWING_4)
+			m_LEGSWING = LEGSWING_5;
+		else if (m_LEGSWING == LEGSWING_5)
+			m_LEGSWING = LEGSWING_6;
+		else if (m_LEGSWING == LEGSWING_6)
+			m_LEGSWING = LEGSWING_7;
+		else if (m_LEGSWING == LEGSWING_7)
+			m_LEGSWING = LEGSWING_8;
+		else if (m_LEGSWING == LEGSWING_8)
+			m_LEGSWING = LEGSWING_9;
+		else if (m_LEGSWING == LEGSWING_9)
+			m_LEGSWING = LEGSWING_10;
+		else if (m_LEGSWING == LEGSWING_10)
+			m_LEGSWING = LEGSWING_11;
+		else if (m_LEGSWING == LEGSWING_11)
+			m_LEGSWING = LEGSWING_12;
+		else if (m_LEGSWING == LEGSWING_12)
+			m_LEGSWING = LEGSWING_13;
+		else if (m_LEGSWING == LEGSWING_13)
+			m_LEGSWING = LEGSWING_14;
+		else if (m_LEGSWING == LEGSWING_14)
+			m_LEGSWING = LEGSWING_15;
+		else if (m_LEGSWING == LEGSWING_15)
+			m_LEGSWING = LEGSWING_16;
+		else if (m_LEGSWING == LEGSWING_16)
+			m_LEGSWING = LEGSWING_17;
+		else if (m_LEGSWING == LEGSWING_17)
+			m_LEGSWING = LEGSWING_18;
+		else if (m_LEGSWING == LEGSWING_18)
+			m_LEGSWING = LEGSWING_19;
+		else if (m_LEGSWING == LEGSWING_19)
+			m_LEGSWING = LEGSWING_20;
+		else if (m_LEGSWING == LEGSWING_20)
+			m_LEGSWING = LEGSWING_21;
+		else if (m_LEGSWING == LEGSWING_21)
+			m_LEGSWING = LEGSWING_22;
+		else if (m_LEGSWING == LEGSWING_22)
+		{
+			m_LEGSWING = LEGSWING_1;
+			m_STATE = KRAKEN_IDLE;
+			m_LEGIDLE = LEGIDLE_1;
+			m_PATTERN = KRAKEN_SKILL_END;
+		}
+
+		m_AnimationTime = 0.f;
+	}
+	for (auto& iter : ListBox)
+	{
+		CQuarternion* Qtan = dynamic_cast<CQuarternion*>(iter.second->Get_Component(L"Proto_QuaternionCom", ID_STATIC));
+		Qtan->Change_Animation(21 + m_LEGSWING);
+		
 	}
 }
 

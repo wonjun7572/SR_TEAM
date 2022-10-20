@@ -126,6 +126,37 @@ void CExBullet::Collision_check(void)
 		m_bDead = true;
 	}
 
+	CLayer* pKrakenLayer = Engine::Get_Layer(STAGE_MONSTER);
+
+	for (auto& iter : *(pKrakenLayer->Get_GameListPtr()))
+	{
+		CTransform* pIterTransform = dynamic_cast<CTransform*>(iter->Get_Component(TRANSFORM_COMP, ID_DYNAMIC));
+		NULL_CHECK_RETURN(pIterTransform, );
+		CHitBox* pIterBox = dynamic_cast<CHitBox*>(iter->Get_Component(HITBOX_COMP, ID_STATIC));
+		NULL_CHECK_RETURN(pIterBox, );
+
+		if (m_pCollision->Collision_Square(this->m_pTransCom, this->m_pHitbox, pIterTransform, pIterBox))
+		{
+			m_bDead = true;
+			return;
+		}
+	}
+
+	CLayer* pTentacleLayer = Engine::Get_Layer(STAGE_TENTACLE);
+
+	for (auto& iter : *(pTentacleLayer->Get_GameListPtr()))
+	{
+		CTransform* pIterTransform = dynamic_cast<CTransform*>(iter->Get_Component(TRANSFORM_COMP, ID_DYNAMIC));
+		NULL_CHECK_RETURN(pIterTransform, );
+		CHitBox* pIterBox = dynamic_cast<CHitBox*>(iter->Get_Component(HITBOX_COMP, ID_STATIC));
+		NULL_CHECK_RETURN(pIterBox, );
+
+		if (m_pCollision->Collision_Square(this->m_pTransCom, this->m_pHitbox, pIterTransform, pIterBox))
+		{
+			m_bDead = true;
+			return;
+		}
+	}
 }
 
 HRESULT CExBullet::Add_Component(void)
