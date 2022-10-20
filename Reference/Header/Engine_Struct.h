@@ -26,8 +26,8 @@ namespace Engine
 	typedef struct tagVertexCubeTex
 	{
 		_vec3		vPos;
-		_vec3		vTexUV;
 		_vec3		vNormal;
+		_vec3		vTexUV;
 
 	}VTXCUBE;
 

@@ -17,10 +17,17 @@ public:
 	virtual void	Render_Object(void) override;
 	virtual void	LateUpdate_Object(void) override;
 
+public:
+	void				Ready_Annihilate(void) { m_bAnnihilateReady = true; }
+	void				Start_Annihilate(void) { m_STATE = KRAKEN_ATTACK, m_PATTERN = KRAKEN_SKILL_ROLLING, m_bAnnihilateReady = false; }
+	_int				Get_State(void) { return m_STATE; }
+	_int				Get_SWING(void) { return m_LEGSWING; }
+
 private:
 	void				Look_Direction(void);
 	virtual _int		Update_Pattern(_float fTimeDelta);
 	void				Hit_Check(_float _deltaTime);
+	void				AttackHit(_float fDamage, _float fKnuckback);
 
 private:
 	HRESULT				Build(void);
@@ -28,12 +35,16 @@ private:
 	void				Run_Animation(const _float& AnimationSpeed);
 
 	void				Lurker_Pattern(void);
+	void				Swing_Pattern(void);
+	void				Revive_Pattern(void);
 
 private:
 	void				APPEAR(void);
 	void				IDLE_Animation_Run(void);
 	void				SMASH_Animation_Run(void);
 	void				SHAKE_Animation_Run(void);
+	void				SWING_Animation_Run(void);
+	void				ANIHILATE_Animation_Run(void);
 
 private:
 	KRAKENSTATEID		m_STATE;
@@ -47,6 +58,8 @@ private:
 
 	KRAKENLEGIDLEID		m_LEGIDLE;
 	KRAKENLEGSHAKEID	m_LEGSHAKE;
+	KRAKENLEGSWINGID	m_LEGSWING;
+	KRAKENLEGREVIVEID	m_LEGREVIVE;
 
 protected:
 	HRESULT				Add_Component(void);
@@ -89,6 +102,8 @@ private:
 	_float				m_fLerpTime = 0.f;
 	_vec3				m_vOriginPos;
 	vector<_float>		m_ShufflePos;
+
+	_bool				m_bAnnihilateReady = false;
 
 public:
 	static CKrakenLeg*	Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3& vPos, _tchar* Name);

@@ -80,6 +80,8 @@
 #define STAGE_FLIGHTPLAYER L"STAGE_PLAYERFLIGHT_Layer"
 #define STAGE_EXBULLET		L"STAGE_EXBULLET_Layer"
 
+#define STAGE_TENTACLE		L"STAGE_TENTACLE_Layer"
+
 // Particle
 #define SHOTPARTICLE_TEX			L"SHOTPARTICLE_TEX"
 #define	SHOTPARTICLE_TEX_PATH		L"../Bin/Resources/Particle/fireball_hit_big0.png"
