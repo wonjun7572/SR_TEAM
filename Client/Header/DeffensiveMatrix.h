@@ -17,7 +17,9 @@ public:
 
 private:
 	HRESULT					Add_Component(void);
-
+	void					Scaling();
+	void					Dead();
+	void					DeadParticle();
 public:
 	static	CDeffensiveMatrix*	Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3& Position);
 	virtual		void			Free(void);

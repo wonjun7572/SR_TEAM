@@ -134,6 +134,9 @@ void CExplosion::Hit_Check_Monster(void)
 
 	CLayer* pTentacleLayer = Engine::Get_Layer(STAGE_TENTACLE);
 
+	if (pTentacleLayer == nullptr)
+		return;
+
 	for (auto& iter : pTentacleLayer->Get_GameList())
 	{
 		CTransform* pTransform = dynamic_cast<CTransform*>(iter->Get_Component(TRANSFORM_COMP, ID_DYNAMIC));

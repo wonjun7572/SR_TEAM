@@ -45,6 +45,7 @@ _int CHyperionStrike::Update_Object(const _float & fTimeDelta)
 
 	m_fAge += fTimeDelta;
 	m_fBlinkTimer += fTimeDelta;
+	m_fBulletTimer += fTimeDelta;
 	m_pTransCom->Get_Info(INFO_POS, &m_vPos);
 	Recall_BattleCruiser();
 	Bullet_Rain();
@@ -143,9 +144,13 @@ void CHyperionStrike::Bullet_Rain(void)
 	_vec3 vDir = { fRnd, -1.f, fRnd2 };	
 
 	//CPoolMgr::GetInstance()->Reuse_Obj(m_pGraphicDev, &m_vBattlePos, &vDir, 10.f);
-	CPoolMgr::GetInstance()->Reuse_Laser(m_pGraphicDev, &(m_vBattlePos+ m_vDirection*100.f), &vDir, 5,1);
-	_float fGunSound = .3f;
-	Engine::PlaySoundGun(L"BattleCruiserAtk.wav", SOUND_EFFECT, fGunSound);
+	if (m_fBulletTimer > 0.1)
+	{
+		m_fBulletTimer = 0.f;
+		CPoolMgr::GetInstance()->Reuse_Laser(m_pGraphicDev, &(m_vBattlePos + m_vDirection*100.f), &vDir, 5, 1);
+		_float fGunSound = .3f;
+		Engine::PlaySoundGun(L"BattleCruiserAtk.wav", SOUND_EFFECT, fGunSound);
+	}
 	
 }
 

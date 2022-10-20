@@ -35,7 +35,7 @@ _int CMainApp::Update_MainApp(const _float & fTimeDelta)
 	
 	if (m_pManagementClass->Get_Scene()->Get_SceneId() == STAGE_SCENE)
 	{
-		if (Get_Layer(L"STAGE_KEY")->Get_GameList().size() == 0 && Get_Layer(STAGE_GUNITEM)->Get_GameObjectMap().size() == 0)
+		if (Get_Layer(L"STAGE_KEY")->Get_GameList().size() == 0)
 		{
 			Engine::CScene*			pScene = nullptr;
 
@@ -45,7 +45,8 @@ _int CMainApp::Update_MainApp(const _float & fTimeDelta)
 			FAILED_CHECK_RETURN(m_pManagementClass->Set_Scene(pScene), E_FAIL);
 		}
 
-		if (Get_DIKeyState(DIK_Y))
+		//if (Get_Layer(STAGE_GUNITEM)->Get_GameObjectMap().size() == 0)
+		if(Get_DIKeyState(DIK_Y))
 		{
 			Engine::CScene*			pScene = nullptr;
 
@@ -56,10 +57,10 @@ _int CMainApp::Update_MainApp(const _float & fTimeDelta)
 		}
 	}
 
-	//// 툴 프레임 업데이트 
-	//ImGui_ImplDX9_NewFrame();
-	//ImGui_ImplWin32_NewFrame();
-	//ImGui::NewFrame();
+	// 툴 프레임 업데이트 
+	ImGui_ImplDX9_NewFrame();
+	ImGui_ImplWin32_NewFrame();
+	ImGui::NewFrame();
 	//CImGuiMgr::LoggerWindow();
 
 	m_pManagementClass->Update_Scene(fTimeDelta);
@@ -80,14 +81,14 @@ void CMainApp::Render_MainApp(void)
 
 	m_pManagementClass->Render_Scene(m_pGraphicDev);
 	// 툴 그리기
-	//ImGui::Render();
-	//ImGui_ImplDX9_RenderDrawData(ImGui::GetDrawData());
-	//
-	//if (ImGui::GetIO().ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
-	//{
-	//	ImGui::UpdatePlatformWindows();
-	//	ImGui::RenderPlatformWindowsDefault();
-	//}
+	ImGui::Render();
+	ImGui_ImplDX9_RenderDrawData(ImGui::GetDrawData());
+
+	if (ImGui::GetIO().ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+	{
+		ImGui::UpdatePlatformWindows();
+		ImGui::RenderPlatformWindowsDefault();
+	}
 	
 	Engine::Render_End();
 }
@@ -134,16 +135,16 @@ HRESULT CMainApp::SetUp_DefaultSetting(LPDIRECT3DDEVICE9 * ppGraphicDev)
 	ImGui_ImplDX9_Init(m_pGraphicDev);
 
 
-//#ifdef _DEBUG
-//	if (::AllocConsole() == TRUE)
-//	{
-//		FILE* nfp[3];
-//		freopen_s(nfp + 0, "CONOUT$", "rb", stdin);
-//		freopen_s(nfp + 1, "CONOUT$", "wb", stdout);
-//		freopen_s(nfp + 2, "CONOUT$", "wb", stderr);
-//		std::ios::sync_with_stdio();
-//	}
-//#endif // _DEBUG
+#ifdef _DEBUG
+	if (::AllocConsole() == TRUE)
+	{
+		FILE* nfp[3];
+		freopen_s(nfp + 0, "CONOUT$", "rb", stdin);
+		freopen_s(nfp + 1, "CONOUT$", "wb", stdout);
+		freopen_s(nfp + 2, "CONOUT$", "wb", stderr);
+		std::ios::sync_with_stdio();
+	}
+#endif // _DEBUG
 
 	return S_OK;
 }

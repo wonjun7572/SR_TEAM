@@ -2,7 +2,7 @@
 #include "..\Header\Supporter_Shotgun.h"
 #include "TransAxisBox.h"
 #include "PoolMgr.h"
-
+#include "VerticalLine.h"
 
 CSupporter_Shotgun::CSupporter_Shotgun(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CSupporter(pGraphicDev)
@@ -84,6 +84,19 @@ _int CSupporter_Shotgun::Update_Object(const _float & fTimeDelta)
 	if (vPosition.y > 0.6f)
 	{
 		m_pTransform->Move_Pos(&(_vec3(0.f, -1.f, 0.f) * 10.f * fTimeDelta));
+
+		CVerticalLine* pVerticalLine = nullptr;
+		_vec3 vPos;
+		_vec3 vDir;
+		m_pTransform->Get_Info(INFO_POS, &vPos);
+		if (!pVerticalLine)
+			pVerticalLine = dynamic_cast<CVerticalLine*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"VerticalLine"));
+		pVerticalLine->Set_PcleDir(vDir);
+		pVerticalLine->Set_PclePos(vPos);
+		for (_int i = 0; i < 250; ++i)
+		{
+			pVerticalLine->addParticle();
+		}
 	}
 	else if (vPosition.y < 0.6f)
 	{
@@ -139,7 +152,7 @@ _int CSupporter_Shotgun::Update_Object(const _float & fTimeDelta)
 	}
 	// 여기서 good
 
-	if (vPosition.y < 0.6f)
+	if (vPosition.y < 1.f)
 	{
 		Find_Target();	//	맨 아래에 둘 것, 주변 적 탐색하여 공격하는 기능임
 						//	Look_Direction 지금 yaw만 적용시킨 상태

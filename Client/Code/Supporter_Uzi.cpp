@@ -2,7 +2,7 @@
 #include "..\Header\Supporter_Uzi.h"
 #include "TransAxisBox.h"
 #include "PoolMgr.h"
-
+#include "VerticalLine.h"
 
 CSupporter_Uzi::CSupporter_Uzi(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CSupporter(pGraphicDev)
@@ -91,6 +91,42 @@ _int CSupporter_Uzi::Update_Object(const _float & fTimeDelta)
 	if (vPosition.y > 0.6f)
 	{
 		m_pTransform->Move_Pos(&(_vec3(0.f, -1.f, 0.f) * 10.f * fTimeDelta));
+
+		CVerticalLine* pVerticalLine = nullptr;
+		_vec3 vPos;
+		_vec3 vDir;
+		m_pTransform->Get_Info(INFO_POS, &vPos);
+		if (!pVerticalLine)
+			pVerticalLine = dynamic_cast<CVerticalLine*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"VerticalLine"));	
+		pVerticalLine->Set_PcleDir(vDir);
+		pVerticalLine->Set_PclePos(vPos);
+		for (_int i = 0; i < 250; ++i)
+		{
+			pVerticalLine->addParticle();
+		}
+
+
+
+
+		//CVerticalLine* pVerticalLine = nullptr;
+		//_vec3 vPos;														//대쉬이펙트하려던것
+		//if (!pVerticalLine)
+		//	pVerticalLine = dynamic_cast<CVerticalLine*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"VerticalLine"));
+		//_vec3 vDir;
+		//m_pTransform->Get_Info(INFO_POS, &vPos);
+		////m_pBodyWorld->Get_Info(INFO_LOOK, &vDir);
+		//vPos.y = +0.45f;
+		////dynamic_cast<CCubeParticle*>(m_pCubeParticle)->Set_PclePos(vPos);
+
+
+		//dynamic_cast<CVerticalLine*>(pVerticalLine)->Set_PcleDir(vDir);
+
+
+		//pVerticalLine->Set_PclePos(vPos);
+		//for (_int i = 0; i < 25; ++i)
+		//{
+		//	pVerticalLine->addParticle();
+		//}
 	}
 	else if(vPosition.y < 0.6f)
 	{
@@ -146,7 +182,7 @@ _int CSupporter_Uzi::Update_Object(const _float & fTimeDelta)
 	}
 	// 여기서 good
 
-	if (vPosition.y < 0.6f)
+	if (vPosition.y < 1.f)
 	{
 		Find_Target();
 

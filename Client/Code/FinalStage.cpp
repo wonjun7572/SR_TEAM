@@ -144,7 +144,7 @@ HRESULT CFinalStage::Ready_Scene(void)
 	FAILED_CHECK_RETURN(Ready_Layer_ExBullet(STAGE_EXBULLET), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Layer_Creature(STAGE_CREATURE), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Layer_PlayerFlight(STAGE_FLIGHTPLAYER), E_FAIL);
-
+	FAILED_CHECK_RETURN(Ready_Layer_KraKenBullet(STAGE_KRAKENBULLET), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Layer_Tentacle(STAGE_TENTACLE), E_FAIL);
 
 	return S_OK;
@@ -1080,6 +1080,18 @@ HRESULT CFinalStage::Load_Position(OBJECT_ID eID, wstring strDirectory)
 			break;
 	}
 	CloseHandle(hFile);
+
+	return S_OK;
+}
+
+HRESULT CFinalStage::Ready_Layer_KraKenBullet(const _tchar * pLayerTag)
+{
+	Engine::CLayer*		pLayer = Engine::CLayer::Create();
+	NULL_CHECK_RETURN(pLayer, E_FAIL);
+
+	CGameObject*		pGameObject = nullptr;
+
+	m_mapLayer.insert({ pLayerTag, pLayer });
 
 	return S_OK;
 }

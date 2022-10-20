@@ -58,7 +58,7 @@ private:
 	HRESULT			Ready_Light(void);
 
 	HRESULT			Load_Position(OBJECT_ID eID, wstring strDirectory);
-
+	HRESULT         Ready_Layer_KraKenBullet(const _tchar* pLayerTag);
 private:
 	////////////¸Ê ÆÄ½Ì
 	_int			m_iIndex = 0;
