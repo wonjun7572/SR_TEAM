@@ -2,6 +2,7 @@
 #include "..\Header\SpBullet.h"
 #include "PoolMgr.h"
 #include "Monster.h"
+#include "KrakenBoss.h"
 
 CSpBullet::CSpBullet(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
@@ -53,8 +54,11 @@ _int CSpBullet::Update_Object(const _float & fTimeDelta)
 
 		if (m_pCollision->Collision_Square(this->m_pTransCom, this->m_pHitbox, pTransform, pHitbox))
 		{
-			if(m_bDamage)
+			if (m_bDamage)
+			{
 				dynamic_cast<CMonster*>(iter)->Set_Damaged(m_fDamage);
+				dynamic_cast<CKrakenBoss*>(iter)->Set_Damaged(m_fDamage);
+			}
 			m_bDamage = false;
 			break;
 		}

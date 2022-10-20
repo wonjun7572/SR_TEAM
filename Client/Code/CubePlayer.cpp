@@ -225,6 +225,16 @@ void CCubePlayer::CoolTimer(void)
 	if (m_fSpeed < 10.f)
 		m_fSpeed += 1.f;
 
+
+	_vec3 vPos;
+	m_pBodyWorld->Get_Info(INFO_POS, &vPos);
+
+	if (vPos.x >= 129.f || vPos.x <= -0.1f || vPos.z >= 129.f || vPos.z <= -0.1f)
+	{
+		m_iKnuckStack = 0;
+		m_iDashStack = 20;
+	}
+
 	_vec3 vLook;
 	m_pBodyWorld->Get_Info(INFO_LOOK, &vLook);
 	D3DXVec3Normalize(&vLook, &vLook);

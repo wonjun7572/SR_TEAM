@@ -12,7 +12,6 @@ public:
 	virtual void		LateUpdate_Object(void);
 	virtual void		Render_Object(void);
 
-
 	_bool				Get_setcam() { return m_bSetCam; }
 	void				Set_setcam(_bool bcam) { m_bSetCam = bcam; }
 private:

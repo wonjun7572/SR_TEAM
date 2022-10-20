@@ -36,7 +36,7 @@ HRESULT CSupporter_Sniper::Ready_Object(const _vec3 & vPos, _tchar * Name)
 	m_pHitBoxTransform->Set_Pos(vAnimationPos.x, vAnimationPos.y, vAnimationPos.z);
 	m_pHitBoxTransform->Static_Update();
 
-	m_pSphereTransCom->Set_Scale(&_vec3(10.f, 10.f, 10.f));
+	m_pSphereTransCom->Set_Scale(&_vec3(10.f, 0.f, 10.f));
 	m_pSphereTransCom->Set_Pos(vAnimationPos.x, vAnimationPos.y, vAnimationPos.z);
 	m_pSphereTransCom->Static_Update();
 
@@ -112,8 +112,8 @@ _int CSupporter_Sniper::Update_Object(const _float & fTimeDelta)
 			m_bGetOrder = true;
 			m_bOrdering = true;
 		}
-
-		m_pTransform->Chase_Target(&m_vOrderPos, 5.f, fTimeDelta);
+		if (m_STATE != SNIPERSUPPORT_ATTACK)
+			m_pTransform->Chase_Target(&m_vOrderPos, 5.f, fTimeDelta);
 
 		_vec3 vPosition;
 		m_pTransform->Get_Info(INFO_POS, &vPosition);
@@ -139,7 +139,7 @@ _int CSupporter_Sniper::Update_Object(const _float & fTimeDelta)
 	}
 	// 여기서 good
 
-	if (vPosition.y < 0.6f)
+	if (vPosition.y < 1.f)
 	{
 		Find_Target();	//	맨 아래에 둘 것, 주변 적 탐색하여 공격하는 기능임
 						//	Look_Direction 지금 yaw만 적용시킨 상태
@@ -152,7 +152,7 @@ _int CSupporter_Sniper::Update_Object(const _float & fTimeDelta)
 	_vec3 vPos;
 	m_pTransform->Get_Info(INFO_POS, &vPos);
 	m_pHitBoxTransform->Set_Pos(vPos.x, vPos.y, vPos.z);
-	m_pSphereTransCom->Set_Pos(vPos.x, vPos.y, vPos.z);
+	m_pSphereTransCom->Set_Pos(vPos.x, 0.f, vPos.z);
 
 	return 0;
 }
