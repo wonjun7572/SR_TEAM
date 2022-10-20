@@ -190,6 +190,7 @@ void CMonster::Hit_Check(_float _deltaTime)
 				m_pComboUI->ComboCntPlus();
 				Hit_Effect();
 				pWeapon->Set_Shoot(false);
+				m_bisHit = true;
 			}
 
 			if (m_tAbility->fCurrentHp <= 0.f)
@@ -230,6 +231,8 @@ void CMonster::Hit_SphereCheck(_float _deltaTime)
 
 void CMonster::Skill_SphereCheck(_float _deltaTime)
 {
+	m_iSphereSkillTag = 0;
+
 	if (!Get_Layer(STAGE_SKILL)->Get_GameList().empty())
 	{
 		m_pTransCom->Static_Update();
@@ -244,8 +247,6 @@ void CMonster::Skill_SphereCheck(_float _deltaTime)
 			}			
 		}
 	}
-	else
-		m_iSphereSkillTag = 0;
 }
 
 void CMonster::Free(void)

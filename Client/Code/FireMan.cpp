@@ -75,9 +75,11 @@ HRESULT CFireMan::Ready_Object(const _vec3 & vPos, _tchar * Name)
 
 _int CFireMan::Update_Object(const _float & fTimeDelta)
 {
+	Sound();
+
 	if (m_iSphereSkillTag != SKILL_STATICFIELD)
 	m_fTimeDelta = fTimeDelta;
-
+	m_fSoundTimer += fTimeDelta;
 
 	if (m_bDead)
 	{
@@ -167,7 +169,10 @@ _int CFireMan::Update_Object(const _float & fTimeDelta)
 			//m_pTransCom->Chase_Target(&vPlayerPos, 0.f, fTimeDelta);
 			m_pCollision->Wall_Collision_Check(this->m_pTransCom, this->m_pHitBox, &vDir);
 			if (m_iSphereSkillTag != SKILL_STATICFIELD)
+			{
 				m_pTransCom->Chase_Target_By_Direction(&vDir, 5.f, fTimeDelta);
+				m_bDetect = true;
+			}
 			m_STATE = FIREMAN_WALK;
 		}
 		else if (m_STATE != FIREMAN_ATTACK)
@@ -188,7 +193,6 @@ _int CFireMan::Update_Object(const _float & fTimeDelta)
 	m_pSearchRange_TransCom->Set_Pos(vMonsterPos.x, vMonsterPos.y, vMonsterPos.z);
 	m_pAttackRange_TransCom->Set_Pos(vMonsterPos.x, vMonsterPos.y, vMonsterPos.z);
 	m_pRunawayRange_TransCom->Set_Pos(vMonsterPos.x, vMonsterPos.y, vMonsterPos.z);
-	
 	return 0;
 
 }
@@ -333,6 +337,47 @@ HRESULT CFireMan::Create_Item()
 	}
 
 	return S_OK;
+}
+
+void CFireMan::Sound()
+{
+	srand(rand());
+	_int i = rand() % 3 + 1;
+
+	if (m_fSoundTimer > 5.f)
+	{
+		if (m_bDetect)
+		{
+			if (i == 1)
+				Engine::PlaySoundGun(L"FireMan_detect_01.wav", SOUND_EFFECT, m_fIdleSound);
+			if (i == 2)														 
+				Engine::PlaySoundGun(L"FireMan_detect_02.wav", SOUND_EFFECT, m_fIdleSound);
+			if (i == 3)														 
+				Engine::PlaySoundGun(L"FireMan_detect_03.wav", SOUND_EFFECT, m_fIdleSound);
+			m_fSoundTimer = 0.f;
+			m_bDetect = false;
+		}
+	}
+	if (m_bisHit)
+	{
+		if (i == 1)
+			Engine::PlaySoundGun(L"FireMan_attack_01.wav", SOUND_EFFECT, m_fHitSound);
+		if (i == 2)														 
+			Engine::PlaySoundGun(L"FireMan_attack_02.wav", SOUND_EFFECT, m_fHitSound);
+		if (i == 3)														 
+			Engine::PlaySoundGun(L"FireMan_attack_03.wav", SOUND_EFFECT, m_fHitSound);
+
+		m_bisHit = false;
+	}
+	if (m_bDead)
+	{
+		if (i == 1)
+			Engine::PlaySoundGun(L"FireMan_death_01.wav", SOUND_EFFECT, m_fDeadSound);
+		if (i == 2)													
+			Engine::PlaySoundGun(L"FireMan_death_02.wav", SOUND_EFFECT, m_fDeadSound);
+		if (i == 3)								  						
+			Engine::PlaySoundGun(L"FireMan_death_03.wav", SOUND_EFFECT, m_fDeadSound);
+	}
 }
 
 HRESULT CFireMan::Build(void)

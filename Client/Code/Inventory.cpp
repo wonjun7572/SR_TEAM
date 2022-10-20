@@ -340,10 +340,9 @@ void CInventory::Syncronize()
 
 	if (dynamic_cast<CCubePlayer*>(m_pPlayer)->GetWeaponState() != m_iWeaponState)
 	{		
-		
+
 		if (m_vecEquipments[0] != nullptr)
 		{			
-			m_iWeaponState = dynamic_cast<CCubePlayer*>(m_pPlayer)->GetWeaponState();
 			for (_int i = 1; i < 5; i++)
 			{
 				if (m_vecEquipments[i] != nullptr)
@@ -358,7 +357,6 @@ void CInventory::Syncronize()
 		}
 		if (m_vecEquipments[0] == nullptr)
 		{
-			m_iWeaponState = dynamic_cast<CCubePlayer*>(m_pPlayer)->GetWeaponState();
 			m_vecEquipments[0] = m_vecWeapon[dynamic_cast<CCubePlayer*>(m_pPlayer)->GetWeaponState()-2]; // m_vecWeapon 벡터위치 수정
 			m_vecWeapon[dynamic_cast<CCubePlayer*>(m_pPlayer)->GetWeaponState()-2] = nullptr; // 벡터위치 수정
 			
@@ -371,6 +369,7 @@ void CInventory::Syncronize()
 					dynamic_cast<CItemIcon*>(m_vecEquipments[i + 1])->Off_WeaponPart();
 				}
 			}			
+			m_iWeaponState = dynamic_cast<CCubePlayer*>(m_pPlayer)->GetWeaponState();
 		}		
 		m_iWeaponNumb = m_iWeaponState;
 	}	
@@ -400,6 +399,14 @@ void CInventory::Mouse()
 	if (1405 < pt.x && pt.x < 1450 && 565 < pt.y && pt.y < 630 && m_bInvSwitch && Mouse_Down(DIM_LB))
 	{
 		m_bInvSwitch = false;
+	}
+	if (!m_bInvSwitch)
+	{
+		if (m_pIconGrab != nullptr)
+		{
+			m_pIconGrab->Cursor_free();
+			m_pIconGrab = nullptr;
+		}
 	}
 
 	//인벤토리 기능
@@ -464,50 +471,52 @@ void CInventory::Mouse()
 	//좌클릭 기능 
 	//좌클릭 장비 장착
 	
-
 	for (auto& iter : m_vecWeapon)
 	{
-		if (iter != nullptr&& iter == m_vecWeapon[m_iWeaponNumb] && m_pIconGrab != nullptr && Mouse_Down(DIM_LB))
+		if (iter != nullptr&& iter == m_vecWeapon[m_iWeaponNumb] && m_pIconGrab != nullptr && 2 <= m_pIconGrab->Get_iTemIdx() && m_pIconGrab->Get_iTemIdx() <= 4)
 		{
-			m_pIconGrab->Cursor_free();
-			if (1025 < pt.x && pt.x < 1075 && 215 < pt.y && pt.y < 280) // 맨왼쪽인벤토리
+			if (Mouse_Down(DIM_LB))
 			{
-				if (m_vecEquipments[0] != nullptr)
+				m_pIconGrab->Cursor_free();
+				if (1025 < pt.x && pt.x < 1075 && 215 < pt.y && pt.y < 280) // 맨왼쪽인벤토리
 				{
-					for (_int i = 1; i < 5; i++)
+					if (m_vecEquipments[0] != nullptr)
 					{
-						if (m_vecEquipments[i] != nullptr)
+						for (_int i = 1; i < 5; i++)
 						{
-							m_vecParts[(((dynamic_cast<CItemIcon*>(m_vecEquipments[0])->Get_iTemIdx()) - 2) * 4) + (i - 1)] = m_vecEquipments[i];
-							m_vecEquipments[i] = nullptr;
-						}
-					}
-					m_vecWeapon[dynamic_cast<CItemIcon*>(m_vecEquipments[0])->Get_iTemIdx() - 2] = m_vecEquipments[0];
-					m_vecEquipments[0] = nullptr;
-				}
-				if (m_vecEquipments[0] == nullptr)
-				{
-					if (2<=m_pIconGrab->Get_iTemIdx() && m_pIconGrab->Get_iTemIdx()<=4)
-					{
-						m_pIconGrab->Set_block(435.f *WINCY / WINCX, 365.f * WINCY / WINCX, 0.1f);
-						m_vecEquipments[0] = m_pIconGrab;
-						for (_int i = 0; i < 4; ++i)
-						{
-							if (m_vecParts[4 * m_iWeaponNumb + i] != nullptr)
+							if (m_vecEquipments[i] != nullptr)
 							{
-								m_vecEquipments[i + 1] = m_vecParts[4 * m_iWeaponNumb + i];
-								m_vecParts[4 * m_iWeaponNumb + i] = nullptr;
-								dynamic_cast<CItemIcon*>(m_vecEquipments[i + 1])->Off_WeaponPart();						
+								m_vecParts[(((dynamic_cast<CItemIcon*>(m_vecEquipments[0])->Get_iTemIdx()) - 2) * 4) + (i - 1)] = m_vecEquipments[i];
+								m_vecEquipments[i] = nullptr;
+
 							}
 						}
-						iter = nullptr;
-						m_pIconGrab = nullptr;
-						//break;
-					}				
+						m_vecWeapon[dynamic_cast<CItemIcon*>(m_vecEquipments[0])->Get_iTemIdx() - 2] = m_vecEquipments[0];
+						m_vecEquipments[0] = nullptr;
+					}
+					if (m_vecEquipments[0] == nullptr)
+					{
+						if (2 <= m_pIconGrab->Get_iTemIdx() && m_pIconGrab->Get_iTemIdx() <= 4)
+						{
+							m_pIconGrab->Set_block(435.f *WINCY / WINCX, 365.f * WINCY / WINCX, 0.1f);
+							m_vecEquipments[0] = m_pIconGrab;
+							for (_int i = 0; i < 4; ++i)
+							{
+								if (m_vecParts[(4 * m_iWeaponNumb) + i] != nullptr)
+								{
+									m_vecEquipments[i + 1] = m_vecParts[(4 * m_iWeaponNumb) + i];
+									m_vecParts[(4 * m_iWeaponNumb) + i] = nullptr;
+									dynamic_cast<CItemIcon*>(m_vecEquipments[i + 1])->Off_WeaponPart();
+								}
+							}
+							iter = nullptr;
+							m_pIconGrab = nullptr;
+							//break;
+						}
+					}
 				}
-			}
 			m_pIconGrab = nullptr;
-
+			}
 		}
 	}
 	for (auto& iter : m_vecContents)
@@ -521,7 +530,7 @@ void CInventory::Mouse()
 				if (1080 < pt.x && pt.x < 1125 && 160 < pt.y && pt.y < 225) // 0,0
 				{
 					if (m_vecEquipments[1] == nullptr)
-					{
+					{						
 						m_pIconGrab->Set_block(535.f * WINCY / WINCX, 455.f * WINCY / WINCX, 0.1f);
 						m_vecEquipments[1] = m_pIconGrab;
 						iter = nullptr;

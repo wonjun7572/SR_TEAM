@@ -73,6 +73,8 @@ HRESULT CIllusioner::Ready_Object(const _vec3 & vPos, _tchar * Name)
 
 _int CIllusioner::Update_Object(const _float & fTimeDelta)
 {
+	Sound();
+	m_fSoundTimer += fTimeDelta;
 	if (m_bDead)
 	{
 		m_pComboUI->KillCntPlus();
@@ -101,7 +103,10 @@ _int CIllusioner::Update_Object(const _float & fTimeDelta)
 	}
 
 	CMonster::Update_Object(fTimeDelta);
-	m_fTimeDelta = fTimeDelta;
+	if (m_iSphereSkillTag != SKILL_STATICFIELD)
+		m_fTimeDelta = fTimeDelta;
+	if (m_iSphereSkillTag == SKILL_STATICFIELD)
+		m_fTimeDelta = 0.f;
 	
 	if (!Collision_Wall(fTimeDelta))
 	{
@@ -162,7 +167,10 @@ _int CIllusioner::Update_Object(const _float & fTimeDelta)
 		{
 			// Å½ÁöÃæµ¹
 			if (m_iSphereSkillTag != SKILL_STATICFIELD)
+			{
 				m_pTransCom->Chase_Target(&vPlayerPos, 5.f, fTimeDelta);
+				m_bDetect = true;
+			}
 			m_STATE = ILLUSION_WALK;
 			m_bRun = false;
 		}
@@ -339,6 +347,32 @@ HRESULT CIllusioner::Create_Item()
 		break;
 	}
 	return S_OK;
+}
+
+void CIllusioner::Sound()
+{
+	srand(rand());
+	if (m_fSoundTimer > 5.f)
+	{
+		if (m_bDetect)
+		{
+			Engine::PlaySoundGun(L"Illusioner_Deatect_01.wav", SOUND_EFFECT, m_fIdleSound);
+			m_fSoundTimer = 0.f;
+			m_bDetect = false;
+		}
+	}
+
+	if (m_bisHit)
+	{
+		Engine::PlaySoundGun(L"Illusioner_Attack_01.wav", SOUND_EFFECT, m_fHitSound);
+		m_bisHit = false;
+	}
+
+	if (m_bDead)
+	{
+		Engine::PlaySoundGun(L"Illusioner_Death_01.wav", SOUND_EFFECT, m_fDeadSound);
+
+	}
 }
 
 CIllusioner * CIllusioner::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3 & vPos, _tchar * Name)

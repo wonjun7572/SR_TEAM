@@ -107,9 +107,9 @@ HRESULT CHyperionStrike::Add_Component(void)
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_SphereTexCom2", pComponent });
 
-	pComponent = m_pTexture = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Red_Tex"));
+	pComponent = m_pTexture = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Brown_Tex"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Red_Tex", pComponent });
+	m_mapComponent[ID_STATIC].insert({ L"Brown_Tex", pComponent });
 
 	return S_OK;
 }
@@ -143,8 +143,10 @@ void CHyperionStrike::Bullet_Rain(void)
 	_vec3 vDir = { fRnd, -1.f, fRnd2 };	
 
 	//CPoolMgr::GetInstance()->Reuse_Obj(m_pGraphicDev, &m_vBattlePos, &vDir, 10.f);
-	CPoolMgr::GetInstance()->Reuse_ExBullet(m_pGraphicDev, &(m_vBattlePos+ m_vDirection*100.f), &vDir, 5);
-
+	CPoolMgr::GetInstance()->Reuse_Laser(m_pGraphicDev, &(m_vBattlePos+ m_vDirection*100.f), &vDir, 5,1);
+	_float fGunSound = .3f;
+	Engine::PlaySoundGun(L"BattleCruiserAtk.wav", SOUND_EFFECT, fGunSound);
+	
 }
 
 void CHyperionStrike::Move_Location(void)

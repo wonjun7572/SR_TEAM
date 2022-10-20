@@ -74,6 +74,7 @@ private:
 	 _vec2		m_Pos;
 
 	 _int		m_iIndex;
+	  _int		m_iLetterCnt = 0;
 
 	 wstring	 m_pInformation;
 	 wstring	 m_pUziRaffle;

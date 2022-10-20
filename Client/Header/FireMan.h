@@ -22,14 +22,16 @@ public:
 	virtual		_int		Update_Object(const _float& fTimeDelta);
 	virtual		void		LateUpdate_Object(void);
 	virtual		void		Render_Object(void);
-
+	
 private:
 	HRESULT				Add_Component(void);
 	HRESULT				Create_Item();
-
+	void				Sound();
 	CCubeCol*			m_pAnimationBox = nullptr;
 
 	_float				m_fFrame = 0.f;
+	
+
 
 private:	//	애니메이션 관련
 	HRESULT				Build(void);

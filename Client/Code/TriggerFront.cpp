@@ -77,9 +77,9 @@ HRESULT CTriggerFront::Add_Component(void)
 {
 	CComponent* pComponent = nullptr;
 
-	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Clone_Proto(L"Trigger_Tex"));
+	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Clone_Proto(L"Red_Tex"));
 	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Trigger_Tex", pComponent });
+	m_mapComponent[ID_STATIC].insert({ L"Red_Tex", pComponent });
 
 	/*pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Clone_Proto(L"STATICPARTICLE_TEX"));
 	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);

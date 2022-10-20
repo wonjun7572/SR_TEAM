@@ -50,6 +50,7 @@ void CStaticField::Render_Object(void)
 {
 	m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
 	m_pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_DESTALPHA);
+
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransCom->Get_WorldMatrixPointer());
@@ -80,9 +81,9 @@ HRESULT CStaticField::Add_Component(void)
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_SphereTexCom2", pComponent });
 
-	pComponent = m_pTexture = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"White_Tex"));
+	pComponent = m_pTexture = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Black_Tex"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"White_Tex", pComponent });
+	m_mapComponent[ID_STATIC].insert({ L"Black_Tex", pComponent });
 
 	return S_OK;
 }
