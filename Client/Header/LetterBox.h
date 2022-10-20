@@ -13,13 +13,13 @@ public:
 	virtual void   LateUpdate_Object(void) override;
 	virtual void   Render_Object(void) override;
 
-	void	ChangeLetterContents(const wstring& str , _int iSize)
+	void   ChangeLetterContents(const wstring& str, _int iSize)
 	{
 		m_strLetterContents = str;
 		m_iTextAmount = iSize - 3;
 	}
 
-	void	LetterDead() { m_bDead = true; }
+	void   LetterDead() { m_bDead = true; }
 
 public:
 	void         On_Switch() { m_bPowerSwitch = true; };
@@ -45,26 +45,25 @@ private:
 
 private:
 	CTransform*      m_TranformCom = nullptr;
-	CTexture*		 m_pFontTexture = nullptr;
-	CTexture*		 m_pTexture = nullptr;
-	CCubeTex*		 m_pCube = nullptr;
-	CRcTex*			 m_pRcCom = nullptr;
-	_matrix			 m_matWorld;
-	_matrix			 m_matView;
-	_matrix			 m_matProj;
-	wstring			 m_strLetterContents;
-	_float			 m_fFontSize;
-	_float			 m_fFontAlpha;
+	CTexture*       m_pFontTexture = nullptr;
+	CTexture*       m_pTexture = nullptr;
+	CCubeTex*       m_pCube = nullptr;
+	CRcTex*          m_pRcCom = nullptr;
+	_matrix          m_matWorld;
+	_matrix          m_matView;
+	_matrix          m_matProj;
+	wstring          m_strLetterContents;
+	_float          m_fFontSize;
+	_float          m_fFontAlpha;
 	//_tchar         m_strLetterName[64];
 	_tchar           szCntName[64];
 
-	_bool			m_bPowerSwitch = true;
-	_bool			m_bAlphaSwitch = false;
-	_int			m_iTextAmount;
-	_int			m_iIndex;
+	_bool         m_bPowerSwitch = true;
+	_bool         m_bAlphaSwitch = false;
+	_int         m_iTextAmount;
+	_int         m_iIndex;
 
 public:
 	static CLetterBox*   Create(LPDIRECT3DDEVICE9 pGraphicDev, _tchar* tDialogue, _int iSize, _int iIndex);
 	virtual void Free(void) override;
 };
-

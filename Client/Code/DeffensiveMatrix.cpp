@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "..\Header\DeffensiveMatrix.h"
-
-
+#include "DefensiveEffect.h"
+#include "RoundEffect.h"
 CDeffensiveMatrix::CDeffensiveMatrix(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
 {
@@ -33,14 +33,12 @@ _int CDeffensiveMatrix::Update_Object(const _float & fTimeDelta)
 	Add_RenderGroup(RENDER_UI, this);
 	m_fTimer += fTimeDelta;
 
-	if (m_fTimer < .5f)
-	{
-		m_pTransCom->Set_Angle(&m_vDir);
-
-		m_pTransCom->Set_Scale(m_vScale.x + m_fSpeed*m_fTimer, m_vScale.y + m_fSpeed*m_fTimer, m_vScale.z + m_fSpeed*m_fTimer);
-	}
+	Scaling();
+	Dead();
+	
 	if (m_bDead)
-	{
+	{		
+		DeadParticle();
 		return-1;
 	}
 	return 0;
@@ -63,10 +61,6 @@ void CDeffensiveMatrix::Render_Object(void)
 
 	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 	m_pTexture->Set_Texture(0);
-	iT++;
-	if (iT > 5)
-		iT = 0;
-
 	m_pCube->Render_Buffer();
 	//m_pHitBox->Render_Buffer();
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);	
@@ -104,7 +98,57 @@ HRESULT CDeffensiveMatrix::Add_Component(void)
 	pInstance = m_pHitBoxTransCom = dynamic_cast<CTransform*>(Clone_Proto(TRANSFORM_COMP));
 	NULL_CHECK_RETURN(m_pTransCom, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"HitBox_Transform22", pInstance });
+
+
+
 	return S_OK;
+}
+
+void CDeffensiveMatrix::Scaling()
+{
+	if (m_fTimer < .5f)
+	{
+		m_pTransCom->Set_Angle(&m_vDir);
+
+		m_pTransCom->Set_Scale(m_vScale.x + m_fSpeed*m_fTimer, m_vScale.y + m_fSpeed*m_fTimer, m_vScale.z + m_fSpeed*m_fTimer);
+	}
+}
+
+void CDeffensiveMatrix::Dead()
+{
+	if (m_fTimer > 5.f)
+		m_bDead = true;
+}
+
+void CDeffensiveMatrix::DeadParticle()
+{
+	_vec3 vPos;														//대쉬이펙트하려던것
+	_vec3 vDir;
+	_vec3 vScale;
+	_vec3 min = { -1.0f ,-1.0f ,-1.0f };	
+	m_pTransCom->Get_Info(INFO_POS, &vPos);
+	m_pTransCom->Get_Scale(&vScale);
+
+	CDefensiveEffect* pDefensiveEffect = nullptr;
+	pDefensiveEffect = dynamic_cast<CDefensiveEffect*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"DefensiveEffect"));
+	for (_int i = -5; i < 5; i++)
+	{
+		for (_int j = -5; j < 5; j++)
+		{
+			for (_int k = -5; k < 5; k++)
+			{
+				D3DXVec3Normalize(&min, &_vec3(i, j, k));						
+
+				dynamic_cast<CDefensiveEffect*>(pDefensiveEffect)->Set_PclePos(vPos + _vec3(i, j, k)*vScale.x/4);
+
+				dynamic_cast<CDefensiveEffect*>(pDefensiveEffect)->Set_CenterPos(vPos);
+
+				dynamic_cast<CDefensiveEffect*>(pDefensiveEffect)->Set_PcleDir(-min);
+
+				pDefensiveEffect->addParticle();
+			}
+		}
+	}
 }
 
 CDeffensiveMatrix * CDeffensiveMatrix::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3 & Position)

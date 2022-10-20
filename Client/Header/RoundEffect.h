@@ -14,6 +14,10 @@ public:
 	virtual		void		LateUpdate_Object(void);
 	virtual		void		Render_Object(void);
 
+	void					Set_CenterPos(_vec3 _vCenter)
+	{
+		m_vCenterPos = _vCenter;
+	}
 	void					Set_PclePos(_vec3 _vPos)
 	{
 		m_vRoundEffectPos = _vPos;
@@ -37,6 +41,7 @@ private:
 	_float		m_fSpeed = 0.f;
 	_vec3		m_vDir = { 0.f,0.f,0.f };
 	_vec3		m_vRoundEffectPos = { 0.f,0.f,0.f };
+	_vec3		m_vCenterPos = { 0.f,0.f,0.f };
 
 
 

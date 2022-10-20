@@ -17,6 +17,8 @@ class CCartridgeParticle;
 class CTriggerParticle;
 class CTriggerFront;
 class CRoundEffect;
+class CTraceEffect;
+class CLaserPoint;
 
 class CCubePlayer : public CGameObject
 {
@@ -26,7 +28,7 @@ private:
 
 public:
 	void			SetWeaponState(_int _WeaponState) { m_iSetWeaponState = _WeaponState; /*m_iWeaponState = _WeaponState;*/ }
-	_int			GetWeaponState() { return m_iWeaponState ; }
+	_int			GetWeaponState() { return m_iWeaponState; }
 
 	void			Get_HitboxMin(_vec3* vMin, _vec3* vMax)
 	{
@@ -44,8 +46,8 @@ public:
 
 public:
 	ABILITY*      Get_Ability() { return m_tAbility; }
-	void          Set_Damaged(_float iDamage) 
-	{ 
+	void          Set_Damaged(_float iDamage)
+	{
 		if (m_tAbility->fDefence > 0.f)
 		{
 			m_tAbility->fDefence -= iDamage;
@@ -53,9 +55,9 @@ public:
 		}
 		else
 		{
-			m_tAbility->fHp -= iDamage; 
+			m_tAbility->fHp -= iDamage;
 			if (m_tAbility->fHp <= 0.f)
-			m_tAbility->fHp = 0.f;
+				m_tAbility->fHp = 0.f;
 		}
 	}
 
@@ -84,7 +86,11 @@ private:
 public:
 	CWeapon*		Get_Weapon() { return m_Weapon; }
 	_int			Get_DmgItem() { return m_iDmgItem; }
-	void			Set_DoorOpen(_bool bDoorOpen) { m_bDoorOpen = bDoorOpen; }
+		void			On_StaticField() { m_bCanStaticField = true; }
+	void			On_Shield() { m_bCanShield = true; }
+
+
+		void			Set_DoorOpen(_bool bDoorOpen) { m_bDoorOpen = bDoorOpen; }
 
 private:
 	map<const _tchar*, CGameObject*>	m_mapPlayerBody;
@@ -136,7 +142,7 @@ private:
 
 	CSphereTex*		m_pSphereBufferCom = nullptr;
 	CTransform*		m_pSphereTransCom = nullptr;
-	
+
 	CPlayerMapping* m_pBomb = nullptr;
 	CFlight*		m_pFlight = nullptr;
 
@@ -149,6 +155,8 @@ private: // 파티클관련 포인터입니다.
 	CTriggerParticle* m_pTriggerParticle = nullptr;
 	CTriggerFront* m_pTriggerFront = nullptr;
 	CRoundEffect* m_pRoundEffect = nullptr;
+	CTraceEffect* m_pTraceEffect = nullptr;
+	CLaserPoint* m_pLaserPoint = nullptr;
 
 	CCartridgeParticle*		m_pCartridgeParticle = nullptr;
 
@@ -156,9 +164,12 @@ private:
 	_float			m_fRed = 0.f;
 	_float			m_fGreen = 0.f;
 	_float			m_fBlue = 0.f;
-	_float			m_fRange = 0.f;
+		_float			m_fLaserTimer = 0.f;
 
-	_bool			m_bColorLighting = false;
+	_bool			m_bSniperEffect = 0.f;
+		_float			m_fRange = 0.f;
+
+		_bool			m_bColorLighting = false;
 
 	_float			m_fLookAngle = 0.f;
 	_float			m_fDownAngle = 0.f;
@@ -187,7 +198,7 @@ private:
 	_bool			m_bShotgun;
 	_bool			m_bSniper;
 	_bool			m_bSinperZoom = false;
-	
+
 	vector<CWeapon*> m_vecWeapon;
 
 	_bool			m_bDoorOpen = false;
@@ -207,6 +218,9 @@ private:
 	_int			m_iSetWeaponState = 0;
 	_int			m_iDmgItem = 0;
 	_int			m_iSpeedItem = 0;
+	_bool			m_bCanStaticField = false;
+	_bool			m_bCanShield = false;
+
 
 	//방벽관련 변수입니다
 	_bool			m_bShield = false;
@@ -218,15 +232,15 @@ public:
 	_bool			Get_SniperZoom() { return m_bSinperZoom; }
 
 	//ITEM
-	void		Get_Defense() 
-	{ 
+	void		Get_Defense()
+	{
 		if (m_tAbility->fDefence <= m_tAbility->fMaxDefence)
 			m_tAbility->fDefence += 10.f;
 		if (m_tAbility->fDefence >= m_tAbility->fMaxDefence)
 			m_tAbility->fDefence = m_tAbility->fMaxDefence;
 	}
-	void		Get_Hp() 
-	{ 
+	void		Get_Hp()
+	{
 		if (m_tAbility->fHp <= m_tAbility->fMaxHp)
 			m_tAbility->fHp += 10.f;
 		if (m_tAbility->fHp >= m_tAbility->fMaxHp)
@@ -239,4 +253,5 @@ public:
 	static CCubePlayer*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
 	virtual void Free(void);
 };
+
 

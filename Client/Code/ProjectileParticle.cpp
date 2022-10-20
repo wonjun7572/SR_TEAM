@@ -169,7 +169,7 @@ void CProjectileParticle::Dead_Effect()
 		if (!m_pIceEffectParticle)
 			m_pIceEffectParticle = dynamic_cast<CIceEffect*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"IceEffect"));
 		m_pIceEffectParticle->Set_PclePos(m_vDeadPos);
-		for (_int i = 0; i < 150; ++i)
+		for (_int i = 0; i < 250; ++i)
 		{
 			m_pIceEffectParticle->addParticle();
 		}
