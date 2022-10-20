@@ -68,10 +68,12 @@ _int CCubePlayer::Update_Object(const _float & fTimeDelta)
 		m_fRed	 = 0.5f;
 		m_fGreen = 0.5f;
 		m_fBlue	 = 0.5f;
+		m_fRange = 25.f;
 	}
 	else
 	{
 		m_fGreen = 0.f;
+		m_fRange = 40.f;
 		if (!m_bColorLighting)
 		{
 			m_fRed += fTimeDelta;
@@ -1207,7 +1209,7 @@ HRESULT CCubePlayer::Lighting()
 
 	// Don't attenuate.
 	d3dLight.Attenuation0 = 0.5f;
-	d3dLight.Range = 50.0f;
+	d3dLight.Range = m_fRange;
 
 	// Set the property information for the first light.
 	FAILED_CHECK_RETURN(m_pGraphicDev->SetLight(1, &d3dLight),E_FAIL);

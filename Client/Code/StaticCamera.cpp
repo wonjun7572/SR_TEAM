@@ -445,58 +445,113 @@ void CStaticCamera::Look_Target(const _float& _fTimeDelta)
 			m_vAt = vShuttlePos + (vRight * 2.f);
 		}
 	}
-
 	else
 	{
-		_vec3 vLook;
-		m_pTransform_Target->Get_Info(INFO_LOOK, &vLook);
-
-		_vec3 vRight;
-		m_pTransform_Target->Get_Info(INFO_RIGHT, &vRight);
-
-		_vec3 vUp;
-		m_pTransform_Target->Get_Info(INFO_UP, &vUp);
-
-		m_vEye = (vLook * -1.f);
-		D3DXVec3Normalize(&m_vEye, &m_vEye);
-		m_vEye *= 0.1f;
-
-		_vec3 vPos;
-		m_pTransform_Target->Get_Info(INFO_POS, &vPos);
-
-		_vec3 vTransLerp;
-		D3DXVec3Lerp(&vTransLerp, &_vec3(0.f, 50.f, -10.f), &vPos, m_fPlayerFrame);
-
-		if (m_fPlayerFrame < 1.f)
+		if (Get_Scene()->Get_SceneId() == STAGE_SCENE)
 		{
-			if (!m_bLetterBox)
-			{
-				if (0.f < m_fPlayerFrame && m_fPlayerFrame < 0.3f)
-				{
-					m_pLetterBox = CLetterBox::Create(m_pGraphicDev, L"Where am I?", sizeof(L"Where am I?"), 0);
-					m_bLetterBox = true;
-				}
-			}
-			else if (0.3f < m_fPlayerFrame && m_fPlayerFrame < 0.6f)
-			{
-				m_pLetterBox->ChangeLetterContents(L"Is it a dream or a reality?", sizeof(L"Is it a dream or a reality?"));
-			}
-			else if (0.89f > m_fPlayerFrame && m_fPlayerFrame > 0.6f)
-				m_pLetterBox->ChangeLetterContents(L"Oh my god!!!", sizeof(L"Oh my god!!!"));
-			else if (m_fPlayerFrame > 0.9f)
-			{
-				m_pLetterBox->LetterDead();
-			}
+			_vec3 vLook;
+			m_pTransform_Target->Get_Info(INFO_LOOK, &vLook);
 
-			m_fFov = D3DXToRadian(60.f);
-			m_vEye += vTransLerp * m_fPlayerFrame;
-			m_vAt = vTransLerp + (-vUp * m_fPlayerFrame * 2.f);
+			_vec3 vRight;
+			m_pTransform_Target->Get_Info(INFO_RIGHT, &vRight);
+
+			_vec3 vUp;
+			m_pTransform_Target->Get_Info(INFO_UP, &vUp);
+
+			m_vEye = (vLook * -1.f);
+			D3DXVec3Normalize(&m_vEye, &m_vEye);
+			m_vEye *= 0.1f;
+
+			_vec3 vPos;
+			m_pTransform_Target->Get_Info(INFO_POS, &vPos);
+
+			_vec3 vTransLerp;
+			D3DXVec3Lerp(&vTransLerp, &_vec3(0.f, 50.f, -10.f), &vPos, m_fPlayerFrame);
+
+			if (m_fPlayerFrame < 1.f)
+			{
+				if (!m_bLetterBox)
+				{
+					if (0.f < m_fPlayerFrame && m_fPlayerFrame < 0.3f)
+					{
+						m_pLetterBox = CLetterBox::Create(m_pGraphicDev, L"Where am I?", sizeof(L"Where am I?"), 0);
+						m_bLetterBox = true;
+					}
+				}
+				else if (0.3f < m_fPlayerFrame && m_fPlayerFrame < 0.6f)
+				{
+					m_pLetterBox->ChangeLetterContents(L"Is it a dream or a reality?", sizeof(L"Is it a dream or a reality?"));
+				}
+				else if (0.89f > m_fPlayerFrame && m_fPlayerFrame > 0.6f)
+					m_pLetterBox->ChangeLetterContents(L"Oh my god!!!", sizeof(L"Oh my god!!!"));
+				else if (m_fPlayerFrame > 0.9f)
+				{
+					m_pLetterBox->LetterDead();
+				}
+
+				m_fFov = D3DXToRadian(60.f);
+				m_vEye += vTransLerp * m_fPlayerFrame;
+				m_vAt = vTransLerp + (-vUp * m_fPlayerFrame * 2.f);
+			}
+			else
+			{
+				m_fFov = D3DXToRadian(60.f);
+				m_vEye += vPos;
+				m_vAt = vPos;
+			}
 		}
 		else
 		{
-			m_fFov = D3DXToRadian(60.f);
-			m_vEye += vPos;
-			m_vAt = vPos;
+			_vec3 vLook;
+			m_pTransform_Target->Get_Info(INFO_LOOK, &vLook);
+
+			_vec3 vRight;
+			m_pTransform_Target->Get_Info(INFO_RIGHT, &vRight);
+
+			_vec3 vUp;
+			m_pTransform_Target->Get_Info(INFO_UP, &vUp);
+
+			m_vEye = (vLook * -1.f);
+			D3DXVec3Normalize(&m_vEye, &m_vEye);
+			m_vEye *= 0.1f;
+
+			_vec3 vPos;
+			m_pTransform_Target->Get_Info(INFO_POS, &vPos);
+
+			_vec3 vTransLerp;
+			D3DXVec3Lerp(&vTransLerp, &_vec3(-10.f, 50.f, 0.f), &vPos, m_fPlayerFrame);
+
+			if (m_fPlayerFrame < 1.f)
+			{
+				if (!m_bLetterBox)
+				{
+					if (0.f < m_fPlayerFrame && m_fPlayerFrame < 0.3f)
+					{
+						m_pLetterBox = CLetterBox::Create(m_pGraphicDev, L"What? Cracken this time?", sizeof(L"What? Cracken this time?"), 0);
+						m_bLetterBox = true;
+					}
+				}
+				else if (0.3f < m_fPlayerFrame && m_fPlayerFrame < 0.6f)
+				{
+					m_pLetterBox->ChangeLetterContents(L"Okay, let's go again", sizeof(L"Okay, let's go again"));
+				}
+				else if (0.89f > m_fPlayerFrame && m_fPlayerFrame > 0.6f)
+					m_pLetterBox->ChangeLetterContents(L"Let's do this!!!", sizeof(L"Let's do this!!!"));
+				else if (m_fPlayerFrame > 0.9f)
+				{
+					m_pLetterBox->LetterDead();
+				}
+
+				m_fFov = D3DXToRadian(60.f);
+				m_vEye += vTransLerp * m_fPlayerFrame;
+				m_vAt = vTransLerp + (-vUp * m_fPlayerFrame * 2.f);
+			}
+			else
+			{
+				m_fFov = D3DXToRadian(60.f);
+				m_vEye += vPos;
+				m_vAt = vPos;
+			}
 		}
 	}
 

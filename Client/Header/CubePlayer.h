@@ -156,6 +156,7 @@ private:
 	_float			m_fRed = 0.f;
 	_float			m_fGreen = 0.f;
 	_float			m_fBlue = 0.f;
+	_float			m_fRange = 0.f;
 
 	_bool			m_bColorLighting = false;
 
