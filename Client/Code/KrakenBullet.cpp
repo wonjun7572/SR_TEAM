@@ -14,7 +14,7 @@ CKrakenBullet::~CKrakenBullet()
 
 HRESULT CKrakenBullet::Ready_Object(const _vec3 & vPos, _tchar * Name)
 {
-	FAILED(Add_Component(), E_FAIL);
+	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
 	m_KrakenInk = Name;
 
@@ -25,8 +25,6 @@ HRESULT CKrakenBullet::Ready_Object(const _vec3 & vPos, _tchar * Name)
 	m_fSpeed = 10.f;
 
 	m_vDir = { 1.f, 1.f, 1.f };
-
-	
 
 	return S_OK;
 }

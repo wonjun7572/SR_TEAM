@@ -216,11 +216,10 @@ void CCubePlayer::CoolTimer(void)
 	_vec3 vLook;
 	m_pBodyWorld->Get_Info(INFO_LOOK, &vLook);
 	D3DXVec3Normalize(&vLook, &vLook);
-
-	m_pBodyWorld->Move_Pos(&(vLook* m_iDashStack * m_fTimeDelta));
+	m_pBodyWorld->Move_Pos(&(vLook* _float(m_iDashStack) * m_fTimeDelta));
 
 	vLook *= -1.f;
-	m_pBodyWorld->Move_Pos(&(vLook * m_iKnuckStack * m_fTimeDelta));
+	m_pBodyWorld->Move_Pos(&(vLook * _float(m_iKnuckStack) * m_fTimeDelta));
 }
 
 void CCubePlayer::KnuckDown(const _float & fDamage, const _float& fDistance)

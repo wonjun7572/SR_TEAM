@@ -81,11 +81,11 @@ _int CSupporter_Sniper::Update_Object(const _float & fTimeDelta)
 	_vec3 vPosition;
 	m_pTransform->Get_Info(INFO_POS, &vPosition);
 
-	if (vPosition.y >= 0.6f)
+	if (vPosition.y > 0.6f)
 	{
 		m_pTransform->Move_Pos(&(_vec3(0.f, -1.f, 0.f) * 10.f * fTimeDelta));
 	}
-	else if (vPosition.y <= 0.7f)
+	else if (vPosition.y <= 1.f)
 	{
 		m_bSetCam = false;
 	}

@@ -44,6 +44,8 @@ private:	//	애니메이션 관련
 	void				Idle_Animation_Run(void);
 	void				Attack_Animation_Run(void);
 
+	_bool				m_bCreate = false;
+
 	ILLUSIONSTATEID		m_STATE;
 	ILLUSIONWALKID		m_WALK;
 	ILLUSIONIDLEID		m_IDLE;

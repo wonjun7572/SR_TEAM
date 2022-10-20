@@ -49,43 +49,25 @@ _int CRcEffect::Update_Object(const _float & fTimeDelta)
 	m_fTimer += fTimeDelta;
 	Dead_Condition();
 	Effect_Change();
-	
 	return 0;
 }
 
 void CRcEffect::LateUpdate_Object(void)
 {
-
-
+	m_pTransformCom->Set_Scale(m_fScale, m_fScale, m_fScale);
 }
 
 void CRcEffect::Render_Object(void)
 {
-	m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
-	
-	m_pGraphicDev->SetRenderState(D3DRS_BLENDOP, D3DBLENDOP_REVSUBTRACT);
-	m_pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
-	m_pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
-	
-	
-	m_pTransformCom->Set_Scale(m_fScale, m_fScale, m_fScale);
-
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrixPointer());
-
-
 	m_pTextureCom->Set_Texture(m_iTexIndex);
-
 	m_pRcTexCom->Render_Buffer();
-	m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
-
-
 }
 
 
 HRESULT CRcEffect::Add_Component()
 {
 	CComponent* pComponent = nullptr;
-
 
 	pComponent = m_pRcTexCom = dynamic_cast<CRcTex*>(Clone_Proto(RCTEX_COMP));
 	NULL_CHECK_RETURN(m_pRcTexCom, E_FAIL);
@@ -94,7 +76,6 @@ HRESULT CRcEffect::Add_Component()
 	pComponent = m_pTransformCom = dynamic_cast<CTransform*>(Clone_Proto(TRANSFORM_COMP));
 	NULL_CHECK_RETURN(m_pTransformCom, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ TRANSFORM_COMP, pComponent });
-	
 	
 	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Clone_Proto(szTextureName));
 	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);

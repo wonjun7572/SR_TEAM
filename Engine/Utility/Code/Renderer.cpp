@@ -11,7 +11,6 @@ CRenderer::CRenderer()
 {
 }
 
-
 CRenderer::~CRenderer()
 {
 	Free();
@@ -69,14 +68,14 @@ void CRenderer::Add_RenderGroup(RENDERID eID, CGameObject * pGameObject)
 
 void CRenderer::Render_GameObject(LPDIRECT3DDEVICE9 & pGraphicDev)
 {
+	pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
 	for (auto& iter : m_RenderGroup[RENDER_PRIORITY])
 	{
-		pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
 		iter->Render_Object();
 		Safe_Release(iter);			
-		pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
 	}
 	m_RenderGroup[RENDER_PRIORITY].clear();
+	pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
 	
 	for (auto& iter : m_RenderGroup[RENDER_NONALPHA])
 	{
@@ -106,9 +105,7 @@ void CRenderer::Render_GameObject(LPDIRECT3DDEVICE9 & pGraphicDev)
 		Safe_Release(iter);
 	}
 	m_RenderGroup[RENDER_MAPSETTING].clear();
-	pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
-
-	pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
+	
 	pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
 	pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
 	pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);

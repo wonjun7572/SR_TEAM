@@ -509,7 +509,7 @@ HRESULT CStage::Ready_Layer_Monster(const _tchar * pLayerTag)
 	{
 		for (size_t i = 0; i < vecFireMan.size(); i++)
 		{
-			_tchar* szName = new _tchar[256]{};
+			_tchar* szName = new _tchar[128]{};
 			wstring wName = L"Fireman_%d";
 			wsprintfW(szName, wName.c_str(), i);
 			NameList.push_back(szName);
@@ -524,7 +524,7 @@ HRESULT CStage::Ready_Layer_Monster(const _tchar * pLayerTag)
 	{
 		for (size_t i = 0; i < vecSlime.size(); i++)
 		{
-			_tchar* szName = new _tchar[256]{};
+			_tchar* szName = new _tchar[128]{};
 			wstring wName = L"Slime_%d";
 			wsprintfW(szName, wName.c_str(), i);
 			NameList.push_back(szName);
@@ -539,7 +539,7 @@ HRESULT CStage::Ready_Layer_Monster(const _tchar * pLayerTag)
 	{
 		for (size_t i = 0; i < vecIllusioner.size(); i++)
 		{
-			_tchar* szName = new _tchar[256]{};
+			_tchar* szName = new _tchar[128]{};
 			wstring wName = L"Illusioner_%d";
 			wsprintfW(szName, wName.c_str(), i);
 			NameList.push_back(szName);
@@ -554,7 +554,7 @@ HRESULT CStage::Ready_Layer_Monster(const _tchar * pLayerTag)
 	{
 		for (size_t i = 0; i < vecZombie.size(); i++)
 		{
-			_tchar* szName = new _tchar[256]{};
+			_tchar* szName = new _tchar[128]{};
 			wstring wName = L"Zombie_%d";
 			wsprintfW(szName, wName.c_str(), i);
 			NameList.push_back(szName);
