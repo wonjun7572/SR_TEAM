@@ -41,7 +41,7 @@ HRESULT CKrakenLeg::Ready_Object(const _vec3 & vPos, _tchar * Name)
 
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
-	m_pTransCom->Set_Scale(&_vec3(1.f, 20.f, 1.f));
+	m_pTransCom->Set_Scale(&_vec3(0.f, 0.f, 0.f));
 	m_pTransCom->Set_Pos(vPos.x, vPos.y, vPos.z);
 	m_pTransCom->Static_Update();
 
@@ -52,7 +52,7 @@ HRESULT CKrakenLeg::Ready_Object(const _vec3 & vPos, _tchar * Name)
 	_vec3 vAnimationPos;
 	m_pTransCom->Get_Info(INFO_POS, &vAnimationPos);
 
-	m_pHitBoxTransCom->Set_Scale(&_vec3(4.f, 20.f, 4.f));
+	m_pHitBoxTransCom->Set_Scale(&_vec3(0.f, 0.f, 0.f));
 	m_pHitBoxTransCom->Set_Pos(vAnimationPos.x, vAnimationPos.y, vAnimationPos.z);
 	m_pHitBoxTransCom->Static_Update();
 
@@ -150,6 +150,21 @@ _int CKrakenLeg::Update_Object(const _float & fTimeDelta)
 
 	Update_Pattern(fTimeDelta);
 
+	if ((m_LURKER == KRAKENLURKER_3) && (m_STATE != KRAKEN_REVIVE))
+	{
+		m_pTransCom->Set_Scale(4.f, 40.f, 4.f);
+		m_pTransCom->Static_Update();
+		m_pHitBoxTransCom->Set_Scale(4.f, 40.f, 4.f);
+		m_pHitBoxTransCom->Static_Update();
+	}
+	else
+	{
+		m_pTransCom->Set_Scale(0.f, 0.f, 0.f);
+		m_pTransCom->Static_Update();
+		m_pHitBoxTransCom->Set_Scale(0.f, 0.f, 0.f);
+		m_pHitBoxTransCom->Static_Update();
+	}
+
 	_vec3 vMainBodyPos, vPos, vPlayerPos;
 	vMainBodyPos = { 65.f, 0.f, 65.f };
 	m_pTransCom->Get_Info(INFO_POS, &vPos);
@@ -160,7 +175,7 @@ _int CKrakenLeg::Update_Object(const _float & fTimeDelta)
 
 	_vec3 vNewDir;
 
-	if (m_tAbility->fCurrentHp == 0)
+	if (m_tAbility->fCurrentHp <= 0)
 	{
 		m_STATE = KRAKEN_REVIVE;
 	}
@@ -216,6 +231,8 @@ _int CKrakenLeg::Update_Object(const _float & fTimeDelta)
 
 void CKrakenLeg::Render_Object(void)
 {
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pHitBoxTransCom->Get_WorldMatrixPointer());
+	m_pHitBox->Render_Buffer();
 }
 
 void CKrakenLeg::LateUpdate_Object(void)
