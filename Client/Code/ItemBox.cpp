@@ -49,11 +49,11 @@ _int CItemBox::Update_Object(const _float & fTimeDelta)
 
 	if (m_pCollision->Sphere_Collision(this->m_pTransCom, m_pPlayerTransCom, vPlayerScale.x, vScale.x))
 	{
-		if (Get_DIKeyState(DIK_E))
+		/*if (Get_DIKeyState(DIK_E))
 		{
 			m_pTransCom->Set_Scale(0.f, 0.f, 0.f);
 			m_STATE = ITEMBOX_UP;
-		}
+		}*/
 	}
 
 	Add_RenderGroup(RENDER_PRIORITY, this);

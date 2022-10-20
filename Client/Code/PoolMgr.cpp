@@ -5,6 +5,7 @@
 #include "Bullet.h"
 #include "SpBullet.h"
 #include "ExBullet.h"
+#include "Laser.h"
 
 IMPLEMENT_SINGLETON(CPoolMgr)
 
@@ -40,7 +41,13 @@ void CPoolMgr::Collect_ExBullet(CGameObject * pObj)
 
 	m_ExBulletPool.push_back(pObj);
 }
+void CPoolMgr::Collect_Laser(CGameObject * pObj)
+{
+	if (pObj == nullptr)
+		return;
 
+	m_LaserPool.push_back(pObj);
+}
 HRESULT CPoolMgr::Reuse_Obj(LPDIRECT3DDEVICE9& pGraphicDev, const _vec3* vPos, const _vec3* vDir, _float _fDamage)
 {
 	CGameObject* pObj = nullptr;
@@ -128,7 +135,33 @@ HRESULT CPoolMgr::Reuse_ExBullet(LPDIRECT3DDEVICE9 & pGraphicDev, const _vec3 * 
 
 	return S_OK;
 }
+HRESULT CPoolMgr::Reuse_Laser(LPDIRECT3DDEVICE9 & pGraphicDev, const _vec3 * vPos, const _vec3 * vDir, _float _fSpeed, _int _iIndex)
+{
+	CGameObject* pObj = nullptr;
 
+	if (m_LaserPool.empty())
+	{
+		pObj = CLaser::Create(pGraphicDev, vPos, vDir, _fSpeed, _iIndex);
+		NULL_CHECK_RETURN(pObj, E_FAIL);
+
+		Engine::Get_Layer(STAGE_LASER)->Add_GameList(pObj);
+	}
+	else
+	{
+		pObj = m_LaserPool.front();
+
+		NULL_CHECK_RETURN(pObj, E_FAIL);
+		m_LaserPool.pop_front();
+
+		dynamic_cast<CLaser*>(pObj)->Set_Pos(*vPos);
+		dynamic_cast<CLaser*>(pObj)->Set_Dir(*vDir);
+		dynamic_cast<CLaser*>(pObj)->Restore();
+
+		Engine::Get_Layer(STAGE_LASER)->Add_GameList(pObj);
+	}
+
+	return S_OK;
+}
 void CPoolMgr::Free()
 {
 	for (auto& iter : m_ObjectPool)
@@ -145,6 +178,9 @@ void CPoolMgr::Free()
 	{
 		Safe_Release<CGameObject*>(iter);
 	}
-
+	for (auto& iter : m_LaserPool)
+	{
+		Safe_Release<CGameObject*>(iter);
+	}
 	m_ObjectPool.clear();
 }

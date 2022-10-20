@@ -370,11 +370,11 @@
     <Filter Include="01. Scene\03. FinalStage">
       <UniqueIdentifier>{4d8426b7-b55a-4193-9a78-a35ddf50f476}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\01. For_Stage\21. Boss\02. Kraken\KrakenBullet">
-      <UniqueIdentifier>{c22e28c4-1903-47a4-8590-50c8fa995011}</UniqueIdentifier>
+    <Filter Include="02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\RoundEffect">
+      <UniqueIdentifier>{7f0d0054-ce76-4a98-a0fb-23dfb696c68a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\01. For_Stage\21. Boss\02. Kraken\KrakenLeg">
-      <UniqueIdentifier>{139c1d72-ee6f-4403-824b-b41e230e0c21}</UniqueIdentifier>
+    <Filter Include="02. GameObject\01. For_Stage\06. Bullet\Laser">
+      <UniqueIdentifier>{97dc89cc-42c4-423f-853c-0d623c22f11c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -843,14 +843,11 @@
     <ClInclude Include="..\Header\FinalStage.h">
       <Filter>01. Scene\03. FinalStage</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\KrakenBullet.h">
-      <Filter>02. GameObject\01. For_Stage\21. Boss\02. Kraken\KrakenBullet</Filter>
+    <ClInclude Include="..\Header\RoundEffect.h">
+      <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\RoundEffect</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\LoadingBar.h">
-      <Filter>01. Scene\00. Logo</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\KrakenLeg.h">
-      <Filter>02. GameObject\01. For_Stage\21. Boss\02. Kraken\KrakenLeg</Filter>
+    <ClInclude Include="..\Header\Laser.h">
+      <Filter>02. GameObject\01. For_Stage\06. Bullet\Laser</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1295,14 +1292,11 @@
     <ClCompile Include="..\Code\FinalStage.cpp">
       <Filter>01. Scene\03. FinalStage</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\KrakenBullet.cpp">
-      <Filter>02. GameObject\01. For_Stage\21. Boss\02. Kraken\KrakenBullet</Filter>
+    <ClCompile Include="..\Code\RoundEffect.cpp">
+      <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\RoundEffect</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\LoadingBar.cpp">
-      <Filter>01. Scene\00. Logo</Filter>
-    </ClCompile>
-    <ClCompile Include="KrakenLeg.cpp">
-      <Filter>02. GameObject\01. For_Stage\21. Boss\02. Kraken\KrakenLeg</Filter>
+    <ClCompile Include="..\Code\Laser.cpp">
+      <Filter>02. GameObject\01. For_Stage\06. Bullet\Laser</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

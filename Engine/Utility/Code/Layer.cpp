@@ -98,6 +98,10 @@ _int CLayer::Update_Layer(const _float & fTimeDelta)
 				{
 					iter = m_ObjectList.erase(iter);
 				}
+				else if (this == Get_Layer(L"STAGE_LASER_Layer"))
+				{
+					iter = m_ObjectList.erase(iter);
+				}
 				else
 				{
 					Safe_Release(*iter);

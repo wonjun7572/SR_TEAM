@@ -115,7 +115,10 @@ _int CAlien::Update_Object(const _float & fTimeDelta)
 	}
 
 
-	m_fTimeDelta = fTimeDelta;
+	if (m_iSphereSkillTag != SKILL_STATICFIELD)
+		m_fTimeDelta = fTimeDelta;
+	if (m_iSphereSkillTag == SKILL_STATICFIELD)
+		m_fTimeDelta = 0.f;
 
 
 
@@ -152,14 +155,16 @@ _int CAlien::Update_Object(const _float & fTimeDelta)
 
 			vDir *= -1.f;
 			m_pCollision->Wall_Collision_Check(this->m_pTransCom, this->m_pHitBox, &vDir);
-			m_pTransCom->Chase_Target_By_Direction(&vDir, 1.f, fTimeDelta);
+			if (m_iSphereSkillTag != SKILL_STATICFIELD)
+				m_pTransCom->Chase_Target_By_Direction(&vDir, 1.f, fTimeDelta);
 			m_STATE = ALIEN_WALK;
 		}
 		else if (m_pCollision->Sphere_Collision(this->m_pAttackRange_TransCom, m_pPlayerTransCom, vPlayerScale.x, vAttackScale.x))
 		{
 
 			m_pCollision->Wall_Collision_Check(this->m_pTransCom, this->m_pHitBox, &vDir);
-			m_pTransCom->Chase_Target_By_Direction(&vDir, 3.f, fTimeDelta);
+			if (m_iSphereSkillTag != SKILL_STATICFIELD)
+				m_pTransCom->Chase_Target_By_Direction(&vDir, 3.f, fTimeDelta);
 			m_STATE = ALIEN_ATTACK;
 			if (m_AnimationTime >= 1.f)
 			{
@@ -170,7 +175,8 @@ _int CAlien::Update_Object(const _float & fTimeDelta)
 		else if (m_pCollision->Sphere_Collision(this->m_pSearchRange_TransCom, m_pPlayerTransCom, vPlayerScale.x, vSearchScale.x))
 		{
 			m_pCollision->Wall_Collision_Check(this->m_pTransCom, this->m_pHitBox, &vDir);
-			m_pTransCom->Chase_Target_By_Direction(&vDir, 5.f, fTimeDelta);
+			if (m_iSphereSkillTag != SKILL_STATICFIELD)
+				m_pTransCom->Chase_Target_By_Direction(&vDir, 5.f, fTimeDelta);
 			m_STATE = ALIEN_ATTACK;
 		}
 		else if (m_STATE != ALIEN_ATTACK)
