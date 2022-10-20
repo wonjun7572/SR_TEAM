@@ -376,6 +376,9 @@
     <Filter Include="02. GameObject\01. For_Stage\21. Boss\02. Kraken\KrakenLeg">
       <UniqueIdentifier>{139c1d72-ee6f-4403-824b-b41e230e0c21}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\08. Monster\07. Mob">
+      <UniqueIdentifier>{6b5d8b24-a12f-4eaa-87de-3c5cff1513c1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -852,6 +855,9 @@
     <ClInclude Include="..\Header\KrakenLeg.h">
       <Filter>02. GameObject\01. For_Stage\21. Boss\02. Kraken\KrakenLeg</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\Mob.h">
+      <Filter>02. GameObject\01. For_Stage\08. Monster\07. Mob</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -1303,6 +1309,9 @@
     </ClCompile>
     <ClCompile Include="KrakenLeg.cpp">
       <Filter>02. GameObject\01. For_Stage\21. Boss\02. Kraken\KrakenLeg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Mob.cpp">
+      <Filter>02. GameObject\01. For_Stage\08. Monster\07. Mob</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

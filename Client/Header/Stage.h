@@ -30,6 +30,7 @@ private:
 	HRESULT         Ready_Layer_PlayerBullet(const _tchar* pLayerTag);
 	HRESULT         Ready_Layer_ExBullet(const _tchar* pLayerTag);
 
+
 	HRESULT         Ready_Layer_Mapping(const _tchar* pLayerTag);
 	HRESULT         Ready_Layer_Gun(const _tchar* pLayerTag);
 

@@ -56,6 +56,7 @@
 #include "Slime.h"
 #include "Zombie.h"
 #include "Skeleton.h"
+#include "Mob.h"
 #include "MonsterUI.h"
 #include "HitBarUI.h"
 #include "ComboUI.h"
@@ -144,7 +145,7 @@ HRESULT CStage::Ready_Scene(void)
 	FAILED_CHECK_RETURN(Ready_Layer_ExBullet(STAGE_EXBULLET), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Layer_Creature(STAGE_CREATURE), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Layer_PlayerFlight(STAGE_FLIGHTPLAYER), E_FAIL);
-
+	
 	return S_OK;
 }
 
@@ -506,7 +507,7 @@ HRESULT CStage::Ready_Layer_Monster(const _tchar * pLayerTag)
 
 	CGameObject*      pGameObject = nullptr;
 
-	/*if (!vecFireMan.empty())
+	if (!vecFireMan.empty())
 	{
 	for (size_t i = 0; i < vecFireMan.size(); i++)
 	{
@@ -536,7 +537,13 @@ HRESULT CStage::Ready_Layer_Monster(const _tchar * pLayerTag)
 
 	pGameObject = CMiddleBoss::Create(m_pGraphicDev, _vec3(109.f, 0.6f, 10.f), L"MiddleBoss");
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);*/
+	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+
+
+	pGameObject = CMob::Create(m_pGraphicDev, _vec3(15.f, 0.6f, 10.f), L"Mob");
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL); 
+
 
 	//pGameObject = CKrakenBoss::Create(m_pGraphicDev, _vec3(10.f, 5.6f, 10.f), L"Kraken");
 	//NULL_CHECK_RETURN(pGameObject, E_FAIL);

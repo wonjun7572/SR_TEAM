@@ -5,6 +5,7 @@
 #include "Bullet.h"
 #include "SpBullet.h"
 #include "ExBullet.h"
+#include "KrakenBullet.h"
 
 IMPLEMENT_SINGLETON(CPoolMgr)
 
@@ -39,6 +40,14 @@ void CPoolMgr::Collect_ExBullet(CGameObject * pObj)
 		return;
 
 	m_ExBulletPool.push_back(pObj);
+}
+
+void CPoolMgr::Collect_KraKenBullet(CGameObject * pObj)
+{
+	if (pObj == nullptr)
+		return;
+
+	m_KrakenBulletPool.push_back(pObj);
 }
 
 HRESULT CPoolMgr::Reuse_Obj(LPDIRECT3DDEVICE9& pGraphicDev, const _vec3* vPos, const _vec3* vDir, _float _fDamage)
@@ -129,6 +138,35 @@ HRESULT CPoolMgr::Reuse_ExBullet(LPDIRECT3DDEVICE9 & pGraphicDev, const _vec3 * 
 	return S_OK;
 }
 
+HRESULT CPoolMgr::Reuse_KrakenBullet(LPDIRECT3DDEVICE9 & pGraphicDev, const _vec3 * vPos, const _vec3 * vDir, _float _fSpeed, _float _fDamage)
+{
+
+	CGameObject* pObj = nullptr;
+
+	if (m_KrakenBulletPool.empty())
+	{
+		pObj = CKrakenBullet::Create(pGraphicDev, vPos, vDir, _fSpeed, _fDamage);
+		NULL_CHECK_RETURN(pObj, E_FAIL);
+
+		Engine::Get_Layer(STAGE_KRAKENBULLET)->Add_GameList(pObj);
+	}
+	else
+	{
+		pObj = m_KrakenBulletPool.front();
+
+		NULL_CHECK_RETURN(pObj, E_FAIL);
+		m_KrakenBulletPool.pop_front();
+
+		dynamic_cast<CKrakenBullet*>(pObj)->Set_Pos(*vPos);
+		dynamic_cast<CKrakenBullet*>(pObj)->Set_Dir(*vDir);
+		dynamic_cast<CKrakenBullet*>(pObj)->Restore();
+
+		Engine::Get_Layer(STAGE_KRAKENBULLET)->Add_GameList(pObj);
+	}
+
+	return S_OK;
+}
+
 void CPoolMgr::Free()
 {
 	for (auto& iter : m_ObjectPool)
@@ -142,6 +180,10 @@ void CPoolMgr::Free()
 	}
 
 	for (auto& iter : m_ExBulletPool)
+	{
+		Safe_Release<CGameObject*>(iter);
+	}
+	for (auto& iter : m_KrakenBulletPool)
 	{
 		Safe_Release<CGameObject*>(iter);
 	}

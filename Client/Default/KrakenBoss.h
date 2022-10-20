@@ -42,6 +42,8 @@ private:
 	KRAKENLURKERID		m_LURKER;
 	KRAKENSKILLID		m_PATTERN;
 
+	_int				m_i = 0;
+
 private:
 	void				Set_OnTerrain(void);
 
@@ -79,6 +81,8 @@ private:
 	_float				m_AnimationTime = 0.f;
 	_float				m_fTimeDelta = 0.f;
 	_float				m_fUISwitchTime = 0.f;
+	_float				m_fFireAngle = 0.f;
+	_float				m_fFrame = 0.f;
 	_vec3				vUIPos;
 
 public:

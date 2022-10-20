@@ -5,6 +5,10 @@
 #include "CubePlayer.h"
 #include "Weapon.h"
 #include "TransAxisBox.h"
+#include "PoolMgr.h"
+
+
+
 CKrakenBoss::CKrakenBoss(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CGameObject(pGraphicDev)
 {
@@ -25,7 +29,7 @@ HRESULT CKrakenBoss::Ready_Object(const _vec3 & vPos, _tchar * Name)
 
 	m_MonsterName = Name;
 
-	m_STATE = KRAKEN_APPEAR;
+	m_STATE = KRAKEN_IDLE;
 	m_IDLE = KRAKENIDLE_1;
 	m_APPEAR = KRAKENAPPEAR_1;
 	m_SMASH = KRAKENSMASH_1;
@@ -51,7 +55,7 @@ HRESULT CKrakenBoss::Ready_Object(const _vec3 & vPos, _tchar * Name)
 	m_pHitBoxTransCom->Set_Pos(vAnimationPos.x, vAnimationPos.y, vAnimationPos.z);
 	m_pHitBoxTransCom->Static_Update();
 
-	m_pSphereTransCom->Set_Scale(&_vec3(20.f, 20.f, 20.f));
+	m_pSphereTransCom->Set_Scale(&_vec3(40.f, 40.f, 40.f));
 	m_pSphereTransCom->Set_Pos(vAnimationPos.x, vAnimationPos.y, vAnimationPos.z);
 	m_pSphereTransCom->Static_Update();
 
@@ -74,10 +78,7 @@ _int CKrakenBoss::Update_Object(const _float & fTimeDelta)
 	{
 		m_bFirst = false;
 
-		m_vPattern.push_back(KRAKEN_SKILL_SMASH);
 		m_vPattern.push_back(KRAKEN_SKILL_INKSHOT);
-		m_vPattern.push_back(KRAKEN_SKILL_ROLLING);
-		m_vPattern.push_back(KRAKEN_SKILL_LURKER);
 		m_vPattern.push_back(KRAKEN_SKILL_5);
 
 		Engine::Get_Scene()->New_Layer(m_MonsterName);
@@ -207,8 +208,14 @@ _int CKrakenBoss::Update_Pattern(_float fTimeDelta)
 	if (m_pComboUI == nullptr)
 		m_pComboUI = dynamic_cast<CComboUI*>(Engine::Get_GameObject(STAGE_UI, L"ComboUI"));
 
-	_float Hp = m_tAbility->fCurrentHp / m_tAbility->fMaxHp;
-	
+	_vec3 vPlayerPos;
+	m_pPlayerTransCom->Get_Info(INFO_POS, &vPlayerPos);
+	_vec3 vPlayerScale;
+	m_pPlayerTransCom->Get_Scale(&vPlayerScale);
+	_vec3 vScale;
+	m_pSphereTransCom->Get_Scale(&vScale);
+	_vec3 vPos;
+	m_pTransCom->Get_Info(INFO_POS, &vPos);
 
 	if (m_STATE == KRAKEN_IDLE)
 	{
@@ -219,23 +226,67 @@ _int CKrakenBoss::Update_Pattern(_float fTimeDelta)
 			m_STATE = KRAKEN_ATTACK;
 
 			random_shuffle(m_vPattern.begin(), m_vPattern.end());
+
 			m_PATTERN = m_vPattern.front();
+			//m_i++;
+
+			//if (m_i % 2 == 0)
+			//{
+			//	m_PATTERN = m_vPattern.front();
+			//}
+			//else
+			//{
+			//	m_PATTERN = m_vPattern.back();
+			//}
 
 			m_ReloadTimer = 0.f;
 		}
 	}
 	else if (m_STATE == KRAKEN_ATTACK)
 	{
+		_vec3 vDir{ 1.f, 0.f, 0.f };
+
 		if (m_PATTERN == KRAKEN_SKILL_INKSHOT)
 		{
-			// Àü¹æÇâ ¸Ô¹°Åº
+			_matrix matRotY, matTrans, matWorld;
+			if (m_AnimationTime >= 1)
+			{
+				if (!m_pCollision->Sphere_Collision(this->m_pSphereTransCom, m_pPlayerTransCom, vPlayerScale.x, vScale.x))
+				{
+					for (m_fFireAngle = 0.f; m_fFireAngle < 360.f; m_fFireAngle += 2.f)
+					{
+						D3DXMatrixRotationY(&matRotY, D3DXToRadian(-m_fFireAngle));
+						D3DXMatrixTranslation(&matTrans, vPos.x, 0.f, vPos.y);
+
+						m_pTransCom->Get_WorldMatrix(&matWorld);
+						matWorld = matRotY * matTrans;
+
+						D3DXVec3TransformNormal(&vDir, &vDir, &matWorld);
+
+						vPos.y = 1.f;
+						CPoolMgr::GetInstance()->Reuse_KrakenBullet(m_pGraphicDev, &vPos, &vDir, 10.f, 50.f);
+					}
+				}
+
+			}
+
 		}
 		if (m_PATTERN == KRAKEN_SKILL_5)
 		{
+			if (m_AnimationTime >= 1.f)
+			{
+					vPos.y = 1.f;
+				if (!m_pCollision->Sphere_Collision(this->m_pSphereTransCom, m_pPlayerTransCom, vPlayerScale.x, vScale.x))
+				{
+					_vec3 vDirection;
+					vDirection = vPlayerPos - vPos;
+					CPoolMgr::GetInstance()->Reuse_KrakenBullet(m_pGraphicDev, &vPos, &vDirection, 10.f, 50.f);
+
+				}
+			}
 
 		}
 	}
-
 	return 0;
 }
 
