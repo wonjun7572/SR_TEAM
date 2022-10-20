@@ -18,6 +18,13 @@ public:
 	virtual void	Render_Object(void) override;
 	virtual void	LateUpdate_Object(void) override;
 
+public:
+	void          Set_Damaged(_float iDamage)
+	{
+		if (this != nullptr)
+			m_tAbility->fCurrentHp -= iDamage;
+	}
+
 private:
 	void				Look_Direction(void);
 	virtual _int		Update_Pattern(_float fTimeDelta);

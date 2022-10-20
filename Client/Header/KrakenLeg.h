@@ -23,6 +23,13 @@ public:
 	_int				Get_State(void) { return m_STATE; }
 	_int				Get_SWING(void) { return m_LEGSWING; }
 
+public:
+	void          Set_Damaged(_float iDamage)
+	{
+		if (this != nullptr)
+			m_tAbility->fCurrentHp -= iDamage;
+	}
+
 private:
 	void				Look_Direction(void);
 	virtual _int		Update_Pattern(_float fTimeDelta);
