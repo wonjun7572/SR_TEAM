@@ -84,6 +84,8 @@ private:
 	vector<_vec3> vecZombie;
 	vector<_vec3> vecIllusioner;
 
+	SCENE_ID m_eID = FINAL_SCENE;
+
 public:
 	static CFinalStage*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
 

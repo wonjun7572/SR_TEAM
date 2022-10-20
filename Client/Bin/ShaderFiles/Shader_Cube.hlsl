@@ -35,17 +35,6 @@ VS_OUTPUT VS_MAIN(VS_INPUT Input)
 {
 	VS_OUTPUT         Output = (VS_OUTPUT)0;
 
-#pragma region test
-	/*matrix         matWV, matWVP;
-
-	matWV = mul(g_WorldMatrix, g_ViewMatrix);
-	matWVP = mul(matWV, g_ProjMatrix);
-
-	Out.vPosition = mul(float4(In.vPosition, 1.f), matWVP);
-	Out.vTexUV = In.vTexUV;
-	Out.vWorldPos = mul(float4(In.vPosition, 1.f), g_WorldMatrix).xyz;*/
-#pragma endregion test
-
 	Output.vPosition = mul(vector(Input.vPosition, 1.f), g_WorldMatrix);
 
 	float3   fLightDir = Output.vPosition.xyz - gWorldLightPosition.xyz;

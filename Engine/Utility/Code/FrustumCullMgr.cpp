@@ -34,7 +34,7 @@ HRESULT CFrustumCullMgr::Update(const _matrix& matView, const _matrix& matProj)
 	};
 
 	// w = 1·Î ¼¼ÆÃ
-	for (int i = 0; i < vWorldPos.size(); i++)
+	for (size_t i = 0; i < vWorldPos.size(); i++)
 	{
 		D3DXVec3TransformCoord(&vWorldPos[i], &vWorldPos[i], &matInv);
 	}

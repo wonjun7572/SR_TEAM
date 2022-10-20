@@ -67,6 +67,7 @@ public:
 	virtual HRESULT		Set_Material()override;
 
 	void			Key_Skill();
+
 private:
 	_int			m_iKnuckStack = 0;
 	_int			m_iDashStack = 0;
@@ -83,6 +84,8 @@ private:
 public:
 	CWeapon*		Get_Weapon() { return m_Weapon; }
 	_int			Get_DmgItem() { return m_iDmgItem; }
+	void			Set_DoorOpen(_bool bDoorOpen) { m_bDoorOpen = bDoorOpen; }
+
 private:
 	map<const _tchar*, CGameObject*>	m_mapPlayerBody;
 
@@ -104,12 +107,10 @@ private:
 	void			Gun_Check(void);
 	void			Inventory_Check(void); //인벤토리관련 함수
 
-
 private:
 	void			Jump(void);
 	_bool			m_bJump = false;
 	_bool			m_bFirst = true;
-
 
 private:
 	HRESULT			Add_Component(void);
@@ -153,8 +154,9 @@ private: // 파티클관련 포인터입니다.
 
 private:
 	_float			m_fRed = 0.f;
+	_float			m_fGreen = 0.f;
 	_float			m_fBlue = 0.f;
-
+	_float			m_fRange = 0.f;
 
 	_bool			m_bColorLighting = false;
 
@@ -186,8 +188,9 @@ private:
 	_bool			m_bSniper;
 	_bool			m_bSinperZoom = false;
 	
-
 	vector<CWeapon*> m_vecWeapon;
+
+	_bool			m_bDoorOpen = false;
 
 	// 총관련 변수
 	_float			m_fBulletTime = 0.f;

@@ -30,7 +30,7 @@ _int CTriggerParticle::Update_Object(const _float & fTimeDelta)
 	for (list<ATTRIBUTE>::iterator iter = m_particles.begin(); iter != m_particles.end(); iter++)
 	{
 		iter->fAge += fTimeDelta;
-		iter->vPos += (iter->vVelocity) * fTimeDelta * (rand() % 50)*1.;;
+		iter->vPos += (iter->vVelocity) * fTimeDelta * _float(rand() % 50) * 1.f;
 		iter->vPos.y += 0.01f* (m_fGravity*iter->fAge)*(m_fGravity* iter->fAge) * fTimeDelta;
 
 		if (iter->fAge > iter->fLifeTime)
@@ -103,11 +103,11 @@ void CTriggerParticle::resetParticle(ATTRIBUTE * attribute)
 	_vec3 min = _vec3(-1.0f, -1.0f, -1.0f);
 	_vec3 max = _vec3(1.0f, 1.0f, 1.0f);
 	_vec3 vRand = { 0.f,0.f ,0.f };
-	_float fRand = (rand() % 3)*0.1;
+	_float fRand = (rand() % 3) * 0.1f;
 
 	GetRandomVector(&vRand, &min, &max);
 	
-	attribute->vVelocity = m_vDir + vRand*0.05;
+	attribute->vVelocity = m_vDir + vRand * 0.05f;
 	attribute->vPos = m_vTriggerParticlePos - m_vDir+ vRand*.00005f; //+ attribute->vVelocity / 5.f;
 	attribute->vPos.y += vRand.y*.05f; //+ attribute->vVelocity / 5.f;
 

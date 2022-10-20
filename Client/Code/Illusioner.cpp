@@ -144,7 +144,6 @@ _int CIllusioner::Update_Object(const _float & fTimeDelta)
 			if (m_iSphereSkillTag != SKILL_STATICFIELD)
 				m_pTransCom->Chase_Target(&vPlayerPos, 0.f, fTimeDelta);
 			m_STATE = ILLUSION_ATTACK;
-
 			if (m_fFrame >= 2.f)
 			{
 				_vec3 vWallPos;
@@ -153,25 +152,15 @@ _int CIllusioner::Update_Object(const _float & fTimeDelta)
 				_vec3 vLook;
 				m_pTransCom->Get_Info(INFO_LOOK, &vLook);
 				D3DXVec3Normalize(&vLook, &vLook);
-
+				
 				CGameObject* pGameObject = CTargetCube::Create(m_pGraphicDev, _vec3(vWallPos.x + (vLook.x * 4.f), vWallPos.y - 3.f, vWallPos.z + (vLook.z * 4.f)), _vec3(0.f, 1.f, 0.f), _vec3(1.f, 1.f, 0.5f), 13);
 
 				NULL_CHECK_RETURN(pGameObject, E_FAIL);
 				Engine::Get_Layer(STAGE_DESTORYWALL)->Add_GameList(pGameObject);
 				m_fFrame = 0.f;
 
-				m_pEffect = CRcEffect::Create(m_pGraphicDev, CASTINGEFFECT_EFT); //enum EFFECTID
-				dynamic_cast<CRcEffect*>(m_pEffect)->Set_EffectPos(vPos.x, vPos.y, vPos.z);//EFFECT POS
-				dynamic_cast<CRcEffect*>(m_pEffect)->Set_SingleUse();
-
-				m_pPlayerEffect = CRcEffect::Create(m_pGraphicDev, STAREFFECT_EFT); //enum EFFECTID
-				dynamic_cast<CRcEffect*>(m_pPlayerEffect)->Set_EffectPos(vPlayerPos.x, vPlayerPos.y, vPlayerPos.z);//EFFECT POS
-				dynamic_cast<CRcEffect*>(m_pPlayerEffect)->Set_SingleUse();
-				
-
+				m_bCreate = true;
 			}
-			
-
 			m_bRun = false;
 		}
 		else if (m_pCollision->Sphere_Collision(this->m_pSearchRange_TransCom, m_pPlayerTransCom, vPlayerScale.x, vSearchScale.x)/* && (m_STATE != FIREMAN_ATTACK)*/)
@@ -201,16 +190,12 @@ _int CIllusioner::Update_Object(const _float & fTimeDelta)
 		m_pSearchRange_TransCom->Set_Pos(vMonsterPos.x, vMonsterPos.y, vMonsterPos.z);
 		m_pAttackRange_TransCom->Set_Pos(vMonsterPos.x, vMonsterPos.y, vMonsterPos.z);
 		m_pRunawayRange_TransCom->Set_Pos(vMonsterPos.x, vMonsterPos.y, vMonsterPos.z);
-			
-
 	}
 	return 0;
 }
 
 void CIllusioner::LateUpdate_Object(void)
 {
-
-
 	if (!m_bFirst)
 	{
 		if (m_STATE == ILLUSION_WALK)
@@ -230,23 +215,30 @@ void CIllusioner::LateUpdate_Object(void)
 		}
 	}
 
+	if (m_bCreate)
+	{
+		_vec3 vPlayerPos;
+		m_pPlayerTransCom->Get_Info(INFO_POS, &vPlayerPos);
+		
+		_vec3 vPos;
+		m_pTransCom->Get_Info(INFO_POS, &vPos);
+		
+		m_pEffect = CRcEffect::Create(m_pGraphicDev, CASTINGEFFECT_EFT); //enum EFFECTID
+		dynamic_cast<CRcEffect*>(m_pEffect)->Set_EffectPos(vPos.x, vPos.y, vPos.z);//EFFECT POS
+		dynamic_cast<CRcEffect*>(m_pEffect)->Set_SingleUse();
+		
+		m_pPlayerEffect = CRcEffect::Create(m_pGraphicDev, STAREFFECT_EFT); //enum EFFECTID
+		dynamic_cast<CRcEffect*>(m_pPlayerEffect)->Set_EffectPos(vPlayerPos.x, vPlayerPos.y, vPlayerPos.z);//EFFECT POS
+		dynamic_cast<CRcEffect*>(m_pPlayerEffect)->Set_SingleUse();
+		m_bCreate = false;
+	}
+
 	CMonster::LateUpdate_Object();
 }
 
 void CIllusioner::Render_Object(void)
 {
-	//m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
-	//m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pHitBoxTransCom->Get_WorldMatrixPointer());
-	//m_pHitBox->Render_Buffer();
-
-	//m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransCom->Get_WorldMatrixPointer());
-	//m_pAnimationBox->Render_Buffer();
-
-	////m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pSphereTransCom->Get_WorldMatrixPointer());
-	////m_pSphereBufferCom->Render_Buffer();
-	//m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransUICom->Get_WorldMatrixPointer());
-
 	m_pTextureUICom->Set_Texture(0);
 	m_pBufferUICom->Resize_Buffer(m_tAbility->fCurrentHp / m_tAbility->fMaxHp);
 	m_pBufferUICom->Render_Buffer();
@@ -385,7 +377,6 @@ void CIllusioner::Sound()
 
 CIllusioner * CIllusioner::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3 & vPos, _tchar * Name)
 {
-
 	CIllusioner* pInstance = new CIllusioner(pGraphicDev);
 	if (FAILED(pInstance->Ready_Object(vPos, Name)))
 	{
