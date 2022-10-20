@@ -99,30 +99,30 @@ void CRenderer::Render_GameObject(LPDIRECT3DDEVICE9 & pGraphicDev)
 	}
 	m_RenderGroup[RENDER_ANIOBJ].clear();
 
+	pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
 	for (auto& iter : m_RenderGroup[RENDER_MAPSETTING])
 	{
-		pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
 		iter->Render_Object();
 		Safe_Release(iter);
-		pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
 	}
 	m_RenderGroup[RENDER_MAPSETTING].clear();
+	pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
 
+	pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
+	pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+	pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+	pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+	pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
+	pGraphicDev->SetRenderState(D3DRS_ALPHAREF, 0xcc);
+	pGraphicDev->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
 	for (auto& iter : m_RenderGroup[RENDER_UI])
 	{
-		pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
-		pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
-		pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
-		pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
-		pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
-		pGraphicDev->SetRenderState(D3DRS_ALPHAREF, 0xcc);
-		pGraphicDev->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
 		iter->Render_Object();
-		pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
-		pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
-		pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
 		Safe_Release(iter);
 	}
+	pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
+	pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
+	pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
 	m_RenderGroup[RENDER_UI].clear();
 }
 

@@ -88,43 +88,49 @@ _int CTestCube::Update_Object(const _float& fTimeDelta)
 
 void CTestCube::Render_Object()
 {
-	CCamera* pCam = dynamic_cast<CCamera*>(Get_GameObject(STAGE_ENVIRONMENT, L"StaticCamera"));
-	_vec4 vCamPos = { pCam->GetEye().x,pCam->GetEye().y,pCam->GetEye().z, 1.f };
-	_vec4 vLightPos = { 50.f, 50.f, -50.f, 1.f };
-	D3DXVECTOR4      gLightColor(0.7f, 0.7f, 1.f, 1.f);
+#pragma region 쉐이더
+	//CCamera* pCam = dynamic_cast<CCamera*>(Get_GameObject(STAGE_ENVIRONMENT, L"StaticCamera"));
+	//_vec4 vCamPos = { pCam->GetEye().x,pCam->GetEye().y,pCam->GetEye().z, 1.f };
+	//_vec4 vLightPos = { 50.f, 50.f, -50.f, 1.f };
+	//D3DXVECTOR4      gLightColor(0.7f, 0.7f, 1.f, 1.f);
 
-	_matrix         matWorld, matView, matProj;
-	matWorld = *m_pTransCom->Get_WorldMatrixPointer();
-	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
-	m_pGraphicDev->GetTransform(D3DTS_PROJECTION, &matProj);
+	//_matrix         matWorld, matView, matProj;
+	//matWorld = *m_pTransCom->Get_WorldMatrixPointer();
+	//m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
+	//m_pGraphicDev->GetTransform(D3DTS_PROJECTION, &matProj);
 
-	D3DXMatrixTranspose(&matWorld, &matWorld);
-	D3DXMatrixTranspose(&matView, &matView);
-	D3DXMatrixTranspose(&matProj, &matProj);
+	//D3DXMatrixTranspose(&matWorld, &matWorld);
+	//D3DXMatrixTranspose(&matView, &matView);
+	//D3DXMatrixTranspose(&matProj, &matProj);
 
-	if (FAILED(m_pShaderCom->Set_RawValue("g_WorldMatrix", matWorld, sizeof(_matrix))))
-		return;
-	if (FAILED(m_pShaderCom->Set_RawValue("g_ViewMatrix", &matView, sizeof(_matrix))))
-		return;
-	if (FAILED(m_pShaderCom->Set_RawValue("g_ProjMatrix", &matProj, sizeof(_matrix))))
-		return;
-	if (FAILED(m_pShaderCom->Set_RawValue("gWorldLightPosition", &vLightPos, sizeof(_vec4))))
-		return;
-	if (FAILED(m_pShaderCom->Set_RawValue("gWorldCameraPosition", &vCamPos, sizeof(_vec4))))
-		return;
-	if (FAILED(m_pShaderCom->Set_RawValue("gLightColor", &gLightColor, sizeof(_vec4))))
-		return;
+	//if (FAILED(m_pShaderCom->Set_RawValue("g_WorldMatrix", matWorld, sizeof(_matrix))))
+	//	return;
+	//if (FAILED(m_pShaderCom->Set_RawValue("g_ViewMatrix", &matView, sizeof(_matrix))))
+	//	return;
+	//if (FAILED(m_pShaderCom->Set_RawValue("g_ProjMatrix", &matProj, sizeof(_matrix))))
+	//	return;
+	//if (FAILED(m_pShaderCom->Set_RawValue("gWorldLightPosition", &vLightPos, sizeof(_vec4))))
+	//	return;
+	//if (FAILED(m_pShaderCom->Set_RawValue("gWorldCameraPosition", &vCamPos, sizeof(_vec4))))
+	//	return;
+	//if (FAILED(m_pShaderCom->Set_RawValue("gLightColor", &gLightColor, sizeof(_vec4))))
+	//	return;
 
-	m_pTextureCom->Set_Texture(m_pShaderCom, "g_DefaultTexture", m_iTexIndex);
+	//m_pTextureCom->Set_Texture(m_pShaderCom, "g_DefaultTexture", m_iTexIndex);
 
-	m_pShaderCom->Begin_Shader(0);
+	//m_pShaderCom->Begin_Shader(0);
 
-	m_pBufferCom->Render_Buffer();
+	//m_pBufferCom->Render_Buffer();
 
-	m_pShaderCom->End_Shader();
+	//m_pShaderCom->End_Shader();
 
 	//if (m_bWireFrame)
 	//	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+#pragma endregion
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransCom->Get_WorldMatrixPointer());
+	FAILED_CHECK_RETURN(Set_Material(), );
+	m_pTextureCom->Set_Texture(m_iTexIndex);
+	m_pBufferCom->Render_Buffer();
 }
 
 // 큐브를 선택 후 터레인 자리위에 올려 놓는 함수
@@ -346,9 +352,9 @@ HRESULT CTestCube::Set_Material()
 	D3DMATERIAL9 Material;
 	ZeroMemory(&Material, sizeof(D3DMATERIAL9));
 
-	Material.Diffuse = D3DXCOLOR(1.f, 0.f, 0.f, 1.f);
-	Material.Specular = D3DXCOLOR(0.2f, 0.2f, 0.2f, 1.f);
-	Material.Ambient = D3DXCOLOR(0.5f, 0.5f, 0.5f, 1.f);
+	Material.Diffuse = D3DXCOLOR(1.f, 0.5f, 0.5f, 1.f);
+	Material.Specular = D3DXCOLOR(1.f, 0.4f, 0.4f, 1.f);
+	Material.Ambient = D3DXCOLOR(0.3f, 0.3f, 0.4f, 1.f);
 	Material.Emissive = D3DXCOLOR(0.f, 0.f, 0.f, 1.f);
 	Material.Power = 0.f;
 
