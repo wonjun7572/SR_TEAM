@@ -286,7 +286,7 @@ void CShop::Render_Object()
 
 				Engine::PlaySoundGun(L"Buying.wav", SOUND_EFFECT, fBuyingSound);
 				CLetterBox* m_pLetterBox = nullptr;
-				m_pLetterBox = CLetterBox::Create(m_pGraphicDev, L"BLUE GEM Get!!!", sizeof(L"BLUE GEM Get!!!"), 2);
+				m_pLetterBox = CLetterBox::Create(m_pGraphicDev, L"BLUE GEM Get!!!", sizeof(L"BLUE GEM Get!!!"), 1);
 			}
 		}
 	}

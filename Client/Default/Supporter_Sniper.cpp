@@ -152,7 +152,7 @@ _int CSupporter_Sniper::Update_Object(const _float & fTimeDelta)
 	}
 	// 여기서 good
 
-	if (vPosition.y < 0.6f)
+	if (vPosition.y < 1.f)
 	{
 		Find_Target();	//	맨 아래에 둘 것, 주변 적 탐색하여 공격하는 기능임
 						//	Look_Direction 지금 yaw만 적용시킨 상태

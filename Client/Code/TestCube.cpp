@@ -5,7 +5,7 @@
 #include "Export_Function.h"
 #include "CubePlayer.h"
 #include "StaticCamera.h"
-
+#include "Shop.h"
 static _int m_iMappingCnt = 0;
 static _int m_iLetterCnt = 0;
 
@@ -199,10 +199,12 @@ HRESULT CTestCube::Interact(void)
 		m_bSwitch = false;
 	}
 
+
 	if (!m_bLetterboxInit&& m_bSwitch)
 	{
 		if (m_iTexIndex == 37 || m_iTexIndex == 99)
 		{
+			
 			m_bLetterboxInit = true;
 			m_pLetterBox = CLetterBox::Create(m_pGraphicDev, L"Press [E] to Interact", sizeof(L"Press [E] to Interact"), 0);
 
@@ -217,7 +219,7 @@ HRESULT CTestCube::Interact(void)
 		}
 	}
 
-	if (m_bSwitch && Key_Down(DIK_E))
+	if (m_bSwitch && Get_DIKeyState(DIK_E))
 	{
 		if (m_iTexIndex == 37 || m_iTexIndex == 99) //초록색문
 			if (vPos.y < 15)
@@ -247,11 +249,15 @@ HRESULT CTestCube::Interact(void)
 
 	if (m_bSwitch && m_pLetterBox != nullptr)
 	{
-		dynamic_cast<CLetterBox*>(m_pLetterBox)->On_Switch();
+		if(!(dynamic_cast<CShop*>(Engine::Get_GameObject(STAGE_UI, L"Shop"))->Get_Switch()))
+			dynamic_cast<CLetterBox*>(m_pLetterBox)->On_Switch();
 	}
-	if (!m_bSwitch && m_pLetterBox !=nullptr)
+	if (m_pLetterBox != nullptr)
 	{
-		dynamic_cast<CLetterBox*>(m_pLetterBox)->Off_Switch();
+		if (!m_bSwitch || (dynamic_cast<CShop*>(Engine::Get_GameObject(STAGE_UI, L"Shop"))->Get_Switch()))
+		{
+			dynamic_cast<CLetterBox*>(m_pLetterBox)->Off_Switch();
+		}
 	}
 
 	if (m_bSwitch &&m_iTexIndex == 45)

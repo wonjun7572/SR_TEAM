@@ -182,7 +182,7 @@ _int CSupporter_Uzi::Update_Object(const _float & fTimeDelta)
 	}
 	// ¿©±â¼­ good
 
-	if (vPosition.y < 0.6f)
+	if (vPosition.y < 1.f)
 	{
 		Find_Target();
 
