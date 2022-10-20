@@ -54,6 +54,32 @@ _bool CCollision::Sphere_Collision(CTransform* pTempTransform, CTransform* pSour
 		return true;
 }
 
+_bool CCollision::Animation_Collision(CTransform * pTempTransform, _matrix * AnimationFinalMatrix, _float fTemp, _float fAnimationScale)
+{
+	_vec3 vTemp, vSour;
+
+	pTempTransform->Get_Info(INFO_POS, &vTemp);
+	vSour = { AnimationFinalMatrix->m[3][0], AnimationFinalMatrix->m[3][1] ,AnimationFinalMatrix->m[3][2] };
+
+	_float fTempX, fTempY, fTempZ;
+	_float fSourX, fSourY, fSourZ;
+
+	fTempX = vTemp.x;
+	fTempY = vTemp.y;
+	fTempZ = vTemp.z;
+
+	fSourX = vSour.x;
+	fSourY = vSour.y;
+	fSourZ = vSour.z;
+
+	_float fDistance = sqrtf((fTempX - fSourX) * (fTempX - fSourX) + (fTempY - fSourY) * (fTempY - fSourY) + (fTempZ - fSourZ) * (fTempZ - fSourZ));
+
+	if (fDistance > fTemp + fAnimationScale)
+		return false;
+	else
+		return true;
+}
+
 _int CCollision::Wall_Collision(_vec3* vNorm)
 {
 	CLayer* pLayer = Engine::Get_Layer(STAGE_WALL);

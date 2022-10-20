@@ -5,6 +5,8 @@
 #include "Shotgun.h"
 #include "CubePlayer.h"
 #include "Inventory.h"
+#include "LetterBox.h"
+
 CShop::CShop(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
 {
@@ -221,15 +223,20 @@ void CShop::Render_Object()
 			Render_Ortho(m_pSniperformCom, m_pSniperTextureform, 0);
 		}
 	}
+
 	if (PointTest(m_vPos_ButtonFour))
 	{
+
 		Render_Ortho(m_pLaserTransformCom, m_pLaserRaffle, 1);
 		if (Mouse_Down(DIM_LB) || Mouse_Down(DIM_RB))
 		{
 			if (m_pLaserRaffle || m_eLevelUP == LEVEL_LASER)
 			{
 				dynamic_cast<CUzi*>(Engine::Get_GameObject(STAGE_GUN, L"UZI1"))->Get_UziUpgrade();
-				dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->ItemCreate(5);
+				dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->ItemCreate(5);			
+
+				CLetterBox* m_pLetterBox = nullptr;
+				m_pLetterBox = CLetterBox::Create(m_pGraphicDev, L"Speed Part Get!!!", sizeof(L"Speed Part Get!!!"), 1);				
 			}
 		}
 	}
@@ -241,6 +248,8 @@ void CShop::Render_Object()
 			if (m_pHeavyRaffle || m_eLevelUP == LEVEL_HEAVY)
 			{
 				dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->ItemCreate(6);
+				CLetterBox* m_pLetterBox = nullptr;
+				m_pLetterBox = CLetterBox::Create(m_pGraphicDev, L"DMG Part Get!!!", sizeof(L"DMG Part Get!!!"), 1);
 			}
 		}
 	}
@@ -252,6 +261,8 @@ void CShop::Render_Object()
 			if (m_pRailGunScope || m_eLevelUP == LEVEL_RAIL)
 			{
 				dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->ItemCreate(7);
+				CLetterBox* m_pLetterBox = nullptr;
+				m_pLetterBox = CLetterBox::Create(m_pGraphicDev, L"RED GEM Get!!!", sizeof(L"RED GEM Get!!!"), 1);
 			}
 		}
 	}
@@ -263,6 +274,8 @@ void CShop::Render_Object()
 			if (m_pRailGunScope || m_eLevelUP == LEVEL_BURST)
 			{
 				dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->ItemCreate(8);
+				CLetterBox* m_pLetterBox = nullptr;
+				m_pLetterBox = CLetterBox::Create(m_pGraphicDev, L"BLUE GEM Get!!!", sizeof(L"BLUE GEM Get!!!"), 1);
 			}
 		}
 	}

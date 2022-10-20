@@ -103,6 +103,8 @@ _int CZombie::Update_Object(const _float & fTimeDelta)
 	}
 	if (m_iSphereSkillTag != SKILL_STATICFIELD)
 		m_fTimeDelta = fTimeDelta;
+	if (m_iSphereSkillTag == SKILL_STATICFIELD)
+		m_fTimeDelta = 0.f;
 
 	CMonster::Update_Object(fTimeDelta);
 

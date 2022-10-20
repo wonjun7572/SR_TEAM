@@ -65,7 +65,8 @@ protected:
 	CTransform*			m_pRunawayRange_TransCom = nullptr;		//	근처에오면 도망(원거리몹)
 	////////////////////////////////////////////////////////////////////////
 
-	_bool				m_b;
+	_bool				m_bisHit = false;
+	_bool				m_bDetect = false;
 
 	MONSTERABILITY*		m_tAbility;
 
@@ -81,6 +82,10 @@ protected:
 	CTransform*			m_pMonsterMapping = nullptr;
 
 	_float				m_fSpeed = 1.f;
+	_float				m_fSoundTimer = 0.f;
+	_float				m_fIdleSound = 0.2f;
+	_float				m_fHitSound = 0.3f;
+	_float				m_fDeadSound = 1.f;
 
 	_vec3				m_vDirection;
 

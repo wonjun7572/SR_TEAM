@@ -146,7 +146,8 @@ _int CTerret::Update_Object(const _float & fTimeDelta)
 			vDirection = vPlayerPos - vBulletFire;
 			m_STATE = TERRET_SHOT;
 			CPoolMgr::GetInstance()->Reuse_Obj(m_pGraphicDev, &vBulletFire, &vDirection, 10);
-		
+			_float fGunSound = .5f;
+			Engine::PlaySoundGun(L"Terret.wav", SOUND_EFFECT, fGunSound);
 		}
 	}
 	else if (m_STATE)

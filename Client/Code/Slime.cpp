@@ -55,7 +55,7 @@ HRESULT CSlime::Ready_Object(const _vec3& vPos, _tchar* Name)
 	m_pSphereTransCom->Set_Pos(vAnimationPos.x, vAnimationPos.y, vAnimationPos.z);
 	m_pSphereTransCom->Static_Update();
 
-	m_pSearchRange_TransCom->Set_Scale(&_vec3(10.f, 10.f, 10.f));
+	m_pSearchRange_TransCom->Set_Scale(&_vec3(7.5f, 7.5f, 7.5f));
 	m_pSearchRange_TransCom->Set_Pos(vAnimationPos.x, vAnimationPos.y, vAnimationPos.z);
 	m_pSearchRange_TransCom->Static_Update();
 
@@ -64,6 +64,7 @@ HRESULT CSlime::Ready_Object(const _vec3& vPos, _tchar* Name)
 
 _int CSlime::Update_Object(const _float & fTimeDelta)
 {
+	m_fSoundTimer += fTimeDelta;
 	if (m_bDead)
 	{
 		m_pComboUI->KillCntPlus();
@@ -87,6 +88,10 @@ _int CSlime::Update_Object(const _float & fTimeDelta)
 	CMonster::Update_Object(fTimeDelta);
 	if (m_iSphereSkillTag != SKILL_STATICFIELD)
 		m_fTimeDelta = fTimeDelta;
+	if (m_iSphereSkillTag == SKILL_STATICFIELD)
+		m_fTimeDelta = 0.f;
+
+
 
 	if (!Collision_Wall(fTimeDelta))
 	{
@@ -105,7 +110,10 @@ _int CSlime::Update_Object(const _float & fTimeDelta)
 		if (this->m_pSearchRange_TransCom, m_pPlayerTransCom, vPlayerScale.x, vSearchScale.x)
 		{
 			if (m_iSphereSkillTag != SKILL_STATICFIELD)
+			{
 				m_pTransCom->Chase_Target(&vPlayerPos, 1.f, fTimeDelta);
+				m_bDetect = true;
+			}
 		}
 		else
 		{
@@ -121,6 +129,7 @@ _int CSlime::Update_Object(const _float & fTimeDelta)
 		m_pHitBoxTransCom->Set_Pos(vMonsterPos.x, vMonsterPos.y, vMonsterPos.z);
 		m_pSphereTransCom->Set_Pos(vMonsterPos.x, vMonsterPos.y, vMonsterPos.z);
 	}
+	Sound();
 	return 0;
 }
 
@@ -134,7 +143,7 @@ void CSlime::LateUpdate_Object(void)
 			Run_Animation(5.f);
 		}
 	}
-
+	
 	CMonster::LateUpdate_Object();
 }
 
@@ -253,6 +262,48 @@ HRESULT CSlime::Create_Item()
 	}
 
 	return S_OK;
+}
+
+void CSlime::Sound()
+{
+	srand(rand());
+	_int i = (rand() % 3) + 1;
+	_float fHitSound = .3f;
+	_float fDeadSound = 1.f;		
+	if (m_fSoundTimer > 5.f)
+	{
+		if (m_bDetect)
+		{
+			if (i == 1)
+				Engine::PlaySoundGun(L"Slime_attack_01.wav", SOUND_EFFECT, m_fIdleSound);
+			if (i == 2)													   
+				Engine::PlaySoundGun(L"Slime_attack_02.wav", SOUND_EFFECT, m_fIdleSound);
+			if (i == 3)													   
+				Engine::PlaySoundGun(L"Slime_attack_03.wav", SOUND_EFFECT, m_fIdleSound);
+			m_fSoundTimer = 0.f;
+			m_bDetect = false;
+		}
+	}
+	if (m_bisHit)
+	{
+		if (i == 1)
+			Engine::PlaySoundGun(L"Slime_pain_01.wav", SOUND_EFFECT, m_fHitSound);
+		if (i == 2)													 
+			Engine::PlaySoundGun(L"Slime_pain_02.wav", SOUND_EFFECT, m_fHitSound);
+		if (i == 3)													 
+			Engine::PlaySoundGun(L"Slime_pain_03.wav", SOUND_EFFECT, m_fHitSound);
+	
+		m_bisHit = false;
+	}
+	if (m_bDead)
+	{
+		if (i == 1)
+			Engine::PlaySoundGun(L"Slime_death_01.wav", SOUND_EFFECT, m_fDeadSound);
+		if (i == 2)													  
+			Engine::PlaySoundGun(L"Slime_death_02.wav", SOUND_EFFECT, m_fDeadSound);
+		if (i == 3)													  
+			Engine::PlaySoundGun(L"Slime_death_03.wav", SOUND_EFFECT, m_fDeadSound);	
+	}
 }
 
 HRESULT CSlime::Build(void)
@@ -593,7 +644,6 @@ void CSlime::Free(void)
 	{
 		Safe_Delete_Array(iter);
 	}
-
 	CMonster::Free();
 	Safe_Delete<MONSTERABILITY*>(m_tAbility);
 }

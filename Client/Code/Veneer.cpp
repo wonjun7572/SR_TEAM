@@ -29,7 +29,7 @@ _int CVeneer::Update_Object(const _float & fTimeDelta)
 	}
 
 	Engine::CGameObject::Update_Object(fTimeDelta);
-	Add_RenderGroup(RENDER_NONALPHA, this);
+	Add_RenderGroup(RENDER_UI, this);
 	return 0;
 }
 

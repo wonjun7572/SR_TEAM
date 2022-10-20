@@ -20,6 +20,10 @@ public:
 	_matrix GetView() const { return m_matView; }
 	_matrix GetProj() const { return m_matProj; }
 
+	_vec3	GetEye() const { return m_vEye; }
+	_vec3	GetAt() const { return m_vAt; }
+	_vec3	GetUp() const { return m_vUp; }
+
 	void Get_Position(_vec3* vPos) { *vPos = m_vEye; }
 	void Get_Look(_vec3* vlook) { *vlook = m_vAt - m_vEye; }
 	

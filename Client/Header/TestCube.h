@@ -41,10 +41,10 @@ private:
 	HRESULT				Add_Component(void);
 
 private:
-	CCubeTex*			m_pBufferCom = nullptr;
-	CTransform*			m_pTransCom = nullptr;
+	CCubeTex*			m_pBufferCom  = nullptr;
+	CTransform*			m_pTransCom   = nullptr;
 	CTexture*			m_pTextureCom = nullptr;
-	
+	CShader*			m_pShaderCom  = nullptr;
 
 	CCalculator*		m_pCalculatorCom = nullptr;
 	//CProjectileParticle* m_pProjectileParicle = nullptr;
@@ -72,6 +72,7 @@ private: // 문 상호작용 관련
 	_float				m_fTimer = 0.f;
 
 	_vec3				m_vGPos = { 0.f,0.f,0.f };
+	 _int				m_iLetterCnt = 0;
 
 	wstring				m_strPress;
 	CGameObject*		m_pLetterBox = nullptr;
