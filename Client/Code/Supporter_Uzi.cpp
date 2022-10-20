@@ -92,7 +92,7 @@ _int CSupporter_Uzi::Update_Object(const _float & fTimeDelta)
 	{
 		m_pTransform->Move_Pos(&(_vec3(0.f, -1.f, 0.f) * 10.f * fTimeDelta));
 	}
-	else if(vPosition.y < 0.6f)
+	else if(vPosition.y < 2.f)
 	{
 		m_bSetCam = false;
 	}
@@ -146,7 +146,7 @@ _int CSupporter_Uzi::Update_Object(const _float & fTimeDelta)
 	}
 	// ¿©±â¼­ good
 
-	if (vPosition.y < 0.6f)
+	if (vPosition.y < 1.f)
 	{
 		Find_Target();
 

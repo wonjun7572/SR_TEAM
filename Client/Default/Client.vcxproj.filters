@@ -861,6 +861,9 @@
     <ClInclude Include="..\Header\MiddleBoss.h">
       <Filter>02. GameObject\01. For_Stage\21. Boss\01. MiddleBoss</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\Mob.h">
+      <Filter>02. GameObject\01. For_Stage\08. Monster\07. Mob</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -1318,6 +1321,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\LoadingBar.cpp">
       <Filter>01. Scene\00. Logo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Mob.cpp">
+      <Filter>02. GameObject\01. For_Stage\08. Monster\07. Mob</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -230,40 +230,6 @@ _int CKrakenBoss::Update_Pattern(_float fTimeDelta)
 
 			m_PATTERN = m_vPattern.front();
 			
-			/*m_i++;
-
-			if (m_i % 2 == 0)
-			{
-				m_PATTERN = m_vPattern.front();
-			}
-			else
-			{
-				m_PATTERN = m_vPattern.back();
-				
-			}*/
-		
-			//if (m_PATTERN == KRAKEN_SKILL_INKSHOT)
-			//{
-			//	m_PATTERN = KRAKEN_SKILL_5;
-			//}
-			//else if (m_PATTERN == KRAKEN_SKILL_5)
-			//{
-			//	m_PATTERN = KRAKEN_SKILL_INKSHOT;
-			//}
-			
-			
-			/*	if (m_PATTERN = m_vPattern.front())
-			{
-				m_PATTERN = m_vPattern.back();
-			}
-			else if (m_PATTERN = m_vPattern.back())
-			{
-				m_PATTERN = m_vPattern.front();
-			}
-
-
-
-*/
 			m_ReloadTimer = 0.f;
 		}
 	}
@@ -288,7 +254,7 @@ _int CKrakenBoss::Update_Pattern(_float fTimeDelta)
 
 						D3DXVec3TransformNormal(&vDir, &vDir, &matWorld);
 
-						vPos.y = 1.6f;
+						vPos.y = 1.4f;
 						CPoolMgr::GetInstance()->Reuse_KrakenBullet(m_pGraphicDev, &vPos, &vDir, 10.f, 10.f);
 					}
 				}

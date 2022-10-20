@@ -56,6 +56,18 @@ _int CMainApp::Update_MainApp(const _float & fTimeDelta)
 		}
 	}
 
+
+	if (Get_DIKeyState(DIK_Y))
+	{
+		Engine::CScene*			pScene = nullptr;
+
+		pScene = CFinalStage::Create(m_pGraphicDev);
+		NULL_CHECK_RETURN(pScene, E_FAIL);
+
+		FAILED_CHECK_RETURN(m_pManagementClass->Set_Scene(pScene), E_FAIL);
+	}
+
+
 	// 툴 프레임 업데이트 
 	ImGui_ImplDX9_NewFrame();
 	ImGui_ImplWin32_NewFrame();
