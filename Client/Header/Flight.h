@@ -87,7 +87,7 @@ private:
 	vector<_uint>	m_ShuffleSpeed;
 	_float			m_fSpeed;
 
-	_bool			m_bShuttle;
+	_bool			m_bShuttle = false;
 	_bool			m_bShuttleCam;
 
 	_int			m_iPosSet = -1;

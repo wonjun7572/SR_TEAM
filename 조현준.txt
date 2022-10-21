@@ -8,8 +8,6 @@ if (!m_bLetterboxInit&& m_iTexIndex == 37 && m_bSwitch)
 		
 		dynamic_cast<CLetterBox*>(m_pLetterBox)->Off_Switch();
 		
-
-		
 		TCHAR* szCntName = new TCHAR[64];
 		wsprintf(szCntName, L"");
 		const _tchar*	szNumbering = L"WallLetter_%d";
