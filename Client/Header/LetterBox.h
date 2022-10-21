@@ -22,14 +22,16 @@ public:
 	void   LetterDead() { m_bDead = true; }
 
 public:
-	void         On_Switch() { m_bPowerSwitch = true; };
-	void         Off_Switch() { m_bPowerSwitch = false; };
+	void         On_Switch() { m_bPowerSwitch = true; }
+	void         Off_Switch() { m_bPowerSwitch = false; }
 	void      Maker(CLetterBox* pInstance)
 	{
 		Engine::Add_GameObject(STAGE_UI, pInstance, szCntName);
 	}
+	void		 SetAlpha(_float fAlpha) { m_fFontAlpha = fAlpha; }
+
 private:
-	HRESULT        Add_Component(void);
+	HRESULT      Add_Component(void);
 	void         Alpha_Effect();
 	void         Begin_OrthoProj();
 	void         End_OrthoProj();

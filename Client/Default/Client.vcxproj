@@ -224,6 +224,7 @@
     <ClInclude Include="..\Header\Npc.h" />
     <ClInclude Include="..\Header\ObjectCube.h" />
     <ClInclude Include="..\Header\Ping.h" />
+    <ClInclude Include="..\Header\Quest.h" />
     <ClInclude Include="..\Header\RcEffect.h" />
     <ClInclude Include="..\Header\RoundEffect.h" />
     <ClInclude Include="..\Header\Shield.h" />
@@ -397,6 +398,7 @@
     <ClCompile Include="..\Code\Npc.cpp" />
     <ClCompile Include="..\Code\ObjectCube.cpp" />
     <ClCompile Include="..\Code\Ping.cpp" />
+    <ClCompile Include="..\Code\Quest.cpp" />
     <ClCompile Include="..\Code\RcEffect.cpp" />
     <ClCompile Include="..\Code\RoundEffect.cpp" />
     <ClCompile Include="..\Code\Shield.cpp" />

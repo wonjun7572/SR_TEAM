@@ -89,6 +89,7 @@
 #include "Key.h"
 #include "FlightSpot.h"
 #include "Npc.h"
+#include "Quest.h"
 
 CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CScene(pGraphicDev)
@@ -372,6 +373,10 @@ HRESULT CStage::Ready_Layer_UI(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"InventoryUI", pGameObject), E_FAIL);
 
+	pGameObject = CQuest::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"QuestUI", pGameObject), E_FAIL);
+
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
 	return S_OK;
@@ -544,7 +549,7 @@ HRESULT CStage::Ready_Layer_Monster(const _tchar * pLayerTag)
 		}
 	}
 	
-	/*if (!vecSlime.empty())
+	if (!vecSlime.empty())
 	{
 		for (size_t i = 0; i < vecSlime.size(); i++)
 		{
@@ -592,7 +597,7 @@ HRESULT CStage::Ready_Layer_Monster(const _tchar * pLayerTag)
 
 	pGameObject = CMiddleBoss::Create(m_pGraphicDev, _vec3(109.f, 0.6f, 10.f), L"MiddleBoss");
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);*/
+	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
@@ -948,7 +953,7 @@ HRESULT CStage::Ready_Layer_Trap(const _tchar * pLayerTag)
 	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	//FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
 
-	/*if (!vecThrone.empty())
+	if (!vecThrone.empty())
 	{
 		for (size_t i = 0; i < vecThrone.size(); i++)
 		{
@@ -989,7 +994,7 @@ HRESULT CStage::Ready_Layer_Trap(const _tchar * pLayerTag)
 			NULL_CHECK_RETURN(pGameObject, E_FAIL);
 			FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
 		}
-	}*/
+	}
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 

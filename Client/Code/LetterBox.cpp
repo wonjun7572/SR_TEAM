@@ -71,6 +71,11 @@ void CLetterBox::Render_Object(void)
 		m_pRcCom->Render_Buffer();
 		End_OrthoProj();
 	}
+
+	if (m_iIndex == 3)
+	{
+		BoxText();
+	}
 }
 
 HRESULT CLetterBox::Add_Component(void)
@@ -130,7 +135,7 @@ void CLetterBox::Begin_OrthoProj()
 	matView.m[2][2] = 1.f;
 	//matView.m[3][0] = m_TranformCom->m_vInfo[INFO_POS].x ;
 	matView.m[3][1] = -WINCY / 4 + 50;
-	matView.m[3][2] = 0.001;
+	matView.m[3][2] = 0.001f;
 
 	D3DXMatrixOrthoLH(&matOrtho, WINCX, WINCY, 0.f, 1.f);
 		
