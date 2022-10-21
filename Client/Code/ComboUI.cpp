@@ -70,40 +70,43 @@ void CComboUI::LateUpdate_Object(void)
 
 void CComboUI::Render_Object(void)
 {
-	_matrix      OldViewMatrix, OldProjMatrix, ViewMatrix;
+	_matrix      matWorld, matView;
 
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pHUDTransCom->Get_WorldMatrixPointer());
+	matWorld = *m_pHUDTransCom->Get_WorldMatrixPointer();
 
-	m_pGraphicDev->GetTransform(D3DTS_VIEW, &OldViewMatrix);
-	m_pGraphicDev->GetTransform(D3DTS_PROJECTION, &OldProjMatrix);
+	matView = *D3DXMatrixIdentity(&matView);
 
-	ViewMatrix = *D3DXMatrixIdentity(&ViewMatrix);
+	D3DXMatrixTranspose(&matWorld, &matWorld);
+	D3DXMatrixTranspose(&matView, &matView);
+	D3DXMatrixTranspose(&m_matProj, &m_matProj);
 
-	m_pGraphicDev->SetTransform(D3DTS_VIEW, &ViewMatrix);
-	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &m_matProj);
+	if (FAILED(m_pShaderCom->Set_RawValue("g_WorldMatrix", &matWorld, sizeof(_matrix))))
+		return;
+	if (FAILED(m_pShaderCom->Set_RawValue("g_ViewMatrix", &matView, sizeof(_matrix))))
+		return;
+	if (FAILED(m_pShaderCom->Set_RawValue("g_ProjMatrix", &m_matProj, sizeof(_matrix))))
+		return;
 
-	m_pHUDTextureCom->Set_Texture();
+	m_pHUDTextureCom->Set_Texture(m_pShaderCom, "g_DefaultTexture", 0);
+	m_pShaderCom->Begin_Shader(0);
 	m_pHUDBufferCom->Render_Buffer();
+	m_pShaderCom->End_Shader();
 
-	m_pGraphicDev->SetTransform(D3DTS_VIEW, &OldViewMatrix);
-	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &OldProjMatrix);
+	matWorld = *m_pTransCom->Get_WorldMatrixPointer();
+	D3DXMatrixTranspose(&matWorld, &matWorld);
 
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransCom->Get_WorldMatrixPointer());
+	if (FAILED(m_pShaderCom->Set_RawValue("g_WorldMatrix", &matWorld, sizeof(_matrix))))
+		return;
+	if (FAILED(m_pShaderCom->Set_RawValue("g_ViewMatrix", &matView, sizeof(_matrix))))
+		return;
+	if (FAILED(m_pShaderCom->Set_RawValue("g_ProjMatrix", &m_matProj, sizeof(_matrix))))
+		return;
 
-	m_pGraphicDev->GetTransform(D3DTS_VIEW, &OldViewMatrix);
-	m_pGraphicDev->GetTransform(D3DTS_PROJECTION, &OldProjMatrix);
-
-	ViewMatrix = *D3DXMatrixIdentity(&ViewMatrix);
-
-	m_pGraphicDev->SetTransform(D3DTS_VIEW, &ViewMatrix);
-	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &m_matProj);
-
-	m_pTextureCom->Set_Texture();
-	m_pBufferCom->Resize_Buffer_Reverse(m_fFrame * 0.5f);
+	m_pTextureCom->Set_Texture(m_pShaderCom, "g_DefaultTexture", 0);
+	m_pShaderCom->Begin_Shader(0);
+	m_pBufferCom->Resize_Buffer(m_fFrame * 0.5f);
 	m_pBufferCom->Render_Buffer();
-
-	m_pGraphicDev->SetTransform(D3DTS_VIEW, &OldViewMatrix);
-	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &OldProjMatrix);
+	m_pShaderCom->End_Shader();
 
 	Render_Font(L"Combo", m_strCombo.c_str(), &_vec2(1095.f, 170.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
 	Render_Font(L"Kill", m_strKill.c_str(), &_vec2(1120.f,250.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
@@ -136,6 +139,10 @@ HRESULT CComboUI::Add_Component()
 	pComponent = m_pHUDTextureCom = dynamic_cast<CTexture*>(Clone_Proto(COMBOBAR_HUD_TEX));
 	NULL_CHECK_RETURN(m_pHUDTextureCom, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ COMBOBAR_HUD_TEX , pComponent });
+
+	pComponent = m_pShaderCom = dynamic_cast<CShader*>(Clone_Proto(RCTEX_SHADER));
+	NULL_CHECK_RETURN(m_pShaderCom, E_FAIL);
+	m_mapComponent[ID_STATIC].insert({ RCTEX_SHADER, pComponent });
 
 	return S_OK;
 }

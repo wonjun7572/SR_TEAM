@@ -27,9 +27,10 @@ private:
 	HRESULT Add_Component();
 
 private:
-	CRcTex*		m_pBufferCom = nullptr;
-	CTransform* m_pTransCom = nullptr;
-	CTexture*	m_pTextureCom = nullptr;
+	CRcTex*			m_pBufferCom = nullptr;
+	CTransform*		m_pTransCom = nullptr;
+	CTexture*		m_pTextureCom = nullptr;
+	CShader*		m_pShaderCom = nullptr;
 
 	_bool		m_bSwitch = false;
 

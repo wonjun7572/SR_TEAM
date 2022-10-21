@@ -44,24 +44,21 @@ private:
 	void         DialogueBox();
 
 private:
-	CTransform*      m_TranformCom = nullptr;
+	CTransform*     m_TranformCom = nullptr;
 	CTexture*       m_pFontTexture = nullptr;
 	CTexture*       m_pTexture = nullptr;
 	CCubeTex*       m_pCube = nullptr;
-	CRcTex*          m_pRcCom = nullptr;
-	_matrix          m_matWorld;
-	_matrix          m_matView;
-	_matrix          m_matProj;
-	wstring          m_strLetterContents;
+	CRcTex*         m_pRcCom = nullptr;
+	CShader*	m_pShaderCom = nullptr;	
+	wstring         m_strLetterContents;
 	_float          m_fFontSize;
 	_float          m_fFontAlpha;
-	//_tchar         m_strLetterName[64];
-	_tchar           szCntName[64];
+	_tchar          szCntName[64];
 
-	_bool         m_bPowerSwitch = true;
-	_bool         m_bAlphaSwitch = false;
-	_int         m_iTextAmount;
-	_int         m_iIndex;
+	_bool			m_bPowerSwitch = true;
+	_bool			m_bAlphaSwitch = false;
+	_int			m_iTextAmount;
+	_int			m_iIndex;
 
 public:
 	static CLetterBox*   Create(LPDIRECT3DDEVICE9 pGraphicDev, _tchar* tDialogue, _int iSize, _int iIndex);

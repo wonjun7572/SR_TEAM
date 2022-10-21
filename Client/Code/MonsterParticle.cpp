@@ -35,7 +35,7 @@ _int CMonsterParticle::Update_Object(const _float & fTimeDelta)
 
 	removeDeadParticles();
 
-	Add_RenderGroup(RENDER_UI, this);
+	Add_RenderGroup(RENDER_NONALPHA, this);
 
 	return 0;
 }
@@ -52,7 +52,7 @@ void CMonsterParticle::Render_Object(void)
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, &matWorld);
 	if (!m_particles.empty())
 	{
-		m_pTextureCom->Set_Texture(0);
+		m_pTextureCom->Set_Texture();
 		CPSystem::Render_Object();
 	}
 }

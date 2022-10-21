@@ -30,6 +30,8 @@ public:
 	void		HitPlayer() { m_bPlayerHit = true; }
 	void		CameraShaking() { m_bEarthQuake = true; }
 
+	_bool		Get_bNpc() { return m_bFirst; }
+
 public:
 	void		Set_MainCam(_bool is) { m_bMainCameraOn = is; }
 	_bool		Get_MainCam(void) { return m_bMainCameraOn; }
@@ -73,6 +75,7 @@ private:
 	_float			m_fPlayerFrame = 0.f;
 	_bool			m_bPlayerHit = false;
 	_bool			m_bEarthQuake = false;
+	_bool			m_bFirst = false;
 
 public:
 	static CStaticCamera*		Create(LPDIRECT3DDEVICE9 pGraphicDev,

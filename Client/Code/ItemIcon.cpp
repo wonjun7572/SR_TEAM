@@ -35,7 +35,7 @@ _int CItemIcon::Update_Object(const _float & fTimeDelta)
 			CGameObject* pPlayer = nullptr;
 			if (!pPlayer)
 				pPlayer = Engine::Get_GameObject(STAGE_CHARACTER, L"PLAYER");
-//			dynamic_cast<CCubePlayer*>(pPlayer)->On_StaticField();
+			dynamic_cast<CCubePlayer*>(pPlayer)->On_StaticField();
 
 			_float fSound = 1.f;
 			Engine::PlaySoundGun(L"Upgrade.wav", SOUND_EFFECT, fSound);
@@ -45,7 +45,7 @@ _int CItemIcon::Update_Object(const _float & fTimeDelta)
 			CGameObject* pPlayer = nullptr;
 			if (!pPlayer)
 				pPlayer = Engine::Get_GameObject(STAGE_CHARACTER, L"PLAYER");
-//			dynamic_cast<CCubePlayer*>(pPlayer)->On_Shield();
+			dynamic_cast<CCubePlayer*>(pPlayer)->On_Shield();
 
 			_float fSound = 1.f;
 			Engine::PlaySoundGun(L"Upgrade.wav", SOUND_EFFECT, fSound);
@@ -69,30 +69,22 @@ void CItemIcon::Render_Object(void)
 {
 	if (dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->Get_Switch() && m_iNumber != 0 && !m_bWeaponPart)
 	{
-		m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
-
-		m_pTextureCom->Set_Texture(m_iTexIndex);
-
 		Begin_OrthoProj();
+		m_pTextureCom->Set_Texture(m_pShaderCom, "g_DefaultTexture", m_iTexIndex);
+		m_pShaderCom->Begin_Shader(0);
 		m_pRcTexCom->Render_Buffer();
 		End_OrthoProj();
-
-		m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
-
 	}
 	if (m_iNumber == 0)
 	{
 		if (dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->Get_Switch() || dynamic_cast<CShop*>(Engine::Get_GameObject(STAGE_UI, L"Shop"))->Get_Switch())
 		{
-			m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
-
-			if (m_iNumber == 0)
-				m_pTextureCom->Set_Texture(0);
 			Begin_OrthoProj();
+			if (m_iNumber == 0)
+				m_pTextureCom->Set_Texture(m_pShaderCom, "g_DefaultTexture", 0);
+			m_pShaderCom->Begin_Shader(0);
 			m_pRcTexCom->Render_Buffer();
 			End_OrthoProj();
-
-			m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
 		}
 	}
 }
@@ -101,7 +93,6 @@ void CItemIcon::Render_Object(void)
 HRESULT CItemIcon::Add_Component()
 {
 	CComponent* pComponent = nullptr;
-
 
 	pComponent = m_pRcTexCom = dynamic_cast<CRcTex*>(Clone_Proto(L"Proto_RcTexCom"));
 	NULL_CHECK_RETURN(m_pRcTexCom, E_FAIL);
@@ -115,45 +106,44 @@ HRESULT CItemIcon::Add_Component()
 	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_ItemIconTexture", pComponent });
 
+	pComponent = m_pShaderCom = dynamic_cast<CShader*>(Clone_Proto(RCTEX_SHADER));
+	NULL_CHECK_RETURN(m_pShaderCom, E_FAIL);
+	m_mapComponent[ID_STATIC].insert({ RCTEX_SHADER, pComponent });
+
 	return S_OK;
 }
 
 void CItemIcon::Begin_OrthoProj()
 {
-
 	m_pTransformCom->Get_Info(INFO_POS, &m_vIconPos);
 
-	_matrix matWorld, matView, matProj, matOrtho;
-	m_pGraphicDev->GetTransform(D3DTS_WORLD, &matWorld);
-	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
-	m_pGraphicDev->GetTransform(D3DTS_PROJECTION, &matProj);
-
-	memcpy(&m_matWorld, &matWorld, sizeof(_matrix));
-	memcpy(&m_matView, &matView, sizeof(_matrix));
-	memcpy(&m_matProj, &matProj, sizeof(_matrix));
-
+	_matrix matWorld, matView, matOrtho;
 	D3DXMatrixIdentity(&matWorld);
 	D3DXMatrixIdentity(&matView);
 
 	matView.m[0][0] = m_fImgX * WINCX / WINCY; // 이미지 가로
 	matView.m[1][1] = m_fImgY * WINCY / WINCY;   // 이미지 세로
 	matView.m[2][2] = 1.f;
-	matView.m[3][0] = m_fImgX/8 + m_vBlockPos.x * (WINCX / WINCY);
+	matView.m[3][0] = m_fImgX / 8 + m_vBlockPos.x * (WINCX / WINCY);
 	matView.m[3][1] = m_vBlockPos.y * (WINCX / WINCY);
 	matView.m[3][2] = m_fImgZ;
 
-
 	D3DXMatrixOrthoLH(&matOrtho, WINCX, WINCY, 0.f, 1.f);
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, &matWorld);
-	m_pGraphicDev->SetTransform(D3DTS_VIEW, &matView);
-	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &matOrtho);
+	D3DXMatrixTranspose(&matWorld, &matWorld);
+	D3DXMatrixTranspose(&matView, &matView);
+	D3DXMatrixTranspose(&matOrtho, &matOrtho);
+
+	if (FAILED(m_pShaderCom->Set_RawValue("g_WorldMatrix", &matWorld, sizeof(_matrix))))
+		return;
+	if (FAILED(m_pShaderCom->Set_RawValue("g_ViewMatrix", &matView, sizeof(_matrix))))
+		return;
+	if (FAILED(m_pShaderCom->Set_RawValue("g_ProjMatrix", &matOrtho, sizeof(_matrix))))
+		return;
 }
 
 void CItemIcon::End_OrthoProj()
 {
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, &m_matWorld);
-	m_pGraphicDev->SetTransform(D3DTS_VIEW, &m_matView);
-	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &m_matProj);
+	m_pShaderCom->End_Shader();
 }
 
 void CItemIcon::Index()
