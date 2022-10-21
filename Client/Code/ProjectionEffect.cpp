@@ -104,7 +104,7 @@ void CProjectionEffect::resetParticle(ATTRIBUTE * attribute)
 	_vec3 max = _vec3(1.0f, 1.0f, 1.0f);
 	GetRandomVector(&attribute->vVelocity, &min, &max);
 	D3DXVec3Normalize(&attribute->vVelocity, &attribute->vVelocity);*/
-	attribute->vPos = m_vProjectionEffectPos;
+	attribute->vPos = m_vProjectionEffectPos*0.1f;
 	attribute->vVelocity = m_vDir * 1.f;
 	attribute->dwColor = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
 	attribute->fAge = 0.0f;
