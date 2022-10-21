@@ -109,6 +109,8 @@ HRESULT CStage::Ready_Scene(void)
 	_float fBGMSound = 0.5f;
 	PlayBGM(L"Track_02.mp3", fBGMSound);
 
+	Set_SceneId(STAGE_SCENE);
+
 	FAILED_CHECK_RETURN(Ready_Proto(), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Light(), E_FAIL);
 

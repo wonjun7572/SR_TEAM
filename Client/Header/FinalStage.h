@@ -29,6 +29,7 @@ private:
 	HRESULT			Ready_Layer_Bullet(const _tchar* pLayerTag);
 	HRESULT			Ready_Layer_PlayerBullet(const _tchar* pLayerTag);
 	HRESULT			Ready_Layer_ExBullet(const _tchar* pLayerTag);
+	HRESULT			Ready_Layer_Laser(const _tchar* pLayerTag);
 
 	HRESULT			Ready_Layer_Tentacle(const _tchar* pLayerTag);
 

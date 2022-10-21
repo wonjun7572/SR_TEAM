@@ -20,7 +20,7 @@ HRESULT CKrakenLeg::Ready_Object(const _vec3 & vPos, _tchar * Name)
 	m_MonsterName = Name;
 
 	m_tAbility = new KRAKENABILITY;
-	m_tAbility->fMaxHp = 1.f;
+	m_tAbility->fMaxHp = 200.f;
 	m_tAbility->fCurrentHp = m_tAbility->fMaxHp;
 	m_tAbility->fDamage = 20.f;
 	m_tAbility->strObjTag = m_MonsterName;
@@ -41,7 +41,7 @@ HRESULT CKrakenLeg::Ready_Object(const _vec3 & vPos, _tchar * Name)
 
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
-	m_pTransCom->Set_Scale(&_vec3(0.f, 0.f, 0.f));
+	m_pTransCom->Set_Scale(&_vec3(4.f, 20.f, 4.f));
 	m_pTransCom->Set_Pos(vPos.x, vPos.y, vPos.z);
 	m_pTransCom->Static_Update();
 
@@ -52,7 +52,7 @@ HRESULT CKrakenLeg::Ready_Object(const _vec3 & vPos, _tchar * Name)
 	_vec3 vAnimationPos;
 	m_pTransCom->Get_Info(INFO_POS, &vAnimationPos);
 
-	m_pHitBoxTransCom->Set_Scale(&_vec3(0.f, 0.f, 0.f));
+	m_pHitBoxTransCom->Set_Scale(&_vec3(4.f, 20.f, 4.f));
 	m_pHitBoxTransCom->Set_Pos(vAnimationPos.x, vAnimationPos.y, vAnimationPos.z);
 	m_pHitBoxTransCom->Static_Update();
 
@@ -72,7 +72,7 @@ _int CKrakenLeg::Update_Object(const _float & fTimeDelta)
 		return -1;
 	}
 
-	cout << 21 + m_LEGSWING << endl;
+	//cout << 21 + m_LEGSWING << endl;
 
 	m_fTimeDelta = fTimeDelta;
 
@@ -87,7 +87,7 @@ _int CKrakenLeg::Update_Object(const _float & fTimeDelta)
 
 		m_vPattern.push_back(KRAKEN_SKILL_SMASH);
 		//m_vPattern.push_back(KRAKEN_SKILL_INKSHOT);
-		//m_vPattern.push_back(KRAKEN_SKILL_ROLLING);
+		m_vPattern.push_back(KRAKEN_SKILL_ROLLING);
 		m_vPattern.push_back(KRAKEN_SKILL_LURKER);
 		//m_vPattern.push_back(KRAKEN_SKILL_5);
 
@@ -150,21 +150,6 @@ _int CKrakenLeg::Update_Object(const _float & fTimeDelta)
 
 	Update_Pattern(fTimeDelta);
 
-	if ((m_LURKER == KRAKENLURKER_3) && (m_STATE != KRAKEN_REVIVE))
-	{
-		m_pTransCom->Set_Scale(4.f, 40.f, 4.f);
-		m_pTransCom->Static_Update();
-		m_pHitBoxTransCom->Set_Scale(4.f, 40.f, 4.f);
-		m_pHitBoxTransCom->Static_Update();
-	}
-	else
-	{
-		m_pTransCom->Set_Scale(0.f, 0.f, 0.f);
-		m_pTransCom->Static_Update();
-		m_pHitBoxTransCom->Set_Scale(0.f, 0.f, 0.f);
-		m_pHitBoxTransCom->Static_Update();
-	}
-
 	_vec3 vMainBodyPos, vPos, vPlayerPos;
 	vMainBodyPos = { 65.f, 0.f, 65.f };
 	m_pTransCom->Get_Info(INFO_POS, &vPos);
@@ -180,7 +165,14 @@ _int CKrakenLeg::Update_Object(const _float & fTimeDelta)
 		m_STATE = KRAKEN_REVIVE;
 	}
 
-	if (m_STATE == KRAKEN_REVIVE)
+	if (m_STATE == KRAKENSTATE_END)
+	{
+		_vec3 vPos;
+		m_pTransCom->Get_Info(INFO_POS, &vPos);
+
+		m_pTransCom->Set_Pos(vPos.x, vPos.y - 0.1f, vPos.z);
+	}
+	else if (m_STATE == KRAKEN_REVIVE)
 	{
 		Revive_Pattern();
 	}
@@ -231,16 +223,14 @@ _int CKrakenLeg::Update_Object(const _float & fTimeDelta)
 
 void CKrakenLeg::Render_Object(void)
 {
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pHitBoxTransCom->Get_WorldMatrixPointer());
-	m_pHitBox->Render_Buffer();
 }
 
 void CKrakenLeg::LateUpdate_Object(void)
 {
 	/*if (m_tAbility->fCurrentHp <= 0.f)
 	{
-		m_pMonsterUI->Off_Switch();
-		this->Kill_Obj();
+	m_pMonsterUI->Off_Switch();
+	this->Kill_Obj();
 	}*/
 
 	//애니메이션 관련해서 run animation 이랑 각자 상황에 맞는 애니메이션 넣어주면됨.
@@ -250,8 +240,12 @@ void CKrakenLeg::LateUpdate_Object(void)
 		////SMASH_Animation_Run();
 		/*SWING_Animation_Run();
 		Run_Animation(20.f);*/
-
-		if (m_STATE == KRAKEN_APPEAR)
+		if (m_STATE == KRAKENSTATE_END)
+		{
+			IDLE_Animation_Run();
+			Run_Animation(3.f);
+		}
+		else if (m_STATE == KRAKEN_APPEAR)
 		{
 			_vec3 vPos;
 			m_pTransCom->Get_Info(INFO_POS, &vPos);
@@ -364,6 +358,13 @@ _int CKrakenLeg::Update_Pattern(_float fTimeDelta)
 
 	_float Hp = m_tAbility->fCurrentHp / m_tAbility->fMaxHp;
 
+	if (m_bAnnihilateReady)
+	{
+		m_tAbility->fCurrentHp += 1.f;
+		if (m_tAbility->fCurrentHp >= m_tAbility->fMaxHp)
+			m_tAbility->fCurrentHp = m_tAbility->fMaxHp;
+	}
+
 	if (m_STATE == KRAKEN_REVIVE)
 	{
 		Revive_Pattern();
@@ -449,6 +450,18 @@ void CKrakenLeg::Hit_Check(_float _deltaTime)
 			{
 				m_tAbility->fCurrentHp = 0.f;
 			}
+		}
+		else if (m_BeforeHp != m_tAbility->fCurrentHp)
+		{
+			m_BeforeHp = m_tAbility->fCurrentHp;
+
+			m_pMonsterUI->Set_Name(m_tAbility->strObjTag);
+			m_pMonsterUI->Set_Hp(m_tAbility->fCurrentHp);
+			m_pMonsterUI->Set_MaxHp(m_tAbility->fMaxHp);
+			m_pMonsterUI->On_Switch();
+
+			m_pComboUI->On_Switch();
+			m_pComboUI->ComboCntPlus();
 		}
 		else
 		{
@@ -831,7 +844,7 @@ void CKrakenLeg::Revive_Pattern(void)
 		m_pTransCom->Set_Pos(m_vOriginPos.x, vPos.y + 0.5f, m_vOriginPos.z);
 		m_pTransCom->Static_Update();
 	}
-	
+
 
 	if (vPos.y < -300.f)
 	{
@@ -1084,7 +1097,7 @@ void CKrakenLeg::ANIHILATE_Animation_Run(void)
 	{
 		CQuarternion* Qtan = dynamic_cast<CQuarternion*>(iter.second->Get_Component(L"Proto_QuaternionCom", ID_STATIC));
 		Qtan->Change_Animation(21 + m_LEGSWING);
-		
+
 	}
 }
 
