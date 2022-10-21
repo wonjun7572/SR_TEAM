@@ -19,6 +19,7 @@ class CTriggerFront;
 class CRoundEffect;
 class CTraceEffect;
 class CLaserPoint;
+class CProjectionEffect;
 
 class CCubePlayer : public CGameObject
 {
@@ -158,7 +159,7 @@ private: // 파티클관련 포인터입니다.
 	CRoundEffect* m_pRoundEffect = nullptr;
 	CTraceEffect* m_pTraceEffect = nullptr;
 	CLaserPoint* m_pLaserPoint = nullptr;
-
+	CProjectionEffect* m_pProjectionEffect = nullptr;
 	CCartridgeParticle*		m_pCartridgeParticle = nullptr;
 
 private:

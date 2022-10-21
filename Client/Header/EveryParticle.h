@@ -24,6 +24,8 @@
 #include "LaserEffect.h"
 #include "TraceEffect.h"
 #include "LaserPoint.h"
+#include "ProjectionEffect.h"
+
 /*	
 CFlameEffect* m_pFlameEffectParticle = nullptr;
 CIceEffect* m_pIceEffectParticle = nullptr;

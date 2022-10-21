@@ -42,12 +42,9 @@
 
 
 #include "LetterBox.h"
-#include "ShotParticle.h"
-#include "ItemParticle.h"
 
 #include "CrossHeader.h"
 #include "TargetCube.h"
-#include "BulletParticle.h"
 #include "Shop.h"
 #include "CubeShop.h"
 #include "Inventory.h"
@@ -60,15 +57,6 @@
 #include "HitBarUI.h"
 #include "ComboUI.h"
 
-#include "MonsterParticle.h"
-#include "ProjectileParticle.h"
-#include "FlameEffect.h"
-#include "IceEffect.h"
-#include "BubbleEffect.h"
-#include "SparkEffect.h"
-#include "SoundWave.h"
-#include "CloudEffect.h"
-#include "BrownCloudEffect.h"
 #include "Illusioner.h"
 #include "EveryParticle.h"
 
@@ -287,6 +275,11 @@ HRESULT CStage::Ready_Layer_Environment(const _tchar * pLayerTag)
 	pGameObject = CDashCube::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"DashCube", pGameObject), E_FAIL);
+
+	pGameObject = CProjectionEffect::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"ProjectionEffect", pGameObject), E_FAIL);
+
 
 	pGameObject = CCartridgeParticle::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);

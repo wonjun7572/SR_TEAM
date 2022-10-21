@@ -356,8 +356,12 @@ void CCubePlayer::Update_NullCheck()
 
 	if (!m_pTraceEffect)
 		m_pTraceEffect = dynamic_cast<CTraceEffect*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"TraceEffect"));
+
 	if (!m_pLaserPoint)
 		m_pLaserPoint = dynamic_cast<CLaserPoint*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"LaserPoint"));
+
+	if (!m_pProjectionEffect)
+		m_pProjectionEffect = dynamic_cast<CProjectionEffect*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"ProjectionEffect"));
 
 	Player_Mapping();
 
@@ -695,39 +699,39 @@ void CCubePlayer::Move()
 	}
 	if (Key_Pressing(DIK_C))
 	{
-		//	//_vec3 vPos;														//보스죽는이팩트
-		//_vec3 vPos;														//대쉬이펙트하려던것
-		//_vec3 vDir;
-		//m_pTransform->Get_Info(INFO_POS, &vPos);
-		//_vec3 min = { -1.0f ,-1.0f ,-1.0f };
-		//_vec3 max = { -1.0f ,-1.0f ,-1.0f };
+			//_vec3 vPos;														//보스죽는이팩트
+		_vec3 vPos;														//대쉬이펙트하려던것
+		_vec3 vDir;
+		_vec3 vMoveDir;
+		_vec3 min = { -1.0f ,-1.0f ,-1.0f };
+		_vec3 max = { -1.0f ,-1.0f ,-1.0f };
 
-		//m_pTransform->Get_Info(INFO_POS, &vPos);
-		//vPos.x -= 5.f;
-		//vPos.y += 5.f;
-		//vPos.z -= 5.f;
-		//for (_int i = -5; i < 5; i++)
-		//{
-		//	for (_int j = -5; j < 5; j++)
-		//	{
-		//		for (_int k = -5; k < 5; k++)
-		//		{
-		//			min.x = i;
-		//			min.y = j;
-		//			min.z = k;
+		m_pTransform->Get_Info(INFO_POS, &vPos);
+		m_pHeadWorld->Get_Info(INFO_LOOK, &vMoveDir);
+		vPos += vMoveDir;
+		vPos.y += 0.5f;
+		for (_int i = -5; i < 5; i++)
+		{
+			for (_int j = -5; j < 5; j++)
+			{
+				for (_int k = -5; k < 5; k++)
+				{
+					min.x = i;
+					min.y = j;
+					min.z = k;
 
-		//			max.x = i;
-		//			max.y = j;
-		//			max.z = k;
-		//			D3DXVec3Normalize(&max, &_vec3(i, j, k));
-		//			dynamic_cast<CRoundEffect*>(pRoundEffect)->Set_PclePos(vPos + min*1.f);
+					max.x = i;
+					max.y = j;
+					max.z = k;
+					//D3DXVec3Normalize(&max, &_vec3(i, j, k));
+					dynamic_cast<CProjectionEffect*>(m_pProjectionEffect)->Set_PclePos(vPos + min*0.1f);
+					dynamic_cast<CProjectionEffect*>(m_pProjectionEffect)->Set_PcleDir(-max);
+					dynamic_cast<CProjectionEffect*>(m_pProjectionEffect)->Set_PcleMoveDir(vMoveDir);
 
-		//			dynamic_cast<CRoundEffect*>(pRoundEffect)->Set_PcleDir(-max);
-
-		//			pRoundEffect->addParticle();
-		//		}
-		//	}
-		//}
+					m_pProjectionEffect->addParticle();
+				}
+			}
+		}
 
 
 		//_vec3 vPos;														//대쉬이펙트하려던것
@@ -754,22 +758,22 @@ void CCubePlayer::Move()
 			//		}
 			//	}
 			//}
-			_vec3 vPos;														//대쉬이펙트하려던것
-			_vec3 vDir = { 0,1,0 };
-			m_pTransform->Get_Info(INFO_POS, &vPos);
-			_vec3 min = { -1.0f ,-1.0f ,-1.0f };
-			_vec3 max = { -1.0f ,-1.0f ,-1.0f };
+		//	_vec3 vPos;														//대쉬이펙트하려던것
+		//	_vec3 vDir = { 0,1,0 };
+		//	m_pTransform->Get_Info(INFO_POS, &vPos);
+		//	_vec3 min = { -1.0f ,-1.0f ,-1.0f };
+		//	_vec3 max = { -1.0f ,-1.0f ,-1.0f };
 
-			m_pTransform->Get_Info(INFO_POS, &vPos);
-			vPos.x -= 5.f;
-			vPos.y += 5.f;
-			vPos.z -= 5.f;
-		dynamic_cast<CCubeParticle*>(m_pCubeParticle)->Set_PclePos(vPos);
-		dynamic_cast<CCubeParticle*>(m_pCubeParticle)->Set_PcleDir(vDir);
-		for (_int i = 0; i < 150; ++i)
-		{
-			m_pCubeParticle->addParticle();
-		}
+		//	m_pTransform->Get_Info(INFO_POS, &vPos);
+		//	vPos.x -= 5.f;
+		//	vPos.y += 5.f;
+		//	vPos.z -= 5.f;
+		//dynamic_cast<CCubeParticle*>(m_pCubeParticle)->Set_PclePos(vPos);
+		//dynamic_cast<CCubeParticle*>(m_pCubeParticle)->Set_PcleDir(vDir);
+		//for (_int i = 0; i < 150; ++i)
+		//{
+		//	m_pCubeParticle->addParticle();
+		//}
 	}
 
 
