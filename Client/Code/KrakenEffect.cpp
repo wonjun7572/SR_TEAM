@@ -109,7 +109,7 @@ void CKrakenEffect::resetParticle(ATTRIBUTE * attribute)
 	attribute->vPos = m_vCubePatriclePos + attribute->vVelocity;
 	attribute->vPos += m_vDir;
 	attribute->vPos.y -= attribute->vVelocity.y + 0.35f;
-	attribute->dwColor = D3DXCOLOR(0.25 - fRand, 0.25f - fRand, 0.25f - fRand, 1.f);
+	attribute->dwColor = D3DXCOLOR(0.25f - fRand, 0.25f - fRand, 0.25f - fRand, 1.f);
 	attribute->fAge = 0.0f;
 	attribute->fLifeTime = .5f;
 }
