@@ -861,12 +861,6 @@
     <ClInclude Include="..\Header\FinalStage.h">
       <Filter>01. Scene\03. FinalStage</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\KrakenBullet.h">
-      <Filter>99. Default\헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\KrakenLeg.h">
-      <Filter>99. Default\헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\LoadingBar.h">
       <Filter>99. Default\헤더 파일</Filter>
     </ClInclude>
@@ -896,6 +890,12 @@
     </ClInclude>
     <ClInclude Include="..\Header\VerticalLine.h">
       <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\VerticalLine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\KrakenLeg.h">
+      <Filter>02. GameObject\01. For_Stage\21. Boss\02. Kraken</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\KrakenBullet.h">
+      <Filter>02. GameObject\01. For_Stage\21. Boss\02. Kraken</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1340,13 +1340,7 @@
     <ClCompile Include="..\Code\FinalStage.cpp">
       <Filter>01. Scene\03. FinalStage</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\KrakenBullet.cpp">
-      <Filter>99. Default\소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\LoadingBar.cpp">
-      <Filter>99. Default\소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="KrakenLeg.cpp">
       <Filter>99. Default\소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Laser.cpp">
@@ -1375,6 +1369,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\VerticalLine.cpp">
       <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\VerticalLine</Filter>
+    </ClCompile>
+    <ClCompile Include="KrakenLeg.cpp">
+      <Filter>02. GameObject\01. For_Stage\21. Boss\02. Kraken</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\KrakenBullet.cpp">
+      <Filter>02. GameObject\01. For_Stage\21. Boss\02. Kraken</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

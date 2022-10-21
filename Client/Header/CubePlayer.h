@@ -87,7 +87,7 @@ private:
 public:
 	CWeapon*		Get_Weapon() { return m_Weapon; }
 	_int			Get_DmgItem() { return m_iDmgItem; }
-		void			On_StaticField() { m_bCanStaticField = true; }
+		void		On_StaticField() { m_bCanStaticField = true; }
 	void			On_Shield() { m_bCanShield = true; }
 
 
