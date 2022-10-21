@@ -221,7 +221,13 @@ void CPoolMgr::Free()
 	{
 		Safe_Release<CGameObject*>(iter);
 	}
+
 	for (auto& iter : m_KrakenBulletPool)
+	{
+		Safe_Release<CGameObject*>(iter);
+	}
+
+	for (auto& iter : m_LaserPool)
 	{
 		Safe_Release<CGameObject*>(iter);
 	}

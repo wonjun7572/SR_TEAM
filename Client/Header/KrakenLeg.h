@@ -20,6 +20,7 @@ public:
 public:
 	void				Ready_Annihilate(void) { m_bAnnihilateReady = true; }
 	void				Start_Annihilate(void) { m_STATE = KRAKEN_ATTACK, m_PATTERN = KRAKEN_SKILL_ROLLING, m_bAnnihilateReady = false; }
+	void				Set_Dead(void) { m_STATE = KRAKENSTATE_END; }
 	_int				Get_State(void) { return m_STATE; }
 	_int				Get_SWING(void) { return m_LEGSWING; }
 
@@ -109,6 +110,7 @@ private:
 	_float				m_fLerpTime = 0.f;
 	_vec3				m_vOriginPos;
 	vector<_float>		m_ShufflePos;
+	_float				m_BeforeHp = 0.f;
 
 	_bool				m_bAnnihilateReady = false;
 
