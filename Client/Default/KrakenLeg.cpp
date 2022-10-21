@@ -5,7 +5,8 @@
 #include "CubePlayer.h"
 #include "Weapon.h"
 #include "TransAxisBox.h"
-
+#include "KrakenEffect.h"
+#include "KrakenParticle.h"
 CKrakenLeg::CKrakenLeg(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
 {
@@ -182,8 +183,12 @@ _int CKrakenLeg::Update_Object(const _float & fTimeDelta)
 			&& fabs(fDistance) <= 50.f)
 		{
 			vDir = vPlayerPos - vPos;
-		}
+			
+			
 
+	
+		
+		}
 		vNewDir = vPos - vMainBodyPos;
 
 		if (/*m_SMASH == KRAKENSMASH_8 || */m_SMASH == KRAKENSMASH_9 ||
@@ -357,6 +362,8 @@ _int CKrakenLeg::Update_Pattern(_float fTimeDelta)
 		m_pComboUI = dynamic_cast<CComboUI*>(Engine::Get_GameObject(STAGE_UI, L"ComboUI"));
 
 	_float Hp = m_tAbility->fCurrentHp / m_tAbility->fMaxHp;
+	_vec3 vPlayerPos;
+	m_pPlayerTransCom->Get_Info(INFO_POS, &vPlayerPos);
 
 	if (m_bAnnihilateReady)
 	{
@@ -390,7 +397,9 @@ _int CKrakenLeg::Update_Pattern(_float fTimeDelta)
 		{
 			// ÇÃ·¹ÀÌ¾î¶û °¡±î¿î ÃË¼ö ³»·ÁÂï±â
 			if (m_SMASH == KRAKENSMASH_6)
+			{	
 				AttackHit(10.f, 30.f);
+			}
 		}
 		if (m_PATTERN == KRAKEN_SKILL_INKSHOT)
 		{
@@ -501,8 +510,10 @@ void CKrakenLeg::AttackHit(_float fDamage, _float fKnuckback)
 		{
 			CLayer* pLayer = Engine::Get_Layer(STAGE_CHARACTER);
 			CCubePlayer* pPlayer = dynamic_cast<CCubePlayer*>(pLayer->Get_GameObject(L"PLAYER"));
-
 			pPlayer->KnuckDown(fDamage, fKnuckback);
+
+			
+		
 		}
 	}
 }

@@ -106,6 +106,7 @@ void CRoundEffect::resetParticle(ATTRIBUTE * attribute)
 //	GetRandomVector(&attribute->vVelocity, &min, &max);
 //	D3DXVec3Normalize(&attribute->vVelocity, &attribute->vVelocity);
 	attribute->vPos = m_vRoundEffectPos;
+	attribute->vPos.x = m_vRoundEffectPos.x/2;
 	attribute->vVelocity = m_vDir*2;
 	attribute->dwColor = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
 	attribute->dwColor = D3DXCOLOR(GetRandomFloat(0.8f, 1.0f), GetRandomFloat(0.f, 0.2f), GetRandomFloat(0.f, .2f), 1.0f);

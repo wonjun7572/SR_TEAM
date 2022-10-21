@@ -21,7 +21,7 @@ public:
 private:
 	void			Collision_check(void);
 	void			Bomb_effect(void);
-
+	void			Bomb_Collision(void);
 private:
 	HRESULT			Add_Component(void);
 	CTransform*		m_pTransCom = nullptr;

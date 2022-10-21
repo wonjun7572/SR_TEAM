@@ -26,6 +26,7 @@ HRESULT CLogo::Ready_Scene(void)
 {
 	if (FAILED(Engine::CScene::Ready_Scene()))
 		return E_FAIL;
+
 	FAILED_CHECK_RETURN(Ready_Light(), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Proto(), E_FAIL);
 
@@ -96,7 +97,7 @@ void CLogo::LateUpdate_Scene(void)
 
 void CLogo::Render_Scene(void)
 {
-	
+
 }
 
 HRESULT CLogo::Ready_Layer_Environment(const _tchar * pLayerTag)
@@ -125,8 +126,8 @@ HRESULT CLogo::Ready_Layer_Environment(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"LogoBilboard", pGameObject), E_FAIL);
 
-
 	m_mapLayer.insert({ pLayerTag, pLayer });
+
 	return S_OK;
 }
 
@@ -141,6 +142,7 @@ HRESULT CLogo::Ready_Layer_UI(const _tchar * pLayerTag)
 	pGameObject = CLogoUI::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"LogoUI", pGameObject), E_FAIL);
+
 	//PlayButton
 	m_PlayButton = dynamic_cast<CPlayButton*> (pGameObject = CPlayButton::Create(m_pGraphicDev));
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
@@ -160,8 +162,6 @@ HRESULT CLogo::Ready_Layer_UI(const _tchar * pLayerTag)
 	m_pLoadingBar = dynamic_cast<CLoadingBar*>(pGameObject = CLoadingBar::Create(m_pGraphicDev));
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"LoadingBar", pGameObject), E_FAIL);
-
-
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
@@ -241,7 +241,7 @@ HRESULT CLogo::Ready_Proto(void)
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_TerrainTexture", CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Terrain/Grass_%d.tga", TEX_NORMAL)), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_CubeTexture", CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/SkyBox/burger%d.dds", TEX_CUBE, 4)), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"SkyBox_TEX", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Sky01.jpg", TEX_NORMAL)), E_FAIL);
-	
+
 
 	}
 	{      //MENUUI
@@ -252,8 +252,8 @@ HRESULT CLogo::Ready_Proto(void)
 	}
 	{
 
-	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_HudLoadinga", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/UI/LoadingUI/perk_selected.png", TEX_NORMAL)), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_ReadyLoading", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/UI/LoadingUI/theHUDui_10.png", TEX_NORMAL)), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_HudLoadinga", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/UI/LoadingUI/perk_selected.png", TEX_NORMAL)), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_ReadyLoading", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/UI/LoadingUI/theHUDui_10.png", TEX_NORMAL)), E_FAIL);
 
 	}
 
