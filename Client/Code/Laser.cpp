@@ -4,6 +4,7 @@
 #include "Explosion.h"
 #include "TriggerParticle.h"
 #include "LaserEffect.h"
+#include "Monster.h"
 CLaser::CLaser(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
 {
@@ -43,6 +44,8 @@ _int CLaser::Update_Object(const _float & fTimeDelta)
 
 		// À§Ä¡ ¹Ù²ãÁà¾ßÇÔ	
 		Bomb_effect();
+		Bomb_Collision();
+
 		CPoolMgr::GetInstance()->Collect_Laser(this);
 		return -1;
 	}
@@ -69,7 +72,6 @@ _int CLaser::Update_Object(const _float & fTimeDelta)
 void CLaser::LateUpdate_Object(void)
 {
 	Collision_check();
-	
 
 
 	CGameObject::LateUpdate_Object();
@@ -137,7 +139,7 @@ void CLaser::Bomb_effect(void)
 
 	dynamic_cast<CTriggerParticle*>(pTriggerParticle)->Set_PclePos(vPos);
 	dynamic_cast<CTriggerParticle*>(pTriggerParticle)->Set_PcleDir(vDir);
-	for (_int i = 0; i < 50; ++i)
+	for (_int i = 0; i < 15; ++i)
 	{
 		pTriggerParticle->addParticle();
 	}
@@ -147,24 +149,65 @@ void CLaser::Bomb_effect(void)
 	//vPos.x -= 5.f;
 	//vPos.y += 5.f;
 	//vPos.z -= 5.f;
-	for (_int i = -5; i < 5; i++)
+	for (_int i = -6; i < 6; i++)
 	{
-		for (_int j = -5; j < 5; j++)
+		for (_int j = -6; j < 6; j++)
 		{
-			for (_int k = -5; k < 5; k++)
+			for (_int k = -6; k < 6; k++)
 			{
 				D3DXVec3Normalize(&vDir, &_vec3(i, j, k));
 
-				dynamic_cast<CLaserEffect*>(m_pLaserEffect)->Set_PclePos(vPos + _vec3(i, j, k)*0.05);
+				dynamic_cast<CLaserEffect*>(m_pLaserEffect)->Set_PclePos(vPos + _vec3(i, j, k)*0.25);
 
 				dynamic_cast<CLaserEffect*>(m_pLaserEffect)->Set_PcleDir(-vDir);
+
+				m_pLaserEffect->addParticle();
+				for (_int i = 0; i < 1; ++i)
+				{
+					pTriggerParticle->addParticle();
+				}
+			}
+		}
+	}
+	for (_int i = -6; i < 6; i++)
+	{
+		for (_int j = -6; j < 6; j++)
+		{
+			for (_int k = -6; k < 6; k++)
+			{
+				D3DXVec3Normalize(&vDir, &_vec3(i, j, k));
+
+				dynamic_cast<CLaserEffect*>(m_pLaserEffect)->Set_PclePos(vPos + _vec3(i, j*0.1, k)*0.05);
+
+				dynamic_cast<CLaserEffect*>(m_pLaserEffect)->Set_PcleDir(vDir);
 
 				m_pLaserEffect->addParticle();
 			}
 		}
 	}
 
+}
 
+void CLaser::Bomb_Collision(void)
+{
+	
+	if (!Get_Layer(STAGE_MONSTER)->Get_GameList().empty())
+	{
+		m_pTransCom->Static_Update();
+		for (auto& iter : Get_Layer(STAGE_MONSTER)->Get_GameList())
+		{
+			_vec3 vDest, vSour;
+			m_pTransCom->Get_Info(INFO_POS, &vDest);			
+			dynamic_cast<CTransform*>(iter->Get_Component(TRANSFORM_COMP, ID_DYNAMIC))->Get_Info(INFO_POS, &vSour);
+			_float fDistance = sqrtf((vDest.x - vSour.x) * (vDest.x - vSour.x) + (vDest.y - vSour.y) * (vDest.y - vSour.y) + (vDest.z - vSour.z) * (vDest.z - vSour.z));
+
+			if (fDistance < 5.f)
+			{
+				dynamic_cast<CMonster*>(iter)->Set_CollisionDmg();
+			}
+		}
+	}
+	
 }
 
 HRESULT CLaser::Add_Component(void)

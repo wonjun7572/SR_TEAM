@@ -35,7 +35,7 @@ _int CItemIcon::Update_Object(const _float & fTimeDelta)
 			CGameObject* pPlayer = nullptr;
 			if (!pPlayer)
 				pPlayer = Engine::Get_GameObject(STAGE_CHARACTER, L"PLAYER");
-//			dynamic_cast<CCubePlayer*>(pPlayer)->On_StaticField();
+			dynamic_cast<CCubePlayer*>(pPlayer)->On_StaticField();
 
 			_float fSound = 1.f;
 			Engine::PlaySoundGun(L"Upgrade.wav", SOUND_EFFECT, fSound);
@@ -45,7 +45,7 @@ _int CItemIcon::Update_Object(const _float & fTimeDelta)
 			CGameObject* pPlayer = nullptr;
 			if (!pPlayer)
 				pPlayer = Engine::Get_GameObject(STAGE_CHARACTER, L"PLAYER");
-//			dynamic_cast<CCubePlayer*>(pPlayer)->On_Shield();
+			dynamic_cast<CCubePlayer*>(pPlayer)->On_Shield();
 
 			_float fSound = 1.f;
 			Engine::PlaySoundGun(L"Upgrade.wav", SOUND_EFFECT, fSound);

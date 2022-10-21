@@ -202,7 +202,7 @@ void CCubePlayer::Key_Skill()
 				static_cast<CFlightCamera*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"FlightCamera"))->Set_MainCam(false);
 			}
 		}
-		if (m_Weapon == Engine::Get_GameObject(STAGE_GUN, L"SHOTGUN") && m_iSkillEnforce == 3)
+		//if (m_Weapon == Engine::Get_GameObject(STAGE_GUN, L"SHOTGUN") && m_iSkillEnforce == 3)
 		{
 			_vec3 vPos;
 			m_pTransform->Get_Info(INFO_POS, &vPos);
@@ -331,6 +331,7 @@ void CCubePlayer::Update_NullCheck()
 
 	if (!m_pDashCube)
 		m_pDashCube = dynamic_cast<CDashCube*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"DashCube"));
+
 	if (!m_pRoundEffect)
 		m_pRoundEffect = dynamic_cast<CRoundEffect*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"RoundEffect"));
 
@@ -682,10 +683,12 @@ void CCubePlayer::Move()
 	if (Key_Pressing(DIK_C))
 	{
 		//	//_vec3 vPos;														//보스죽는이팩트
-		//	_vec3 vPos;														//대쉬이펙트하려던것
+		//_vec3 vPos;														//대쉬이펙트하려던것
 		//_vec3 vDir;
 		//m_pTransform->Get_Info(INFO_POS, &vPos);
 		//_vec3 min = { -1.0f ,-1.0f ,-1.0f };
+		//_vec3 max = { -1.0f ,-1.0f ,-1.0f };
+
 		//m_pTransform->Get_Info(INFO_POS, &vPos);
 		//vPos.x -= 5.f;
 		//vPos.y += 5.f;
@@ -696,13 +699,19 @@ void CCubePlayer::Move()
 		//	{
 		//		for (_int k = -5; k < 5; k++)
 		//		{
-		//			//D3DXVec3Normalize(&min, &_vec3(i, j, k));						
+		//			min.x = i;
+		//			min.y = j;
+		//			min.z = k;
 
-		//			dynamic_cast<CRoundEffect*>(m_pRoundEffect)->Set_PclePos(vPos + _vec3(i, j, k)*0.1f);
+		//			max.x = i;
+		//			max.y = j;
+		//			max.z = k;
+		//			D3DXVec3Normalize(&max, &_vec3(i, j, k));
+		//			dynamic_cast<CRoundEffect*>(pRoundEffect)->Set_PclePos(vPos + min*1.f);
 
-		//			dynamic_cast<CRoundEffect*>(m_pRoundEffect)->Set_PcleDir(-min);
+		//			dynamic_cast<CRoundEffect*>(pRoundEffect)->Set_PcleDir(-max);
 
-		//			m_pRoundEffect->addParticle();
+		//			pRoundEffect->addParticle();
 		//		}
 		//	}
 		//}
@@ -732,20 +741,21 @@ void CCubePlayer::Move()
 			//		}
 			//	}
 			//}
-			dynamic_cast<CSniper*>(Engine::Get_GameObject(STAGE_GUN, L"SNIPER"));
-		CTransform* pTransform = nullptr;
-		pTransform = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_GUN, L"Sniper_Part_2", TRANSFORM_COMP, ID_DYNAMIC));
-		NULL_CHECK_RETURN(pTransform, );
-		pTransform->Get_Info(INFO_POS, &vPos);
-		_vec3 vPos1;
-		_vec3 vDir1;
-		m_pBodyWorld->Get_Info(INFO_POS, &vPos);
-		m_pHeadWorld->Get_Info(INFO_LOOK, &vDir);
-		dynamic_cast<CTraceEffect*>(m_pTraceEffect)->Set_PclePos(vPos1);
-		dynamic_cast<CTraceEffect*>(m_pTraceEffect)->Set_PcleDir(vDir1);
+			_vec3 vPos;														//대쉬이펙트하려던것
+			_vec3 vDir = { 0,1,0 };
+			m_pTransform->Get_Info(INFO_POS, &vPos);
+			_vec3 min = { -1.0f ,-1.0f ,-1.0f };
+			_vec3 max = { -1.0f ,-1.0f ,-1.0f };
+
+			m_pTransform->Get_Info(INFO_POS, &vPos);
+			vPos.x -= 5.f;
+			vPos.y += 5.f;
+			vPos.z -= 5.f;
+		dynamic_cast<CCubeParticle*>(m_pCubeParticle)->Set_PclePos(vPos);
+		dynamic_cast<CCubeParticle*>(m_pCubeParticle)->Set_PcleDir(vDir);
 		for (_int i = 0; i < 150; ++i)
 		{
-			m_pTraceEffect->addParticle();
+			m_pCubeParticle->addParticle();
 		}
 	}
 
@@ -984,7 +994,7 @@ void CCubePlayer::Fire_Bullet(void)
 	if (m_bSniperEffect)
 	{
 		m_bSniperEffect = false;
-		_vec3 vPos;														//대쉬이펙트하려던것
+		_vec3 vPos;														//스나레이저이펙트
 		_vec3 vDir;
 		dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_GUN, L"Sniper_Part_2", TRANSFORM_COMP, ID_DYNAMIC))->Get_Info(INFO_POS, &vPos);
 		m_pHeadWorld->Get_Info(INFO_LOOK, &vDir);
