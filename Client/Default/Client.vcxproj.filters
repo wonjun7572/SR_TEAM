@@ -861,6 +861,9 @@
     <ClInclude Include="..\Header\FinalStage.h">
       <Filter>01. Scene\03. FinalStage</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\LoadingBar.h">
+      <Filter>99. Default\헤더 파일</Filter>
+    </ClInclude>
     <ClInclude Include="..\Header\Laser.h">
       <Filter>02. GameObject\01. For_Stage\05. CubePlayer\06. Bullet\Laser</Filter>
     </ClInclude>
@@ -888,17 +891,11 @@
     <ClInclude Include="..\Header\VerticalLine.h">
       <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\VerticalLine</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\Mob.h">
-      <Filter>99. Default\헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\KrakenBullet.h">
-      <Filter>02. GameObject\01. For_Stage\21. Boss\02. Kraken</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\KrakenLeg.h">
       <Filter>02. GameObject\01. For_Stage\21. Boss\02. Kraken</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\LoadingBar.h">
-      <Filter>01. Scene\00. Logo</Filter>
+    <ClInclude Include="..\Header\KrakenBullet.h">
+      <Filter>02. GameObject\01. For_Stage\21. Boss\02. Kraken</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1343,6 +1340,9 @@
     <ClCompile Include="..\Code\FinalStage.cpp">
       <Filter>01. Scene\03. FinalStage</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\LoadingBar.cpp">
+      <Filter>99. Default\소스 파일</Filter>
+    </ClCompile>
     <ClCompile Include="..\Code\Laser.cpp">
       <Filter>02. GameObject\01. For_Stage\05. CubePlayer\06. Bullet\Laser</Filter>
     </ClCompile>
@@ -1370,17 +1370,11 @@
     <ClCompile Include="..\Code\VerticalLine.cpp">
       <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\VerticalLine</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\Mob.cpp">
-      <Filter>99. Default\소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\KrakenBullet.cpp">
-      <Filter>02. GameObject\01. For_Stage\21. Boss\02. Kraken</Filter>
-    </ClCompile>
     <ClCompile Include="KrakenLeg.cpp">
       <Filter>02. GameObject\01. For_Stage\21. Boss\02. Kraken</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\LoadingBar.cpp">
-      <Filter>01. Scene\00. Logo</Filter>
+    <ClCompile Include="..\Code\KrakenBullet.cpp">
+      <Filter>02. GameObject\01. For_Stage\21. Boss\02. Kraken</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

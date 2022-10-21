@@ -22,6 +22,9 @@
 #include "StaticCamera.h"
 #include "FlightCamera.h"
 
+#include "Stage.h"
+#include "FinalStage.h"
+
 CCubePlayer::CCubePlayer(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
 {
@@ -263,6 +266,16 @@ void CCubePlayer::CoolTimer(void)
 		m_iDashStack = 0;
 	if (m_fSpeed < 10.f)
 		m_fSpeed += 1.f;
+
+
+	_vec3 vPos;
+	m_pBodyWorld->Get_Info(INFO_POS, &vPos);
+
+	if (vPos.x >= 129.f || vPos.x <= -0.1f || vPos.z >= 129.f || vPos.z <= -0.1f)
+	{
+		m_iKnuckStack = 0;
+		m_iDashStack = 20;
+	}
 
 	_vec3 vLook;
 	m_pBodyWorld->Get_Info(INFO_LOOK, &vLook);
@@ -1125,9 +1138,35 @@ void CCubePlayer::Gun_Check(void)
 
 void CCubePlayer::Inventory_Check(void)
 {
-	m_iDmgItem = dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->Get_WeaponDmg();
-	m_iSpeedItem = dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->Get_WeaponSpeed();
-	m_iSkillEnforce = dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->Get_EnforceCheck();
+	//cout << typeid(Engine::Get_Scene()).name() << endl;
+
+	if (Engine::Get_Scene()->Get_SceneId() == STAGE_SCENE)
+	{
+		m_iDmgItem = dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->Get_WeaponDmg();
+		m_iSpeedItem = dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->Get_WeaponSpeed();
+		m_iSkillEnforce = dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->Get_EnforceCheck();
+	}
+	else if (Engine::Get_Scene()->Get_SceneId() == FINAL_SCENE)
+	{
+		m_iDmgItem = 1;
+		m_iSpeedItem = 1;
+
+		On_StaticField();
+		On_Shield();
+
+		if (m_Weapon == Engine::Get_GameObject(STAGE_GUN, L"UZI1"))
+		{
+			m_iSkillEnforce = 1;
+		}
+		if (m_Weapon == Engine::Get_GameObject(STAGE_GUN, L"SHOTGUN"))
+		{
+			m_iSkillEnforce = 3;
+		}
+		if (m_Weapon == Engine::Get_GameObject(STAGE_GUN, L"SNIPER"))
+		{
+			m_iSkillEnforce = 5;
+		}
+	}
 
 	switch (m_iSkillEnforce)
 	{

@@ -79,6 +79,7 @@ private:
 public:	//	상태이상, 외부에서 지정
 	void			KnuckDown(const _float& fDamage, const _float& fDistance);	//	데미지 입으면서 밀려남
 	void			SlowDown(const _float& fDamage);	//	느려짐
+	_int			Get_KnuckbackStack(void) { return m_iKnuckStack; }
 
 private:
 	void			Dash(void);
@@ -86,7 +87,7 @@ private:
 public:
 	CWeapon*		Get_Weapon() { return m_Weapon; }
 	_int			Get_DmgItem() { return m_iDmgItem; }
-		void			On_StaticField() { m_bCanStaticField = true; }
+		void		On_StaticField() { m_bCanStaticField = true; }
 	void			On_Shield() { m_bCanShield = true; }
 
 
