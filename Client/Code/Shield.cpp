@@ -27,9 +27,6 @@ HRESULT CShield::Ready_Object(const _vec3 & Position, const _vec3& Direction)
 	_float fGunSound = 1.f;
 	Engine::PlaySoundGun(L"Shield.wav", SOUND_EFFECT, fGunSound);
 
-
-	
-
 	return S_OK;
 }
 
@@ -61,12 +58,11 @@ void CShield::Render_Object(void)
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransCom->Get_WorldMatrixPointer());
 
 	m_pTexture->Set_Texture(0);
-	if (m_vScale.x<0.5f)
+	if (m_vScale.x < 0.5f)
 	{
 		m_pCube->Render_Buffer();
 
 	}
-
 	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 	
 }
@@ -113,9 +109,6 @@ void CShield::Move(void)
 			m_vScale += m_vScale*0.3f;
 		m_pTransCom->Set_Scale(m_vScale.x, m_vScale.y, m_vScale.z);
 	}
-
-
-	
 }
 
 void CShield::DefensiveMatrix(void)
@@ -131,8 +124,6 @@ void CShield::DefensiveMatrix(void)
 			m_pDeffensiveMatrix = CDeffensiveMatrix::Create(m_pGraphicDev, vPos);
 			NULL_CHECK_RETURN(m_pDeffensiveMatrix, );
 			FAILED_CHECK_RETURN(pLayer->Add_GameList(m_pDeffensiveMatrix), );
-
-			
 		}
 	}
 }

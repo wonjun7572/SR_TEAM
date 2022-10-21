@@ -128,7 +128,7 @@ _int CSupporter_Uzi::Update_Object(const _float & fTimeDelta)
 		//	pVerticalLine->addParticle();
 		//}
 	}
-	else if(vPosition.y < 0.6f)
+	else if(vPosition.y < 2.f)
 	{
 		m_bSetCam = false;
 	}

@@ -28,7 +28,7 @@ private:
 	CTexture* m_pRifleTextureCom = nullptr;
 	CTexture* m_pShotGunTextureCom = nullptr;
 	CTexture* m_pSniperTextureCom = nullptr;
-
+	CShader*	m_pShaderCom = nullptr;
 	GUN_ID		m_eGunID;
 
 	_matrix		m_matWorld;

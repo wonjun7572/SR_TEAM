@@ -27,13 +27,13 @@ private:
 	HRESULT Add_Component();
 
 private:
-	CRcTex*   m_pBufferCom = nullptr;
+	CRcTex*		m_pBufferCom = nullptr;
 	CTransform* m_pTransCom = nullptr;
-	CTexture* m_pTextureCom = nullptr;
-
+	CTexture*	m_pTextureCom = nullptr;
 	CRcTex*		m_pHUDBufferCom = nullptr;
 	CTransform* m_pHUDTransCom = nullptr;
 	CTexture*	m_pHUDTextureCom = nullptr;
+	CShader*		m_pShaderCom = nullptr;
 
 	_matrix m_matProj;
 

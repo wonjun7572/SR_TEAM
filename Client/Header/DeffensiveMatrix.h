@@ -42,7 +42,5 @@ private:
 	_float					m_fTimer = 0.f;
 
 	_int iT = 0;
-
-
 };
 

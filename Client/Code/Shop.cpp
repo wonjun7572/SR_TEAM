@@ -305,25 +305,27 @@ void CShop::Render_Object()
 
 void CShop::Render_Ortho(CTransform * pTransform, CTexture * pTexture, _int iIndex)
 {
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, pTransform->Get_WorldMatrixPointer());
+	_matrix      matWorld, matView;
 
-	_matrix      OldViewMatrix, OldProjMatrix;
+	matWorld = *pTransform->Get_WorldMatrixPointer();
 
-	m_pGraphicDev->GetTransform(D3DTS_VIEW, &OldViewMatrix);
-	m_pGraphicDev->GetTransform(D3DTS_PROJECTION, &OldProjMatrix);
+	matView = *D3DXMatrixIdentity(&matView);
 
-	_matrix      ViewMatrix;
+	D3DXMatrixTranspose(&matWorld, &matWorld);
+	D3DXMatrixTranspose(&matView, &matView);
+	D3DXMatrixTranspose(&m_matProj, &m_matProj);
 
-	ViewMatrix = *D3DXMatrixIdentity(&ViewMatrix);
+	if (FAILED(m_pShaderCom->Set_RawValue("g_WorldMatrix", &matWorld, sizeof(_matrix))))
+		return;
+	if (FAILED(m_pShaderCom->Set_RawValue("g_ViewMatrix", &matView, sizeof(_matrix))))
+		return;
+	if (FAILED(m_pShaderCom->Set_RawValue("g_ProjMatrix", &m_matProj, sizeof(_matrix))))
+		return;
 
-	m_pGraphicDev->SetTransform(D3DTS_VIEW, &ViewMatrix);
-	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &m_matProj);
-
-	pTexture->Set_Texture(iIndex);
+	pTexture->Set_Texture(m_pShaderCom, "g_DefaultTexture", iIndex);
+	m_pShaderCom->Begin_Shader(0);
 	m_pBufferCom->Render_Buffer();
-
-	m_pGraphicDev->SetTransform(D3DTS_VIEW, &OldViewMatrix);
-	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &OldProjMatrix);
+	m_pShaderCom->End_Shader();
 }
 
 HRESULT CShop::Add_Component(void)
@@ -435,6 +437,10 @@ HRESULT CShop::Add_Component(void)
 	pComponent = m_pUpgradeTransformCom = dynamic_cast<CTransform*>(Clone_Proto(L"Proto_TransformCom"));
 	NULL_CHECK_RETURN(m_pUpgradeTransformCom, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"UpgradeTexture_TransformCom", pComponent });
+
+	pComponent = m_pShaderCom = dynamic_cast<CShader*>(Clone_Proto(RCTEX_SHADER));
+	NULL_CHECK_RETURN(m_pShaderCom, E_FAIL);
+	m_mapComponent[ID_STATIC].insert({ RCTEX_SHADER, pComponent });
 
 	return S_OK;
 }

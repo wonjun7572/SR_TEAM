@@ -11,19 +11,16 @@ class CCalculator;
 
 END
 
-
-
-class CLoadingBar :
-	public CGameObject
+class CLoadingBar :	public CGameObject
 {
 public:
 	explicit CLoadingBar(LPDIRECT3DDEVICE9 pGraphicDev);
 	virtual ~CLoadingBar(void);
 
 public:
-	virtual HRESULT Ready_Object() override;
-	virtual _int Update_Object(const _float& fTimeDelta) override;
-	virtual		void		LateUpdate_Object(void) override;
+	virtual HRESULT			 Ready_Object() override;
+	virtual _int			 Update_Object(const _float& fTimeDelta) override;
+	virtual	void			LateUpdate_Object(void) override;
 	virtual void Render_Object(void) override;
 
 private:
@@ -43,17 +40,14 @@ private:
 	CRcTex*			m_pBufferUICom = nullptr;
 	CTransform*		m_pUITransCom = nullptr;
 	CTexture*		m_pUITextureCom = nullptr;
-	
 
 	CRcTex*			m_pHUDBufferCom = nullptr;
 	CTransform*		m_pHUDTransCom = nullptr;
 	CTexture*		m_pHUDTextureCom = nullptr;
 
+	CShader*		m_pShaderCom = nullptr;
 
-	_matrix	m_matWorld;
-	_matrix m_matView;
 	_matrix m_matProj;
-
 
 	_float  m_fX, m_fY, m_fSizeX, m_fSizeY;
 	_float  m_fSizeHUDX, m_fSizeHUDY;

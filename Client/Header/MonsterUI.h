@@ -28,7 +28,7 @@ private:
 	CRcTex*		m_pBufferCom = nullptr;
 	CTransform* m_pTransCom = nullptr;
 	CTexture*	m_pTextureCom = nullptr;
-
+	CShader*	m_pShaderCom = nullptr;
 	CRcTex*		m_pHUDBufferCom = nullptr;
 	CTransform* m_pHUDTransCom = nullptr;
 	CTexture*	m_pHUDTextureCom = nullptr;

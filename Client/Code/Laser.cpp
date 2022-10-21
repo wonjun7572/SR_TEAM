@@ -63,9 +63,7 @@ _int CLaser::Update_Object(const _float & fTimeDelta)
 	
 
 	Engine::Add_RenderGroup(RENDER_UI, this);
-
-
-	
+		
 	return 0;
 }
 
@@ -79,8 +77,8 @@ void CLaser::LateUpdate_Object(void)
 
 void CLaser::Render_Object(void)
 {
-	m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
-	m_pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_DESTALPHA);
+	//m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+	//m_pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_DESTALPHA);
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransCom->Get_WorldMatrixPointer());
 	m_pTexture->Set_Texture();
 	m_pCube->Render_Buffer();
@@ -89,7 +87,7 @@ void CLaser::Render_Object(void)
 	//m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pHitboxTransCom->Get_WorldMatrixPointer());
 	//m_pHitbox->Render_Buffer();
 	//m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
-	m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
+	//m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
 }
 
 void CLaser::Set_Pos(const _vec3 & vPos)

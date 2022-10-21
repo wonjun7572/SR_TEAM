@@ -17,13 +17,10 @@ private:
 	HRESULT Add_Component();
 
 private:
-	CRcTex*   m_pBufferCom = nullptr;
-	CTransform* m_pTransCom = nullptr;
-	CTexture* m_pTextureCom = nullptr;
-
-	_matrix m_matWorld;
-	_matrix m_matView;
-	_matrix m_matProj;
+	CRcTex*			m_pBufferCom = nullptr;
+	CTransform*		m_pTransCom = nullptr;
+	CTexture*		m_pTextureCom = nullptr;
+	CShader*		m_pShaderCom = nullptr;
 
 	CGameObject*		m_pPlayer = nullptr;
 	_float				m_fDefence;

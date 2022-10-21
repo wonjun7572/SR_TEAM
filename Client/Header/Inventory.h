@@ -52,9 +52,7 @@ private:
 	CTexture*			m_pTextureCom = nullptr;
 	CRcTex*				m_pRcTexCom = nullptr;
 	CWeapon*			m_pWeapon = nullptr;
-	_matrix		 		m_matWorld;
-	_matrix				m_matView;
-	_matrix				m_matProj;	
+	CShader*			m_pShaderCom = nullptr;
 
 	vector<CGameObject*>  m_vecContents;
 	vector<CGameObject*>  m_vecEquipments;

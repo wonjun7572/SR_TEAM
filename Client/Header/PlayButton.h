@@ -28,6 +28,7 @@ private:
 	CTexture*		m_TextureCom = nullptr;
 	CTexture*		m_CheckTextureCom = nullptr; 
 	CLoading*		m_pLoading = nullptr;
+	CShader*		m_pShaderCom = nullptr;
 
 private:
 	void		Begin_OrthoProj();
@@ -40,9 +41,7 @@ private:
 	_bool		Mouse_check = false;
 	_bool		Checking = false; 
 	_bool		PointMouse(void);
-	_matrix m_matWorld;
-	_matrix m_matView;
-	_matrix m_matProj;
+
 	//텍스처 인덱스 번
 	_int	m_iIndex = 0;
 	wstring m_strPB;
