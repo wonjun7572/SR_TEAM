@@ -160,7 +160,7 @@ _int CKrakenLeg::Update_Object(const _float & fTimeDelta)
 
 	_vec3 vNewDir;
 
-	if (m_tAbility->fCurrentHp == 0)
+	if (m_tAbility->fCurrentHp <= 0)
 	{
 		m_STATE = KRAKEN_REVIVE;
 	}

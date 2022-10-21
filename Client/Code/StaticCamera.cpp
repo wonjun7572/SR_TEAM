@@ -112,11 +112,22 @@ Engine::_int CStaticCamera::Update_Object(const _float& fTimeDelta)
 		Mouse_Fix();
 	}
 
+	CLayer* pLayer = Engine::Get_Layer(STAGE_CHARACTER);
+	CCubePlayer* pPlayer = dynamic_cast<CCubePlayer*>(pLayer->Get_GameObject(L"PLAYER"));
+	CTransform* pPlayerTransform = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_CHARACTER, L"PLAYER", TRANSFORM_COMP, ID_DYNAMIC));
+	if (dynamic_cast<CCubePlayer*>(pPlayer)->Get_KnuckbackStack() != 0)
+	{
+		Camera_Shaking(fTimeDelta);
+
+		Mouse_Fix();
+	}
+
+
 	m_fFrame += fTimeDelta * 0.5f;
 	m_fFlightFrame += fTimeDelta * 0.5f;
 	m_fBombFrame += fTimeDelta * 0.5f;
 	m_fShuttleFrame += fTimeDelta * 0.15f;
-	m_fPlayerFrame += fTimeDelta * 0.05f;
+	m_fPlayerFrame += fTimeDelta;// *0.05f;
 
 	_int   iExit = CCamera::Update_Object(fTimeDelta);
 
@@ -565,6 +576,20 @@ void CStaticCamera::Look_Target(const _float& _fTimeDelta)
 
 void CStaticCamera::Camera_Shaking(const _float& _fTimeDelta)
 {
+	CLayer* pLayer = Engine::Get_Layer(STAGE_CHARACTER);
+	CCubePlayer* pPlayer = dynamic_cast<CCubePlayer*>(pLayer->Get_GameObject(L"PLAYER"));
+	CTransform* pPlayerTransform = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_CHARACTER, L"PLAYER", TRANSFORM_COMP, ID_DYNAMIC));
+	if (dynamic_cast<CCubePlayer*>(pPlayer)->Get_KnuckbackStack() != 0)
+	{
+		m_fFrame += 0.1f * _fTimeDelta;
+		m_iReverse *= -1;
+		m_vEye.y = m_vEye.y + (_float(m_iReverse) * 0.03f * _fTimeDelta);
+
+		if (m_fFrame >= 0.025f)
+		{
+			m_fFrame = 0.f;
+		}
+	}
 	
 	if (m_bPlayerHit)
 	{
@@ -591,4 +616,6 @@ void CStaticCamera::Camera_Shaking(const _float& _fTimeDelta)
 			m_bEarthQuake = false;
 		}
 	}
+
+
 }
