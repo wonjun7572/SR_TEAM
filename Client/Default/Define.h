@@ -88,7 +88,7 @@
 
 // Particle
 #define SHOTPARTICLE_TEX         L"SHOTPARTICLE_TEX"
-#define   SHOTPARTICLE_TEX_PATH      L"../Bin/Resources/Particle/fireball_hit_big0.png"
+#define  SHOTPARTICLE_TEX_PATH      L"../Bin/Resources/Particle/fireball_hit_big0.png"
 #define BULLETPARTICLE_TEX         L"BULLETPARTICLE_TEX"
 #define BULLETPARTICLE_TEX_PATH      L"../Bin/Resources/Particle/BulletParticle.png"
 #define PROJECTILEPARTICLE_TEX      L"PROJECTILEPARTICLE_TEX"

@@ -18,7 +18,7 @@ HRESULT CHyperionStrike::Ready_Object(const _vec3 & Position, DIRRECTIONSTATE _e
 	m_iSphereSkillTag = SKILL_HYPERIONSTRIKE;
 	m_fSphereScale = 20.f;							//크기
 	m_fDuration = 10.f;								//지속시간
-	m_fSpeed = 0.05f;								//속도
+	m_fSpeed = 0.025f;								//속도
 	m_vDirection = { 1.f,0.f,0.f };					//방향
 	if (m_eDir == DIR_PX)
 		m_vDirection = { 1.f,0.f,0.f };					//방향
@@ -138,8 +138,8 @@ void CHyperionStrike::Recall_BattleCruiser(void)
 void CHyperionStrike::Bullet_Rain(void)
 {
 	
-	_float fRnd = (-50.f + rand() % 100) *0.015f;
-	_float fRnd2 = (-50.f + rand() % 100) *0.015f;
+	_float fRnd = (-50.f + rand() % 100) *0.03f;
+	_float fRnd2 = (-50.f + rand() % 100) *0.03f;
 
 	_vec3 vDir = { fRnd, -1.f, fRnd2 };	
 

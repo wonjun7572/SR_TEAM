@@ -36,7 +36,7 @@ public:
 		if(this != nullptr)
 			m_tAbility->fCurrentHp -= iDamage;
 	}
-
+	void		 Set_CollisionDmg() { m_bCollisionDmg = true; }
 protected:
 	CCubeTex*			m_pBufferCom = nullptr;
 	CTransform*			m_pTransCom = nullptr;
@@ -88,7 +88,7 @@ protected:
 	_float				m_fDeadSound = 1.f;
 
 	_vec3				m_vDirection;
-	
+	_bool				m_bCollisionDmg = false;
 protected:
 	virtual void	Free(void)override;
 };

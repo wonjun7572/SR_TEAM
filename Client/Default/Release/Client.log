@@ -1,8 +1,26 @@
-﻿     ../Bin\Client.lib 라이브러리 및 ../Bin\Client.exp 개체를 생성하고 있습니다.
+﻿  Laser.cpp
+..\Code\Laser.cpp(156): warning C4244: '인수': 'Engine::_int'에서 'FLOAT'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+..\Code\Laser.cpp(158): warning C4244: '인수': 'Engine::_int'에서 'FLOAT'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+..\Code\Laser.cpp(159): warning C4244: '인수': 'Engine::_int'에서 'FLOAT'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+..\Code\Laser.cpp(176): warning C4244: '인수': 'Engine::_int'에서 'FLOAT'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+..\Code\Laser.cpp(178): warning C4244: '인수': 'Engine::_int'에서 'FLOAT'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  GraphEditor.cpp
+  ImCurveEdit.cpp
+  ImGradient.cpp
+  imgui.cpp
+  ImGuiFileBrowser.cpp
+  ImGuiFileDialog.cpp
+  ImGuizmo.cpp
+  imgui_demo.cpp
+  imgui_draw.cpp
+  imgui_impl_dx9.cpp
+  imgui_impl_win32.cpp
+  imgui_tables.cpp
+  imgui_widgets.cpp
+  ImSequencer.cpp
+     ../Bin\Client.lib 라이브러리 및 ../Bin\Client.exp 개체를 생성하고 있습니다.
   코드를 생성하고 있습니다.
-  0 of 8915 functions ( 0.0%) were compiled, the rest were copied from previous compilation.
-    0 functions were new in current compilation
-    542 functions had inline decision re-evaluated but remain unchanged
+  All 8938 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
   코드를 생성했습니다.
-  Client.vcxproj -> C:\Users\beoms\OneDrive\문서\GitHub\SR_TEAM\Client\Default\../Bin\Client.exe
+  Client.vcxproj -> C:\Users\DecoyZ\Desktop\SR_TEAM\Client\Default\../Bin\Client.exe
   Client.vcxproj -> ../Bin\Client.pdb (Full PDB)

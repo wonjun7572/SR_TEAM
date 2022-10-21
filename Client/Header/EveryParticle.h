@@ -24,6 +24,8 @@
 #include "LaserEffect.h"
 #include "TraceEffect.h"
 #include "LaserPoint.h"
+#include "ProjectionEffect.h"
+
 #include "KrakenParticle.h"
 /*	
 CFlameEffect* m_pFlameEffectParticle = nullptr;
