@@ -40,7 +40,7 @@ _int CTriggerFront::Update_Object(const _float & fTimeDelta)
 		}*/
 
 		iter->fAge += fTimeDelta;
-		iter->vPos += (iter->vVelocity) * fTimeDelta * m_fSpeed *(rand()%50)*0.1f;
+		iter->vPos += (iter->vVelocity) * fTimeDelta * m_fSpeed * _float(rand()%50) * 0.1f;
 		iter->vPos.y += 0.01f* (m_fGravity*iter->fAge)*(m_fGravity* iter->fAge) * fTimeDelta;
 
 		if (iter->fAge > iter->fLifeTime)
@@ -113,12 +113,12 @@ void CTriggerFront::resetParticle(ATTRIBUTE * attribute)
 	_vec3 max = _vec3(1.0f, 1.0f, 1.0f);
 	_vec3 vRand = { 0.f,0.f ,0.f };
 	_float fRand = (rand() % 5)*0.1f;
-	_float m_fHand = rand() % 2;
+	_float m_fHand = _float(rand() % 2);
 
 	GetRandomVector(&vRand, &min, &max);
 	m_fGravity = 10.f;
 
-	attribute->vVelocity = m_vDir + vRand*0.05;
+	attribute->vVelocity = m_vDir + vRand*0.05f;
 	attribute->vPos = m_vTriggerFrontPos - m_vDir + vRand*.00005f; //+ attribute->vVelocity / 5.f;
 	attribute->vPos.y += vRand.y*.05f; //+ attribute->vVelocity / 5.f;
 
@@ -144,7 +144,7 @@ void CTriggerFront::resetParticle(ATTRIBUTE * attribute)
 			pTransform->Get_Info(INFO_LOOK, &m_vDir);
 
 			m_fSpeed = 10.f;
-			attribute->vPos = vPos - ((vRand)*0.05);
+			attribute->vPos = vPos - ((vRand)*0.05f);
 			attribute->vVelocity = m_vDir* 1.f + ((vRand)*0.02f);
 			attribute->fLifeTime = .25f;
 		}
@@ -158,8 +158,8 @@ void CTriggerFront::resetParticle(ATTRIBUTE * attribute)
 			pTransform->Get_Info(INFO_LOOK, &vDir1);
 
 			m_fSpeed = 10.f;
-			attribute->vPos = vPos1 - ((vRand)*0.05);
-			attribute->vVelocity = vDir1* 1.f + ((vRand)*0.02);
+			attribute->vPos = vPos1 - ((vRand)*0.05f);
+			attribute->vVelocity = vDir1* 1.f + ((vRand)*0.02f);
 			attribute->fLifeTime = .25f;
 		}
 	}
@@ -174,7 +174,7 @@ void CTriggerFront::resetParticle(ATTRIBUTE * attribute)
 		D3DXVec3Normalize(&vRand, &vRand);
 		
 		m_fSpeed = 10.f;
-		attribute->vPos = vPos - ((vRand)*0.1);
+		attribute->vPos = vPos - ((vRand)*0.1f);
 		attribute->vVelocity = m_vDir* 1.f - ((vRand)*0.05f);
 		attribute->fLifeTime = .5f;
 	}
@@ -189,8 +189,8 @@ void CTriggerFront::resetParticle(ATTRIBUTE * attribute)
 		D3DXVec3Normalize(&vRand, &vRand);
 
 		m_fSpeed = 10.f;
-		attribute->vPos = vPos - ((vRand)*0.1);
-		attribute->vVelocity = m_vDir* 1.f - ((vRand)*0.1);
+		attribute->vPos = vPos - ((vRand)*0.1f);
+		attribute->vVelocity = m_vDir* 1.f - ((vRand)*0.1f);
 		attribute->fLifeTime = .5f;
 	}
 	

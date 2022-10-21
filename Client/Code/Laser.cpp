@@ -147,11 +147,11 @@ void CLaser::Bomb_effect(void)
 	//vPos.x -= 5.f;
 	//vPos.y += 5.f;
 	//vPos.z -= 5.f;
-	for (_int i = -6; i < 6; i++)
+	for (_float i = -6.f; i < 6.f; i++)
 	{
-		for (_int j = -6; j < 6; j++)
+		for (_float j = -6.f; j < 6.f; j++)
 		{
-			for (_int k = -6; k < 6; k++)
+			for (_float k = -6.f; k < 6.f; k++)
 			{
 				D3DXVec3Normalize(&vDir, &_vec3(i, j, k));
 
@@ -167,11 +167,11 @@ void CLaser::Bomb_effect(void)
 			}
 		}
 	}
-	for (_int i = -6; i < 6; i++)
+	for (_float i = -6.f; i < 6.f; i++)
 	{
-		for (_int j = -6; j < 6; j++)
+		for (_float j = -6.f; j < 6.f; j++)
 		{
-			for (_int k = -6; k < 6; k++)
+			for (_float k = -6.f; k < 6.f; k++)
 			{
 				D3DXVec3Normalize(&vDir, &_vec3(i, j, k));
 

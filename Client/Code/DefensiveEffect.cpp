@@ -37,7 +37,7 @@ _int CDefensiveEffect::Update_Object(const _float & fTimeDelta)
 		{
 			if (iter->fAge < .1f)
 			{
-				iter->vVelocity = (iter->vPos - m_vCenterPos)*0.1;
+				iter->vVelocity = (iter->vPos - m_vCenterPos)*0.1f;
 				//D3DXVec3Normalize(&iter->vVelocity, &iter->vVelocity);
 				iter->vPos -= (iter->vVelocity) *iter->fAge*iter->fAge* fTimeDelta * 500.f;
 			}
