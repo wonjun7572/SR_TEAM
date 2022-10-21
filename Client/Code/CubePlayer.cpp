@@ -613,7 +613,7 @@ void CCubePlayer::Move()
 
 		vDir = vLook + vRight;
 
-		D3DXVec3Normalize(&vDir, &vDir);
+D3DXVec3Normalize(&vDir, &vDir);
 	}
 	else if (Get_DIKeyState(DIK_S) && Get_DIKeyState(DIK_A))
 	{
@@ -694,8 +694,36 @@ void CCubePlayer::Move()
 	}
 	if (Key_Pressing(DIK_C))
 	{
+
+		//_vec3 vPlayerPos;
+		//m_pPlayerTransCom->Get_Info(INFO_POS, &vPlayerPos);
+
+		//if (!m_pKrakenEffectParticle)
+		//	m_pKrakenEffectParticle = dynamic_cast<CKrakenEffect*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"KraKenEffect"));
+		//if (m_pKrakenEffectParticle != nullptr)
+		//{
+		//	m_pKrakenEffectParticle->Set_PclePos(vPos);
+		//	for (_int i = 0; i < 150; ++i)
+		//	{
+		//		m_pKrakenEffectParticle->addParticle();
+		//	}
+		//}
+		//if (!m_pKrakenSmoke)
+		//	m_pKrakenSmoke = dynamic_cast<CKrakenParticle*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"KrakenParticle"));
+		//if (m_pKrakenSmoke != nullptr)
+		//{
+		//	m_pKrakenSmoke->Set_PclePos(vPos);
+		//	for (int i = 0; i < 150; ++i)
+		//	{
+		//		m_pKrakenSmoke->addParticle();
+		//	}
+
+		//}
+
+
+
 		//	//_vec3 vPos;														//보스죽는이팩트
-		//	_vec3 vPos;														//대쉬이펙트하려던것
+		//_vec3 vPos;														//대쉬이펙트하려던것
 		//_vec3 vDir;
 		//m_pTransform->Get_Info(INFO_POS, &vPos);
 		//_vec3 min = { -1.0f ,-1.0f ,-1.0f };
@@ -709,11 +737,11 @@ void CCubePlayer::Move()
 		//	{
 		//		for (_int k = -5; k < 5; k++)
 		//		{
-		//			//D3DXVec3Normalize(&min, &_vec3(i, j, k));						
+		//			D3DXVec3Normalize(&min, &_vec3(i, j, k));						
 
 		//			dynamic_cast<CRoundEffect*>(m_pRoundEffect)->Set_PclePos(vPos + _vec3(i, j, k)*0.1f);
 
-		//			dynamic_cast<CRoundEffect*>(m_pRoundEffect)->Set_PcleDir(-min);
+		//			dynamic_cast<CRoundEffect*>(m_pRoundEffect)->Set_PcleDir(min);
 
 		//			m_pRoundEffect->addParticle();
 		//		}
@@ -722,30 +750,30 @@ void CCubePlayer::Move()
 
 
 		//_vec3 vPos;														//대쉬이펙트하려던것
-			//_vec3 vDir;
-			//m_pTransform->Get_Info(INFO_POS, &vPos);
-			//_vec3 min = { -1.0f ,-1.0f ,-1.0f };
-			//m_pTransform->Get_Info(INFO_POS, &vPos);
-			//vPos.x -= 5.f;
-			//vPos.y += 5.f;
-			//vPos.z -= 5.f;
-			//for (_int i = -5; i < 5; i++)
-			//{
-			//	for (_int j = -5; j < 5; j++)
-			//	{
-			//		for (_int k = -5; k < 5; k++)
-			//		{
-			//			D3DXVec3Normalize(&min, &_vec3(i, j, k));						
+		//	_vec3 vDir;
+		//	m_pTransform->Get_Info(INFO_POS, &vPos);
+		//	_vec3 min = { -1.0f ,-1.0f ,-1.0f };
+		//	m_pTransform->Get_Info(INFO_POS, &vPos);
+		//	vPos.x -= 5.f;
+		//	vPos.y += 5.f;
+		//	vPos.z -= 5.f;
+		//	for (_int i = -5; i < 5; i++)
+		//	{
+		//		for (_int j = -5; j < 5; j++)
+		//		{
+		//			for (_int k = -5; k < 5; k++)
+		//			{
+		//				D3DXVec3Normalize(&min, &_vec3(i, j, k));						
 
-			//			dynamic_cast<CRoundEffect*>(m_pRoundEffect)->Set_PclePos(vPos + _vec3(i, j, k)*0.1);
+		//				dynamic_cast<CRoundEffect*>(m_pRoundEffect)->Set_PclePos(vPos + _vec3(i, j, k)*0.1);
 
-			//			dynamic_cast<CRoundEffect*>(m_pRoundEffect)->Set_PcleDir(-min);
+		//				dynamic_cast<CRoundEffect*>(m_pRoundEffect)->Set_PcleDir(-min);
 
-			//			m_pRoundEffect->addParticle();
-			//		}
-			//	}
-			//}
-			dynamic_cast<CSniper*>(Engine::Get_GameObject(STAGE_GUN, L"SNIPER"));
+		//				m_pRoundEffect->addParticle();
+		//			}
+		//		}
+		//	}
+	/*		dynamic_cast<CSniper*>(Engine::Get_GameObject(STAGE_GUN, L"SNIPER"));
 		CTransform* pTransform = nullptr;
 		pTransform = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_GUN, L"Sniper_Part_2", TRANSFORM_COMP, ID_DYNAMIC));
 		NULL_CHECK_RETURN(pTransform, );
@@ -759,7 +787,7 @@ void CCubePlayer::Move()
 		for (_int i = 0; i < 150; ++i)
 		{
 			m_pTraceEffect->addParticle();
-		}
+		}*/
 	}
 
 

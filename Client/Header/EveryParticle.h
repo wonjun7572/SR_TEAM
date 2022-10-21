@@ -24,6 +24,7 @@
 #include "LaserEffect.h"
 #include "TraceEffect.h"
 #include "LaserPoint.h"
+#include "KrakenParticle.h"
 /*	
 CFlameEffect* m_pFlameEffectParticle = nullptr;
 CIceEffect* m_pIceEffectParticle = nullptr;
@@ -33,7 +34,7 @@ CRainbowCloudEffect* m_pRainbowCloudEffectParticle = nullptr;
 CBrownCloudEffect* m_pBrownCloudEffectParticle = nullptr;
 CSparkEffect* m_pSparkEffectParticle = nullptr;
 CSoundWave* m_pSoundWaveParticle = nullptr;
-
+CKrakenEffect*	m_pKrakenEffectParticle = nullptr;
 
 #### È­¿°
 if (!m_pFlameEffectParticle)

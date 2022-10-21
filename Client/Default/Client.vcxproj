@@ -216,6 +216,7 @@
     <ClInclude Include="..\Header\KrakenBullet.h" />
     <ClInclude Include="..\Header\KrakenEffect.h" />
     <ClInclude Include="..\Header\KrakenLeg.h" />
+    <ClInclude Include="..\Header\KrakenParticle.h" />
     <ClInclude Include="..\Header\Laser.h" />
     <ClInclude Include="..\Header\LaserEffect.h" />
     <ClInclude Include="..\Header\LaserPoint.h" />
@@ -390,6 +391,7 @@
     <ClCompile Include="..\Code\Key.cpp" />
     <ClCompile Include="..\Code\KrakenBullet.cpp" />
     <ClCompile Include="..\Code\KrakenEffect.cpp" />
+    <ClCompile Include="..\Code\KrakenParticle.cpp" />
     <ClCompile Include="..\Code\Laser.cpp" />
     <ClCompile Include="..\Code\LaserEffect.cpp" />
     <ClCompile Include="..\Code\LaserPoint.cpp" />

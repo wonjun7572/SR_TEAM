@@ -155,7 +155,7 @@ void CLaser::Bomb_effect(void)
 			{
 				D3DXVec3Normalize(&vDir, &_vec3(i, j, k));
 
-				dynamic_cast<CLaserEffect*>(m_pLaserEffect)->Set_PclePos(vPos + _vec3(i, j, k)*0.05);
+				dynamic_cast<CLaserEffect*>(m_pLaserEffect)->Set_PclePos(vPos + _vec3(i, j, k)*0.05f);
 
 				dynamic_cast<CLaserEffect*>(m_pLaserEffect)->Set_PcleDir(-vDir);
 
