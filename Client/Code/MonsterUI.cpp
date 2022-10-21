@@ -57,41 +57,43 @@ void CMonsterUI::LateUpdate_Object(void)
 
 void CMonsterUI::Render_Object(void)
 {
-	_matrix      OldViewMatrix, OldProjMatrix, ViewMatrix;
+	_matrix      matWorld, matView;
 
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pHUDTransCom->Get_WorldMatrixPointer());
-	
-	m_pGraphicDev->GetTransform(D3DTS_VIEW, &OldViewMatrix);
-	m_pGraphicDev->GetTransform(D3DTS_PROJECTION, &OldProjMatrix);
+	matWorld = *m_pHUDTransCom->Get_WorldMatrixPointer();
 
-	ViewMatrix = *D3DXMatrixIdentity(&ViewMatrix);
+	matView = *D3DXMatrixIdentity(&matView);
 
-	m_pGraphicDev->SetTransform(D3DTS_VIEW, &ViewMatrix);
-	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &m_matProj);
-	
-	m_pHUDTextureCom->Set_Texture();
+	D3DXMatrixTranspose(&matWorld, &matWorld);
+	D3DXMatrixTranspose(&matView, &matView);
+	D3DXMatrixTranspose(&m_matProj, &m_matProj);
+
+	if (FAILED(m_pShaderCom->Set_RawValue("g_WorldMatrix", &matWorld, sizeof(_matrix))))
+		return;
+	if (FAILED(m_pShaderCom->Set_RawValue("g_ViewMatrix", &matView, sizeof(_matrix))))
+		return;
+	if (FAILED(m_pShaderCom->Set_RawValue("g_ProjMatrix", &m_matProj, sizeof(_matrix))))
+		return;
+
+	m_pHUDTextureCom->Set_Texture(m_pShaderCom, "g_DefaultTexture", 0);
+	m_pShaderCom->Begin_Shader(0);
 	m_pHUDBufferCom->Render_Buffer();
+	m_pShaderCom->End_Shader();
 
-	m_pGraphicDev->SetTransform(D3DTS_VIEW, &OldViewMatrix);
-	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &OldProjMatrix);
+	matWorld = *m_pTransCom->Get_WorldMatrixPointer();
+	D3DXMatrixTranspose(&matWorld, &matWorld);
 
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransCom->Get_WorldMatrixPointer());
+	if (FAILED(m_pShaderCom->Set_RawValue("g_WorldMatrix", &matWorld, sizeof(_matrix))))
+		return;
+	if (FAILED(m_pShaderCom->Set_RawValue("g_ViewMatrix", &matView, sizeof(_matrix))))
+		return;
+	if (FAILED(m_pShaderCom->Set_RawValue("g_ProjMatrix", &m_matProj, sizeof(_matrix))))
+		return;
 
-	m_pGraphicDev->GetTransform(D3DTS_VIEW, &OldViewMatrix);
-	m_pGraphicDev->GetTransform(D3DTS_PROJECTION, &OldProjMatrix);
-
-	ViewMatrix = *D3DXMatrixIdentity(&ViewMatrix);
-
-	m_pGraphicDev->SetTransform(D3DTS_VIEW, &ViewMatrix);
-	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &m_matProj);
-
-	m_pTextureCom->Set_Texture();
+	m_pTextureCom->Set_Texture(m_pShaderCom, "g_DefaultTexture", 0);
+	m_pShaderCom->Begin_Shader(0);
 	m_pBufferCom->Resize_Buffer(m_fHp / m_fMaxHp);
 	m_pBufferCom->Render_Buffer();
-
-	m_pGraphicDev->SetTransform(D3DTS_VIEW, &OldViewMatrix);
-	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &OldProjMatrix);
-
+	m_pShaderCom->End_Shader();
 	Render_Font(L"MonsterName", m_strMonsterUI.c_str(), &_vec2(630.f, 120.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
 }
 
@@ -138,6 +140,10 @@ HRESULT CMonsterUI::Add_Component()
 	pComponent = m_pHUDTextureCom = dynamic_cast<CTexture*>(Clone_Proto(MONSTER_HP_HUD_TEX));
 	NULL_CHECK_RETURN(m_pHUDTextureCom, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Monsetr_HP_HUD" , pComponent });
+
+	pComponent = m_pShaderCom = dynamic_cast<CShader*>(Clone_Proto(RCTEX_SHADER));
+	NULL_CHECK_RETURN(m_pShaderCom, E_FAIL);
+	m_mapComponent[ID_STATIC].insert({ RCTEX_SHADER, pComponent });
 
 	return S_OK;
 }

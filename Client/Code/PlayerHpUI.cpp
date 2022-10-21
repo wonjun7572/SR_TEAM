@@ -56,31 +56,28 @@ void CPlayerHpUI::LateUpdate_Object(void)
 
 void CPlayerHpUI::Render_Object(void)
 {
+	_matrix      matWorld, matView;
 
-	m_pTextureCom->Set_Texture(0);
-	m_pBufferCom->Render_Buffer();
+	matWorld = *m_pTransCom->Get_WorldMatrixPointer();
 
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransCom->Get_WorldMatrixPointer());
+	matView = *D3DXMatrixIdentity(&matView);
 
+	D3DXMatrixTranspose(&matWorld, &matWorld);
+	D3DXMatrixTranspose(&matView, &matView);
+	D3DXMatrixTranspose(&m_ProjMatrix, &m_ProjMatrix);
 
-	_matrix      OldViewMatrix, OldProjMatrix;
+	if (FAILED(m_pShaderCom->Set_RawValue("g_WorldMatrix", &matWorld, sizeof(_matrix))))
+		return;
+	if (FAILED(m_pShaderCom->Set_RawValue("g_ViewMatrix", &matView, sizeof(_matrix))))
+		return;
+	if (FAILED(m_pShaderCom->Set_RawValue("g_ProjMatrix", &m_ProjMatrix, sizeof(_matrix))))
+		return;
 
-	m_pGraphicDev->GetTransform(D3DTS_VIEW, &OldViewMatrix);
-	m_pGraphicDev->GetTransform(D3DTS_PROJECTION, &OldProjMatrix);
-
-	_matrix      ViewMatrix;
-
-	ViewMatrix = *D3DXMatrixIdentity(&ViewMatrix);
-
-	m_pGraphicDev->SetTransform(D3DTS_VIEW, &ViewMatrix);
-	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &m_ProjMatrix);
-	m_pTextureCom->Set_Texture(0);
+	m_pTextureCom->Set_Texture(m_pShaderCom, "g_DefaultTexture", 0);
+	m_pShaderCom->Begin_Shader(0);
 	m_pBufferCom->Resize_Buffer(m_fHp / m_fMaxHp);
 	m_pBufferCom->Render_Buffer();
-
-
-	m_pGraphicDev->SetTransform(D3DTS_VIEW, &OldViewMatrix);
-	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &OldProjMatrix);
+	m_pShaderCom->End_Shader();
 
 	Render_Font(L"HP", m_strHp.c_str(), &(_vec2(176.5f, 870.f)), D3DXCOLOR(0.5f, 0.5f, 0.3f, 1.f));
 }
@@ -100,6 +97,10 @@ HRESULT CPlayerHpUI::Add_Component()
 	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Clone_Proto(L"HP_Gage"));
 	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"HP_Gage", pComponent });
+
+	pComponent = m_pShaderCom = dynamic_cast<CShader*>(Clone_Proto(RCTEX_SHADER));
+	NULL_CHECK_RETURN(m_pShaderCom, E_FAIL);
+	m_mapComponent[ID_STATIC].insert({ RCTEX_SHADER, pComponent });
 
 	return S_OK;
 }

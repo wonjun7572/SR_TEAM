@@ -456,6 +456,10 @@ HRESULT CStage::Ready_Layer_Wall(const _tchar * pLayerTag)
 		}
 	}
 
+	pGameObject = CCubeShop::Create(m_pGraphicDev,_vec3( 20.f, 0.5f, 10.f));
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"CubeShop", pGameObject), E_FAIL);
+
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
 	return S_OK;
@@ -540,7 +544,7 @@ HRESULT CStage::Ready_Layer_Monster(const _tchar * pLayerTag)
 		}
 	}
 	
-	if (!vecSlime.empty())
+	/*if (!vecSlime.empty())
 	{
 		for (size_t i = 0; i < vecSlime.size(); i++)
 		{
@@ -588,12 +592,7 @@ HRESULT CStage::Ready_Layer_Monster(const _tchar * pLayerTag)
 
 	pGameObject = CMiddleBoss::Create(m_pGraphicDev, _vec3(109.f, 0.6f, 10.f), L"MiddleBoss");
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
-
-	//pGameObject = CKrakenBoss::Create(m_pGraphicDev, _vec3(10.f, 5.6f, 10.f), L"Kraken");
-	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
-
+	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);*/
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
@@ -949,48 +948,48 @@ HRESULT CStage::Ready_Layer_Trap(const _tchar * pLayerTag)
 	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	//FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
 
-	//if (!vecThrone.empty())
-	//{
-	//	for (size_t i = 0; i < vecThrone.size(); i++)
-	//	{
-	//	_tchar* szName = new _tchar[256]{};
-	//	wstring wName = L"Thorn_%d";
-	//	wsprintfW(szName, wName.c_str(), i);
-	//	NameList.push_back(szName);
-	//	pGameObject = CThorn::Create(m_pGraphicDev, vecThrone[i], szName);
-	//	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
-	//	}
-	//}
-	//
-	//if (!vecLava.empty())
-	//{
-	//	for (size_t i = 0; i < vecLava.size(); i++)
-	//	{
-	//	_tchar* szName = new _tchar[256]{};
-	//	wstring wName = L"Magma_%d";
-	//	wsprintfW(szName, wName.c_str(), i);
-	//	NameList.push_back(szName);
-	//	pGameObject = CMagma::Create(m_pGraphicDev, vecLava[i], szName);
-	//	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
-	//	}
-	//}
-	//
-	//if (!vecItem.empty())
-	//{
-	//	for (size_t i = 0; i < vecItem.size(); i++)
-	//	{
-	//		_tchar* szName = new _tchar[256]{};
-	//		wstring wName = L"Item_%d";
-	//		wsprintfW(szName, wName.c_str(), i);
-	//		NameList.push_back(szName);
-	//		vecItem[i].y += 0.5f;
-	//		pGameObject = CItemBox::Create(m_pGraphicDev, vecItem[i], szName);
-	//		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
-	//	}
-	//}
+	/*if (!vecThrone.empty())
+	{
+		for (size_t i = 0; i < vecThrone.size(); i++)
+		{
+		_tchar* szName = new _tchar[256]{};
+		wstring wName = L"Thorn_%d";
+		wsprintfW(szName, wName.c_str(), i);
+		NameList.push_back(szName);
+		pGameObject = CThorn::Create(m_pGraphicDev, vecThrone[i], szName);
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+		}
+	}
+	
+	if (!vecLava.empty())
+	{
+		for (size_t i = 0; i < vecLava.size(); i++)
+		{
+		_tchar* szName = new _tchar[256]{};
+		wstring wName = L"Magma_%d";
+		wsprintfW(szName, wName.c_str(), i);
+		NameList.push_back(szName);
+		pGameObject = CMagma::Create(m_pGraphicDev, vecLava[i], szName);
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+		}
+	}
+	
+	if (!vecItem.empty())
+	{
+		for (size_t i = 0; i < vecItem.size(); i++)
+		{
+			_tchar* szName = new _tchar[256]{};
+			wstring wName = L"Item_%d";
+			wsprintfW(szName, wName.c_str(), i);
+			NameList.push_back(szName);
+			vecItem[i].y += 0.5f;
+			pGameObject = CItemBox::Create(m_pGraphicDev, vecItem[i], szName);
+			NULL_CHECK_RETURN(pGameObject, E_FAIL);
+			FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+		}
+	}*/
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
@@ -1058,8 +1057,8 @@ HRESULT CStage::Ready_Light(void)
 	*/
 	FAILED_CHECK_RETURN(Engine::Ready_Light(m_pGraphicDev, &Light, 0), E_FAIL);
 
-	D3DLIGHT9   Light2;
-	ZeroMemory(&Light2, sizeof(D3DLIGHT9));
+	//D3DLIGHT9   Light2;
+	//ZeroMemory(&Light2, sizeof(D3DLIGHT9));
 
 	//Light2.Type = D3DLIGHT_POINT;
 	//Light2.Position = _vec3(14.f, 0.6f, 10.f);

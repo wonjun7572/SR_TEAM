@@ -20,6 +20,7 @@ private:
 	CRcTex*		m_pBufferCom = nullptr;
 	CTransform* m_pTransCom = nullptr;
 	CTexture*	m_pTextureCom = nullptr;
+	CShader*	m_pShaderCom = nullptr;
 
 	_matrix m_ProjMatrix;
 

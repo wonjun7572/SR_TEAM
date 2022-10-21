@@ -24,10 +24,7 @@ private:
 	CRcTex*		m_pRcTexCom = nullptr;
 	CTransform*	m_pTransCom = nullptr;
 	CTexture*	m_pTextureCom = nullptr;
-
-	_matrix	m_matWorld;
-	_matrix m_matView;
-	_matrix m_matProj;
+	CShader*	m_pShaderCom = nullptr;
 
 public:
 	static	CLogoUI* Create(LPDIRECT3DDEVICE9 pGraphicDev);
