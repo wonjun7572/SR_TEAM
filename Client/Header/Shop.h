@@ -63,8 +63,7 @@ private:
 	 _matrix	m_matButtonTwoView;
 	 _matrix	m_matButtonThreeView;
 	 _matrix	m_bChekingUzi;
-
-
+	 
 	 _matrix	m_matLaserView;
 	 _matrix	m_matHeavyView;
 	 _matrix	m_matRailGunView;
@@ -124,6 +123,8 @@ private:
 	Engine::CTexture*	m_pRailGunScope = nullptr;
 	Engine::CTexture*	m_pBurstMode = nullptr;
 	Engine::CTexture*	m_pUpgradeString = nullptr;
+
+	CShader*	m_pShaderCom = nullptr;
 
 	CGameObject* m_pPlayer = nullptr;
 

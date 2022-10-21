@@ -44,13 +44,9 @@ private:
 	CTransform*		 m_pTransformCom = nullptr;
 	CTexture*		 m_pTextureCom = nullptr;
 	CTexture*		 m_pCursorTextureCom = nullptr;
-
+	CShader*		 m_pShaderCom = nullptr;
 
 	CRcTex*			 m_pRcTexCom = nullptr;	
-
-	_matrix	 		 m_matWorld;
-	_matrix			 m_matView;
-	_matrix			 m_matProj;
 
 	list<TCHAR*>	 m_listItemIcon;
 	_tchar			 szCntName[64];

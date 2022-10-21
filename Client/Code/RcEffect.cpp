@@ -59,11 +59,10 @@ void CRcEffect::LateUpdate_Object(void)
 
 void CRcEffect::Render_Object(void)
 {
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrixPointer());
-	m_pTextureCom->Set_Texture(m_iTexIndex);
-	m_pRcTexCom->Render_Buffer();
+	//m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrixPointer());
+	//m_pTextureCom->Set_Texture(m_iTexIndex);
+	//m_pRcTexCom->Render_Buffer();
 }
-
 
 HRESULT CRcEffect::Add_Component()
 {

@@ -45,23 +45,18 @@ void CLoadingBar::LateUpdate_Object(void)
 void CLoadingBar::Render_Object(void)
 {
 	Begin_OrthoProj();
-	m_pUITextureCom->Set_Texture();
 	m_pBufferUICom->Resize_Buffer(m_fMin / m_fMax);
 	m_pBufferUICom->Render_Buffer();
 	End_OrthoProj();
 	
-	
 	Begin_HudOrthoProj();
-	m_pHUDTextureCom->Set_Texture();
 	m_pHUDBufferCom->Render_Buffer();
 	End_HudOrthoProj();
 }
 
 HRESULT CLoadingBar::Add_Component(void)
 {
-
 	CComponent* pComponent = nullptr;
-
 
 	//loading
 	pComponent = m_pBufferUICom = dynamic_cast<CRcTex*>(Clone_Proto(L"Proto_LoadingBar"));
@@ -75,14 +70,11 @@ HRESULT CLoadingBar::Add_Component(void)
 	pComponent = m_pUITextureCom = dynamic_cast<CTexture*>(Clone_Proto(L"Proto_ReadyLoading"));
 	NULL_CHECK_RETURN(m_pUITextureCom, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_ReadyLoading", pComponent });
-	
-	
 
 	//Hud
 	pComponent = m_pHUDBufferCom = dynamic_cast<CRcTex*>(Clone_Proto(L"Proto_HudLoading"));
 	NULL_CHECK_RETURN(m_pHUDBufferCom, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_HudLoading", pComponent });
-
 
 	pComponent = m_pHUDTransCom = dynamic_cast<CTransform*>(Clone_Proto(TRANSFORM_COMP));
 	NULL_CHECK_RETURN(m_pHUDTransCom, E_FAIL);
@@ -92,8 +84,9 @@ HRESULT CLoadingBar::Add_Component(void)
 	NULL_CHECK_RETURN(m_pHUDTextureCom, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_HudLoadinga", pComponent });
 
-
-	
+	pComponent = m_pShaderCom = dynamic_cast<CShader*>(Clone_Proto(RCTEX_SHADER));
+	NULL_CHECK_RETURN(m_pShaderCom, E_FAIL);
+	m_mapComponent[ID_STATIC].insert({ RCTEX_SHADER, pComponent });
 	
 	return S_OK;
 }
@@ -101,14 +94,6 @@ HRESULT CLoadingBar::Add_Component(void)
 void CLoadingBar::Begin_OrthoProj()
 {
 	_matrix matWorld, matView, matProj, matOrtho;
-	m_pGraphicDev->GetTransform(D3DTS_WORLD, &matWorld);
-	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
-	m_pGraphicDev->GetTransform(D3DTS_PROJECTION, &matProj);
-
-	memcpy(&m_matWorld, &matWorld, sizeof(_matrix));
-	memcpy(&m_matView, &matView, sizeof(_matrix));
-	memcpy(&m_matProj, &matProj, sizeof(_matrix));
-
 	D3DXMatrixIdentity(&matWorld);
 	D3DXMatrixIdentity(&matView);
 
@@ -119,30 +104,30 @@ void CLoadingBar::Begin_OrthoProj()
 	matView.m[3][1] = m_pUITransCom->m_vInfo[INFO_POS].y;
 
 	D3DXMatrixOrthoLH(&matOrtho, WINCX, WINCY, 0.f, 1.f);
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, &matWorld);
-	m_pGraphicDev->SetTransform(D3DTS_VIEW, &matView);
-	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &matOrtho);
+
+	D3DXMatrixTranspose(&matWorld, &matWorld);
+	D3DXMatrixTranspose(&matView, &matView);
+	D3DXMatrixTranspose(&matOrtho, &matOrtho);
+
+	if (FAILED(m_pShaderCom->Set_RawValue("g_WorldMatrix", &matWorld, sizeof(_matrix))))
+		return;
+	if (FAILED(m_pShaderCom->Set_RawValue("g_ViewMatrix", &matView, sizeof(_matrix))))
+		return;
+	if (FAILED(m_pShaderCom->Set_RawValue("g_ProjMatrix", &matOrtho, sizeof(_matrix))))
+		return;
+
+	m_pUITextureCom->Set_Texture(m_pShaderCom, "g_DefaultTexture", 0);
+	m_pShaderCom->Begin_Shader(0);
 }
 
 void CLoadingBar::End_OrthoProj()
 {
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, &m_matWorld);
-	m_pGraphicDev->SetTransform(D3DTS_VIEW, &m_matView);
-	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &m_matProj);
-
+	m_pShaderCom->End_Shader();
 }
 
 void CLoadingBar::Begin_HudOrthoProj()
 {
 	_matrix matWorld, matView, matProj, matOrtho;
-	m_pGraphicDev->GetTransform(D3DTS_WORLD, &matWorld);
-	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
-	m_pGraphicDev->GetTransform(D3DTS_PROJECTION, &matProj);
-
-	memcpy(&m_matWorld, &matWorld, sizeof(_matrix));
-	memcpy(&m_matView, &matView, sizeof(_matrix));
-	memcpy(&m_matProj, &matProj, sizeof(_matrix));
-
 	D3DXMatrixIdentity(&matWorld);
 	D3DXMatrixIdentity(&matView);
 
@@ -153,16 +138,25 @@ void CLoadingBar::Begin_HudOrthoProj()
 	matView.m[3][1] = m_pHUDTransCom->m_vInfo[INFO_POS].y;
 
 	D3DXMatrixOrthoLH(&matOrtho, WINCX, WINCY, 0.f, 1.f);
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, &matWorld);
-	m_pGraphicDev->SetTransform(D3DTS_VIEW, &matView);
-	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &matOrtho);
+
+	D3DXMatrixTranspose(&matWorld, &matWorld);
+	D3DXMatrixTranspose(&matView, &matView);
+	D3DXMatrixTranspose(&matOrtho, &matOrtho);
+
+	if (FAILED(m_pShaderCom->Set_RawValue("g_WorldMatrix", &matWorld, sizeof(_matrix))))
+		return;
+	if (FAILED(m_pShaderCom->Set_RawValue("g_ViewMatrix", &matView, sizeof(_matrix))))
+		return;
+	if (FAILED(m_pShaderCom->Set_RawValue("g_ProjMatrix", &matOrtho, sizeof(_matrix))))
+		return;
+
+	m_pHUDTextureCom->Set_Texture(m_pShaderCom, "g_DefaultTexture", 0);
+	m_pShaderCom->Begin_Shader(0);
 }
 
 void CLoadingBar::End_HudOrthoProj()
 {
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, &m_matWorld);
-	m_pGraphicDev->SetTransform(D3DTS_VIEW, &m_matView);
-	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &m_matProj);
+	m_pShaderCom->End_Shader();
 }
 
 CLoadingBar * CLoadingBar::Create(LPDIRECT3DDEVICE9 pGraphicDev)

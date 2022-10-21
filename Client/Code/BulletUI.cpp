@@ -62,29 +62,31 @@ void CBulletUI::LateUpdate_Object(void)
 
 void CBulletUI::Render_Object(void)
 {
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransCom->Get_WorldMatrixPointer());
+	_matrix      matWorld, matView;
 
-	_matrix      OldViewMatrix, OldProjMatrix;
+	matWorld = *m_pTransCom->Get_WorldMatrixPointer();
 
-	m_pGraphicDev->GetTransform(D3DTS_VIEW, &OldViewMatrix);
-	m_pGraphicDev->GetTransform(D3DTS_PROJECTION, &OldProjMatrix);
+	matView = *D3DXMatrixIdentity(&matView);
 
-	_matrix      ViewMatrix;
+	D3DXMatrixTranspose(&matWorld, &matWorld);
+	D3DXMatrixTranspose(&matView, &matView);
+	D3DXMatrixTranspose(&m_ProjMatrix, &m_ProjMatrix);
 
-	ViewMatrix = *D3DXMatrixIdentity(&ViewMatrix);
-
-	m_pGraphicDev->SetTransform(D3DTS_VIEW, &ViewMatrix);
-	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &m_ProjMatrix);
+	if (FAILED(m_pShaderCom->Set_RawValue("g_WorldMatrix", &matWorld, sizeof(_matrix))))
+		return;
+	if (FAILED(m_pShaderCom->Set_RawValue("g_ViewMatrix", &matView, sizeof(_matrix))))
+		return;
+	if (FAILED(m_pShaderCom->Set_RawValue("g_ProjMatrix", &m_ProjMatrix, sizeof(_matrix))))
+		return;
 
 	if (dynamic_cast<CCubePlayer*>(m_pPlayer)->Get_Weapon() != nullptr)
 	{
-		m_pTextureCom->Set_Texture();
+		m_pTextureCom->Set_Texture(m_pShaderCom, "g_DefaultTexture", 0);
+		m_pShaderCom->Begin_Shader(0);
 		m_pBufferCom->Resize_Buffer_Reverse(m_fRemainBullet / m_fTotalBullet);
 		m_pBufferCom->Render_Buffer();
+		m_pShaderCom->End_Shader();
 	}
-
-	m_pGraphicDev->SetTransform(D3DTS_VIEW, &OldViewMatrix);
-	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &OldProjMatrix);
 
 	Render_Font(L"REMAINBULLET", m_strReminaBullet.c_str(), &(_vec2(1520.f, 851.f)), D3DXCOLOR(0.5f, 0.5f, 0.3f, 1.f));
 	Render_Font(L"TOTALBULLET", m_strTotalBullet.c_str(), &(_vec2(1545.f, 851.f)), D3DXCOLOR(0.5f, 0.5f, 0.3f, 1.f));
@@ -105,6 +107,10 @@ HRESULT CBulletUI::Add_Component()
 	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Clone_Proto(L"BULLET_Gage"));
 	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"BULLET_Gage", pComponent });
+
+	pComponent = m_pShaderCom = dynamic_cast<CShader*>(Clone_Proto(RCTEX_SHADER));
+	NULL_CHECK_RETURN(m_pShaderCom, E_FAIL);
+	m_mapComponent[ID_STATIC].insert({ RCTEX_SHADER, pComponent });
 
 	return S_OK;
 }

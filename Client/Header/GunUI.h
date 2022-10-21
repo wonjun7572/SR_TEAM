@@ -18,14 +18,12 @@ private:
 private:
 	CRcTex*   m_pBufferCom = nullptr;
 	CTransform* m_pTransCom = nullptr;
-	CTexture* m_pTextureCom = nullptr;
+	CTexture*		  m_pTextureCom = nullptr;
+	CShader*		m_pShaderCom = nullptr;
 
-	CGameObject* m_pPlayer = nullptr;
+	CGameObject*	  m_pPlayer = nullptr;
 
-	_matrix m_matWorld;
-	_matrix m_matView;
-	_matrix m_matProj;
-	_matrix            m_ProjMatrix;
+	_matrix           m_ProjMatrix;
 	_float            m_fX, m_fY, m_fSizeX, m_fSizeY;
 	_int m_iGunIndex = 0;
 

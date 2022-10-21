@@ -223,13 +223,13 @@ void CIllusioner::LateUpdate_Object(void)
 		_vec3 vPos;
 		m_pTransCom->Get_Info(INFO_POS, &vPos);
 		
-		m_pEffect = CRcEffect::Create(m_pGraphicDev, CASTINGEFFECT_EFT); //enum EFFECTID
-		dynamic_cast<CRcEffect*>(m_pEffect)->Set_EffectPos(vPos.x, vPos.y, vPos.z);//EFFECT POS
-		dynamic_cast<CRcEffect*>(m_pEffect)->Set_SingleUse();
-		
-		m_pPlayerEffect = CRcEffect::Create(m_pGraphicDev, STAREFFECT_EFT); //enum EFFECTID
-		dynamic_cast<CRcEffect*>(m_pPlayerEffect)->Set_EffectPos(vPlayerPos.x, vPlayerPos.y, vPlayerPos.z);//EFFECT POS
-		dynamic_cast<CRcEffect*>(m_pPlayerEffect)->Set_SingleUse();
+		//m_pEffect = CRcEffect::Create(m_pGraphicDev, CASTINGEFFECT_EFT); //enum EFFECTID
+		//dynamic_cast<CRcEffect*>(m_pEffect)->Set_EffectPos(vPos.x, vPos.y, vPos.z);//EFFECT POS
+		//dynamic_cast<CRcEffect*>(m_pEffect)->Set_SingleUse();
+		//
+		//m_pPlayerEffect = CRcEffect::Create(m_pGraphicDev, STAREFFECT_EFT); //enum EFFECTID
+		//dynamic_cast<CRcEffect*>(m_pPlayerEffect)->Set_EffectPos(vPlayerPos.x, vPlayerPos.y, vPlayerPos.z);//EFFECT POS
+		//dynamic_cast<CRcEffect*>(m_pPlayerEffect)->Set_SingleUse();
 		m_bCreate = false;
 	}
 
@@ -684,7 +684,7 @@ void CIllusioner::Look_Direction(void)
 			_vec3 vAngle;
 			CTransform* Transform = dynamic_cast<CTransform*>(iter.second->Get_Component(L"Proto_TransformCom", ID_STATIC));
 			Transform->Get_Angle(&vAngle);
-			Transform->Set_Angle(&_vec3(yaw, vAngle.y, roll));
+			Transform->Set_Angle(&_vec3(yaw, vAngle.x, vAngle.z));
 		}
 	}
 }

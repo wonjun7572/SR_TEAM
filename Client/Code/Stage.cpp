@@ -454,6 +454,10 @@ HRESULT CStage::Ready_Layer_Wall(const _tchar * pLayerTag)
 		}
 	}
 
+	pGameObject = CCubeShop::Create(m_pGraphicDev,_vec3( 20.f, 0.5f, 10.f));
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"CubeShop", pGameObject), E_FAIL);
+
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
 	return S_OK;
@@ -523,75 +527,70 @@ HRESULT CStage::Ready_Layer_Monster(const _tchar * pLayerTag)
 
 	CGameObject*      pGameObject = nullptr;
 
-	//if (!vecFireMan.empty())
-	//{
-	//	for (size_t i = 0; i < vecFireMan.size(); i++)
-	//	{
-	//		_tchar* szName = new _tchar[128]{};
-	//		wstring wName = L"Fireman_%d";
-	//		wsprintfW(szName, wName.c_str(), i);
-	//		NameList.push_back(szName);
-	//		vecFireMan[i].y += 0.5f;
-	//		pGameObject = CFireMan::Create(m_pGraphicDev, vecFireMan[i], szName);
-	//		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
-	//	}
-	//}
-	//
-	//if (!vecSlime.empty())
-	//{
-	//	for (size_t i = 0; i < vecSlime.size(); i++)
-	//	{
-	//		_tchar* szName = new _tchar[128]{};
-	//		wstring wName = L"Slime_%d";
-	//		wsprintfW(szName, wName.c_str(), i);
-	//		NameList.push_back(szName);
-	//		vecSlime[i].y += 0.5f;
-	//		pGameObject = CSlime::Create(m_pGraphicDev, vecSlime[i], szName);
-	//		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
-	//	}
-	//}
-	//
-	//if (!vecIllusioner.empty())
-	//{
-	//	for (size_t i = 0; i < vecIllusioner.size(); i++)
-	//	{
-	//		_tchar* szName = new _tchar[128]{};
-	//		wstring wName = L"Illusioner_%d";
-	//		wsprintfW(szName, wName.c_str(), i);
-	//		NameList.push_back(szName);
-	//		vecIllusioner[i].y += 0.5f;
-	//		pGameObject = CIllusioner::Create(m_pGraphicDev, vecIllusioner[i], szName);
-	//		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
-	//	}
-	//}
-	//
-	//if (!vecZombie.empty())
-	//{
-	//	for (size_t i = 0; i < vecZombie.size(); i++)
-	//	{
-	//		_tchar* szName = new _tchar[128]{};
-	//		wstring wName = L"Zombie_%d";
-	//		wsprintfW(szName, wName.c_str(), i);
-	//		NameList.push_back(szName);
-	//		vecZombie[i].y += 0.5f;
-	//		pGameObject = CZombie::Create(m_pGraphicDev, vecZombie[i], szName);
-	//		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
-	//	}
-	//}
+	if (!vecFireMan.empty())
+	{
+		for (size_t i = 0; i < vecFireMan.size(); i++)
+		{
+			_tchar* szName = new _tchar[128]{};
+			wstring wName = L"Fireman_%d";
+			wsprintfW(szName, wName.c_str(), i);
+			NameList.push_back(szName);
+			vecFireMan[i].y += 0.5f;
+			pGameObject = CFireMan::Create(m_pGraphicDev, vecFireMan[i], szName);
+			NULL_CHECK_RETURN(pGameObject, E_FAIL);
+			FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+		}
+	}
+	
+	/*if (!vecSlime.empty())
+	{
+		for (size_t i = 0; i < vecSlime.size(); i++)
+		{
+			_tchar* szName = new _tchar[128]{};
+			wstring wName = L"Slime_%d";
+			wsprintfW(szName, wName.c_str(), i);
+			NameList.push_back(szName);
+			vecSlime[i].y += 0.5f;
+			pGameObject = CSlime::Create(m_pGraphicDev, vecSlime[i], szName);
+			NULL_CHECK_RETURN(pGameObject, E_FAIL);
+			FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+		}
+	}
+	
+	if (!vecIllusioner.empty())
+	{
+		for (size_t i = 0; i < vecIllusioner.size(); i++)
+		{
+			_tchar* szName = new _tchar[128]{};
+			wstring wName = L"Illusioner_%d";
+			wsprintfW(szName, wName.c_str(), i);
+			NameList.push_back(szName);
+			vecIllusioner[i].y += 0.5f;
+			pGameObject = CIllusioner::Create(m_pGraphicDev, vecIllusioner[i], szName);
+			NULL_CHECK_RETURN(pGameObject, E_FAIL);
+			FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+		}
+	}
+	
+	if (!vecZombie.empty())
+	{
+		for (size_t i = 0; i < vecZombie.size(); i++)
+		{
+			_tchar* szName = new _tchar[128]{};
+			wstring wName = L"Zombie_%d";
+			wsprintfW(szName, wName.c_str(), i);
+			NameList.push_back(szName);
+			vecZombie[i].y += 0.5f;
+			pGameObject = CZombie::Create(m_pGraphicDev, vecZombie[i], szName);
+			NULL_CHECK_RETURN(pGameObject, E_FAIL);
+			FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+		}
+	}
 
 
 	pGameObject = CMiddleBoss::Create(m_pGraphicDev, _vec3(109.f, 0.6f, 10.f), L"MiddleBoss");
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
-
-	//pGameObject = CKrakenBoss::Create(m_pGraphicDev, _vec3(10.f, 5.6f, 10.f), L"Kraken");
-	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
-
+	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);*/
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
@@ -947,48 +946,48 @@ HRESULT CStage::Ready_Layer_Trap(const _tchar * pLayerTag)
 	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	//FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
 
-	//if (!vecThrone.empty())
-	//{
-	//	for (size_t i = 0; i < vecThrone.size(); i++)
-	//	{
-	//	_tchar* szName = new _tchar[256]{};
-	//	wstring wName = L"Thorn_%d";
-	//	wsprintfW(szName, wName.c_str(), i);
-	//	NameList.push_back(szName);
-	//	pGameObject = CThorn::Create(m_pGraphicDev, vecThrone[i], szName);
-	//	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
-	//	}
-	//}
-	//
-	//if (!vecLava.empty())
-	//{
-	//	for (size_t i = 0; i < vecLava.size(); i++)
-	//	{
-	//	_tchar* szName = new _tchar[256]{};
-	//	wstring wName = L"Magma_%d";
-	//	wsprintfW(szName, wName.c_str(), i);
-	//	NameList.push_back(szName);
-	//	pGameObject = CMagma::Create(m_pGraphicDev, vecLava[i], szName);
-	//	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
-	//	}
-	//}
-	//
-	//if (!vecItem.empty())
-	//{
-	//	for (size_t i = 0; i < vecItem.size(); i++)
-	//	{
-	//		_tchar* szName = new _tchar[256]{};
-	//		wstring wName = L"Item_%d";
-	//		wsprintfW(szName, wName.c_str(), i);
-	//		NameList.push_back(szName);
-	//		vecItem[i].y += 0.5f;
-	//		pGameObject = CItemBox::Create(m_pGraphicDev, vecItem[i], szName);
-	//		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
-	//	}
-	//}
+	/*if (!vecThrone.empty())
+	{
+		for (size_t i = 0; i < vecThrone.size(); i++)
+		{
+		_tchar* szName = new _tchar[256]{};
+		wstring wName = L"Thorn_%d";
+		wsprintfW(szName, wName.c_str(), i);
+		NameList.push_back(szName);
+		pGameObject = CThorn::Create(m_pGraphicDev, vecThrone[i], szName);
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+		}
+	}
+	
+	if (!vecLava.empty())
+	{
+		for (size_t i = 0; i < vecLava.size(); i++)
+		{
+		_tchar* szName = new _tchar[256]{};
+		wstring wName = L"Magma_%d";
+		wsprintfW(szName, wName.c_str(), i);
+		NameList.push_back(szName);
+		pGameObject = CMagma::Create(m_pGraphicDev, vecLava[i], szName);
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+		}
+	}
+	
+	if (!vecItem.empty())
+	{
+		for (size_t i = 0; i < vecItem.size(); i++)
+		{
+			_tchar* szName = new _tchar[256]{};
+			wstring wName = L"Item_%d";
+			wsprintfW(szName, wName.c_str(), i);
+			NameList.push_back(szName);
+			vecItem[i].y += 0.5f;
+			pGameObject = CItemBox::Create(m_pGraphicDev, vecItem[i], szName);
+			NULL_CHECK_RETURN(pGameObject, E_FAIL);
+			FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+		}
+	}*/
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 

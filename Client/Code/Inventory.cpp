@@ -60,8 +60,6 @@ void CInventory::Render_Object(void)
 
 	if (m_bInvSwitch)
 	{
-		m_pTextureCom->Set_Texture(0);
-
 		Begin_OrthoProj();
 		m_pRcTexCom->Render_Buffer();
 		End_OrthoProj();
@@ -84,21 +82,16 @@ HRESULT CInventory::Add_Component()
 	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_InventoryTexture", pComponent });
 
+	pComponent = m_pShaderCom = dynamic_cast<CShader*>(Clone_Proto(RCTEX_SHADER));
+	NULL_CHECK_RETURN(m_pShaderCom, E_FAIL);
+	m_mapComponent[ID_STATIC].insert({ RCTEX_SHADER, pComponent });
+
 	return S_OK;
 }
 
 void CInventory::Begin_OrthoProj()
 {
-	
-	_matrix matWorld, matView, matProj, matOrtho;
-	m_pGraphicDev->GetTransform(D3DTS_WORLD, &matWorld);
-	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
-	m_pGraphicDev->GetTransform(D3DTS_PROJECTION, &matProj);
-
-	memcpy(&m_matWorld, &matWorld, sizeof(_matrix));
-	memcpy(&m_matView, &matView, sizeof(_matrix));
-	memcpy(&m_matProj, &matProj, sizeof(_matrix));
-
+	_matrix matWorld, matView, matOrtho;
 	D3DXMatrixIdentity(&matWorld);
 	D3DXMatrixIdentity(&matView);
 
@@ -110,16 +103,24 @@ void CInventory::Begin_OrthoProj()
 	matView.m[3][2] = 0.003f;
 	D3DXMatrixOrthoLH(&matOrtho, WINCX, WINCY, 0.f, 1.f);
 
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, &matWorld);
-	m_pGraphicDev->SetTransform(D3DTS_VIEW, &matView);
-	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &matOrtho);
+	D3DXMatrixTranspose(&matWorld, &matWorld);
+	D3DXMatrixTranspose(&matView, &matView);
+	D3DXMatrixTranspose(&matOrtho, &matOrtho);
+
+	if (FAILED(m_pShaderCom->Set_RawValue("g_WorldMatrix", &matWorld, sizeof(_matrix))))
+		return;
+	if (FAILED(m_pShaderCom->Set_RawValue("g_ViewMatrix", &matView, sizeof(_matrix))))
+		return;
+	if (FAILED(m_pShaderCom->Set_RawValue("g_ProjMatrix", &matOrtho, sizeof(_matrix))))
+		return;
+
+	m_pTextureCom->Set_Texture(m_pShaderCom, "g_DefaultTexture", 0);
+	m_pShaderCom->Begin_Shader(0);
 }
 
 void CInventory::End_OrthoProj()
 {
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, &m_matWorld);
-	m_pGraphicDev->SetTransform(D3DTS_VIEW, &m_matView);
-	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &m_matProj);
+	m_pShaderCom->End_Shader();
 }
 
 

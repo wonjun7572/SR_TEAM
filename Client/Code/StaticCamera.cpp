@@ -112,12 +112,16 @@ Engine::_int CStaticCamera::Update_Object(const _float& fTimeDelta)
 		Mouse_Fix();
 	}
 
-	m_fFrame += fTimeDelta * 0.5f;
-	m_fFlightFrame += fTimeDelta * 0.5f;
-	m_fBombFrame += fTimeDelta * 0.5f;
-	m_fShuttleFrame += fTimeDelta * 0.15f;
-	m_fPlayerFrame += fTimeDelta * 0.05f;
-
+	//m_fFrame += fTimeDelta * 0.5f;
+	//m_fFlightFrame += fTimeDelta * 0.5f;
+	//m_fBombFrame += fTimeDelta * 0.5f;
+	//m_fShuttleFrame += fTimeDelta * 0.15f;
+	//m_fPlayerFrame += fTimeDelta * 0.05f;
+	m_fFrame += fTimeDelta;
+	m_fFlightFrame += fTimeDelta;
+	m_fBombFrame += fTimeDelta;
+	m_fShuttleFrame += fTimeDelta;
+	m_fPlayerFrame += fTimeDelta;
 	_int   iExit = CCamera::Update_Object(fTimeDelta);
 
 	return iExit;
