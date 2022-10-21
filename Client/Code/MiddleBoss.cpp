@@ -91,7 +91,7 @@ _int CMiddleBoss::Update_Object(const _float & fTimeDelta)
 		m_bFirst = false;
 
 		m_vPattern.push_back(MIDDLEBOSS_SKILL_NORMALATTACK);
-		//m_vPattern.push_back(MIDDLEBOSS_SKILL_BOMBING);
+		m_vPattern.push_back(MIDDLEBOSS_SKILL_BOMBING);
 
 		Engine::Get_Scene()->New_Layer(m_MonsterName);
 		pMyLayer = Engine::Get_Layer(m_MonsterName);

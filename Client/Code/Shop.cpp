@@ -224,7 +224,7 @@ void CShop::Render_Object()
 		}
 	}
 
-				_float fBuyingSound = 1.f;
+	_float fBuyingSound = 1.f;
 	if (PointTest(m_vPos_ButtonFour))
 	{
 
@@ -234,12 +234,12 @@ void CShop::Render_Object()
 			if (m_pLaserRaffle || m_eLevelUP == LEVEL_LASER)
 			{
 				dynamic_cast<CUzi*>(Engine::Get_GameObject(STAGE_GUN, L"UZI1"))->Get_UziUpgrade();
-				dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->ItemCreate(5);			
+				dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->ItemCreate(5);
 
 				Engine::PlaySoundGun(L"Button.wav", SOUND_EFFECT, fBuyingSound);
 
 				CLetterBox* m_pLetterBox = nullptr;
-				m_pLetterBox = CLetterBox::Create(m_pGraphicDev, L"Speed Part Get!!!", sizeof(L"Speed Part Get!!!"), 1);				
+				m_pLetterBox = CLetterBox::Create(m_pGraphicDev, L"Speed Part Get!!!", sizeof(L"Speed Part Get!!!"), 1);
 			}
 		}
 	}

@@ -1,4 +1,4 @@
-﻿빌드 시작: 2022-10-21 오후 1:21:49
+﻿빌드 시작: 2022-10-21 오후 3:06:26
      1>2 노드의 "D:\GitHub\SR_TEAM\Engine\System\Default\System.vcxproj" 프로젝트(Build 대상)입니다.
      1>Link:
          C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"../Bin\System.dll" /INCREMENTAL:NO /NOLOGO /LIBPATH:../../../Reference/Library d3d9.lib d3dx9.lib dxguid.lib Utility.lib dinput8.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"../Bin\System.pdb" /SUBSYSTEM:WINDOWS /LARGEADDRESSAWARE /OPT:REF /OPT:ICF /LTCG:incremental /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"../Bin\System.lib" /MACHINE:X86 /SAFESEH /DLL Release\FontMgr.obj
@@ -107,4 +107,4 @@
 
 빌드했습니다.
 
-경과 시간: 00:00:01.24
+경과 시간: 00:00:03.03
