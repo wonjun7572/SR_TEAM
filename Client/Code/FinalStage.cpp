@@ -88,6 +88,7 @@
 #include "Flight.h"
 #include "Key.h"
 #include "FlightSpot.h"
+#include "Mob.h"
 
 #include "KrakenLeg.h"
 #include "Npc.h"
@@ -573,6 +574,10 @@ HRESULT CFinalStage::Ready_Layer_Monster(const _tchar * pLayerTag)
 	pGameObject = CKrakenBoss::Create(m_pGraphicDev, _vec3(65.f, 10.f, 65.f), L"Kraken");
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+
+	//pGameObject = CMob::Create(m_pGraphicDev, _vec3(10.f, 0.6f, 10.f), L"Mob");
+	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 

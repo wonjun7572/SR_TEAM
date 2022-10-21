@@ -284,6 +284,16 @@ HRESULT CStage::Ready_Layer_Environment(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"DefensiveEffect", pGameObject), E_FAIL);
 
+
+	pGameObject = CKrakenEffect::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"KraKenEffect", pGameObject), E_FAIL);
+
+	pGameObject = CKrakenParticle::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"KrakenParticle", pGameObject), E_FAIL);
+
+
 	pGameObject = CDashCube::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"DashCube", pGameObject), E_FAIL);

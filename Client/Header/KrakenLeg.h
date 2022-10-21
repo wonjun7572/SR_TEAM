@@ -3,9 +3,10 @@
 
 class CMonsterUI;
 class CComboUI;
+class CKrakenEffect;
+class CKrakenParticle;
 
-class CKrakenLeg :
-	public CGameObject
+class CKrakenLeg :public CGameObject
 {
 private:
 	explicit CKrakenLeg(LPDIRECT3DDEVICE9 pGraphicDev);
@@ -89,7 +90,8 @@ protected:
 	CComboUI*			m_pComboUI = nullptr;
 	CLayer*				pMyLayer;
 	CCubeCol*			m_pAnimationBox = nullptr;
-
+	CKrakenEffect*		m_pKrakenEffectParticle = nullptr;
+	CKrakenParticle*	m_pKrakenSmoke = nullptr;
 private:
 	KRAKENABILITY*		m_tAbility;
 	_tchar*				m_MonsterName;
