@@ -145,7 +145,7 @@ void CTriggerFront::resetParticle(ATTRIBUTE * attribute)
 
 			m_fSpeed = 10.f;
 			attribute->vPos = vPos - ((vRand)*0.05);
-			attribute->vVelocity = m_vDir* 1.f + ((vRand)*0.02);
+			attribute->vVelocity = m_vDir* 1.f + ((vRand)*0.02f);
 			attribute->fLifeTime = .25f;
 		}
 		if (m_fHand == 1)
@@ -175,7 +175,7 @@ void CTriggerFront::resetParticle(ATTRIBUTE * attribute)
 		
 		m_fSpeed = 10.f;
 		attribute->vPos = vPos - ((vRand)*0.1);
-		attribute->vVelocity = m_vDir* 1.f - ((vRand)*0.05);
+		attribute->vVelocity = m_vDir* 1.f - ((vRand)*0.05f);
 		attribute->fLifeTime = .5f;
 	}
 	else if (dynamic_cast<CCubePlayer*>(pPlayer)->Get_Weapon() == dynamic_cast<CWeapon*>(Engine::Get_GameObject(STAGE_GUN, L"SNIPER")))

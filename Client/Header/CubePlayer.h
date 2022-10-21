@@ -19,8 +19,13 @@ class CTriggerFront;
 class CRoundEffect;
 class CTraceEffect;
 class CLaserPoint;
+<<<<<<< HEAD
 class CProjectionEffect;
 
+=======
+class CKrakenEffect;
+class CKrakenParticle;
+>>>>>>> main
 class CCubePlayer : public CGameObject
 {
 private:
@@ -135,6 +140,9 @@ private:
 	CTransform*		m_pRightHandWorld = nullptr;
 	CTransform*		m_pLeftFootWorld = nullptr;
 	CTransform*		m_pRightFootWorld = nullptr;
+	/////
+	CTransform*			m_pPlayerTransCom = nullptr;
+
 
 	CCalculator*	m_pCalculatorCom = nullptr;
 	CCollision*		m_pCollision = nullptr;
@@ -159,8 +167,13 @@ private: // 파티클관련 포인터입니다.
 	CRoundEffect* m_pRoundEffect = nullptr;
 	CTraceEffect* m_pTraceEffect = nullptr;
 	CLaserPoint* m_pLaserPoint = nullptr;
+<<<<<<< HEAD
 	CProjectionEffect* m_pProjectionEffect = nullptr;
+=======
+	CKrakenEffect* m_pKrakenEffectParticle = nullptr;
+>>>>>>> main
 	CCartridgeParticle*		m_pCartridgeParticle = nullptr;
+	CKrakenParticle* m_pKrakenSmoke = nullptr;
 
 private:
 	_float			m_fRed = 0.f;

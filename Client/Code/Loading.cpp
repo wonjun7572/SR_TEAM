@@ -52,6 +52,8 @@ _uint CLoading::Loading_ForStage(void)
 		m_iCur++;
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(CUBECOL_COMP, CCubeCol::Create(m_pGraphicDev)), E_FAIL);
 		m_iCur++;
+		//FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_TerrainTexture", CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Terrain/Grass_%d.tga", TEX_NORMAL)), E_FAIL);
+		//m_iCur++;
 	}
 	// ÆÄÆ¼Å¬
 	{
