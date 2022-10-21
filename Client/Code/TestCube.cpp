@@ -227,6 +227,8 @@ HRESULT CTestCube::Interact(void)
 				_float fGunSound = 1.f;
 				Engine::PlaySoundGun(L"portal_2.wav", SOUND_EFFECT, fGunSound);
 				m_bDoorOpen = true;
+				CGameObject* pGameObject = Get_GameObject(STAGE_CHARACTER, L"PLAYER");
+				dynamic_cast<CCubePlayer*>(pGameObject)->Set_DoorOpen(true);
 			}
 	}	
 

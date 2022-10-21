@@ -59,10 +59,6 @@ _int CSpBullet::Update_Object(const _float & fTimeDelta)
 			break;
 		}
 	}
-	
-	
-
-
 
 	Engine::CGameObject::Update_Object(fTimeDelta);
 
@@ -81,13 +77,13 @@ void CSpBullet::Render_Object(void)
 {
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransCom->Get_WorldMatrixPointer());
 
-	m_pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
+	//m_pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
 
 	m_pTextureCom->Set_Texture();
 
 	m_pBufferCom->Render_Buffer();
 
-	m_pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
+	//m_pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
 }
 
 HRESULT CSpBullet::Add_Component(void)

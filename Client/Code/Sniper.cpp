@@ -17,10 +17,7 @@ CSniper::~CSniper()
 HRESULT CSniper::Ready_Object(void)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
-	
-
-	
-	
+		
 	m_tAbility = new GUNABILITY;
 
 	m_tAbility->fBulletRate = 2.f;
