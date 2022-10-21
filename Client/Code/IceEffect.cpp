@@ -8,7 +8,7 @@
 CIceEffect::CIceEffect(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CPSystem(pGraphicDev)
 {
-	m_fSize = 1.0f;
+	m_fSize = .05f;
 	m_vbSize = 2048;
 	m_vbOffset = 0;
 	m_vbBatchSize = 512;
@@ -47,7 +47,7 @@ _int CIceEffect::Update_Object(const _float & fTimeDelta)
 		if (!(-0.1f < iter->vPos.y && iter->vPos.y < 0.05f ))
 		{
 			iter->vPos += vtest * fTimeDelta  * .1f;
-			if(iter->fAge > 2.0)
+			if(iter->fAge > 3.0f)
 			iter->vPos.y -= 5 * fTimeDelta*(iter->fAge-2)*(iter->fAge-2);
 		}
 		iter->fAge += fTimeDelta;
@@ -75,7 +75,7 @@ void CIceEffect::Render_Object(void)
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, &matWorld);
 	if (!m_particles.empty())
 	{
-		m_pTextureCom->Set_Texture(6);
+		m_pTextureCom->Set_Texture(0);
 		CPSystem::Render_Object();
 	}
 }
@@ -84,9 +84,9 @@ HRESULT CIceEffect::Add_Component(void)
 {
 	CComponent* pComponent = nullptr;
 
-	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Clone_Proto(STATICPARTICLE_TEX));
+	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Clone_Proto(L"White_Tex"));
 	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ STATICPARTICLE_TEX, pComponent });
+	m_mapComponent[ID_STATIC].insert({ L"White_Tex", pComponent });
 
 	return S_OK;
 }

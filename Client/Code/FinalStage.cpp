@@ -147,13 +147,6 @@ HRESULT CFinalStage::Ready_Scene(void)
 	FAILED_CHECK_RETURN(Ready_Layer_KraKenBullet(STAGE_KRAKENBULLET), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Layer_Tentacle(STAGE_TENTACLE), E_FAIL);
 
-	dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->WeaponCreate(2);
-	dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->WeaponCreate(3);
-	dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->WeaponCreate(4);
-
-	CGameObject* pShuttle = nullptr;
-	pShuttle = Engine::Get_GameObject(STAGE_FLIGHTPLAYER, L"FLIGHTSHUTTLE");
-
 	return S_OK;
 }
 
@@ -776,7 +769,7 @@ HRESULT CFinalStage::Ready_Layer_GunItem(const _tchar * pLayerTag)
 
 	CGameObject*		pGameObject = nullptr;
 
-	/*if (!vecGun.empty())
+	if (!vecGun.empty())
 	{
 		_vec3 vTemp = _vec3(1.f, 0.5f, 0.f);
 
@@ -791,7 +784,7 @@ HRESULT CFinalStage::Ready_Layer_GunItem(const _tchar * pLayerTag)
 		pGameObject = CGetSniper::Create(m_pGraphicDev, vecGun[2] + vTemp);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"GetSniper", pGameObject), E_FAIL);
-	}*/
+	}
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
@@ -832,7 +825,6 @@ HRESULT CFinalStage::Ready_Layer_SkillCruiser(const _tchar * pLayerTag)
 
 	pGameObject = CBattleCursier::Create(m_pGraphicDev, _vec3(10, 20, -10), _vec3(0, 0, 1), L"BattleCruiser_Skill");
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	dynamic_cast<CBattleCursier*>(pGameObject)->Random();
 	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
@@ -847,33 +839,37 @@ HRESULT CFinalStage::Ready_Layer_Creature(const _tchar * pLayerTag)
 
 	CGameObject*		pGameObject = nullptr;
 
-	for (int i = 0; i < 10; ++i)
-	{
-		_tchar* szName = new _tchar[256]{};
-		wstring wName = L"BATTLECRUISER_%d";
+	pGameObject = CBattleCursier::Create(m_pGraphicDev, _vec3(10, 20, -10), _vec3(0, 0, 1), L"BATTLECRUISER1");
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
 
-		wsprintfW(szName, wName.c_str(), i);
-		NameList.push_back(szName);
+	pGameObject = CBattleCursier::Create(m_pGraphicDev, _vec3(20, 20, -5), _vec3(0, 0, 1), L"BATTLECRUISER2");
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
 
-		pGameObject = CBattleCursier::Create(m_pGraphicDev, _vec3(0, 20, 0), _vec3(0, 0, 1), szName);
-		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		dynamic_cast<CBattleCursier*>(pGameObject)->Random();
-		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
-	}
+	pGameObject = CBattleCursier::Create(m_pGraphicDev, _vec3(30, 20, -10), _vec3(0, 0, 1), L"BATTLECRUISER3");
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
 
-	for (int i = 0; i < 30; ++i)
-	{
-		_tchar* szName = new _tchar[256]{};
-		wstring wName = L"FLIGHT_%d";
+	pGameObject = CFlight::Create(m_pGraphicDev, _vec3(0, 30, 100), _vec3(0, 0, -2), L"FLIGHT1");
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
 
-		wsprintfW(szName, wName.c_str(), i);
-		NameList.push_back(szName);
+	pGameObject = CFlight::Create(m_pGraphicDev, _vec3(10, 30, 100), _vec3(0, 0, -2), L"FLIGHT2");
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
 
-		pGameObject = CFlight::Create(m_pGraphicDev, _vec3(0, 30, 100), _vec3(0, 0, -2), szName);
-		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		dynamic_cast<CFlight*>(pGameObject)->Random();
-		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
-	}
+	pGameObject = CFlight::Create(m_pGraphicDev, _vec3(20, 30, 100), _vec3(0, 0, -2), L"FLIGHT3");
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+
+	pGameObject = CFlight::Create(m_pGraphicDev, _vec3(30, 30, 100), _vec3(0, 0, -2), L"FLIGHT4");
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+
+	pGameObject = CFlight::Create(m_pGraphicDev, _vec3(40, 30, 100), _vec3(0, 0, -2), L"FLIGHT5");
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
@@ -968,18 +964,6 @@ HRESULT CFinalStage::Ready_Layer_Supporter(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pLayer, E_FAIL);
 
 	CGameObject*		pGameObject = nullptr;
-
-	/*pGameObject = CSupporter_Uzi::Create(m_pGraphicDev, _vec3(15.f, 10.f, 15.f), L"SUPPORTER_UZI");
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"SUPPORTER_UZI", pGameObject), E_FAIL);
-
-	pGameObject = CSupporter_Shotgun::Create(m_pGraphicDev, _vec3(20.f, 10.f, 15.f), L"SUPPORTER_SHOTGUN");
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"SUPPORTER_SHOTGUN", pGameObject), E_FAIL);
-
-	pGameObject = CSupporter_Sniper::Create(m_pGraphicDev, _vec3(25.f, 10.f, 15.f), L"SUPPORTER_SNIPER");
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"SUPPORTER_SNIPER", pGameObject), E_FAIL);*/
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 

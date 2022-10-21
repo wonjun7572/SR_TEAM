@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Inventory.h"
 #include "Shop.h"
+#include "CubePlayer.h"
 #include "..\Header\ItemIcon.h"
 
 static _int iIconCnt = 0;
@@ -29,6 +30,26 @@ _int CItemIcon::Update_Object(const _float & fTimeDelta)
 {
 	if (m_bDead)
 	{
+		if (m_iNumber == 8)			
+		{
+			CGameObject* pPlayer = nullptr;
+			if (!pPlayer)
+				pPlayer = Engine::Get_GameObject(STAGE_CHARACTER, L"PLAYER");
+//			dynamic_cast<CCubePlayer*>(pPlayer)->On_StaticField();
+
+			_float fSound = 1.f;
+			Engine::PlaySoundGun(L"Upgrade.wav", SOUND_EFFECT, fSound);
+		}
+		if (m_iNumber == 1)			
+		{
+			CGameObject* pPlayer = nullptr;
+			if (!pPlayer)
+				pPlayer = Engine::Get_GameObject(STAGE_CHARACTER, L"PLAYER");
+//			dynamic_cast<CCubePlayer*>(pPlayer)->On_Shield();
+
+			_float fSound = 1.f;
+			Engine::PlaySoundGun(L"Upgrade.wav", SOUND_EFFECT, fSound);
+		}
 		return -1;
 	}
 	CGameObject::Update_Object(fTimeDelta);

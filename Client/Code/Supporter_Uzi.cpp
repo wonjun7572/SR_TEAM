@@ -2,7 +2,7 @@
 #include "..\Header\Supporter_Uzi.h"
 #include "TransAxisBox.h"
 #include "PoolMgr.h"
-
+#include "VerticalLine.h"
 
 CSupporter_Uzi::CSupporter_Uzi(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CSupporter(pGraphicDev)
@@ -37,7 +37,7 @@ HRESULT CSupporter_Uzi::Ready_Object(const _vec3 & vPos, _tchar * Name)
 	m_pHitBoxTransform->Set_Pos(vAnimationPos.x, vAnimationPos.y, vAnimationPos.z);
 	m_pHitBoxTransform->Static_Update();
 
-	m_pSphereTransCom->Set_Scale(&_vec3(5.f, 0.f, 5.f));
+	m_pSphereTransCom->Set_Scale(&_vec3(3.f, 3.f, 3.f));
 	m_pSphereTransCom->Set_Pos(vAnimationPos.x, vAnimationPos.y, vAnimationPos.z);
 	m_pSphereTransCom->Static_Update();
 
@@ -91,6 +91,42 @@ _int CSupporter_Uzi::Update_Object(const _float & fTimeDelta)
 	if (vPosition.y > 0.6f)
 	{
 		m_pTransform->Move_Pos(&(_vec3(0.f, -1.f, 0.f) * 10.f * fTimeDelta));
+
+		CVerticalLine* pVerticalLine = nullptr;
+		_vec3 vPos;
+		_vec3 vDir;
+		m_pTransform->Get_Info(INFO_POS, &vPos);
+		if (!pVerticalLine)
+			pVerticalLine = dynamic_cast<CVerticalLine*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"VerticalLine"));	
+		pVerticalLine->Set_PcleDir(vDir);
+		pVerticalLine->Set_PclePos(vPos);
+		for (_int i = 0; i < 250; ++i)
+		{
+			pVerticalLine->addParticle();
+		}
+
+
+
+
+		//CVerticalLine* pVerticalLine = nullptr;
+		//_vec3 vPos;														//대쉬이펙트하려던것
+		//if (!pVerticalLine)
+		//	pVerticalLine = dynamic_cast<CVerticalLine*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"VerticalLine"));
+		//_vec3 vDir;
+		//m_pTransform->Get_Info(INFO_POS, &vPos);
+		////m_pBodyWorld->Get_Info(INFO_LOOK, &vDir);
+		//vPos.y = +0.45f;
+		////dynamic_cast<CCubeParticle*>(m_pCubeParticle)->Set_PclePos(vPos);
+
+
+		//dynamic_cast<CVerticalLine*>(pVerticalLine)->Set_PcleDir(vDir);
+
+
+		//pVerticalLine->Set_PclePos(vPos);
+		//for (_int i = 0; i < 25; ++i)
+		//{
+		//	pVerticalLine->addParticle();
+		//}
 	}
 	else if(vPosition.y < 0.6f)
 	{
@@ -116,13 +152,11 @@ _int CSupporter_Uzi::Update_Object(const _float & fTimeDelta)
 			_vec3 vSetPos = _vec3(vPos.x, vPos.y + 0.5f, vPos.z);
 			
 			m_vOrderPos = vSetPos;
-			m_vOrderPos.x -= 5.f;
 			m_bGetOrder = true;
 			m_bOrdering = true;
 		}
 
-		if (m_STATE != UZISUPPORT_ATTACK)
-			m_pTransform->Chase_Target(&m_vOrderPos, 5.f, fTimeDelta);
+		m_pTransform->Chase_Target(&m_vOrderPos, 5.f, fTimeDelta);
 	
 		_vec3 vPosition;
 		m_pTransform->Get_Info(INFO_POS, &vPosition);
@@ -160,7 +194,7 @@ _int CSupporter_Uzi::Update_Object(const _float & fTimeDelta)
 	_vec3 vPos;
 	m_pTransform->Get_Info(INFO_POS, &vPos);
 	m_pHitBoxTransform->Set_Pos(vPos.x, vPos.y, vPos.z);
-	m_pSphereTransCom->Set_Pos(vPos.x, 0.f, vPos.z);
+	m_pSphereTransCom->Set_Pos(vPos.x, vPos.y, vPos.z);
 
 	return 0;
 }

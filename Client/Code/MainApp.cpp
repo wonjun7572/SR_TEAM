@@ -45,19 +45,10 @@ _int CMainApp::Update_MainApp(const _float & fTimeDelta)
 			FAILED_CHECK_RETURN(m_pManagementClass->Set_Scene(pScene), E_FAIL);
 		}
 
-		if (Get_Layer(STAGE_GUNITEM)->Get_GameObjectMap().size() == 0)
+		//if (Get_Layer(STAGE_GUNITEM)->Get_GameObjectMap().size() == 0)
+		if(Get_DIKeyState(DIK_Y))
 		{
 			Engine::CScene*			pScene = nullptr;
-
-			pScene = CFinalStage::Create(m_pGraphicDev);
-			NULL_CHECK_RETURN(pScene, E_FAIL);
-
-			FAILED_CHECK_RETURN(m_pManagementClass->Set_Scene(pScene), E_FAIL);
-		}
-
-		if (Get_DIKeyState(DIK_Y))
-		{
-			Engine::CScene*         pScene = nullptr;
 
 			pScene = CFinalStage::Create(m_pGraphicDev);
 			NULL_CHECK_RETURN(pScene, E_FAIL);

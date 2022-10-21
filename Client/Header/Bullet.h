@@ -28,6 +28,7 @@ private:
 	CSphereTex*			m_pBufferCom = nullptr;
 
 	CCollision*			m_pCollision = nullptr;
+	CHitBox*			m_pHitbox = nullptr;
 
 	CStaticCamera*		m_pStaticCam = nullptr;
 

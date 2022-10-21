@@ -2,7 +2,8 @@
 #include "..\Header\Laser.h"
 #include "PoolMgr.h"
 #include "Explosion.h"
-
+#include "TriggerParticle.h"
+#include "LaserEffect.h"
 CLaser::CLaser(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
 {
@@ -41,7 +42,7 @@ _int CLaser::Update_Object(const _float & fTimeDelta)
 		
 
 		// À§Ä¡ ¹Ù²ãÁà¾ßÇÔ	
-
+		Bomb_effect();
 		CPoolMgr::GetInstance()->Collect_Laser(this);
 		return -1;
 	}
@@ -120,6 +121,49 @@ void CLaser::Collision_check(void)
 	{
 		m_bDead = true;
 	}
+
+}
+
+void CLaser::Bomb_effect(void)
+{
+	_vec3 vPos;									  //¿¬±â	
+	_vec3 vDir = { 0.f,1.0f,0.f };
+	CTriggerParticle* pTriggerParticle = nullptr;
+	CLaserEffect* m_pLaserEffect = nullptr;
+
+	m_pTransCom->Get_Info(INFO_POS, &vPos);
+	if (!pTriggerParticle)
+		pTriggerParticle = dynamic_cast<CTriggerParticle*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"TriggerParticle"));
+
+	dynamic_cast<CTriggerParticle*>(pTriggerParticle)->Set_PclePos(vPos);
+	dynamic_cast<CTriggerParticle*>(pTriggerParticle)->Set_PcleDir(vDir);
+	for (_int i = 0; i < 50; ++i)
+	{
+		pTriggerParticle->addParticle();
+	}
+	
+	if (!m_pLaserEffect)
+		m_pLaserEffect = dynamic_cast<CLaserEffect*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"LaserEffect"));
+	//vPos.x -= 5.f;
+	//vPos.y += 5.f;
+	//vPos.z -= 5.f;
+	for (_int i = -5; i < 5; i++)
+	{
+		for (_int j = -5; j < 5; j++)
+		{
+			for (_int k = -5; k < 5; k++)
+			{
+				D3DXVec3Normalize(&vDir, &_vec3(i, j, k));
+
+				dynamic_cast<CLaserEffect*>(m_pLaserEffect)->Set_PclePos(vPos + _vec3(i, j, k)*0.05);
+
+				dynamic_cast<CLaserEffect*>(m_pLaserEffect)->Set_PcleDir(-vDir);
+
+				m_pLaserEffect->addParticle();
+			}
+		}
+	}
+
 
 }
 

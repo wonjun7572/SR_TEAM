@@ -2,7 +2,6 @@
 #include "..\Header\SpBullet.h"
 #include "PoolMgr.h"
 #include "Monster.h"
-#include "KrakenBoss.h"
 
 CSpBullet::CSpBullet(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
@@ -54,33 +53,14 @@ _int CSpBullet::Update_Object(const _float & fTimeDelta)
 
 		if (m_pCollision->Collision_Square(this->m_pTransCom, this->m_pHitbox, pTransform, pHitbox))
 		{
-			if (m_bDamage)
-			{
+			if(m_bDamage)
 				dynamic_cast<CMonster*>(iter)->Set_Damaged(m_fDamage);
-				dynamic_cast<CKrakenBoss*>(iter)->Set_Damaged(m_fDamage);
-			}
 			m_bDamage = false;
 			break;
 		}
 	}
 	
-	if (!Get_Layer(STAGE_SKILL)->Get_GameList().empty())
-	{
-		m_pTransCom->Static_Update();
-		for (auto& iter : Get_Layer(STAGE_SKILL)->Get_GameList())
-		{
-			if (iter->GetSphereSkillTag() == SKILL_SHIELD)
-			{
-				CTransform* pTransform = dynamic_cast<CTransform*>(iter->Get_Component(TRANSFORM_COMP, ID_DYNAMIC));
-				CHitBox* pHitbox = dynamic_cast<CHitBox*>(iter->Get_Component(HITBOX_COMP, ID_STATIC));
-				if (m_pCollision->Collision_Square(this->m_pTransCom, this->m_pHitbox, pTransform, pHitbox))
-				{
-					this->m_fTimeDelta = 10;
-					break;
-				}
-			}
-		}
-	}
+	
 
 
 

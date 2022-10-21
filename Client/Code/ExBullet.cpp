@@ -144,6 +144,9 @@ void CExBullet::Collision_check(void)
 
 	CLayer* pTentacleLayer = Engine::Get_Layer(STAGE_TENTACLE);
 
+	if (pTentacleLayer == nullptr)
+		return;
+
 	for (auto& iter : *(pTentacleLayer->Get_GameListPtr()))
 	{
 		CTransform* pIterTransform = dynamic_cast<CTransform*>(iter->Get_Component(TRANSFORM_COMP, ID_DYNAMIC));
