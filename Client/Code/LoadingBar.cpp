@@ -32,6 +32,9 @@ void CLoadingBar::LateUpdate_Object(void)
 void CLoadingBar::Render_Object(void)
 {
 	Begin_OrthoProj();
+	if (m_fMin >= m_fMax)
+		m_fMin = m_fMax;
+
 	m_pBufferUICom->Resize_Buffer(m_fMin / m_fMax);
 	m_pBufferUICom->Render_Buffer();
 	End_OrthoProj();
