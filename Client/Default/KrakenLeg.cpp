@@ -150,11 +150,11 @@ _int CKrakenLeg::Update_Object(const _float & fTimeDelta)
 	}
 
 	Update_Pattern(fTimeDelta);
-
 	_vec3 vMainBodyPos, vPos, vPlayerPos;
 	vMainBodyPos = { 65.f, 0.f, 65.f };
 	m_pTransCom->Get_Info(INFO_POS, &vPos);
 	m_pPlayerTransCom->Get_Info(INFO_POS, &vPlayerPos);
+
 
 	_vec3 vDistance = vPlayerPos - vPos;
 	_float fDistance = D3DXVec3Length(&vDistance);
@@ -261,6 +261,7 @@ void CKrakenLeg::LateUpdate_Object(void)
 				Run_Animation(15.f);
 				m_pTransCom->Set_Pos(vPos.x, vPos.y + 0.1f, vPos.z);
 				m_pTransCom->Static_Update();
+				Kraken_ReviveParticle();
 			}
 			else
 			{
@@ -375,6 +376,7 @@ _int CKrakenLeg::Update_Pattern(_float fTimeDelta)
 	if (m_STATE == KRAKEN_REVIVE)
 	{
 		Revive_Pattern();
+		Kraken_ReviveParticle();
 	}
 	else if (m_STATE == KRAKEN_IDLE)
 	{
@@ -399,6 +401,8 @@ _int CKrakenLeg::Update_Pattern(_float fTimeDelta)
 			if (m_SMASH == KRAKENSMASH_6)
 			{	
 				AttackHit(10.f, 30.f);
+
+				Kraken_EffectParticle();
 			}
 		}
 		if (m_PATTERN == KRAKEN_SKILL_INKSHOT)
@@ -409,15 +413,23 @@ _int CKrakenLeg::Update_Pattern(_float fTimeDelta)
 		{
 			// ÃË¼ö »¸°í ÇÑ¹ÙÄû µ¹±â
 			if (m_LEGSWING >= LEGSWING_6 && m_LEGSWING <= LEGSWING_17)
+			{
 				AttackHit(10.f, 40.f);
+				Kraken_ReviveParticle();
+			}
 		}
 		if (m_PATTERN == KRAKEN_SKILL_LURKER)
 		{
 			// ·²Ä¿
+			Kraken_LukerParticle();
 			Lurker_Pattern();
 
 			if (m_LURKER == KRAKENLURKER_2)
+			{
 				AttackHit(10.f, 30.f);
+				Kraken_LukerParticle();
+
+			}
 		}
 		if (m_PATTERN == KRAKEN_SKILL_5)
 		{
@@ -508,13 +520,429 @@ void CKrakenLeg::AttackHit(_float fDamage, _float fKnuckback)
 
 		if (m_pCollision->Animation_Collision(m_pPlayerTransCom, &matFinal, vPlayerScale.x, vScale.x))
 		{
+
 			CLayer* pLayer = Engine::Get_Layer(STAGE_CHARACTER);
 			CCubePlayer* pPlayer = dynamic_cast<CCubePlayer*>(pLayer->Get_GameObject(L"PLAYER"));
 			pPlayer->KnuckDown(fDamage, fKnuckback);
 
-			
-		
 		}
+	}
+}
+
+void CKrakenLeg::Kraken_EffectParticle(void)
+{
+
+	_vec3 vPos, vPlayerPos;			
+	m_pTransCom->Get_Info(INFO_POS, &vPos);
+	m_pPlayerTransCom->Get_Info(INFO_POS, &vPlayerPos);
+	_vec3 vDir = {0.f, 0.f, 0.f};
+	_vec3 vDirection = { 0.f, 0.f, 0.f };
+	CKrakenHit* m_pKrakenHit = nullptr;
+	
+	_vec3 vLegPart9;
+	if (!m_pKrakenEffectParticle) 
+	{
+		m_pKrakenEffectParticle = dynamic_cast<CKrakenEffect*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"KraKenEffect"));
+		NULL_CHECK_RETURN(m_pKrakenEffectParticle, );
+	}
+	if (!m_pKrakenSmoke)
+	{
+		m_pKrakenSmoke = dynamic_cast<CKrakenParticle*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"KrakenParticle"));
+		NULL_CHECK_RETURN(m_pKrakenSmoke, );
+	}
+	for (auto& iter : *(pMyLayer->Get_GamePairPtr()))
+	{
+		if (0 == _tcscmp(iter.first, L"LEG_PART8"))
+		{
+			
+			
+			CTransAxisBox* m_pKraken = dynamic_cast<CTransAxisBox*>(iter.second);
+			_matrix	m_KrakenFinal;
+			m_pKraken->Get_Final(&m_KrakenFinal);
+			vPos.x = m_KrakenFinal.m[3][0];
+			vPos.y = m_KrakenFinal.m[3][1];
+			vPos.z = m_KrakenFinal.m[3][2];
+
+
+		dynamic_cast<CKrakenEffect*>(m_pKrakenEffectParticle)->Set_PclePos(vPos);
+			dynamic_cast<CKrakenEffect*>(m_pKrakenEffectParticle)->Set_PcleDir(vDir);
+			m_pKrakenEffectParticle->Set_PclePos(vPos);
+			for (_int i = 0; i < 250; ++i)
+			{
+				m_pKrakenEffectParticle->addParticle();
+			}
+			dynamic_cast<CKrakenParticle*>(m_pKrakenSmoke)->Set_PclePos(vPos);
+			dynamic_cast<CKrakenParticle*>(m_pKrakenSmoke)->Set_PcleDir(vDir);
+			m_pKrakenSmoke->Set_PclePos(vPos);
+			for (int i = 0; i < 250; ++i)
+			{
+				m_pKrakenSmoke->addParticle();
+			}
+
+			if (0 == _tcscmp(iter.first, L"LEG_PART7"))
+			{
+
+
+				CTransAxisBox* m_pKraken = dynamic_cast<CTransAxisBox*>(iter.second);
+				_matrix	m_KrakenFinal;
+				m_pKraken->Get_Final(&m_KrakenFinal);
+				vPos.x = m_KrakenFinal.m[3][0];
+				vPos.y = m_KrakenFinal.m[3][1];
+				vPos.z = m_KrakenFinal.m[3][2];
+
+
+				dynamic_cast<CKrakenEffect*>(m_pKrakenEffectParticle)->Set_PclePos(vPos);
+				dynamic_cast<CKrakenEffect*>(m_pKrakenEffectParticle)->Set_PcleDir(vDir);
+				m_pKrakenEffectParticle->Set_PclePos(vPos);
+				for (_int i = 0; i < 250; ++i)
+				{
+					m_pKrakenEffectParticle->addParticle();
+				}
+				dynamic_cast<CKrakenParticle*>(m_pKrakenSmoke)->Set_PclePos(vPos);
+				dynamic_cast<CKrakenParticle*>(m_pKrakenSmoke)->Set_PcleDir(vDir);
+				m_pKrakenSmoke->Set_PclePos(vPos);
+				for (int i = 0; i < 250; ++i)
+				{
+					m_pKrakenSmoke->addParticle();
+				}
+				if (0 == _tcscmp(iter.first, L"LEG_PART6"))
+				{
+
+
+					CTransAxisBox* m_pKraken = dynamic_cast<CTransAxisBox*>(iter.second);
+					_matrix	m_KrakenFinal;
+					m_pKraken->Get_Final(&m_KrakenFinal);
+					vPos.x = m_KrakenFinal.m[3][0];
+					vPos.y = m_KrakenFinal.m[3][1];
+					vPos.z = m_KrakenFinal.m[3][2];
+
+
+					dynamic_cast<CKrakenEffect*>(m_pKrakenEffectParticle)->Set_PclePos(vPos);
+					dynamic_cast<CKrakenEffect*>(m_pKrakenEffectParticle)->Set_PcleDir(vDir);
+					m_pKrakenEffectParticle->Set_PclePos(vPos);
+					for (_int i = 0; i < 250; ++i)
+					{
+						m_pKrakenEffectParticle->addParticle();
+					}
+					dynamic_cast<CKrakenParticle*>(m_pKrakenSmoke)->Set_PclePos(vPos);
+					dynamic_cast<CKrakenParticle*>(m_pKrakenSmoke)->Set_PcleDir(vDir);
+					m_pKrakenSmoke->Set_PclePos(vPos);
+					for (int i = 0; i < 250; ++i)
+					{
+						m_pKrakenSmoke->addParticle();
+					}
+
+				}
+
+			
+			}
+		}
+	}
+
+}
+
+void CKrakenLeg::Kraken_LukerParticle(void)
+{
+	_vec3 vPos, vPlayerPos;
+	m_pTransCom->Get_Info(INFO_POS, &vPos);
+	m_pPlayerTransCom->Get_Info(INFO_POS, &vPlayerPos);
+	_vec3 vDir = { 0.f, 0.f, 0.f };
+	_vec3 vDirection = { 0.f, 0.f, 0.f };
+	CKrakenHit* m_pKrakenHit = nullptr;
+
+	_vec3 vLegPart9;
+	if (!m_pKrakenSmoke)
+	{
+		m_pKrakenSmoke = dynamic_cast<CKrakenParticle*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"KrakenParticle"));
+		NULL_CHECK_RETURN(m_pKrakenSmoke, );
+	}
+	for (auto& iter : *(pMyLayer->Get_GamePairPtr()))
+	{
+		if (0 == _tcscmp(iter.first, L"LEG_PART1"))
+		{
+
+			CTransAxisBox* m_pKraken = dynamic_cast<CTransAxisBox*>(iter.second);
+			_matrix	m_KrakenFinal;
+			m_pKraken->Get_Final(&m_KrakenFinal);
+			vPos.x = m_KrakenFinal.m[3][0];
+			vPos.y = m_KrakenFinal.m[3][1];
+			vPos.z = m_KrakenFinal.m[3][2];
+			dynamic_cast<CKrakenParticle*>(m_pKrakenSmoke)->Set_PclePos(vPos);
+			dynamic_cast<CKrakenParticle*>(m_pKrakenSmoke)->Set_PcleDir(vDir);
+			m_pKrakenSmoke->Set_PclePos(vPos);
+			for (int i = 0; i < 150; ++i)
+			{
+				m_pKrakenSmoke->addParticle();
+			}
+		}
+		if (0 == _tcscmp(iter.first, L"LEG_PART2"))
+		{
+
+			CTransAxisBox* m_pKraken = dynamic_cast<CTransAxisBox*>(iter.second);
+			_matrix	m_KrakenFinal;
+			m_pKraken->Get_Final(&m_KrakenFinal);
+			vPos.x = m_KrakenFinal.m[3][0];
+			vPos.y = m_KrakenFinal.m[3][1];
+			vPos.z = m_KrakenFinal.m[3][2];
+			dynamic_cast<CKrakenParticle*>(m_pKrakenSmoke)->Set_PclePos(vPos);
+			dynamic_cast<CKrakenParticle*>(m_pKrakenSmoke)->Set_PcleDir(vDir);
+			m_pKrakenSmoke->Set_PclePos(vPos);
+			for (int i = 0; i < 150; ++i)
+			{
+				m_pKrakenSmoke->addParticle();
+			}
+		}
+
+		if (0 == _tcscmp(iter.first, L"LEG_PART3"))
+		{
+
+			CTransAxisBox* m_pKraken = dynamic_cast<CTransAxisBox*>(iter.second);
+			_matrix	m_KrakenFinal;
+			m_pKraken->Get_Final(&m_KrakenFinal);
+			vPos.x = m_KrakenFinal.m[3][0];
+			vPos.y = m_KrakenFinal.m[3][1];
+			vPos.z = m_KrakenFinal.m[3][2];
+			dynamic_cast<CKrakenParticle*>(m_pKrakenSmoke)->Set_PclePos(vPos);
+			dynamic_cast<CKrakenParticle*>(m_pKrakenSmoke)->Set_PcleDir(vDir);
+			m_pKrakenSmoke->Set_PclePos(vPos);
+			for (int i = 0; i < 150; ++i)
+			{
+				m_pKrakenSmoke->addParticle();
+			}
+		}
+
+		if (0 == _tcscmp(iter.first, L"LEG_PART4"))
+		{
+
+			CTransAxisBox* m_pKraken = dynamic_cast<CTransAxisBox*>(iter.second);
+			_matrix	m_KrakenFinal;
+			m_pKraken->Get_Final(&m_KrakenFinal);
+			vPos.x = m_KrakenFinal.m[3][0];
+			vPos.y = m_KrakenFinal.m[3][1];
+			vPos.z = m_KrakenFinal.m[3][2];
+			dynamic_cast<CKrakenParticle*>(m_pKrakenSmoke)->Set_PclePos(vPos);
+			dynamic_cast<CKrakenParticle*>(m_pKrakenSmoke)->Set_PcleDir(vDir);
+			m_pKrakenSmoke->Set_PclePos(vPos);
+			for (int i = 0; i < 150; ++i)
+			{
+				m_pKrakenSmoke->addParticle();
+			}
+		}
+		if (0 == _tcscmp(iter.first, L"LEG_PART5"))
+		{
+
+			CTransAxisBox* m_pKraken = dynamic_cast<CTransAxisBox*>(iter.second);
+			_matrix	m_KrakenFinal;
+			m_pKraken->Get_Final(&m_KrakenFinal);
+			vPos.x = m_KrakenFinal.m[3][0];
+			vPos.y = m_KrakenFinal.m[3][1];
+			vPos.z = m_KrakenFinal.m[3][2];
+			dynamic_cast<CKrakenParticle*>(m_pKrakenSmoke)->Set_PclePos(vPos);
+			dynamic_cast<CKrakenParticle*>(m_pKrakenSmoke)->Set_PcleDir(vDir);
+			m_pKrakenSmoke->Set_PclePos(vPos);
+			for (int i = 0; i < 150; ++i)
+			{
+				m_pKrakenSmoke->addParticle();
+			}
+		}
+		if (0 == _tcscmp(iter.first, L"LEG_PART6"))
+		{
+
+			CTransAxisBox* m_pKraken = dynamic_cast<CTransAxisBox*>(iter.second);
+			_matrix	m_KrakenFinal;
+			m_pKraken->Get_Final(&m_KrakenFinal);
+			vPos.x = m_KrakenFinal.m[3][0];
+			vPos.y = m_KrakenFinal.m[3][1];
+			vPos.z = m_KrakenFinal.m[3][2];
+			dynamic_cast<CKrakenParticle*>(m_pKrakenSmoke)->Set_PclePos(vPos);
+			dynamic_cast<CKrakenParticle*>(m_pKrakenSmoke)->Set_PcleDir(vDir);
+			m_pKrakenSmoke->Set_PclePos(vPos);
+			for (int i = 0; i < 150; ++i)
+			{
+				m_pKrakenSmoke->addParticle();
+			}
+		}
+	}
+
+
+
+
+}
+
+void CKrakenLeg::Kraken_ReviveParticle(void)
+{
+	_vec3 vPos, vPlayerPos;
+	m_pTransCom->Get_Info(INFO_POS, &vPos);
+	m_pPlayerTransCom->Get_Info(INFO_POS, &vPlayerPos);
+	_vec3 vDir = { 0.f, 0.f, 0.f };
+	_vec3 vDirection = { 0.f, 0.f, 0.f };
+	CKrakenHit* m_pKrakenHit = nullptr;
+
+	_vec3 vLegPart9;
+	if (!m_pKrakenSmoke)
+	{
+		m_pKrakenSmoke = dynamic_cast<CKrakenParticle*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"KrakenParticle"));
+		NULL_CHECK_RETURN(m_pKrakenSmoke, );
+	}
+	for (auto& iter : *(pMyLayer->Get_GamePairPtr()))
+	{
+		
+		if (0 == _tcscmp(iter.first, L"LEG_PART1"))
+		{
+
+			CTransAxisBox* m_pKraken = dynamic_cast<CTransAxisBox*>(iter.second);
+			_matrix	m_KrakenFinal;
+			m_pKraken->Get_Final(&m_KrakenFinal);
+			vPos.x = m_KrakenFinal.m[3][0];
+			vPos.y = m_KrakenFinal.m[3][1];
+			vPos.z = m_KrakenFinal.m[3][2];
+			dynamic_cast<CKrakenParticle*>(m_pKrakenSmoke)->Set_PclePos(vPos);
+			dynamic_cast<CKrakenParticle*>(m_pKrakenSmoke)->Set_PcleDir(vDir);
+			m_pKrakenSmoke->Set_PclePos(vPos);
+			for (int i = 0; i < 150; ++i)
+			{
+				m_pKrakenSmoke->addParticle();
+			}
+		}
+		if (0 == _tcscmp(iter.first, L"LEG_PART2"))
+		{
+
+			CTransAxisBox* m_pKraken = dynamic_cast<CTransAxisBox*>(iter.second);
+			_matrix	m_KrakenFinal;
+			m_pKraken->Get_Final(&m_KrakenFinal);
+			vPos.x = m_KrakenFinal.m[3][0];
+			vPos.y = m_KrakenFinal.m[3][1];
+			vPos.z = m_KrakenFinal.m[3][2];
+			dynamic_cast<CKrakenParticle*>(m_pKrakenSmoke)->Set_PclePos(vPos);
+			dynamic_cast<CKrakenParticle*>(m_pKrakenSmoke)->Set_PcleDir(vDir);
+			m_pKrakenSmoke->Set_PclePos(vPos);
+			for (int i = 0; i < 150; ++i)
+			{
+				m_pKrakenSmoke->addParticle();
+			}
+		}
+
+		if (0 == _tcscmp(iter.first, L"LEG_PART3"))
+		{
+
+			CTransAxisBox* m_pKraken = dynamic_cast<CTransAxisBox*>(iter.second);
+			_matrix	m_KrakenFinal;
+			m_pKraken->Get_Final(&m_KrakenFinal);
+			vPos.x = m_KrakenFinal.m[3][0];
+			vPos.y = m_KrakenFinal.m[3][1];
+			vPos.z = m_KrakenFinal.m[3][2];
+			dynamic_cast<CKrakenParticle*>(m_pKrakenSmoke)->Set_PclePos(vPos);
+			dynamic_cast<CKrakenParticle*>(m_pKrakenSmoke)->Set_PcleDir(vDir);
+			m_pKrakenSmoke->Set_PclePos(vPos);
+			for (int i = 0; i < 150; ++i)
+			{
+				m_pKrakenSmoke->addParticle();
+			}
+		}
+
+		if (0 == _tcscmp(iter.first, L"LEG_PART4"))
+		{
+
+			CTransAxisBox* m_pKraken = dynamic_cast<CTransAxisBox*>(iter.second);
+			_matrix	m_KrakenFinal;
+			m_pKraken->Get_Final(&m_KrakenFinal);
+			vPos.x = m_KrakenFinal.m[3][0];
+			vPos.y = m_KrakenFinal.m[3][1];
+			vPos.z = m_KrakenFinal.m[3][2];
+			dynamic_cast<CKrakenParticle*>(m_pKrakenSmoke)->Set_PclePos(vPos);
+			dynamic_cast<CKrakenParticle*>(m_pKrakenSmoke)->Set_PcleDir(vDir);
+			m_pKrakenSmoke->Set_PclePos(vPos);
+			for (int i = 0; i < 150; ++i)
+			{
+				m_pKrakenSmoke->addParticle();
+			}
+		}
+		if (0 == _tcscmp(iter.first, L"LEG_PART5"))
+		{
+
+			CTransAxisBox* m_pKraken = dynamic_cast<CTransAxisBox*>(iter.second);
+			_matrix	m_KrakenFinal;
+			m_pKraken->Get_Final(&m_KrakenFinal);
+			vPos.x = m_KrakenFinal.m[3][0];
+			vPos.y = m_KrakenFinal.m[3][1];
+			vPos.z = m_KrakenFinal.m[3][2];
+			dynamic_cast<CKrakenParticle*>(m_pKrakenSmoke)->Set_PclePos(vPos);
+			dynamic_cast<CKrakenParticle*>(m_pKrakenSmoke)->Set_PcleDir(vDir);
+			m_pKrakenSmoke->Set_PclePos(vPos);
+			for (int i = 0; i < 150; ++i)
+			{
+				m_pKrakenSmoke->addParticle();
+			}
+		}
+		if (0 == _tcscmp(iter.first, L"LEG_PART6"))
+		{
+
+			CTransAxisBox* m_pKraken = dynamic_cast<CTransAxisBox*>(iter.second);
+			_matrix	m_KrakenFinal;
+			m_pKraken->Get_Final(&m_KrakenFinal);
+			vPos.x = m_KrakenFinal.m[3][0];
+			vPos.y = m_KrakenFinal.m[3][1];
+			vPos.z = m_KrakenFinal.m[3][2];
+			dynamic_cast<CKrakenParticle*>(m_pKrakenSmoke)->Set_PclePos(vPos);
+			dynamic_cast<CKrakenParticle*>(m_pKrakenSmoke)->Set_PcleDir(vDir);
+			m_pKrakenSmoke->Set_PclePos(vPos);
+			for (int i = 0; i < 150; ++i)
+			{
+				m_pKrakenSmoke->addParticle();
+			}
+		}
+		if (0 == _tcscmp(iter.first, L"LEG_PART7"))
+		{
+
+			CTransAxisBox* m_pKraken = dynamic_cast<CTransAxisBox*>(iter.second);
+			_matrix	m_KrakenFinal;
+			m_pKraken->Get_Final(&m_KrakenFinal);
+			vPos.x = m_KrakenFinal.m[3][0];
+			vPos.y = m_KrakenFinal.m[3][1];
+			vPos.z = m_KrakenFinal.m[3][2];
+			dynamic_cast<CKrakenParticle*>(m_pKrakenSmoke)->Set_PclePos(vPos);
+			dynamic_cast<CKrakenParticle*>(m_pKrakenSmoke)->Set_PcleDir(vDir);
+			m_pKrakenSmoke->Set_PclePos(vPos);
+			for (int i = 0; i < 150; ++i)
+			{
+				m_pKrakenSmoke->addParticle();
+			}
+		}
+		if (0 == _tcscmp(iter.first, L"LEG_PART8"))
+		{
+
+			CTransAxisBox* m_pKraken = dynamic_cast<CTransAxisBox*>(iter.second);
+			_matrix	m_KrakenFinal;
+			m_pKraken->Get_Final(&m_KrakenFinal);
+			vPos.x = m_KrakenFinal.m[3][0];
+			vPos.y = m_KrakenFinal.m[3][1];
+			vPos.z = m_KrakenFinal.m[3][2];
+			dynamic_cast<CKrakenParticle*>(m_pKrakenSmoke)->Set_PclePos(vPos);
+			dynamic_cast<CKrakenParticle*>(m_pKrakenSmoke)->Set_PcleDir(vDir);
+			m_pKrakenSmoke->Set_PclePos(vPos);
+			for (int i = 0; i < 150; ++i)
+			{
+				m_pKrakenSmoke->addParticle();
+			}
+		}
+		if (0 == _tcscmp(iter.first, L"LEG_PART9"))
+		{
+
+			CTransAxisBox* m_pKraken = dynamic_cast<CTransAxisBox*>(iter.second);
+			_matrix	m_KrakenFinal;
+			m_pKraken->Get_Final(&m_KrakenFinal);
+			vPos.x = m_KrakenFinal.m[3][0];
+			vPos.y = m_KrakenFinal.m[3][1];
+			vPos.z = m_KrakenFinal.m[3][2];
+			dynamic_cast<CKrakenParticle*>(m_pKrakenSmoke)->Set_PclePos(vPos);
+			dynamic_cast<CKrakenParticle*>(m_pKrakenSmoke)->Set_PcleDir(vDir);
+			m_pKrakenSmoke->Set_PclePos(vPos);
+			for (int i = 0; i < 150; ++i)
+			{
+				m_pKrakenSmoke->addParticle();
+			}
+		}
+
 	}
 }
 

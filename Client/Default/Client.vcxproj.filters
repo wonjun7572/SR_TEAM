@@ -912,14 +912,17 @@
     <ClInclude Include="..\Header\MFieldEffect.h">
       <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\MiddleDead\MFieldEffect</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\KrakenParticle.h">
-      <Filter>99. Default\헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\Mob.h">
       <Filter>99. Default\헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Quest.h">
       <Filter>02. GameObject\01. For_Stage\09. UI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\KrakenParticle.h">
+      <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\KrakenEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\KrakenHit.h">
+      <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\KrakenEffect</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1406,14 +1409,17 @@
     <ClCompile Include="..\Code\MFieldEffect.cpp">
       <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\MiddleDead\MFieldEffect</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\KrakenParticle.cpp">
-      <Filter>99. Default\소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\Mob.cpp">
       <Filter>99. Default\소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Quest.cpp">
       <Filter>02. GameObject\01. For_Stage\09. UI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\KrakenParticle.cpp">
+      <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\KrakenEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\KrakenHit.cpp">
+      <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\KrakenEffect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

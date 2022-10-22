@@ -27,6 +27,7 @@
 #include "ProjectionEffect.h"
 
 #include "KrakenParticle.h"
+#include "KrakenHit.h"
 /*	
 CFlameEffect* m_pFlameEffectParticle = nullptr;
 CIceEffect* m_pIceEffectParticle = nullptr;

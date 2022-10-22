@@ -219,34 +219,6 @@ _int CKrakenBoss::Update_Pattern(_float fTimeDelta)
 
 	_float Hp = m_tAbility->fCurrentHp / m_tAbility->fMaxHp;
 
-	/*int iAnnihilate = 0;
-	CLayer* pMyLayer = Engine::Get_Layer(STAGE_TENTACLE);
-	for (auto& iter : *(pMyLayer->Get_GameListPtr()))
-	{
-	if (dynamic_cast<CKrakenLeg*>(iter)->Get_SWING() >= LEGSWING_7 && dynamic_cast<CKrakenLeg*>(iter)->Get_SWING() <= LEGSWING_17)
-	iAnnihilate++;
-	else
-	break;
-	}
-
-	if (iAnnihilate == 8)
-	{
-	_vec3 vPlayerScale;
-	m_pPlayerTransCom->Get_Scale(&vPlayerScale);
-	_vec3 vScale;
-	m_pSphereTransCom->Get_Scale(&vScale);
-	_vec3 vPlayerPos;
-	m_pPlayerTransCom->Get_Info(INFO_POS, &vPlayerPos);
-
-	if (!m_pCollision->Sphere_Collision(this->m_pSphereTransCom, m_pPlayerTransCom, vPlayerScale.x, vScale.x))
-	{
-	CLayer* pLayer = Engine::Get_Layer(STAGE_CHARACTER);
-	CCubePlayer* pPlayer = dynamic_cast<CCubePlayer*>(pLayer->Get_GameObject(L"PLAYER"));
-
-	pPlayer->KnuckDown(10.f, 20.f);
-	}
-	}*/
-
 
 	_vec3 vPlayerPos;
 	m_pPlayerTransCom->Get_Info(INFO_POS, &vPlayerPos);
@@ -328,7 +300,7 @@ _int CKrakenBoss::Update_Pattern(_float fTimeDelta)
 			{
 				if (!m_pCollision->Sphere_Collision(this->m_pSphereTransCom, m_pPlayerTransCom, vPlayerScale.x, vScale.x))
 				{
-					for (m_fFireAngle = 0.f; m_fFireAngle < 360.f; m_fFireAngle += 2.f)
+					for (m_fFireAngle = 0.f; m_fFireAngle < 360.f; m_fFireAngle += 5.f)
 					{
 						D3DXMatrixRotationY(&matRotY, D3DXToRadian(-m_fFireAngle));
 						D3DXMatrixTranslation(&matTrans, vPos.x, 0.f, vPos.y);
@@ -338,7 +310,7 @@ _int CKrakenBoss::Update_Pattern(_float fTimeDelta)
 
 						D3DXVec3TransformNormal(&vDir, &vDir, &matWorld);
 
-						vPos.y = 1.4f;
+						vPos.y = 1.8f;
 						CPoolMgr::GetInstance()->Reuse_KrakenBullet(m_pGraphicDev, &vPos, &vDir, 10.f, 10.f);
 					}
 				}
@@ -350,12 +322,12 @@ _int CKrakenBoss::Update_Pattern(_float fTimeDelta)
 		{
 			if (m_AnimationTime >= 1.f)
 			{
-				vPos.y = 1.6f;
+		
 				if (!m_pCollision->Sphere_Collision(this->m_pSphereTransCom, m_pPlayerTransCom, vPlayerScale.x, vScale.x))
 				{
 					_vec3 vDirection;
 					vDirection = vPlayerPos - vPos;
-
+					vPos.y = 1.8f;
 					CPoolMgr::GetInstance()->Reuse_KrakenBullet(m_pGraphicDev, &vPos, &vDirection, 10.f, 10.f);
 
 				}

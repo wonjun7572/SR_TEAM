@@ -7,8 +7,8 @@
 CKrakenEffect::CKrakenEffect(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CPSystem(pGraphicDev)
 {
-	m_fSize = .075f;
-	m_vbSize = 2048;
+	m_fSize = 0.15f;
+	m_vbSize = 51200;
 	m_vbOffset = 0;
 	m_vbBatchSize = 512;
 }
@@ -30,10 +30,10 @@ _int CKrakenEffect::Update_Object(const _float & fTimeDelta)
 {
 	for (list<ATTRIBUTE>::iterator iter = m_particles.begin(); iter != m_particles.end(); iter++)
 	{
-		_vec3 vDirection = { 0.f, 1.f, 0.f };
+		_vec3 vDirection = { 0.f, 0.5f, 0.f };
 		iter->fAge += fTimeDelta;
-		iter->vPos += (iter->vVelocity) * fTimeDelta * .1f;
-		iter->vPos.y += vDirection.y * (m_fGravity*iter->fAge)*(m_fGravity* iter->fAge) * fTimeDelta;
+		iter->vPos += (iter->vVelocity) * fTimeDelta * 1.7f;
+		iter->vPos.y += vDirection.y * (m_fGravity*iter->fAge)*(m_fGravity* iter->fAge) * fTimeDelta * 4.5f;
 
 		if (iter->fAge > iter->fLifeTime)
 		{
@@ -106,9 +106,9 @@ void CKrakenEffect::resetParticle(ATTRIBUTE * attribute)
 	GetRandomVector(&attribute->vVelocity, &min, &max);
 	D3DXVec3Normalize(&attribute->vVelocity, &attribute->vVelocity);
 	D3DXVec3Normalize(&m_vDir, &m_vDir);
-	attribute->vPos = m_vCubePatriclePos + attribute->vVelocity;
+	attribute->vPos = m_vCubePatriclePos + attribute->vVelocity * 3.f;
 	attribute->vPos += m_vDir;
-	attribute->vPos.y -= attribute->vVelocity.y + 0.35f;
+	attribute->vPos.y = attribute->vVelocity.y * 0.5f;
 	attribute->dwColor = D3DXCOLOR(0.25f - fRand, 0.25f - fRand, 0.25f - fRand, 1.f);
 	attribute->fAge = 0.0f;
 	attribute->fLifeTime = .5f;
