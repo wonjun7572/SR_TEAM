@@ -219,6 +219,12 @@ void CMonster::Hit_Check(_float _deltaTime)
 
 void CMonster::Hit_SphereCheck(_float _deltaTime)
 {
+	if (m_bCollisionDmg)
+	{
+		m_bCollisionDmg = false;
+		m_tAbility->fCurrentHp -= 50.f;
+
+	}
 	if (!Get_Layer(STAGE_SKILL)->Get_GameList().empty())
 	{
 		m_pTransCom->Static_Update();
@@ -232,6 +238,7 @@ void CMonster::Hit_SphereCheck(_float _deltaTime)
 					m_tAbility->fCurrentHp -= dynamic_cast<CMeteor*>(iter)->Get_Attack();
 				}
 			}
+			
 		}
 	}
 }

@@ -18,7 +18,12 @@ private:
 private:
 	CRcTex*				m_pBufferCom = nullptr;
 	CTransform*			m_pTransCom = nullptr;
-	CTexture*			m_pTextureCom = nullptr;
+	
+	CTexture*			m_pQuest1TexCom = nullptr; // 52 ¿Â
+	CTexture*			m_pQuest2TexCom = nullptr; // 61 ¿Â
+	CTexture*			m_pQuest3TexCom = nullptr; // 36 ¿Â
+
+	CShader*			m_pShaderCom = nullptr;
 
 	_vec3				m_vScale = _vec3(10.f, 5.f, 1.f);
 	_float				m_fFrame = 0.f;
@@ -26,6 +31,9 @@ private:
 	_vec3				m_vPlayerPos = _vec3(0.f, 0.f, 0.f);
 	_float				m_fSpeed = 10.f;
 	_bool				m_bInit = false;
+
+	_float				m_fTexFrame = 0.f;
+
 public:
 	static	CNpc*	Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3& vPos);
 

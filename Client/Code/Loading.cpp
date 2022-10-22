@@ -18,7 +18,7 @@ CLoading::~CLoading()
 
 HRESULT CLoading::Ready_Loading(LOADINGID eID)
 {
-	m_iMax = 109;
+	m_iMax = 112;
 	InitializeCriticalSection(&m_Crt);
 
 	m_hThread = (HANDLE)_beginthreadex(nullptr, 0, Thread_Main, this, 0, nullptr);
@@ -314,7 +314,11 @@ _uint CLoading::Loading_ForStage(void)
 		m_iCur++;
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Shield2_Tex", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Particle/StaticParticle/Shield2.png", TEX_NORMAL)), E_FAIL);
 		m_iCur++;
-		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"LetterBox_Tex", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/UI/Sprite/Tutorialscreen_UI_0.png", TEX_NORMAL)), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"LetterBox_Tex", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/UI/Quest/Quest_01_%d.png", TEX_NORMAL, 53)), E_FAIL);
+		m_iCur++;
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"LetterBox_Tex_2", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/UI/Quest2/Quest_02_%d.png", TEX_NORMAL, 61)), E_FAIL);
+		m_iCur++;
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"LetterBox_Tex_3", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/UI/Quest3/Quest_03_%d.png", TEX_NORMAL, 36)), E_FAIL);
 		m_iCur++;
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Black_Tex", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Particle/StaticParticle/Black.png", TEX_NORMAL)), E_FAIL);
 		m_iCur++;
@@ -333,6 +337,8 @@ _uint CLoading::Loading_ForStage(void)
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Veneer_Tex", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Blue_Aim.png", TEX_NORMAL)), E_FAIL);
 		m_iCur++;
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Black_Kraken", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/UI/Sprite/Black.jpg", TEX_NORMAL)), E_FAIL);
+		m_iCur++;
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Quest_Tex", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/UI/Sprite/character_select_UI_2.png", TEX_NORMAL)), E_FAIL);
 		m_iCur++;
 	}
 

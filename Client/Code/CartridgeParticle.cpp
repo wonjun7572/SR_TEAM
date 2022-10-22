@@ -97,7 +97,7 @@ void CCartridgeParticle::Free(void)
 
 void CCartridgeParticle::resetParticle(ATTRIBUTE * attribute)
 {
-	_float m_fHand = rand() % 2;
+	_float m_fHand = _float(rand() % 2);
 
 	attribute->bAlive = true;
 	CTransform* pTransform = nullptr;
@@ -141,7 +141,7 @@ void CCartridgeParticle::resetParticle(ATTRIBUTE * attribute)
 			pTransform->Get_Info(INFO_POS, &vPos1);
 
 			attribute->vPos = vPos1 - ((vRand)*0.05f);
-			attribute->vVelocity = m_vDir* 1.f + ((vRand)*0.05);
+			attribute->vVelocity = m_vDir* 1.f + ((vRand)*0.05f);
 		}
 	}
 	else if (dynamic_cast<CCubePlayer*>(pPlayer)->Get_Weapon() == dynamic_cast<CWeapon*>(Engine::Get_GameObject(STAGE_GUN, L"SHOTGUN")))
@@ -151,7 +151,7 @@ void CCartridgeParticle::resetParticle(ATTRIBUTE * attribute)
 		D3DXVECTOR3 vPos;
 		pTransform->Get_Info(INFO_POS, &vPos);
 
-		attribute->vPos = vPos - ((vRand)*0.05);
+		attribute->vPos = vPos - ((vRand)*0.05f);
 		attribute->vVelocity = m_vDir* 1.f+((vRand)*0.2f);
 
 	}
