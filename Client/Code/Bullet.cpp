@@ -86,13 +86,21 @@ _int CBullet::Update_Object(const _float & fTimeDelta)
 	if (!Get_Layer(STAGE_SKILL)->Get_GameList().empty())
 	{
 		m_pTransCom->Static_Update();
+
+		_vec3 vBulletScale;
+		m_pTransCom->Get_Scale(&vPos);
+
 		for (auto& iter : Get_Layer(STAGE_SKILL)->Get_GameList())
 		{
 			if (iter->GetSphereSkillTag() == SKILL_SHIELD)
 			{
 				CTransform* pTransform = dynamic_cast<CTransform*>(iter->Get_Component(TRANSFORM_COMP, ID_DYNAMIC));
 				CHitBox* pHitbox = dynamic_cast<CHitBox*>(iter->Get_Component(HITBOX_COMP, ID_STATIC));
-				if (m_pCollision->Collision_Square(this->m_pTransCom, this->m_pHitbox, pTransform, pHitbox))
+
+				_vec3 vShieldScale;
+				pTransform->Get_Scale(&vShieldScale);
+
+				if (m_pCollision->Sphere_Collision(m_pTransCom, pTransform, vBulletScale.x, vShieldScale.x))
 				{
 					this->m_fTimeDelta = 10;
 					break;
