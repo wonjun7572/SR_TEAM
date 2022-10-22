@@ -51,6 +51,7 @@ private:
 	_bool				m_bQuestText2 = false;
 	_bool				m_bQuestText3 = false;
 
+	_bool				m_bBossDead = false;
 
 public:
 	static	CNpc*	Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3& vPos);

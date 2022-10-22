@@ -25,7 +25,6 @@
 #include "PlayerFaceUI.h"
 #include "PlayerHpUI.h"
 #include "PlayerDefenseUI.h"
-#include "Warning_AnnihilateUI.h"
 #include "WeaponUI.h"
 #include "BulletUI.h"
 #include "GunUI.h"
@@ -138,6 +137,7 @@ HRESULT CStage::Ready_Scene(void)
 	FAILED_CHECK_RETURN(Ready_Layer_PlayerFlight(STAGE_FLIGHTPLAYER), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Layer_KEY(L"STAGE_KEY"), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Layer_QuestBox(L"STAGE_QUESTBOX"), E_FAIL);
+	FAILED_CHECK_RETURN(Ready_Layer_Boss(L"STAGE_BOSS"), E_FAIL);
 
 	return S_OK;
 }
@@ -259,15 +259,6 @@ HRESULT CStage::Ready_Layer_Environment(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"TraceEffect", pGameObject), E_FAIL);
 
-	pGameObject = CTargetPointEffect::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"TargetPointEffect", pGameObject), E_FAIL);
-
-	pGameObject = CHyperionEffect::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"HyperionEffect", pGameObject), E_FAIL);
-
-
 	pGameObject = CRoundEffect::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"RoundEffect", pGameObject), E_FAIL);
@@ -284,7 +275,6 @@ HRESULT CStage::Ready_Layer_Environment(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"DefensiveEffect", pGameObject), E_FAIL);
 
-
 	pGameObject = CKrakenEffect::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"KraKenEffect", pGameObject), E_FAIL);
@@ -300,10 +290,6 @@ HRESULT CStage::Ready_Layer_Environment(const _tchar * pLayerTag)
 	pGameObject = CProjectionEffect::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"ProjectionEffect", pGameObject), E_FAIL);
-
-	pGameObject = CItemCubeEffect::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"ItemCubeEffect", pGameObject), E_FAIL);
 
 	pGameObject = CCartridgeParticle::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
@@ -396,8 +382,6 @@ HRESULT CStage::Ready_Layer_UI(const _tchar * pLayerTag)
 	pGameObject = CQuest::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"QuestUI", pGameObject), E_FAIL);
-
-
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
@@ -550,7 +534,7 @@ HRESULT CStage::Ready_Layer_Monster(const _tchar * pLayerTag)
 
 	CGameObject*      pGameObject = nullptr;
 
-	if (!vecFireMan.empty())
+	/*if (!vecFireMan.empty())
 	{
 		for (size_t i = 0; i < vecFireMan.size(); i++)
 		{
@@ -608,12 +592,7 @@ HRESULT CStage::Ready_Layer_Monster(const _tchar * pLayerTag)
 			NULL_CHECK_RETURN(pGameObject, E_FAIL);
 			FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
 		}
-	}
-
-
-	pGameObject = CMiddleBoss::Create(m_pGraphicDev, _vec3(109.f, 0.6f, 10.f), L"MiddleBoss");
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+	}*/
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
@@ -709,6 +688,22 @@ HRESULT CStage::Ready_Layer_QuestBox(const _tchar * pLayerTag)
 	pGameObject = CItemBox::Create(m_pGraphicDev, _vec3(72.f, 0.4f, 63.f), L"ItemBox2");
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"ItemBox2", pGameObject), E_FAIL);
+
+	m_mapLayer.insert({ pLayerTag, pLayer });
+
+	return S_OK;
+}
+
+HRESULT CStage::Ready_Layer_Boss(const _tchar * pLayerTag)
+{
+	Engine::CLayer*      pLayer = Engine::CLayer::Create();
+	NULL_CHECK_RETURN(pLayer, E_FAIL);
+
+	CGameObject*      pGameObject = nullptr;
+
+	pGameObject = CMiddleBoss::Create(m_pGraphicDev, _vec3(109.f, 0.6f, 10.f), L"MiddleBoss");
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"MiddleBoss", pGameObject), E_FAIL);
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
@@ -1071,7 +1066,7 @@ HRESULT CStage::Ready_Light(void)
 	Light.Diffuse = D3DXCOLOR(0.5f, 0.5f, 0.5f, 1.f);
 	Light.Specular = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
 	Light.Ambient = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
-	Light.Direction = _vec3(0.f, -1.f, 0.f);
+	Light.Direction = _vec3(1.f, 1.f, 0.f);
 
 	/*   Light.Position =
 	Light.Range =
@@ -1083,24 +1078,6 @@ HRESULT CStage::Ready_Light(void)
 	Light.Phi =
 	*/
 	FAILED_CHECK_RETURN(Engine::Ready_Light(m_pGraphicDev, &Light, 0), E_FAIL);
-
-	//D3DLIGHT9   Light2;
-	//ZeroMemory(&Light2, sizeof(D3DLIGHT9));
-
-	//Light2.Type = D3DLIGHT_POINT;
-	//Light2.Position = _vec3(14.f, 0.6f, 10.f);
-	//Light2.Range = 3.f;
-	//Light2.Diffuse = D3DXCOLOR(0.5f, 0.5f, 0.5f, 0.5f);
-	//Light2.Specular = D3DXCOLOR(0.5f, 0.5f, 0.5f, 0.5f);
-	//Light2.Ambient = D3DXCOLOR(0.5f, 0.5f, 0.5f, 0.5f);
-
-	////Light.Falloff =
-	////Light.Attenuation0 =
-	////Light.Attenuation1 =
-	////Light.Attenuation2 =
-	////Light.Theta
-	////Light.Phi =   
-	//FAILED_CHECK_RETURN(Engine::Ready_Light(m_pGraphicDev, &Light2, 1), E_FAIL);
 
 	D3DLIGHT9   Light3;
 	ZeroMemory(&Light3, sizeof(D3DLIGHT9));
@@ -1119,6 +1096,31 @@ HRESULT CStage::Ready_Light(void)
 	//Light.Theta
 	//Light.Phi =   
 	FAILED_CHECK_RETURN(Engine::Ready_Light(m_pGraphicDev, &Light3, 1), E_FAIL);
+
+	// 라이트 아이디어좀..................
+	//D3DLIGHT9   Light2;
+	//ZeroMemory(&Light2, sizeof(D3DLIGHT9));
+
+	//Light2.Type = D3DLIGHT_POINT;
+	//Light2.Position = _vec3(119.3f, 2.f, 64.9f);
+	//Light2.Range = 10.f;
+	//Light2.Diffuse.r = 1.f;
+	//Light2.Diffuse.g = 0.f;
+	//Light2.Diffuse.b = 0.f;
+	//Light2.Ambient.r = 1.f;
+	//Light2.Ambient.g = 0.f;
+	//Light2.Ambient.b = 0.f;
+	//Light2.Specular.r = 1.0f;
+	//Light2.Specular.g = 1.0f;
+	//Light2.Specular.b = 1.0f;
+	//Light2.Attenuation0 = 0.1f;
+	//////Light.Falloff =
+	//////Light.Attenuation0 =
+	//////Light.Attenuation1 =
+	//////Light.Attenuation2 =
+	//////Light.Theta
+	//////Light.Phi =   
+	//FAILED_CHECK_RETURN(Engine::Ready_Light(m_pGraphicDev, &Light2, 2), E_FAIL);
 
 	return S_OK;
 }

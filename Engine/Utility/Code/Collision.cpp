@@ -1180,7 +1180,6 @@ void CCollision::Get_GunItem()
 				pItemTransform->Get_Info(INFO_POS, &vDestionaion);
 				dynamic_cast<CFlight*>(Get_GameObject(STAGE_FLIGHTPLAYER, L"FLIGHTSHUTTLE"))->Set_Shuttle(true, vDestionaion, SUPPORTER_SNIPER);
 			}
-
 		}
 	}
 }

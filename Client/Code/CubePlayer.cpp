@@ -21,6 +21,7 @@
 
 #include "StaticCamera.h"
 #include "FlightCamera.h"
+#include "ComboUI.h"
 
 #include "Stage.h"
 #include "FinalStage.h"
@@ -46,13 +47,13 @@ HRESULT CCubePlayer::Ready_Object(void)
 	m_tAbility->iGunTexture = 5;
 
 	m_pTransform->Set_Scale(0.4f, 0.5f, 0.4f);
-	m_pTransform->Set_Pos(10.f, 10.f, 10.f);
+	m_pTransform->Set_Pos(20.f, 0.6f, 20.f);
 	m_pTransform->Static_Update();
 
 	m_pSphereTransCom->Set_Scale(0.5f, 0.5f, 0.5f);
-	m_pSphereTransCom->Set_Pos(10.f, 10.f, 10.f);
+	m_pSphereTransCom->Set_Pos(20.f, 0.6f, 20.f);
 	m_pSphereTransCom->Static_Update();
-	m_fSpeed = 10.f;
+	m_fSpeed = 7.f;
 
 	m_bUzi = false;
 	m_bShotgun = false;
@@ -66,37 +67,37 @@ _int CCubePlayer::Update_Object(const _float & fTimeDelta)
 {
 	Update_NullCheck();
 
-	if (!m_bDoorOpen)
-	{
-		m_fRed = 0.5f;
-		m_fGreen = 0.5f;
-		m_fBlue = 0.5f;
-		m_fRange = 25.f;
-	}
-	else
-	{
-		m_fGreen = 0.f;
-		m_fRange = 40.f;
-		if (!m_bColorLighting)
-		{
-			m_fRed += fTimeDelta;
-			if (m_fRed > 1.f)
-			{
-				m_bColorLighting = true;
-				m_fRed = 0.f;
-			}
-		}
-		if (m_bColorLighting)
-		{
-			m_fBlue += fTimeDelta;
-			if (m_fBlue > 1.f)
-			{
-				m_bColorLighting = false;
-				m_fBlue = 0.f;
-			}
-		}
-	}
 
+	_vec3 vPos;
+	m_pTransform->Get_Info(INFO_POS, &vPos);
+	cout << vPos.x << " " << vPos.y << " " << vPos.z << "\n";
+
+	if (m_pComboUI != nullptr)
+	{
+		if (m_pComboUI->Get_ComboCnt() == 0.f)
+		{
+			m_fCombo += 0.05f;
+			if (m_fCombo >= 1.f)
+				m_fCombo = 1.f;
+			m_fGreen = m_fCombo;
+			m_fBlue = m_fCombo;
+			m_fRange = 40.f;
+		}
+		else
+		{
+			m_fCombo = 0.f;
+			m_fGreen = 1.f - (m_pComboUI->Get_ComboCnt() * 0.05f) + m_fCombo;
+			m_fBlue = 1.f - (m_pComboUI->Get_ComboCnt() * 0.05f) + m_fCombo;
+		
+			if (m_fGreen > 0.6f)
+				m_fGreen = 0.6f;
+			if (m_fBlue > 0.6f)
+				m_fBlue = 0.6f;
+
+			m_fRange = 40.f;
+			m_fCombo = (1.f - m_pComboUI->Get_ComboCnt() * 0.05f);
+		}
+	}
 
 	m_fTimeDelta = fTimeDelta;
 	m_fBulletTime += fTimeDelta;
@@ -193,7 +194,6 @@ void CCubePlayer::Key_Skill()
 {
 	if (Key_Down(DIK_F))
 	{
-
 		if (m_Weapon == Engine::Get_GameObject(STAGE_GUN, L"UZI1") && m_iSkillEnforce == 1)
 		{
 			if (static_cast<CStaticCamera*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"StaticCamera"))->Get_MainCam())
@@ -205,7 +205,7 @@ void CCubePlayer::Key_Skill()
 				static_cast<CFlightCamera*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"FlightCamera"))->Set_MainCam(false);
 			}
 		}
-		//if (m_Weapon == Engine::Get_GameObject(STAGE_GUN, L"SHOTGUN") && m_iSkillEnforce == 3)
+		if (m_Weapon == Engine::Get_GameObject(STAGE_GUN, L"SHOTGUN") && m_iSkillEnforce == 3)
 		{
 			_vec3 vPos;
 			m_pTransform->Get_Info(INFO_POS, &vPos);
@@ -355,8 +355,12 @@ void CCubePlayer::Update_NullCheck()
 
 	if (!m_pTraceEffect)
 		m_pTraceEffect = dynamic_cast<CTraceEffect*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"TraceEffect"));
+
 	if (!m_pLaserPoint)
 		m_pLaserPoint = dynamic_cast<CLaserPoint*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"LaserPoint"));
+
+	if (m_pComboUI == nullptr)
+		m_pComboUI = dynamic_cast<CComboUI*>(Engine::Get_GameObject(STAGE_UI, L"ComboUI"));
 
 	Player_Mapping();
 
@@ -695,57 +699,70 @@ D3DXVec3Normalize(&vDir, &vDir);
 	if (Key_Pressing(DIK_C))
 	{
 
-	//	_vec3 vPlayerPos;
-	//	_vec3 vPlayerDir;
-	//	_vec3 min = { -1.0f ,-1.0f ,-1.0f };
+		_vec3 vPlayerPos;
+		m_pPlayerTransCom->Get_Info(INFO_POS, &vPlayerPos);
 
-	//	m_pBodyWorld->Get_Info(INFO_POS, &vPlayerPos);
-	//	m_pBodyWorld->Get_Info(INFO_LOOK, &vPlayerDir);
+		if (!m_pKrakenEffectParticle)
+			m_pKrakenEffectParticle = dynamic_cast<CKrakenEffect*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"KraKenEffect"));
+		if (m_pKrakenEffectParticle != nullptr)
+		{
+			m_pKrakenEffectParticle->Set_PclePos(vPos);
+			for (_int i = 0; i < 150; ++i)
+			{
+				m_pKrakenEffectParticle->addParticle();
+			}
+		}
+		if (!m_pKrakenSmoke)
+			m_pKrakenSmoke = dynamic_cast<CKrakenParticle*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"KrakenParticle"));
+		if (m_pKrakenSmoke != nullptr)
+		{
+			m_pKrakenSmoke->Set_PclePos(vPos);
+			for (int i = 0; i < 150; ++i)
+			{
+				m_pKrakenSmoke->addParticle();
+			}
 
-	//	if (!m_pProjectionEffect)
-	//		m_pProjectionEffect = dynamic_cast<CProjectionEffect*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"ProjectionEffect"));
-	///*	if (m_pProjectionEffect != nullptr)
-	//	{
-	//		m_pProjectionEffect->Set_PclePos(vPlayerPos + vPlayerDir);
-	//		m_pProjectionEffect->Set_PcleDir(vPlayerDir);
-	//	}*/
-	//	{
-	//		for (_int i = -5; i < 5; i++)
-	//		{
-	//			for (_int j = -5; j < 5; j++)
-	//			{
-	//				for (_int k = -5; k < 5; k++)
-	//				{
-	//					D3DXVec3Normalize(&min, &_vec3(i, j, k));
+		}
 
-	//					dynamic_cast<CProjectionEffect*>(m_pProjectionEffect)->Set_PclePos(vPlayerPos + _vec3(i, j, k)*1);
 
-	//					dynamic_cast<CProjectionEffect*>(m_pProjectionEffect)->Set_PcleDir(-min);
+		/*if (!m_pKrakenHit)
+			m_pKrakenHit = dynamic_cast<CKrakenHit*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"KrakenHit"));
+		if (m_pKrakenHit != nullptr)
+		{
+			m_pKrakenHit->Set_PclePos(vPos);
+			for (int i = 0; i < 150; ++i)
+			{
+				m_pKrakenHit->addParticle();
+			}
+		}*/
 
-	//					dynamic_cast<CProjectionEffect*>(m_pProjectionEffect)->Set_PcleMoveDir(min);
 
-	//					m_pProjectionEffect->addParticle();
-	//				}
-	//			}
-	//		}
-	//	}
-			
-		//if (!m_pKrakenSmoke)
-		//	m_pKrakenSmoke = dynamic_cast<CKrakenParticle*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"KrakenParticle"));
-		//if (m_pKrakenSmoke != nullptr)
+
+		//	//_vec3 vPos;														//보스죽는이팩트
+		//_vec3 vPos;														//대쉬이펙트하려던것
+		//_vec3 vDir;
+		//m_pTransform->Get_Info(INFO_POS, &vPos);
+		//_vec3 min = { -1.0f ,-1.0f ,-1.0f };
+		//m_pTransform->Get_Info(INFO_POS, &vPos);
+		//vPos.x -= 5.f;
+		//vPos.y += 5.f;
+		//vPos.z -= 5.f;
+		//for (_int i = -5; i < 5; i++)
 		//{
-		//	m_pKrakenSmoke->Set_PclePos(vPos);
-		//	for (int i = 0; i < 150; ++i)
+		//	for (_int j = -5; j < 5; j++)
 		//	{
-		//		m_pKrakenSmoke->addParticle();
+		//		for (_int k = -5; k < 5; k++)
+		//		{
+		//			D3DXVec3Normalize(&min, &_vec3(i, j, k));						
+
+		//			dynamic_cast<CRoundEffect*>(m_pRoundEffect)->Set_PclePos(vPos + _vec3(i, j, k)*0.1f);
+
+		//			dynamic_cast<CRoundEffect*>(m_pRoundEffect)->Set_PcleDir(min);
+
+		//			m_pRoundEffect->addParticle();
+		//		}
 		//	}
-
 		//}
-
-
-
-			//_vec3 vPos;														//보스죽는이팩트
-		
 
 
 		//_vec3 vPos;														//대쉬이펙트하려던것
@@ -1165,8 +1182,6 @@ void CCubePlayer::Gun_Check(void)
 
 void CCubePlayer::Inventory_Check(void)
 {
-	//cout << typeid(Engine::Get_Scene()).name() << endl;
-
 	if (Engine::Get_Scene()->Get_SceneId() == STAGE_SCENE)
 	{
 		m_iDmgItem = dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->Get_WeaponDmg();
