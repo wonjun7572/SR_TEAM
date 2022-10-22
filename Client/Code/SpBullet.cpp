@@ -21,6 +21,15 @@ HRESULT CSpBullet::Ready_Object(const _vec3 * pPos, const _vec3 * pDir, _float _
 	m_fDamage = _fDamage;
 	m_fSpeed = _fSpeed;
 	m_bDamage = true;
+	m_pTransCom->Static_Update();
+
+	m_vDirection = *pDir;
+
+	_vec3 vPos;
+	m_pTransCom->Get_Info(INFO_POS, &vPos);
+	m_pShowTransCom->Set_Scale(0.05f, 0.01f, 0.05f);
+	m_pShowTransCom->Set_Pos(vPos.x, vPos.y, vPos.z);
+	m_pShowTransCom->Static_Update();
 
 	return S_OK;
 }
@@ -30,7 +39,7 @@ _int CSpBullet::Update_Object(const _float & fTimeDelta)
 	m_fTimeDelta += fTimeDelta;
 	Before_Update();
 
-	if (m_fTimeDelta >= 5.f)
+	if (m_fTimeDelta >= 5.f || m_bDamage == false)
 	{
 		m_bDamage = false;
 		CPoolMgr::GetInstance()->Collect_PlayerBullet(this);
@@ -63,6 +72,10 @@ _int CSpBullet::Update_Object(const _float & fTimeDelta)
 	Engine::CGameObject::Update_Object(fTimeDelta);
 
 	m_pTransCom->Move_Pos(&(m_vDirection * fTimeDelta * m_fSpeed));
+	m_pTransCom->Get_Info(INFO_POS, &vPos);
+	m_pShowTransCom->Set_Pos(vPos.x, vPos.y, vPos.z);
+	m_pShowTransCom->Chase_Target_By_Direction(&m_vDirection, 0.f, fTimeDelta);
+
 	Engine::Add_RenderGroup(RENDER_NONALPHA, this);
 
 	return 0;
@@ -75,12 +88,11 @@ void CSpBullet::LateUpdate_Object(void)
 
 void CSpBullet::Render_Object(void)
 {
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransCom->Get_WorldMatrixPointer());
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pShowTransCom->Get_WorldMatrixPointer());
 
 	//m_pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
 
-	m_pTextureCom->Set_Texture();
-
+	m_pTextureCom->Set_Texture(0);
 	m_pBufferCom->Render_Buffer();
 
 	//m_pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
@@ -93,6 +105,10 @@ HRESULT CSpBullet::Add_Component(void)
 	pComponent = m_pTransCom = dynamic_cast<CTransform*>(Clone_Proto(TRANSFORM_COMP));
 	NULL_CHECK_RETURN(m_pTransCom, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ TRANSFORM_COMP, pComponent });
+
+	pComponent = m_pShowTransCom = dynamic_cast<CTransform*>(Clone_Proto(TRANSFORM_COMP));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[ID_DYNAMIC].insert({ L"ShowTransCom", pComponent });
 
 	/*pComponent = m_pBufferCom = dynamic_cast<CSphereTex*>(Clone_Proto(SPHERETEX_COMP));
 	NULL_CHECK_RETURN(m_pBufferCom, E_FAIL);

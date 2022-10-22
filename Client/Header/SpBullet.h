@@ -25,9 +25,9 @@ public:
 
 private:
 	CTransform*			m_pTransCom = nullptr;
+	CTransform*			m_pShowTransCom = nullptr;
+
 	CTexture*			m_pTextureCom = nullptr;
-	//CSphereTex*			m_pBufferCom = nullptr;
-	//CRcCol*				m_pBufferCom = nullptr;
 	CCubeTex*			m_pBufferCom = nullptr;
 	CHitBox*			m_pHitbox = nullptr;
 

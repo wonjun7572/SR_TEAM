@@ -30,6 +30,9 @@ protected:
 	void				Hit_SphereCheck(_float _deltaTime);
 	void				Skill_SphereCheck(_float _deltaTime);
 
+protected:
+	void				Set_On_Terrain(void);
+
 public:
 	void          Set_Damaged(_float iDamage)
 	{
@@ -81,6 +84,7 @@ protected:
 
 	CTransform*			m_pMonsterMapping = nullptr;
 
+	_float				m_BeforeHp;
 	_float				m_fSpeed = 1.f;
 	_float				m_fSoundTimer = 0.f;
 	_float				m_fIdleSound = 0.2f;

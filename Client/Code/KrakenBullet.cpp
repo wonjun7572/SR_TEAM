@@ -37,10 +37,12 @@ HRESULT CKrakenBullet::Ready_Object(const _vec3 * vPos, const _vec3 * vDir, _flo
 
 _int CKrakenBullet::Update_Object(const _float & fTimeDelta)
 {
+	m_fTimeDelta += fTimeDelta;
 
-	if (m_bDead)
+	if (m_fTimeDelta >= 10.f)
 	{
 		CPoolMgr::GetInstance()->Collect_KraKenBullet(this);
+		dynamic_cast<CHitBarUI*>(m_pHitBarUI)->OffSwitch();
 		return -1;
 	}
 	CGameObject::Update_Object(fTimeDelta);

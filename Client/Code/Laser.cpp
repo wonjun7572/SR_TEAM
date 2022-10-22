@@ -5,6 +5,11 @@
 #include "TriggerParticle.h"
 #include "LaserEffect.h"
 #include "Monster.h"
+
+#include "KrakenBoss.h"
+#include "KrakenLeg.h"
+#include "MiddleBoss.h"
+
 CLaser::CLaser(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
 {
@@ -114,6 +119,41 @@ void CLaser::Collision_check(void)
 		}
 	}
 
+	CLayer* pKrakenLayer = Engine::Get_Layer(STAGE_MONSTER);
+
+	for (auto& iter : *(pKrakenLayer->Get_GameListPtr()))
+	{
+		CTransform* pIterTransform = dynamic_cast<CTransform*>(iter->Get_Component(TRANSFORM_COMP, ID_DYNAMIC));
+		NULL_CHECK_RETURN(pIterTransform, );
+		CHitBox* pIterBox = dynamic_cast<CHitBox*>(iter->Get_Component(HITBOX_COMP, ID_STATIC));
+		NULL_CHECK_RETURN(pIterBox, );
+
+		if (m_pCollision->Collision_Square(this->m_pTransCom, this->m_pHitbox, pIterTransform, pIterBox))
+		{
+			m_bDead = true;
+			return;
+		}
+	}
+
+	CLayer* pTentacleLayer = Engine::Get_Layer(STAGE_TENTACLE);
+
+	if (pTentacleLayer == nullptr)
+		return;
+
+	for (auto& iter : *(pTentacleLayer->Get_GameListPtr()))
+	{
+		CTransform* pIterTransform = dynamic_cast<CTransform*>(iter->Get_Component(TRANSFORM_COMP, ID_DYNAMIC));
+		NULL_CHECK_RETURN(pIterTransform, );
+		CHitBox* pIterBox = dynamic_cast<CHitBox*>(iter->Get_Component(HITBOX_COMP, ID_STATIC));
+		NULL_CHECK_RETURN(pIterBox, );
+
+		if (m_pCollision->Collision_Square(this->m_pTransCom, this->m_pHitbox, pIterTransform, pIterBox))
+		{
+			m_bDead = true;
+			return;
+		}
+	}
+
 	_vec3 vPos;
 	m_pTransCom->Get_Info(INFO_POS, &vPos);
 
@@ -202,7 +242,27 @@ void CLaser::Bomb_Collision(void)
 			if (fDistance < 5.f)
 			{
 				dynamic_cast<CMonster*>(iter)->Set_CollisionDmg();
+				dynamic_cast<CKrakenBoss*>(iter)->Set_CollisionDmg();
+				dynamic_cast<CMiddleBoss*>(iter)->Set_CollisionDmg();
 			}
+		}
+	}
+
+	CLayer* pTentacleLayer = Engine::Get_Layer(STAGE_TENTACLE);
+
+	if (pTentacleLayer == nullptr)
+		return;
+
+	for (auto& iter : *(pTentacleLayer->Get_GameListPtr()))
+	{
+		_vec3 vDest, vSour;
+		m_pTransCom->Get_Info(INFO_POS, &vDest);
+		dynamic_cast<CTransform*>(iter->Get_Component(TRANSFORM_COMP, ID_DYNAMIC))->Get_Info(INFO_POS, &vSour);
+		_float fDistance = sqrtf((vDest.x - vSour.x) * (vDest.x - vSour.x) + (vDest.y - vSour.y) * (vDest.y - vSour.y) + (vDest.z - vSour.z) * (vDest.z - vSour.z));
+
+		if (fDistance < 5.f)
+		{
+			dynamic_cast<CKrakenLeg*>(iter)->Set_CollisionDmg();
 		}
 	}
 	
