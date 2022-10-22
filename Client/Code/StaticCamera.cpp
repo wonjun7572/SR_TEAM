@@ -118,7 +118,7 @@ Engine::_int CStaticCamera::Update_Object(const _float& fTimeDelta)
 	//m_fFlightFrame += fTimeDelta * 0.5f;
 	//m_fBombFrame += fTimeDelta * 0.5f;
 	//m_fShuttleFrame += fTimeDelta * 0.15f;
-	m_fPlayerFrame += fTimeDelta;// *0.05f;
+	m_fPlayerFrame += fTimeDelta *0.05f;
 	m_fFrame += fTimeDelta;
 	m_fFlightFrame += fTimeDelta;
 	m_fBombFrame += fTimeDelta;

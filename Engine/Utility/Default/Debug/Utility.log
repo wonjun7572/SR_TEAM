@@ -1,6 +1,43 @@
-﻿빌드 시작: 2022-10-22 오후 4:47:01
+﻿빌드 시작: 2022-10-22 오후 5:08:02
      1>3 노드의 "D:\GitHub\SR_TEAM\Engine\Utility\Default\Utility.vcxproj" 프로젝트(Build 대상)입니다.
-     1>Link:
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /I../../Header /I../Code /I../../../Reference/Header /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _USRDLL /D UTILITY_EXPORTS /D _WINDLL /D _UNICODE /D UNICODE /D ENGINE_EXPORTS /D _WINDLL /D _UNICODE /D UNICODE /D ENGINE_EXPORTS /D _WINDLL /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\" /Fd"Debug\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt ..\Code\Calculator.cpp ..\Code\Camera.cpp ..\Code\Collision.cpp ..\Code\Component.cpp ..\Code\CubeCol.cpp ..\Code\CubeTex.cpp ..\Code\DynamicBuffer.cpp ..\Code\FlexibleAxisCube.cpp ..\Code\FrustumCullMgr.cpp ..\Code\GameObject.cpp ..\Code\Hitbox.cpp ..\Code\Interface.cpp ..\Code\Layer.cpp ..\Code\Light.cpp ..\Code\LightMgr.cpp ..\Code\Management.cpp ..\Code\PSystem.cpp ..\Code\ProtoMgr.cpp ..\Code\Quarternion.cpp ..\Code\RcCol.cpp ..\Code\RcRD.cpp ..\Code\RcTex.cpp ..\Code\Renderer.cpp ..\Code\Scene.cpp ..\Code\Shader.cpp ..\Code\SoundMgr.cpp ..\Code\SphereTex.cpp ..\Code\TerrainTex.cpp ..\Code\Texture.cpp ..\Code\Transform.cpp ..\Code\TriCol.cpp ..\Code\VIBuffer.cpp
+         Transform.cpp
+         Texture.cpp
+         TerrainTex.cpp
+         SphereTex.cpp
+         SoundMgr.cpp
+         Shader.cpp
+         Renderer.cpp
+         RcTex.cpp
+         RcRD.cpp
+         Quarternion.cpp
+         ProtoMgr.cpp
+         Management.cpp
+         LightMgr.cpp
+         Layer.cpp
+         Interface.cpp
+         Hitbox.cpp
+         FrustumCullMgr.cpp
+         CubeTex.cpp
+         Camera.cpp
+         Calculator.cpp
+         코드를 생성하고 있습니다...
+         컴파일하고 있습니다...
+         VIBuffer.cpp
+         TriCol.cpp
+         Scene.cpp
+         RcCol.cpp
+         PSystem.cpp
+         Light.cpp
+         GameObject.cpp
+         FlexibleAxisCube.cpp
+         DynamicBuffer.cpp
+         CubeCol.cpp
+         Component.cpp
+         Collision.cpp
+         코드를 생성하고 있습니다...
+       Link:
          C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"../Bin\Utility.dll" /INCREMENTAL /NOLOGO /LIBPATH:../../../Reference/Library d3d9.lib d3dx9.lib dxguid.lib System.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"../Bin\Utility.pdb" /SUBSYSTEM:WINDOWS /LARGEADDRESSAWARE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"../Bin\Utility.lib" /MACHINE:X86 /DLL Debug\Collision.obj
          Debug\CubeCol.obj
          Debug\DynamicBuffer.obj
@@ -125,4 +162,4 @@
 
 빌드했습니다.
 
-경과 시간: 00:00:01.45
+경과 시간: 00:01:10.39
