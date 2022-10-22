@@ -3,6 +3,7 @@
 #include "StaticCamera.h"
 #include "ItemBox.h"
 #include "MiddleBoss.h"
+#include "Flight.h"
 
 CNpc::CNpc(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
@@ -47,6 +48,10 @@ _int CNpc::Update_Object(const _float & fTimeDelta)
 	{
 		Quest3(fTimeDelta);
 	}
+	else if (Get_Layer(L"STAGE_BOSS")->Get_GameObjectMap().size() == 0 && m_bQuest3 == false)
+	{
+		Finish(fTimeDelta);
+	}
 
 	return 0;
 }
@@ -85,7 +90,11 @@ void CNpc::Render_Object(void)
 		_uint iTexindex = _uint(m_fTexFrame);
 		m_pQuest3TexCom->Set_Texture(m_pShaderCom, "g_DefaultTexture", iTexindex);
 	}
-
+	else if (Get_Layer(L"STAGE_BOSS")->Get_GameObjectMap().size() == 0 && m_bQuest3 == false)
+	{
+		_uint iTexindex = _uint(m_fTexFrame);
+		m_pQuest3TexCom->Set_Texture(m_pShaderCom, "g_DefaultTexture", iTexindex);
+	}
 	m_pShaderCom->Begin_Shader(1);
 	m_pBufferCom->Render_Buffer();
 	m_pShaderCom->End_Shader();
@@ -328,6 +337,79 @@ void CNpc::Quest3(const _float & fTimeDelta)
 			m_fTransFrame0 = 0.f;
 			m_fScaleFrame0 = 0.f;
 			m_fScaleFrame1 = 0.f;
+		}
+	}
+}
+
+void CNpc::Finish(const _float & fTimeDelta)
+{
+	CTransform* pPlayer = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_CHARACTER, L"HEAD", TRANSFORM_COMP, ID_DYNAMIC));
+	_vec3 vPlayerLook;
+	pPlayer->Get_Info(INFO_LOOK, &vPlayerLook);
+	_vec3 vPlayerPos;
+	pPlayer->Get_Info(INFO_POS, &vPlayerPos);
+	if (!m_bInit)
+	{
+		m_vPlayerPos = vPlayerPos;
+		D3DXVec3Normalize(&vPlayerLook, &vPlayerLook);
+		m_vPlayerPos.x += vPlayerLook.x * 1.f;
+		m_vPlayerPos.y += vPlayerLook.y * 1.f + 2.5f;
+		m_vPlayerPos.z += vPlayerLook.z * 1.f;
+
+		m_bInit = true;
+	}
+
+	if (m_fTransFrame0 <= 1.f)
+	{
+		m_bQuest4 = true;
+		m_fTransFrame0 += fTimeDelta * 0.2f;
+		_vec3 vTransLerp;
+		D3DXVec3Lerp(&vTransLerp, &vPlayerPos, &m_vPlayerPos, m_fTransFrame0);
+		m_pTransCom->Set_Pos(vTransLerp.x, vTransLerp.y, vTransLerp.z);
+		CGameObject::Update_Object(fTimeDelta);
+		m_pTransCom->Billboard_Transform(fTimeDelta);
+		Add_RenderGroup(RENDER_EFFECT_UI, this);
+	}
+	else if (m_fTransFrame0 > 0.9f && m_fTexFrame < 35.5f)
+	{
+		m_fScaleFrame0 += fTimeDelta;
+		if (m_fScaleFrame0 <= 1.f)
+		{
+			_vec3 vScaleLerp;
+			D3DXVec3Lerp(&vScaleLerp, &_vec3(0.f, 0.f, 0.f), &m_vScale, m_fScaleFrame0);
+			m_pTransCom->Set_Scale(&vScaleLerp);
+		}
+		m_fTexFrame += fTimeDelta * 3.f;
+		CGameObject::Update_Object(fTimeDelta);
+		m_pTransCom->Billboard_Transform(fTimeDelta);
+		Add_RenderGroup(RENDER_EFFECT_UI, this);
+	}
+	else if (m_fTexFrame >= 35.5f)
+	{
+		m_fTexFrame = 35.f;
+		m_fScaleFrame1 += fTimeDelta;
+		if (m_fScaleFrame1 <= 1.f)
+		{
+			_vec3 vScaleLerp;
+			D3DXVec3Lerp(&vScaleLerp, &m_vScale, &_vec3(0.f, 0.f, 0.f), m_fScaleFrame1);
+			m_pTransCom->Set_Scale(&vScaleLerp);
+			CGameObject::Update_Object(fTimeDelta);
+			m_pTransCom->Billboard_Transform(fTimeDelta);
+			Add_RenderGroup(RENDER_EFFECT_UI, this);
+		}
+		else
+		{
+			m_bQuest4 = false;
+			m_bInit = false;
+			m_bQuestText4 = true;
+			m_fTexFrame = 0.f;
+			m_fTransFrame0 = 0.f;
+			m_fScaleFrame0 = 0.f;
+			m_fScaleFrame1 = 0.f;
+			CGameObject* pGameObject = dynamic_cast<CFlight*>(Get_GameObject(STAGE_FLIGHTPLAYER, L"FLIGHTSHUTTLE"));
+
+			if (dynamic_cast<CFlight*>(pGameObject)->Get_Ending() == false)
+				dynamic_cast<CFlight*>(pGameObject)->Set_Ending(true);
 		}
 	}
 }

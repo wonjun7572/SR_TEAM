@@ -20,6 +20,7 @@ private:
 	void				Quest1(const _float& fTimeDelta);
 	void				Quest2(const _float& fTiemDelta);
 	void				Quest3(const _float& fTiemDelta);
+	void				Finish(const _float& fTimeDelta);
 
 private:
 	CRcTex*				m_pBufferCom = nullptr;
@@ -46,10 +47,12 @@ private:
 	_bool				m_bQuest1 = true;
 	_bool				m_bQuest2 = true;
 	_bool				m_bQuest3 = true;
+	_bool				m_bQuest4 = true;
 
 	_bool				m_bQuestText1 = false;
 	_bool				m_bQuestText2 = false;
 	_bool				m_bQuestText3 = false;
+	_bool				m_bQuestText4 = false;
 
 	_bool				m_bBossDead = false;
 

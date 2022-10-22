@@ -2,6 +2,7 @@
 #include "..\Header\OptionButton.h"
 #include "Export_Function.h"
 #include "ToolScene.h"
+#include "Logo.h"
 COptionButton::COptionButton(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CGameObject(pGraphicDev)
 {
@@ -24,17 +25,19 @@ HRESULT COptionButton::Ready_Object(void)
 
 _int COptionButton::Update_Object(const _float & fTimeDelta)
 {
-	if (PointMouse())
+	if (dynamic_cast<CLogo*>(Get_Scene())->Get_bVideo() == true)
 	{
-		if (Mouse_Down(DIM_LB))
+		if (PointMouse())
 		{
-			Mouse_check = true;
+			if (Mouse_Down(DIM_LB))
+			{
+				Mouse_check = true;
+			}
 		}
+
+		Engine::CGameObject::Update_Object(fTimeDelta);
+		Add_RenderGroup(RENDER_UI, this);
 	}
-
-	Engine::CGameObject::Update_Object(fTimeDelta);
-	Add_RenderGroup(RENDER_UI, this);
-
 	return 0;
 }
 

@@ -86,7 +86,6 @@ _int CMiddleBoss::Update_Object(const _float & fTimeDelta)
 		Monster_DeleteMapping();
 		_float fMiddle_death = 1.5f;
 		PlaySoundGun(L"Middle_Death.wav", SOUND_EFFECT, fMiddle_death);
-
 		return -1;
 	}
 
@@ -175,12 +174,9 @@ void CMiddleBoss::LateUpdate_Object(void)
 		m_pTransCom->Static_Update();
 
 		m_pMonsterUI->Off_Switch();
-		//this->Kill_Obj();
 
-		CGameObject* pGameObject = dynamic_cast<CFlight*>(Get_GameObject(STAGE_FLIGHTPLAYER, L"FLIGHTSHUTTLE"));
-
-		if (dynamic_cast<CFlight*>(pGameObject)->Get_Ending() == false)
-			dynamic_cast<CFlight*>(pGameObject)->Set_Ending(true);
+		if(vPos.y <= -20.f)
+			this->Kill_Obj();
 	}
 	else
 	{
@@ -1182,10 +1178,10 @@ CMiddleBoss * CMiddleBoss::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3 & v
 
 void CMiddleBoss::Free(void)
 {
-	//for (auto& iter : *(pMyLayer->Get_GamePairPtr()))
-	//{
-	//	iter.second->Kill_Obj();
-	//}
+	for (auto& iter : *(pMyLayer->Get_GamePairPtr()))
+	{
+		iter.second->Kill_Obj();
+	}
 
 	for (auto iter : m_TcharList)
 	{

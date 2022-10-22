@@ -20,6 +20,7 @@ public:
 	virtual _int Update_Scene(const _float& fTimeDelta) override;
 	virtual void LateUpdate_Scene(void) override;
 	virtual void Render_Scene(void) override;
+	_bool		Get_bVideo() { return m_bVideo; }
 
 private:
 	HRESULT         Ready_Layer_Environment(const _tchar* pLayerTag);
