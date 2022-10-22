@@ -310,7 +310,7 @@ _int CKrakenBoss::Update_Pattern(_float fTimeDelta)
 
 						D3DXVec3TransformNormal(&vDir, &vDir, &matWorld);
 
-						vPos.y = 1.8f;
+						vPos.y = 1.4f;
 						CPoolMgr::GetInstance()->Reuse_KrakenBullet(m_pGraphicDev, &vPos, &vDir, 10.f, 10.f);
 					}
 				}
@@ -327,7 +327,7 @@ _int CKrakenBoss::Update_Pattern(_float fTimeDelta)
 				{
 					_vec3 vDirection;
 					vDirection = vPlayerPos - vPos;
-					vPos.y = 1.8f;
+					vPos.y = 1.4f;
 					CPoolMgr::GetInstance()->Reuse_KrakenBullet(m_pGraphicDev, &vPos, &vDirection, 10.f, 10.f);
 
 				}

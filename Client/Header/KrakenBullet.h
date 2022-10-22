@@ -25,11 +25,11 @@ public:
 	void			Set_Dir(const _vec3& vDir) { m_vDir = vDir; }
 	void			Restore(void) { m_bDead = false, m_fTimeDelta = 0.f; }
 	void			Collision_Check(void);
-<<<<<<< HEAD
-	void			Kraken_BulletParticle(void);
-=======
 
->>>>>>> main
+	void			Kraken_BulletParticle(void);
+
+
+
 protected:
 	CTransform*			m_pKrakenBullet;
 	CSphereTex*				m_pSphereTex;
