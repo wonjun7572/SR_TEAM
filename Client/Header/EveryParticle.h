@@ -25,8 +25,10 @@
 #include "TraceEffect.h"
 #include "LaserPoint.h"
 #include "ProjectionEffect.h"
-
+#include "ItemCubeEffect.h"
+#include "HyperionEffect.h"
 #include "KrakenParticle.h"
+#include "TargetPointEffect.h"
 /*	
 CFlameEffect* m_pFlameEffectParticle = nullptr;
 CIceEffect* m_pIceEffectParticle = nullptr;

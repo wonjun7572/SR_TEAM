@@ -90,8 +90,8 @@ _int CMiddleBoss::Update_Object(const _float & fTimeDelta)
 	{
 		m_bFirst = false;
 
-		m_vPattern.push_back(MIDDLEBOSS_SKILL_NORMALATTACK);
-		//m_vPattern.push_back(MIDDLEBOSS_SKILL_BOMBING);
+		//m_vPattern.push_back(MIDDLEBOSS_SKILL_NORMALATTACK);
+		m_vPattern.push_back(MIDDLEBOSS_SKILL_BOMBING);
 
 		Engine::Get_Scene()->New_Layer(m_MonsterName);
 		pMyLayer = Engine::Get_Layer(m_MonsterName);
@@ -391,8 +391,8 @@ _int CMiddleBoss::Update_Pattern(_float fTimeDelta)
 						vRandom = _vec3(vPlayerPos.x - m_iRand, 30.f, vPlayerPos.z + m_iRand);
 					else if (m_MissileCnt % 5 == 3)
 						vRandom = _vec3(vPlayerPos.x - m_iRand, 30.f, vPlayerPos.z - m_iRand);
-					/*else if (m_MissileCnt % 5 == 4)
-						vRandom = _vec3(vPlayerPos.x + m_iRand, 30.f, vPlayerPos.z + m_iRand);*/
+					else if (m_MissileCnt % 5 == 4)
+						vRandom = _vec3(vPlayerPos.x + m_iRand, 30.f, vPlayerPos.z + m_iRand);
 
 					CGameObject* pGameObject = CVeneer::Create(m_pGraphicDev, vRandom);
 					NULL_CHECK_RETURN(pGameObject, -1);

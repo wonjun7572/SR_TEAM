@@ -38,9 +38,7 @@ HRESULT CTestCube::Ready_Object(int PosX, int PosY)
 _int CTestCube::Update_Object(const _float& fTimeDelta)
 {
 	if (m_bDead)
-	{
-		_float fGunSound = 1.f;
-		Engine::PlaySoundGun(L"EXPLOLRG.wav", SOUND_EFFECT, fGunSound);
+	{	
 		m_pStaticCam->CameraShaking();
 		return -1;
 	}
@@ -245,6 +243,8 @@ HRESULT CTestCube::Interact(void)
 				{
 					m_pBrownCloudEffect->addParticle();
 				};
+				_float fGunSound = 1.f;
+				Engine::PlaySoundGun(L"EXPLOLRG.wav", SOUND_EFFECT, fGunSound);
 			}
 		}
 	}

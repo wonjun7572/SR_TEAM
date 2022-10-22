@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "..\Header\Quest.h"
 #include "LetterBox.h"
-
+#include "ProjectionEffect.h"
 CQuest::CQuest(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
 {
@@ -77,6 +77,11 @@ void CQuest::Key_Input()
 	{
 		m_bSwitch = !m_bSwitch;
 	}
+}
+
+void CQuest::ProjectionEffect()
+{
+	
 }
 
 HRESULT CQuest::Add_Component()

@@ -25,6 +25,7 @@
 #include "PlayerFaceUI.h"
 #include "PlayerHpUI.h"
 #include "PlayerDefenseUI.h"
+#include "Warning_AnnihilateUI.h"
 #include "WeaponUI.h"
 #include "BulletUI.h"
 #include "GunUI.h"
@@ -257,6 +258,15 @@ HRESULT CStage::Ready_Layer_Environment(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"TraceEffect", pGameObject), E_FAIL);
 
+	pGameObject = CTargetPointEffect::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"TargetPointEffect", pGameObject), E_FAIL);
+
+	pGameObject = CHyperionEffect::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"HyperionEffect", pGameObject), E_FAIL);
+
+
 	pGameObject = CRoundEffect::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"RoundEffect", pGameObject), E_FAIL);
@@ -291,6 +301,9 @@ HRESULT CStage::Ready_Layer_Environment(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"ProjectionEffect", pGameObject), E_FAIL);
 
+	pGameObject = CItemCubeEffect::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"ItemCubeEffect", pGameObject), E_FAIL);
 
 	pGameObject = CCartridgeParticle::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
@@ -379,6 +392,8 @@ HRESULT CStage::Ready_Layer_UI(const _tchar * pLayerTag)
 	pGameObject = CQuest::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"QuestUI", pGameObject), E_FAIL);
+
+
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 

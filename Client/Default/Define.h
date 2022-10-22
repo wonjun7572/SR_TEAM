@@ -195,3 +195,6 @@
 #define COMBOBAR_TEX_PATH         L"../Bin/Resources/UI/Player/Gage/comboBar.png"
 #define   COMBOBAR_HUD_TEX         L"ComboBar_Hud"
 #define COMBOBAR_HUD_TEX_PATH      L"../Bin/Resources/UI/Player/Gage/comboHUD.png"
+
+#define   WARNING_TEX         L"WarningUI"
+#define   WARNING_TEX_PATH         L"../Bin/Resources/UI/Player/Warning%d.png"

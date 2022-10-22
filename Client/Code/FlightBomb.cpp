@@ -2,7 +2,7 @@
 #include "..\Header\FlightBomb.h"
 #include "TransAxisBox.h"
 #include "Explosion.h"
-
+#include "TargetPointEffect.h"
 CFlightBomb::CFlightBomb(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
 {
@@ -73,7 +73,7 @@ _int CFlightBomb::Update_Object(const _float & fTimeDelta)
 	Add_RenderGroup(RENDER_NONALPHA, this);
 
 	Bombing(fTimeDelta);
-
+	Effect();
 	return _int();
 }
 
@@ -124,6 +124,41 @@ void CFlightBomb::Bombing(const _float& fTimeDelta)
 		if (0 == _tcscmp(iter.first, L"A_ROOT"))
 			BoxTransform->Set_Pos(vPos.x, vPos.y, vPos.z);
 	}
+}
+
+void CFlightBomb::Effect()
+{
+	//타겟떨어지는모양
+
+	CTargetPointEffect* m_pTargetPointEffect = nullptr;
+
+	if (!m_pTargetPointEffect)
+		m_pTargetPointEffect = dynamic_cast<CTargetPointEffect*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"TargetPointEffect"));
+
+	_vec3 vPos;													//대쉬이펙트하려던것
+	_vec3 vDir;
+	_vec3 min = { -1.0f ,-1.0f ,-1.0f };
+	_vec3 max = { 0.f ,1.0f , 0.f};
+
+	m_pTransCom->Get_Info(INFO_POS, &vPos);
+	vPos.y = 0.5f;
+	for (_int i = -5; i < 5; i++)
+	{
+		for (_int j = -5; j < 5; j++)
+		{
+			for (_int k = -5; k < 5; k++)
+			{
+				D3DXVec3Normalize(&min, &_vec3(i, j, k));
+
+				dynamic_cast<CTargetPointEffect*>(m_pTargetPointEffect)->Set_PclePos(vPos + min*4.f);
+
+				dynamic_cast<CTargetPointEffect*>(m_pTargetPointEffect)->Set_PcleDir(min);
+				dynamic_cast<CTargetPointEffect*>(m_pTargetPointEffect)->Set_PcleMoveDir(max);
+
+				m_pTargetPointEffect->addParticle();
+			}
+		}
+	}	
 }
 
 HRESULT CFlightBomb::Build(void)

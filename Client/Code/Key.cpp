@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "..\Header\Key.h"
-
+#include "ItemCubeEffect.h"
 CKey::CKey(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CItem(pGraphicDev)
 {
@@ -36,7 +36,7 @@ _int CKey::Update_Object(const _float & fTimeDelta)
 
 	CItem::Move_Item(fTimeDelta);
 	CItem::Update_Object(fTimeDelta);
-
+	Effect();
 	return 0;
 }
 
@@ -104,6 +104,34 @@ HRESULT CKey::Add_Component(void)
 	m_mapComponent[ID_STATIC].insert({ CALCULATOR_COMP, pComponent });
 
 	return S_OK;
+}
+
+void CKey::Effect()
+{
+	CItemCubeEffect* pItemCubeEffect = nullptr;
+
+	if (!pItemCubeEffect)
+		pItemCubeEffect = dynamic_cast<CItemCubeEffect*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"ItemCubeEffect"));
+	_vec3 vPos;														//대쉬이펙트하려던것
+	_vec3 vDir;
+	_vec3 min = { -1.0f + rand() % 3 ,0.5 ,-1.0f + rand() % 3 };
+	m_pTransCom->Get_Info(INFO_POS, &vPos);
+	m_pTransCom->Get_Info(INFO_POS, &vPos);
+
+	for (_int i = 1; i < 4; i++)
+	{
+		for (_int j = -3; j < 3; j++)
+		{
+			for (_int k = 0; k < 1; k++)
+			{
+				dynamic_cast<CItemCubeEffect*>(pItemCubeEffect)->Set_PclePos(vPos + _vec3(i, j, k)*0.05f);
+				dynamic_cast<CItemCubeEffect*>(pItemCubeEffect)->Set_PcleDir(min);
+				//dynamic_cast<CItemCubeEffect*>(pItemCubeEffect)->Set_PcleMoveDir(_vec3(0,1,0));
+
+				pItemCubeEffect->addParticle();
+			}
+		}
+	}
 }
 
 CKey * CKey::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3 & vPos, COLOR_ID eID)

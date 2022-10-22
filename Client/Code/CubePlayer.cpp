@@ -205,7 +205,7 @@ void CCubePlayer::Key_Skill()
 				static_cast<CFlightCamera*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"FlightCamera"))->Set_MainCam(false);
 			}
 		}
-		if (m_Weapon == Engine::Get_GameObject(STAGE_GUN, L"SHOTGUN") && m_iSkillEnforce == 3)
+		//if (m_Weapon == Engine::Get_GameObject(STAGE_GUN, L"SHOTGUN") && m_iSkillEnforce == 3)
 		{
 			_vec3 vPos;
 			m_pTransform->Get_Info(INFO_POS, &vPos);
@@ -695,19 +695,41 @@ D3DXVec3Normalize(&vDir, &vDir);
 	if (Key_Pressing(DIK_C))
 	{
 
-		//_vec3 vPlayerPos;
-		//m_pPlayerTransCom->Get_Info(INFO_POS, &vPlayerPos);
+	//	_vec3 vPlayerPos;
+	//	_vec3 vPlayerDir;
+	//	_vec3 min = { -1.0f ,-1.0f ,-1.0f };
 
-		//if (!m_pKrakenEffectParticle)
-		//	m_pKrakenEffectParticle = dynamic_cast<CKrakenEffect*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"KraKenEffect"));
-		//if (m_pKrakenEffectParticle != nullptr)
-		//{
-		//	m_pKrakenEffectParticle->Set_PclePos(vPos);
-		//	for (_int i = 0; i < 150; ++i)
-		//	{
-		//		m_pKrakenEffectParticle->addParticle();
-		//	}
-		//}
+	//	m_pBodyWorld->Get_Info(INFO_POS, &vPlayerPos);
+	//	m_pBodyWorld->Get_Info(INFO_LOOK, &vPlayerDir);
+
+	//	if (!m_pProjectionEffect)
+	//		m_pProjectionEffect = dynamic_cast<CProjectionEffect*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"ProjectionEffect"));
+	///*	if (m_pProjectionEffect != nullptr)
+	//	{
+	//		m_pProjectionEffect->Set_PclePos(vPlayerPos + vPlayerDir);
+	//		m_pProjectionEffect->Set_PcleDir(vPlayerDir);
+	//	}*/
+	//	{
+	//		for (_int i = -5; i < 5; i++)
+	//		{
+	//			for (_int j = -5; j < 5; j++)
+	//			{
+	//				for (_int k = -5; k < 5; k++)
+	//				{
+	//					D3DXVec3Normalize(&min, &_vec3(i, j, k));
+
+	//					dynamic_cast<CProjectionEffect*>(m_pProjectionEffect)->Set_PclePos(vPlayerPos + _vec3(i, j, k)*1);
+
+	//					dynamic_cast<CProjectionEffect*>(m_pProjectionEffect)->Set_PcleDir(-min);
+
+	//					dynamic_cast<CProjectionEffect*>(m_pProjectionEffect)->Set_PcleMoveDir(min);
+
+	//					m_pProjectionEffect->addParticle();
+	//				}
+	//			}
+	//		}
+	//	}
+			
 		//if (!m_pKrakenSmoke)
 		//	m_pKrakenSmoke = dynamic_cast<CKrakenParticle*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"KrakenParticle"));
 		//if (m_pKrakenSmoke != nullptr)
@@ -722,31 +744,8 @@ D3DXVec3Normalize(&vDir, &vDir);
 
 
 
-		//	//_vec3 vPos;														//보스죽는이팩트
-		//_vec3 vPos;														//대쉬이펙트하려던것
-		//_vec3 vDir;
-		//m_pTransform->Get_Info(INFO_POS, &vPos);
-		//_vec3 min = { -1.0f ,-1.0f ,-1.0f };
-		//m_pTransform->Get_Info(INFO_POS, &vPos);
-		//vPos.x -= 5.f;
-		//vPos.y += 5.f;
-		//vPos.z -= 5.f;
-		//for (_int i = -5; i < 5; i++)
-		//{
-		//	for (_int j = -5; j < 5; j++)
-		//	{
-		//		for (_int k = -5; k < 5; k++)
-		//		{
-		//			D3DXVec3Normalize(&min, &_vec3(i, j, k));						
-
-		//			dynamic_cast<CRoundEffect*>(m_pRoundEffect)->Set_PclePos(vPos + _vec3(i, j, k)*0.1f);
-
-		//			dynamic_cast<CRoundEffect*>(m_pRoundEffect)->Set_PcleDir(min);
-
-		//			m_pRoundEffect->addParticle();
-		//		}
-		//	}
-		//}
+			//_vec3 vPos;														//보스죽는이팩트
+		
 
 
 		//_vec3 vPos;														//대쉬이펙트하려던것

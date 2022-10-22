@@ -152,6 +152,8 @@ _uint CLoading::Loading_ForStage(void)
 		// HITBAR
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(HITBAR_TEX, CTexture::Create(m_pGraphicDev, HITBAR_TEX_PATH, TEX_NORMAL)), E_FAIL);
 		m_iCur++;
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(WARNING_TEX, CTexture::Create(m_pGraphicDev, WARNING_TEX_PATH, TEX_NORMAL,2)), E_FAIL);
+	//	m_iCur++;
 	}
 
 	{

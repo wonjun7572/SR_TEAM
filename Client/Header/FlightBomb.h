@@ -16,7 +16,7 @@ public:
 private:
 	HRESULT					Add_Component(void);
 	void					Bombing(const _float& fTimeDelta);
-
+	void					Effect();
 private:
 	HRESULT					Build(void);
 

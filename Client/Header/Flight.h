@@ -4,7 +4,7 @@
 #include "FlightBomb.h"
 #include "RcTex.h"
 class CFlightBulletParticle;
-
+class CCubeParticle;
 
 
 class CFlight :
@@ -33,6 +33,7 @@ private:
 	CTexture*		m_pBombTexture = nullptr;
 	CRcTex*			m_pBombBuffer = nullptr;
 	CRcTex*			m_pBufferCom = nullptr;
+	CCubeParticle* m_pCubeParticle = nullptr;
 
 
 public:
