@@ -924,6 +924,9 @@
     <ClInclude Include="..\Header\KrakenHit.h">
       <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\KrakenEffect</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\LaserSpot.h">
+      <Filter>02. GameObject\01. For_Stage\21. Boss\01. MiddleBoss</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -1420,6 +1423,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\KrakenHit.cpp">
       <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\KrakenEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\LaserSpot.cpp">
+      <Filter>02. GameObject\01. For_Stage\21. Boss\01. MiddleBoss</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
