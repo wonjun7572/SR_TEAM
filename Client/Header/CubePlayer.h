@@ -79,6 +79,7 @@ private:
 	_int			m_iDashStack = 0;
 	_float			m_fGlobal_Cooltime = 0.f;				//	데미지 내부 글쿨
 	void			CoolTimer(void);
+	_float			m_fCombo = 1.f;
 
 public:	//	상태이상, 외부에서 지정
 	void			KnuckDown(const _float& fDamage, const _float& fDistance);	//	데미지 입으면서 밀려남

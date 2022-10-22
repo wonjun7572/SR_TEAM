@@ -70,43 +70,31 @@ _int CCubePlayer::Update_Object(const _float & fTimeDelta)
 	_vec3 vPos;
 	m_pTransform->Get_Info(INFO_POS, &vPos);
 
-	//if (!m_bDoorOpen)
-	//{
-	//	// 점점 빨개진다.
-	//	m_fRed = 0.5f;
-	//	m_fGreen = 0.5f;
-	//	m_fBlue = 0.5f;
-	//	m_fRange = 40.f;
-	//}
-	//else
-	//{
-	//	m_fGreen = 0.f;
-	//	m_fRange = 30.f;
-	//	if (!m_bColorLighting)
-	//	{
-	//		m_fRed += fTimeDelta;
-	//		if (m_fRed > 1.f)
-	//		{
-	//			m_bColorLighting = true;
-	//			m_fRed = 0.f;
-	//		}
-	//	}
-	//	if (m_bColorLighting)
-	//	{
-	//		m_fBlue += fTimeDelta;
-	//		if (m_fBlue > 1.f)
-	//		{
-	//			m_bColorLighting = false;
-	//			m_fBlue = 0.f;
-	//		}
-	//	}
-	//}
-
 	if (m_pComboUI != nullptr)
 	{
-		m_fGreen -= m_pComboUI->Get_ComboCnt();
-		m_fBlue -= m_pComboUI->Get_ComboCnt();
-		m_fRange = 40.f;
+		if (m_pComboUI->Get_ComboCnt() == 0.f)
+		{
+			m_fCombo += 0.05f;
+			if (m_fCombo >= 1.f)
+				m_fCombo = 1.f;
+			m_fGreen = m_fCombo;
+			m_fBlue = m_fCombo;
+			m_fRange = 40.f;
+		}
+		else
+		{
+			m_fCombo = 0.f;
+			m_fGreen = 1.f - (m_pComboUI->Get_ComboCnt() * 0.05f) + m_fCombo;
+			m_fBlue = 1.f - (m_pComboUI->Get_ComboCnt() * 0.05f) + m_fCombo;
+		
+			if (m_fGreen > 0.6f)
+				m_fGreen = 0.6f;
+			if (m_fBlue > 0.6f)
+				m_fBlue = 0.6f;
+
+			m_fRange = 40.f;
+			m_fCombo = (1.f - m_pComboUI->Get_ComboCnt() * 0.05f);
+		}
 	}
 
 	m_fTimeDelta = fTimeDelta;

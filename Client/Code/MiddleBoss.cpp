@@ -75,14 +75,19 @@ HRESULT CMiddleBoss::Ready_Object(const _vec3 & vPos, _tchar * Name)
 _int CMiddleBoss::Update_Object(const _float & fTimeDelta)
 {
 	if (m_bDead)
-	{
-		Create_Item();
+	{	
+		//Create_Item();
 		m_pComboUI->KillCntPlus();
-		Monster_DeleteMapping();
-		_float fMiddle_death = 1.5f;
-		PlaySoundGun(L"Middle_Death.wav", SOUND_EFFECT, fMiddle_death);
-
-		return -1;
+		//Monster_DeleteMapping();
+		//_float fMiddle_death = 1.0f;
+		//PlaySoundGun(L"Middle_Death.wav", SOUND_EFFECT, fMiddle_death);
+		//m_pTransCom->Move_Pos(&(_vec3(0.f, -1.f, 0.f) * fTimeDelta));
+		//_vec3 vPos;
+		//m_pTransCom->Get_Info(INFO_POS, &vPos);
+		//if (vPos.y < -10.f)
+		//{
+		//	return -1;
+		//}
 	}
 
 	m_fTimeDelta = fTimeDelta;
@@ -236,10 +241,7 @@ _int CMiddleBoss::Update_Pattern(_float fTimeDelta)
 		{
 			_matrix matBoss;
 			dynamic_cast<CTransAxisBox*>(iter.second)->Get_Final(&matBoss);
-
 			vShotgunLeft = { matBoss.m[3][0], matBoss.m[3][1], matBoss.m[3][2] };
-
-
 
 			_vec3 vLook = { matBoss.m[2][0], matBoss.m[2][1], matBoss.m[2][2] };
 			vShotgunLeft += vLook;
@@ -392,8 +394,8 @@ _int CMiddleBoss::Update_Pattern(_float fTimeDelta)
 						vRandom = _vec3(vPlayerPos.x - m_iRand, 30.f, vPlayerPos.z + m_iRand);
 					else if (m_MissileCnt % 5 == 3)
 						vRandom = _vec3(vPlayerPos.x - m_iRand, 30.f, vPlayerPos.z - m_iRand);
-					/*else if (m_MissileCnt % 5 == 4)
-						vRandom = _vec3(vPlayerPos.x + m_iRand, 30.f, vPlayerPos.z + m_iRand);*/
+					else if (m_MissileCnt % 5 == 4)
+						vRandom = _vec3(vPlayerPos.x + m_iRand, 30.f, vPlayerPos.z + m_iRand);
 
 					CGameObject* pGameObject = CVeneer::Create(m_pGraphicDev, vRandom);
 					NULL_CHECK_RETURN(pGameObject, -1);
@@ -1121,10 +1123,10 @@ CMiddleBoss * CMiddleBoss::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3 & v
 
 void CMiddleBoss::Free(void)
 {
-	//for (auto& iter : *(pMyLayer->Get_GamePairPtr()))
-	//{
-	//	iter.second->Kill_Obj();
-	//}
+	for (auto& iter : *(pMyLayer->Get_GamePairPtr()))
+	{
+		iter.second->Kill_Obj();
+	}
 
 	for (auto iter : m_TcharList)
 	{
