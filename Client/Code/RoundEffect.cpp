@@ -112,6 +112,6 @@ void CRoundEffect::resetParticle(ATTRIBUTE * attribute)
 	attribute->dwColor = D3DXCOLOR(GetRandomFloat(0.8f, 1.0f), GetRandomFloat(0.f, 0.2f), GetRandomFloat(0.f, .2f), 1.0f);
 
 	attribute->fAge = 0.0f;
-	attribute->fLifeTime = 5.5f;
+	attribute->fLifeTime = 1.f;
 }
 

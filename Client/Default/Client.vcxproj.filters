@@ -403,6 +403,9 @@
     <Filter Include="02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\MiddleDead\MFieldEffect">
       <UniqueIdentifier>{c3b92b0a-b520-4a9e-8989-52ef9cd1ae0d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\98. Particle\01. EllipseParticle\MonsterDead">
+      <UniqueIdentifier>{dde53569-1066-4419-80e1-b3b70a2deb8c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -924,6 +927,9 @@
     <ClInclude Include="..\Header\KrakenHit.h">
       <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\KrakenEffect</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\DeadParticle.h">
+      <Filter>99. Default\헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -1420,6 +1426,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\KrakenHit.cpp">
       <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\KrakenEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\DeadParticle.cpp">
+      <Filter>99. Default\소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

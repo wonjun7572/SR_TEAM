@@ -146,6 +146,8 @@ _int CCubePlayer::Update_Object(const _float & fTimeDelta)
 	Lighting();
 	CGameObject::Update_Object(fTimeDelta);
 
+
+
 	Engine::Add_RenderGroup(RENDER_NONALPHA, this);
 	return 0;
 }
@@ -699,20 +701,17 @@ D3DXVec3Normalize(&vDir, &vDir);
 	if (Key_Pressing(DIK_C))
 	{
 
-		_vec3 vPlayerPos;
-		m_pPlayerTransCom->Get_Info(INFO_POS, &vPlayerPos);
+		//_vec3 vPlayerPos;
+		//m_pPlayerTransCom->Get_Info(INFO_POS, &vPlayerPos);
+		//if (!m_pIceEffectParticle)
+		//	m_pIceEffectParticle = dynamic_cast<CIceEffect*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"IceEffect"));
+		//m_pIceEffectParticle->Set_PclePos(vPos);
+		//for (_int i = 0; i < 100; ++i)
+		//{
+		//	m_pIceEffectParticle->addParticle();
+		//}
 
-		if (!m_pKrakenEffectParticle)
-			m_pKrakenEffectParticle = dynamic_cast<CKrakenEffect*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"KraKenEffect"));
-		if (m_pKrakenEffectParticle != nullptr)
-		{
-			m_pKrakenEffectParticle->Set_PclePos(vPos);
-			for (_int i = 0; i < 150; ++i)
-			{
-				m_pKrakenEffectParticle->addParticle();
-			}
-		}
-		if (!m_pKrakenSmoke)
+	/*	if (!m_pKrakenSmoke)
 			m_pKrakenSmoke = dynamic_cast<CKrakenParticle*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"KrakenParticle"));
 		if (m_pKrakenSmoke != nullptr)
 		{
@@ -723,7 +722,7 @@ D3DXVec3Normalize(&vDir, &vDir);
 			}
 
 		}
-
+*/
 
 		/*if (!m_pKrakenHit)
 			m_pKrakenHit = dynamic_cast<CKrakenHit*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"KrakenHit"));
@@ -737,42 +736,18 @@ D3DXVec3Normalize(&vDir, &vDir);
 		}*/
 
 
-
-		//	//_vec3 vPos;														//보스죽는이팩트
-		//_vec3 vPos;														//대쉬이펙트하려던것
-		//_vec3 vDir;
-		//m_pTransform->Get_Info(INFO_POS, &vPos);
-		//_vec3 min = { -1.0f ,-1.0f ,-1.0f };
-		//m_pTransform->Get_Info(INFO_POS, &vPos);
-		//vPos.x -= 5.f;
-		//vPos.y += 5.f;
-		//vPos.z -= 5.f;
-		//for (_int i = -5; i < 5; i++)
+		//if (m_pIceEffectParticle == nullptr)
 		//{
-		//	for (_int j = -5; j < 5; j++)
-		//	{
-		//		for (_int k = -5; k < 5; k++)
-		//		{
-		//			D3DXVec3Normalize(&min, &_vec3(i, j, k));						
-
-		//			dynamic_cast<CRoundEffect*>(m_pRoundEffect)->Set_PclePos(vPos + _vec3(i, j, k)*0.1f);
-
-		//			dynamic_cast<CRoundEffect*>(m_pRoundEffect)->Set_PcleDir(min);
-
-		//			m_pRoundEffect->addParticle();
-		//		}
-		//	}
+		//	m_pIceEffectParticle = dynamic_cast<CIceEffect*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"IceEffect"));
 		//}
+		//
 
 
 		//_vec3 vPos;														//대쉬이펙트하려던것
 		//	_vec3 vDir;
 		//	m_pTransform->Get_Info(INFO_POS, &vPos);
-		//	_vec3 min = { -1.0f ,-1.0f ,-1.0f };
-		//	m_pTransform->Get_Info(INFO_POS, &vPos);
-		//	vPos.x -= 5.f;
-		//	vPos.y += 5.f;
-		//	vPos.z -= 5.f;
+		//	_vec3 min = { .0f ,.0f ,.0f };
+		//
 		//	for (_int i = -5; i < 5; i++)
 		//	{
 		//		for (_int j = -5; j < 5; j++)
@@ -781,14 +756,20 @@ D3DXVec3Normalize(&vDir, &vDir);
 		//			{
 		//				D3DXVec3Normalize(&min, &_vec3(i, j, k));						
 
-		//				dynamic_cast<CRoundEffect*>(m_pRoundEffect)->Set_PclePos(vPos + _vec3(i, j, k)*0.1);
+		//				dynamic_cast<CIceEffect*>(m_pIceEffectParticle)->Set_PclePos(vPos);
 
-		//				dynamic_cast<CRoundEffect*>(m_pRoundEffect)->Set_PcleDir(-min);
+		//				dynamic_cast<CIceEffect*>(m_pIceEffectParticle)->Set_PcleDir(min);
 
-		//				m_pRoundEffect->addParticle();
+		//				m_pIceEffectParticle->addParticle();
 		//			}
 		//		}
 		//	}
+
+
+
+
+
+
 	/*		dynamic_cast<CSniper*>(Engine::Get_GameObject(STAGE_GUN, L"SNIPER"));
 		CTransform* pTransform = nullptr;
 		pTransform = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_GUN, L"Sniper_Part_2", TRANSFORM_COMP, ID_DYNAMIC));

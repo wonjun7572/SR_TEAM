@@ -177,6 +177,7 @@
     <ClInclude Include="..\Header\CartridgeParticle.h" />
     <ClInclude Include="..\Header\CubeParticle.h" />
     <ClInclude Include="..\Header\DashCube.h" />
+    <ClInclude Include="..\Header\DeadParticle.h" />
     <ClInclude Include="..\Header\DefensiveEffect.h" />
     <ClInclude Include="..\Header\DeffensiveMatrix.h" />
     <ClInclude Include="..\Header\BaseMapping.h" />
@@ -358,6 +359,7 @@
     <ClCompile Include="..\Code\CartridgeParticle.cpp" />
     <ClCompile Include="..\Code\CubeParticle.cpp" />
     <ClCompile Include="..\Code\DashCube.cpp" />
+    <ClCompile Include="..\Code\DeadParticle.cpp" />
     <ClCompile Include="..\Code\DefensiveEffect.cpp" />
     <ClCompile Include="..\Code\DeffensiveMatrix.cpp" />
     <ClCompile Include="..\Code\BaseMapping.cpp" />

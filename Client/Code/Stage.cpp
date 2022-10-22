@@ -53,6 +53,7 @@
 #include "Slime.h"
 #include "Zombie.h"
 #include "Skeleton.h"
+#include "Alien.h"
 #include "MonsterUI.h"
 #include "HitBarUI.h"
 #include "ComboUI.h"
@@ -298,6 +299,10 @@ HRESULT CStage::Ready_Layer_Environment(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"NPC", pGameObject), E_FAIL);
 
+
+	pGameObject = CDeadParticle::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"DeadParticle", pGameObject), E_FAIL);
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
 	return S_OK;
@@ -588,6 +593,18 @@ HRESULT CStage::Ready_Layer_Monster(const _tchar * pLayerTag)
 			FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
 		}
 	}
+	pGameObject = CAlien::Create(m_pGraphicDev, _vec3(17.21f, 0.6f, 56.95f), L"Alien1");
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+	pGameObject = CAlien::Create(m_pGraphicDev, _vec3(3.f, 0.6f, 126.f), L"Alien2");
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+	pGameObject = CAlien::Create(m_pGraphicDev, _vec3(57.f, 0.6f, 109.f), L"Alien3");
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+	pGameObject = CAlien::Create(m_pGraphicDev, _vec3(65.f, 0.6f, 41.f), L"Alien4");
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
 
 
 	pGameObject = CMiddleBoss::Create(m_pGraphicDev, _vec3(109.f, 0.6f, 10.f), L"MiddleBoss");
@@ -996,6 +1013,42 @@ HRESULT CStage::Ready_Layer_Trap(const _tchar * pLayerTag)
 		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
 		}
 	}*/
+
+
+	pGameObject = CTerret::Create(m_pGraphicDev, _vec3(67.44, 0.6f, 50.88f), L"Terret");
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+
+	pGameObject = CTerret::Create(m_pGraphicDev, _vec3(55.6f, 0.6f, 58.83f), L"Terret1");
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+
+	pGameObject = CTerret::Create(m_pGraphicDev, _vec3(22.f, 0.6f, 69.22f), L"Terret2");
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+
+	pGameObject = CTerret::Create(m_pGraphicDev, _vec3(15.6f, 0.6f, 88.f), L"Terret3");
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+
+	pGameObject = CTerret::Create(m_pGraphicDev, _vec3(48.95f, 0.6f, 89.84f), L"Terret4");
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+
+	pGameObject = CTerret::Create(m_pGraphicDev, _vec3(51.4665f, 0.6f, 56.34f), L"Terret5");
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+
+	pGameObject = CTerret::Create(m_pGraphicDev, _vec3(3.617f, 0.6f, 87.122f), L"Terret6");
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+
+/*
+	pGameObject = CTerret::Create(m_pGraphicDev, _vec3(48.95f, 0.6f, 89.84f), L"Terret4");
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);*/
+
+
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 

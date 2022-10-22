@@ -7,9 +7,9 @@
 #include "ObtainBullet.h"
 #include "PoolMgr.h"
 #include "ComboUI.h"
-
+#include "IceEffect.h"
 #include "TransAxisBox.h"
-
+#include "DeadParticle.h"
 CZombie::CZombie(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CMonster(pGraphicDev)
 {
@@ -77,9 +77,11 @@ _int CZombie::Update_Object(const _float & fTimeDelta)
 {
 	if (m_bDead)
 	{
+		Dead_Effect();
 		Create_Item();
 		m_pComboUI->KillCntPlus();
 		Monster_DeleteMapping();
+
 		return -1;
 	}
 
@@ -496,6 +498,42 @@ HRESULT CZombie::Create_Item()
 	}
 
 	return S_OK;
+}
+
+void CZombie::Dead_Effect(void)
+{
+	if (m_pDeadParticle == nullptr)
+	{
+		m_pDeadParticle = dynamic_cast<CDeadParticle*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"DeadParticle"));
+	}
+
+
+
+	_vec3 vPos;														//대쉬이펙트하려던것
+	_vec3 vDir;
+	m_pTransCom->Get_Info(INFO_POS, &vPos);
+	_vec3 min = { .0f ,.0f ,.0f };
+
+	for (_int i = -5; i < 5; i++)
+	{
+		for (_int j = -5; j < 5; j++)
+		{
+			for (_int k = -5; k < 5; k++)
+			{
+				D3DXVec3Normalize(&min, &_vec3(i, j, k));
+
+				dynamic_cast<CDeadParticle*>(m_pDeadParticle)->Set_PclePos(vPos);
+
+				dynamic_cast<CDeadParticle*>(m_pDeadParticle)->Set_PcleDir(min);
+
+				m_pDeadParticle->addParticle();
+			}
+		}
+	}
+
+
+
+
 }
 
 HRESULT CZombie::Build(void)
