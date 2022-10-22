@@ -4,6 +4,7 @@
 #include "CubePlayer.h"
 #include "StaticCamera.h"
 #include "HitBarUI.h"
+#include "KrakenHit.h"
 CKrakenBullet::CKrakenBullet(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
 {
@@ -51,7 +52,7 @@ _int CKrakenBullet::Update_Object(const _float & fTimeDelta)
 	D3DXVec3Normalize(&m_vDir, &m_vDir);
 
 	m_pKrakenBullet->Move_Pos(&(m_vDir * m_fSpeed * fTimeDelta));
-
+	Kraken_BulletParticle();
 	_vec3 vPos;
 	m_pKrakenBullet->Get_Info(INFO_POS, &vPos);
 	m_pHitBoxCom->Set_Pos(vPos.x, vPos.y, vPos.z);
@@ -193,6 +194,22 @@ void CKrakenBullet::Collision_Check(void)
 		m_bDamage = true;
 	}
 
+}
+
+void CKrakenBullet::Kraken_BulletParticle(void)
+{
+	_vec3 vPos;
+	m_pKrakenBullet->Get_Info(INFO_POS, &vPos);
+	if (!m_pKrakenHit)
+		m_pKrakenHit = dynamic_cast<CKrakenHit*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"KrakenHit"));
+	if (m_pKrakenHit != nullptr)
+	{
+		m_pKrakenHit->Set_PclePos(vPos);
+		for (int i = 0; i < 50; ++i)
+		{
+			m_pKrakenHit->addParticle();
+		}
+	}
 }
 
 CKrakenBullet * CKrakenBullet::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3 * vPos, const _vec3 * vDir, _float _fSpeed, _float _fDamage)
