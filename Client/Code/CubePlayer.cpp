@@ -21,6 +21,7 @@
 
 #include "StaticCamera.h"
 #include "FlightCamera.h"
+#include "ComboUI.h"
 
 #include "Stage.h"
 #include "FinalStage.h"
@@ -68,39 +69,44 @@ _int CCubePlayer::Update_Object(const _float & fTimeDelta)
 
 	_vec3 vPos;
 	m_pTransform->Get_Info(INFO_POS, &vPos);
-	cout << vPos.x << " " << vPos.y << " " << vPos.z << "\n";
 
+	//if (!m_bDoorOpen)
+	//{
+	//	// Á¡Á¡ »¡°³Áø´Ù.
+	//	m_fRed = 0.5f;
+	//	m_fGreen = 0.5f;
+	//	m_fBlue = 0.5f;
+	//	m_fRange = 40.f;
+	//}
+	//else
+	//{
+	//	m_fGreen = 0.f;
+	//	m_fRange = 30.f;
+	//	if (!m_bColorLighting)
+	//	{
+	//		m_fRed += fTimeDelta;
+	//		if (m_fRed > 1.f)
+	//		{
+	//			m_bColorLighting = true;
+	//			m_fRed = 0.f;
+	//		}
+	//	}
+	//	if (m_bColorLighting)
+	//	{
+	//		m_fBlue += fTimeDelta;
+	//		if (m_fBlue > 1.f)
+	//		{
+	//			m_bColorLighting = false;
+	//			m_fBlue = 0.f;
+	//		}
+	//	}
+	//}
 
-	if (!m_bDoorOpen)
+	if (m_pComboUI != nullptr)
 	{
-		// Á¡Á¡ »¡°³Áø´Ù.
-		m_fRed = 0.5f;
-		m_fGreen = 0.5f;
-		m_fBlue = 0.5f;
+		m_fGreen -= m_pComboUI->Get_ComboCnt();
+		m_fBlue -= m_pComboUI->Get_ComboCnt();
 		m_fRange = 40.f;
-	}
-	else
-	{
-		m_fGreen = 0.f;
-		m_fRange = 30.f;
-		if (!m_bColorLighting)
-		{
-			m_fRed += fTimeDelta;
-			if (m_fRed > 1.f)
-			{
-				m_bColorLighting = true;
-				m_fRed = 0.f;
-			}
-		}
-		if (m_bColorLighting)
-		{
-			m_fBlue += fTimeDelta;
-			if (m_fBlue > 1.f)
-			{
-				m_bColorLighting = false;
-				m_fBlue = 0.f;
-			}
-		}
 	}
 
 	m_fTimeDelta = fTimeDelta;
@@ -359,8 +365,12 @@ void CCubePlayer::Update_NullCheck()
 
 	if (!m_pTraceEffect)
 		m_pTraceEffect = dynamic_cast<CTraceEffect*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"TraceEffect"));
+
 	if (!m_pLaserPoint)
 		m_pLaserPoint = dynamic_cast<CLaserPoint*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"LaserPoint"));
+
+	if (m_pComboUI == nullptr)
+		m_pComboUI = dynamic_cast<CComboUI*>(Engine::Get_GameObject(STAGE_UI, L"ComboUI"));
 
 	Player_Mapping();
 
@@ -1170,8 +1180,6 @@ void CCubePlayer::Gun_Check(void)
 
 void CCubePlayer::Inventory_Check(void)
 {
-	//cout << typeid(Engine::Get_Scene()).name() << endl;
-
 	if (Engine::Get_Scene()->Get_SceneId() == STAGE_SCENE)
 	{
 		m_iDmgItem = dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->Get_WeaponDmg();

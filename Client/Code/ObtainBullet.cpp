@@ -2,6 +2,9 @@
 #include "..\Header\ObtainBullet.h"
 #include "Weapon.h"
 #include "CubePlayer.h"
+#include "Uzi.h"
+#include "Sniper.h"
+#include "Shotgun.h"
 
 CObtainBullet::CObtainBullet(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CItem(pGraphicDev)
@@ -37,18 +40,17 @@ _int CObtainBullet::Update_Object(const _float & fTimeDelta)
 		{
 			if(dynamic_cast<CWeapon*>(Engine::Get_GameObject(STAGE_GUN, L"UZI1")))
 			{
-				dynamic_cast<CWeapon*>(Engine::Get_GameObject(STAGE_GUN, L"UZI1"))->Get_Bullet();
+				dynamic_cast<CUzi*>(Engine::Get_GameObject(STAGE_GUN, L"UZI1"))->Get_Bullet();
 			}
 			else if (dynamic_cast<CWeapon*>(Engine::Get_GameObject(STAGE_GUN, L"SHOTGUN")))
 			{
-				dynamic_cast<CWeapon*>(Engine::Get_GameObject(STAGE_GUN, L"SHOTGUN"))->Get_Bullet();
+				dynamic_cast<CShotgun*>(Engine::Get_GameObject(STAGE_GUN, L"SHOTGUN"))->Get_Bullet();
 			}
 			else if(dynamic_cast<CWeapon*>(Engine::Get_GameObject(STAGE_GUN, L"SNIPER")))
 			{
-				dynamic_cast<CWeapon*>(Engine::Get_GameObject(STAGE_GUN, L"SNIPER"))->Get_Bullet();
+				dynamic_cast<CSniper*>(Engine::Get_GameObject(STAGE_GUN, L"SNIPER"))->Get_Bullet();
 			}
 		}
-
 		
 		return -1;
 	}

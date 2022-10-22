@@ -20,6 +20,7 @@ class CRoundEffect;
 class CTraceEffect;
 class CLaserPoint;
 class CProjectionEffect;
+class CComboUI;
 
 class CKrakenEffect;
 class CKrakenParticle;
@@ -90,11 +91,11 @@ private:
 public:
 	CWeapon*		Get_Weapon() { return m_Weapon; }
 	_int			Get_DmgItem() { return m_iDmgItem; }
-		void		On_StaticField() { m_bCanStaticField = true; }
+	void		On_StaticField() { m_bCanStaticField = true; }
 	void			On_Shield() { m_bCanShield = true; }
 
 
-		void			Set_DoorOpen(_bool bDoorOpen) { m_bDoorOpen = bDoorOpen; }
+	void			Set_DoorOpen(_bool bDoorOpen) { m_bDoorOpen = bDoorOpen; }
 
 private:
 	map<const _tchar*, CGameObject*>	m_mapPlayerBody;
@@ -168,17 +169,18 @@ private: // 파티클관련 포인터입니다.
 	CKrakenEffect* m_pKrakenEffectParticle = nullptr;
 	CCartridgeParticle*		m_pCartridgeParticle = nullptr;
 	CKrakenParticle* m_pKrakenSmoke = nullptr;
+	CComboUI*			m_pComboUI = nullptr;
 
 private:
-	_float			m_fRed = 0.f;
-	_float			m_fGreen = 0.f;
-	_float			m_fBlue = 0.f;
-		_float			m_fLaserTimer = 0.f;
+	_float			m_fRed = 1.f;
+	_float			m_fGreen = 1.f;
+	_float			m_fBlue = 1.f;
+	_float			m_fLaserTimer = 0.f;
 
 	_bool			m_bSniperEffect = 0.f;
-		_float			m_fRange = 0.f;
+	_float			m_fRange = 0.f;
 
-		_bool			m_bColorLighting = false;
+	_bool			m_bColorLighting = false;
 
 	_float			m_fLookAngle = 0.f;
 	_float			m_fDownAngle = 0.f;

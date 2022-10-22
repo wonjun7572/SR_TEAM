@@ -21,7 +21,7 @@ HRESULT CSniper::Ready_Object(void)
 	m_tAbility = new GUNABILITY;
 
 	m_tAbility->fBulletRate = 2.f;
-	m_tAbility->fRemainBulletCnt = 10.f;
+	m_tAbility->fRemainBulletCnt = 50.f;
 	m_tAbility->fBulletCount = 100.f;
 	m_tAbility->fBulletAttack = 100.f;
 

@@ -21,7 +21,6 @@ CMiddleBoss::CMiddleBoss(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 }
 
-
 CMiddleBoss::~CMiddleBoss()
 {
 }
@@ -29,7 +28,7 @@ CMiddleBoss::~CMiddleBoss()
 HRESULT CMiddleBoss::Ready_Object(const _vec3 & vPos, _tchar * Name)
 {
 	m_tAbility = new MIDDLEBOSSABILITY;
-	m_tAbility->fMaxHp = 10000.f;
+	m_tAbility->fMaxHp = 10.f;
 	m_tAbility->fCurrentHp = m_tAbility->fMaxHp;
 	m_tAbility->fDamage = 5.f;
 	m_tAbility->strObjTag = L"MiddleBoss";
