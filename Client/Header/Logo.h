@@ -8,6 +8,7 @@ class COptionButton;
 class CExitButton;
 class CLogoUI;
 class CLoadingBar;
+
 class CLogo : public Engine::CScene
 {
 private:
@@ -39,6 +40,12 @@ private:
 
 	_float			m_Min = 0;
 	_float			m_Max = 0;
+
+	_bool			m_bVideo = false;
+
+private:
+	HWND		m_hVideo;
+
 public:
 	static CLogo*      Create(LPDIRECT3DDEVICE9 pGraphicDev);
 

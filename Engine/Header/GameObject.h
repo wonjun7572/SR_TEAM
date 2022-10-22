@@ -18,6 +18,7 @@ public:
 public:
 	void		Set_DrawTexIndex(_int iTexIndex) { m_iTexIndex = iTexIndex; }
 	const _int	Get_DrawTexIndex()const { return m_iTexIndex; }
+	_bool		Get_Dead() { return m_bDead; }
 
 public:
 	virtual		HRESULT		Ready_Object(void);

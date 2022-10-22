@@ -56,6 +56,8 @@ private:
 	HRESULT			Ready_Layer_KEY(const _tchar* pLayerTag);
 	HRESULT			Ready_Layer_QuestBox(const _tchar* pLayerTag);
 
+	HRESULT			Ready_Layer_Boss(const _tchar* pLayerTag);
+
 	HRESULT         Ready_Proto(void);
 	HRESULT         Ready_Light(void);
 

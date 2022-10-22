@@ -20,10 +20,11 @@ class CRoundEffect;
 class CTraceEffect;
 class CLaserPoint;
 class CProjectionEffect;
-
+class CComboUI;
 class CKrakenEffect;
 class CKrakenParticle;
 class CKrakenHit;
+
 class CCubePlayer : public CGameObject
 {
 private:
@@ -79,6 +80,7 @@ private:
 	_int			m_iDashStack = 0;
 	_float			m_fGlobal_Cooltime = 0.f;				//	데미지 내부 글쿨
 	void			CoolTimer(void);
+	_float			m_fCombo = 1.f;
 
 public:	//	상태이상, 외부에서 지정
 	void			KnuckDown(const _float& fDamage, const _float& fDistance);	//	데미지 입으면서 밀려남
@@ -91,94 +93,96 @@ private:
 public:
 	CWeapon*		Get_Weapon() { return m_Weapon; }
 	_int			Get_DmgItem() { return m_iDmgItem; }
-		void		On_StaticField() { m_bCanStaticField = true; }
+	void		On_StaticField() { m_bCanStaticField = true; }
 	void			On_Shield() { m_bCanShield = true; }
 
 
-		void			Set_DoorOpen(_bool bDoorOpen) { m_bDoorOpen = bDoorOpen; }
+	void			Set_DoorOpen(_bool bDoorOpen) { m_bDoorOpen = bDoorOpen; }
 
 private:
 	map<const _tchar*, CGameObject*>	m_mapPlayerBody;
 
 private:
-	void			Update_NullCheck();
-	HRESULT			Get_BodyTransform(void);
-	HRESULT			Player_Mapping(void);
+	void					Update_NullCheck();
+	HRESULT					Get_BodyTransform(void);
+	HRESULT					Player_Mapping(void);
 
-	void			Key_Input(const _float& fTimeDelta);
-	void			Set_OnTerrain(void);
-	void			Assemble(void);
+	void					Key_Input(const _float& fTimeDelta);
+	void					Set_OnTerrain(void);
+	void					Assemble(void);
 
-	void			Animation(void);
-	void			TransAxis(void);
+	void					Animation(void);
+	void					TransAxis(void);
 
-	void			Move(void);
-	void			Look_Direction(void);
-	void			Fire_Bullet(void);
-	void			Gun_Check(void);
-	void			Inventory_Check(void); //인벤토리관련 함수
-
-private:
-	void			Jump(void);
-	_bool			m_bJump = false;
-	_bool			m_bFirst = true;
+	void					Move(void);
+	void					Look_Direction(void);
+	void					Fire_Bullet(void);
+	void					Gun_Check(void);
+	void					Inventory_Check(void); //인벤토리관련 함수
 
 private:
-	HRESULT			Add_Component(void);
-	HRESULT			Lighting();
-	CTransform*		m_pTransform = nullptr;
+	void					Jump(void);
+	_bool					m_bJump = false;
+	_bool					m_bFirst = true;
 
-	CTransform*		m_pHeadWorld = nullptr;
-	CTransform*		m_pBodyWorld = nullptr;
-	CTransform*		m_pLeftArmWorld = nullptr;
-	CTransform*		m_pRightArmWorld = nullptr;
-	CTransform*		m_pLeftLegWorld = nullptr;
-	CTransform*		m_pRightLegWorld = nullptr;
-	CTransform*		m_pLeftHandWorld = nullptr;
-	CTransform*		m_pRightHandWorld = nullptr;
-	CTransform*		m_pLeftFootWorld = nullptr;
-	CTransform*		m_pRightFootWorld = nullptr;
+private:
+	HRESULT					Add_Component(void);
+	HRESULT					Lighting();
+	CTransform*				m_pTransform = nullptr;
+
+	CTransform*				m_pHeadWorld = nullptr;
+	CTransform*				m_pBodyWorld = nullptr;
+	CTransform*				m_pLeftArmWorld = nullptr;
+	CTransform*				m_pRightArmWorld = nullptr;
+	CTransform*				m_pLeftLegWorld = nullptr;
+	CTransform*				m_pRightLegWorld = nullptr;
+	CTransform*				m_pLeftHandWorld = nullptr;
+	CTransform*				m_pRightHandWorld = nullptr;
+	CTransform*				m_pLeftFootWorld = nullptr;
+	CTransform*				m_pRightFootWorld = nullptr;
 	/////
-	CTransform*			m_pPlayerTransCom = nullptr;
+	CTransform*				m_pPlayerTransCom = nullptr;
 
 
-	CCalculator*	m_pCalculatorCom = nullptr;
-	CCollision*		m_pCollision = nullptr;
+	CCalculator*			m_pCalculatorCom = nullptr;
+	CCollision*				m_pCollision = nullptr;
 
-	CHitBox*		m_pHitBox = nullptr;
-	ABILITY*		m_tAbility = nullptr;
+	CHitBox*				m_pHitBox = nullptr;
+	ABILITY*				m_tAbility = nullptr;
 
-	CSphereTex*		m_pSphereBufferCom = nullptr;
-	CTransform*		m_pSphereTransCom = nullptr;
+	CSphereTex*				m_pSphereBufferCom = nullptr;
+	CTransform*				m_pSphereTransCom = nullptr;
 
-	CPlayerMapping* m_pBomb = nullptr;
-	CFlight*		m_pFlight = nullptr;
+	CPlayerMapping*			m_pBomb = nullptr;
+	CFlight*				m_pFlight = nullptr;
 
 private: // 파티클관련 포인터입니다.
-	CBulletParticle* m_pBulletParicle = nullptr;
-	CShotParticle*	 m_pShotParicle = nullptr;
-	CProjectileParticle* m_pProjectileParicle = nullptr;
-	CCubeParticle* m_pCubeParticle = nullptr;
-	CDashCube*		m_pDashCube = nullptr;
-	CTriggerParticle* m_pTriggerParticle = nullptr;
-	CTriggerFront* m_pTriggerFront = nullptr;
-	CRoundEffect* m_pRoundEffect = nullptr;
-	CTraceEffect* m_pTraceEffect = nullptr;
-	CLaserPoint* m_pLaserPoint = nullptr;
-	CKrakenEffect* m_pKrakenEffectParticle = nullptr;
+	CBulletParticle*		m_pBulletParicle = nullptr;
+	CShotParticle*			m_pShotParicle = nullptr;
+	CProjectileParticle*	m_pProjectileParicle = nullptr;
+	CCubeParticle*			m_pCubeParticle = nullptr;
+	CDashCube*				m_pDashCube = nullptr;
+	CTriggerParticle*		m_pTriggerParticle = nullptr;
+	CTriggerFront*			m_pTriggerFront = nullptr;
+	CRoundEffect*			m_pRoundEffect = nullptr;
+	CTraceEffect*			m_pTraceEffect = nullptr;
+	CLaserPoint*			m_pLaserPoint = nullptr;
+	CKrakenEffect*			m_pKrakenEffectParticle = nullptr;
 	CCartridgeParticle*		m_pCartridgeParticle = nullptr;
-	CKrakenParticle* m_pKrakenSmoke = nullptr;
-	CKrakenHit*	m_pKrakenHit = nullptr;
+	CKrakenParticle*		m_pKrakenSmoke = nullptr;
+	CComboUI*				m_pComboUI = nullptr;
+	CKrakenHit*				m_pKrakenHit = nullptr;
+
 private:
-	_float			m_fRed = 0.f;
-	_float			m_fGreen = 0.f;
-	_float			m_fBlue = 0.f;
-		_float			m_fLaserTimer = 0.f;
+	_float			m_fRed = 1.f;
+	_float			m_fGreen = 1.f;
+	_float			m_fBlue = 1.f;
+	_float			m_fLaserTimer = 0.f;
 
 	_bool			m_bSniperEffect = 0.f;
-		_float			m_fRange = 0.f;
+	_float			m_fRange = 0.f;
 
-		_bool			m_bColorLighting = false;
+	_bool			m_bColorLighting = false;
 
 	_float			m_fLookAngle = 0.f;
 	_float			m_fDownAngle = 0.f;

@@ -68,7 +68,6 @@ CLogoCamera* CLogoCamera::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3* pEy
 
 void CLogoCamera::RightCamera(const _float& fTimeDelta)
 {
-
 	_matrix		matCamWorld;
 	D3DXMatrixInverse(&matCamWorld, nullptr, &m_matView);
 
@@ -77,6 +76,6 @@ void CLogoCamera::RightCamera(const _float& fTimeDelta)
 
 	_vec3		vLength = *D3DXVec3Normalize(&vRight, &vRight) * fTimeDelta;
 
-	m_vEye.y = m_fDistnace;
+	m_vEye.y = 0.f;
 	m_vEye += vLength;
 }

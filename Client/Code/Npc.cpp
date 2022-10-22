@@ -2,6 +2,7 @@
 #include "..\Header\Npc.h"
 #include "StaticCamera.h"
 #include "ItemBox.h"
+#include "MiddleBoss.h"
 
 CNpc::CNpc(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
@@ -28,6 +29,11 @@ _int CNpc::Update_Object(const _float & fTimeDelta)
 	CStaticCamera* pCam = dynamic_cast<CStaticCamera*>(Get_GameObject(STAGE_ENVIRONMENT, L"StaticCamera"));
 	CItemBox* pQuestBox1 = dynamic_cast<CItemBox*>(Get_GameObject(L"STAGE_QUESTBOX", L"ItemBox1"));
 	CItemBox* pQuestBox2 = dynamic_cast<CItemBox*>(Get_GameObject(L"STAGE_QUESTBOX", L"ItemBox2"));
+
+	if (Get_GameObject(L"STAGE_BOSS", L"MiddleBoss") != nullptr)
+	{
+		m_bBossDead = Get_GameObject(L"STAGE_BOSS", L"MiddleBoss")->Get_Dead();
+	}
 
 	if (pCam != nullptr && pCam->Get_bNpc() && m_bQuest1)
 	{
