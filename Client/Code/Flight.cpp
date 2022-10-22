@@ -29,6 +29,7 @@ HRESULT CFlight::Ready_Object(const _vec3 & vPos, const _vec3 & vDir, _tchar * N
 
 	m_vDirection = vDir;
 
+	m_bControl = false;
 	m_bShuttle = false;
 
 	m_pTransform->Set_Scale(1.f, 1.f, 1.f);

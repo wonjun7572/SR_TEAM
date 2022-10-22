@@ -30,6 +30,8 @@ HRESULT CIllusioner::Ready_Object(const _vec3 & vPos, _tchar * Name)
 	m_tAbility->fDamage = 10.f;
 	m_tAbility->strObjTag = L"Illusioner";
 
+	m_BeforeHp = m_tAbility->fMaxHp;
+
 	m_MonsterName = Name;
 
 	m_STATE = ILLUSION_IDLE;
@@ -100,6 +102,7 @@ _int CIllusioner::Update_Object(const _float & fTimeDelta)
 		Load_Animation(L"../../Data/ILLUSIONER/Illusion_Walk_2.dat", 4);
 
 		Load_Animation(L"../../Data/ILLUSIONER/Illusion_Attack_1.dat", 5);
+		Load_Animation(L"../../Data/ILLUSIONER/Illusion_Attack_2.dat", 6);
 	}
 
 	CMonster::Update_Object(fTimeDelta);
@@ -143,8 +146,10 @@ _int CIllusioner::Update_Object(const _float & fTimeDelta)
 			// 공격충돌
 			if (m_iSphereSkillTag != SKILL_STATICFIELD)
 				m_pTransCom->Chase_Target(&vPlayerPos, 0.f, fTimeDelta);
+
 			m_STATE = ILLUSION_ATTACK;
-			if (m_fFrame >= 2.f)
+
+			if (m_ATTACK == ILLUSIONATTACK_1 && m_AnimationTime >= 1.f)
 			{
 				_vec3 vWallPos;
 				m_pTransCom->Get_Info(INFO_POS, &vWallPos);
@@ -152,7 +157,7 @@ _int CIllusioner::Update_Object(const _float & fTimeDelta)
 				_vec3 vLook;
 				m_pTransCom->Get_Info(INFO_LOOK, &vLook);
 				D3DXVec3Normalize(&vLook, &vLook);
-				
+
 				CGameObject* pGameObject = CTargetCube::Create(m_pGraphicDev, _vec3(vWallPos.x + (vLook.x * 4.f), vWallPos.y - 3.f, vWallPos.z + (vLook.z * 4.f)), _vec3(0.f, 1.f, 0.f), _vec3(1.f, 1.f, 0.5f), 13);
 
 				NULL_CHECK_RETURN(pGameObject, E_FAIL);
@@ -211,7 +216,7 @@ void CIllusioner::LateUpdate_Object(void)
 		else if (m_STATE == ILLUSION_ATTACK)
 		{
 			Attack_Animation_Run();
-			Run_Animation(5.f);
+			Run_Animation(20.f);
 		}
 	}
 
@@ -684,7 +689,7 @@ void CIllusioner::Look_Direction(void)
 			_vec3 vAngle;
 			CTransform* Transform = dynamic_cast<CTransform*>(iter.second->Get_Component(L"Proto_TransformCom", ID_STATIC));
 			Transform->Get_Angle(&vAngle);
-			Transform->Set_Angle(&_vec3(yaw, vAngle.x, vAngle.z));
+			Transform->Set_Angle(&_vec3(yaw, 0.f, 0.f));
 		}
 	}
 }
@@ -757,8 +762,10 @@ void CIllusioner::Attack_Animation_Run(void)
 			Qtan->Delete_WorldVector();
 		}
 
-		//if (m_ATTACK == FIREMANATTACK_1)
-		//	m_ATTACK = FIREMANATTACK_END;
+		if (m_ATTACK == ILLUSIONATTACK_1)
+			m_ATTACK = ILLUSIONATTACK_2;
+		else if (m_ATTACK == ILLUSIONATTACK_2)
+			m_ATTACK = ILLUSIONATTACK_1;
 
 		m_AnimationTime = 0.f;
 	}

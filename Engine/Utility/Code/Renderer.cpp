@@ -21,7 +21,7 @@ void CRenderer::Add_RenderGroup(RENDERID eID, CGameObject * pGameObject)
 	if (eID >= RENDER_END || nullptr == pGameObject)
 		return;
 
-	if (eID == RENDER_UI || eID == RENDER_PRIORITY || eID == RENDER_MAPSETTING || !pGameObject->GetCheckFrustum())
+	if (eID == RENDER_UI || eID == RENDER_PRIORITY || eID == RENDER_MAPSETTING || eID == RENDER_EFFECT_UI || !pGameObject->GetCheckFrustum())
 	{
 		m_RenderGroup[eID].push_back(pGameObject);
 		pGameObject->AddRef();
@@ -63,6 +63,11 @@ void CRenderer::Add_RenderGroup(RENDERID eID, CGameObject * pGameObject)
 			m_RenderGroup[eID].push_back(pGameObject);
 			pGameObject->AddRef();
 		}
+	}
+	else
+	{
+		m_RenderGroup[eID].push_back(pGameObject);
+		pGameObject->AddRef();
 	}
 }
 
@@ -106,6 +111,13 @@ void CRenderer::Render_GameObject(LPDIRECT3DDEVICE9 & pGraphicDev)
 	}
 	m_RenderGroup[RENDER_MAPSETTING].clear();
 	
+	for (auto& iter : m_RenderGroup[RENDER_EFFECT_UI])
+	{
+		iter->Render_Object();
+		Safe_Release(iter);
+	}
+	m_RenderGroup[RENDER_EFFECT_UI].clear();
+
 	pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
 	pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
 	pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);

@@ -46,13 +46,13 @@ HRESULT CCubePlayer::Ready_Object(void)
 	m_tAbility->iGunTexture = 5;
 
 	m_pTransform->Set_Scale(0.4f, 0.5f, 0.4f);
-	m_pTransform->Set_Pos(10.f, 10.f, 10.f);
+	m_pTransform->Set_Pos(20.f, 0.6f, 20.f);
 	m_pTransform->Static_Update();
 
 	m_pSphereTransCom->Set_Scale(0.5f, 0.5f, 0.5f);
-	m_pSphereTransCom->Set_Pos(10.f, 10.f, 10.f);
+	m_pSphereTransCom->Set_Pos(20.f, 0.6f, 20.f);
 	m_pSphereTransCom->Static_Update();
-	m_fSpeed = 10.f;
+	m_fSpeed = 7.f;
 
 	m_bUzi = false;
 	m_bShotgun = false;
@@ -66,17 +66,23 @@ _int CCubePlayer::Update_Object(const _float & fTimeDelta)
 {
 	Update_NullCheck();
 
+	_vec3 vPos;
+	m_pTransform->Get_Info(INFO_POS, &vPos);
+	cout << vPos.x << " " << vPos.y << " " << vPos.z << "\n";
+
+
 	if (!m_bDoorOpen)
 	{
+		// 점점 빨개진다.
 		m_fRed = 0.5f;
 		m_fGreen = 0.5f;
 		m_fBlue = 0.5f;
-		m_fRange = 25.f;
+		m_fRange = 40.f;
 	}
 	else
 	{
 		m_fGreen = 0.f;
-		m_fRange = 40.f;
+		m_fRange = 30.f;
 		if (!m_bColorLighting)
 		{
 			m_fRed += fTimeDelta;
@@ -96,7 +102,6 @@ _int CCubePlayer::Update_Object(const _float & fTimeDelta)
 			}
 		}
 	}
-
 
 	m_fTimeDelta = fTimeDelta;
 	m_fBulletTime += fTimeDelta;
@@ -193,7 +198,6 @@ void CCubePlayer::Key_Skill()
 {
 	if (Key_Down(DIK_F))
 	{
-
 		if (m_Weapon == Engine::Get_GameObject(STAGE_GUN, L"UZI1") && m_iSkillEnforce == 1)
 		{
 			if (static_cast<CStaticCamera*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"StaticCamera"))->Get_MainCam())

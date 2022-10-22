@@ -27,6 +27,7 @@ public:
 
 public:
 	_float				Get_Hp(void) { return m_tAbility->fCurrentHp; }
+	void				Set_CollisionDmg() { m_tAbility->fCurrentHp -= 50.f; }
 
 private:
 	void				Look_Direction(void);
@@ -93,7 +94,7 @@ private:
 	_bool				m_bAnihilate_First = true;
 	_bool				m_bAnihilate_Second = true;
 	_bool				m_bAnihilate_Third = true;
-	_float				m_BeforeHp = 0.f;
+	_float				m_BeforeHp = 5000.f;
 	_float				m_fInterval;
 	_float				 m_fFireAngle = 0.f;
 

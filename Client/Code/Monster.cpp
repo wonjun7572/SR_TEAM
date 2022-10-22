@@ -43,6 +43,8 @@ _int CMonster::Update_Object(const _float & fTimeDelta)
 	m_pTransCom->Get_Info(INFO_POS, &vUIPos);
 	m_pTransUICom->Set_Pos(vUIPos.x, vUIPos.y + 0.5f, vUIPos.z);
 
+	Set_On_Terrain();
+
 	Engine::CGameObject::Update_Object(fTimeDelta);
 	m_pTransUICom->Billboard_Transform(fTimeDelta);
 	Add_RenderGroup(RENDER_UI, this);
@@ -186,24 +188,29 @@ void CMonster::Hit_Check(_float _deltaTime)
 		_vec3 vDir;
 		if (m_pCollision->HitScan(g_hWnd, &vSrcPos, this->m_pBufferCom, this->m_pTransCom, &vDir))
 		{
-			m_pMonsterUI->Set_Name(m_tAbility->strObjTag);
+			/*m_pMonsterUI->Set_Name(m_tAbility->strObjTag);
 			m_pMonsterUI->Set_Hp(m_tAbility->fCurrentHp);
 			m_pMonsterUI->Set_MaxHp(m_tAbility->fMaxHp);
-			m_pMonsterUI->On_Switch();
+			m_pMonsterUI->On_Switch();*/
 			if (pWeapon->Get_Shoot() == true)
 			{
 				m_tAbility->fCurrentHp -= pWeapon->Get_Ability()->fBulletAttack;
-				m_pComboUI->On_Switch();
-				m_pComboUI->ComboCntPlus();
 				Hit_Effect();
 				pWeapon->Set_Shoot(false);
 				m_bisHit = true;
 			}
+		}
+		if (m_BeforeHp != m_tAbility->fCurrentHp)
+		{
+			m_BeforeHp = m_tAbility->fCurrentHp;
 
-			if (m_tAbility->fCurrentHp <= 0.f)
-			{
-				m_tAbility->fCurrentHp = 0.f;
-			}
+			m_pMonsterUI->Set_Name(m_tAbility->strObjTag);
+			m_pMonsterUI->Set_Hp(m_tAbility->fCurrentHp);
+			m_pMonsterUI->Set_MaxHp(m_tAbility->fMaxHp);
+			m_pMonsterUI->On_Switch();
+
+			m_pComboUI->On_Switch();
+			m_pComboUI->ComboCntPlus();
 		}
 		else
 		{
@@ -215,6 +222,11 @@ void CMonster::Hit_Check(_float _deltaTime)
 			}
 		}
 	} 
+
+	if (m_tAbility->fCurrentHp <= 0.f)
+	{
+		m_tAbility->fCurrentHp = 0.f;
+	}
 }
 
 void CMonster::Hit_SphereCheck(_float _deltaTime)
@@ -241,6 +253,27 @@ void CMonster::Hit_SphereCheck(_float _deltaTime)
 			
 		}
 	}
+
+	if (m_BeforeHp != m_tAbility->fCurrentHp)
+	{
+		m_BeforeHp = m_tAbility->fCurrentHp;
+
+		m_pMonsterUI->Set_Name(m_tAbility->strObjTag);
+		m_pMonsterUI->Set_Hp(m_tAbility->fCurrentHp);
+		m_pMonsterUI->Set_MaxHp(m_tAbility->fMaxHp);
+		m_pMonsterUI->On_Switch();
+
+		m_pComboUI->On_Switch();
+		m_pComboUI->ComboCntPlus();
+
+		m_pComboUI->On_Switch();
+		m_pComboUI->ComboCntPlus();
+	}
+
+	if (m_tAbility->fCurrentHp <= 0.f)
+	{
+		m_tAbility->fCurrentHp = 0.f;
+	}
 }
 
 void CMonster::Skill_SphereCheck(_float _deltaTime)
@@ -261,6 +294,40 @@ void CMonster::Skill_SphereCheck(_float _deltaTime)
 			}			
 		}
 	}
+
+	if (m_BeforeHp != m_tAbility->fCurrentHp)
+	{
+		m_BeforeHp = m_tAbility->fCurrentHp;
+
+		m_pMonsterUI->Set_Name(m_tAbility->strObjTag);
+		m_pMonsterUI->Set_Hp(m_tAbility->fCurrentHp);
+		m_pMonsterUI->Set_MaxHp(m_tAbility->fMaxHp);
+		m_pMonsterUI->On_Switch();
+
+		m_pComboUI->On_Switch();
+		m_pComboUI->ComboCntPlus();
+
+		m_pComboUI->On_Switch();
+		m_pComboUI->ComboCntPlus();
+	}
+
+	if (m_tAbility->fCurrentHp <= 0.f)
+	{
+		m_tAbility->fCurrentHp = 0.f;
+	}
+}
+
+void CMonster::Set_On_Terrain(void)
+{
+	_vec3		vPos;
+	m_pTransCom->Get_Info(INFO_POS, &vPos);
+
+	Engine::CTerrainTex*	pTerrainTexCom = dynamic_cast<Engine::CTerrainTex*>(Engine::Get_Component(STAGE_ENVIRONMENT, L"Terrain", TERRAINTEX_COMP, ID_STATIC));
+	NULL_CHECK(pTerrainTexCom);
+
+	_float fHeight = m_pCalculatorCom->HeightOnTerrain(&vPos, pTerrainTexCom->Get_VtxPos(), VTXCNTX, VTXCNTZ) + 0.6f;
+
+	m_pTransCom->Set_Pos(vPos.x, fHeight, vPos.z);
 }
 
 void CMonster::Free(void)

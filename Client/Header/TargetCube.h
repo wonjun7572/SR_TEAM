@@ -41,6 +41,7 @@ private:
 
 	_vec3				m_vDir = _vec3(0.f, 0.f, 0.f);
 	_vec3				m_vScale = _vec3(0.f, 0.f, 0.f);
+	_float				m_BeforeHp;
 
 private:
 	MONSTERABILITY*		m_tAbility;

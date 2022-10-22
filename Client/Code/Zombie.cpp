@@ -29,6 +29,8 @@ HRESULT CZombie::Ready_Object(const _vec3& vPos, _tchar* Name)
 	m_tAbility->fDamage = 10.f;
 	m_tAbility->strObjTag = L"Zombie";
 
+	m_BeforeHp = m_tAbility->fMaxHp;
+
 	m_STATE = ZOMBIE_IDLE;
 	m_WALK = ZOMBIEWALK_START;
 	m_IDLE = ZOMBIEIDLE_1;
@@ -56,7 +58,7 @@ HRESULT CZombie::Ready_Object(const _vec3& vPos, _tchar* Name)
 	m_pHitBoxTransCom->Static_Update();
 
 	// ChaseTarget 범위 지정
-	m_pSphereTransCom->Set_Scale(&_vec3(10.f, 10.f, 10.f));
+	m_pSphereTransCom->Set_Scale(&_vec3(1.f, 1.f, 1.f));
 	m_pSphereTransCom->Set_Pos(vAnimationPos.x, vAnimationPos.y, vAnimationPos.z);
 	m_pSphereTransCom->Static_Update();
 
@@ -129,6 +131,14 @@ _int CZombie::Update_Object(const _float & fTimeDelta)
 			if (m_iSphereSkillTag != SKILL_STATICFIELD)
 				m_pTransCom->Chase_Target(&vPlayerPos, 0.f, fTimeDelta);
 			m_STATE = ZOMBIE_ATTACK;
+			
+			if (m_AnimationTime >= 1.f)
+			{
+				CLayer* pLayer = Engine::Get_Layer(STAGE_CHARACTER);
+				CCubePlayer* pPlayer = dynamic_cast<CCubePlayer*>(pLayer->Get_GameObject(L"PLAYER"));
+				pPlayer->KnuckDown(10.f, 10.f);
+			}
+
 		}
 		else if (m_pCollision->Sphere_Collision(this->m_pSearchRange_TransCom, m_pPlayerTransCom, vPlayerScale.x, vSearchScale.x)/* && (m_STATE != FIREMAN_ATTACK)*/)
 		{
