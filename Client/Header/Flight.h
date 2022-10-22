@@ -60,8 +60,17 @@ public:
 		m_eSupporterID = eID;
 	}
 
+
+
 	_bool			Get_Shuttle() { return m_bShuttle; }
 	_vec3			Get_Desitination() { return m_vDestination; }
+
+	_bool			Get_Ending() { return m_bEnding; }
+	void			Set_Ending(_bool bEnd) { m_bEnding = bEnd; }
+	_bool			m_bEnding = false;/////////////////
+
+	_bool			m_bLeaveMap = false;
+
 private:
 	HRESULT			Build(void);
 	void			Key_Input(const _float& fTimeDelta);
@@ -80,6 +89,7 @@ private:
 	_vec3			m_vDestination = _vec3(0.f, 0.f, 0.f);
 
 	_vec3			m_vDirection;
+	_vec3			m_vLeave;
 	_vec3			m_vAngle;
 	_float			m_Frame = 0.f;
 

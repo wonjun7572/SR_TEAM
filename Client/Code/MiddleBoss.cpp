@@ -14,6 +14,8 @@
 #include "Explosion.h"
 #include "Veneer.h"
 
+#include "Flight.h"
+
 static _int m_iCnt = 0;
 
 CMiddleBoss::CMiddleBoss(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -29,7 +31,7 @@ CMiddleBoss::~CMiddleBoss()
 HRESULT CMiddleBoss::Ready_Object(const _vec3 & vPos, _tchar * Name)
 {
 	m_tAbility = new MIDDLEBOSSABILITY;
-	m_tAbility->fMaxHp = 10000.f;
+	m_tAbility->fMaxHp = 100.f;
 	m_tAbility->fCurrentHp = m_tAbility->fMaxHp;
 	m_tAbility->fDamage = 5.f;
 	m_tAbility->strObjTag = L"MiddleBoss";
@@ -49,7 +51,7 @@ HRESULT CMiddleBoss::Ready_Object(const _vec3 & vPos, _tchar * Name)
 
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
-	m_pTransCom->Set_Scale(&_vec3(10.f, 10.f, 10.f));
+	m_pTransCom->Set_Scale(&_vec3(1.f, 1.f, 1.f));
 	m_pTransCom->Set_Pos(vPos.x, vPos.y, vPos.z);
 	m_pTransCom->Static_Update();
 
@@ -133,7 +135,20 @@ _int CMiddleBoss::Update_Object(const _float & fTimeDelta)
 
 	_vec3 vMonsterPos;
 	m_pTransCom->Get_Info(INFO_POS, &vMonsterPos);
-	m_pHitBoxTransCom->Set_Pos(vMonsterPos.x, vMonsterPos.y, vMonsterPos.z);
+
+	for (auto& iter : pMyLayer->Get_GamePair())
+	{
+		if (0 == _tcscmp(iter.first, L"CORE"))
+		{
+			CTransAxisBox* pBox = dynamic_cast<CTransAxisBox*>(iter.second);
+			_matrix matFinal;
+			pBox->Get_Final(&matFinal);
+
+			m_pHitBoxTransCom->Set_Pos(matFinal.m[3][0], matFinal.m[3][1], matFinal.m[3][2]);
+		}
+	}
+
+	//m_pHitBoxTransCom->Set_Pos(vMonsterPos.x, vMonsterPos.y, vMonsterPos.z);
 	
 	m_pSearchRange_TransCom->Set_Pos(vMonsterPos.x, 0.f, vMonsterPos.z);
 	m_pAttackRange_TransCom->Set_Pos(vMonsterPos.x, 0.f, vMonsterPos.z);
@@ -148,13 +163,26 @@ void CMiddleBoss::LateUpdate_Object(void)
 {
 	Monster_Mapping();
 
-	Set_OnTerrain();
-	m_pTransCom->Static_Update();
-
 	if (m_tAbility->fCurrentHp <= 0.f)
 	{
+		_vec3 vPos;
+		m_pTransCom->Get_Info(INFO_POS, &vPos);
+
+		m_pTransCom->Set_Pos(vPos.x, vPos.y - 0.1f, vPos.z);
+		m_pTransCom->Static_Update();
+
 		m_pMonsterUI->Off_Switch();
-		this->Kill_Obj();
+		//this->Kill_Obj();
+
+		CGameObject* pGameObject = dynamic_cast<CFlight*>(Get_GameObject(STAGE_FLIGHTPLAYER, L"FLIGHTSHUTTLE"));
+
+		if (dynamic_cast<CFlight*>(pGameObject)->Get_Ending() == false)
+			dynamic_cast<CFlight*>(pGameObject)->Set_Ending(true);
+	}
+	else
+	{
+		Set_OnTerrain();
+		m_pTransCom->Static_Update();
 	}
 
 	if (!m_bFirst)
@@ -393,8 +421,8 @@ _int CMiddleBoss::Update_Pattern(_float fTimeDelta)
 						vRandom = _vec3(vPlayerPos.x - m_iRand, 30.f, vPlayerPos.z + m_iRand);
 					else if (m_MissileCnt % 5 == 3)
 						vRandom = _vec3(vPlayerPos.x - m_iRand, 30.f, vPlayerPos.z - m_iRand);
-					/*else if (m_MissileCnt % 5 == 4)
-						vRandom = _vec3(vPlayerPos.x + m_iRand, 30.f, vPlayerPos.z + m_iRand);*/
+					else if (m_MissileCnt % 5 == 4)
+						vRandom = _vec3(vPlayerPos.x + m_iRand, 30.f, vPlayerPos.z + m_iRand);
 
 					CGameObject* pGameObject = CVeneer::Create(m_pGraphicDev, vRandom);
 					NULL_CHECK_RETURN(pGameObject, -1);
@@ -438,11 +466,14 @@ void CMiddleBoss::Hit_Check(_float _deltaTime)
 		pWeapon->Get_Transform()->Get_Info(INFO_POS, &vSrcPos);
 
 		_vec3 vDir;
-		if (m_pCollision->HitScan(g_hWnd, &vSrcPos, this->m_pBufferCom, this->m_pTransCom, &vDir))
+		if (m_pCollision->HitScan(g_hWnd, &vSrcPos, this->m_pBufferCom, this->m_pHitBoxTransCom, &vDir))
 		{
 			if (pWeapon->Get_Shoot() == true)
 			{
 				m_tAbility->fCurrentHp -= pWeapon->Get_Ability()->fBulletAttack;
+
+				m_pComboUI->On_Switch();
+				m_pComboUI->ComboCntPlus();
 	
 				pWeapon->Set_Shoot(false);
 			}
@@ -460,9 +491,6 @@ void CMiddleBoss::Hit_Check(_float _deltaTime)
 			m_pMonsterUI->Set_Hp(m_tAbility->fCurrentHp);
 			m_pMonsterUI->Set_MaxHp(m_tAbility->fMaxHp);
 			m_pMonsterUI->On_Switch();
-
-			m_pComboUI->On_Switch();
-			m_pComboUI->ComboCntPlus();
 		}
 		else
 		{

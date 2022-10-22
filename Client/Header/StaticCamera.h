@@ -70,6 +70,7 @@ private:
 
 	_int			m_iReverse = 1;
 	_float			m_fFrame = 0.f;
+	_float			m_fEndingFrame = 0.f;
 	_float			m_fFlightFrame = 0.f;
 	_float			m_fShuttleFrame = 0.f;
 	_float			m_fPlayerFrame = 0.f;
