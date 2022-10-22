@@ -6,7 +6,7 @@
 CProjectionEffect::CProjectionEffect(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CPSystem(pGraphicDev)
 {
-	m_fSize = .025f;
+	m_fSize = .05f;
 	m_vbSize = 2048;
 	m_vbOffset = 0;
 	m_vbBatchSize = 512;
@@ -30,8 +30,8 @@ _int CProjectionEffect::Update_Object(const _float & fTimeDelta)
 	for (list<ATTRIBUTE>::iterator iter = m_particles.begin(); iter != m_particles.end(); iter++)
 	{
 		iter->fAge += fTimeDelta;
-		iter->vPos += (iter->vVelocity) * fTimeDelta* .25f;
-		iter->vPos += m_vMoveDir*fTimeDelta*10.f;
+		iter->vPos += (iter->vVelocity) * fTimeDelta* .375f;
+		iter->vPos += m_vMoveDir*fTimeDelta*5.f;
 
 		if (iter->fAge > iter->fLifeTime)
 		{
@@ -142,6 +142,38 @@ void CProjectionEffect::resetParticle(ATTRIBUTE * attribute)
 //			m_pProjectionEffect->addParticle();
 //
 //
+//		}
+//	}
+//}
+
+
+// 발산 프로젝션
+//CProjectionEffect* m_pProjectionEffect = nullptr;
+//if (!m_pProjectionEffect)
+//m_pProjectionEffect = dynamic_cast<CProjectionEffect*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"ProjectionEffect"));
+//
+//_vec3 vPos;													//대쉬이펙트하려던것		
+//_vec3 vRootPos;
+//_vec3 vDir;
+//_vec3 min = { -1.0f ,-1.0f ,-1.0f };
+//_vec3 max = { 1.0f ,1.0f ,.0f };
+//m_pTransCom->Get_Info(INFO_POS, &vPos);
+//vPos.z += 5.f;
+//vRootPos = vPos;
+//vRootPos.y = 10.f;
+//vRootPos.z = 55.f;
+//for (_int i = -5; i < 5; i++)
+//{
+//	for (_int j = -5; j < 5; j++)
+//	{
+//		for (_int k = -5; k < 5; k++)
+//		{
+//			//D3DXVec3Normalize(&min, &_vec3(i, j, k));
+//
+//			dynamic_cast<CProjectionEffect*>(m_pProjectionEffect)->Set_PclePos(vRootPos + _vec3(i, j, k)*0.01f);
+//			dynamic_cast<CProjectionEffect*>(m_pProjectionEffect)->Set_PcleDir(_vec3(i, j, k));
+//			dynamic_cast<CProjectionEffect*>(m_pProjectionEffect)->Set_PcleMoveDir((vPos - vRootPos)*0.1f);
+//			m_pProjectionEffect->addParticle();
 //		}
 //	}
 //}
