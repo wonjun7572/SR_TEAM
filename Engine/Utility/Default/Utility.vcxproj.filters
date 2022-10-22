@@ -25,18 +25,6 @@
     <Filter Include="03. Scene">
       <UniqueIdentifier>{049aabfa-bc5d-4479-abb2-73ad091699ce}</UniqueIdentifier>
     </Filter>
-    <Filter Include="04. Manager">
-      <UniqueIdentifier>{bdab411a-dc47-4d46-891f-d7298f7adb4e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="04. Manager\01. ProtoMgr">
-      <UniqueIdentifier>{bf294e5c-7d75-4437-84e5-04de8dde0bd3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="04. Manager\00. Management">
-      <UniqueIdentifier>{9cf6be8d-fe21-4609-aa36-21061519fff9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="04. Manager\02. Renderer">
-      <UniqueIdentifier>{7ee63053-5e07-45f5-85e5-25431d4e5add}</UniqueIdentifier>
-    </Filter>
     <Filter Include="00. Component\01. Transform">
       <UniqueIdentifier>{43e13693-b01d-457c-828d-685950560bb9}</UniqueIdentifier>
     </Filter>
@@ -57,15 +45,6 @@
     </Filter>
     <Filter Include="00. Component\03. Calculator">
       <UniqueIdentifier>{2ba22ad8-754b-494d-b09b-aae60842396c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="04. Manager\03. Light">
-      <UniqueIdentifier>{1563419e-9567-471f-941d-5d23b02c64da}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="04. Manager\03. Light\Manager">
-      <UniqueIdentifier>{7ccae5e5-f0cd-4591-96dd-fce74168f2c5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="04. Manager\04. SoundMgr">
-      <UniqueIdentifier>{f3b6f7c7-f618-479c-9eb8-2afb6900a6e1}</UniqueIdentifier>
     </Filter>
     <Filter Include="00. Component\00. VIBuffer\06. HitBox">
       <UniqueIdentifier>{892106c3-da42-4215-900e-a17f34c0d1ba}</UniqueIdentifier>
@@ -100,11 +79,32 @@
     <Filter Include="00. Component\00. VIBuffer\10. CubeCol">
       <UniqueIdentifier>{a9464c04-7cb7-4e67-b494-4a8d4db435b2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="04. Manager\05. FrustumCullMgr">
-      <UniqueIdentifier>{b67fd3c2-35c9-4272-a8da-829f5d566639}</UniqueIdentifier>
-    </Filter>
     <Filter Include="00. Component\06. Shader">
       <UniqueIdentifier>{ff0870b6-b11b-4ad3-a753-d209070aaeaf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. Manager">
+      <UniqueIdentifier>{bdab411a-dc47-4d46-891f-d7298f7adb4e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. Manager\01. ProtoMgr">
+      <UniqueIdentifier>{bf294e5c-7d75-4437-84e5-04de8dde0bd3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. Manager\00. Management">
+      <UniqueIdentifier>{9cf6be8d-fe21-4609-aa36-21061519fff9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. Manager\02. Renderer">
+      <UniqueIdentifier>{7ee63053-5e07-45f5-85e5-25431d4e5add}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. Manager\03. Light">
+      <UniqueIdentifier>{1563419e-9567-471f-941d-5d23b02c64da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. Manager\03. Light\Manager">
+      <UniqueIdentifier>{7ccae5e5-f0cd-4591-96dd-fce74168f2c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. Manager\04. SoundMgr">
+      <UniqueIdentifier>{f3b6f7c7-f618-479c-9eb8-2afb6900a6e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. Manager\05. FrustumCullMgr">
+      <UniqueIdentifier>{b67fd3c2-35c9-4272-a8da-829f5d566639}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
