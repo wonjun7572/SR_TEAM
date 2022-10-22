@@ -397,11 +397,23 @@
     <Filter Include="02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\ProjectionEffect">
       <UniqueIdentifier>{fcba2e6b-779d-4924-bb43-32b32361d648}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\MiddleDead">
+    <Filter Include="02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\ItemCubeEffect">
+      <UniqueIdentifier>{c34126bd-e1a9-43f8-b492-1d48198dc86f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\MiddleBoss">
+      <UniqueIdentifier>{86a1d70e-14fb-4dc8-a337-4db8813e086a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\MiddleBoss\MiddleDead">
       <UniqueIdentifier>{b6131e99-8874-423c-8f19-d2a182fef8be}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\MiddleDead\MFieldEffect">
+    <Filter Include="02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\MiddleBoss\MiddleDead\MFieldEffect">
       <UniqueIdentifier>{c3b92b0a-b520-4a9e-8989-52ef9cd1ae0d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\MiddleBoss\TargetPoint">
+      <UniqueIdentifier>{4b5bffc5-2dfd-49be-8d53-b57a965ede15}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\LaserEffect\HyperionEffect">
+      <UniqueIdentifier>{1b0efa4c-daba-4c4e-9f5c-b6a9cb926ec8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -910,7 +922,10 @@
       <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\ProjectionEffect</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\MFieldEffect.h">
-      <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\MiddleDead\MFieldEffect</Filter>
+      <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\MiddleBoss\MiddleDead\MFieldEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\KrakenParticle.h">
+      <Filter>99. Default\헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Mob.h">
       <Filter>99. Default\헤더 파일</Filter>
@@ -918,14 +933,17 @@
     <ClInclude Include="..\Header\Quest.h">
       <Filter>02. GameObject\01. For_Stage\09. UI</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\KrakenParticle.h">
-      <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\KrakenEffect</Filter>
+    <ClInclude Include="..\Header\ItemCubeEffect.h">
+      <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\ItemCubeEffect</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\KrakenHit.h">
-      <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\KrakenEffect</Filter>
+    <ClInclude Include="..\Header\TargetPointEffect.h">
+      <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\MiddleBoss\TargetPoint</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\LaserSpot.h">
-      <Filter>02. GameObject\01. For_Stage\21. Boss\01. MiddleBoss</Filter>
+    <ClInclude Include="..\Header\HyperionEffect.h">
+      <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\LaserEffect\HyperionEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Warning_AnnihilateUI.h">
+      <Filter>02. GameObject\01. For_Stage\09. UI\Player</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1410,7 +1428,10 @@
       <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\ProjectionEffect</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\MFieldEffect.cpp">
-      <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\MiddleDead\MFieldEffect</Filter>
+      <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\MiddleBoss\MiddleDead\MFieldEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\KrakenParticle.cpp">
+      <Filter>99. Default\소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Mob.cpp">
       <Filter>99. Default\소스 파일</Filter>
@@ -1418,14 +1439,17 @@
     <ClCompile Include="..\Code\Quest.cpp">
       <Filter>02. GameObject\01. For_Stage\09. UI</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\KrakenParticle.cpp">
-      <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\KrakenEffect</Filter>
+    <ClCompile Include="..\Code\ItemCubeEffect.cpp">
+      <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\ItemCubeEffect</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\KrakenHit.cpp">
-      <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\KrakenEffect</Filter>
+    <ClCompile Include="..\Code\TargetPointEffect.cpp">
+      <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\MiddleBoss\TargetPoint</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\LaserSpot.cpp">
-      <Filter>02. GameObject\01. For_Stage\21. Boss\01. MiddleBoss</Filter>
+    <ClCompile Include="..\Code\HyperionEffect.cpp">
+      <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\LaserEffect\HyperionEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Warning_AnnihilateUI.cpp">
+      <Filter>02. GameObject\01. For_Stage\09. UI\Player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

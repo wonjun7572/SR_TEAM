@@ -2,6 +2,7 @@
 #include "..\Header\GetShotgun.h"
 #include "CubePlayer.h"
 #include "Inventory.h"
+#include "ItemCubeEffect.h"
 CGetShotgun::CGetShotgun(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CItem(pGraphicDev)
 {
@@ -37,7 +38,7 @@ _int CGetShotgun::Update_Object(const _float & fTimeDelta)
 	
 	CItem::Move_Item(fTimeDelta);
 	CItem::Update_Object(fTimeDelta);
-	
+	Effect();
 	return 0;
 }
 
@@ -82,6 +83,32 @@ HRESULT CGetShotgun::Add_Component(void)
 	m_mapComponent[ID_STATIC].insert({ CALCULATOR_COMP, pComponent });
 
 	return S_OK;
+}
+
+void CGetShotgun::Effect()
+{
+	CItemCubeEffect* pItemCubeEffect = nullptr;
+
+	if (!pItemCubeEffect)
+		pItemCubeEffect = dynamic_cast<CItemCubeEffect*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"ItemCubeEffect"));
+	_vec3 vPos;														//대쉬이펙트하려던것
+	_vec3 vDir;
+	_vec3 min = { -1.0f + rand() % 3 ,-1.0f + rand() % 3 ,-1.0f + rand() % 3 };
+	m_pTransCom->Get_Info(INFO_POS, &vPos);
+	m_pTransCom->Get_Info(INFO_POS, &vPos);
+
+	for (_int i = -1; i < 1; i++)
+	{
+		for (_int j = -1; j < 1; j++)
+		{
+			for (_int k = -1; k < 1; k++)
+			{
+				dynamic_cast<CItemCubeEffect*>(pItemCubeEffect)->Set_PclePos(vPos + _vec3(i, j, k)*0.0125f);
+				dynamic_cast<CItemCubeEffect*>(pItemCubeEffect)->Set_PcleDir(min);
+				pItemCubeEffect->addParticle();
+			}
+		}
+	}
 }
 
 CGetShotgun * CGetShotgun::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3 & vPos)

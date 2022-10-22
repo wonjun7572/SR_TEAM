@@ -19,8 +19,9 @@ public:
 		m_iTextAmount = iSize - 3;
 	}
 
+	void	SetPosition(_float _PositionX, _float _PositionY) { m_fPosX = _PositionX, m_fPosY = _PositionY; }
 	void   LetterDead() { m_bDead = true; }
-
+	
 public:
 	void         On_Switch() { m_bPowerSwitch = true; }
 	void         Off_Switch() { m_bPowerSwitch = false; }
@@ -53,7 +54,10 @@ private:
 	CRcTex*         m_pRcCom = nullptr;
 	CShader*	m_pShaderCom = nullptr;	
 	wstring         m_strLetterContents;
-	_float          m_fFontSize;
+	_float          m_fFontSizeX;
+	_float          m_fFontSizeY;
+	_float			m_fBoxSizeX;
+	_float			m_fBoxSizeY;
 	_float          m_fFontAlpha;
 	_tchar          szCntName[64];
 
@@ -61,6 +65,9 @@ private:
 	_bool			m_bAlphaSwitch = false;
 	_int			m_iTextAmount;
 	_int			m_iIndex;
+
+	_float			m_fPosX = 0.f;
+	_float			m_fPosY = 0.f;
 
 public:
 	static CLetterBox*   Create(LPDIRECT3DDEVICE9 pGraphicDev, _tchar* tDialogue, _int iSize, _int iIndex);

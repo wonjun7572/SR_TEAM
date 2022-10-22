@@ -254,7 +254,6 @@ void CFlight::Fly_Effect()
 {
 	_vec3 vPos;														// บา
 	_vec3 vDir;
-	CCubeParticle* m_pCubeParticle = nullptr;
 	if (!m_pCubeParticle)
 		m_pCubeParticle = dynamic_cast<CCubeParticle*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"CubeParticle"));
 	for (auto& iter : *(pMyLayer->Get_GamePairPtr()))

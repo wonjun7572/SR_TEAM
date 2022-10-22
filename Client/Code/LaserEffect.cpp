@@ -103,7 +103,7 @@ void CLaserEffect::resetParticle(ATTRIBUTE * attribute)
 	_vec3 max = _vec3(1.0f, 1.0f, 1.0f);
 
 
-	//	GetRandomVector(&attribute->vVelocity, &min, &max);
+		GetRandomVector(&attribute->vVelocity, &min, &max);
 	//	D3DXVec3Normalize(&attribute->vVelocity, &attribute->vVelocity);
 	attribute->vPos = m_vLaserEffectPos;
 	attribute->vPos.y += 0.1f;

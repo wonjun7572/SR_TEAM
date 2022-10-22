@@ -1,0 +1,204 @@
+﻿C:\Users\DecoyZ\Desktop\SR_TEAM\Client\Bin\ShaderFiles\Shader_Cube.hlsl(102,19-51): warning X3206: implicit truncation of vector type
+FXC : warning X4717: Effects deprecated for D3DCompiler_47
+  
+  compilation object save succeeded; see C:\Users\DecoyZ\Desktop\SR_TEAM\Client\Bin\Shader_Cube.cso
+FXC : warning X4717: Effects deprecated for D3DCompiler_47
+  
+  compilation object save succeeded; see C:\Users\DecoyZ\Desktop\SR_TEAM\Client\Bin\Shader_Rect.cso
+  stdafx.cpp
+  Alien.cpp
+  AnimationPlayer.cpp
+  CartridgeParticle.cpp
+  CubeParticle.cpp
+  DashCube.cpp
+  DefensiveEffect.cpp
+  DeffensiveMatrix.cpp
+  BaseMapping.cpp
+  BattleCursier.cpp
+  BrownCloudEffect.cpp
+  BubbleEffect.cpp
+  Bullet.cpp
+  BulletParicle.cpp
+  BulletUI.cpp
+  CloudEffect.cpp
+  ComboUI.cpp
+  CrossHeader.cpp
+  CubeArm.cpp
+  CubeBody.cpp
+  CubeFoot.cpp
+  컴파일하고 있습니다...
+  CubeHand.cpp
+  CubeHead.cpp
+  CubeLeg.cpp
+  CubePlayer.cpp
+  CubeShop.cpp
+  DynamicCamera.cpp
+  ExBullet.cpp
+  Explosion.cpp
+  FinalStage.cpp
+  FlameEffect.cpp
+  Flight.cpp
+  FlightBomb.cpp
+..\Code\FlightBomb.cpp(151): warning C4244: '인수': 'Engine::_int'에서 'FLOAT'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  FlightBulletParticle.cpp
+  FlightCamera.cpp
+  FlightSpot.cpp
+  HyperionStrike.cpp
+..\Code\HyperionStrike.cpp(188): warning C4244: '인수': 'Engine::_int'에서 'FLOAT'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+..\Code\HyperionStrike.cpp(189): warning C4244: '인수': 'Engine::_int'에서 'FLOAT'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+..\Code\HyperionStrike.cpp(190): warning C4244: '인수': 'Engine::_int'에서 'FLOAT'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  IceEffect.cpp
+  Key.cpp
+..\Code\Key.cpp(127): warning C4244: '인수': 'Engine::_int'에서 'FLOAT'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  KrakenBullet.cpp
+  KrakenEffect.cpp
+  컴파일하고 있습니다...
+  KrakenHit.cpp
+  KrakenParticle.cpp
+  Laser.cpp
+  LaserEffect.cpp
+  LaserPoint.cpp
+  LaserSpot.cpp
+  LoadingBar.cpp
+  MFieldEffect.cpp
+  MiddleBoss.cpp
+  Mob.cpp
+  Npc.cpp
+  ObjectCube.cpp
+  Ping.cpp
+  ProjectionEffect.cpp
+  Quest.cpp
+  RcEffect.cpp
+  RoundEffect.cpp
+  Shield.cpp
+  SoundWave.cpp
+  SparkEffect.cpp
+  컴파일하고 있습니다...
+  ExitButton.cpp
+  FireMan.cpp
+  GetShotgun.cpp
+..\Code\GetShotgun.cpp(106): warning C4244: '인수': 'Engine::_int'에서 'FLOAT'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  GetSniper.cpp
+..\Code\GetSniper.cpp(105): warning C4244: '인수': 'Engine::_int'에서 'FLOAT'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  GetUzi.cpp
+..\Code\GetUzi.cpp(112): warning C4244: '인수': 'Engine::_int'에서 'FLOAT'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  GunUI.cpp
+  HealthPotion.cpp
+  HitBarUI.cpp
+  Illusioner.cpp
+  ImguiMgr.cpp
+  Inventory.cpp
+  Item.cpp
+  ItemBox.cpp
+  ItemIcon.cpp
+..\Code\ItemIcon.cpp(257): warning C4244: '=': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+..\Code\ItemIcon.cpp(258): warning C4244: '=': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+..\Code\ItemIcon.cpp(304): warning C4244: '인수': 'LONG'에서 'Engine::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  ItemParticle.cpp
+  LetterBox.cpp
+..\Code\LetterBox.cpp(32): warning C4244: '인수': 'Engine::_float'에서 'const Engine::_uint'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+..\Code\LetterBox.cpp(155): warning C4305: '=': 'double'에서 'float'(으)로 잘립니다.
+  Loading.cpp
+  Logo.cpp
+  LogoBilboard.cpp
+  LogoCamera.cpp
+  컴파일하고 있습니다...
+  LogoUI.cpp
+  Magma.cpp
+  MainApp.cpp
+  MaxPlusHp.cpp
+  Meteor.cpp
+  Monster.cpp
+  MonsterMapping.cpp
+  MonsterParticle.cpp
+  MonsterUI.cpp
+  ObtainBullet.cpp
+  ObtainDefense.cpp
+  OptionButton.cpp
+  PlayButton.cpp
+  PlayerHpUI.cpp
+  PlayerMapping.cpp
+  PlayerUI.cpp
+  PoolMgr.cpp
+  ProjectileParticle.cpp
+  Shop.cpp
+  Shotgun.cpp
+  컴파일하고 있습니다...
+  ShotgunPart1.cpp
+  ShotgunPart2.cpp
+  ShotgunPart3.cpp
+  ShotgunPart4.cpp
+  Skeleton.cpp
+  SkyBox.cpp
+  Slime.cpp
+  Sniper.cpp
+  SniperPart1.cpp
+  SniperPart2.cpp
+  SniperPart3.cpp
+  SniperPart4.cpp
+  SpBullet.cpp
+  Stage.cpp
+  StaticCamera.cpp
+  RainbowCloudEffect.cpp
+  StaticField.cpp
+  Supporter.cpp
+  Supporter_Shotgun.cpp
+  Supporter_Uzi.cpp
+  컴파일하고 있습니다...
+  TargetCube.cpp
+  Terrain.cpp
+..\Code\Terrain.cpp(72): warning C4101: 'expn' :참조되지 않은 지역 변수입니다.
+  Terret.cpp
+  TestCube.cpp
+  Thorn.cpp
+  ToolScene.cpp
+  TraceEffect.cpp
+  TransAxisBox.cpp
+  Trap.cpp
+  TriggerFront.cpp
+  TriggerParticle.cpp
+  Uzi.cpp
+  UziPart1.cpp
+  UziPart2.cpp
+  UziPart3.cpp
+  UziPart4.cpp
+  UziPart5.cpp
+  Veneer.cpp
+  VerticalLine.cpp
+  Wall.cpp
+  컴파일하고 있습니다...
+  WallMapping.cpp
+  Warning_AnnihilateUI.cpp
+  Weapon.cpp
+  WeaponUI.cpp
+  ShotParticle.cpp
+  Zombie.cpp
+  KrakenLeg.cpp
+  Client.cpp
+  PlayerDefenseUI.cpp
+  PlayerFaceUI.cpp
+  KrakenBoss.cpp
+  Supporter_Sniper.cpp
+  HyperionEffect.cpp
+  ItemCubeEffect.cpp
+  TargetPointEffect.cpp
+  GraphEditor.cpp
+  ImCurveEdit.cpp
+  ImGradient.cpp
+  imgui.cpp
+  ImGuiFileBrowser.cpp
+  ImGuiFileDialog.cpp
+  ImGuizmo.cpp
+  imgui_demo.cpp
+  imgui_draw.cpp
+  imgui_impl_dx9.cpp
+  imgui_impl_win32.cpp
+  imgui_tables.cpp
+  imgui_widgets.cpp
+  ImSequencer.cpp
+     ../Bin\Client.lib 라이브러리 및 ../Bin\Client.exp 개체를 생성하고 있습니다.
+  코드를 생성하고 있습니다.
+  All 9075 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  코드를 생성했습니다.
+  Client.vcxproj -> C:\Users\DecoyZ\Desktop\SR_TEAM\Client\Default\../Bin\Client.exe
+  Client.vcxproj -> ../Bin\Client.pdb (Full PDB)
