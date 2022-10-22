@@ -424,10 +424,10 @@ CItemBox * CItemBox::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3 & vPos, _
 
 void CItemBox::Free(void)
 {
-	for (auto& iter : *(pMyLayer->Get_GamePairPtr()))
-	{
-		iter.second->Kill_Obj();
-	}
+	//for (auto& iter : *(pMyLayer->Get_GamePairPtr()))
+	//{
+	//	iter.second->Kill_Obj();
+	//}
 
 	for (auto iter : m_TcharList)
 	{

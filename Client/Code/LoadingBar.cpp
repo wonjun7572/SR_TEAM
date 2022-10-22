@@ -13,12 +13,6 @@ CLoadingBar::~CLoadingBar(void)
 HRESULT CLoadingBar::Ready_Object()
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
-	
-	if (m_fMin >= 0)
-	{
-		Power_On();
-		m_bPower = true;
-	}
 	return S_OK;
 }
 
@@ -32,13 +26,6 @@ _int CLoadingBar::Update_Object(const _float & fTimeDelta)
 
 void CLoadingBar::LateUpdate_Object(void)
 {
-	if (m_fMax <= 100.f)
-	{
-		Power_Off();
-		m_bPower = false;
-		this->Kill_Obj();
-
-	}
 	CGameObject::LateUpdate_Object();
 }
 

@@ -76,18 +76,13 @@ _int CMiddleBoss::Update_Object(const _float & fTimeDelta)
 {
 	if (m_bDead)
 	{	
-		//Create_Item();
+		Create_Item();
 		m_pComboUI->KillCntPlus();
-		//Monster_DeleteMapping();
-		//_float fMiddle_death = 1.0f;
-		//PlaySoundGun(L"Middle_Death.wav", SOUND_EFFECT, fMiddle_death);
-		//m_pTransCom->Move_Pos(&(_vec3(0.f, -1.f, 0.f) * fTimeDelta));
-		//_vec3 vPos;
-		//m_pTransCom->Get_Info(INFO_POS, &vPos);
-		//if (vPos.y < -10.f)
-		//{
-		//	return -1;
-		//}
+		Monster_DeleteMapping();
+		_float fMiddle_death = 1.0f;
+		PlaySoundGun(L"Middle_Death.wav", SOUND_EFFECT, fMiddle_death);
+		
+		return -1;
 	}
 
 	m_fTimeDelta = fTimeDelta;
@@ -1123,10 +1118,10 @@ CMiddleBoss * CMiddleBoss::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3 & v
 
 void CMiddleBoss::Free(void)
 {
-	for (auto& iter : *(pMyLayer->Get_GamePairPtr()))
-	{
-		iter.second->Kill_Obj();
-	}
+	//for (auto& iter : *(pMyLayer->Get_GamePairPtr()))
+	//{
+	//	iter.second->Kill_Obj();
+	//}
 
 	for (auto iter : m_TcharList)
 	{

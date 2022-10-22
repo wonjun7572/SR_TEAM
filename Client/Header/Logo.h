@@ -8,6 +8,7 @@ class COptionButton;
 class CExitButton;
 class CLogoUI;
 class CLoadingBar;
+
 class CLogo : public Engine::CScene
 {
 private:

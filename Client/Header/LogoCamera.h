@@ -36,7 +36,6 @@ private:
 	_bool			m_bFix = false;
 	_bool			m_bCheck = true;
 
-	_float			m_fDistnace = 13.f;
 private:
 	virtual void Free(void) override;
 };

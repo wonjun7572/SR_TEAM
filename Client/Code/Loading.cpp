@@ -18,13 +18,10 @@ CLoading::~CLoading()
 
 HRESULT CLoading::Ready_Loading(LOADINGID eID)
 {
-	m_iMax = 112;
+	m_iMax = 3819;
 	InitializeCriticalSection(&m_Crt);
-
 	m_hThread = (HANDLE)_beginthreadex(nullptr, 0, Thread_Main, this, 0, nullptr);
-
 	m_eID = eID;
-
 	return S_OK;
 }
 
@@ -342,10 +339,14 @@ _uint CLoading::Loading_ForStage(void)
 		m_iCur++;
 	}
 
+	if (m_iCur <= m_iMax)
+	{
+		m_iCur++;
+	}
+
 	if (m_iCur == m_iMax)
 	{
 		m_bFinish = true;
-
 	}
 	return 0;
 }
