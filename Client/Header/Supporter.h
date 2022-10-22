@@ -42,6 +42,8 @@ protected:
 
 	_bool				m_bGetOrder = false;
 	_bool				m_bOrdering = false;
+	_float				m_fShootingTime = 0.f;
+	_bool				m_bShooting = true;
 
 protected:
 	SUPPORTDROPID		m_DROP;

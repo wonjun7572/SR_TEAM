@@ -303,9 +303,9 @@ HRESULT CFinalStage::Ready_Layer_Environment(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"CartridgeParticle", pGameObject), E_FAIL);
 
-	pGameObject = CNpc::Create(m_pGraphicDev, _vec3(14.f, 0.5f, 10.f));
+	/*pGameObject = CNpc::Create(m_pGraphicDev, _vec3(14.f, 0.5f, 10.f));
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"NPC", pGameObject), E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"NPC", pGameObject), E_FAIL);*/
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 

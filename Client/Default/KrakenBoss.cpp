@@ -290,9 +290,9 @@ _int CKrakenBoss::Update_Pattern(_float fTimeDelta)
 
 			if (m_bAnihilate_First)
 				m_bAnihilate_First = false;
-			if (m_bAnihilate_First == false)
+			else if (m_bAnihilate_First == false)
 				m_bAnihilate_Second = false;
-			if (m_bAnihilate_Second == false)
+			else if (m_bAnihilate_Second == false)
 				m_bAnihilate_Third = false;
 		}
 		else
