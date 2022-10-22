@@ -38,7 +38,9 @@ private:
 	virtual _int		Update_Pattern(_float fTimeDelta);
 	void				Hit_Check(_float _deltaTime);
 	void				AttackHit(_float fDamage, _float fKnuckback);
-
+	void				Kraken_EffectParticle(void);
+	void				Kraken_LukerParticle(void);
+	void				Kraken_ReviveParticle(void);
 private:
 	HRESULT				Build(void);
 	void				Load_Animation(wstring FileName, _uint AnimationID);

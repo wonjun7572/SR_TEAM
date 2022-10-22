@@ -697,30 +697,42 @@ D3DXVec3Normalize(&vDir, &vDir);
 	if (Key_Pressing(DIK_C))
 	{
 
-		//_vec3 vPlayerPos;
-		//m_pPlayerTransCom->Get_Info(INFO_POS, &vPlayerPos);
+		_vec3 vPlayerPos;
+		m_pPlayerTransCom->Get_Info(INFO_POS, &vPlayerPos);
 
-		//if (!m_pKrakenEffectParticle)
-		//	m_pKrakenEffectParticle = dynamic_cast<CKrakenEffect*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"KraKenEffect"));
-		//if (m_pKrakenEffectParticle != nullptr)
-		//{
-		//	m_pKrakenEffectParticle->Set_PclePos(vPos);
-		//	for (_int i = 0; i < 150; ++i)
-		//	{
-		//		m_pKrakenEffectParticle->addParticle();
-		//	}
-		//}
-		//if (!m_pKrakenSmoke)
-		//	m_pKrakenSmoke = dynamic_cast<CKrakenParticle*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"KrakenParticle"));
-		//if (m_pKrakenSmoke != nullptr)
-		//{
-		//	m_pKrakenSmoke->Set_PclePos(vPos);
-		//	for (int i = 0; i < 150; ++i)
-		//	{
-		//		m_pKrakenSmoke->addParticle();
-		//	}
+		if (!m_pKrakenEffectParticle)
+			m_pKrakenEffectParticle = dynamic_cast<CKrakenEffect*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"KraKenEffect"));
+		if (m_pKrakenEffectParticle != nullptr)
+		{
+			m_pKrakenEffectParticle->Set_PclePos(vPos);
+			for (_int i = 0; i < 150; ++i)
+			{
+				m_pKrakenEffectParticle->addParticle();
+			}
+		}
+		if (!m_pKrakenSmoke)
+			m_pKrakenSmoke = dynamic_cast<CKrakenParticle*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"KrakenParticle"));
+		if (m_pKrakenSmoke != nullptr)
+		{
+			m_pKrakenSmoke->Set_PclePos(vPos);
+			for (int i = 0; i < 150; ++i)
+			{
+				m_pKrakenSmoke->addParticle();
+			}
 
-		//}
+		}
+
+
+		/*if (!m_pKrakenHit)
+			m_pKrakenHit = dynamic_cast<CKrakenHit*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"KrakenHit"));
+		if (m_pKrakenHit != nullptr)
+		{
+			m_pKrakenHit->Set_PclePos(vPos);
+			for (int i = 0; i < 150; ++i)
+			{
+				m_pKrakenHit->addParticle();
+			}
+		}*/
 
 
 
