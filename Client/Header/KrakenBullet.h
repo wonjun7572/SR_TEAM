@@ -23,9 +23,13 @@ private:
 public:
 	void			Set_Pos(const _vec3& vPos);
 	void			Set_Dir(const _vec3& vDir) { m_vDir = vDir; }
-	void			Restore(void) { m_bDead = false; }
+	void			Restore(void) { m_bDead = false, m_fTimeDelta = 0.f; }
 	void			Collision_Check(void);
+<<<<<<< HEAD
 	void			Kraken_BulletParticle(void);
+=======
+
+>>>>>>> main
 protected:
 	CTransform*			m_pKrakenBullet;
 	CSphereTex*				m_pSphereTex;
@@ -42,6 +46,7 @@ private:
 	_vec3					m_vPos;
 	_float					m_fSpeed = 10.f;
 
+	_float				m_fTimeDelta = 0.f;
 	_bool				m_bDamage = false;
 	_float				m_fDamage = 0.f;
 	CStaticCamera*		m_pStaticCam = nullptr;
