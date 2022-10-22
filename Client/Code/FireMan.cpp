@@ -30,6 +30,8 @@ HRESULT CFireMan::Ready_Object(const _vec3 & vPos, _tchar * Name)
 	m_tAbility->fDamage = 10.f;
 	m_tAbility->strObjTag = L"Fireman";
 
+	m_BeforeHp = m_tAbility->fMaxHp;
+
 	m_MonsterName = Name;
 
 	m_STATE = FIREMAN_IDLE;
@@ -110,6 +112,7 @@ _int CFireMan::Update_Object(const _float & fTimeDelta)
 		Load_Animation(L"../../Data/Fireman/Fireman_Walk_2.dat", 4);
 
 		Load_Animation(L"../../Data/Fireman/Fireman_Attack_1.dat", 5);
+		Load_Animation(L"../../Data/Fireman/Fireman_Attack_2.dat", 6);
 	}
 
 
@@ -136,7 +139,7 @@ _int CFireMan::Update_Object(const _float & fTimeDelta)
 	//D3DXVec3Normalize(&vDir, &vDir);
 	vDir.y = 0.f;
 
-	m_fFrame += fTimeDelta;
+	m_fInterval += fTimeDelta;
 	
 		if (m_pCollision->Sphere_Collision(this->m_pRunawayRange_TransCom, m_pPlayerTransCom, vPlayerScale.x, vRunScale.x)/* && (m_STATE != FIREMAN_ATTACK)*/)
 		{
@@ -156,12 +159,13 @@ _int CFireMan::Update_Object(const _float & fTimeDelta)
 			m_pCollision->Wall_Collision_Check(this->m_pTransCom, this->m_pHitBox, &vDir);
 			if (m_iSphereSkillTag != SKILL_STATICFIELD)
 				m_pTransCom->Chase_Target_By_Direction(&vDir, 0.f, fTimeDelta);
-			m_STATE = FIREMAN_ATTACK;
 
-			if (m_AnimationTime >= 1.f)
-			{
-				CPoolMgr::GetInstance()->Reuse_Obj(m_pGraphicDev, &vPos, &vDir, 10);
-			}
+				m_STATE = FIREMAN_ATTACK;
+
+				if (m_AnimationTime >= 1.f && m_ATTACK == FIREMANATTACK_1)
+				{
+					CPoolMgr::GetInstance()->Reuse_Obj(m_pGraphicDev, &vPos, &vDir, 10);
+				}
 		}
 		else if (m_pCollision->Sphere_Collision(this->m_pSearchRange_TransCom, m_pPlayerTransCom, vPlayerScale.x, vSearchScale.x)/* && (m_STATE != FIREMAN_ATTACK)*/)
 		{
@@ -217,7 +221,7 @@ void CFireMan::LateUpdate_Object(void)
 			else if (m_STATE == FIREMAN_ATTACK)
 			{
 				Attack_Animation_Run();
-				Run_Animation(5.f);
+				Run_Animation(10.f);
 			}
 		}
 	}
@@ -700,8 +704,10 @@ void CFireMan::Attack_Animation_Run(void)
 			Qtan->Delete_WorldVector();
 		}
 
-		//if (m_ATTACK == FIREMANATTACK_1)
-		//	m_ATTACK = FIREMANATTACK_END;
+		if (m_ATTACK == FIREMANATTACK_1)
+			m_ATTACK = FIREMANATTACK_2;
+		else if (m_ATTACK == FIREMANATTACK_2)
+			m_ATTACK = FIREMANATTACK_1;
 
 		m_AnimationTime = 0.f;
 	}

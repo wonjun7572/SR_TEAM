@@ -17,6 +17,9 @@ public:
 	virtual void	LateUpdate_Object(void) override;
 	virtual void	Render_Object(void) override;
 
+public:
+	void			Set_CollisionDmg() { m_tAbility->fCurrentHp -= 50.f; }
+
 private:
 	_int			Update_Pattern(_float fTimeDelta);
 	void			Hit_Check(_float _deltaTime);
@@ -97,6 +100,7 @@ protected:
 private:
 	_float				m_ReloadTimer = 0.f;
 
+	_float				m_fBeforeHp;
 	_float				m_fFrame = 0.f;
 	_float				m_fTargetLength;
 	_float				m_fDetectRange;

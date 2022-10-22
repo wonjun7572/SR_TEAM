@@ -31,6 +31,8 @@ HRESULT CSlime::Ready_Object(const _vec3& vPos, _tchar* Name)
 	m_tAbility->fDamage = 10.f;
 	m_tAbility->strObjTag = L"Slime";
 
+	m_BeforeHp = m_tAbility->fMaxHp;
+
 	m_MonsterName = Name;
 
 	m_STATE = SLIME_JUMP;
@@ -51,7 +53,7 @@ HRESULT CSlime::Ready_Object(const _vec3& vPos, _tchar* Name)
 	m_pHitBoxTransCom->Set_Pos(vAnimationPos.x, vAnimationPos.y, vAnimationPos.z);
 	m_pHitBoxTransCom->Static_Update();
 
-	m_pSphereTransCom->Set_Scale(&_vec3(10.f, 10.f, 10.f));
+	m_pSphereTransCom->Set_Scale(&_vec3(1.f, 1.f, 1.f));
 	m_pSphereTransCom->Set_Pos(vAnimationPos.x, vAnimationPos.y, vAnimationPos.z);
 	m_pSphereTransCom->Static_Update();
 
@@ -105,29 +107,38 @@ _int CSlime::Update_Object(const _float & fTimeDelta)
 		m_pTransCom->Get_Info(INFO_POS, &vPos);
 		_vec3 vSearchScale;
 		m_pSearchRange_TransCom->Get_Scale(&vSearchScale);
+		_vec3 vAttackScale;
+		m_pSphereTransCom->Get_Scale(&vSearchScale);
 
+		if (m_pCollision->Sphere_Collision(this->m_pSphereTransCom, m_pPlayerTransCom, vAttackScale.x, vPlayerScale.x))
+		{
+			if (m_AnimationTime >= 1.f)
+			{
+				CLayer* pLayer = Engine::Get_Layer(STAGE_CHARACTER);
+				CCubePlayer* pPlayer = dynamic_cast<CCubePlayer*>(pLayer->Get_GameObject(L"PLAYER"));
 
-		if (this->m_pSearchRange_TransCom, m_pPlayerTransCom, vPlayerScale.x, vSearchScale.x)
+				m_pTransCom->Chase_Target(&vPlayerPos, 0.f, fTimeDelta);
+
+				pPlayer->KnuckDown(10.f, 5.f);
+			}
+		}
+		else if (m_pCollision->Sphere_Collision(this->m_pSearchRange_TransCom, m_pPlayerTransCom, vSearchScale.x, vPlayerScale.x))
 		{
 			if (m_iSphereSkillTag != SKILL_STATICFIELD)
 			{
 				m_pTransCom->Chase_Target(&vPlayerPos, 1.f, fTimeDelta);
-				m_bDetect = true;
+				//m_bDetect = true;
 			}
-		}
-		else
-		{
-			if (m_iSphereSkillTag != SKILL_STATICFIELD)
-				m_pTransCom->Chase_Target(&vPlayerPos, 0.f, fTimeDelta);
 		}
 
 		if (m_iSphereSkillTag != SKILL_STATICFIELD)
-		Look_Direction();
+			Look_Direction();
 
 		_vec3 vMonsterPos;
 		m_pTransCom->Get_Info(INFO_POS, &vMonsterPos);
 		m_pHitBoxTransCom->Set_Pos(vMonsterPos.x, vMonsterPos.y, vMonsterPos.z);
 		m_pSphereTransCom->Set_Pos(vMonsterPos.x, vMonsterPos.y, vMonsterPos.z);
+		m_pSearchRange_TransCom->Set_Pos(vMonsterPos.x, vMonsterPos.y, vMonsterPos.z);
 	}
 	Sound();
 	return 0;

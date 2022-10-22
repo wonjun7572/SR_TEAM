@@ -37,10 +37,12 @@ HRESULT CKrakenBullet::Ready_Object(const _vec3 * vPos, const _vec3 * vDir, _flo
 
 _int CKrakenBullet::Update_Object(const _float & fTimeDelta)
 {
+	m_fTimeDelta += fTimeDelta;
 
-	if (m_bDead)
+	if (m_fTimeDelta >= 10.f)
 	{
 		CPoolMgr::GetInstance()->Collect_KraKenBullet(this);
+		dynamic_cast<CHitBarUI*>(m_pHitBarUI)->OffSwitch();
 		return -1;
 	}
 	CGameObject::Update_Object(fTimeDelta);
@@ -62,6 +64,33 @@ _int CKrakenBullet::Update_Object(const _float & fTimeDelta)
 void CKrakenBullet::LateUpdate_Object(void)
 {
 	Collision_Check();
+
+	if (!Get_Layer(STAGE_SKILL)->Get_GameList().empty())
+	{
+		m_pKrakenBullet->Static_Update();
+
+		_vec3 vBullet;
+		m_pKrakenBullet->Get_Scale(&vBullet);
+
+		for (auto& iter : Get_Layer(STAGE_SKILL)->Get_GameList())
+		{
+			if (iter->GetSphereSkillTag() == SKILL_SHIELD)
+			{
+				CTransform* pTransform = dynamic_cast<CTransform*>(iter->Get_Component(TRANSFORM_COMP, ID_DYNAMIC));
+				CHitBox* pHitbox = dynamic_cast<CHitBox*>(iter->Get_Component(HITBOX_COMP, ID_STATIC));
+
+				_vec3 vShield;
+				pTransform->Get_Scale(&vShield);
+
+				if (m_pCollision->Sphere_Collision(this->m_pKrakenBullet, pTransform, vBullet.x, vShield.x))
+				{
+					this->Kill_Obj();
+					break;
+				}
+			}
+		}
+	}
+
 	CGameObject::LateUpdate_Object();
 }
 
@@ -165,9 +194,6 @@ void CKrakenBullet::Collision_Check(void)
 	}
 
 }
-
-
-
 
 CKrakenBullet * CKrakenBullet::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3 * vPos, const _vec3 * vDir, _float _fSpeed, _float _fDamage)
 {

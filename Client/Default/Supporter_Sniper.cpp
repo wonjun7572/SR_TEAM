@@ -126,7 +126,8 @@ _int CSupporter_Sniper::Update_Object(const _float & fTimeDelta)
 			m_bOrdering = true;
 		}
 
-		m_pTransform->Chase_Target(&m_vOrderPos, 5.f, fTimeDelta);
+		if (m_STATE != SNIPERSUPPORT_ATTACK)
+			m_pTransform->Chase_Target(&m_vOrderPos, 5.f, fTimeDelta);
 
 		_vec3 vPosition;
 		m_pTransform->Get_Info(INFO_POS, &vPosition);

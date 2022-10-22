@@ -39,6 +39,8 @@ HRESULT CStaticCamera::Ready_Object(const _vec3* pEye,
 	m_fNear = fNear;
 	m_fFar = fFar;
 
+	m_fPlayerFrame = 0.f;
+
 	m_bMainCameraOn = true;
 
 	m_fDistance = 10.f;
@@ -116,7 +118,7 @@ Engine::_int CStaticCamera::Update_Object(const _float& fTimeDelta)
 	//m_fFlightFrame += fTimeDelta * 0.5f;
 	//m_fBombFrame += fTimeDelta * 0.5f;
 	//m_fShuttleFrame += fTimeDelta * 0.15f;
-	m_fPlayerFrame += fTimeDelta * 0.05f;
+	m_fPlayerFrame += fTimeDelta *0.05f;
 	m_fFrame += fTimeDelta;
 	m_fFlightFrame += fTimeDelta;
 	m_fBombFrame += fTimeDelta;
@@ -402,7 +404,7 @@ void CStaticCamera::Look_Target(const _float& _fTimeDelta)
 		{
 			m_fFov = D3DXToRadian(60.f);
 			m_vEye += vTransLerp + (vLook * m_fFlightFrame * 10.f);
-			m_vAt = vTransLerp + (vUp* m_fFlightFrame * 2.f) + (-vLook * m_fFlightFrame * 1.f);
+			m_vAt = vFlightPos;//vTransLerp + (vUp* m_fFlightFrame * 2.f) + (-vLook * m_fFlightFrame * 1.f);
 		}
 		else
 		{
@@ -440,7 +442,7 @@ void CStaticCamera::Look_Target(const _float& _fTimeDelta)
 		{
 			m_fFov = D3DXToRadian(60.f);
 			m_vEye += vTransLerp + (vRight * m_fShuttleFrame * 10.f) + (vUp * m_fShuttleFrame * 5.f);
-			m_vAt = vTransLerp + (vRight* m_fShuttleFrame * 2.f);
+			m_vAt = vShuttlePos;//vTransLerp + (vRight* m_fShuttleFrame * 2.f);
 		}
 		else
 		{
