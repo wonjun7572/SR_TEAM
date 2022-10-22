@@ -35,6 +35,7 @@ private:
 	void			Idle_Animation_Run(void);
 	void			NormalAttack_Animation_Run(void);
 	void			Bombing_Animation_Run(void);
+	void			Dead_Animation_Run(void);
 
 private:
 	void			Set_OnTerrain(void);
@@ -60,6 +61,7 @@ private:
 	MIDDLEBOSSBOMBINGID			m_BOMBING;
 	MIDDLEBOSSCRASHID			m_CRASH;
 	MIDDLEBOSSSKILLID			m_PATTERN;
+	MIDDLEBOSSDEADID			m_DEAD;
 
 private:
 	HRESULT				Create_Item();
