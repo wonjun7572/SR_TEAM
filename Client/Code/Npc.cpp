@@ -3,6 +3,8 @@
 #include "StaticCamera.h"
 #include "ItemBox.h"
 #include "MiddleBoss.h"
+#include "ProjectionEffect.h"
+#include "TargetPointEffect.h"
 
 CNpc::CNpc(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
@@ -47,7 +49,7 @@ _int CNpc::Update_Object(const _float & fTimeDelta)
 	{
 		Quest3(fTimeDelta);
 	}
-
+	Projection_Effect();
 	return 0;
 }
 
@@ -145,7 +147,9 @@ void CNpc::Quest1(const _float& fTimeDelta)
 
 	if (m_fTransFrame0 <= 1.f)
 	{
-		m_bQuest1 = true;
+		m_bEffect1 = true;
+
+		m_bQuest1 = true;															//켜주는곳
 		m_fTransFrame0 += fTimeDelta * 0.2f;
 		_vec3 vTransLerp;
 		D3DXVec3Lerp(&vTransLerp, &vPlayerPos, &m_vPlayerPos, m_fTransFrame0);
@@ -182,10 +186,11 @@ void CNpc::Quest1(const _float& fTimeDelta)
 			Add_RenderGroup(RENDER_EFFECT_UI, this);
 		}
 		else
-		{
+		{																				//꺼주는곳
 			m_bQuest1 = false;
 			m_bInit = false;
 			m_bQuestText1 = true;
+			m_bEffect1 = false;
 			m_fTexFrame = 0.f;
 			m_fTransFrame0 = 0.f;
 			m_fScaleFrame0 = 0.f;
@@ -214,6 +219,8 @@ void CNpc::Quest2(const _float & fTimeDelta)
 
 	if (m_fTransFrame0 <= 1.f)
 	{
+		m_bEffect2 = true;
+
 		m_bQuest2 = true;
 		m_fTransFrame0 += fTimeDelta * 0.2f;
 		_vec3 vTransLerp;
@@ -252,6 +259,7 @@ void CNpc::Quest2(const _float & fTimeDelta)
 		}
 		else
 		{
+			m_bEffect2 = false;
 			m_bQuest2 = false;
 			m_bInit = false;
 			m_bQuestText2 = true;
@@ -283,6 +291,7 @@ void CNpc::Quest3(const _float & fTimeDelta)
 
 	if (m_fTransFrame0 <= 1.f)
 	{
+		m_bEffect3 = true;
 		m_bQuest3 = true;
 		m_fTransFrame0 += fTimeDelta * 0.2f;
 		_vec3 vTransLerp;
@@ -321,6 +330,7 @@ void CNpc::Quest3(const _float & fTimeDelta)
 		}
 		else
 		{
+			m_bEffect3 = false;
 			m_bQuest3 = false;
 			m_bInit = false;
 			m_bQuestText3 = true;
@@ -328,6 +338,98 @@ void CNpc::Quest3(const _float & fTimeDelta)
 			m_fTransFrame0 = 0.f;
 			m_fScaleFrame0 = 0.f;
 			m_fScaleFrame1 = 0.f;
+		}
+	}
+}
+
+void CNpc::Projection_Effect(void)
+{
+	if (m_bQuest1)
+	{
+		CProjectionEffect* m_pProjectionEffect = nullptr;
+		if (!m_pProjectionEffect)
+		m_pProjectionEffect = dynamic_cast<CProjectionEffect*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"ProjectionEffect"));
+		
+		_vec3 vPos;													//대쉬이펙트하려던것		
+		_vec3 vRootPos;
+		_vec3 vDir;
+		_vec3 min = { -1.0f ,-1.0f ,-1.0f };
+		_vec3 max = { 1.0f ,1.0f ,.0f };		
+		m_pTransCom->Get_Info(INFO_POS, &vPos);
+		vPos.z += 12.5f;
+		vRootPos = vPos;
+		vRootPos.y = 10.f;
+		vRootPos.z = 55.f;
+		for (_int i = -7; i < 7; i++)
+		{
+			for (_int j = -7; j < 7; j++)
+			{
+				for (_int k = -7; k < 7; k++)
+				{
+					//D3DXVec3Normalize(&min, &_vec3(i, j, k));
+		
+					dynamic_cast<CProjectionEffect*>(m_pProjectionEffect)->Set_PclePos(vRootPos+ _vec3(i, j, k)*0.005f);
+					dynamic_cast<CProjectionEffect*>(m_pProjectionEffect)->Set_PcleDir(_vec3(i, j, k)*0.15f);
+					dynamic_cast<CProjectionEffect*>(m_pProjectionEffect)->Set_PcleMoveDir((vPos- vRootPos)*0.1f);
+					m_pProjectionEffect->addParticle();		
+				}
+			}
+		}
+	}
+	if (m_bEffect2)
+	{
+		CTargetPointEffect* m_pTargetPointEffect = nullptr;
+		if (!m_pTargetPointEffect)
+		m_pTargetPointEffect = dynamic_cast<CTargetPointEffect*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"TargetPointEffect"));
+		
+		_vec3 vPos;														//대쉬이펙트하려던것		
+		_vec3 vDir;
+		_vec3 min = { -1.0f ,-1.0f ,-1.0f };
+		_vec3 max = { 1.0f ,1.0f ,1.0f };
+		
+		m_pTransCom->Get_Info(INFO_POS, &vPos);
+		vPos.z -= 2.f;
+		for (_int i = -5; i < 5; i++)
+		{
+			for (_int j = -5; j < 5; j++)
+			{
+				for (_int k = -5; k < 5; k++)
+				{
+					//D3DXVec3Normalize(&min, &_vec3(i, j, k));								
+					dynamic_cast<CTargetPointEffect*>(m_pTargetPointEffect)->Set_PclePos(vPos + _vec3(i, j, k)*0.1f);		
+					dynamic_cast<CTargetPointEffect*>(m_pTargetPointEffect)->Set_PcleDir(_vec3(i, j, k)*1.f);
+					dynamic_cast<CTargetPointEffect*>(m_pTargetPointEffect)->Set_PcleMoveDir(max);		
+					m_pTargetPointEffect->addParticle();		
+				}
+			}
+		}
+	}
+	if (m_bEffect3)
+	{
+		CTargetPointEffect* m_pTargetPointEffect = nullptr;
+		if (!m_pTargetPointEffect)
+			m_pTargetPointEffect = dynamic_cast<CTargetPointEffect*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"TargetPointEffect"));
+
+		_vec3 vPos;														//대쉬이펙트하려던것		
+		_vec3 vDir;
+		_vec3 min = { -1.0f ,-1.0f ,-1.0f };
+		_vec3 max = { 1.0f ,1.0f ,1.0f };
+
+		m_pTransCom->Get_Info(INFO_POS, &vPos);
+		vPos.z -= 2.f;
+		for (_int i = -5; i < 5; i++)
+		{
+			for (_int j = -5; j < 5; j++)
+			{
+				for (_int k = -5; k < 5; k++)
+				{
+					//D3DXVec3Normalize(&min, &_vec3(i, j, k));								
+					dynamic_cast<CTargetPointEffect*>(m_pTargetPointEffect)->Set_PclePos(vPos + _vec3(i, j, k)*0.1f);
+					dynamic_cast<CTargetPointEffect*>(m_pTargetPointEffect)->Set_PcleDir(_vec3(i, j, k)*1.f);
+					dynamic_cast<CTargetPointEffect*>(m_pTargetPointEffect)->Set_PcleMoveDir(max);
+					m_pTargetPointEffect->addParticle();
+				}
+			}
 		}
 	}
 }
