@@ -43,6 +43,7 @@ private:
 private:
 	_uint			m_MissileCnt = 0;
 	_float			m_fMissileItv = 0.f;
+	_float			m_fLaserTime = 0.f;
 
 	_float			m_fTimeDelta = 0.f;
 	_bool			m_bFirst = true;

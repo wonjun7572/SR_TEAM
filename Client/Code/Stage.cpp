@@ -79,6 +79,8 @@
 #include "Npc.h"
 #include "Quest.h"
 
+#include "LaserSpot.h"
+
 CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CScene(pGraphicDev)
 {
@@ -308,6 +310,10 @@ HRESULT CStage::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pLayer, E_FAIL);
 
 	CGameObject*      pGameObject = nullptr;
+
+	pGameObject = CLaserSpot::Create(m_pGraphicDev, _vec3(10.f, 0.f, 10.f));
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"LaserSpot", pGameObject), E_FAIL);
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
