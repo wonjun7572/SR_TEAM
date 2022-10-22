@@ -104,7 +104,7 @@ void CItemCubeEffect::resetParticle(ATTRIBUTE * attribute)
 	GetRandomVector(&attribute->vVelocity, &min, &max);
 	D3DXVec3Normalize(&attribute->vVelocity, &attribute->vVelocity);*/
 	attribute->vPos = m_vItemCubeEffectPos*1.f;
-	attribute->vVelocity = m_vDir * (-2+rand()%4);
+	attribute->vVelocity = m_vDir * (_float)(-2+rand()%4);
 	attribute->dwColor = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
 	//attribute->dwColor = D3DXCOLOR(GetRandomFloat(0.25f, 1.f), GetRandomFloat(0.5f, .75f), GetRandomFloat(0.25f, 1.f), 1.0f);
 

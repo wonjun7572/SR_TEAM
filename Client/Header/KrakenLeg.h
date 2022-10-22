@@ -34,7 +34,6 @@ public:
 	}
 	_bool         Get_Annihilate(void) { return m_bAnnihilateReady; }
 
-	_bool			Get_Annihilate(void) { return m_bAnnihilateReady; }
 
 private:
 	void				Look_Direction(void);
