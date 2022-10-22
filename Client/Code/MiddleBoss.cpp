@@ -14,6 +14,8 @@
 #include "Explosion.h"
 #include "Veneer.h"
 
+#include "Flight.h"
+
 static _int m_iCnt = 0;
 
 CMiddleBoss::CMiddleBoss(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -171,6 +173,11 @@ void CMiddleBoss::LateUpdate_Object(void)
 
 		m_pMonsterUI->Off_Switch();
 		//this->Kill_Obj();
+
+		CGameObject* pGameObject = dynamic_cast<CFlight*>(Get_GameObject(STAGE_FLIGHTPLAYER, L"FLIGHTSHUTTLE"));
+
+		if (dynamic_cast<CFlight*>(pGameObject)->Get_Ending() == false)
+			dynamic_cast<CFlight*>(pGameObject)->Set_Ending(true);
 	}
 	else
 	{
