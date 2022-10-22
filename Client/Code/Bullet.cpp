@@ -71,7 +71,7 @@ _int CBullet::Update_Object(const _float & fTimeDelta)
 			{
 				fAngle = D3DX_PI * 2.f - fAngle;
 			}
-			
+
 			dynamic_cast<CHitBarUI*>(m_pHitBarUI)->OnSwitch(fAngle);
 		}
 

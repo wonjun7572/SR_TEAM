@@ -7,7 +7,7 @@
 CKrakenEffect::CKrakenEffect(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CPSystem(pGraphicDev)
 {
-	m_fSize = .01f;
+	m_fSize = .075f;
 	m_vbSize = 2048;
 	m_vbOffset = 0;
 	m_vbBatchSize = 512;
@@ -30,9 +30,10 @@ _int CKrakenEffect::Update_Object(const _float & fTimeDelta)
 {
 	for (list<ATTRIBUTE>::iterator iter = m_particles.begin(); iter != m_particles.end(); iter++)
 	{
+		_vec3 vDirection = { 0.f, 1.f, 0.f };
 		iter->fAge += fTimeDelta;
 		iter->vPos += (iter->vVelocity) * fTimeDelta * .1f;
-		//iter->vPos.y -= 0.01f* (m_fGravity*iter->fAge)*(m_fGravity* iter->fAge) * fTimeDelta;
+		iter->vPos.y += vDirection.y * (m_fGravity*iter->fAge)*(m_fGravity* iter->fAge) * fTimeDelta;
 
 		if (iter->fAge > iter->fLifeTime)
 		{
@@ -68,9 +69,9 @@ HRESULT CKrakenEffect::Add_Component(void)
 {
 	CComponent* pComponent = nullptr;
 
-	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Clone_Proto(L"LightGreen_Tex"));
+	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Clone_Proto(L"White_Tex"));
 	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"LightGreen_Tex", pComponent });
+	m_mapComponent[ID_STATIC].insert({ L"White_Tex", pComponent });
 
 	return S_OK;
 }
@@ -97,16 +98,18 @@ void CKrakenEffect::resetParticle(ATTRIBUTE * attribute)
 {
 	attribute->bAlive = true;
 	CTransform* pTransform = nullptr;
-	m_fGravity = 15.f;
+	m_fGravity = 0.f;
 	_vec3 min = _vec3(-1.0f, -1.0f, -1.0f);
-	_vec3 max = _vec3(1.0f, 1.0f, 1.0f);
+	_vec3 max = _vec3(1.0f, 1.f, 1.0f);
+	_vec3 vDirection = { 0.f, 1.f, 0.f };
+	_float fRand = (rand() % 5)*0.1f;
 	GetRandomVector(&attribute->vVelocity, &min, &max);
 	D3DXVec3Normalize(&attribute->vVelocity, &attribute->vVelocity);
 	D3DXVec3Normalize(&m_vDir, &m_vDir);
-	attribute->vPos = m_vCubePatriclePos + attribute->vVelocity / .5f;
-	attribute->vPos += m_vDir*1.5f;
-	attribute->vPos.y -= attribute->vVelocity.y / 5.f;
-	attribute->dwColor = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+	attribute->vPos = m_vCubePatriclePos + attribute->vVelocity;
+	attribute->vPos += m_vDir;
+	attribute->vPos.y -= attribute->vVelocity.y + 0.35f;
+	attribute->dwColor = D3DXCOLOR(0.25f - fRand, 0.25f - fRand, 0.25f - fRand, 1.f);
 	attribute->fAge = 0.0f;
 	attribute->fLifeTime = .5f;
 }

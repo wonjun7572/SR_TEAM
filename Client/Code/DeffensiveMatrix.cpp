@@ -22,6 +22,7 @@ HRESULT CDeffensiveMatrix::Ready_Object(const _vec3 & Position)
 	m_vPos = Position;	
 	m_vScale = { .5f,.5f,.5f };
 	m_fSpeed = 5.f;
+	m_fDuration = 3.f;
 	m_pTransCom->Set_Pos(m_vPos.x, m_vPos.y, m_vPos.z);
 	m_pTransCom->Set_Scale(m_vScale.x, m_vScale.y, m_vScale.z);
 	return S_OK;
@@ -116,7 +117,7 @@ void CDeffensiveMatrix::Scaling()
 
 void CDeffensiveMatrix::Dead()
 {
-	if (m_fTimer > 5.f)
+	if (m_fTimer > m_fDuration)
 		m_bDead = true;
 }
 
@@ -131,15 +132,15 @@ void CDeffensiveMatrix::DeadParticle()
 
 	CDefensiveEffect* pDefensiveEffect = nullptr;
 	pDefensiveEffect = dynamic_cast<CDefensiveEffect*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"DefensiveEffect"));
-	for (_int i = -5; i < 5; i++)
+	for (_float i = -5.f; i < 5.f; i++)
 	{
-		for (_int j = -5; j < 5; j++)
+		for (_float j = -5.f; j < 5.f; j++)
 		{
-			for (_int k = -5; k < 5; k++)
+			for (_float k = -5.f; k < 5.f; k++)
 			{
 				D3DXVec3Normalize(&min, &_vec3(i, j, k));						
 
-				dynamic_cast<CDefensiveEffect*>(pDefensiveEffect)->Set_PclePos(vPos + _vec3(i, j, k)*vScale.x/4);
+				dynamic_cast<CDefensiveEffect*>(pDefensiveEffect)->Set_PclePos(vPos + _vec3(i, j, k) * vScale.x / 4.f);
 
 				dynamic_cast<CDefensiveEffect*>(pDefensiveEffect)->Set_CenterPos(vPos);
 

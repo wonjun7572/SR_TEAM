@@ -44,9 +44,12 @@ _int CNpc::Update_Object(const _float & fTimeDelta)
 
 	if (pCam != nullptr && pCam->Get_bNpc() == true)
 	{
-		if (m_fFrame < 1.f)
-			m_fFrame += fTimeDelta * 0.01f;
+		if (m_fFrame <= 1.f)
+			m_fFrame += fTimeDelta * 0.05f;
 
+		if (m_fFrame > 0.9f && m_fTexFrame < 52.5f)
+			m_fTexFrame += fTimeDelta * 3.f;
+		
 		_vec3 vScaleLerp;
 		D3DXVec3Lerp(&vScaleLerp, &_vec3(0.f, 0.f, 0.f), &m_vScale, m_fFrame);
 		m_pTransCom->Set_Scale(&vScaleLerp);
@@ -58,16 +61,36 @@ _int CNpc::Update_Object(const _float & fTimeDelta)
 		CGameObject::Update_Object(fTimeDelta);
 		m_pTransCom->Billboard_Transform(fTimeDelta);
 		Add_RenderGroup(RENDER_UI, this);
-		return 0;
 	}
 	return 0;
 }
 
 void CNpc::Render_Object(void)
 {
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransCom->Get_WorldMatrixPointer());
-	m_pTextureCom->Set_Texture();
+	_matrix      matWorld, matView, matProj;
+
+	matWorld = *m_pTransCom->Get_WorldMatrixPointer();
+	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
+	m_pGraphicDev->GetTransform(D3DTS_PROJECTION, &matProj);
+
+	D3DXMatrixTranspose(&matWorld, &matWorld);
+	D3DXMatrixTranspose(&matView, &matView);
+	D3DXMatrixTranspose(&matProj, &matProj);
+
+	if (FAILED(m_pShaderCom->Set_RawValue("g_WorldMatrix", &matWorld, sizeof(_matrix))))
+		return;
+	if (FAILED(m_pShaderCom->Set_RawValue("g_ViewMatrix", &matView, sizeof(_matrix))))
+		return;
+	if (FAILED(m_pShaderCom->Set_RawValue("g_ProjMatrix", &matProj, sizeof(_matrix))))
+		return;
+
+	_uint iTexindex = _uint(m_fTexFrame);
+	m_pQuest1TexCom->Set_Texture(m_pShaderCom, "g_DefaultTexture", iTexindex);
+
+
+	m_pShaderCom->Begin_Shader(1);
 	m_pBufferCom->Render_Buffer();
+	m_pShaderCom->End_Shader();
 }
 
 HRESULT CNpc::Add_Component(void)
@@ -78,13 +101,28 @@ HRESULT CNpc::Add_Component(void)
 	NULL_CHECK_RETURN(m_pBufferCom, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ RCTEX_COMP, pComponent });
 
-	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Clone_Proto(L"LetterBox_Tex"));
+	// Quest1 모음집
+	pComponent = m_pQuest1TexCom = dynamic_cast<CTexture*>(Clone_Proto(L"LetterBox_Tex"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"LetterBox_Tex", pComponent });
+
+	// Quest2 모음집
+	pComponent = m_pQuest2TexCom = dynamic_cast<CTexture*>(Clone_Proto(L"LetterBox_Tex_2"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[ID_STATIC].insert({ L"LetterBox_Tex_2", pComponent });
+
+	// Quest3 모음집
+	pComponent = m_pQuest3TexCom = dynamic_cast<CTexture*>(Clone_Proto(L"LetterBox_Tex_3"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[ID_STATIC].insert({ L"LetterBox_Tex_3", pComponent });
 
 	pComponent = m_pTransCom = dynamic_cast<CTransform*>(Clone_Proto(TRANSFORM_COMP));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ TRANSFORM_COMP, pComponent });
+
+	pComponent = m_pShaderCom = dynamic_cast<CShader*>(Clone_Proto(RCTEX_SHADER));
+	NULL_CHECK_RETURN(m_pShaderCom, E_FAIL);
+	m_mapComponent[ID_STATIC].insert({ RCTEX_SHADER, pComponent });
 
 	return S_OK;
 }

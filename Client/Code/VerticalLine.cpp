@@ -30,7 +30,7 @@ _int CVerticalLine::Update_Object(const _float & fTimeDelta)
 	for (list<ATTRIBUTE>::iterator iter = m_particles.begin(); iter != m_particles.end(); iter++)
 	{
 		iter->fAge += fTimeDelta;
-		iter->vPos += (iter->vVelocity) * fTimeDelta * (-1 + rand() % 3) * .5f;
+		iter->vPos += (iter->vVelocity) * fTimeDelta * _float(-1 + rand() % 3) * .5f;
 		//iter->vPos.y -= 0.01f* (m_fGravity*iter->fAge)*(m_fGravity* iter->fAge) * fTimeDelta;
 
 		if (iter->fAge > iter->fLifeTime)

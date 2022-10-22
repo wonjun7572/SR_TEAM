@@ -394,6 +394,15 @@
     <Filter Include="02. GameObject\01. For_Stage\06. Bullet\Laser">
       <UniqueIdentifier>{97dc89cc-42c4-423f-853c-0d623c22f11c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\ProjectionEffect">
+      <UniqueIdentifier>{fcba2e6b-779d-4924-bb43-32b32361d648}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\MiddleDead">
+      <UniqueIdentifier>{b6131e99-8874-423c-8f19-d2a182fef8be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\MiddleDead\MFieldEffect">
+      <UniqueIdentifier>{c3b92b0a-b520-4a9e-8989-52ef9cd1ae0d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -897,6 +906,21 @@
     <ClInclude Include="..\Header\KrakenBullet.h">
       <Filter>02. GameObject\01. For_Stage\21. Boss\02. Kraken</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\ProjectionEffect.h">
+      <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\ProjectionEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\MFieldEffect.h">
+      <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\MiddleDead\MFieldEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\KrakenParticle.h">
+      <Filter>99. Default\헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Mob.h">
+      <Filter>99. Default\헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Quest.h">
+      <Filter>02. GameObject\01. For_Stage\09. UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -1375,6 +1399,21 @@
     </ClCompile>
     <ClCompile Include="..\Code\KrakenBullet.cpp">
       <Filter>02. GameObject\01. For_Stage\21. Boss\02. Kraken</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ProjectionEffect.cpp">
+      <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\ProjectionEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\MFieldEffect.cpp">
+      <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\MiddleDead\MFieldEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\KrakenParticle.cpp">
+      <Filter>99. Default\소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Mob.cpp">
+      <Filter>99. Default\소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Quest.cpp">
+      <Filter>02. GameObject\01. For_Stage\09. UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
