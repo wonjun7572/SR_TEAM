@@ -302,12 +302,6 @@ void CMonster::Skill_SphereCheck(_float _deltaTime)
 		m_pMonsterUI->Set_Hp(m_tAbility->fCurrentHp);
 		m_pMonsterUI->Set_MaxHp(m_tAbility->fMaxHp);
 		m_pMonsterUI->On_Switch();
-
-		m_pComboUI->On_Switch();
-		m_pComboUI->ComboCntPlus();
-
-		m_pComboUI->On_Switch();
-		m_pComboUI->ComboCntPlus();
 	}
 
 	if (m_tAbility->fCurrentHp <= 0.f)
