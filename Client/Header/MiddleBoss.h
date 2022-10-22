@@ -17,6 +17,9 @@ public:
 	virtual void	LateUpdate_Object(void) override;
 	virtual void	Render_Object(void) override;
 
+public:
+	void			Set_CollisionDmg() { m_tAbility->fCurrentHp -= 50.f; }
+
 private:
 	_int			Update_Pattern(_float fTimeDelta);
 	void			Hit_Check(_float _deltaTime);
@@ -40,6 +43,7 @@ private:
 private:
 	_uint			m_MissileCnt = 0;
 	_float			m_fMissileItv = 0.f;
+	_float			m_fLaserTime = 0.f;
 
 	_float			m_fTimeDelta = 0.f;
 	_bool			m_bFirst = true;
@@ -97,6 +101,7 @@ protected:
 private:
 	_float				m_ReloadTimer = 0.f;
 
+	_float				m_fBeforeHp;
 	_float				m_fFrame = 0.f;
 	_float				m_fTargetLength;
 	_float				m_fDetectRange;

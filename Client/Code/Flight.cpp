@@ -29,7 +29,9 @@ HRESULT CFlight::Ready_Object(const _vec3 & vPos, const _vec3 & vDir, _tchar * N
 
 	m_vDirection = vDir;
 
+	m_bControl = false;
 	m_bShuttle = false;
+	m_bEnding = false;
 
 	m_pTransform->Set_Scale(1.f, 1.f, 1.f);
 	m_pTransform->Set_Pos(vPos.x, vPos.y, vPos.z);
@@ -126,6 +128,42 @@ _int CFlight::Update_Object(const _float & fTimeDelta)
 				dynamic_cast<CSupporter_Sniper*>(pGameObject)->Set_setcam(true);
 				m_bShuttle = false;
 			}
+		}
+	}
+
+	if (m_bEnding == true)
+	{
+		CTransform* m_pPlayerTransCom = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_CHARACTER, L"PLAYER", TRANSFORM_COMP, ID_DYNAMIC));
+
+		_vec3 vPlayerPos;
+		m_pPlayerTransCom->Get_Info(INFO_POS, &vPos);
+
+		_vec3 vFlightPos;
+		m_pTransform->Get_Info(INFO_POS, &vFlightPos);
+
+		_vec3 vDistance = vPlayerPos - vFlightPos;
+
+		if (vFlightPos.y <= 1.f && (m_bLeaveMap == false))
+		{
+			m_vLeave.y *= -1.f;
+			m_bLeaveMap = true;
+		}
+
+		if (m_bLeaveMap)
+		{
+			m_pTransform->Chase_Target_By_Direction(&m_vLeave, 5.f, fTimeDelta);
+			Look_Direction_Only_Y();
+		}
+		else
+		{
+			m_pTransform->Chase_Target(&vPos, 5.f, fTimeDelta);
+
+			_matrix matWorld;
+			m_pTransform->Get_WorldMatrix(&matWorld);
+
+			m_vLeave = { matWorld.m[2][0], matWorld.m[2][1],matWorld.m[2][2] };
+
+			Look_Direction_Only_Y();
 		}
 	}
 

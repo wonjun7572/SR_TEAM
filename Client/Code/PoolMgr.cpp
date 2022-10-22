@@ -166,11 +166,12 @@ HRESULT CPoolMgr::Reuse_KrakenBullet(LPDIRECT3DDEVICE9 & pGraphicDev, const _vec
 		NULL_CHECK_RETURN(pObj, E_FAIL);
 		m_KrakenBulletPool.pop_front();
 
-		dynamic_cast<CKrakenBullet*>(pObj)->Set_Pos(*vPos);
-		dynamic_cast<CKrakenBullet*>(pObj)->Set_Dir(*vDir);
 		dynamic_cast<CKrakenBullet*>(pObj)->Restore();
 
 		Engine::Get_Layer(STAGE_KRAKENBULLET)->Add_GameList(pObj);
+
+		dynamic_cast<CKrakenBullet*>(pObj)->Set_Pos(*vPos);
+		dynamic_cast<CKrakenBullet*>(pObj)->Set_Dir(*vDir);
 	}
 
 	return S_OK;

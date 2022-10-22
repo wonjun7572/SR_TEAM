@@ -32,11 +32,19 @@ private:
 	_float           m_fX, m_fY, m_fSizeX, m_fSizeY;
 	CGameObject*	 m_pPlayer = nullptr;
 
+	_bool			m_bQuest1 = false;
+	_bool			m_bQuest2 = false;
+	_bool			m_bQuest3 = false;
 
 	_bool			m_bSwitch = false;
 
+	_int			m_iWeapon = 0;
+	_int			m_iKey = 0;
+	_int			m_iMiddle = 1;
+
 	wstring			 m_strWeapon = L"";
 	wstring			 m_strKey = L"";
+	wstring			 m_strQuest3 = L"";
 
 public:
 	static CQuest*      Create(LPDIRECT3DDEVICE9 pGraphicDev);

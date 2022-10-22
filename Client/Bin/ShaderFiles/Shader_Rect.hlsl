@@ -35,21 +35,6 @@ VS_OUT VS_MAIN(VS_IN In)
 	return Out;
 }
 
-VS_OUT VS_MAIN_ALPHA(VS_IN In)
-{
-	VS_OUT		Out = (VS_OUT)0;
-
-	vector		vPosition = mul(vector(In.vPosition, 1.f), g_WorldMatrix);
-	vPosition = mul(vPosition, g_ViewMatrix);
-	vPosition = mul(vPosition, g_ProjMatrix);
-
-	Out.vPosition = vPosition;
-	Out.vTexUV = In.vTexUV;
-
-	return Out;
-}
-
-
 struct PS_IN
 {
 	float4		vPosition : POSITION;
@@ -70,17 +55,21 @@ PS_OUT PS_MAIN(PS_IN In)
 	return Out;
 }
 
-PS_OUT PS_MAIN_ALPHA(PS_IN In)
+PS_OUT PS_MAIN_ALPHA_MIN(PS_IN In)
 {
 	PS_OUT		Out = (PS_OUT)0;
 
-	vector		vColor = (vector)1.f;
+	Out.vColor.rgba = tex2D(DefaultSampler, In.vTexUV).rgba;
 
-	Out.vColor = tex2D(DefaultSampler, In.vTexUV);
+	return Out;
+}
 
-	//Out.vColor.r = 1.f;
-	//Out.vColor.a = In.vTexUV.y;
+PS_OUT PS_MAIN_ALPHA_MAX(PS_IN In)
+{
+	PS_OUT		Out = (PS_OUT)0;
 
+	Out.vColor.rgba = tex2D(DefaultSampler, In.vTexUV).rgba;
+	Out.vColor.a = In.vTexUV.y;
 	return Out;
 }
 
@@ -92,14 +81,31 @@ technique DefaultTechnique
 		PixelShader = compile ps_3_0 PS_MAIN();
 	}
 
-	pass Alpha
+	pass AlphaMin
 	{
 		AlphaBlendEnable = true;
 		SrcBlend = SrcAlpha;
 		DestBlend = InvSrcAlpha;
-		BlendOp = Add;
+		ALPHATESTENABLE = true;
+		ALPHAREF = 0xcc;
+		ALPHAFUNC = greater;
+		BlendOp = add;
 
-		VertexShader = compile vs_3_0 VS_MAIN_ALPHA();
-		PixelShader = compile ps_3_0 PS_MAIN_ALPHA();
+		VertexShader = compile vs_3_0 VS_MAIN();
+		PixelShader = compile ps_3_0 PS_MAIN_ALPHA_MIN();
+	}
+
+	pass AlphaMax
+	{
+		AlphaBlendEnable = true;
+		SrcBlend = SrcAlpha;
+		DestBlend = InvSrcAlpha;
+		ALPHATESTENABLE = false;
+		ALPHAREF = 0xcc;
+		ALPHAFUNC = less;
+		BlendOp = max;
+
+		VertexShader = compile vs_3_0 VS_MAIN();
+		PixelShader = compile ps_3_0 PS_MAIN_ALPHA_MAX();
 	}
 }

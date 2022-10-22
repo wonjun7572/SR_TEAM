@@ -30,8 +30,8 @@ _int CKrakenParticle::Update_Object(const _float & fTimeDelta)
 	for (list<ATTRIBUTE>::iterator iter = m_particles.begin(); iter != m_particles.end(); iter++)
 	{
 		iter->fAge += fTimeDelta;
-		iter->vPos += (iter->vVelocity) * fTimeDelta * _float(rand() % 50) * 1.f;
-		iter->vPos.y += 0.01f* (m_fGravity*iter->fAge)*(m_fGravity* iter->fAge) * fTimeDelta;
+		iter->vPos += (iter->vVelocity) * fTimeDelta * _float(rand() % 50) * 1.7f;
+		iter->vPos.y += 0.0f* (m_fGravity*iter->fAge)*(m_fGravity* iter->fAge) * fTimeDelta;
 
 		if (iter->fAge > iter->fLifeTime)
 		{
@@ -48,7 +48,7 @@ _int CKrakenParticle::Update_Object(const _float & fTimeDelta)
 
 void CKrakenParticle::LateUpdate_Object(void)
 {
-	CGameObject::LateUpdate_Object();
+	CPSystem::LateUpdate_Object();
 }
 
 void CKrakenParticle::Render_Object(void)
@@ -107,9 +107,9 @@ void CKrakenParticle::resetParticle(ATTRIBUTE * attribute)
 
 	attribute->vVelocity = m_vDir + vRand * 0.05f;
 	attribute->vPos = m_vCubePatriclePos - m_vDir + vRand*.00005f;
-	attribute->vPos.y += vRand.y*.03f; 
+	attribute->vPos.y += vRand.y * 0.3f; 
 
-	attribute->dwColor = D3DXCOLOR(fRand, fRand, fRand, 1.f);
+	attribute->dwColor = D3DXCOLOR(0.4f - fRand, 0.4f - fRand, 0.4f - fRand, 1.f);
 	attribute->fAge = 0.0f;
-	attribute->fLifeTime = 0.7f;
+	attribute->fLifeTime = 1.5f;
 }

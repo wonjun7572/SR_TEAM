@@ -14,6 +14,10 @@
 #include "Explosion.h"
 #include "Veneer.h"
 
+#include "Flight.h"
+
+#include "LaserSpot.h"
+
 static _int m_iCnt = 0;
 
 CMiddleBoss::CMiddleBoss(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -29,11 +33,13 @@ CMiddleBoss::~CMiddleBoss()
 HRESULT CMiddleBoss::Ready_Object(const _vec3 & vPos, _tchar * Name)
 {
 	m_tAbility = new MIDDLEBOSSABILITY;
-	m_tAbility->fMaxHp = 10000.f;
+	m_tAbility->fMaxHp = 100.f;
 	m_tAbility->fCurrentHp = m_tAbility->fMaxHp;
 	m_tAbility->fDamage = 5.f;
 	m_tAbility->strObjTag = L"MiddleBoss";
 	m_fDetectRange = 30.f;
+
+	m_fBeforeHp = m_tAbility->fMaxHp;
 
 	m_MonsterName = Name;
 
@@ -47,7 +53,7 @@ HRESULT CMiddleBoss::Ready_Object(const _vec3 & vPos, _tchar * Name)
 
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
-	m_pTransCom->Set_Scale(&_vec3(10.f, 10.f, 10.f));
+	m_pTransCom->Set_Scale(&_vec3(1.f, 1.f, 1.f));
 	m_pTransCom->Set_Pos(vPos.x, vPos.y, vPos.z);
 	m_pTransCom->Static_Update();
 
@@ -90,8 +96,9 @@ _int CMiddleBoss::Update_Object(const _float & fTimeDelta)
 	{
 		m_bFirst = false;
 
-		//m_vPattern.push_back(MIDDLEBOSS_SKILL_NORMALATTACK);
+		m_vPattern.push_back(MIDDLEBOSS_SKILL_NORMALATTACK);
 		m_vPattern.push_back(MIDDLEBOSS_SKILL_BOMBING);
+		m_vPattern.push_back(MIDDLEBOSS_SKILL_LASER);
 
 		Engine::Get_Scene()->New_Layer(m_MonsterName);
 		pMyLayer = Engine::Get_Layer(m_MonsterName);
@@ -131,7 +138,20 @@ _int CMiddleBoss::Update_Object(const _float & fTimeDelta)
 
 	_vec3 vMonsterPos;
 	m_pTransCom->Get_Info(INFO_POS, &vMonsterPos);
-	m_pHitBoxTransCom->Set_Pos(vMonsterPos.x, vMonsterPos.y, vMonsterPos.z);
+
+	for (auto& iter : pMyLayer->Get_GamePair())
+	{
+		if (0 == _tcscmp(iter.first, L"CORE"))
+		{
+			CTransAxisBox* pBox = dynamic_cast<CTransAxisBox*>(iter.second);
+			_matrix matFinal;
+			pBox->Get_Final(&matFinal);
+
+			m_pHitBoxTransCom->Set_Pos(matFinal.m[3][0], matFinal.m[3][1], matFinal.m[3][2]);
+		}
+	}
+
+	//m_pHitBoxTransCom->Set_Pos(vMonsterPos.x, vMonsterPos.y, vMonsterPos.z);
 	
 	m_pSearchRange_TransCom->Set_Pos(vMonsterPos.x, 0.f, vMonsterPos.z);
 	m_pAttackRange_TransCom->Set_Pos(vMonsterPos.x, 0.f, vMonsterPos.z);
@@ -146,13 +166,26 @@ void CMiddleBoss::LateUpdate_Object(void)
 {
 	Monster_Mapping();
 
-	Set_OnTerrain();
-	m_pTransCom->Static_Update();
-
 	if (m_tAbility->fCurrentHp <= 0.f)
 	{
+		_vec3 vPos;
+		m_pTransCom->Get_Info(INFO_POS, &vPos);
+
+		m_pTransCom->Set_Pos(vPos.x, vPos.y - 0.1f, vPos.z);
+		m_pTransCom->Static_Update();
+
 		m_pMonsterUI->Off_Switch();
-		this->Kill_Obj();
+		//this->Kill_Obj();
+
+		CGameObject* pGameObject = dynamic_cast<CFlight*>(Get_GameObject(STAGE_FLIGHTPLAYER, L"FLIGHTSHUTTLE"));
+
+		if (dynamic_cast<CFlight*>(pGameObject)->Get_Ending() == false)
+			dynamic_cast<CFlight*>(pGameObject)->Set_Ending(true);
+	}
+	else
+	{
+		Set_OnTerrain();
+		m_pTransCom->Static_Update();
 	}
 
 	if (!m_bFirst)
@@ -185,6 +218,25 @@ void CMiddleBoss::LateUpdate_Object(void)
 					Run_Animation(10.f);
 				else
 					Run_Animation(100.f);
+			}
+			else if (m_PATTERN == MIDDLEBOSS_SKILL_LASER)
+			{
+				m_fLaserTime += m_fTimeDelta;
+
+				if (m_fLaserTime >= 1.f)
+				{
+					CGameObject* pGameObject = Get_GameObject(STAGE_GAMELOGIC, L"LaserSpot");
+					dynamic_cast<CLaserSpot*>(pGameObject)->Attack_Permit(true);
+				}
+				// 여기에 레이저 추가
+
+				if (m_fLaserTime >= 10.f)
+				{
+					m_STATE = MIDDLEBOSS_IDLE;
+					m_fLaserTime = 0.f;
+					CGameObject* pGameObject = Get_GameObject(STAGE_GAMELOGIC, L"LaserSpot");
+					dynamic_cast<CLaserSpot*>(pGameObject)->Attack_Permit(false);
+				}
 			}
 		}
 		else if (m_STATE == MIDDLEBOSS_MOVE)
@@ -321,6 +373,16 @@ _int CMiddleBoss::Update_Pattern(_float fTimeDelta)
 					m_PATTERN = m_vPattern.front();
 				}
 
+				{
+					CGameObject* pGameObject = Get_GameObject(STAGE_GAMELOGIC, L"LaserSpot");
+					CTransform* pSpotTrans = dynamic_cast<CTransform*>(pGameObject->Get_Component(TRANSFORM_COMP, ID_DYNAMIC));
+
+					_vec3 vPlayerPos;
+					m_pPlayerTransCom->Get_Info(INFO_POS, &vPlayerPos);
+
+					pSpotTrans->Set_Pos(vPlayerPos.x, vPlayerPos.y, vPlayerPos.z);
+				}
+
 				m_ReloadTimer = 0.f;
 			}
 		}
@@ -436,15 +498,12 @@ void CMiddleBoss::Hit_Check(_float _deltaTime)
 		pWeapon->Get_Transform()->Get_Info(INFO_POS, &vSrcPos);
 
 		_vec3 vDir;
-		if (m_pCollision->HitScan(g_hWnd, &vSrcPos, this->m_pBufferCom, this->m_pTransCom, &vDir))
+		if (m_pCollision->HitScan(g_hWnd, &vSrcPos, this->m_pBufferCom, this->m_pHitBoxTransCom, &vDir))
 		{
-			m_pMonsterUI->Set_Name(m_tAbility->strObjTag);
-			m_pMonsterUI->Set_Hp(m_tAbility->fCurrentHp);
-			m_pMonsterUI->Set_MaxHp(m_tAbility->fMaxHp);
-			m_pMonsterUI->On_Switch();
 			if (pWeapon->Get_Shoot() == true)
 			{
 				m_tAbility->fCurrentHp -= pWeapon->Get_Ability()->fBulletAttack;
+
 				m_pComboUI->On_Switch();
 				m_pComboUI->ComboCntPlus();
 	
@@ -455,6 +514,15 @@ void CMiddleBoss::Hit_Check(_float _deltaTime)
 			{
 				m_tAbility->fCurrentHp = 0.f;
 			}
+		}
+		if (m_fBeforeHp != m_tAbility->fCurrentHp)
+		{
+			m_fBeforeHp = m_tAbility->fCurrentHp;
+
+			m_pMonsterUI->Set_Name(m_tAbility->strObjTag);
+			m_pMonsterUI->Set_Hp(m_tAbility->fCurrentHp);
+			m_pMonsterUI->Set_MaxHp(m_tAbility->fMaxHp);
+			m_pMonsterUI->On_Switch();
 		}
 		else
 		{

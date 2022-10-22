@@ -23,6 +23,8 @@ HRESULT CTargetCube::Ready_Object(const _vec3& vPos, const _vec3& vDir, const _v
 	m_tAbility->fDamage = 0.f;
 	m_tAbility->strObjTag = L"WALL";
 
+	m_BeforeHp = m_tAbility->fMaxHp;
+
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
 	m_vScale = vScale;
@@ -148,20 +150,20 @@ void CTargetCube::Hit_Check(const _float& fTimeDelta)
 		_vec3 vDir;
 		if (m_pCollision->HitScan(g_hWnd, &vSrcPos, this->m_pBufferCom, this->m_pTransCom, &vDir))
 		{
-			m_pMonsterUI->Set_Name(m_tAbility->strObjTag);
-			m_pMonsterUI->Set_Hp(m_tAbility->fCurrentHp);
-			m_pMonsterUI->Set_MaxHp(m_tAbility->fMaxHp);
-			m_pMonsterUI->On_Switch();
 			if (pWeapon->Get_Shoot() == true)
 			{
 				m_tAbility->fCurrentHp -= pWeapon->Get_Ability()->fBulletAttack;
 				pWeapon->Set_Shoot(false);
 			}
+		}
+		if (m_BeforeHp != m_tAbility->fCurrentHp)
+		{
+			m_BeforeHp = m_tAbility->fCurrentHp;
 
-			if (m_tAbility->fCurrentHp <= 0.f)
-			{
-				m_tAbility->fCurrentHp = 0.f;
-			}
+			m_pMonsterUI->Set_Name(m_tAbility->strObjTag);
+			m_pMonsterUI->Set_Hp(m_tAbility->fCurrentHp);
+			m_pMonsterUI->Set_MaxHp(m_tAbility->fMaxHp);
+			m_pMonsterUI->On_Switch();
 		}
 		else
 		{
@@ -172,6 +174,11 @@ void CTargetCube::Hit_Check(const _float& fTimeDelta)
 				m_fUISwitchTime = 0.f;
 			}
 		}
+	}
+
+	if (m_tAbility->fCurrentHp <= 0.f)
+	{
+		m_tAbility->fCurrentHp = 0.f;
 	}
 }
 

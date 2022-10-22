@@ -11,6 +11,7 @@ public:
 	virtual _int		Update_Object(const _float& fTimeDelta);
 	virtual void		LateUpdate_Object(void);
 	virtual void		Render_Object(void);
+	_bool				Get_QuestOpen() { return m_bQuestOpen; }
 
 private:
 	HRESULT				Add_Component(void);
@@ -32,6 +33,7 @@ private:	//	애니메이션 관련
 
 	ITEMBOXSTATEID		m_STATE;
 
+	_bool				m_bQuestOpen = false;
 	CLayer*				pMyLayer;
 	_tchar*				m_TrapName;
 

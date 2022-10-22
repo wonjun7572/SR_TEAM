@@ -219,34 +219,6 @@ _int CKrakenBoss::Update_Pattern(_float fTimeDelta)
 
 	_float Hp = m_tAbility->fCurrentHp / m_tAbility->fMaxHp;
 
-	/*int iAnnihilate = 0;
-	CLayer* pMyLayer = Engine::Get_Layer(STAGE_TENTACLE);
-	for (auto& iter : *(pMyLayer->Get_GameListPtr()))
-	{
-	if (dynamic_cast<CKrakenLeg*>(iter)->Get_SWING() >= LEGSWING_7 && dynamic_cast<CKrakenLeg*>(iter)->Get_SWING() <= LEGSWING_17)
-	iAnnihilate++;
-	else
-	break;
-	}
-
-	if (iAnnihilate == 8)
-	{
-	_vec3 vPlayerScale;
-	m_pPlayerTransCom->Get_Scale(&vPlayerScale);
-	_vec3 vScale;
-	m_pSphereTransCom->Get_Scale(&vScale);
-	_vec3 vPlayerPos;
-	m_pPlayerTransCom->Get_Info(INFO_POS, &vPlayerPos);
-
-	if (!m_pCollision->Sphere_Collision(this->m_pSphereTransCom, m_pPlayerTransCom, vPlayerScale.x, vScale.x))
-	{
-	CLayer* pLayer = Engine::Get_Layer(STAGE_CHARACTER);
-	CCubePlayer* pPlayer = dynamic_cast<CCubePlayer*>(pLayer->Get_GameObject(L"PLAYER"));
-
-	pPlayer->KnuckDown(10.f, 20.f);
-	}
-	}*/
-
 
 	_vec3 vPlayerPos;
 	m_pPlayerTransCom->Get_Info(INFO_POS, &vPlayerPos);
@@ -295,9 +267,9 @@ _int CKrakenBoss::Update_Pattern(_float fTimeDelta)
 
 			if (m_bAnihilate_First)
 				m_bAnihilate_First = false;
-			if (m_bAnihilate_First == false)
+			else if (m_bAnihilate_First == false)
 				m_bAnihilate_Second = false;
-			if (m_bAnihilate_Second == false)
+			else if (m_bAnihilate_Second == false)
 				m_bAnihilate_Third = false;
 		}
 		else
@@ -333,7 +305,7 @@ _int CKrakenBoss::Update_Pattern(_float fTimeDelta)
 			{
 				if (!m_pCollision->Sphere_Collision(this->m_pSphereTransCom, m_pPlayerTransCom, vPlayerScale.x, vScale.x))
 				{
-					for (m_fFireAngle = 0.f; m_fFireAngle < 360.f; m_fFireAngle += 2.f)
+					for (m_fFireAngle = 0.f; m_fFireAngle < 360.f; m_fFireAngle += 5.f)
 					{
 						D3DXMatrixRotationY(&matRotY, D3DXToRadian(-m_fFireAngle));
 						D3DXMatrixTranslation(&matTrans, vPos.x, 0.f, vPos.y);
@@ -355,12 +327,12 @@ _int CKrakenBoss::Update_Pattern(_float fTimeDelta)
 		{
 			if (m_AnimationTime >= 1.f)
 			{
-				vPos.y = 1.6f;
+		
 				if (!m_pCollision->Sphere_Collision(this->m_pSphereTransCom, m_pPlayerTransCom, vPlayerScale.x, vScale.x))
 				{
 					_vec3 vDirection;
 					vDirection = vPlayerPos - vPos;
-
+					vPos.y = 1.4f;
 					CPoolMgr::GetInstance()->Reuse_KrakenBullet(m_pGraphicDev, &vPos, &vDirection, 10.f, 10.f);
 
 				}
@@ -474,25 +446,14 @@ void CKrakenBoss::Hit_Check(_float _deltaTime)
 		_vec3 vDir;
 		if (m_pCollision->HitScan(g_hWnd, &vSrcPos, this->m_pBufferCom, this->m_pTransCom, &vDir))
 		{
-			m_pMonsterUI->Set_Name(m_tAbility->strObjTag);
-			m_pMonsterUI->Set_Hp(m_tAbility->fCurrentHp);
-			m_pMonsterUI->Set_MaxHp(m_tAbility->fMaxHp);
-			m_pMonsterUI->On_Switch();
 			if (pWeapon->Get_Shoot() == true)
 			{
 				m_tAbility->fCurrentHp -= pWeapon->Get_Ability()->fBulletAttack;
-				m_pComboUI->On_Switch();
-				m_pComboUI->ComboCntPlus();
 
 				pWeapon->Set_Shoot(false);
 			}
-
-			if (m_tAbility->fCurrentHp <= 0.f)
-			{
-				m_tAbility->fCurrentHp = 0.f;
-			}
 		}
-		else if (m_BeforeHp != m_tAbility->fCurrentHp)
+		if (m_BeforeHp != m_tAbility->fCurrentHp)
 		{
 			m_BeforeHp = m_tAbility->fCurrentHp;
 
@@ -513,6 +474,11 @@ void CKrakenBoss::Hit_Check(_float _deltaTime)
 				m_fUISwitchTime = 0.f;
 			}
 		}
+	}
+
+	if (m_tAbility->fCurrentHp <= 0.f)
+	{
+		m_tAbility->fCurrentHp = 0.f;
 	}
 
 }

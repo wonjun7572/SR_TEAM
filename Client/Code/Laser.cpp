@@ -40,9 +40,9 @@ _int CLaser::Update_Object(const _float & fTimeDelta)
 	{
 		_vec3 vPos;
 		m_pTransCom->Get_Info(INFO_POS, &vPos);
-		
 
-		// À§Ä¡ ¹Ù²ãÁà¾ßÇÔ	
+
+		// À§Ä¡ ¹Ù²ãÁà¾ßÇÔ   
 		Bomb_effect();
 		Bomb_Collision();
 
@@ -60,10 +60,10 @@ _int CLaser::Update_Object(const _float & fTimeDelta)
 	m_pTransCom->Get_Info(INFO_POS, &vPos);
 	m_pHitboxTransCom->Set_Pos(vPos.x, vPos.y, vPos.z);
 	m_pTransCom->Chase_Target_By_Direction(&m_vDirection, 0.f, fTimeDelta);
-	
+
 
 	Engine::Add_RenderGroup(RENDER_UI, this);
-		
+
 	return 0;
 }
 
@@ -126,7 +126,7 @@ void CLaser::Collision_check(void)
 
 void CLaser::Bomb_effect(void)
 {
-	_vec3 vPos;									  //¿¬±â	
+	_vec3 vPos;                             //¿¬±â   
 	_vec3 vDir = { 0.f,1.0f,0.f };
 	CTriggerParticle* pTriggerParticle = nullptr;
 	CLaserEffect* m_pLaserEffect = nullptr;
@@ -141,7 +141,7 @@ void CLaser::Bomb_effect(void)
 	{
 		pTriggerParticle->addParticle();
 	}
-	
+
 	if (!m_pLaserEffect)
 		m_pLaserEffect = dynamic_cast<CLaserEffect*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"LaserEffect"));
 	//vPos.x -= 5.f;
@@ -188,14 +188,14 @@ void CLaser::Bomb_effect(void)
 
 void CLaser::Bomb_Collision(void)
 {
-	
+
 	if (!Get_Layer(STAGE_MONSTER)->Get_GameList().empty())
 	{
 		m_pTransCom->Static_Update();
 		for (auto& iter : Get_Layer(STAGE_MONSTER)->Get_GameList())
 		{
 			_vec3 vDest, vSour;
-			m_pTransCom->Get_Info(INFO_POS, &vDest);			
+			m_pTransCom->Get_Info(INFO_POS, &vDest);
 			dynamic_cast<CTransform*>(iter->Get_Component(TRANSFORM_COMP, ID_DYNAMIC))->Get_Info(INFO_POS, &vSour);
 			_float fDistance = sqrtf((vDest.x - vSour.x) * (vDest.x - vSour.x) + (vDest.y - vSour.y) * (vDest.y - vSour.y) + (vDest.z - vSour.z) * (vDest.z - vSour.z));
 
@@ -205,7 +205,7 @@ void CLaser::Bomb_Collision(void)
 			}
 		}
 	}
-	
+
 }
 
 HRESULT CLaser::Add_Component(void)
@@ -249,7 +249,7 @@ CLaser * CLaser::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3 * pPos, const
 {
 	CLaser* pInstance = new CLaser(pGraphicDev);
 
-	if (FAILED(pInstance->Ready_Object(pPos, pDir, _fSpeed,_iIndex)))
+	if (FAILED(pInstance->Ready_Object(pPos, pDir, _fSpeed, _iIndex)))
 	{
 		Safe_Release(pInstance);
 		return nullptr;

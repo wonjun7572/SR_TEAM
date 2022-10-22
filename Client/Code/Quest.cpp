@@ -1,7 +1,8 @@
 #include "stdafx.h"
 #include "..\Header\Quest.h"
 #include "LetterBox.h"
-#include "ProjectionEffect.h"
+#include "Npc.h"
+
 CQuest::CQuest(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
 {
@@ -21,8 +22,7 @@ HRESULT CQuest::Ready_Object(void)
 	m_fSizeX = 184.f * 1.5f;
 	m_fSizeY = 206.f * 1.5f;
 
-	// ·¹ÅÍ ¹Ú½º »ý¼º ¤¡¤¡
-	//m_pLetterBox = CLetterBox::Create(m_pGraphicDev, L"Speed Part Get!!!", sizeof(L"Speed Part Get!!!"), 1);
+	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"Quest", L"Roboto-Bold", 10, 20, FW_HEAVY), E_FAIL);
 	return S_OK;
 }
 
@@ -33,10 +33,28 @@ _int CQuest::Update_Object(const _float & fTimeDelta)
 	if (!m_bSwitch)
 		return 0;
 
+	CNpc* pGameObject = dynamic_cast<CNpc*>(Get_GameObject(STAGE_ENVIRONMENT, L"NPC"));
+
+	if (pGameObject != nullptr)
+	{
+		if (pGameObject->Get_QuestText1() && !m_bQuest1)
+		{
+			m_bQuest1 = true;
+		}
+		else if(pGameObject->Get_QuestText2() && !m_bQuest2)
+		{
+			m_bQuest2 = true;
+		}
+		else if (pGameObject->Get_QuestText3() && !m_bQuest3)
+		{
+			m_bQuest3 = true;
+		}
+	}
+
 	m_pTransCom->Set_Scale(m_fSizeX, m_fSizeY, 1.f);
 	m_pTransCom->Set_Pos(m_fX, -m_fY, 0.f);
 	_int iResult = CGameObject::Update_Object(fTimeDelta);
-	Add_RenderGroup(RENDER_UI, this);
+	Add_RenderGroup(RENDER_EFFECT_UI, this);
 
 	return 0;
 }
@@ -48,6 +66,7 @@ void CQuest::LateUpdate_Object(void)
 
 void CQuest::Render_Object(void)
 {
+
 	_matrix      matWorld, matView;
 
 	matWorld = *m_pTransCom->Get_WorldMatrixPointer();
@@ -66,9 +85,29 @@ void CQuest::Render_Object(void)
 		return;
 
 	m_pTextureCom->Set_Texture(m_pShaderCom, "g_DefaultTexture", 0);
-	m_pShaderCom->Begin_Shader(0);
+	m_pShaderCom->Begin_Shader(1);
 	m_pBufferCom->Render_Buffer();
 	m_pShaderCom->End_Shader();
+	
+	if (m_bQuest1)
+	{
+		m_iWeapon = 3 - Get_Layer(STAGE_GUNITEM)->Get_GameObjectMap().size();
+		m_strWeapon = L"¹«±â È¹µæ ( " + to_wstring(m_iWeapon) + L"/" + to_wstring(Get_Layer(STAGE_GUNITEM)->Get_GameObjectMap().size() + m_iWeapon) + L" )";
+		Engine::Render_Font(L"Quest", m_strWeapon.c_str(), &_vec2(40.f, 35.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+	}
+
+	if (m_bQuest2)
+	{
+		m_iKey = 3 - Get_Layer(L"STAGE_KEY")->Get_GameList().size();
+		m_strKey = L"Å° È¹µæ ( " + to_wstring(m_iKey) + L"/" + to_wstring(Get_Layer(L"STAGE_KEY")->Get_GameList().size() + m_iKey) + L" )";
+		Engine::Render_Font(L"Quest", m_strKey.c_str(), &_vec2(40.f, 85.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+	}
+
+	if (m_bQuest3)
+	{
+		m_strQuest3 = L"¹Ìµé º¸½º Ã³Ä¡( " + to_wstring(0) + L"/" + to_wstring(m_iMiddle) + L" )";
+		Engine::Render_Font(L"Quest", m_strQuest3.c_str(), &_vec2(40.f, 135.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+	}
 }
 
 void CQuest::Key_Input()
@@ -77,11 +116,6 @@ void CQuest::Key_Input()
 	{
 		m_bSwitch = !m_bSwitch;
 	}
-}
-
-void CQuest::ProjectionEffect()
-{
-	
 }
 
 HRESULT CQuest::Add_Component()

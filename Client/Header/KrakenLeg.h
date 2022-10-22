@@ -24,6 +24,7 @@ public:
 	void				Set_Dead(void) { m_STATE = KRAKENSTATE_END; }
 	_int				Get_State(void) { return m_STATE; }
 	_int				Get_SWING(void) { return m_LEGSWING; }
+	void				Set_CollisionDmg() { m_tAbility->fCurrentHp -= 50.f; }
 
 public:
 	void          Set_Damaged(_float iDamage)
@@ -33,12 +34,16 @@ public:
 	}
 	_bool         Get_Annihilate(void) { return m_bAnnihilateReady; }
 
+	_bool			Get_Annihilate(void) { return m_bAnnihilateReady; }
+
 private:
 	void				Look_Direction(void);
 	virtual _int		Update_Pattern(_float fTimeDelta);
 	void				Hit_Check(_float _deltaTime);
 	void				AttackHit(_float fDamage, _float fKnuckback);
-
+	void				Kraken_EffectParticle(void);
+	void				Kraken_LukerParticle(void);
+	void				Kraken_ReviveParticle(void);
 private:
 	HRESULT				Build(void);
 	void				Load_Animation(wstring FileName, _uint AnimationID);
@@ -113,7 +118,7 @@ private:
 	_float				m_fLerpTime = 0.f;
 	_vec3				m_vOriginPos;
 	vector<_float>		m_ShufflePos;
-	_float				m_BeforeHp = 0.f;
+	_float				m_BeforeHp = 200.f;
 
 	_bool				m_bAnnihilateReady = false;
 

@@ -80,6 +80,8 @@
 #include "Npc.h"
 #include "Quest.h"
 
+#include "LaserSpot.h"
+
 CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CScene(pGraphicDev)
 {
@@ -105,9 +107,7 @@ HRESULT CStage::Ready_Scene(void)
 	FAILED_CHECK_RETURN(Ready_Light(), E_FAIL);
 
 	Load_Position(GUN, L"../../Data/GunPos.dat");
-	Load_Position(SHOP, L"../../Data/ShopPos.dat");
 	Load_Position(LAVA, L"../../Data/LavaPos.dat");
-	Load_Position(ITEMBOX, L"../../Data/ItemPos.dat");
 	Load_Position(THRONE, L"../../Data/ThronePos.dat");
 	Load_Position(SLIME, L"../../Data/SlimePos.dat");
 	Load_Position(FIREMAN, L"../../Data/FireManPos.dat");
@@ -137,6 +137,7 @@ HRESULT CStage::Ready_Scene(void)
 	FAILED_CHECK_RETURN(Ready_Layer_Creature(STAGE_CREATURE), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Layer_PlayerFlight(STAGE_FLIGHTPLAYER), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Layer_KEY(L"STAGE_KEY"), E_FAIL);
+	FAILED_CHECK_RETURN(Ready_Layer_QuestBox(L"STAGE_QUESTBOX"), E_FAIL);
 
 	return S_OK;
 }
@@ -292,7 +293,6 @@ HRESULT CStage::Ready_Layer_Environment(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"KrakenParticle", pGameObject), E_FAIL);
 
-
 	pGameObject = CDashCube::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"DashCube", pGameObject), E_FAIL);
@@ -324,6 +324,10 @@ HRESULT CStage::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pLayer, E_FAIL);
 
 	CGameObject*      pGameObject = nullptr;
+
+	pGameObject = CLaserSpot::Create(m_pGraphicDev, _vec3(10.f, 0.f, 10.f));
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"LaserSpot", pGameObject), E_FAIL);
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
@@ -464,24 +468,18 @@ HRESULT CStage::Ready_Layer_Wall(const _tchar * pLayerTag)
 	}
 	CloseHandle(hFile);
 
-	if (!vecShop.empty())
-	{
-		for (size_t i = 0; i < vecShop.size(); i++)
-		{
-			_vec3 vShop = { 0.f,0.5f,0.f };
-			_tchar* szName = new _tchar[256]{};
-			wstring wName = L"CubeShop_%d";
-			wsprintfW(szName, wName.c_str(), i);
-			NameList.push_back(szName);
-			pGameObject = CCubeShop::Create(m_pGraphicDev, vecShop[i] + vShop);
-			NULL_CHECK_RETURN(pGameObject, E_FAIL);
-			FAILED_CHECK_RETURN(pLayer->Add_GameObject(szName, pGameObject), E_FAIL);
-		}
-	}
-
 	pGameObject = CCubeShop::Create(m_pGraphicDev,_vec3( 20.f, 0.5f, 10.f));
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"CubeShop", pGameObject), E_FAIL);
+
+	pGameObject = CCubeShop::Create(m_pGraphicDev, _vec3( 7.f, 0.5f, 66.f));
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"CubeShop2", pGameObject), E_FAIL);
+
+	pGameObject = CCubeShop::Create(m_pGraphicDev, _vec3(49.f, 0.5f, 110.f));
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"CubeShop3", pGameObject), E_FAIL);
+
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
@@ -677,6 +675,7 @@ HRESULT CStage::Ready_Layer_KEY(const _tchar * pLayerTag)
 
 	CGameObject*      pGameObject = nullptr;
 
+	// 3개의 키를 찾고 미들보스 방으로 진입.
 	pGameObject = CKey::Create(m_pGraphicDev, _vec3(20.f, 0.6f, 10.f), COLOR_BLUE);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
@@ -685,7 +684,6 @@ HRESULT CStage::Ready_Layer_KEY(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
 
-	// 키 하나 미들보스가 죽었을때로 옮겨줘야함
 	pGameObject = CKey::Create(m_pGraphicDev, _vec3(28.f, 0.6f, 10.f), COLOR_YELLOW);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
@@ -695,6 +693,27 @@ HRESULT CStage::Ready_Layer_KEY(const _tchar * pLayerTag)
 	return S_OK;
 }
 
+HRESULT CStage::Ready_Layer_QuestBox(const _tchar * pLayerTag)
+{
+	Engine::CLayer*      pLayer = Engine::CLayer::Create();
+	NULL_CHECK_RETURN(pLayer, E_FAIL);
+
+	CGameObject*      pGameObject = nullptr;
+
+	// 키를 위한 테스트
+	pGameObject = CItemBox::Create(m_pGraphicDev, _vec3(54.f, 0.4f, 103.f), L"ItemBox1");
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"ItemBox1", pGameObject), E_FAIL);
+
+	// 미들 보스를 위한 퀘스트
+	pGameObject = CItemBox::Create(m_pGraphicDev, _vec3(72.f, 0.4f, 63.f), L"ItemBox2");
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"ItemBox2", pGameObject), E_FAIL);
+
+	m_mapLayer.insert({ pLayerTag, pLayer });
+
+	return S_OK;
+}
 
 HRESULT CStage::Ready_Layer_Mapping(const _tchar * pLayerTag)
 {
@@ -971,7 +990,7 @@ HRESULT CStage::Ready_Layer_Trap(const _tchar * pLayerTag)
 	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	//FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
 
-	if (!vecThrone.empty())
+	/*if (!vecThrone.empty())
 	{
 		for (size_t i = 0; i < vecThrone.size(); i++)
 		{
@@ -997,22 +1016,7 @@ HRESULT CStage::Ready_Layer_Trap(const _tchar * pLayerTag)
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
 		}
-	}
-	
-	if (!vecItem.empty())
-	{
-		for (size_t i = 0; i < vecItem.size(); i++)
-		{
-			_tchar* szName = new _tchar[256]{};
-			wstring wName = L"Item_%d";
-			wsprintfW(szName, wName.c_str(), i);
-			NameList.push_back(szName);
-			vecItem[i].y += 0.5f;
-			pGameObject = CItemBox::Create(m_pGraphicDev, vecItem[i], szName);
-			NULL_CHECK_RETURN(pGameObject, E_FAIL);
-			FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
-		}
-	}
+	}*/
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 

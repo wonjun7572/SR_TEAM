@@ -29,7 +29,7 @@ private:
 	void				Sound();
 	CCubeCol*			m_pAnimationBox = nullptr;
 
-	_float				m_fFrame = 0.f;
+	_float				m_fInterval = 0.f;
 	
 
 

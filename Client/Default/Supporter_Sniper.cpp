@@ -122,11 +122,13 @@ _int CSupporter_Sniper::Update_Object(const _float & fTimeDelta)
 			_vec3 vSetPos = _vec3(vPos.x, vPos.y + 0.5f, vPos.z);
 
 			m_vOrderPos = vSetPos;
+			m_vOrderPos.x -= 2.f;
 			m_bGetOrder = true;
 			m_bOrdering = true;
 		}
 
-		m_pTransform->Chase_Target(&m_vOrderPos, 5.f, fTimeDelta);
+		if (m_STATE != SNIPERSUPPORT_ATTACK)
+			m_pTransform->Chase_Target(&m_vOrderPos, 5.f, fTimeDelta);
 
 		_vec3 vPosition;
 		m_pTransform->Get_Info(INFO_POS, &vPosition);
@@ -166,6 +168,27 @@ _int CSupporter_Sniper::Update_Object(const _float & fTimeDelta)
 	m_pTransform->Get_Info(INFO_POS, &vPos);
 	m_pHitBoxTransform->Set_Pos(vPos.x, vPos.y, vPos.z);
 	m_pSphereTransCom->Set_Pos(vPos.x, vPos.y, vPos.z);
+
+	if (m_STATE == SNIPERSUPPORT_ATTACK)
+	{
+		m_fShootingTime += fTimeDelta;
+	}
+	else
+	{
+		m_fShootingTime -= (fTimeDelta * 2.f);
+
+		if (m_fShootingTime <= 0.f)
+			m_fShootingTime = 0.f;
+	}
+
+	if (m_bShooting == true && m_fShootingTime >= 5.f)
+	{
+		m_bShooting = false;
+	}
+	else if (m_fShootingTime <= 0.f)
+	{
+		m_bShooting = true;
+	}
 
 	return 0;
 }
@@ -309,7 +332,7 @@ void CSupporter_Sniper::Find_Target(void)
 		_vec3 vMonsterPos;
 		pTransform->Get_Info(INFO_POS, &vMonsterPos);
 
-		if (m_pCollision->Sphere_Collision(this->m_pSphereTransCom, pTransform, vMonsterScale.x, vScale.x))
+		if (m_pCollision->Sphere_Collision(this->m_pSphereTransCom, pTransform, vMonsterScale.x, vScale.x) && m_bShooting)
 		{
 			_vec3 vDir_Left = vMonsterPos - vGunPos_Left;
 			D3DXVec3Normalize(&vDir_Left, &vDir_Left);
