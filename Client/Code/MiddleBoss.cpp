@@ -34,6 +34,8 @@ HRESULT CMiddleBoss::Ready_Object(const _vec3 & vPos, _tchar * Name)
 	m_tAbility->strObjTag = L"MiddleBoss";
 	m_fDetectRange = 30.f;
 
+	m_fBeforeHp = m_tAbility->fMaxHp;
+
 	m_MonsterName = Name;
 
 	m_STATE = MIDDLEBOSS_IDLE;
@@ -90,7 +92,7 @@ _int CMiddleBoss::Update_Object(const _float & fTimeDelta)
 		m_bFirst = false;
 
 		m_vPattern.push_back(MIDDLEBOSS_SKILL_NORMALATTACK);
-		//m_vPattern.push_back(MIDDLEBOSS_SKILL_BOMBING);
+		m_vPattern.push_back(MIDDLEBOSS_SKILL_BOMBING);
 
 		Engine::Get_Scene()->New_Layer(m_MonsterName);
 		pMyLayer = Engine::Get_Layer(m_MonsterName);
@@ -437,15 +439,9 @@ void CMiddleBoss::Hit_Check(_float _deltaTime)
 		_vec3 vDir;
 		if (m_pCollision->HitScan(g_hWnd, &vSrcPos, this->m_pBufferCom, this->m_pTransCom, &vDir))
 		{
-			m_pMonsterUI->Set_Name(m_tAbility->strObjTag);
-			m_pMonsterUI->Set_Hp(m_tAbility->fCurrentHp);
-			m_pMonsterUI->Set_MaxHp(m_tAbility->fMaxHp);
-			m_pMonsterUI->On_Switch();
 			if (pWeapon->Get_Shoot() == true)
 			{
 				m_tAbility->fCurrentHp -= pWeapon->Get_Ability()->fBulletAttack;
-				m_pComboUI->On_Switch();
-				m_pComboUI->ComboCntPlus();
 	
 				pWeapon->Set_Shoot(false);
 			}
@@ -454,6 +450,18 @@ void CMiddleBoss::Hit_Check(_float _deltaTime)
 			{
 				m_tAbility->fCurrentHp = 0.f;
 			}
+		}
+		if (m_fBeforeHp != m_tAbility->fCurrentHp)
+		{
+			m_fBeforeHp = m_tAbility->fCurrentHp;
+
+			m_pMonsterUI->Set_Name(m_tAbility->strObjTag);
+			m_pMonsterUI->Set_Hp(m_tAbility->fCurrentHp);
+			m_pMonsterUI->Set_MaxHp(m_tAbility->fMaxHp);
+			m_pMonsterUI->On_Switch();
+
+			m_pComboUI->On_Switch();
+			m_pComboUI->ComboCntPlus();
 		}
 		else
 		{

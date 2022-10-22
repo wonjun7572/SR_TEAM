@@ -37,7 +37,7 @@ HRESULT CSupporter_Uzi::Ready_Object(const _vec3 & vPos, _tchar * Name)
 	m_pHitBoxTransform->Set_Pos(vAnimationPos.x, vAnimationPos.y, vAnimationPos.z);
 	m_pHitBoxTransform->Static_Update();
 
-	m_pSphereTransCom->Set_Scale(&_vec3(3.f, 3.f, 3.f));
+	m_pSphereTransCom->Set_Scale(&_vec3(5.f, 5.f, 5.f));
 	m_pSphereTransCom->Set_Pos(vAnimationPos.x, vAnimationPos.y, vAnimationPos.z);
 	m_pSphereTransCom->Static_Update();
 
@@ -156,7 +156,8 @@ _int CSupporter_Uzi::Update_Object(const _float & fTimeDelta)
 			m_bOrdering = true;
 		}
 
-		m_pTransform->Chase_Target(&m_vOrderPos, 5.f, fTimeDelta);
+		if (m_STATE != UZISUPPORT_ATTACK)
+			m_pTransform->Chase_Target(&m_vOrderPos, 5.f, fTimeDelta);
 	
 		_vec3 vPosition;
 		m_pTransform->Get_Info(INFO_POS, &vPosition);

@@ -558,36 +558,36 @@ HRESULT CStage::Ready_Layer_Monster(const _tchar * pLayerTag)
 			FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
 		}
 	}
-	//
-	//if (!vecIllusioner.empty())
-	//{
-	//	for (size_t i = 0; i < vecIllusioner.size(); i++)
-	//	{
-	//		_tchar* szName = new _tchar[128]{};
-	//		wstring wName = L"Illusioner_%d";
-	//		wsprintfW(szName, wName.c_str(), i);
-	//		NameList.push_back(szName);
-	//		vecIllusioner[i].y += 0.5f;
-	//		pGameObject = CIllusioner::Create(m_pGraphicDev, vecIllusioner[i], szName);
-	//		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
-	//	}
-	//}
-	//
-	//if (!vecZombie.empty())
-	//{
-	//	for (size_t i = 0; i < vecZombie.size(); i++)
-	//	{
-	//		_tchar* szName = new _tchar[128]{};
-	//		wstring wName = L"Zombie_%d";
-	//		wsprintfW(szName, wName.c_str(), i);
-	//		NameList.push_back(szName);
-	//		vecZombie[i].y += 0.5f;
-	//		pGameObject = CZombie::Create(m_pGraphicDev, vecZombie[i], szName);
-	//		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
-	//	}
-	//}
+	
+	if (!vecIllusioner.empty())
+	{
+		for (size_t i = 0; i < vecIllusioner.size(); i++)
+		{
+			_tchar* szName = new _tchar[128]{};
+			wstring wName = L"Illusioner_%d";
+			wsprintfW(szName, wName.c_str(), i);
+			NameList.push_back(szName);
+			vecIllusioner[i].y += 0.5f;
+			pGameObject = CIllusioner::Create(m_pGraphicDev, vecIllusioner[i], szName);
+			NULL_CHECK_RETURN(pGameObject, E_FAIL);
+			FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+		}
+	}
+	
+	if (!vecZombie.empty())
+	{
+		for (size_t i = 0; i < vecZombie.size(); i++)
+		{
+			_tchar* szName = new _tchar[128]{};
+			wstring wName = L"Zombie_%d";
+			wsprintfW(szName, wName.c_str(), i);
+			NameList.push_back(szName);
+			vecZombie[i].y += 0.5f;
+			pGameObject = CZombie::Create(m_pGraphicDev, vecZombie[i], szName);
+			NULL_CHECK_RETURN(pGameObject, E_FAIL);
+			FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+		}
+	}
 
 
 	pGameObject = CMiddleBoss::Create(m_pGraphicDev, _vec3(109.f, 0.6f, 10.f), L"MiddleBoss");

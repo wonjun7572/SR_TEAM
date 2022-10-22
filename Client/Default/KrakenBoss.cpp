@@ -469,25 +469,14 @@ void CKrakenBoss::Hit_Check(_float _deltaTime)
 		_vec3 vDir;
 		if (m_pCollision->HitScan(g_hWnd, &vSrcPos, this->m_pBufferCom, this->m_pTransCom, &vDir))
 		{
-			m_pMonsterUI->Set_Name(m_tAbility->strObjTag);
-			m_pMonsterUI->Set_Hp(m_tAbility->fCurrentHp);
-			m_pMonsterUI->Set_MaxHp(m_tAbility->fMaxHp);
-			m_pMonsterUI->On_Switch();
 			if (pWeapon->Get_Shoot() == true)
 			{
 				m_tAbility->fCurrentHp -= pWeapon->Get_Ability()->fBulletAttack;
-				m_pComboUI->On_Switch();
-				m_pComboUI->ComboCntPlus();
 
 				pWeapon->Set_Shoot(false);
 			}
-
-			if (m_tAbility->fCurrentHp <= 0.f)
-			{
-				m_tAbility->fCurrentHp = 0.f;
-			}
 		}
-		else if (m_BeforeHp != m_tAbility->fCurrentHp)
+		if (m_BeforeHp != m_tAbility->fCurrentHp)
 		{
 			m_BeforeHp = m_tAbility->fCurrentHp;
 
@@ -508,6 +497,11 @@ void CKrakenBoss::Hit_Check(_float _deltaTime)
 				m_fUISwitchTime = 0.f;
 			}
 		}
+	}
+
+	if (m_tAbility->fCurrentHp <= 0.f)
+	{
+		m_tAbility->fCurrentHp = 0.f;
 	}
 
 }

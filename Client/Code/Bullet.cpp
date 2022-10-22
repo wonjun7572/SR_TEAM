@@ -78,6 +78,8 @@ _int CBullet::Update_Object(const _float & fTimeDelta)
 		m_bDamage = true;
 	}
 
+
+
 	Engine::CGameObject::Update_Object(fTimeDelta);
 
 	m_pTransCom->Move_Pos(&(m_vDirection * fTimeDelta * m_fSpeed));
