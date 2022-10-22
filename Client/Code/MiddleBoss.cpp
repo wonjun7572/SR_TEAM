@@ -16,6 +16,8 @@
 
 #include "Flight.h"
 
+#include "LaserSpot.h"
+
 static _int m_iCnt = 0;
 
 CMiddleBoss::CMiddleBoss(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -96,6 +98,7 @@ _int CMiddleBoss::Update_Object(const _float & fTimeDelta)
 
 		m_vPattern.push_back(MIDDLEBOSS_SKILL_NORMALATTACK);
 		m_vPattern.push_back(MIDDLEBOSS_SKILL_BOMBING);
+		m_vPattern.push_back(MIDDLEBOSS_SKILL_LASER);
 
 		Engine::Get_Scene()->New_Layer(m_MonsterName);
 		pMyLayer = Engine::Get_Layer(m_MonsterName);
@@ -215,6 +218,25 @@ void CMiddleBoss::LateUpdate_Object(void)
 					Run_Animation(10.f);
 				else
 					Run_Animation(100.f);
+			}
+			else if (m_PATTERN == MIDDLEBOSS_SKILL_LASER)
+			{
+				m_fLaserTime += m_fTimeDelta;
+
+				if (m_fLaserTime >= 1.f)
+				{
+					CGameObject* pGameObject = Get_GameObject(STAGE_GAMELOGIC, L"LaserSpot");
+					dynamic_cast<CLaserSpot*>(pGameObject)->Attack_Permit(true);
+				}
+				// 여기에 레이저 추가
+
+				if (m_fLaserTime >= 10.f)
+				{
+					m_STATE = MIDDLEBOSS_IDLE;
+					m_fLaserTime = 0.f;
+					CGameObject* pGameObject = Get_GameObject(STAGE_GAMELOGIC, L"LaserSpot");
+					dynamic_cast<CLaserSpot*>(pGameObject)->Attack_Permit(false);
+				}
 			}
 		}
 		else if (m_STATE == MIDDLEBOSS_MOVE)
@@ -349,6 +371,16 @@ _int CMiddleBoss::Update_Pattern(_float fTimeDelta)
 				{
 					random_shuffle(m_vPattern.begin(), m_vPattern.end());
 					m_PATTERN = m_vPattern.front();
+				}
+
+				{
+					CGameObject* pGameObject = Get_GameObject(STAGE_GAMELOGIC, L"LaserSpot");
+					CTransform* pSpotTrans = dynamic_cast<CTransform*>(pGameObject->Get_Component(TRANSFORM_COMP, ID_DYNAMIC));
+
+					_vec3 vPlayerPos;
+					m_pPlayerTransCom->Get_Info(INFO_POS, &vPlayerPos);
+
+					pSpotTrans->Set_Pos(vPlayerPos.x, vPlayerPos.y, vPlayerPos.z);
 				}
 
 				m_ReloadTimer = 0.f;
