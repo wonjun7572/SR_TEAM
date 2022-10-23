@@ -143,11 +143,11 @@ _int CFlight::Update_Object(const _float & fTimeDelta)
 
 		_vec3 vDistance = vPlayerPos - vFlightPos;
 
-		if (vFlightPos.y <= 1.f && (m_bLeaveMap == false))
-		{
-			m_vLeave.y *= -1.f;
-			m_bLeaveMap = true;
-		}
+		//if (vFlightPos.y <= 1.f && m_bLeaveMap == false)
+		//{
+		//	m_vLeave.y *= -1.f;
+		//	m_bLeaveMap = true;
+		//}
 
 		if (m_bLeaveMap)
 		{
@@ -156,14 +156,46 @@ _int CFlight::Update_Object(const _float & fTimeDelta)
 		}
 		else
 		{
-			m_pTransform->Chase_Target(&vPos, 5.f, fTimeDelta);
+			_vec3 vDesination;
+			vDesination.x = vPos.x;
+			vDesination.y = 30.f;
+			vDesination.z = vPos.z;
+			
+			_vec3 vDestination2;
+			vDestination2 = vPos;
 
-			_matrix matWorld;
-			m_pTransform->Get_WorldMatrix(&matWorld);
+			if (fabs(vFlightPos.x - vDesination.x) < 1.f && fabs(vFlightPos.z - vDesination.z) < 1.f && !m_bRide)
+			{
+				m_fEndingFrame += fTimeDelta * 0.2f;
+				
+				_vec3 vTransLerp;
+				D3DXVec3Lerp(&vTransLerp,&vDesination,&vDestination2, m_fEndingFrame);
+				m_pTransform->Set_Pos(vTransLerp.x,vTransLerp.y,vTransLerp.z);
 
-			m_vLeave = { matWorld.m[2][0], matWorld.m[2][1],matWorld.m[2][2] };
+				if(vFlightPos.y <= 1.f)
+					m_bRide = true;
+			}
+			else if(fabs(vFlightPos.x - vDesination.x) < 1.f && fabs(vFlightPos.z - vDesination.z) < 1.f && m_bRide)
+			{
+				m_fEndingFrame -= fTimeDelta * 0.2f;
+				_vec3 vTransLerp;
+				D3DXVec3Lerp(&vTransLerp, &vDesination, &vDestination2, m_fEndingFrame);
+				m_pTransform->Set_Pos(vTransLerp.x, vTransLerp.y, vTransLerp.z);
 
-			Look_Direction_Only_Y();
+				if(vFlightPos.y >= 29.f)
+					m_bLeaveMap = true;
+			}
+			else 
+			{
+				m_pTransform->Chase_Target(&vDesination, 5.f, fTimeDelta);
+
+				_matrix matWorld;
+				m_pTransform->Get_WorldMatrix(&matWorld);
+				m_vLeave = { matWorld.m[2][0], matWorld.m[2][1],matWorld.m[2][2] };
+				Look_Direction_Only_Y();
+			}
+
+			m_vEndingPos = vPos;
 		}
 	}
 

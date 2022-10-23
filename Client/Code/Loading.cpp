@@ -188,9 +188,12 @@ _uint CLoading::Loading_ForStage(void)
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Ping_Tex", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Skill/locationPin.png", TEX_NORMAL)), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Shield_Tex", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Particle/StaticParticle/Shield.png", TEX_NORMAL)), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Shield2_Tex", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Particle/StaticParticle/Shield2.png", TEX_NORMAL)), E_FAIL);
+	
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"LetterBox_Tex", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/UI/Quest/Quest_01_%d.png", TEX_NORMAL, 53)), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"LetterBox_Tex_2", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/UI/Quest2/Quest_02_%d.png", TEX_NORMAL, 61)), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"LetterBox_Tex_3", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/UI/Quest3/Quest_03_%d.png", TEX_NORMAL, 36)), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"LetterBox_Tex_4", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/UI/Quest4/Quest_04_%d.png", TEX_NORMAL, 62)), E_FAIL);
+		
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Black_Tex", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Particle/StaticParticle/Black.png", TEX_NORMAL)), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Brown_Tex", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Particle/StaticParticle/Brown.png", TEX_NORMAL)), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"LightGreen_Tex", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Particle/StaticParticle/LightGreen.png", TEX_NORMAL)), E_FAIL);
