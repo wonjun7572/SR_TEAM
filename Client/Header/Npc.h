@@ -30,6 +30,7 @@ private:
 	CTexture*			m_pQuest1TexCom = nullptr; // 52 장
 	CTexture*			m_pQuest2TexCom = nullptr; // 60 장
 	CTexture*			m_pQuest3TexCom = nullptr; // 36 장
+	CTexture*			m_pQuest4TexCom = nullptr; // 62 장
 
 	CShader*			m_pShaderCom = nullptr;
 

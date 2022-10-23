@@ -68,7 +68,12 @@ public:
 	void			Set_Ending(_bool bEnd) { m_bEnding = bEnd; }
 	_bool			m_bEnding = false;/////////////////
 
+	_vec3			m_vEndingPos = _vec3(0.f, 0.f, 0.f);
+
 	_bool			m_bLeaveMap = false;
+
+	_float			m_fEndingFrame = 0.f;
+	_bool			m_bRide = false;
 
 private:
 	HRESULT			Build(void);

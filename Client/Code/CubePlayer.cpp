@@ -67,7 +67,6 @@ _int CCubePlayer::Update_Object(const _float & fTimeDelta)
 {
 	Update_NullCheck();
 
-
 	_vec3 vPos;
 	m_pTransform->Get_Info(INFO_POS, &vPos);
 	
@@ -138,9 +137,15 @@ _int CCubePlayer::Update_Object(const _float & fTimeDelta)
 
 	}
 
+	CGameObject* pGameObject = dynamic_cast<CFlight*>(Get_GameObject(STAGE_FLIGHTPLAYER, L"FLIGHTSHUTTLE"));
+
+	if (dynamic_cast<CFlight*>(pGameObject)->Get_Ending() == false)
+		m_pGraphicDev->LightEnable(1, true);
+	else 
+		m_pGraphicDev->LightEnable(1, false);
+
 	Lighting();
 	CGameObject::Update_Object(fTimeDelta);
-
 	Engine::Add_RenderGroup(RENDER_NONALPHA, this);
 	return 0;
 }
@@ -653,8 +658,6 @@ D3DXVec3Normalize(&vDir, &vDir);
 		m_pBodyWorld->Get_Info(INFO_RIGHT, &vDir);
 		D3DXVec3Normalize(&vDir, &vDir);
 	}
-
-
 
 	if (m_bCanStaticField)
 	{
