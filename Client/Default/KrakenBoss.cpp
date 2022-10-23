@@ -7,7 +7,13 @@
 #include "TransAxisBox.h"
 #include "KrakenLeg.h"
 #include "PoolMgr.h"
+#include "Meteor.h"
+
+#include "BattleCursier.h"
+#include "Flight.h"
+
 #include "Warning_AnnihilateUI.h"
+
 CKrakenBoss::CKrakenBoss(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CGameObject(pGraphicDev)
 {
@@ -21,7 +27,7 @@ CKrakenBoss::~CKrakenBoss()
 HRESULT CKrakenBoss::Ready_Object(const _vec3 & vPos, _tchar * Name)
 {
 	m_tAbility = new KRAKENABILITY;
-	m_tAbility->fMaxHp = 5000.f;
+	m_tAbility->fMaxHp = 10.f;
 	m_tAbility->fCurrentHp = m_tAbility->fMaxHp;
 	m_tAbility->fDamage = 20.f;
 	m_tAbility->strObjTag = L"Kraken";
@@ -144,6 +150,11 @@ void CKrakenBoss::LateUpdate_Object(void)
 		m_pTransCom->Set_Pos(vPos.x, vPos.y - 0.1f, vPos.z);
 		m_pTransCom->Static_Update();
 
+		if (m_bDeadScene)
+		{
+			Dead_Event();
+			m_bDeadScene = false;
+		}
 		//this->Kill_Obj();
 	}
 
@@ -169,6 +180,53 @@ void CKrakenBoss::LateUpdate_Object(void)
 
 	CGameObject::LateUpdate_Object();
 
+}
+
+void CKrakenBoss::Hit_SphereCheck(_float _deltaTime)
+{
+	if (m_bCollisionDmg)
+	{
+		m_bCollisionDmg = false;
+		m_tAbility->fCurrentHp -= 50.f;
+
+	}
+	if (!Get_Layer(STAGE_SKILL)->Get_GameList().empty())
+	{
+		m_pTransCom->Static_Update();
+
+		for (auto& iter : Get_Layer(STAGE_SKILL)->Get_GameList())
+		{
+			if (iter->GetSphereSkill() == true)
+			{
+				if (m_pCollision->Sphere_Collision(this->m_pSphereTransCom, dynamic_cast<CTransform*>(iter->Get_Component(TRANSFORM_COMP, ID_DYNAMIC)), 1.f, iter->GetSphereScale()*2.f))
+				{
+					m_tAbility->fCurrentHp -= dynamic_cast<CMeteor*>(iter)->Get_Attack();
+				}
+			}
+
+		}
+	}
+
+	if (m_BeforeHp != m_tAbility->fCurrentHp)
+	{
+		m_BeforeHp = m_tAbility->fCurrentHp;
+
+		m_pMonsterUI->Set_Name(m_tAbility->strObjTag);
+		m_pMonsterUI->Set_Hp(m_tAbility->fCurrentHp);
+		m_pMonsterUI->Set_MaxHp(m_tAbility->fMaxHp);
+		m_pMonsterUI->On_Switch();
+
+		m_pComboUI->On_Switch();
+		m_pComboUI->ComboCntPlus();
+
+		m_pComboUI->On_Switch();
+		m_pComboUI->ComboCntPlus();
+	}
+
+	if (m_tAbility->fCurrentHp <= 0.f)
+	{
+		m_tAbility->fCurrentHp = 0.f;
+	}
 }
 
 void CKrakenBoss::Look_Direction(void)
@@ -405,7 +463,6 @@ HRESULT CKrakenBoss::Add_Component(void)
 
 CKrakenBoss * CKrakenBoss::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3 & vPos, _tchar * Name)
 {
-
 	CKrakenBoss* pInstance = new CKrakenBoss(pGraphicDev);
 
 	if (FAILED(pInstance->Ready_Object(vPos, Name)))
@@ -414,7 +471,6 @@ CKrakenBoss * CKrakenBoss::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3 & v
 
 		return nullptr;
 	}
-
 
 	return pInstance;
 }
@@ -481,6 +537,132 @@ void CKrakenBoss::Hit_Check(_float _deltaTime)
 		m_tAbility->fCurrentHp = 0.f;
 	}
 
+}
+
+void CKrakenBoss::Dead_Event(void)
+{
+	CLayer* pLayer = Get_Layer(STAGE_CREATURE);
+
+	CGameObject* pGameObject = nullptr;
+
+	{
+		pGameObject = CBattleCursier::Create(m_pGraphicDev, _vec3(10, 20, 0), _vec3(0, 0, 1), L"BATTLE1");
+		NULL_CHECK_RETURN(pGameObject, );
+		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), );
+
+		pGameObject = CBattleCursier::Create(m_pGraphicDev, _vec3(30, 20, 10), _vec3(0, 0, 1), L"BATTLE2");
+		NULL_CHECK_RETURN(pGameObject, );
+		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), );
+
+		pGameObject = CBattleCursier::Create(m_pGraphicDev, _vec3(50, 20, 20), _vec3(0, 0, 1), L"BATTLE3");
+		NULL_CHECK_RETURN(pGameObject, );
+		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), );
+
+		pGameObject = CBattleCursier::Create(m_pGraphicDev, _vec3(70, 20, 30), _vec3(0, 0, 1), L"BATTLE4");
+		NULL_CHECK_RETURN(pGameObject, );
+		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), );
+
+		pGameObject = CBattleCursier::Create(m_pGraphicDev, _vec3(90, 20, 20), _vec3(0, 0, 1), L"BATTLE5");
+		NULL_CHECK_RETURN(pGameObject, );
+		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), );
+
+		pGameObject = CBattleCursier::Create(m_pGraphicDev, _vec3(110, 20, 10), _vec3(0, 0, 1), L"BATTLE6");
+		NULL_CHECK_RETURN(pGameObject, );
+		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), );
+
+		pGameObject = CBattleCursier::Create(m_pGraphicDev, _vec3(130, 20, 0), _vec3(0, 0, 1), L"BATTLE7");
+		NULL_CHECK_RETURN(pGameObject, );
+		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), );
+
+
+
+
+		pGameObject = CBattleCursier::Create(m_pGraphicDev, _vec3(20, 30, 0), _vec3(0, 0, 1), L"BATTLE8");
+		NULL_CHECK_RETURN(pGameObject, );
+		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), );
+
+		pGameObject = CBattleCursier::Create(m_pGraphicDev, _vec3(40, 30, 10), _vec3(0, 0, 1), L"BATTLE9");
+		NULL_CHECK_RETURN(pGameObject, );
+		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), );
+
+		pGameObject = CBattleCursier::Create(m_pGraphicDev, _vec3(60, 30, 20), _vec3(0, 0, 1), L"BATTLE10");
+		NULL_CHECK_RETURN(pGameObject, );
+		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), );
+
+		pGameObject = CBattleCursier::Create(m_pGraphicDev, _vec3(80, 30, 20), _vec3(0, 0, 1), L"BATTLE11");
+		NULL_CHECK_RETURN(pGameObject, );
+		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), );
+
+		pGameObject = CBattleCursier::Create(m_pGraphicDev, _vec3(100, 30, 10), _vec3(0, 0, 1), L"BATTLE12");
+		NULL_CHECK_RETURN(pGameObject, );
+		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), );
+
+		pGameObject = CBattleCursier::Create(m_pGraphicDev, _vec3(120, 30, 0), _vec3(0, 0, 1), L"BATTLE13");
+		NULL_CHECK_RETURN(pGameObject, );
+		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), );
+	}
+
+
+	{
+		pGameObject = CFlight::Create(m_pGraphicDev, _vec3(0, 15, 0), _vec3(0, 0, 1), L"FLIGHT1");
+		NULL_CHECK_RETURN(pGameObject, );
+		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), );
+
+		pGameObject = CFlight::Create(m_pGraphicDev, _vec3(10, 15, 5), _vec3(0, 0, 1), L"FLIGHT2");
+		NULL_CHECK_RETURN(pGameObject, );
+		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), );
+
+		pGameObject = CFlight::Create(m_pGraphicDev, _vec3(20, 15, 0), _vec3(0, 0, 1), L"FLIGHT3");
+		NULL_CHECK_RETURN(pGameObject, );
+		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), );
+
+		pGameObject = CFlight::Create(m_pGraphicDev, _vec3(30, 15, 5), _vec3(0, 0, 1), L"FLIGHT4");
+		NULL_CHECK_RETURN(pGameObject, );
+		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), );
+
+		pGameObject = CFlight::Create(m_pGraphicDev, _vec3(40, 15, 0), _vec3(0, 0, 1), L"FLIGHT5");
+		NULL_CHECK_RETURN(pGameObject, );
+		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), );
+
+		pGameObject = CFlight::Create(m_pGraphicDev, _vec3(50, 15, 5), _vec3(0, 0, 1), L"FLIGHT6");
+		NULL_CHECK_RETURN(pGameObject, );
+		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), );
+
+		pGameObject = CFlight::Create(m_pGraphicDev, _vec3(60, 15, 0), _vec3(0, 0, 1), L"FLIGHT7");
+		NULL_CHECK_RETURN(pGameObject, );
+		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), );
+
+		pGameObject = CFlight::Create(m_pGraphicDev, _vec3(70, 15, 5), _vec3(0, 0, 1), L"FLIGHT8");
+		NULL_CHECK_RETURN(pGameObject, );
+		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), );
+
+		pGameObject = CFlight::Create(m_pGraphicDev, _vec3(80, 15, 0), _vec3(0, 0, 1), L"FLIGHT9");
+		NULL_CHECK_RETURN(pGameObject, );
+		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), );
+
+		pGameObject = CFlight::Create(m_pGraphicDev, _vec3(90, 15, 5), _vec3(0, 0, 1), L"FLIGHT10");
+		NULL_CHECK_RETURN(pGameObject, );
+		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), );
+
+		pGameObject = CFlight::Create(m_pGraphicDev, _vec3(100, 15, 0), _vec3(0, 0, 1), L"FLIGHT11");
+		NULL_CHECK_RETURN(pGameObject, );
+		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), );
+
+		pGameObject = CFlight::Create(m_pGraphicDev, _vec3(110, 15, 5), _vec3(0, 0, 1), L"FLIGHT12");
+		NULL_CHECK_RETURN(pGameObject, );
+		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), );
+
+		pGameObject = CFlight::Create(m_pGraphicDev, _vec3(120, 15, 0), _vec3(0, 0, 1), L"FLIGHT13");
+		NULL_CHECK_RETURN(pGameObject, );
+		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), );
+
+		pGameObject = CFlight::Create(m_pGraphicDev, _vec3(130, 15, 5), _vec3(0, 0, 1), L"FLIGHT14");
+		NULL_CHECK_RETURN(pGameObject, );
+		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), );
+	}
+
+	CGameObject* pShuttle = dynamic_cast<CFlight*>(Get_GameObject(STAGE_FLIGHTPLAYER, L"FLIGHTSHUTTLE"));
+	dynamic_cast<CFlight*>(pShuttle)->Replace(_vec3(65, 15, -49), _vec3(0, 0, 0), _vec3(0, 0, 1));
 }
 
 HRESULT CKrakenBoss::Build(void)

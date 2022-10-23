@@ -5,6 +5,9 @@
 #include "TriggerParticle.h"
 #include "LaserEffect.h"
 #include "Monster.h"
+#include "KrakenBoss.h"
+
+
 CLaser::CLaser(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
 {
