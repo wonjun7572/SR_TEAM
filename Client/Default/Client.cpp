@@ -43,9 +43,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     LoadStringW(hInstance, IDC_CLIENT, szWindowClass, MAX_LOADSTRING);
     MyRegisterClass(hInstance);
 
-	//WNDCLASSEX wc = { sizeof(WNDCLASSEX), CS_CLASSDC, WndProc, 0L, 0L, GetModuleHandle(NULL), NULL, NULL, NULL, NULL, _T("ImGui Example"), NULL };
-	//::RegisterClassEx(&wc);
-	//HWND hwnd = ::CreateWindow(wc.lpszClassName, _T("Dear ImGui DirectX9 Example"), WS_OVERLAPPEDWINDOW, 100, 100, 1280, 800, NULL, NULL, wc.hInstance, NULL);
+	WNDCLASSEX wc = { sizeof(WNDCLASSEX), CS_CLASSDC, WndProc, 0L, 0L, GetModuleHandle(NULL), NULL, NULL, NULL, NULL, _T("ImGui Example"), NULL };
+	::RegisterClassEx(&wc);
+	HWND hwnd = ::CreateWindow(wc.lpszClassName, _T("Dear ImGui DirectX9 Example"), WS_OVERLAPPEDWINDOW, 100, 100, 1280, 800, NULL, NULL, wc.hInstance, NULL);
 
     // 응용 프로그램 초기화를 수행합니다.
     if (!InitInstance (hInstance, nCmdShow))

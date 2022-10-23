@@ -32,6 +32,8 @@ public:
 		if (this != nullptr)
 			m_tAbility->fCurrentHp -= iDamage;
 	}
+	_bool         Get_Annihilate(void) { return m_bAnnihilateReady; }
+
 
 private:
 	void				Look_Direction(void);

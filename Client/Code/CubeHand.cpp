@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "..\Header\CubeHand.h"
+#include "Flight.h"
 
 CCubeHand::CCubeHand(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
@@ -25,7 +26,10 @@ _int CCubeHand::Update_Object(const _float & fTimeDelta)
 
 	CGameObject::Update_Object(fTimeDelta);
 	
-	Add_RenderGroup(RENDER_NONALPHA, this);
+	CGameObject* pGameObject = dynamic_cast<CFlight*>(Get_GameObject(STAGE_FLIGHTPLAYER, L"FLIGHTSHUTTLE"));
+
+	if (dynamic_cast<CFlight*>(pGameObject)->Get_Ending() == false)
+		Add_RenderGroup(RENDER_NONALPHA, this);
 
 	return 0;
 }

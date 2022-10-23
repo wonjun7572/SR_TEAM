@@ -4,7 +4,7 @@
 #include "FlightBomb.h"
 #include "RcTex.h"
 class CFlightBulletParticle;
-
+class CCubeParticle;
 
 
 class CFlight :
@@ -33,6 +33,7 @@ private:
 	CTexture*		m_pBombTexture = nullptr;
 	CRcTex*			m_pBombBuffer = nullptr;
 	CRcTex*			m_pBufferCom = nullptr;
+	CCubeParticle* m_pCubeParticle = nullptr;
 
 
 public:
@@ -62,6 +63,18 @@ public:
 
 	_bool			Get_Shuttle() { return m_bShuttle; }
 	_vec3			Get_Desitination() { return m_vDestination; }
+
+	_bool			Get_Ending() { return m_bEnding; }
+	void			Set_Ending(_bool bEnd) { m_bEnding = bEnd; }
+	_bool			m_bEnding = false;/////////////////
+
+	_vec3			m_vEndingPos = _vec3(0.f, 0.f, 0.f);
+
+	_bool			m_bLeaveMap = false;
+
+	_float			m_fEndingFrame = 0.f;
+	_bool			m_bRide = false;
+
 private:
 	HRESULT			Build(void);
 	void			Key_Input(const _float& fTimeDelta);
@@ -80,6 +93,7 @@ private:
 	_vec3			m_vDestination = _vec3(0.f, 0.f, 0.f);
 
 	_vec3			m_vDirection;
+	_vec3			m_vLeave;
 	_vec3			m_vAngle;
 	_float			m_Frame = 0.f;
 

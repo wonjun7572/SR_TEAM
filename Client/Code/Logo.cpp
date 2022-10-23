@@ -29,68 +29,83 @@ HRESULT CLogo::Ready_Scene(void)
 
 	FAILED_CHECK_RETURN(Ready_Light(), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Proto(), E_FAIL);
-
 	FAILED_CHECK_RETURN(Ready_Layer_Environment(L"Ready_Layer_Environment"), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Layer_UI(L"Ready_Layer_UI"), E_FAIL);
 
-	m_pLoading = CLoading::Create(m_pGraphicDev, LOADING_STAGE);
-	NULL_CHECK_RETURN(m_pLoading, E_FAIL);
+	m_hVideo = MCIWndCreate(g_hWnd, nullptr, WS_CHILD | WS_VISIBLE | MCIWNDF_NOPLAYBAR, L"../Bin/Resources/Video/Space.wmv");
+
+	// MoveWindow : 동영상을 재생할 크기를 설정
+
+	MoveWindow(m_hVideo, 0, 0, WINCX, WINCY, FALSE);
+	MCIWndPlay(m_hVideo);
 
 	return S_OK;
 }
 
 Engine::_int CLogo::Update_Scene(const _float& fTimeDelta)
 {
-	_int iResult = Engine::CScene::Update_Scene(fTimeDelta);
-
-	m_Min = (_float)m_pLoading->Get_CurPercentage();
-	m_Max = (_float)m_pLoading->Get_MaxPercentage();
-
-	if (m_pLoadingBar == nullptr)
-		m_pLoadingBar = dynamic_cast<CLoadingBar*>(Engine::Get_GameObject(L"Ready_Layer_UI", L"LoadingBar"));
-
-	if (m_pLoadingBar != nullptr)
+	if (MCIWndGetLength(m_hVideo) <= MCIWndGetPosition(m_hVideo)  && !m_bVideo)
 	{
-		dynamic_cast<CLoadingBar*>(m_pLoadingBar)->Set_Min(m_Min);
-		dynamic_cast<CLoadingBar*>(m_pLoadingBar)->Set_Max(m_Max);
-
+		MCIWndClose(m_hVideo);
+		_float fBGMSound = 0.5f;
+		PlayBGM(L"LogoBgm.mp3", fBGMSound);
+		m_bVideo = true;
+		return 0;
 	}
-
-	if (m_pLoading->Get_Finish())
+	else
 	{
-		if (m_PlayButton->Get_MouseCheck())
+		Engine::CScene::Update_Scene(fTimeDelta);
+
+		if (m_pLoadingBar == nullptr)
+			m_pLoadingBar = dynamic_cast<CLoadingBar*>(Engine::Get_GameObject(L"Ready_Layer_UI", L"LoadingBar"));
+
+		if (m_pLoadingBar != nullptr)
 		{
-			CScene*      pScene = CStage::Create(m_pGraphicDev);
-			NULL_CHECK_RETURN(pScene, E_FAIL);
-			FAILED_CHECK_RETURN(Engine::Set_Scene(pScene), E_FAIL);
-			pScene->Set_SceneId(STAGE_SCENE);
-			return 0;
+			if (m_pLoading == nullptr)
+			{
+				m_pLoading = CLoading::Create(m_pGraphicDev, LOADING_STAGE);
+				NULL_CHECK_RETURN(m_pLoading, E_FAIL);
+			}
+			else if (m_pLoading != nullptr)
+			{
+				m_Min++;
+				m_Max = (_float)m_pLoading->Get_MaxPercentage();
+			}
+			dynamic_cast<CLoadingBar*>(m_pLoadingBar)->Set_Min(m_Min);
+			dynamic_cast<CLoadingBar*>(m_pLoadingBar)->Set_Max(m_Max);
 		}
 
-		if (m_OptionButton->Get_MouseCheck())
+		if (m_pLoading->Get_Finish())
 		{
-			CScene*      pScene = CToolScene::Create(m_pGraphicDev);
-			NULL_CHECK_RETURN(pScene, E_FAIL);
-			FAILED_CHECK_RETURN(Engine::Set_Scene(pScene), E_FAIL);
-			pScene->Set_SceneId(TOOL_SCENE);
-			return 0;
+			if (m_PlayButton->Get_MouseCheck())
+			{
+				CScene*      pScene = CStage::Create(m_pGraphicDev);
+				NULL_CHECK_RETURN(pScene, E_FAIL);
+				FAILED_CHECK_RETURN(Engine::Set_Scene(pScene), E_FAIL);
+				pScene->Set_SceneId(STAGE_SCENE);
+				return 0;
+			}
+
+			if (m_OptionButton->Get_MouseCheck())
+			{
+				CScene*      pScene = CToolScene::Create(m_pGraphicDev);
+				NULL_CHECK_RETURN(pScene, E_FAIL);
+				FAILED_CHECK_RETURN(Engine::Set_Scene(pScene), E_FAIL);
+				pScene->Set_SceneId(TOOL_SCENE);
+				return 0;
+			}
 		}
 	}
-
-	return iResult;
+	return 0;
 }
 
 void CLogo::LateUpdate_Scene(void)
 {
-
-
 	if (m_pLoadingBar == nullptr)
 		m_pLoadingBar = dynamic_cast<CLoadingBar*>(Engine::Get_GameObject(L"Ready_Layer_UI", L"LoadingBar"));
-	if (m_Max = m_Min)
+	if (m_Max == m_Min)
 	{
-		m_pLoadingBar->Power_Off();
 		m_pLoadingBar->Kill_Obj();
-
 	}
 	Engine::CScene::LateUpdate_Scene();
 }
@@ -111,20 +126,10 @@ HRESULT CLogo::Ready_Layer_Environment(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"DynamicCamera", pGameObject), E_FAIL);
 
-	//Terrian 
-	pGameObject = CTerrain::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Terrain", pGameObject), E_FAIL);
-
 	// Sky box
 	pGameObject = CSkyBox::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"SkyBox", pGameObject), E_FAIL);
-
-	//Billboard
-	pGameObject = CLogoBilboard::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"LogoBilboard", pGameObject), E_FAIL);
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
@@ -133,15 +138,14 @@ HRESULT CLogo::Ready_Layer_Environment(const _tchar * pLayerTag)
 
 HRESULT CLogo::Ready_Layer_UI(const _tchar * pLayerTag)
 {
-
 	Engine::CLayer*      pLayer = Engine::CLayer::Create();
 	NULL_CHECK_RETURN(pLayer, E_FAIL);
 
 	CGameObject*      pGameObject = nullptr;
 
-	pGameObject = CLogoUI::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"LogoUI", pGameObject), E_FAIL);
+	//pGameObject = CLogoUI::Create(m_pGraphicDev);
+	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"LogoUI", pGameObject), E_FAIL);
 
 	//PlayButton
 	m_PlayButton = dynamic_cast<CPlayButton*> (pGameObject = CPlayButton::Create(m_pGraphicDev));
@@ -182,8 +186,8 @@ CLogo * CLogo::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 
 void CLogo::Free(void)
 {
+	MCIWndClose(m_hVideo);
 	Safe_Release(m_pLoading);
-
 	Engine::CScene::Free();
 }
 
@@ -220,16 +224,6 @@ HRESULT CLogo::Ready_Proto(void)
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(RCTEX_COMP, CRcTex::Create(m_pGraphicDev)), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_LoadingBar", CRcTex::Create(m_pGraphicDev)), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_HudLoading", CRcTex::Create(m_pGraphicDev)), E_FAIL);
-		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_MemorialRC", CRcTex::Create(m_pGraphicDev)), E_FAIL);
-		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_AnubisRC", CRcTex::Create(m_pGraphicDev)), E_FAIL);
-		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_MageRC", CRcTex::Create(m_pGraphicDev)), E_FAIL);
-		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_TreeRC", CRcTex::Create(m_pGraphicDev)), E_FAIL);
-		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_SocerRC", CRcTex::Create(m_pGraphicDev)), E_FAIL);
-		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_NewRC", CRcTex::Create(m_pGraphicDev)), E_FAIL);
-		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_GlcierRC", CRcTex::Create(m_pGraphicDev)), E_FAIL);
-		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_ProRC", CRcTex::Create(m_pGraphicDev)), E_FAIL);
-		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_HandRC", CRcTex::Create(m_pGraphicDev)), E_FAIL);
-		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_EgyptRC", CRcTex::Create(m_pGraphicDev)), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(TRANSFORM_COMP, CTransform::Create(m_pGraphicDev)), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(CUBETEX_COMP, CCubeTex::Create(m_pGraphicDev)), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(TERRAINTEX_COMP, CTerrainTex::Create(m_pGraphicDev, VTXCNTX, VTXCNTZ, VTXITV)), E_FAIL);
@@ -241,8 +235,6 @@ HRESULT CLogo::Ready_Proto(void)
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_TerrainTexture", CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/Terrain/Grass_%d.tga", TEX_NORMAL)), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_CubeTexture", CTexture::Create(m_pGraphicDev, L"../Bin/Resource/Texture/SkyBox/burger%d.dds", TEX_CUBE, 4)), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"SkyBox_TEX", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Sky01.jpg", TEX_NORMAL)), E_FAIL);
-
-
 	}
 	{      //MENUUI
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_OptionButton", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/UI/MenuUI/UI%d.png", TEX_NORMAL, 2)), E_FAIL);
@@ -251,27 +243,10 @@ HRESULT CLogo::Ready_Proto(void)
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_ExitButton", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/UI/MenuUI/UI%d.png", TEX_NORMAL, 2)), E_FAIL);
 	}
 	{
-
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_HudLoadinga", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/UI/LoadingUI/perk_selected.png", TEX_NORMAL)), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_ReadyLoading", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/UI/LoadingUI/theHUDui_10.png", TEX_NORMAL)), E_FAIL);
-
 	}
 
-
-	//Menu Bilboard
-	{
-		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_LogoBil", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Texture2D/amidevil.png", TEX_NORMAL)), E_FAIL);
-		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_Memorial", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Texture2D/memorial_broken0001.png", TEX_NORMAL)), E_FAIL);
-		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_Anubis", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Texture2D/anubis_attack.png", TEX_NORMAL)), E_FAIL);
-		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_Mage", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Texture2D/mage_attack0000.png", TEX_NORMAL)), E_FAIL);
-		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_Tree", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Texture2D/tex_forest_dead.png", TEX_NORMAL)), E_FAIL);
-		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_Socer", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Texture2D/sorcererboss_damage_first0003.png", TEX_NORMAL)), E_FAIL);
-		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_New", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Texture2D/newshambler_bash0010.png", TEX_NORMAL)), E_FAIL);
-		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_Glcier", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Texture2D/glacier_hurt_idle.png", TEX_NORMAL)), E_FAIL);
-		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_Pro", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Texture2D/proteus.png", TEX_NORMAL)), E_FAIL);
-		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_Hand", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Texture2D/proteus.png", TEX_NORMAL)), E_FAIL);
-		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_Egypt", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Texture2D/texture_egypt_palmtree_1.png", TEX_NORMAL)), E_FAIL);
-	}
 
 	{
 		//Shader

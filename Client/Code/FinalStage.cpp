@@ -29,7 +29,7 @@
 #include "BulletUI.h"
 #include "GunUI.h"
 #include "BaseMapping.h"
-
+#include "Warning_AnnihilateUI.h"
 #include "GetUzi.h"
 #include "GetShotgun.h"
 #include "GetSniper.h"
@@ -402,6 +402,10 @@ HRESULT CFinalStage::Ready_Layer_UI(const _tchar * pLayerTag)
 	pGameObject = CInventory::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"InventoryUI", pGameObject), E_FAIL);
+
+	pGameObject = CWarning_AnnihilateUI::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(WARNING_TEX, pGameObject), E_FAIL);
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 

@@ -20,6 +20,8 @@ public:
 
 	void   Off_Switch() { m_bSwitch = false; }
 
+	_float	Get_ComboCnt() { return m_fComboCnt; }
+
 	void   ComboCntPlus() { m_fComboCnt++; }
 	void   KillCntPlus() { m_fKillCnt++; }
 

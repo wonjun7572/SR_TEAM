@@ -183,11 +183,6 @@ _int CKrakenLeg::Update_Object(const _float & fTimeDelta)
 			&& fabs(fDistance) <= 50.f)
 		{
 			vDir = vPlayerPos - vPos;
-			
-			
-
-	
-		
 		}
 		vNewDir = vPos - vMainBodyPos;
 
@@ -1157,7 +1152,10 @@ void CKrakenLeg::Run_Animation(const _float & AnimationSpeed)
 		D3DXQuaternionSlerp(&qSLerp, &q1, &q2, m_AnimationTime);
 		D3DXVec3Lerp(&vTransLerp, &vTrans1, &vTrans2, m_AnimationTime);
 
-		m_AnimationTime += (m_fTimeDelta / AnimationSpeed);
+		if (m_bAnnihilateReady)
+			m_AnimationTime += (m_fTimeDelta / AnimationSpeed) * 10.f;
+		else
+			m_AnimationTime += (m_fTimeDelta / AnimationSpeed);
 
 		_float pitch, yaw, roll;
 

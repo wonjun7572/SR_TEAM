@@ -15,7 +15,7 @@ public:
 
 private:
 	HRESULT			Add_Component(void);
-
+	void			Effect();
 public:
 	static CGetShotgun* Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3& vPos);
 

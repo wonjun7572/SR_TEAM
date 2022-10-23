@@ -33,8 +33,6 @@ private:
 public:
 	void		Set_Min(_float Min) {m_fMin = Min; }
 	void		Set_Max(_float Max) { m_fMax = Max; }
-	void		Power_On() { m_bPower = true; }
-	void		Power_Off() { m_bPower = false; }
 
 private:
 	CRcTex*			m_pBufferUICom = nullptr;
@@ -54,7 +52,6 @@ private:
 
 	_float	m_fMin = 0;
 	_float	m_fMax = 0;
-	_bool	m_bPower = false;
 
 public:
 	static CLoadingBar*		Create(LPDIRECT3DDEVICE9 pGraphicDev);

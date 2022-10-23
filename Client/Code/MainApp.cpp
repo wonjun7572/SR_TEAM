@@ -35,7 +35,7 @@ _int CMainApp::Update_MainApp(const _float & fTimeDelta)
 	
 	if (m_pManagementClass->Get_Scene()->Get_SceneId() == STAGE_SCENE)
 	{
-		if (Get_Layer(L"STAGE_KEY")->Get_GameList().size() == 0)
+		/*if (Get_Layer(L"STAGE_KEY")->Get_GameList().size() == 0)
 		{
 			Engine::CScene*			pScene = nullptr;
 
@@ -43,7 +43,7 @@ _int CMainApp::Update_MainApp(const _float & fTimeDelta)
 			NULL_CHECK_RETURN(pScene, E_FAIL);
 
 			FAILED_CHECK_RETURN(m_pManagementClass->Set_Scene(pScene), E_FAIL);
-		}
+		}*/
 
 		//if (Get_Layer(STAGE_GUNITEM)->Get_GameObjectMap().size() == 0)
 		if(Get_DIKeyState(DIK_Y))

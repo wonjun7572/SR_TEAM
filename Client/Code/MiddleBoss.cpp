@@ -14,6 +14,10 @@
 #include "Explosion.h"
 #include "Veneer.h"
 
+#include "Flight.h"
+
+#include "LaserSpot.h"
+
 static _int m_iCnt = 0;
 
 CMiddleBoss::CMiddleBoss(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -29,7 +33,7 @@ CMiddleBoss::~CMiddleBoss()
 HRESULT CMiddleBoss::Ready_Object(const _vec3 & vPos, _tchar * Name)
 {
 	m_tAbility = new MIDDLEBOSSABILITY;
-	m_tAbility->fMaxHp = 10000.f;
+	m_tAbility->fMaxHp = 100.f;
 	m_tAbility->fCurrentHp = m_tAbility->fMaxHp;
 	m_tAbility->fDamage = 5.f;
 	m_tAbility->strObjTag = L"MiddleBoss";
@@ -46,15 +50,16 @@ HRESULT CMiddleBoss::Ready_Object(const _vec3 & vPos, _tchar * Name)
 	m_BOMBING = MIDDLEBOSS_BOMBING_1;
 	m_CRASH = MIDDLEBOSS_CRASH_1;
 	m_PATTERN = MIDDLEBOSS_SKILL_END;
+	m_DEAD = MIDDLEBOSS_DEAD_1;
 
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
-	m_pTransCom->Set_Scale(&_vec3(10.f, 10.f, 10.f));
+	m_pTransCom->Set_Scale(&_vec3(1.f, 1.f, 1.f));
 	m_pTransCom->Set_Pos(vPos.x, vPos.y, vPos.z);
 	m_pTransCom->Static_Update();
 
 	m_pTransUICom->Set_Scale(3.f, 1.f, 1.5f);
-	
+
 	_vec3 vAnimationPos;
 	m_pTransCom->Get_Info(INFO_POS, &vAnimationPos);
 
@@ -82,7 +87,6 @@ _int CMiddleBoss::Update_Object(const _float & fTimeDelta)
 		Monster_DeleteMapping();
 		_float fMiddle_death = 1.5f;
 		PlaySoundGun(L"Middle_Death.wav", SOUND_EFFECT, fMiddle_death);
-
 		return -1;
 	}
 
@@ -94,6 +98,7 @@ _int CMiddleBoss::Update_Object(const _float & fTimeDelta)
 
 		m_vPattern.push_back(MIDDLEBOSS_SKILL_NORMALATTACK);
 		m_vPattern.push_back(MIDDLEBOSS_SKILL_BOMBING);
+		m_vPattern.push_back(MIDDLEBOSS_SKILL_LASER);
 
 		Engine::Get_Scene()->New_Layer(m_MonsterName);
 		pMyLayer = Engine::Get_Layer(m_MonsterName);
@@ -120,10 +125,14 @@ _int CMiddleBoss::Update_Object(const _float & fTimeDelta)
 		Load_Animation(L"../../Data/Thor/THOR_BOMBING_9.dat", 19);
 		Load_Animation(L"../../Data/Thor/THOR_BOMBING_10.dat", 20);
 		Load_Animation(L"../../Data/Thor/THOR_BOMBING_11.dat", 21);
+
+		Load_Animation(L"../../Data/Thor/THOR_DEAD_1.dat", 22);
+		Load_Animation(L"../../Data/Thor/THOR_DEAD_2.dat", 23);
+		Load_Animation(L"../../Data/Thor/THOR_DEAD_3.dat", 24);
 	}
 
 	Update_Pattern(fTimeDelta);
-	
+
 	Look_Direction();
 
 	CGameObject::Update_Object(fTimeDelta);
@@ -133,8 +142,21 @@ _int CMiddleBoss::Update_Object(const _float & fTimeDelta)
 
 	_vec3 vMonsterPos;
 	m_pTransCom->Get_Info(INFO_POS, &vMonsterPos);
-	m_pHitBoxTransCom->Set_Pos(vMonsterPos.x, vMonsterPos.y, vMonsterPos.z);
-	
+
+	for (auto& iter : pMyLayer->Get_GamePair())
+	{
+		if (0 == _tcscmp(iter.first, L"CORE"))
+		{
+			CTransAxisBox* pBox = dynamic_cast<CTransAxisBox*>(iter.second);
+			_matrix matFinal;
+			pBox->Get_Final(&matFinal);
+
+			m_pHitBoxTransCom->Set_Pos(matFinal.m[3][0], matFinal.m[3][1], matFinal.m[3][2]);
+		}
+	}
+
+	//m_pHitBoxTransCom->Set_Pos(vMonsterPos.x, vMonsterPos.y, vMonsterPos.z);
+
 	m_pSearchRange_TransCom->Set_Pos(vMonsterPos.x, 0.f, vMonsterPos.z);
 	m_pAttackRange_TransCom->Set_Pos(vMonsterPos.x, 0.f, vMonsterPos.z);
 
@@ -148,13 +170,25 @@ void CMiddleBoss::LateUpdate_Object(void)
 {
 	Monster_Mapping();
 
-	Set_OnTerrain();
-	m_pTransCom->Static_Update();
-
 	if (m_tAbility->fCurrentHp <= 0.f)
 	{
+		m_STATE = MIDDLEBOSS_END;
+
+		_vec3 vPos;
+		m_pTransCom->Get_Info(INFO_POS, &vPos);
+
+		m_pTransCom->Set_Pos(vPos.x, vPos.y - 0.1f, vPos.z);
+		m_pTransCom->Static_Update();
+
 		m_pMonsterUI->Off_Switch();
-		this->Kill_Obj();
+
+		if (vPos.y <= -20.f)
+			this->Kill_Obj();
+	}
+	else
+	{
+		Set_OnTerrain();
+		m_pTransCom->Static_Update();
 	}
 
 	if (!m_bFirst)
@@ -188,13 +222,30 @@ void CMiddleBoss::LateUpdate_Object(void)
 				else
 					Run_Animation(100.f);
 			}
-		}
-		else if (m_STATE == MIDDLEBOSS_MOVE)
-		{
+			else if (m_PATTERN == MIDDLEBOSS_SKILL_LASER)
+			{
+				m_fLaserTime += m_fTimeDelta;
 
-			PlaySoundW(L"shambler_detect.wav", SOUND_EFFECT, 1.f);
-			Walk_Animation_Run();
-			Run_Animation(10.f);
+				if (m_fLaserTime >= 1.f)
+				{
+					CGameObject* pGameObject = Get_GameObject(STAGE_GAMELOGIC, L"LaserSpot");
+					dynamic_cast<CLaserSpot*>(pGameObject)->Attack_Permit(true);
+				}
+				// 여기에 레이저 추가
+
+				if (m_fLaserTime >= 10.f)
+				{
+					m_STATE = MIDDLEBOSS_IDLE;
+					m_fLaserTime = 0.f;
+					CGameObject* pGameObject = Get_GameObject(STAGE_GAMELOGIC, L"LaserSpot");
+					dynamic_cast<CLaserSpot*>(pGameObject)->Attack_Permit(false);
+				}
+			}
+		}
+		else if (m_STATE == MIDDLEBOSS_END)
+		{
+			Dead_Animation_Run();
+			Run_Animation(30.f);
 		}
 	}
 
@@ -244,7 +295,7 @@ _int CMiddleBoss::Update_Pattern(_float fTimeDelta)
 
 			_vec3 vLook = { matBoss.m[2][0], matBoss.m[2][1], matBoss.m[2][2] };
 			vShotgunLeft += vLook;
-			
+
 		}
 		if (0 == _tcscmp(iter.first, L"RIGHTCANNON2"))
 		{
@@ -261,10 +312,10 @@ _int CMiddleBoss::Update_Pattern(_float fTimeDelta)
 	{
 		m_pPlayerTransCom = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_CHARACTER, L"PLAYER", TRANSFORM_COMP, ID_DYNAMIC));
 	}
-	
+
 	if (m_pMonsterUI == nullptr)
 		m_pMonsterUI = dynamic_cast<CMonsterUI*>(Engine::Get_GameObject(STAGE_UI, L"MonsterUI"));
-	
+
 	if (m_pComboUI == nullptr)
 		m_pComboUI = dynamic_cast<CComboUI*>(Engine::Get_GameObject(STAGE_UI, L"ComboUI"));
 
@@ -281,23 +332,23 @@ _int CMiddleBoss::Update_Pattern(_float fTimeDelta)
 	_float m_fPlayerCurrent = D3DXVec3Length(&m_vDir);
 	_vec3 vAnimationPos;
 	_vec3 vSearchScale, vAttackScale;
-	
+
 	m_pSearchRange_TransCom->Get_Scale(&vSearchScale);
 	m_pAttackRange_TransCom->Get_Scale(&vAttackScale);
-	
+
 	_float HP = m_tAbility->fCurrentHp / m_tAbility->fMaxHp;
 
 	srand((unsigned int)time(NULL) + m_iRandom);
 	m_iRandom = rand() % 1000;
-	
+
 	int m_iRand = rand() % 10;
-	
+
 	/*if (!m_pCollision->Sphere_Collision(this->m_pSearchRange_TransCom, m_pPlayerTransCom, vPlayerScale.x, vSearchScale.x)
-		&& (m_STATE != MIDDLEBOSS_ATTACK))
+	&& (m_STATE != MIDDLEBOSS_ATTACK))
 	{
-		m_STATE = MIDDLEBOSS_MOVE;
-		m_pTransCom->Chase_Target(&vPlayerPos, 1.f, fTimeDelta);
-		m_ReloadTimer += fTimeDelta;
+	m_STATE = MIDDLEBOSS_MOVE;
+	m_pTransCom->Chase_Target(&vPlayerPos, 1.f, fTimeDelta);
+	m_ReloadTimer += fTimeDelta;
 	}*/
 	if (m_pCollision->Sphere_Collision(this->m_pSearchRange_TransCom, m_pPlayerTransCom, vPlayerScale.x, vSearchScale.x))
 	{
@@ -321,6 +372,16 @@ _int CMiddleBoss::Update_Pattern(_float fTimeDelta)
 				{
 					random_shuffle(m_vPattern.begin(), m_vPattern.end());
 					m_PATTERN = m_vPattern.front();
+				}
+
+				{
+					CGameObject* pGameObject = Get_GameObject(STAGE_GAMELOGIC, L"LaserSpot");
+					CTransform* pSpotTrans = dynamic_cast<CTransform*>(pGameObject->Get_Component(TRANSFORM_COMP, ID_DYNAMIC));
+
+					_vec3 vPlayerPos;
+					m_pPlayerTransCom->Get_Info(INFO_POS, &vPlayerPos);
+
+					pSpotTrans->Set_Pos(vPlayerPos.x, vPlayerPos.y, vPlayerPos.z);
 				}
 
 				m_ReloadTimer = 0.f;
@@ -393,8 +454,8 @@ _int CMiddleBoss::Update_Pattern(_float fTimeDelta)
 						vRandom = _vec3(vPlayerPos.x - m_iRand, 30.f, vPlayerPos.z + m_iRand);
 					else if (m_MissileCnt % 5 == 3)
 						vRandom = _vec3(vPlayerPos.x - m_iRand, 30.f, vPlayerPos.z - m_iRand);
-					/*else if (m_MissileCnt % 5 == 4)
-						vRandom = _vec3(vPlayerPos.x + m_iRand, 30.f, vPlayerPos.z + m_iRand);*/
+					else if (m_MissileCnt % 5 == 4)
+						vRandom = _vec3(vPlayerPos.x + m_iRand, 30.f, vPlayerPos.z + m_iRand);
 
 					CGameObject* pGameObject = CVeneer::Create(m_pGraphicDev, vRandom);
 					NULL_CHECK_RETURN(pGameObject, -1);
@@ -405,12 +466,12 @@ _int CMiddleBoss::Update_Pattern(_float fTimeDelta)
 					NULL_CHECK_RETURN(pGameObject, -1);
 					FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), -1);
 
-				//	m_fMissileItv = 0.f;
+					//   m_fMissileItv = 0.f;
 					m_MissileCnt++;
 				}
 				/*else
 				{
-					m_fMissileItv += fTimeDelta;
+				m_fMissileItv += fTimeDelta;
 				}*/
 			}
 			else if (m_PATTERN == MIDDLEBOSS_SKILL_CRASH)
@@ -438,12 +499,15 @@ void CMiddleBoss::Hit_Check(_float _deltaTime)
 		pWeapon->Get_Transform()->Get_Info(INFO_POS, &vSrcPos);
 
 		_vec3 vDir;
-		if (m_pCollision->HitScan(g_hWnd, &vSrcPos, this->m_pBufferCom, this->m_pTransCom, &vDir))
+		if (m_pCollision->HitScan(g_hWnd, &vSrcPos, this->m_pBufferCom, this->m_pHitBoxTransCom, &vDir))
 		{
 			if (pWeapon->Get_Shoot() == true)
 			{
 				m_tAbility->fCurrentHp -= pWeapon->Get_Ability()->fBulletAttack;
-	
+
+				m_pComboUI->On_Switch();
+				m_pComboUI->ComboCntPlus();
+
 				pWeapon->Set_Shoot(false);
 			}
 
@@ -460,9 +524,6 @@ void CMiddleBoss::Hit_Check(_float _deltaTime)
 			m_pMonsterUI->Set_Hp(m_tAbility->fCurrentHp);
 			m_pMonsterUI->Set_MaxHp(m_tAbility->fMaxHp);
 			m_pMonsterUI->On_Switch();
-
-			m_pComboUI->On_Switch();
-			m_pComboUI->ComboCntPlus();
 		}
 		else
 		{
@@ -478,7 +539,7 @@ void CMiddleBoss::Hit_Check(_float _deltaTime)
 
 HRESULT CMiddleBoss::Build(void)
 {
-	HANDLE      hFile = CreateFile(L"../../Data/Thor/THOR.dat",      // 파일의 경로와 이름	
+	HANDLE      hFile = CreateFile(L"../../Data/Thor/THOR.dat",      // 파일의 경로와 이름   
 		GENERIC_READ,         // 파일 접근 모드 (GENERIC_WRITE : 쓰기 전용, GENERIC_READ : 읽기 전용)
 		NULL,               // 공유 방식(파일이 열려있는 상태에서 다른 프로세스가 오픈할 때 허용할 것인가)    
 		NULL,               // 보안 속성(NULL을 지정하면 기본값 상태)
@@ -494,15 +555,15 @@ HRESULT CMiddleBoss::Build(void)
 	DWORD   dwByte = 0;
 
 	_vec3   vRight, vUp, vLook, vPos, vScale, vAngle;
-	_int	iDrawNum = 0;
-	_float	fAxisX = 0.f, fAxisY = 0.f, fAxisZ = 0.f;
-	_int	iChildCnt = 0;
-	_int	iParentCnt = 0;
+	_int   iDrawNum = 0;
+	_float   fAxisX = 0.f, fAxisY = 0.f, fAxisZ = 0.f;
+	_int   iChildCnt = 0;
+	_int   iParentCnt = 0;
 
 	int iSize = 0;
 	ReadFile(hFile, &iSize, sizeof(int), &dwByte, nullptr);
 
-	list<const _tchar*>	LoadOrder;
+	list<const _tchar*>   LoadOrder;
 	for (int i = 0; i < iSize; ++i)
 	{
 		_tchar* szName = new _tchar[256]{};
@@ -548,13 +609,13 @@ HRESULT CMiddleBoss::Build(void)
 
 		Transcom->Worldspace_By_Quarternion();
 
-		_vec3	vPos;
+		_vec3   vPos;
 		Transcom->Get_Info(INFO_POS, &vPos);
 
-		_vec3	vPlayerPos;
+		_vec3   vPlayerPos;
 		m_pTransCom->Get_Info(INFO_POS, &vPlayerPos);
 
-		if (0 == _tcscmp(LoadOrder.front(), L"A_ROOT"))	//	루트 이름은 항상 고정이므로 이렇게 지정해둠, 루트를 몸통으로 사용해도 좋고 아주 작게 만들어서 바닥으로 해도 좋고? 근데 거기까진 안해봤습니다ㅎ
+		if (0 == _tcscmp(LoadOrder.front(), L"A_ROOT"))   //   루트 이름은 항상 고정이므로 이렇게 지정해둠, 루트를 몸통으로 사용해도 좋고 아주 작게 만들어서 바닥으로 해도 좋고? 근데 거기까진 안해봤습니다ㅎ
 			Transcom->Set_Pos(vPos.x + vPlayerPos.x, vPos.y + vPlayerPos.y, vPos.z + vPlayerPos.z);
 		else
 			Transcom->Set_Pos(vPos.x, vPos.y, vPos.z);
@@ -598,7 +659,7 @@ HRESULT CMiddleBoss::Build(void)
 	{
 		for (auto& List : dynamic_cast<CTransAxisBox*>(iter.second)->m_ParentKey)
 		{
-			auto	MapFindIter = find_if(pMyLayer->Get_GamePairPtr()->begin(), pMyLayer->Get_GamePairPtr()->end(), CTag_Finder(List));
+			auto   MapFindIter = find_if(pMyLayer->Get_GamePairPtr()->begin(), pMyLayer->Get_GamePairPtr()->end(), CTag_Finder(List));
 
 			dynamic_cast<CTransAxisBox*>(iter.second)->m_ParentList.push_back(dynamic_cast<CTransAxisBox*>(MapFindIter->second));
 		}
@@ -628,7 +689,7 @@ void CMiddleBoss::Load_Animation(wstring FileName, _uint AnimationID)
 	int iSize = 0;
 	ReadFile(hFile, &iSize, sizeof(_int), &dwByte, nullptr);
 
-	list<const _tchar*>	LoadOrder;
+	list<const _tchar*>   LoadOrder;
 	for (int i = 0; i < iSize; ++i)
 	{
 		_tchar* szName = new _tchar[256]{};
@@ -639,7 +700,7 @@ void CMiddleBoss::Load_Animation(wstring FileName, _uint AnimationID)
 
 	for (auto& iter : LoadOrder)
 	{
-		auto	MapFindIter = find_if(pMyLayer->Get_GamePairPtr()->begin(), pMyLayer->Get_GamePairPtr()->end(), CTag_Finder(iter));
+		auto   MapFindIter = find_if(pMyLayer->Get_GamePairPtr()->begin(), pMyLayer->Get_GamePairPtr()->end(), CTag_Finder(iter));
 
 		CQuarternion* Quaternion = dynamic_cast<CQuarternion*>(MapFindIter->second->Get_Component(L"Proto_QuaternionCom", ID_STATIC));
 
@@ -712,13 +773,13 @@ void CMiddleBoss::Run_Animation(const _float & AnimationSpeed)
 		D3DXMatrixTranslation(&matNewTrans, vTransLerp.x, vTransLerp.y, vTransLerp.z);
 		matNewWorld = matNewScale * matNewRot * matNewTrans;
 
-		CTransform*	BoxTransform = dynamic_cast<CTransform*>(iter.second->Get_Component(L"Proto_TransformCom", ID_STATIC));
+		CTransform*   BoxTransform = dynamic_cast<CTransform*>(iter.second->Get_Component(L"Proto_TransformCom", ID_STATIC));
 		_matrix matWorld;
 		BoxTransform->Set_WorldMatrix(&matNewWorld);
 		BoxTransform->Set_Scale(&vScaleLerp);
 		BoxTransform->Set_Angle(&_vec3(yaw, pitch, roll));
 
-		_vec3		vPlayerPos;
+		_vec3      vPlayerPos;
 		m_pTransCom->Get_Info(INFO_POS, &vPlayerPos);
 
 		if (0 == _tcscmp(iter.first, L"A_ROOT"))
@@ -781,23 +842,23 @@ void CMiddleBoss::Walk_Animation_Run(void)
 
 		m_AnimationTime = 0.f;
 	}
-	for (auto& iter : ListBox)	// 애니메이션 변경
+	for (auto& iter : ListBox)   // 애니메이션 변경
 	{
 		CQuarternion* Qtan = dynamic_cast<CQuarternion*>(iter.second->Get_Component(L"Proto_QuaternionCom", ID_STATIC));
 		Qtan->Change_Animation(4 + m_WALK);
 	}
 
-	
+
 }
 
 void CMiddleBoss::Set_OnTerrain(void)
 {
 	_vec3 vAnimationPos;
 
-	_vec3		vPos;
+	_vec3      vPos;
 	m_pTransCom->Get_BeforeInfo(INFO_POS, &vAnimationPos);
 
-	Engine::CTerrainTex*	pTerrainTexCom = dynamic_cast<Engine::CTerrainTex*>(Engine::Get_Component(STAGE_ENVIRONMENT, L"Terrain", TERRAINTEX_COMP, ID_STATIC));
+	Engine::CTerrainTex*   pTerrainTexCom = dynamic_cast<Engine::CTerrainTex*>(Engine::Get_Component(STAGE_ENVIRONMENT, L"Terrain", TERRAINTEX_COMP, ID_STATIC));
 	NULL_CHECK(pTerrainTexCom);
 
 	_float fHeight = m_pCalculatorCom->HeightOnTerrain(&vAnimationPos, pTerrainTexCom->Get_VtxPos(), VTXCNTX, VTXCNTZ) + 0.6f;
@@ -810,8 +871,8 @@ _bool CMiddleBoss::Collision_Wall(const _float & fTimeDelta)
 	_vec3 vPos;
 	m_pTransCom->Get_Info(INFO_POS, &vPos);
 
-	_vec3	vDir(0, 0, 0);
-	_vec3	vNormal(0, 0, 0);
+	_vec3   vDir(0, 0, 0);
+	_vec3   vNormal(0, 0, 0);
 
 	_int iCollision = m_pCollision->Wall_Collision_For_Monster(&vNormal, this->m_pTransCom, this->m_pHitBox);
 
@@ -890,7 +951,7 @@ void CMiddleBoss::Idle_Animation_Run(void)
 		CQuarternion* Qtan = dynamic_cast<CQuarternion*>(iter.second->Get_Component(L"Proto_QuaternionCom", ID_STATIC));
 		Qtan->Change_Animation(0 + m_IDLE);
 	}
-	
+
 }
 
 void CMiddleBoss::NormalAttack_Animation_Run(void)
@@ -907,9 +968,9 @@ void CMiddleBoss::NormalAttack_Animation_Run(void)
 
 		if (m_NORMALATTACK == MIDDLEBOSS_NORMALATTACK_1)
 			m_NORMALATTACK = MIDDLEBOSS_NORMALATTACK_2;
-		else if(m_NORMALATTACK == MIDDLEBOSS_NORMALATTACK_2)
+		else if (m_NORMALATTACK == MIDDLEBOSS_NORMALATTACK_2)
 			m_NORMALATTACK = MIDDLEBOSS_NORMALATTACK_3;
-		else if(m_NORMALATTACK == MIDDLEBOSS_NORMALATTACK_3)
+		else if (m_NORMALATTACK == MIDDLEBOSS_NORMALATTACK_3)
 			m_NORMALATTACK = MIDDLEBOSS_NORMALATTACK_4;
 		else if (m_NORMALATTACK == MIDDLEBOSS_NORMALATTACK_4)
 		{
@@ -973,9 +1034,36 @@ void CMiddleBoss::Bombing_Animation_Run(void)
 	}
 }
 
+void CMiddleBoss::Dead_Animation_Run(void)
+{
+	list<pair<const _tchar*, CGameObject*>> ListBox = *(pMyLayer->Get_GamePairPtr());
+
+	if (m_AnimationTime >= 1.f)
+	{
+		for (auto& iter : ListBox)
+		{
+			CQuarternion* Qtan = dynamic_cast<CQuarternion*>(iter.second->Get_Component(L"Proto_QuaternionCom", ID_STATIC));
+			Qtan->Delete_WorldVector();
+		}
+
+
+		if (m_DEAD == MIDDLEBOSS_DEAD_1)
+			m_DEAD = MIDDLEBOSS_DEAD_2;
+		else if (m_DEAD == MIDDLEBOSS_DEAD_2)
+			m_DEAD = MIDDLEBOSS_DEAD_3;
+
+		m_AnimationTime = 0.f;
+	}
+	for (auto& iter : ListBox)
+	{
+		CQuarternion* Qtan = dynamic_cast<CQuarternion*>(iter.second->Get_Component(L"Proto_QuaternionCom", ID_STATIC));
+		Qtan->Change_Animation(22 + m_DEAD);
+	}
+}
+
 HRESULT CMiddleBoss::Create_Item()
 {
-	CGameObject*		pGameObject = nullptr;
+	CGameObject*      pGameObject = nullptr;
 	_vec3 vItemPos;
 	m_pTransCom->Get_Info(INFO_POS, &vItemPos);
 
@@ -1008,13 +1096,13 @@ HRESULT CMiddleBoss::Create_Item()
 
 HRESULT CMiddleBoss::Monster_Mapping(void)
 {
-	_vec3		vPos;
+	_vec3      vPos;
 	m_pHitBoxTransCom->Get_Info(INFO_POS, &vPos);
 	if (!m_MappingInit)
 	{
-		CGameObject*	m_pMapMonster = CMonsterMapping::Create(m_pGraphicDev);
+		CGameObject*   m_pMapMonster = CMonsterMapping::Create(m_pGraphicDev);
 		wsprintf(m_szCntName, L"");
-		const _tchar*	szNumbering = L"MapMonster_%d";
+		const _tchar*   szNumbering = L"MapMonster_%d";
 		wsprintf(m_szCntName, szNumbering, m_iCnt);
 		Engine::Add_GameObject(STAGE_MAPPING, m_pMapMonster, m_szCntName);
 		m_listMonsterCnt.push_back(m_szCntName);
@@ -1122,10 +1210,10 @@ CMiddleBoss * CMiddleBoss::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3 & v
 
 void CMiddleBoss::Free(void)
 {
-	//for (auto& iter : *(pMyLayer->Get_GamePairPtr()))
-	//{
-	//	iter.second->Kill_Obj();
-	//}
+	for (auto& iter : *(pMyLayer->Get_GamePairPtr()))
+	{
+		iter.second->Kill_Obj();
+	}
 
 	for (auto iter : m_TcharList)
 	{
@@ -1133,8 +1221,8 @@ void CMiddleBoss::Free(void)
 	}
 
 	Safe_Delete_Array(m_szCntName);
-	
-	m_listMonsterCnt.clear();	
+
+	m_listMonsterCnt.clear();
 	CGameObject::Free();
 	Safe_Delete<MIDDLEBOSSABILITY*>(m_tAbility);
 }

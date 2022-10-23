@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "..\Header\CubeArm.h"
+#include "Flight.h"
 
 CCubeArm::CCubeArm(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
@@ -24,8 +25,11 @@ _int CCubeArm::Update_Object(const _float & fTimeDelta)
 	m_pMyLayer = Engine::Get_Layer(STAGE_CHARACTER);
 
 	CGameObject::Update_Object(fTimeDelta);
-
-	Add_RenderGroup(RENDER_NONALPHA, this);
+	
+	CGameObject* pGameObject = dynamic_cast<CFlight*>(Get_GameObject(STAGE_FLIGHTPLAYER, L"FLIGHTSHUTTLE"));
+	
+	if (dynamic_cast<CFlight*>(pGameObject)->Get_Ending() == false)
+		Add_RenderGroup(RENDER_NONALPHA, this);
 
 	return 0;
 }

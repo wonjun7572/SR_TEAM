@@ -103,9 +103,10 @@ void CQuest::Render_Object(void)
 		Engine::Render_Font(L"Quest", m_strKey.c_str(), &_vec2(40.f, 85.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
 	}
 
-	if (m_bQuest3)
+	if(m_bQuest3)
 	{
-		m_strQuest3 = L"미들 보스 처치( " + to_wstring(0) + L"/" + to_wstring(m_iMiddle) + L" )";
+		m_iMiddle = 1 - Get_Layer(L"STAGE_BOSS")->Get_GameObjectMap().size();
+		m_strQuest3 = L"미들 보스 처치( " + to_wstring(m_iMiddle) + L"/" + to_wstring(Get_Layer(L"STAGE_BOSS")->Get_GameObjectMap().size() + m_iMiddle) + L" )";
 		Engine::Render_Font(L"Quest", m_strQuest3.c_str(), &_vec2(40.f, 135.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
 	}
 }

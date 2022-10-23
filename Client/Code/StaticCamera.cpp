@@ -118,11 +118,12 @@ Engine::_int CStaticCamera::Update_Object(const _float& fTimeDelta)
 	//m_fFlightFrame += fTimeDelta * 0.5f;
 	//m_fBombFrame += fTimeDelta * 0.5f;
 	//m_fShuttleFrame += fTimeDelta * 0.15f;
-	m_fPlayerFrame += fTimeDelta *0.05f;
+	m_fPlayerFrame += fTimeDelta;// *0.05f;
 	m_fFrame += fTimeDelta;
 	m_fFlightFrame += fTimeDelta;
 	m_fBombFrame += fTimeDelta;
 	m_fShuttleFrame += fTimeDelta;
+	m_fEndingFrame += fTimeDelta * 0.1f;
 	//m_fPlayerFrame += fTimeDelta;
 	_int   iExit = CCamera::Update_Object(fTimeDelta);
 
@@ -189,8 +190,44 @@ void CStaticCamera::Look_Target(const _float& _fTimeDelta)
 	CGameObject* pUZI = nullptr;
 	pUZI = Engine::Get_GameObject(STAGE_SUPPORTER, L"FLIGHTSHUTTLE");
 
-	
-	if (m_pSupporterUziTransform != nullptr && m_pSupUzi != nullptr
+	if (dynamic_cast<CFlight*>(pShuttle)->Get_Ending() == true)
+	{
+		_vec3 vLook;
+		m_pShuttleTransform->Get_Info(INFO_LOOK, &vLook);
+
+		_vec3 vRight;
+		m_pShuttleTransform->Get_Info(INFO_RIGHT, &vRight);
+
+		_vec3 vUp;
+		m_pShuttleTransform->Get_Info(INFO_UP, &vUp);
+
+		m_vEye = (vRight * 1.f);
+		D3DXVec3Normalize(&m_vEye, &m_vEye);
+		m_vEye *= 5.f;
+
+		_vec3 vShuttlePos;
+		m_pShuttleTransform->Get_Info(INFO_POS, &vShuttlePos);
+
+		_vec3 vPlayerPos;
+		m_pTransform_Target->Get_Info(INFO_POS, &vPlayerPos);
+
+		_vec3 vTransLerp;
+		D3DXVec3Lerp(&vTransLerp, &vPlayerPos, &vShuttlePos, m_fEndingFrame);
+
+		if (m_fEndingFrame < 1.f)
+		{
+			m_fFov = D3DXToRadian(60.f);
+			m_vEye += vTransLerp + (vRight * m_fShuttleFrame * 10.f) + (vUp * m_fShuttleFrame * 5.f);
+			m_vAt = vShuttlePos;//vTransLerp + (vRight* m_fShuttleFrame * 2.f);
+		}
+		else
+		{
+			m_fFov = D3DXToRadian(60.f);
+			m_vEye += vShuttlePos + (vRight * 10.f) + (vUp * 5.f);
+			m_vAt = vShuttlePos + (vRight * 2.f);
+		}
+	}
+	else if (m_pSupporterUziTransform != nullptr && m_pSupUzi != nullptr
 		&& dynamic_cast<CSupporter_Uzi*>(m_pSupUzi)->Get_setcam() == true)
 	{
 		_vec3 vLook;
@@ -493,8 +530,9 @@ void CStaticCamera::Look_Target(const _float& _fTimeDelta)
 				else if (m_fPlayerFrame > 0.9f)
 				{
 					m_pLetterBox->LetterDead();
-					m_bFirst = true;
 				}
+				// 일단 무조건 켜놓기
+				m_bFirst = true;
 
 				m_fFov = D3DXToRadian(60.f);
 				m_vEye += vTransLerp * m_fPlayerFrame;

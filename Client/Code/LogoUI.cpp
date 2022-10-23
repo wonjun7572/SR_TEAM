@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "..\Header\LogoUI.h"
 #include "PlayButton.h"
+#include "Logo.h"
 
 CLogoUI::CLogoUI(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
@@ -20,11 +21,14 @@ HRESULT CLogoUI::Ready_Object(void)
 
 _int CLogoUI::Update_Object(const _float & fTimeDelta)
 {
-	_int iResult = CGameObject::Update_Object(fTimeDelta);
+	if (dynamic_cast<CLogo*>(Get_Scene())->Get_bVideo() == true)
+	{
+		CGameObject::Update_Object(fTimeDelta);
 
-	Add_RenderGroup(RENDER_UI, this);
+		Add_RenderGroup(RENDER_UI, this);
+	}
 
-	return iResult;
+	return 0;
 }
 
 void CLogoUI::LateUpdate_Object(void)

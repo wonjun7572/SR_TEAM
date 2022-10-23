@@ -17,6 +17,7 @@ public:
 
 private:
 	void	Key_Input();
+	void	ProjectionEffect();
 	HRESULT Add_Component();
 
 	CLetterBox* m_pLetterBox = nullptr;
@@ -39,7 +40,7 @@ private:
 
 	_int			m_iWeapon = 0;
 	_int			m_iKey = 0;
-	_int			m_iMiddle = 1;
+	_int			m_iMiddle = 0;
 
 	wstring			 m_strWeapon = L"";
 	wstring			 m_strKey = L"";
