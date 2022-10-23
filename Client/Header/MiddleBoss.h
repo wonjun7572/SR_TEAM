@@ -103,6 +103,7 @@ protected:
 private:
 	_float				m_ReloadTimer = 0.f;
 
+	_bool				m_bPatternStart = false;
 	_float				m_fBeforeHp;
 	_float				m_fFrame = 0.f;
 	_float				m_fTargetLength;

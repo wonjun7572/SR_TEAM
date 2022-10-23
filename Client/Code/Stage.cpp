@@ -548,7 +548,7 @@ HRESULT CStage::Ready_Layer_Monster(const _tchar * pLayerTag)
 
 	CGameObject*      pGameObject = nullptr;
 
-	/*if (!vecFireMan.empty())
+	if (!vecFireMan.empty())
 	{
 		for (size_t i = 0; i < vecFireMan.size(); i++)
 		{
@@ -606,7 +606,7 @@ HRESULT CStage::Ready_Layer_Monster(const _tchar * pLayerTag)
 			NULL_CHECK_RETURN(pGameObject, E_FAIL);
 			FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
 		}
-	}*/
+	}
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
@@ -715,7 +715,7 @@ HRESULT CStage::Ready_Layer_Boss(const _tchar * pLayerTag)
 
 	CGameObject*      pGameObject = nullptr;
 
-	pGameObject = CMiddleBoss::Create(m_pGraphicDev, _vec3(109.f, 0.6f, 10.f), L"MiddleBoss");
+	pGameObject = CMiddleBoss::Create(m_pGraphicDev, _vec3(107.f, 0.6f, 10.f), L"MiddleBoss");
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"MiddleBoss", pGameObject), E_FAIL);
 

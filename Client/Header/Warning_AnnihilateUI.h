@@ -1,5 +1,6 @@
 #pragma once
 #include "GameObject.h"
+
 class CWarning_AnnihilateUI : public CGameObject
 {
 private:

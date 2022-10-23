@@ -7,15 +7,13 @@
 #include "TransAxisBox.h"
 #include "KrakenLeg.h"
 #include "PoolMgr.h"
-<<<<<<< HEAD
 #include "Meteor.h"
 
 #include "BattleCursier.h"
 #include "Flight.h"
 
-=======
 #include "Warning_AnnihilateUI.h"
->>>>>>> main
+
 CKrakenBoss::CKrakenBoss(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CGameObject(pGraphicDev)
 {

@@ -64,6 +64,11 @@ private: // 맵핑 관련
 private:
 	_bool				m_bWireFrame = false;
 
+	// 99번 인덱스의 문이 true인지 확인
+public:
+	_bool				Boss_Start(void) { return m_bDoorOpen; }
+	_int				Get_Index(void) { return m_iTexIndex; }
+
 private: // 문 상호작용 관련
 	_int				m_CubeIndex = 0;
 	_bool				m_bSwitch = false;
