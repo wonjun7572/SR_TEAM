@@ -1,4 +1,219 @@
-﻿  StaticCamera.cpp
+﻿C:\Users\sam51\Desktop\SR_TEAM\Client\Bin\ShaderFiles\Shader_Cube.hlsl(102,19-51): warning X3206: implicit truncation of vector type
+FXC : warning X4717: Effects deprecated for D3DCompiler_47
+  
+  compilation object save succeeded; see C:\Users\sam51\Desktop\SR_TEAM\Client\Bin\Shader_Cube.cso
+FXC : warning X4717: Effects deprecated for D3DCompiler_47
+  
+  compilation object save succeeded; see C:\Users\sam51\Desktop\SR_TEAM\Client\Bin\Shader_Rect.cso
+  stdafx.cpp
+  Supporter_Sniper.cpp
+  KrakenBoss.cpp
+  PlayerFaceUI.cpp
+  PlayerDefenseUI.cpp
+  Client.cpp
+  KrakenLeg.cpp
+  Zombie.cpp
+  ShotParticle.cpp
+  WeaponUI.cpp
+  Weapon.cpp
+  Warning_AnnihilateUI.cpp
+  WallMapping.cpp
+  Wall.cpp
+  VerticalLine.cpp
+  Veneer.cpp
+  UziPart5.cpp
+  UziPart4.cpp
+  UziPart3.cpp
+  UziPart2.cpp
+  UziPart1.cpp
+  코드를 생성하고 있습니다...
+  컴파일하고 있습니다...
+  Uzi.cpp
+  TriggerParticle.cpp
+  TriggerFront.cpp
+  Trap.cpp
+  TransAxisBox.cpp
+  TraceEffect.cpp
+  ToolScene.cpp
+  Thorn.cpp
+  TestCube.cpp
+  Terret.cpp
+  Terrain.cpp
+c:\users\sam51\desktop\sr_team\client\code\terrain.cpp(72): warning C4101: 'expn' :참조되지 않은 지역 변수입니다.
+  TargetPointEffect.cpp
+  TargetCube.cpp
+  Supporter_Uzi.cpp
+  Supporter_Shotgun.cpp
+  Supporter.cpp
+  StaticField.cpp
+  RainbowCloudEffect.cpp
+  StaticCamera.cpp
+  Stage.cpp
+  코드를 생성하고 있습니다...
+  컴파일하고 있습니다...
+  SpBullet.cpp
+  SniperPart4.cpp
+  SniperPart3.cpp
+  SniperPart2.cpp
+  SniperPart1.cpp
+  Sniper.cpp
+  Slime.cpp
+  SkyBox.cpp
+  Skeleton.cpp
+  ShotgunPart4.cpp
+  ShotgunPart3.cpp
+  ShotgunPart2.cpp
+  ShotgunPart1.cpp
+  Shotgun.cpp
+  Shop.cpp
+  ProjectileParticle.cpp
+  PoolMgr.cpp
+  PlayerUI.cpp
+  PlayerMapping.cpp
+  PlayerHpUI.cpp
+  코드를 생성하고 있습니다...
+  컴파일하고 있습니다...
+  PlayButton.cpp
+  OptionButton.cpp
+  ObtainDefense.cpp
+  ObtainBullet.cpp
+  MonsterUI.cpp
+  MonsterParticle.cpp
+  MonsterMapping.cpp
+  Monster.cpp
+  Meteor.cpp
+  MaxPlusHp.cpp
+  MainApp.cpp
+  Magma.cpp
+  LogoUI.cpp
+  LogoBilboard.cpp
+  Logo.cpp
+  Loading.cpp
+  LetterBox.cpp
+c:\users\sam51\desktop\sr_team\client\code\letterbox.cpp(32): warning C4244: '인수': 'Engine::_float'에서 'const Engine::_uint'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\sam51\desktop\sr_team\client\code\letterbox.cpp(155): warning C4305: '=': 'double'에서 'float'(으)로 잘립니다.
+  ItemParticle.cpp
+  ItemIcon.cpp
+c:\users\sam51\desktop\sr_team\client\code\itemicon.cpp(257): warning C4244: '=': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\sam51\desktop\sr_team\client\code\itemicon.cpp(258): warning C4244: '=': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\sam51\desktop\sr_team\client\code\itemicon.cpp(304): warning C4244: '인수': 'LONG'에서 'Engine::_float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  ItemBox.cpp
+  코드를 생성하고 있습니다...
+  컴파일하고 있습니다...
+  Item.cpp
+  Inventory.cpp
+  ImguiMgr.cpp
+  Illusioner.cpp
+  HitBarUI.cpp
+  HealthPotion.cpp
+  GunUI.cpp
+  GetUzi.cpp
+c:\users\sam51\desktop\sr_team\client\code\getuzi.cpp(112): warning C4244: '인수': 'Engine::_int'에서 'FLOAT'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  GetSniper.cpp
+c:\users\sam51\desktop\sr_team\client\code\getsniper.cpp(105): warning C4244: '인수': 'Engine::_int'에서 'FLOAT'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  GetShotgun.cpp
+c:\users\sam51\desktop\sr_team\client\code\getshotgun.cpp(106): warning C4244: '인수': 'Engine::_int'에서 'FLOAT'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  FireMan.cpp
+  ExitButton.cpp
+  SparkEffect.cpp
+  Shield.cpp
+  RoundEffect.cpp
+  RcEffect.cpp
+  Quest.cpp
+  ProjectionEffect.cpp
+  Ping.cpp
+  ObjectCube.cpp
+  코드를 생성하고 있습니다...
+  컴파일하고 있습니다...
+  Npc.cpp
+c:\users\sam51\desktop\sr_team\client\code\npc.cpp(461): warning C4244: '인수': 'Engine::_int'에서 'FLOAT'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\sam51\desktop\sr_team\client\code\npc.cpp(462): warning C4244: '인수': 'Engine::_int'에서 'FLOAT'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\sam51\desktop\sr_team\client\code\npc.cpp(489): warning C4244: '인수': 'Engine::_int'에서 'FLOAT'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\sam51\desktop\sr_team\client\code\npc.cpp(490): warning C4244: '인수': 'Engine::_int'에서 'FLOAT'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\sam51\desktop\sr_team\client\code\npc.cpp(517): warning C4244: '인수': 'Engine::_int'에서 'FLOAT'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\sam51\desktop\sr_team\client\code\npc.cpp(518): warning C4244: '인수': 'Engine::_int'에서 'FLOAT'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\sam51\desktop\sr_team\client\code\npc.cpp(545): warning C4244: '인수': 'Engine::_int'에서 'FLOAT'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\sam51\desktop\sr_team\client\code\npc.cpp(546): warning C4244: '인수': 'Engine::_int'에서 'FLOAT'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  Mob.cpp
+  MiddleBoss.cpp
+  MFieldEffect.cpp
+  LoadingBar.cpp
+  LaserSpot.cpp
+  LaserPoint.cpp
+  LaserEffect.cpp
+  Laser.cpp
+  KrakenParticle.cpp
+  KrakenHit.cpp
+  KrakenEffect.cpp
+  KrakenBullet.cpp
+  Key.cpp
+c:\users\sam51\desktop\sr_team\client\code\key.cpp(127): warning C4244: '인수': 'Engine::_int'에서 'FLOAT'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  ItemCubeEffect.cpp
+  IceEffect.cpp
+  HyperionStrike.cpp
+c:\users\sam51\desktop\sr_team\client\code\hyperionstrike.cpp(188): warning C4244: '인수': 'Engine::_int'에서 'FLOAT'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\sam51\desktop\sr_team\client\code\hyperionstrike.cpp(189): warning C4244: '인수': 'Engine::_int'에서 'FLOAT'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\sam51\desktop\sr_team\client\code\hyperionstrike.cpp(190): warning C4244: '인수': 'Engine::_int'에서 'FLOAT'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  HyperionEffect.cpp
+  FlightSpot.cpp
+  FlightCamera.cpp
+  코드를 생성하고 있습니다...
+  컴파일하고 있습니다...
+  FlightBulletParticle.cpp
+  FlightBomb.cpp
+c:\users\sam51\desktop\sr_team\client\code\flightbomb.cpp(151): warning C4244: '인수': 'Engine::_int'에서 'FLOAT'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  Flight.cpp
+  FlameEffect.cpp
+  FinalStage.cpp
+  Explosion.cpp
+  ExBullet.cpp
+  DynamicCamera.cpp
+  CubeShop.cpp
+  CubePlayer.cpp
+  CubeLeg.cpp
+  CubeHead.cpp
+  CubeHand.cpp
+  CubeFoot.cpp
+  CubeBody.cpp
+  CubeArm.cpp
+  CrossHeader.cpp
+  ComboUI.cpp
+  BulletUI.cpp
+  BulletParicle.cpp
+  코드를 생성하고 있습니다...
+  컴파일하고 있습니다...
+  Bullet.cpp
+  BubbleEffect.cpp
+  BrownCloudEffect.cpp
+  BattleCursier.cpp
+  BaseMapping.cpp
+  DeffensiveMatrix.cpp
+  DefensiveEffect.cpp
+  DashCube.cpp
+  CubeParticle.cpp
+  CartridgeParticle.cpp
+  AnimationPlayer.cpp
+  Alien.cpp
+  코드를 생성하고 있습니다...
+  LogoCamera.cpp
+  SoundWave.cpp
+  CloudEffect.cpp
+  코드를 생성하고 있습니다...
+  ImSequencer.cpp
+  imgui_widgets.cpp
+  imgui_tables.cpp
+  imgui_impl_win32.cpp
+  imgui_impl_dx9.cpp
+  imgui_draw.cpp
+  imgui_demo.cpp
+  ImGuizmo.cpp
+  ImGuiFileDialog.cpp
+  ImGuiFileBrowser.cpp
+  imgui.cpp
+  ImGradient.cpp
+  ImCurveEdit.cpp
+  GraphEditor.cpp
+  코드를 생성하고 있습니다...
      ../Bin\Client.lib 라이브러리 및 ../Bin\Client.exp 개체를 생성하고 있습니다.
   Client.vcxproj -> C:\Users\sam51\Desktop\SR_TEAM\Client\Default\../Bin\Client.exe
   Client.vcxproj -> ../Bin\Client.pdb (Full PDB)

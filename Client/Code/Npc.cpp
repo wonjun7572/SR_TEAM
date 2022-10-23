@@ -50,7 +50,7 @@ _int CNpc::Update_Object(const _float & fTimeDelta)
 	{
 		Quest3(fTimeDelta);
 	}
-	else if (Get_Layer(L"STAGE_BOSS")->Get_GameObjectMap().size() == 0 && m_bQuest3 == false)
+	else if (Get_Layer(L"STAGE_BOSS")->Get_GameObjectMap().size() == 0 && m_bQuest3 == false && m_bQuest4)
 	{
 		Finish(fTimeDelta);
 	}
@@ -93,10 +93,10 @@ void CNpc::Render_Object(void)
 		_uint iTexindex = _uint(m_fTexFrame);
 		m_pQuest3TexCom->Set_Texture(m_pShaderCom, "g_DefaultTexture", iTexindex);
 	}
-	else if (m_bQuest4)// 수정할 예정
+	else if (m_bQuest4)
 	{
 		_uint iTexindex = _uint(m_fTexFrame);
-		m_pQuest3TexCom->Set_Texture(m_pShaderCom, "g_DefaultTexture", iTexindex);
+		m_pQuest4TexCom->Set_Texture(m_pShaderCom, "g_DefaultTexture", iTexindex);
 	}
 
 	m_pShaderCom->Begin_Shader(1);
@@ -126,6 +126,11 @@ HRESULT CNpc::Add_Component(void)
 	pComponent = m_pQuest3TexCom = dynamic_cast<CTexture*>(Clone_Proto(L"LetterBox_Tex_3"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"LetterBox_Tex_3", pComponent });
+	
+	// Quest4 모음집
+	pComponent = m_pQuest4TexCom = dynamic_cast<CTexture*>(Clone_Proto(L"LetterBox_Tex_4"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[ID_STATIC].insert({ L"LetterBox_Tex_4", pComponent });
 
 	pComponent = m_pTransCom = dynamic_cast<CTransform*>(Clone_Proto(TRANSFORM_COMP));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
@@ -169,7 +174,7 @@ void CNpc::Quest1(const _float& fTimeDelta)
 		m_pTransCom->Billboard_Transform(fTimeDelta);
 		Add_RenderGroup(RENDER_EFFECT_UI, this);
 	}
-	else if (m_fTransFrame0 > 0.9f && m_fTexFrame < 52.5f)
+	else if (m_fTransFrame0 > 0.9f && m_fTexFrame < 52.f)
 	{
 		m_fScaleFrame0 += fTimeDelta;
 		if (m_fScaleFrame0 <= 1.f)
@@ -183,7 +188,7 @@ void CNpc::Quest1(const _float& fTimeDelta)
 		m_pTransCom->Billboard_Transform(fTimeDelta);
 		Add_RenderGroup(RENDER_EFFECT_UI, this);
 	}
-	else if (m_fTexFrame >= 52.5f)
+	else if (m_fTexFrame >= 52.f)
 	{
 		m_fTexFrame = 52.f;
 		m_fScaleFrame1 += fTimeDelta;
@@ -241,7 +246,7 @@ void CNpc::Quest2(const _float & fTimeDelta)
 		m_pTransCom->Billboard_Transform(fTimeDelta);
 		Add_RenderGroup(RENDER_EFFECT_UI, this);
 	}
-	else if (m_fTransFrame0 > 0.9f && m_fTexFrame < 60.5f)
+	else if (m_fTransFrame0 > 0.9f && m_fTexFrame < 60.f)
 	{
 		m_fScaleFrame0 += fTimeDelta;
 		if (m_fScaleFrame0 <= 1.f)
@@ -255,7 +260,7 @@ void CNpc::Quest2(const _float & fTimeDelta)
 		m_pTransCom->Billboard_Transform(fTimeDelta);
 		Add_RenderGroup(RENDER_EFFECT_UI, this);
 	}
-	else if (m_fTexFrame >= 60.5f)
+	else if (m_fTexFrame >= 60.f)
 	{
 		m_fTexFrame = 60.f;
 		m_fScaleFrame1 += fTimeDelta;
@@ -312,7 +317,7 @@ void CNpc::Quest3(const _float & fTimeDelta)
 		m_pTransCom->Billboard_Transform(fTimeDelta);
 		Add_RenderGroup(RENDER_EFFECT_UI, this);
 	}
-	else if (m_fTransFrame0 > 0.9f && m_fTexFrame < 35.5f)
+	else if (m_fTransFrame0 > 0.9f && m_fTexFrame < 35.f)
 	{
 		m_fScaleFrame0 += fTimeDelta;
 		if (m_fScaleFrame0 <= 1.f)
@@ -326,7 +331,7 @@ void CNpc::Quest3(const _float & fTimeDelta)
 		m_pTransCom->Billboard_Transform(fTimeDelta);
 		Add_RenderGroup(RENDER_EFFECT_UI, this);
 	}
-	else if (m_fTexFrame >= 35.5f)
+	else if (m_fTexFrame >= 35.f)
 	{
 		m_fTexFrame = 35.f;
 		m_fScaleFrame1 += fTimeDelta;
@@ -382,7 +387,7 @@ void CNpc::Finish(const _float & fTimeDelta)
 		m_pTransCom->Billboard_Transform(fTimeDelta);
 		Add_RenderGroup(RENDER_EFFECT_UI, this);
 	}
-	else if (m_fTransFrame0 > 0.9f && m_fTexFrame < 35.5f)
+	else if (m_fTransFrame0 > 0.9f && m_fTexFrame < 61.f)
 	{
 		m_fScaleFrame0 += fTimeDelta;
 		if (m_fScaleFrame0 <= 1.f)
@@ -396,9 +401,9 @@ void CNpc::Finish(const _float & fTimeDelta)
 		m_pTransCom->Billboard_Transform(fTimeDelta);
 		Add_RenderGroup(RENDER_EFFECT_UI, this);
 	}
-	else if (m_fTexFrame >= 35.5f)
+	else if (m_fTexFrame >= 61.f)
 	{
-		m_fTexFrame = 35.f;
+		m_fTexFrame = 61.f;
 		m_fScaleFrame1 += fTimeDelta;
 		if (m_fScaleFrame1 <= 1.f)
 		{
@@ -419,8 +424,8 @@ void CNpc::Finish(const _float & fTimeDelta)
 			m_fTransFrame0 = 0.f;
 			m_fScaleFrame0 = 0.f;
 			m_fScaleFrame1 = 0.f;
-			CGameObject* pGameObject = dynamic_cast<CFlight*>(Get_GameObject(STAGE_FLIGHTPLAYER, L"FLIGHTSHUTTLE"));
 
+			CGameObject* pGameObject = dynamic_cast<CFlight*>(Get_GameObject(STAGE_FLIGHTPLAYER, L"FLIGHTSHUTTLE"));
 			if (dynamic_cast<CFlight*>(pGameObject)->Get_Ending() == false)
 				dynamic_cast<CFlight*>(pGameObject)->Set_Ending(true);
 		}
