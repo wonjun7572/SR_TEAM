@@ -7,6 +7,7 @@
 #include "TransAxisBox.h"
 #include "KrakenEffect.h"
 #include "KrakenParticle.h"
+#include "Veneer.h"
 CKrakenLeg::CKrakenLeg(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
 {
@@ -556,14 +557,14 @@ void CKrakenLeg::Kraken_EffectParticle(void)
 		dynamic_cast<CKrakenEffect*>(m_pKrakenEffectParticle)->Set_PclePos(vPos);
 			dynamic_cast<CKrakenEffect*>(m_pKrakenEffectParticle)->Set_PcleDir(vDir);
 			m_pKrakenEffectParticle->Set_PclePos(vPos);
-			for (_int i = 0; i < 250; ++i)
+			for (_int i = 0; i < 30; ++i)
 			{
 				m_pKrakenEffectParticle->addParticle();
 			}
 			dynamic_cast<CKrakenParticle*>(m_pKrakenSmoke)->Set_PclePos(vPos);
 			dynamic_cast<CKrakenParticle*>(m_pKrakenSmoke)->Set_PcleDir(vDir);
 			m_pKrakenSmoke->Set_PclePos(vPos);
-			for (int i = 0; i < 250; ++i)
+			for (int i = 0; i < 30; ++i)
 			{
 				m_pKrakenSmoke->addParticle();
 			}
@@ -583,14 +584,14 @@ void CKrakenLeg::Kraken_EffectParticle(void)
 				dynamic_cast<CKrakenEffect*>(m_pKrakenEffectParticle)->Set_PclePos(vPos);
 				dynamic_cast<CKrakenEffect*>(m_pKrakenEffectParticle)->Set_PcleDir(vDir);
 				m_pKrakenEffectParticle->Set_PclePos(vPos);
-				for (_int i = 0; i < 250; ++i)
+				for (_int i = 0; i < 30; ++i)
 				{
 					m_pKrakenEffectParticle->addParticle();
 				}
 				dynamic_cast<CKrakenParticle*>(m_pKrakenSmoke)->Set_PclePos(vPos);
 				dynamic_cast<CKrakenParticle*>(m_pKrakenSmoke)->Set_PcleDir(vDir);
 				m_pKrakenSmoke->Set_PclePos(vPos);
-				for (int i = 0; i < 250; ++i)
+				for (int i = 0; i < 30; ++i)
 				{
 					m_pKrakenSmoke->addParticle();
 				}
@@ -609,14 +610,14 @@ void CKrakenLeg::Kraken_EffectParticle(void)
 					dynamic_cast<CKrakenEffect*>(m_pKrakenEffectParticle)->Set_PclePos(vPos);
 					dynamic_cast<CKrakenEffect*>(m_pKrakenEffectParticle)->Set_PcleDir(vDir);
 					m_pKrakenEffectParticle->Set_PclePos(vPos);
-					for (_int i = 0; i < 250; ++i)
+					for (_int i = 0; i < 30; ++i)
 					{
 						m_pKrakenEffectParticle->addParticle();
 					}
 					dynamic_cast<CKrakenParticle*>(m_pKrakenSmoke)->Set_PclePos(vPos);
 					dynamic_cast<CKrakenParticle*>(m_pKrakenSmoke)->Set_PcleDir(vDir);
 					m_pKrakenSmoke->Set_PclePos(vPos);
-					for (int i = 0; i < 250; ++i)
+					for (int i = 0; i < 30; ++i)
 					{
 						m_pKrakenSmoke->addParticle();
 					}
@@ -659,7 +660,7 @@ void CKrakenLeg::Kraken_LukerParticle(void)
 			dynamic_cast<CKrakenParticle*>(m_pKrakenSmoke)->Set_PclePos(vPos);
 			dynamic_cast<CKrakenParticle*>(m_pKrakenSmoke)->Set_PcleDir(vDir);
 			m_pKrakenSmoke->Set_PclePos(vPos);
-			for (int i = 0; i < 100; ++i)
+			for (int i = 0; i < 30; ++i)
 			{
 				m_pKrakenSmoke->addParticle();
 			}
@@ -676,7 +677,7 @@ void CKrakenLeg::Kraken_LukerParticle(void)
 			dynamic_cast<CKrakenParticle*>(m_pKrakenSmoke)->Set_PclePos(vPos);
 			dynamic_cast<CKrakenParticle*>(m_pKrakenSmoke)->Set_PcleDir(vDir);
 			m_pKrakenSmoke->Set_PclePos(vPos);
-			for (int i = 0; i < 100; ++i)
+			for (int i = 0; i < 30; ++i)
 			{
 				m_pKrakenSmoke->addParticle();
 			}
@@ -694,7 +695,7 @@ void CKrakenLeg::Kraken_LukerParticle(void)
 			dynamic_cast<CKrakenParticle*>(m_pKrakenSmoke)->Set_PclePos(vPos);
 			dynamic_cast<CKrakenParticle*>(m_pKrakenSmoke)->Set_PcleDir(vDir);
 			m_pKrakenSmoke->Set_PclePos(vPos);
-			for (int i = 0; i < 100; ++i)
+			for (int i = 0; i < 30; ++i)
 			{
 				m_pKrakenSmoke->addParticle();
 			}
@@ -712,7 +713,7 @@ void CKrakenLeg::Kraken_LukerParticle(void)
 			dynamic_cast<CKrakenParticle*>(m_pKrakenSmoke)->Set_PclePos(vPos);
 			dynamic_cast<CKrakenParticle*>(m_pKrakenSmoke)->Set_PcleDir(vDir);
 			m_pKrakenSmoke->Set_PclePos(vPos);
-			for (int i = 0; i < 100; ++i)
+			for (int i = 0; i < 30; ++i)
 			{
 				m_pKrakenSmoke->addParticle();
 			}
@@ -729,7 +730,7 @@ void CKrakenLeg::Kraken_LukerParticle(void)
 			dynamic_cast<CKrakenParticle*>(m_pKrakenSmoke)->Set_PclePos(vPos);
 			dynamic_cast<CKrakenParticle*>(m_pKrakenSmoke)->Set_PcleDir(vDir);
 			m_pKrakenSmoke->Set_PclePos(vPos);
-			for (int i = 0; i < 100; ++i)
+			for (int i = 0; i < 30; ++i)
 			{
 				m_pKrakenSmoke->addParticle();
 			}
@@ -746,7 +747,7 @@ void CKrakenLeg::Kraken_LukerParticle(void)
 			dynamic_cast<CKrakenParticle*>(m_pKrakenSmoke)->Set_PclePos(vPos);
 			dynamic_cast<CKrakenParticle*>(m_pKrakenSmoke)->Set_PcleDir(vDir);
 			m_pKrakenSmoke->Set_PclePos(vPos);
-			for (int i = 0; i < 100; ++i)
+			for (int i = 0; i < 30; ++i)
 			{
 				m_pKrakenSmoke->addParticle();
 			}
@@ -788,7 +789,7 @@ void CKrakenLeg::Kraken_ReviveParticle(void)
 			dynamic_cast<CKrakenParticle*>(m_pKrakenSmoke)->Set_PclePos(vPos);
 			dynamic_cast<CKrakenParticle*>(m_pKrakenSmoke)->Set_PcleDir(vDir);
 			m_pKrakenSmoke->Set_PclePos(vPos);
-			for (int i = 0; i < 100; ++i)
+			for (int i = 0; i < 30; ++i)
 			{
 				m_pKrakenSmoke->addParticle();
 			}
@@ -805,7 +806,7 @@ void CKrakenLeg::Kraken_ReviveParticle(void)
 			dynamic_cast<CKrakenParticle*>(m_pKrakenSmoke)->Set_PclePos(vPos);
 			dynamic_cast<CKrakenParticle*>(m_pKrakenSmoke)->Set_PcleDir(vDir);
 			m_pKrakenSmoke->Set_PclePos(vPos);
-			for (int i = 0; i < 100; ++i)
+			for (int i = 0; i < 30; ++i)
 			{
 				m_pKrakenSmoke->addParticle();
 			}
@@ -823,7 +824,7 @@ void CKrakenLeg::Kraken_ReviveParticle(void)
 			dynamic_cast<CKrakenParticle*>(m_pKrakenSmoke)->Set_PclePos(vPos);
 			dynamic_cast<CKrakenParticle*>(m_pKrakenSmoke)->Set_PcleDir(vDir);
 			m_pKrakenSmoke->Set_PclePos(vPos);
-			for (int i = 0; i < 100; ++i)
+			for (int i = 0; i < 30; ++i)
 			{
 				m_pKrakenSmoke->addParticle();
 			}
@@ -841,7 +842,7 @@ void CKrakenLeg::Kraken_ReviveParticle(void)
 			dynamic_cast<CKrakenParticle*>(m_pKrakenSmoke)->Set_PclePos(vPos);
 			dynamic_cast<CKrakenParticle*>(m_pKrakenSmoke)->Set_PcleDir(vDir);
 			m_pKrakenSmoke->Set_PclePos(vPos);
-			for (int i = 0; i < 100; ++i)
+			for (int i = 0; i < 30; ++i)
 			{
 				m_pKrakenSmoke->addParticle();
 			}
@@ -858,7 +859,7 @@ void CKrakenLeg::Kraken_ReviveParticle(void)
 			dynamic_cast<CKrakenParticle*>(m_pKrakenSmoke)->Set_PclePos(vPos);
 			dynamic_cast<CKrakenParticle*>(m_pKrakenSmoke)->Set_PcleDir(vDir);
 			m_pKrakenSmoke->Set_PclePos(vPos);
-			for (int i = 0; i < 100; ++i)
+			for (int i = 0; i < 30; ++i)
 			{
 				m_pKrakenSmoke->addParticle();
 			}
@@ -875,7 +876,7 @@ void CKrakenLeg::Kraken_ReviveParticle(void)
 			dynamic_cast<CKrakenParticle*>(m_pKrakenSmoke)->Set_PclePos(vPos);
 			dynamic_cast<CKrakenParticle*>(m_pKrakenSmoke)->Set_PcleDir(vDir);
 			m_pKrakenSmoke->Set_PclePos(vPos);
-			for (int i = 0; i < 100; ++i)
+			for (int i = 0; i < 30; ++i)
 			{
 				m_pKrakenSmoke->addParticle();
 			}
@@ -892,7 +893,7 @@ void CKrakenLeg::Kraken_ReviveParticle(void)
 			dynamic_cast<CKrakenParticle*>(m_pKrakenSmoke)->Set_PclePos(vPos);
 			dynamic_cast<CKrakenParticle*>(m_pKrakenSmoke)->Set_PcleDir(vDir);
 			m_pKrakenSmoke->Set_PclePos(vPos);
-			for (int i = 0; i < 100; ++i)
+			for (int i = 0; i < 30; ++i)
 			{
 				m_pKrakenSmoke->addParticle();
 			}
@@ -909,7 +910,7 @@ void CKrakenLeg::Kraken_ReviveParticle(void)
 			dynamic_cast<CKrakenParticle*>(m_pKrakenSmoke)->Set_PclePos(vPos);
 			dynamic_cast<CKrakenParticle*>(m_pKrakenSmoke)->Set_PcleDir(vDir);
 			m_pKrakenSmoke->Set_PclePos(vPos);
-			for (int i = 0; i < 100; ++i)
+			for (int i = 0; i < 30; ++i)
 			{
 				m_pKrakenSmoke->addParticle();
 			}
@@ -926,7 +927,7 @@ void CKrakenLeg::Kraken_ReviveParticle(void)
 			dynamic_cast<CKrakenParticle*>(m_pKrakenSmoke)->Set_PclePos(vPos);
 			dynamic_cast<CKrakenParticle*>(m_pKrakenSmoke)->Set_PcleDir(vDir);
 			m_pKrakenSmoke->Set_PclePos(vPos);
-			for (int i = 0; i < 100; ++i)
+			for (int i = 0; i < 30; ++i)
 			{
 				m_pKrakenSmoke->addParticle();
 			}
@@ -1210,6 +1211,18 @@ void CKrakenLeg::Lurker_Pattern(void)
 			_float fRandFront = m_ShufflePos.front();
 			_float fRandBack = m_ShufflePos.back();
 			m_pTransCom->Set_Pos(vPlayerPos.x + fRandFront, vPos.y + 2.f, vPlayerPos.z + fRandBack);
+
+			if (m_AnimationTime >= 1)
+			{
+				_vec3 vPlayerPos;
+				m_pPlayerTransCom->Get_Info(INFO_POS, &vPlayerPos);
+				CLayer* pLayer = Get_Layer(STAGE_SKILL);
+				CGameObject* pGameObject = CVeneer::Create(m_pGraphicDev, vPlayerPos);
+				NULL_CHECK_RETURN(pGameObject, );
+				FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), );
+			}
+
+
 		}
 		else
 			m_pTransCom->Set_Pos(vPos.x, vPos.y + 2.f, vPos.z);

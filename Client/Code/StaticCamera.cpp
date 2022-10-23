@@ -190,7 +190,7 @@ void CStaticCamera::Look_Target(const _float& _fTimeDelta)
 	CGameObject* pUZI = nullptr;
 	pUZI = Engine::Get_GameObject(STAGE_SUPPORTER, L"FLIGHTSHUTTLE");
 
-	if (dynamic_cast<CFlight*>(pShuttle)->Get_Ending() == true)
+	if (dynamic_cast<CFlight*>(pShuttle)->Get_Ending() == true && Get_Scene()->Get_SceneId() == STAGE_SCENE)
 	{
 		_vec3 vLook;
 		m_pShuttleTransform->Get_Info(INFO_LOOK, &vLook);
@@ -222,6 +222,53 @@ void CStaticCamera::Look_Target(const _float& _fTimeDelta)
 		}
 		else
 		{
+			m_fFov = D3DXToRadian(60.f);
+			m_vEye += vShuttlePos + (vRight * 10.f) + (vUp * 5.f);
+			m_vAt = vShuttlePos + (vRight * 2.f);
+		}
+	}
+	else if (dynamic_cast<CFlight*>(pShuttle)->Get_Ending() == true && Get_Scene()->Get_SceneId() == FINAL_SCENE)
+	{
+		_vec3 vLook;
+		m_pShuttleTransform->Get_Info(INFO_LOOK, &vLook);
+
+		_vec3 vRight;
+		m_pShuttleTransform->Get_Info(INFO_RIGHT, &vRight);
+
+		_vec3 vUp;
+		m_pShuttleTransform->Get_Info(INFO_UP, &vUp);
+
+		if (!m_bEnding)
+		{
+			m_vEye = (vRight * 1.f);
+			D3DXVec3Normalize(&m_vEye, &m_vEye);
+			m_vEye *= 5.f;
+		}
+		else
+		{
+			m_vEye = (-vLook * 1.f);
+			D3DXVec3Normalize(&m_vEye, &m_vEye);
+			m_vEye *= 15.f;
+		}
+
+		_vec3 vShuttlePos;
+		m_pShuttleTransform->Get_Info(INFO_POS, &vShuttlePos);
+
+		_vec3 vPlayerPos;
+		m_pTransform_Target->Get_Info(INFO_POS, &vPlayerPos);
+
+		_vec3 vTransLerp;
+		D3DXVec3Lerp(&vTransLerp, &vPlayerPos, &vShuttlePos, m_fEndingFrame);
+
+		if (m_fEndingFrame < 1.f)
+		{
+			m_fFov = D3DXToRadian(60.f);
+			m_vEye += vTransLerp + (vRight * m_fShuttleFrame * 10.f) + (vUp * m_fShuttleFrame * 5.f);
+			m_vAt = vShuttlePos;//vTransLerp + (vRight* m_fShuttleFrame * 2.f);
+		}
+		else
+		{
+			m_bEnding = true;
 			m_fFov = D3DXToRadian(60.f);
 			m_vEye += vShuttlePos + (vRight * 10.f) + (vUp * 5.f);
 			m_vAt = vShuttlePos + (vRight * 2.f);
@@ -303,7 +350,7 @@ void CStaticCamera::Look_Target(const _float& _fTimeDelta)
 	{
 		_vec3 vLook;
 		m_pTransform_Target->Get_Info(INFO_LOOK, &vLook);
-		
+
 		_vec3 vRight;
 		m_pTransform_Target->Get_Info(INFO_RIGHT, &vRight);
 
@@ -610,7 +657,7 @@ void CStaticCamera::Look_Target(const _float& _fTimeDelta)
 
 void CStaticCamera::Camera_Shaking(const _float& _fTimeDelta)
 {
-	
+
 	if (m_bPlayerHit)
 	{
 		m_fFrame += 0.1f * _fTimeDelta;

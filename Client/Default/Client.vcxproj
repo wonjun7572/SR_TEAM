@@ -203,6 +203,7 @@
     <ClInclude Include="..\Header\DynamicCamera.h" />
     <ClInclude Include="..\Header\EveryParticle.h" />
     <ClInclude Include="..\Header\ExBullet.h" />
+    <ClInclude Include="..\Header\ExBulletEffect.h" />
     <ClInclude Include="..\Header\Explosion.h" />
     <ClInclude Include="..\Header\FinalStage.h" />
     <ClInclude Include="..\Header\FlameEffect.h" />
@@ -230,6 +231,7 @@
     <ClInclude Include="..\Header\LaserPoint.h" />
     <ClInclude Include="..\Header\LaserSpot.h" />
     <ClInclude Include="..\Header\LoadingBar.h" />
+    <ClInclude Include="..\Header\MBLaser.h" />
     <ClInclude Include="..\Header\MFieldEffect.h" />
     <ClInclude Include="..\Header\MiddleBoss.h" />
     <ClInclude Include="..\Header\Mob.h" />
@@ -395,6 +397,7 @@
     <ClCompile Include="..\Code\CubeShop.cpp" />
     <ClCompile Include="..\Code\DynamicCamera.cpp" />
     <ClCompile Include="..\Code\ExBullet.cpp" />
+    <ClCompile Include="..\Code\ExBulletEffect.cpp" />
     <ClCompile Include="..\Code\Explosion.cpp" />
     <ClCompile Include="..\Code\FinalStage.cpp" />
     <ClCompile Include="..\Code\FlameEffect.cpp" />
@@ -421,6 +424,7 @@
     <ClCompile Include="..\Code\LaserPoint.cpp" />
     <ClCompile Include="..\Code\LaserSpot.cpp" />
     <ClCompile Include="..\Code\LoadingBar.cpp" />
+    <ClCompile Include="..\Code\MBLaser.cpp" />
     <ClCompile Include="..\Code\MFieldEffect.cpp" />
     <ClCompile Include="..\Code\MiddleBoss.cpp" />
     <ClCompile Include="..\Code\Mob.cpp" />

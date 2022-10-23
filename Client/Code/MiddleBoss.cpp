@@ -17,8 +17,12 @@
 #include "Flight.h"
 
 #include "LaserSpot.h"
-
+#include "Zombie.h"
+#include "Alien.h"
 #include "TestCube.h"
+
+#include "MBLaser.h"
+#include "TriggerParticle.h"
 
 static _int m_iCnt = 0;
 
@@ -52,6 +56,7 @@ HRESULT CMiddleBoss::Ready_Object(const _vec3 & vPos, _tchar * Name)
 	m_BOMBING = MIDDLEBOSS_BOMBING_1;
 	m_CRASH = MIDDLEBOSS_CRASH_1;
 	m_PATTERN = MIDDLEBOSS_SKILL_END;
+	m_DEAD = MIDDLEBOSS_DEAD_1;
 
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
@@ -85,7 +90,6 @@ _int CMiddleBoss::Update_Object(const _float & fTimeDelta)
 	{
 		Create_Item();
 		m_pComboUI->KillCntPlus();
-		//Monster_DeleteMapping();
 		_float fMiddle_death = 1.5f;
 		PlaySoundGun(L"Middle_Death.wav", SOUND_EFFECT, fMiddle_death);
 		return -1;
@@ -130,6 +134,15 @@ _int CMiddleBoss::Update_Object(const _float & fTimeDelta)
 		Load_Animation(L"../../Data/Thor/THOR_DEAD_1.dat", 22);
 		Load_Animation(L"../../Data/Thor/THOR_DEAD_2.dat", 23);
 		Load_Animation(L"../../Data/Thor/THOR_DEAD_3.dat", 24);
+
+		m_vMonterPos.push_back(_vec3(118.f, 0.6f, 64.f));
+		m_vMonterPos.push_back(_vec3(97.f, 0.6f, 64.f));
+		m_vMonterPos.push_back(_vec3(118.f, 0.6f, 40.f));
+		m_vMonterPos.push_back(_vec3(97.f, 0.6f, 40.f));
+		m_vMonterPos.push_back(_vec3(118.f, 0.6f, 18.f));
+		m_vMonterPos.push_back(_vec3(97.f, 0.6f, 18.f));
+		m_vMonstertype.push_back(0);
+		m_vMonstertype.push_back(1);
 	}
 
 	Update_Pattern(fTimeDelta);
@@ -155,8 +168,6 @@ _int CMiddleBoss::Update_Object(const _float & fTimeDelta)
 			m_pHitBoxTransCom->Set_Pos(matFinal.m[3][0], matFinal.m[3][1], matFinal.m[3][2]);
 		}
 	}
-
-	//m_pHitBoxTransCom->Set_Pos(vMonsterPos.x, vMonsterPos.y, vMonsterPos.z);
 	
 	m_pSearchRange_TransCom->Set_Pos(vMonsterPos.x, 0.f, vMonsterPos.z);
 	m_pAttackRange_TransCom->Set_Pos(vMonsterPos.x, 0.f, vMonsterPos.z);
@@ -164,6 +175,17 @@ _int CMiddleBoss::Update_Object(const _float & fTimeDelta)
 	m_pTransCom->Get_Info(INFO_POS, &vUIPos);
 	m_pTransUICom->Set_Pos(vUIPos.x, vUIPos.y + 8.f, vUIPos.z);
 
+	if (m_bPatternStart)
+	{
+		m_fCreateMonFrame += fTimeDelta;
+
+		if (m_fCreateMonFrame >= 5.f)
+		{
+			Create_Monster();
+			m_fCreateMonFrame = 0.f;
+		}
+	}
+	
 	return 0;
 }
 
@@ -230,8 +252,49 @@ void CMiddleBoss::LateUpdate_Object(void)
 				if (m_fLaserTime >= 1.f)
 				{
 					CGameObject* pGameObject = Get_GameObject(STAGE_GAMELOGIC, L"LaserSpot");
-					dynamic_cast<CLaserSpot*>(pGameObject)->Attack_Permit(true);
+					//dynamic_cast<CLaserSpot*>(pGameObject)->Attack_Permit(true);
 				}
+				_vec3 vCorePos;
+				_vec3 vSpotPos;
+				CTransform* pSpotTrans = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_GAMELOGIC, L"LaserSpot", TRANSFORM_COMP, ID_DYNAMIC));
+				if (pMyLayer != nullptr)
+				{
+					for (auto& iter : *(pMyLayer->Get_GamePairPtr()))
+					{
+						if (0 == _tcscmp(iter.first, L"CORE"))//코어위치
+						{
+							CTransAxisBox* pCoreBox = dynamic_cast<CTransAxisBox*>(iter.second);
+							_matrix matFinal;
+							pCoreBox->Get_Final(&matFinal);
+
+							vCorePos = { matFinal.m[3][0], matFinal.m[3][1], matFinal.m[3][2] };
+						}
+					}
+					pSpotTrans->Get_Info(INFO_POS, &vSpotPos); //점위치
+
+					CMBLaser* m_pMBLaser = nullptr;
+					if (!m_pMBLaser)
+						m_pMBLaser = dynamic_cast<CMBLaser*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"MBLaser"));
+					dynamic_cast<CMBLaser*>(m_pMBLaser)->Set_PclePos(vCorePos);
+					dynamic_cast<CMBLaser*>(m_pMBLaser)->Set_PcleDir(vSpotPos - vCorePos);
+
+					for (_int i = 0; i < 50; ++i)
+					{
+						m_pMBLaser->addParticle();
+					}
+				}
+				_vec3 vDir = { 0.f,1.0f,0.f };
+				CTriggerParticle* pTriggerParticle = nullptr;
+				if (!pTriggerParticle)
+					pTriggerParticle = dynamic_cast<CTriggerParticle*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"TriggerParticle"));
+
+				dynamic_cast<CTriggerParticle*>(pTriggerParticle)->Set_PclePos(vSpotPos);
+				dynamic_cast<CTriggerParticle*>(pTriggerParticle)->Set_PcleDir(vDir);
+				for (_int i = 0; i < 15; ++i)
+				{
+					pTriggerParticle->addParticle();
+				}			
+
 				// 여기에 레이저 추가
 
 				if (m_fLaserTime >= 10.f)
@@ -239,7 +302,7 @@ void CMiddleBoss::LateUpdate_Object(void)
 					m_STATE = MIDDLEBOSS_IDLE;
 					m_fLaserTime = 0.f;
 					CGameObject* pGameObject = Get_GameObject(STAGE_GAMELOGIC, L"LaserSpot");
-					dynamic_cast<CLaserSpot*>(pGameObject)->Attack_Permit(false);
+					//dynamic_cast<CLaserSpot*>(pGameObject)->Attack_Permit(false);
 				}
 			}
 		}
@@ -1141,13 +1204,41 @@ HRESULT CMiddleBoss::Monster_Mapping(void)
 
 }
 
-HRESULT CMiddleBoss::Monster_DeleteMapping(void)
+HRESULT CMiddleBoss::Create_Monster()
 {
-	Delete_GameObject(STAGE_MAPPING, m_szCntName);
+		random_shuffle(m_vMonterPos.begin(), m_vMonterPos.end());
+		_vec3 vPos = m_vMonterPos.front();
 
-	return S_OK;
+		random_shuffle(m_vMonstertype.begin(), m_vMonstertype.end());
+		_int i = m_vMonstertype.front();
+
+		CGameObject* pGameObject = nullptr;
+		CLayer* pLayer = Get_Layer(STAGE_MONSTER);
+
+		if (i == 0)
+		{
+			_tchar* szName = new _tchar[128]{};
+			wstring wName = L"ZomBie_boss_%d";
+			wsprintfW(szName, wName.c_str(), m_iMonsterCnt);
+			NameList.push_back(szName);
+			pGameObject = CZombie::Create(m_pGraphicDev, vPos, szName);
+			NULL_CHECK_RETURN(pGameObject, E_FAIL);
+			FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+			m_iMonsterCnt++;
+		}
+		else if (i == 1)
+		{
+			_tchar* szName = new _tchar[128]{};
+			wstring wName = L"Alien_boss_%d";
+			wsprintfW(szName, wName.c_str(), i);
+			NameList.push_back(szName);
+			pGameObject = CAlien::Create(m_pGraphicDev, vPos, szName);
+			NULL_CHECK_RETURN(pGameObject, E_FAIL);
+			FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+		}
+
+		return S_OK;
 }
-
 
 HRESULT CMiddleBoss::Add_Component(void)
 {
@@ -1177,7 +1268,6 @@ HRESULT CMiddleBoss::Add_Component(void)
 	NULL_CHECK_RETURN(m_pTransCom, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"HitBox_Transform", pComponent });
 
-
 	pComponent = m_pTransUICom = dynamic_cast<CTransform*>(Clone_Proto(TRANSFORM_COMP));
 	NULL_CHECK_RETURN(m_pTransUICom, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_TransformUICom", pComponent });
@@ -1189,7 +1279,6 @@ HRESULT CMiddleBoss::Add_Component(void)
 	pComponent = m_pTextureUICom = dynamic_cast<CTexture*>(Clone_Proto(L"Monster_General_HP"));
 	NULL_CHECK_RETURN(m_pTextureUICom, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Monster_General_HP", pComponent });
-
 
 	pComponent = m_pSphereBufferCom = dynamic_cast<CSphereTex*>(Clone_Proto(SPHERETEX_COMP));
 	NULL_CHECK_RETURN(m_pSphereBufferCom, E_FAIL);

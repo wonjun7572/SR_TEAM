@@ -37,8 +37,4 @@ private:
 	_float		m_fSpeed = 0.f;
 	_vec3		m_vDir = { 0.f,0.f,0.f };
 	_vec3		m_vCubePatriclePos = { 0.f,0.f,0.f };
-
-
-
 };
-

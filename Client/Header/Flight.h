@@ -92,6 +92,8 @@ private:
 
 	_vec3			m_vDestination = _vec3(0.f, 0.f, 0.f);
 
+	_vec3			vAfterDir = _vec3(0, 0, 0);
+
 	_vec3			m_vDirection;
 	_vec3			m_vLeave;
 	_vec3			m_vAngle;

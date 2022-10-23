@@ -9,6 +9,8 @@
 #include "Meteor.h"
 #include "Flight.h"
 #include "Inventory.h"
+#include "TestCube.h"
+
 static _int m_iCnt = 0;
 static _bool m_bShieldInit = false;
 
@@ -42,6 +44,9 @@ _int CMonster::Update_Object(const _float & fTimeDelta)
 	_vec3 vUIPos;
 	m_pTransCom->Get_Info(INFO_POS, &vUIPos);
 	m_pTransUICom->Set_Pos(vUIPos.x, vUIPos.y + 0.5f, vUIPos.z);
+
+	MiddleBoss_LimitBreak();
+	Kraken_LimitBreak();
 
 	Set_On_Terrain();
 
@@ -225,6 +230,45 @@ void CMonster::Hit_Check(_float _deltaTime)
 	if (m_tAbility->fCurrentHp <= 0.f)
 	{
 		m_tAbility->fCurrentHp = 0.f;
+	}
+}
+
+void CMonster::MiddleBoss_LimitBreak(void)
+{
+	if (MiddleBoss_Limit)
+	{
+		CLayer* pLayer = Engine::Get_Layer(STAGE_WALL);
+
+		for (auto& iter : *(pLayer->Get_GameObjectMapPtr()))
+		{
+			if (0 == _tcscmp(iter.first, L"CubeShop") || 0 == _tcscmp(iter.first, L"CubeShop2") || 0 == _tcscmp(iter.first, L"CubeShop3"))
+			{
+			}
+			else
+			{
+				if (dynamic_cast<CTestCube*>(iter.second)->Get_Index() == 99)
+				{
+					if (dynamic_cast<CTestCube*>(iter.second)->Boss_Start())
+					{
+						dynamic_cast<CTransform*>(this->m_pSearchRange_TransCom)->Set_Scale(200.f, 0.f, 200.f);
+						MiddleBoss_Limit = false;
+					}
+				}
+			}
+		}
+	}
+
+}
+
+void CMonster::Kraken_LimitBreak(void)
+{
+	if (Kraken_Limit)
+	{
+		if (Get_Scene()->Get_SceneId() == FINAL_SCENE)
+		{
+			dynamic_cast<CTransform*>(this->m_pSearchRange_TransCom)->Set_Scale(200.f, 0.f, 200.f);
+			Kraken_Limit = false;
+		}
 	}
 }
 

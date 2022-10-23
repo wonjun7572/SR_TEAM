@@ -2,7 +2,7 @@
 #include "..\Header\ExBullet.h"
 #include "PoolMgr.h"
 #include "Explosion.h"
-
+#include "ExBulletEffect.h"
 CExBullet::CExBullet(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
 {
@@ -68,7 +68,7 @@ _int CExBullet::Update_Object(const _float & fTimeDelta)
 	m_pTransCom->Chase_Target_By_Direction(&m_vDirection, 0.f, fTimeDelta);
 
 	Engine::Add_RenderGroup(RENDER_UI, this);
-
+	Effect();
 	return 0;
 }
 
@@ -97,6 +97,10 @@ void CExBullet::Render_Object(void)
 void CExBullet::Set_Pos(const _vec3 & vPos)
 {
 	m_pTransCom->Set_Pos(vPos.x, vPos.y, vPos.z);
+	m_pTransCom->Static_Update();
+
+	m_pHitboxTransCom->Set_Pos(vPos.x, vPos.y, vPos.z);
+	m_pHitboxTransCom->Static_Update();
 }
 
 void CExBullet::Collision_check(void)
@@ -158,6 +162,35 @@ void CExBullet::Collision_check(void)
 		{
 			m_bDead = true;
 			return;
+		}
+	}
+}
+
+void CExBullet::Effect(void)
+{
+	CExBulletEffect* pExBulletEffect = nullptr;
+
+	if (!pExBulletEffect)
+		pExBulletEffect = dynamic_cast<CExBulletEffect*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"ExBulletEffect"));
+
+	_vec3 vPos;                                          //대쉬이펙트하려던것
+	_vec3 vDir;
+	_vec3 min = { -1.0f ,-1.0f ,-1.0f };
+
+	m_pTransCom->Get_Info(INFO_POS, &vPos);
+	m_pTransCom->Get_Info(INFO_POS, &vPos);
+	for (_int i = -2; i < 2; i++)
+	{
+		for (_int j = -2; j < 2; j++)
+		{
+			for (_int k = -2; k < 2; k++)
+			{
+				D3DXVec3Normalize(&min, &_vec3(i, j, k));
+				dynamic_cast<CExBulletEffect*>(pExBulletEffect)->Set_PclePos(vPos + _vec3(i, j, k)*.25f);
+				dynamic_cast<CExBulletEffect*>(pExBulletEffect)->Set_PcleDir(-(vPos + _vec3(i, j, k)*1.f - vPos));
+				//dynamic_cast<CHyperionEffect*>(pHyperionEffect)->Set_PcleMoveDir(max*0.01);
+				pExBulletEffect->addParticle();
+			}
 		}
 	}
 }

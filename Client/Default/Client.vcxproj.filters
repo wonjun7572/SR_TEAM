@@ -924,9 +924,6 @@
     <ClInclude Include="..\Header\MFieldEffect.h">
       <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\MiddleBoss\MiddleDead\MFieldEffect</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\KrakenParticle.h">
-      <Filter>99. Default\헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\Mob.h">
       <Filter>99. Default\헤더 파일</Filter>
     </ClInclude>
@@ -945,14 +942,26 @@
     <ClInclude Include="..\Header\Warning_AnnihilateUI.h">
       <Filter>02. GameObject\01. For_Stage\09. UI\Player</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\KrakenHit.h">
-      <Filter>99. Default\헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\LaserSpot.h">
       <Filter>99. Default\헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Npc.h">
       <Filter>02. GameObject\01. For_Stage\09. UI\NPC</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\DeadParticle.h">
+      <Filter>99. Default\헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\KrakenParticle.h">
+      <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\KrakenEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\KrakenHit.h">
+      <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\KrakenEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\MBLaser.h">
+      <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\MiddleBoss</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ExBulletEffect.h">
+      <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\MiddleBoss</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1436,9 +1445,6 @@
     <ClCompile Include="..\Code\MFieldEffect.cpp">
       <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\MiddleBoss\MiddleDead\MFieldEffect</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\KrakenParticle.cpp">
-      <Filter>99. Default\소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\Mob.cpp">
       <Filter>99. Default\소스 파일</Filter>
     </ClCompile>
@@ -1457,14 +1463,26 @@
     <ClCompile Include="..\Code\Warning_AnnihilateUI.cpp">
       <Filter>02. GameObject\01. For_Stage\09. UI\Player</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\KrakenHit.cpp">
-      <Filter>99. Default\소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\LaserSpot.cpp">
       <Filter>99. Default\소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Npc.cpp">
       <Filter>02. GameObject\01. For_Stage\09. UI\NPC</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\DeadParticle.cpp">
+      <Filter>99. Default\소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\KrakenParticle.cpp">
+      <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\KrakenEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\KrakenHit.cpp">
+      <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\KrakenEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\MBLaser.cpp">
+      <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\MiddleBoss</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ExBulletEffect.cpp">
+      <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\MiddleBoss</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

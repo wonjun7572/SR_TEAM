@@ -31,6 +31,10 @@
 #include "HyperionEffect.h"
 #include "TargetPointEffect.h"
 #include "DeadParticle.h"
+#include "MBLaser.h"
+#include "ExBulletEffect.h"
+
+
 /*	
 CFlameEffect* m_pFlameEffectParticle = nullptr;
 CIceEffect* m_pIceEffectParticle = nullptr;

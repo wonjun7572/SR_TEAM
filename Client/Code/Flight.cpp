@@ -101,6 +101,10 @@ _int CFlight::Update_Object(const _float & fTimeDelta)
 
 		Look_Direction_Only_Y();
 
+		_matrix matWorld;
+		m_pTransform->Get_WorldMatrix(&matWorld);
+		vAfterDir = { matWorld.m[2][0], matWorld.m[2][1], matWorld.m[2][2] };
+
 		if (fabs(vPos.x - vDesination.x) < 1.f && fabs(vPos.z - vDesination.z) < 1.f)
 		{
 			CLayer* pLayer = Get_Layer(STAGE_SUPPORTER);
@@ -151,8 +155,16 @@ _int CFlight::Update_Object(const _float & fTimeDelta)
 
 		if (m_bLeaveMap)
 		{
-			m_pTransform->Chase_Target_By_Direction(&m_vLeave, 5.f, fTimeDelta);
-			Look_Direction_Only_Y();
+			if (Get_Scene()->Get_SceneId() == STAGE_SCENE)
+			{
+				m_pTransform->Chase_Target_By_Direction(&m_vLeave, 5.f, fTimeDelta);
+				Look_Direction_Only_Y();
+			}
+			else if (Get_Scene()->Get_SceneId() == FINAL_SCENE)
+			{
+				m_pTransform->Chase_Target_By_Direction(&_vec3(0.f,0.f,1.f), 5.f, fTimeDelta);
+				Look_Direction_Only_Y();
+			}
 		}
 		else
 		{
@@ -208,11 +220,20 @@ _int CFlight::Update_Object(const _float & fTimeDelta)
 	}
 	else
 	{
-		_vec3 vLook;
-		m_pTransform->Get_Info(INFO_LOOK, &vLook);
-		D3DXVec3Normalize(&vLook, &vLook);
-		m_pTransform->Move_Pos(&(vLook * 5.f * fTimeDelta));
-		m_pTransform->Static_Update();
+		if (D3DXVec3Length(&vAfterDir) != 0.f)
+		{
+			D3DXVec3Normalize(&vAfterDir, &vAfterDir);
+			m_pTransform->Move_Pos(&(vAfterDir * 5.f * fTimeDelta));
+			m_pTransform->Static_Update();
+		}
+		else
+		{
+			_vec3 vLook;
+			m_pTransform->Get_Info(INFO_LOOK, &vLook);
+			D3DXVec3Normalize(&vLook, &vLook);
+			m_pTransform->Move_Pos(&(vLook * 5.f * fTimeDelta));
+			m_pTransform->Static_Update();
+		}
 	}
 	CGameObject::Update_Object(fTimeDelta);
 
@@ -321,8 +342,6 @@ void CFlight::Fly_Effect()
 			}
 		}
 	}
-	
-	
 }
 
 void CFlight::Random(void)
@@ -360,9 +379,20 @@ void CFlight::Random(void)
 		vDir = { -1.f, 0.f, 0.f };
 	}
 	
-	Replace(m_ShufflePos.front(), vAngle, vDir);
+	if (this == dynamic_cast<CFlight*>(Get_GameObject(STAGE_FLIGHTPLAYER, L"FLIGHTSHUTTLE")))
+	{
+		m_ShufflePos.front().y = 30.f;
 
-	Set_Speed(_float(m_ShuffleSpeed.front()));
+		Replace(m_ShufflePos.front(), vAngle, vDir);
+
+		Set_Speed(0.f);
+	}
+	else
+	{
+		Replace(m_ShufflePos.front(), vAngle, vDir);
+
+		Set_Speed(_float(m_ShuffleSpeed.front()));
+	}
 }
 
 HRESULT CFlight::Build(void)

@@ -31,6 +31,12 @@ protected:
 	void				Skill_SphereCheck(_float _deltaTime);
 
 protected:
+	void            MiddleBoss_LimitBreak(void);
+	void            Kraken_LimitBreak(void);
+	_bool           MiddleBoss_Limit = true;
+	_bool           Kraken_Limit = true;
+
+protected:
 	void				Set_On_Terrain(void);
 
 public:

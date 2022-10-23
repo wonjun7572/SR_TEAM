@@ -63,6 +63,8 @@ private:
 
 	_bool			m_bPowerSwitch = true;
 	_bool			m_bAlphaSwitch = false;
+	_bool			m_bInit = false;
+
 	_int			m_iTextAmount;
 	_int			m_iIndex;
 

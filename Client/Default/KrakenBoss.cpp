@@ -73,6 +73,7 @@ _int CKrakenBoss::Update_Object(const _float & fTimeDelta)
 	{
 		m_pComboUI->KillCntPlus();
 
+		
 		return -1;
 	}
 
@@ -153,6 +154,11 @@ void CKrakenBoss::LateUpdate_Object(void)
 		if (m_bDeadScene)
 		{
 			Dead_Event();
+
+			CGameObject* pGameObject = dynamic_cast<CFlight*>(Get_GameObject(STAGE_FLIGHTPLAYER, L"FLIGHTSHUTTLE"));
+			if (dynamic_cast<CFlight*>(pGameObject)->Get_Ending() == false)
+				dynamic_cast<CFlight*>(pGameObject)->Set_Ending(true);
+
 			m_bDeadScene = false;
 		}
 		//this->Kill_Obj();
