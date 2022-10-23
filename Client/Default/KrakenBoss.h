@@ -26,13 +26,18 @@ public:
 	}
 
 public:
+	void				Hit_SphereCheck(_float _DeltaTime);
+	_bool				m_bCollisionDmg = false;
+	void				Set_CollisionDmg() { m_bCollisionDmg = true; }
+
+public:
 	_float				Get_Hp(void) { return m_tAbility->fCurrentHp; }
-	void				Set_CollisionDmg() { m_tAbility->fCurrentHp -= 50.f; }
 
 private:
 	void				Look_Direction(void);
 	virtual _int		Update_Pattern(_float fTimeDelta);
 	void				Hit_Check(_float _deltaTime);
+	void				Dead_Event(void);
 
 private:
 	HRESULT				Build(void);
@@ -97,6 +102,7 @@ private:
 	_float				m_BeforeHp = 5000.f;
 	_float				m_fInterval;
 	_float				 m_fFireAngle = 0.f;
+	_bool				m_bDeadScene = true;
 
 public:
 	static CKrakenBoss*	Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3& vPos, _tchar* Name);

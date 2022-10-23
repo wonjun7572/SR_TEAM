@@ -908,7 +908,7 @@ HRESULT CFinalStage::Ready_Layer_Creature(const _tchar * pLayerTag)
 
 	CGameObject*		pGameObject = nullptr;
 
-	for (int i = 0; i < 10; ++i)
+	/*for (int i = 0; i < 10; ++i)
 	{
 		_tchar* szName = new _tchar[256]{};
 		wstring wName = L"BATTLECRUISER_%d";
@@ -934,7 +934,7 @@ HRESULT CFinalStage::Ready_Layer_Creature(const _tchar * pLayerTag)
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		dynamic_cast<CFlight*>(pGameObject)->Random();
 		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
-	}
+	}*/
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
