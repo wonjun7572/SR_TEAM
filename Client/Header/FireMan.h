@@ -11,6 +11,8 @@ class CCubeCol;
 
 END
 
+class CDeadParticle;
+
 class CFireMan : public CMonster
 {
 private:
@@ -28,7 +30,7 @@ private:
 	HRESULT				Create_Item();
 	void				Sound();
 	CCubeCol*			m_pAnimationBox = nullptr;
-
+	void				Dead_Effect();
 	_float				m_fInterval = 0.f;
 	
 
@@ -55,7 +57,7 @@ private:	//	애니메이션 관련
 
 	CLayer*				pMyLayer;
 	_tchar*				m_MonsterName;
-
+	CDeadParticle*		m_pDeadParticle;
 	list<_tchar*>		m_TcharList;
 
 public:

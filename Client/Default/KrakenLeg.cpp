@@ -659,7 +659,7 @@ void CKrakenLeg::Kraken_LukerParticle(void)
 			dynamic_cast<CKrakenParticle*>(m_pKrakenSmoke)->Set_PclePos(vPos);
 			dynamic_cast<CKrakenParticle*>(m_pKrakenSmoke)->Set_PcleDir(vDir);
 			m_pKrakenSmoke->Set_PclePos(vPos);
-			for (int i = 0; i < 150; ++i)
+			for (int i = 0; i < 100; ++i)
 			{
 				m_pKrakenSmoke->addParticle();
 			}
@@ -676,7 +676,7 @@ void CKrakenLeg::Kraken_LukerParticle(void)
 			dynamic_cast<CKrakenParticle*>(m_pKrakenSmoke)->Set_PclePos(vPos);
 			dynamic_cast<CKrakenParticle*>(m_pKrakenSmoke)->Set_PcleDir(vDir);
 			m_pKrakenSmoke->Set_PclePos(vPos);
-			for (int i = 0; i < 150; ++i)
+			for (int i = 0; i < 100; ++i)
 			{
 				m_pKrakenSmoke->addParticle();
 			}
@@ -694,7 +694,7 @@ void CKrakenLeg::Kraken_LukerParticle(void)
 			dynamic_cast<CKrakenParticle*>(m_pKrakenSmoke)->Set_PclePos(vPos);
 			dynamic_cast<CKrakenParticle*>(m_pKrakenSmoke)->Set_PcleDir(vDir);
 			m_pKrakenSmoke->Set_PclePos(vPos);
-			for (int i = 0; i < 150; ++i)
+			for (int i = 0; i < 100; ++i)
 			{
 				m_pKrakenSmoke->addParticle();
 			}
@@ -712,7 +712,7 @@ void CKrakenLeg::Kraken_LukerParticle(void)
 			dynamic_cast<CKrakenParticle*>(m_pKrakenSmoke)->Set_PclePos(vPos);
 			dynamic_cast<CKrakenParticle*>(m_pKrakenSmoke)->Set_PcleDir(vDir);
 			m_pKrakenSmoke->Set_PclePos(vPos);
-			for (int i = 0; i < 150; ++i)
+			for (int i = 0; i < 100; ++i)
 			{
 				m_pKrakenSmoke->addParticle();
 			}
@@ -729,7 +729,7 @@ void CKrakenLeg::Kraken_LukerParticle(void)
 			dynamic_cast<CKrakenParticle*>(m_pKrakenSmoke)->Set_PclePos(vPos);
 			dynamic_cast<CKrakenParticle*>(m_pKrakenSmoke)->Set_PcleDir(vDir);
 			m_pKrakenSmoke->Set_PclePos(vPos);
-			for (int i = 0; i < 150; ++i)
+			for (int i = 0; i < 100; ++i)
 			{
 				m_pKrakenSmoke->addParticle();
 			}
@@ -746,7 +746,7 @@ void CKrakenLeg::Kraken_LukerParticle(void)
 			dynamic_cast<CKrakenParticle*>(m_pKrakenSmoke)->Set_PclePos(vPos);
 			dynamic_cast<CKrakenParticle*>(m_pKrakenSmoke)->Set_PcleDir(vDir);
 			m_pKrakenSmoke->Set_PclePos(vPos);
-			for (int i = 0; i < 150; ++i)
+			for (int i = 0; i < 100; ++i)
 			{
 				m_pKrakenSmoke->addParticle();
 			}
@@ -788,7 +788,7 @@ void CKrakenLeg::Kraken_ReviveParticle(void)
 			dynamic_cast<CKrakenParticle*>(m_pKrakenSmoke)->Set_PclePos(vPos);
 			dynamic_cast<CKrakenParticle*>(m_pKrakenSmoke)->Set_PcleDir(vDir);
 			m_pKrakenSmoke->Set_PclePos(vPos);
-			for (int i = 0; i < 150; ++i)
+			for (int i = 0; i < 100; ++i)
 			{
 				m_pKrakenSmoke->addParticle();
 			}
@@ -805,7 +805,7 @@ void CKrakenLeg::Kraken_ReviveParticle(void)
 			dynamic_cast<CKrakenParticle*>(m_pKrakenSmoke)->Set_PclePos(vPos);
 			dynamic_cast<CKrakenParticle*>(m_pKrakenSmoke)->Set_PcleDir(vDir);
 			m_pKrakenSmoke->Set_PclePos(vPos);
-			for (int i = 0; i < 150; ++i)
+			for (int i = 0; i < 100; ++i)
 			{
 				m_pKrakenSmoke->addParticle();
 			}
@@ -823,7 +823,7 @@ void CKrakenLeg::Kraken_ReviveParticle(void)
 			dynamic_cast<CKrakenParticle*>(m_pKrakenSmoke)->Set_PclePos(vPos);
 			dynamic_cast<CKrakenParticle*>(m_pKrakenSmoke)->Set_PcleDir(vDir);
 			m_pKrakenSmoke->Set_PclePos(vPos);
-			for (int i = 0; i < 150; ++i)
+			for (int i = 0; i < 100; ++i)
 			{
 				m_pKrakenSmoke->addParticle();
 			}
@@ -841,7 +841,7 @@ void CKrakenLeg::Kraken_ReviveParticle(void)
 			dynamic_cast<CKrakenParticle*>(m_pKrakenSmoke)->Set_PclePos(vPos);
 			dynamic_cast<CKrakenParticle*>(m_pKrakenSmoke)->Set_PcleDir(vDir);
 			m_pKrakenSmoke->Set_PclePos(vPos);
-			for (int i = 0; i < 150; ++i)
+			for (int i = 0; i < 100; ++i)
 			{
 				m_pKrakenSmoke->addParticle();
 			}
@@ -858,7 +858,7 @@ void CKrakenLeg::Kraken_ReviveParticle(void)
 			dynamic_cast<CKrakenParticle*>(m_pKrakenSmoke)->Set_PclePos(vPos);
 			dynamic_cast<CKrakenParticle*>(m_pKrakenSmoke)->Set_PcleDir(vDir);
 			m_pKrakenSmoke->Set_PclePos(vPos);
-			for (int i = 0; i < 150; ++i)
+			for (int i = 0; i < 100; ++i)
 			{
 				m_pKrakenSmoke->addParticle();
 			}
@@ -875,7 +875,7 @@ void CKrakenLeg::Kraken_ReviveParticle(void)
 			dynamic_cast<CKrakenParticle*>(m_pKrakenSmoke)->Set_PclePos(vPos);
 			dynamic_cast<CKrakenParticle*>(m_pKrakenSmoke)->Set_PcleDir(vDir);
 			m_pKrakenSmoke->Set_PclePos(vPos);
-			for (int i = 0; i < 150; ++i)
+			for (int i = 0; i < 100; ++i)
 			{
 				m_pKrakenSmoke->addParticle();
 			}
@@ -892,7 +892,7 @@ void CKrakenLeg::Kraken_ReviveParticle(void)
 			dynamic_cast<CKrakenParticle*>(m_pKrakenSmoke)->Set_PclePos(vPos);
 			dynamic_cast<CKrakenParticle*>(m_pKrakenSmoke)->Set_PcleDir(vDir);
 			m_pKrakenSmoke->Set_PclePos(vPos);
-			for (int i = 0; i < 150; ++i)
+			for (int i = 0; i < 100; ++i)
 			{
 				m_pKrakenSmoke->addParticle();
 			}
@@ -909,7 +909,7 @@ void CKrakenLeg::Kraken_ReviveParticle(void)
 			dynamic_cast<CKrakenParticle*>(m_pKrakenSmoke)->Set_PclePos(vPos);
 			dynamic_cast<CKrakenParticle*>(m_pKrakenSmoke)->Set_PcleDir(vDir);
 			m_pKrakenSmoke->Set_PclePos(vPos);
-			for (int i = 0; i < 150; ++i)
+			for (int i = 0; i < 100; ++i)
 			{
 				m_pKrakenSmoke->addParticle();
 			}
@@ -926,7 +926,7 @@ void CKrakenLeg::Kraken_ReviveParticle(void)
 			dynamic_cast<CKrakenParticle*>(m_pKrakenSmoke)->Set_PclePos(vPos);
 			dynamic_cast<CKrakenParticle*>(m_pKrakenSmoke)->Set_PcleDir(vDir);
 			m_pKrakenSmoke->Set_PclePos(vPos);
-			for (int i = 0; i < 150; ++i)
+			for (int i = 0; i < 100; ++i)
 			{
 				m_pKrakenSmoke->addParticle();
 			}

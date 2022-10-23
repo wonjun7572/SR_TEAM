@@ -8,8 +8,10 @@ class CTransform;
 class CCalculator;
 class CCollision;
 class CCubeCol;
-
 END
+
+
+class CDeadParticle;
 
 class CSlime : public CMonster
 {
@@ -30,7 +32,7 @@ private:
 	CCubeCol*				m_pAnimationBox = nullptr;
 
 	_float					m_fFrame = 0.f;
-
+	void					Dead_Effect(void);
 private:   //   애니메이션 관련
 	HRESULT					Build(void);
 	void					Load_Animation(wstring FileName, _uint AnimationID);
@@ -48,6 +50,7 @@ private:   //   애니메이션 관련
 
 	CLayer*					pMyLayer;
 	_tchar*					m_MonsterName;
+	CDeadParticle*			m_pDeadParticle;
 
 
 	list<_tchar*>			m_TcharList;         // tchar쓰레기통

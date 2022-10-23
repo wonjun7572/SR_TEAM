@@ -205,7 +205,7 @@ void CKrakenBullet::Kraken_BulletParticle(void)
 	if (m_pKrakenHit != nullptr)
 	{
 		m_pKrakenHit->Set_PclePos(vPos);
-		for (int i = 0; i < 50; ++i)
+		for (int i = 0; i < 10; ++i)
 		{
 			m_pKrakenHit->addParticle();
 		}

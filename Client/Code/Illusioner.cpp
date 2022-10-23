@@ -7,7 +7,7 @@
 #include "ComboUI.h"
 #include "TargetCube.h"
 #include "RcEffect.h"
-
+#include "DeadParticle.h"
 #include "TransAxisBox.h"
 
 USING(Engine)
@@ -82,6 +82,7 @@ _int CIllusioner::Update_Object(const _float & fTimeDelta)
 		m_pComboUI->KillCntPlus();
 		Create_Item();
 		Monster_DeleteMapping();
+		Dead_Effect();
 		return -1;
 	}
 
@@ -377,6 +378,24 @@ void CIllusioner::Sound()
 	{
 		Engine::PlaySoundGun(L"Illusioner_Death_01.wav", SOUND_EFFECT, m_fDeadSound);
 
+	}
+}
+
+void CIllusioner::Dead_Effect(void)
+{
+	_vec3 vPos;
+	if (!m_pDeadParticle)
+		m_pDeadParticle = dynamic_cast<CDeadParticle*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"DeadParticle"));
+
+	m_pTransCom->Get_Info(INFO_POS, &vPos);
+
+	if (m_pDeadParticle != nullptr)
+	{
+		m_pDeadParticle->Set_PclePos(vPos);
+		for (_int i = 0; i < 30; ++i)
+		{
+			m_pDeadParticle->addParticle();
+		}
 	}
 }
 

@@ -1,5 +1,6 @@
 #pragma once
 #include "Monster.h"
+class CDeadParticle;
 class CAlien :
 	public CMonster
 {
@@ -17,7 +18,7 @@ private:
 	HRESULT				Add_Component(void);
 	HRESULT				Create_Item(void);
 	void				Look_Direction(void);
-
+	void				Dead_Effect(void);
 	_float				m_fTimeDelta = 0.f;
 	_float				m_fFrame = 0.f;
 private:
@@ -43,7 +44,7 @@ private:
 	void				Run_Animation(const _float& AnimationSpeed);
 
 	
-	
+	CDeadParticle*	    m_pDeadParticle;
 	CCubeCol*			m_pAnimationBox = nullptr;
 	list<_tchar*>		m_TcharList;
 

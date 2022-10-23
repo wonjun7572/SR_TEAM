@@ -2,6 +2,8 @@
 #include "Monster.h"
 #include "Engine_Include.h"
 
+class		CDeadParticle;
+
 class CZombie : public CMonster
 {
 private:
@@ -16,7 +18,7 @@ private:
 private:
 	HRESULT				Add_Component(void);
 	HRESULT				Create_Item();
-
+	void				Dead_Effect(void);
 private:	//	애니메이션 관련
 	HRESULT				Build(void);
 	void				Load_Animation(wstring FileName, _uint AnimationID);
@@ -40,30 +42,11 @@ private:	//	애니메이션 관련
 
 	CLayer*				pMyLayer;
 	_tchar*				m_MonsterName;
-
+	
 	list<_tchar*>		m_TcharList;
 
-//private:
-//	HRESULT				Add_Component(void);
-//	HRESULT				Create_Item();
-//	CCubeCol*			m_pAnimationBox = nullptr;
-//	_float				m_fFrame = 0.f;
-//	_bool				m_bFirst = true;
-//	_float				m_fTimeDelta = 0.f;
-//	_float				m_AnimationTime = 0.f;
-//
-//private:
-//	list<char*>							m_CharList;
-//	list<_tchar*>						m_TcharList;
-//	CLayer* pMyLayer = nullptr;
-//	_tchar*								m_MonsterName;
-//
-//	MONSTERSTATEID			m_STATE;
-//	MONSTERWALKID			m_WALK;
-//	MONSTERSTATEID			m_BeforeState;
-//	MONSTERIDLEID			m_IDLE;
-//	MONSTERATTACKID			m_ATTACK;
-//	MONSTERDEADID			m_DEAD;
+	CDeadParticle*		m_pDeadParticle;
+
 
 public:
 	static CZombie*	Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3& vPos, _tchar* Name);

@@ -30,6 +30,7 @@
 #include "KrakenHit.h"
 #include "HyperionEffect.h"
 #include "TargetPointEffect.h"
+#include "DeadParticle.h"
 /*	
 CFlameEffect* m_pFlameEffectParticle = nullptr;
 CIceEffect* m_pIceEffectParticle = nullptr;

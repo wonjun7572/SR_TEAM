@@ -152,7 +152,7 @@ void CLetterBox::Begin_OrthoProj()
 	matView.m[2][2] = 1.f;
 	matView.m[3][0] = (-WINCX / 2.f + pt.x) * (WINCX / WINCY)+ m_fBoxSizeX/2 + 10.f;
 	matView.m[3][1] = (WINCY / 2.f - pt.y) * (WINCX / WINCY) - m_fBoxSizeY/2 - 50.f;
-	matView.m[3][2] = 0.001;
+	matView.m[3][2] = 0.001f;
 
 	D3DXMatrixOrthoLH(&matOrtho, WINCX, WINCY, 0.f, 1.f);
 		
