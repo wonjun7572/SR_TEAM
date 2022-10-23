@@ -61,8 +61,6 @@ public:
 		m_eSupporterID = eID;
 	}
 
-
-
 	_bool			Get_Shuttle() { return m_bShuttle; }
 	_vec3			Get_Desitination() { return m_vDestination; }
 

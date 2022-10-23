@@ -3,6 +3,7 @@
 
 #include "Export_Function.h"
 #include "Stage.h"
+#include "Logo.h"
 
 CPlayButton::CPlayButton(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CGameObject(pGraphicDev)
@@ -26,13 +27,16 @@ HRESULT CPlayButton::Ready_Object()
 
 _int CPlayButton::Update_Object(const _float & fTimeDelta)
 {
-	if (PointMouse())
+	if (dynamic_cast<CLogo*>(Get_Scene())->Get_bVideo() == true)
 	{
-		if (Engine::Mouse_Down(DIM_LB))
-			Mouse_check = true;
+		if (PointMouse())
+		{
+			if (Engine::Mouse_Down(DIM_LB))
+				Mouse_check = true;
+		}
+		Engine::CGameObject::Update_Object(fTimeDelta);
+		Add_RenderGroup(RENDER_UI, this);
 	}
-	Engine::CGameObject::Update_Object(fTimeDelta);
-	Add_RenderGroup(RENDER_UI, this);
 	return 0;
 }
 

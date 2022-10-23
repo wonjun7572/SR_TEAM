@@ -97,6 +97,8 @@ HRESULT CStage::Ready_Scene(void)
 
 	CGameObject*      pGameObject = nullptr;
 
+	CSoundMgr::GetInstance()->StopAll();
+
 	_float fBGMSound = 0.5f;
 	PlayBGM(L"Track_02.mp3", fBGMSound);
 
@@ -929,33 +931,33 @@ HRESULT CStage::Ready_Layer_Creature(const _tchar * pLayerTag)
 
 	CGameObject*      pGameObject = nullptr;
 
-	for (int i = 0; i < 10; ++i)
-	{
-		_tchar* szName = new _tchar[256]{};
-		wstring wName = L"BATTLECRUISER_%d";
+	//for (int i = 0; i < 10; ++i)
+	//{
+	//	_tchar* szName = new _tchar[256]{};
+	//	wstring wName = L"BATTLECRUISER_%d";
 
-		wsprintfW(szName, wName.c_str(), i);
-		NameList.push_back(szName);
+	//	wsprintfW(szName, wName.c_str(), i);
+	//	NameList.push_back(szName);
 
-		pGameObject = CBattleCursier::Create(m_pGraphicDev, _vec3(0, 20, 0), _vec3(0, 0, 1), szName);
-		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		dynamic_cast<CBattleCursier*>(pGameObject)->Random();
-		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
-	}
+	//	pGameObject = CBattleCursier::Create(m_pGraphicDev, _vec3(0, 20, 0), _vec3(0, 0, 1), szName);
+	//	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//	dynamic_cast<CBattleCursier*>(pGameObject)->Random();
+	//	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+	//}
 
-	for (int i = 0; i < 30; ++i)
-	{
-		_tchar* szName = new _tchar[256]{};
-		wstring wName = L"FLIGHT_%d";
+	//for (int i = 0; i < 30; ++i)
+	//{
+	//	_tchar* szName = new _tchar[256]{};
+	//	wstring wName = L"FLIGHT_%d";
 
-		wsprintfW(szName, wName.c_str(), i);
-		NameList.push_back(szName);
+	//	wsprintfW(szName, wName.c_str(), i);
+	//	NameList.push_back(szName);
 
-		pGameObject = CFlight::Create(m_pGraphicDev, _vec3(0, 30, 100), _vec3(0, 0, -2), szName);
-		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		dynamic_cast<CFlight*>(pGameObject)->Random();
-		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
-	}
+	//	pGameObject = CFlight::Create(m_pGraphicDev, _vec3(0, 30, 100), _vec3(0, 0, -2), szName);
+	//	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//	dynamic_cast<CFlight*>(pGameObject)->Random();
+	//	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+	//}
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
