@@ -85,7 +85,7 @@ _int CMiddleBoss::Update_Object(const _float & fTimeDelta)
 	{
 		Create_Item();
 		m_pComboUI->KillCntPlus();
-		Monster_DeleteMapping();
+		//Monster_DeleteMapping();
 		_float fMiddle_death = 1.5f;
 		PlaySoundGun(L"Middle_Death.wav", SOUND_EFFECT, fMiddle_death);
 		return -1;

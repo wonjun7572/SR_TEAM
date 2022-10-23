@@ -31,19 +31,11 @@ private:
 	void         Look_Direction(void);
 
 private:
-<<<<<<< HEAD
-	void			Walk_Animation_Run(void);
-	void			Idle_Animation_Run(void);
-	void			NormalAttack_Animation_Run(void);
-	void			Bombing_Animation_Run(void);
-	void			Dead_Animation_Run(void);
-=======
 	void         Walk_Animation_Run(void);
 	void         Idle_Animation_Run(void);
 	void         NormalAttack_Animation_Run(void);
 	void         Bombing_Animation_Run(void);
 	void         Dead_Animation_Run(void);
->>>>>>> main
 
 private:
 	void         Set_OnTerrain(void);
@@ -62,16 +54,6 @@ private:
 	list<_tchar*>   m_TcharList;
 
 private:
-<<<<<<< HEAD
-	MIDDLEBOSSSTATEID			m_STATE;
-	MIDDLEBOSSWALKID			m_WALK;
-	MIDDLEBOSSIDLEID			m_IDLE;
-	MIDDLEBOSSNORMALATTACKID	m_NORMALATTACK;
-	MIDDLEBOSSBOMBINGID			m_BOMBING;
-	MIDDLEBOSSCRASHID			m_CRASH;
-	MIDDLEBOSSSKILLID			m_PATTERN;
-	MIDDLEBOSSDEADID			m_DEAD;
-=======
 	MIDDLEBOSSSTATEID         m_STATE;
 	MIDDLEBOSSWALKID         m_WALK;
 	MIDDLEBOSSIDLEID         m_IDLE;
@@ -80,7 +62,6 @@ private:
 	MIDDLEBOSSCRASHID         m_CRASH;
 	MIDDLEBOSSSKILLID         m_PATTERN;
 	MIDDLEBOSSDEADID         m_DEAD;
->>>>>>> main
 
 private:
 	HRESULT            Create_Item();
@@ -122,7 +103,6 @@ protected:
 private:
 	_float            m_ReloadTimer = 0.f;
 
-<<<<<<< HEAD
 	_bool				m_bPatternStart = false;
 	_float				m_fBeforeHp;
 	_float				m_fFrame = 0.f;
@@ -134,18 +114,7 @@ private:
 	_float				m_fSpeed = 1.f;
 	_vec3				vUIPos;
 	_bool				m_MappingInit = false;
-=======
-	_float            m_fBeforeHp;
-	_float            m_fFrame = 0.f;
-	_float            m_fTargetLength;
-	_float            m_fDetectRange;
-	_float            m_fAttackRange;
-	_float            m_fUISwitchTime = 0.f;
-	_float            m_fFireAngle = 0.f;
-	_float            m_fSpeed = 1.f;
-	_vec3            vUIPos;
-	_bool            m_MappingInit = false;
->>>>>>> main
+
 
 	_int            m_iRandom = 0;
 	TCHAR*            m_szCntName = new TCHAR[64];

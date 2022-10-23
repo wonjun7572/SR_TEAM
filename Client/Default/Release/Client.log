@@ -1,9 +1,6 @@
-﻿빌드 시작: 2022-10-23 오후 4:54:48
+﻿빌드 시작: 2022-10-23 오후 5:33:16
      1>2 노드의 "D:\GitHub\SR_TEAM\Client\Default\Client.vcxproj" 프로젝트(Build 대상)입니다.
-     1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /I../Default /I../Header /I../Code /I../../Reference/Header /Zi /nologo /W3 /WX- /sdl /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Yu"stdafx.h" /Fp"Release\Client.pch" /Fo"Release\\" /Fd"Release\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt /Ylsymbol ..\Code\MiddleBoss.cpp
-         MiddleBoss.cpp
-       Link:
+     1>Link:
          C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"../Bin\Client.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:../../Reference/Library d3d9.lib d3dx9.lib dxguid.lib System.lib Utility.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"../Bin\Client.pdb" /SUBSYSTEM:WINDOWS /LARGEADDRESSAWARE /OPT:REF /OPT:ICF /LTCG:incremental /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"../Bin\Client.lib" /MACHINE:X86 /SAFESEH Release\Client.res
          Release\Alien.obj
          Release\AnimationPlayer.obj
@@ -177,7 +174,7 @@
          Release\TargetPointEffect.obj
             ../Bin\Client.lib 라이브러리 및 ../Bin\Client.exp 개체를 생성하고 있습니다.
          코드를 생성하고 있습니다.
-         2 of 9272 functions ( 0.0%) were compiled, the rest were copied from previous compilation.
+         0 of 9271 functions ( 0.0%) were compiled, the rest were copied from previous compilation.
            0 functions were new in current compilation
            0 functions had inline decision re-evaluated but remain unchanged
          코드를 생성했습니다.
@@ -186,4 +183,4 @@
 
 빌드했습니다.
 
-경과 시간: 00:00:04.48
+경과 시간: 00:00:03.69
