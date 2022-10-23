@@ -4,8 +4,7 @@
 class CMonsterUI;
 class CComboUI;
 
-class CMiddleBoss :
-	public CGameObject
+class CMiddleBoss :	public CGameObject
 {
 public:
 	explicit CMiddleBoss(LPDIRECT3DDEVICE9 pGraphicDev);
@@ -25,7 +24,7 @@ private:
 	void         Hit_Check(_float _deltaTime);
 
 private:
-	HRESULT         Build(void);
+	HRESULT      Build(void);
 	void         Load_Animation(wstring FileName, _uint AnimationID);
 	void         Run_Animation(const _float& AnimationSpeed);
 	void         Look_Direction(void);
@@ -53,6 +52,7 @@ private:
 	_tchar*         m_MonsterName;
 	list<_tchar*>   m_TcharList;
 
+
 private:
 	MIDDLEBOSSSTATEID         m_STATE;
 	MIDDLEBOSSWALKID         m_WALK;
@@ -66,7 +66,7 @@ private:
 private:
 	HRESULT            Create_Item();
 	HRESULT            Monster_Mapping(void);
-	HRESULT            Monster_DeleteMapping(void);
+	HRESULT			   Create_Monster();
 
 protected:
 	CTransform*         m_pTransCom = nullptr;
@@ -81,25 +81,16 @@ protected:
 
 	CTexture*         m_pTextureCom = nullptr;
 	CCubeTex*         m_pBufferCom = nullptr;
-	CSphereTex*         m_pSphereBufferCom = nullptr;
-	CMonsterUI*         m_pMonsterUI = nullptr;
-	CRcTex*            m_pBufferUICom = nullptr;
+	CSphereTex*       m_pSphereBufferCom = nullptr;
+	CMonsterUI*       m_pMonsterUI = nullptr;
+	CRcTex*           m_pBufferUICom = nullptr;
 	CTexture*         m_pTextureUICom = nullptr;
-	CHitBox*         m_pHitBox = nullptr;
-	CCollision*         m_pCollision = nullptr;
+	CHitBox*          m_pHitBox = nullptr;
+	CCollision*       m_pCollision = nullptr;
 	CComboUI*         m_pComboUI = nullptr;
 	CCubeCol*         m_pAnimationBox = nullptr;
 	CCalculator*      m_pCalculatorCom = nullptr;
-	//CBrownCloudEffect* m_pBrownCloudEffectParticle = nullptr;
-	//#### 갈색구름
-	//   if (!m_pBrownCloudEffectParticle)
-	//      m_pBrownCloudEffectParticle = dynamic_cast<CBrownCloudEffect*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"BrownCloudEffect"));
-	//   m_pBrownCloudEffectParticle->Set_PclePos(m_vDeadPos);
-	//   for (_int i = 0; i < 70; ++i)
-	//   {
-	//      m_pBrownCloudEffectParticle->addParticle();
-	//   }
-
+	
 private:
 	_float            m_ReloadTimer = 0.f;
 
@@ -111,23 +102,28 @@ private:
 	_float            m_fUISwitchTime = 0.f;
 	_float            m_fFireAngle = 0.f;
 	_float            m_fSpeed = 1.f;
-	_vec3            vUIPos;
-	_bool            m_MappingInit = false;
+	_vec3             vUIPos;
+	_bool             m_MappingInit = false;
 
-	_int            m_iRandom = 0;
+	_int              m_iRandom = 0;
 	TCHAR*            m_szCntName = new TCHAR[64];
 
 	vector<MIDDLEBOSSSKILLID>   m_vPattern;
 
+	vector<_vec3>	  m_vMonterPos;
+	vector<_int>	  m_vMonstertype;
+	_int			  m_iMonsterCnt = 0;
+
 	list<TCHAR*>      m_listMonsterCnt;
+	list<_tchar* >    NameList;
+
+	_float			 m_fCreateMonFrame = 0.f;
+
 private:
 	HRESULT            Add_Component(void);
 	MIDDLEBOSSABILITY*      m_tAbility;
 
-
 public:
 	static CMiddleBoss*   Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3& vPos, _tchar* Name);
 	virtual void   Free(void);
-
-
 };

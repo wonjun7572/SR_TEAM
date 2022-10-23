@@ -400,7 +400,7 @@ HRESULT CFinalStage::Ready_Layer_UI(const _tchar * pLayerTag)
 	pGameObject = CWarning_AnnihilateUI::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(WARNING_TEX, pGameObject), E_FAIL);
-
+	
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
 	return S_OK;

@@ -205,6 +205,8 @@ _uint CLoading::Loading_ForStage(void)
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Veneer_Tex", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/Blue_Aim.png", TEX_NORMAL)), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Black_Kraken", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/UI/Sprite/Black.jpg", TEX_NORMAL)), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Quest_Tex", CTexture::Create(m_pGraphicDev, L"../Bin/Resources/UI/Sprite/character_select_UI_2.png", TEX_NORMAL)), E_FAIL);
+	
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(WARNING_TEX, CTexture::Create(m_pGraphicDev, WARNING_TEX_PATH, TEX_NORMAL, 2)), E_FAIL);
 	}
 
 	m_bFinish = true;

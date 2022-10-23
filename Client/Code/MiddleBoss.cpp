@@ -16,6 +16,9 @@
 
 #include "Flight.h"
 
+#include "Slime.h"
+#include "Zombie.h"
+
 #include "LaserSpot.h"
 
 static _int m_iCnt = 0;
@@ -84,14 +87,12 @@ _int CMiddleBoss::Update_Object(const _float & fTimeDelta)
 	{
 		Create_Item();
 		m_pComboUI->KillCntPlus();
-		Monster_DeleteMapping();
 		_float fMiddle_death = 1.5f;
 		PlaySoundGun(L"Middle_Death.wav", SOUND_EFFECT, fMiddle_death);
 		return -1;
 	}
 
 	m_fTimeDelta = fTimeDelta;
-
 	if (m_bFirst)
 	{
 		m_bFirst = false;
@@ -129,6 +130,16 @@ _int CMiddleBoss::Update_Object(const _float & fTimeDelta)
 		Load_Animation(L"../../Data/Thor/THOR_DEAD_1.dat", 22);
 		Load_Animation(L"../../Data/Thor/THOR_DEAD_2.dat", 23);
 		Load_Animation(L"../../Data/Thor/THOR_DEAD_3.dat", 24);
+
+		m_vMonterPos.push_back(_vec3(118.f, 0.6f, 64.f));
+		m_vMonterPos.push_back(_vec3(97.f, 0.6f, 64.f));
+		m_vMonterPos.push_back(_vec3(118.f, 0.6f, 40.f));
+		m_vMonterPos.push_back(_vec3(97.f, 0.6f, 40.f));
+		m_vMonterPos.push_back(_vec3(118.f, 0.6f, 18.f));
+		m_vMonterPos.push_back(_vec3(97.f, 0.6f, 18.f));
+		m_vMonstertype.push_back(0);
+		m_vMonstertype.push_back(1);
+		m_vMonstertype.push_back(2);
 	}
 
 	Update_Pattern(fTimeDelta);
@@ -162,6 +173,14 @@ _int CMiddleBoss::Update_Object(const _float & fTimeDelta)
 
 	m_pTransCom->Get_Info(INFO_POS, &vUIPos);
 	m_pTransUICom->Set_Pos(vUIPos.x, vUIPos.y + 8.f, vUIPos.z);
+	
+	m_fCreateMonFrame += fTimeDelta;
+
+	if (m_fCreateMonFrame >= 5.f)
+	{
+		Create_Monster();
+		m_fCreateMonFrame = 0.f;
+	}
 
 	return 0;
 }
@@ -270,8 +289,6 @@ void CMiddleBoss::Render_Object(void)
 	m_pBufferUICom->Resize_Buffer(m_tAbility->fCurrentHp / m_tAbility->fMaxHp);
 	m_pBufferUICom->Render_Buffer();
 }
-
-
 
 _int CMiddleBoss::Update_Pattern(_float fTimeDelta)
 {
@@ -1111,16 +1128,44 @@ HRESULT CMiddleBoss::Monster_Mapping(void)
 		NULL_CHECK_RETURN(m_pMonsterMapping, E_FAIL);
 		++m_iCnt;
 		m_MappingInit = true;
-
 	}
 	m_pMonsterMapping->Set_Pos(vPos.x, vPos.y, vPos.z);
 	return S_OK;
 
 }
 
-HRESULT CMiddleBoss::Monster_DeleteMapping(void)
+HRESULT CMiddleBoss::Create_Monster()
 {
-	Delete_GameObject(STAGE_MAPPING, m_szCntName);
+	random_shuffle(m_vMonterPos.begin(), m_vMonterPos.end());
+	_vec3 vPos = m_vMonterPos.front();
+
+	random_shuffle(m_vMonstertype.begin(), m_vMonstertype.end());
+	_int i = m_vMonstertype.front();
+
+	CGameObject* pGameObject = nullptr;
+	CLayer* pLayer = Get_Layer(STAGE_MONSTER);
+	
+	if (i == 0)
+	{
+		_tchar* szName = new _tchar[128]{};
+		wstring wName = L"ZomBie_boss_%d";
+		wsprintfW(szName, wName.c_str(), m_iMonsterCnt);
+		NameList.push_back(szName);
+		pGameObject = CZombie::Create(m_pGraphicDev, vPos, szName);
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+		m_iMonsterCnt++;
+	}
+	/*else if (i == 1)
+	{
+		_tchar* szName = new _tchar[128]{};
+		wstring wName = L"Eilien_boss_%d";
+		wsprintfW(szName, wName.c_str(), i);
+		NameList.push_back(szName);
+		pGameObject = CSlime::Create(m_pGraphicDev, vPos, szName);
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+	}*/
 
 	return S_OK;
 }
@@ -1210,12 +1255,17 @@ CMiddleBoss * CMiddleBoss::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3 & v
 
 void CMiddleBoss::Free(void)
 {
-	for (auto& iter : *(pMyLayer->Get_GamePairPtr()))
-	{
-		iter.second->Kill_Obj();
-	}
+	//for (auto& iter : *(pMyLayer->Get_GamePairPtr()))
+	//{
+	//	iter.second->Kill_Obj();
+	//}
 
 	for (auto iter : m_TcharList)
+	{
+		Safe_Delete_Array(iter);
+	}
+
+	for (auto iter : NameList)
 	{
 		Safe_Delete_Array(iter);
 	}
