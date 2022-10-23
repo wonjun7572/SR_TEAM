@@ -92,7 +92,7 @@
 
 #include "KrakenLeg.h"
 #include "Npc.h"
-
+#include "DeadParticle.h"
 CFinalStage::CFinalStage(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CScene(pGraphicDev)
 {
@@ -320,6 +320,12 @@ HRESULT CFinalStage::Ready_Layer_Environment(const _tchar * pLayerTag)
 	/*pGameObject = CNpc::Create(m_pGraphicDev, _vec3(14.f, 0.5f, 10.f));
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"NPC", pGameObject), E_FAIL);*/
+
+
+	pGameObject = CDeadParticle::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"DeadParticle", pGameObject), E_FAIL);
+	m_mapLayer.insert({ pLayerTag, pLayer });
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 

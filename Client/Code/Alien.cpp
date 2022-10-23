@@ -7,6 +7,7 @@
 #include "TransAxisBox.h"
 #include "PoolMgr.h"
 #include "CubePlayer.h"
+#include "DeadParticle.h"
 CAlien::CAlien(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CMonster(pGraphicDev)
 {
@@ -86,7 +87,7 @@ _int CAlien::Update_Object(const _float & fTimeDelta)
 		m_pComboUI->KillCntPlus();
 		Create_Item();
 		Monster_DeleteMapping();
-
+		Dead_Effect();
 		return -1;
 	}
 
@@ -711,6 +712,24 @@ void CAlien::Look_Direction(void)
 			CTransform* Transform = dynamic_cast<CTransform*>(iter.second->Get_Component(L"Proto_TransformCom", ID_STATIC));
 			Transform->Get_Angle(&vAngle);
 			Transform->Set_Angle(&_vec3(yaw, vAngle.x, vAngle.z));
+		}
+	}
+}
+
+void CAlien::Dead_Effect(void)
+{
+	_vec3 vPos;
+	if (!m_pDeadParticle)
+		m_pDeadParticle = dynamic_cast<CDeadParticle*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"DeadParticle"));
+
+	m_pTransCom->Get_Info(INFO_POS, &vPos);
+
+	if (m_pDeadParticle != nullptr)
+	{
+		m_pDeadParticle->Set_PclePos(vPos);
+		for (_int i = 0; i < 30; ++i)
+		{
+			m_pDeadParticle->addParticle();
 		}
 	}
 }

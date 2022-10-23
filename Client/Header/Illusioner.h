@@ -11,6 +11,7 @@ class CCubeCol;
 class RcEffect;
 END
 
+class CDeadParticle;
 class CIllusioner :	public CMonster
 {
 public:
@@ -27,7 +28,7 @@ private:
 	HRESULT				Add_Component(void);
 	HRESULT				Create_Item();
 	void				Sound();
-
+	void				Dead_Effect(void);
 	CCubeCol*			m_pAnimationBox = nullptr;
 	_float				m_fFrame = 0.f;
 
@@ -56,7 +57,7 @@ private:	//	애니메이션 관련
 	_tchar*				m_MonsterName;
 	_bool				m_bRun = false;
 	CGameObject*			m_pPlayerEffect = nullptr;
-
+	CDeadParticle*			m_pDeadParticle;
 
 	_float			m_fPosX = 0.f;
 	_float			m_fPosY = 0.f;

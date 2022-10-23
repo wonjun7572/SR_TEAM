@@ -44,6 +44,7 @@ private:	//	애니메이션 관련
 	_tchar*				m_MonsterName;
 	
 	list<_tchar*>		m_TcharList;
+
 	CDeadParticle*		m_pDeadParticle;
 
 

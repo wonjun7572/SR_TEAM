@@ -26,6 +26,8 @@ class CKrakenParticle;
 class CKrakenHit;
 
 class CIceEffect;
+class CDeadParticle;
+
 class CCubePlayer : public CGameObject
 {
 private:
@@ -172,6 +174,7 @@ private: // 파티클관련 포인터입니다.
 	CKrakenParticle* m_pKrakenSmoke = nullptr;
 	CIceEffect* m_pIceEffectParticle = nullptr;
 	CKrakenHit*	m_pKrakenHit = nullptr;
+	CDeadParticle* m_pDeadParticle = nullptr;
 private:
 	_float			m_fRed = 0.f;
 	_float			m_fGreen = 0.f;

@@ -1015,7 +1015,7 @@ HRESULT CStage::Ready_Layer_Trap(const _tchar * pLayerTag)
 	}*/
 
 
-	pGameObject = CTerret::Create(m_pGraphicDev, _vec3(67.44, 0.6f, 50.88f), L"Terret");
+	pGameObject = CTerret::Create(m_pGraphicDev, _vec3(67.44f, 0.6f, 50.88f), L"Terret");
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
 

@@ -502,35 +502,49 @@ HRESULT CZombie::Create_Item()
 
 void CZombie::Dead_Effect(void)
 {
-	if (m_pDeadParticle == nullptr)
-	{
+	//if (m_pDeadParticle == nullptr)
+	//{
+	//	m_pDeadParticle = dynamic_cast<CDeadParticle*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"DeadParticle"));
+	//}
+
+
+
+	//_vec3 vPos;														//대쉬이펙트하려던것
+	//_vec3 vDir;
+	//m_pTransCom->Get_Info(INFO_POS, &vPos);
+	//_vec3 min = { .0f ,.0f ,.0f };
+
+	//for (_int i = -5; i < 5; i++)
+	//{
+	//	for (_int j = -5; j < 5; j++)
+	//	{
+	//		for (_int k = -5; k < 5; k++)
+	//		{
+	//			D3DXVec3Normalize(&min, &_vec3(i, j, k));
+
+	//			dynamic_cast<CDeadParticle*>(m_pDeadParticle)->Set_PclePos(vPos);
+
+	//			dynamic_cast<CDeadParticle*>(m_pDeadParticle)->Set_PcleDir(min);
+
+	//			m_pDeadParticle->addParticle();
+	//		}
+	//	}
+	//}
+
+	_vec3 vPos;
+	if (!m_pDeadParticle)
 		m_pDeadParticle = dynamic_cast<CDeadParticle*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"DeadParticle"));
-	}
-
-
-
-	_vec3 vPos;														//대쉬이펙트하려던것
-	_vec3 vDir;
+	
 	m_pTransCom->Get_Info(INFO_POS, &vPos);
-	_vec3 min = { .0f ,.0f ,.0f };
-
-	for (_int i = -5; i < 5; i++)
+	
+	if (m_pDeadParticle != nullptr)
 	{
-		for (_int j = -5; j < 5; j++)
+		m_pDeadParticle->Set_PclePos(vPos);
+		for (_int i = 0; i < 30; ++i)
 		{
-			for (_int k = -5; k < 5; k++)
-			{
-				D3DXVec3Normalize(&min, &_vec3(i, j, k));
-
-				dynamic_cast<CDeadParticle*>(m_pDeadParticle)->Set_PclePos(vPos);
-
-				dynamic_cast<CDeadParticle*>(m_pDeadParticle)->Set_PcleDir(min);
-
-				m_pDeadParticle->addParticle();
-			}
+			m_pDeadParticle->addParticle();
 		}
 	}
-
 
 
 

@@ -406,6 +406,9 @@
     <Filter Include="02. GameObject\01. For_Stage\98. Particle\01. EllipseParticle\MonsterDead">
       <UniqueIdentifier>{dde53569-1066-4419-80e1-b3b70a2deb8c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\98. Particle\02. SparkEffect\DeadEffect">
+      <UniqueIdentifier>{f04616ca-b996-427c-abff-ac79c9d8c845}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -449,9 +452,6 @@
     </ClInclude>
     <ClInclude Include="..\Header\CubeArm.h">
       <Filter>02. GameObject\01. For_Stage\05. CubePlayer\Arm</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CubeLeg.h">
-      <Filter>02. GameObject\01. For_Stage\05. CubePlayer\Leg</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CubeBody.h">
       <Filter>02. GameObject\01. For_Stage\05. CubePlayer\Body</Filter>
@@ -927,8 +927,11 @@
     <ClInclude Include="..\Header\KrakenHit.h">
       <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\KrakenEffect</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CubeLeg.h">
+      <Filter>02. GameObject\01. For_Stage\05. CubePlayer\Leg</Filter>
+    </ClInclude>
     <ClInclude Include="..\Header\DeadParticle.h">
-      <Filter>99. Default\헤더 파일</Filter>
+      <Filter>02. GameObject\01. For_Stage\98. Particle\02. SparkEffect\DeadEffect</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1428,7 +1431,7 @@
       <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\KrakenEffect</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\DeadParticle.cpp">
-      <Filter>99. Default\소스 파일</Filter>
+      <Filter>02. GameObject\01. For_Stage\98. Particle\02. SparkEffect\DeadEffect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
