@@ -211,7 +211,7 @@ _int CFlight::Update_Object(const _float & fTimeDelta)
 		_vec3 vLook;
 		m_pTransform->Get_Info(INFO_LOOK, &vLook);
 		D3DXVec3Normalize(&vLook, &vLook);
-		m_pTransform->Move_Pos(&(vLook * 10.f * fTimeDelta));
+		m_pTransform->Move_Pos(&(vLook * 5.f * fTimeDelta));
 		m_pTransform->Static_Update();
 	}
 	CGameObject::Update_Object(fTimeDelta);
