@@ -4,7 +4,7 @@
 #include "FlightBomb.h"
 #include "RcTex.h"
 class CFlightBulletParticle;
-
+class CCubeParticle;
 
 
 class CFlight :
@@ -33,6 +33,7 @@ private:
 	CTexture*		m_pBombTexture = nullptr;
 	CRcTex*			m_pBombBuffer = nullptr;
 	CRcTex*			m_pBufferCom = nullptr;
+	CCubeParticle* m_pCubeParticle = nullptr;
 
 
 public:
@@ -59,8 +60,6 @@ public:
 		m_vDestination = vDestination; 
 		m_eSupporterID = eID;
 	}
-
-
 
 	_bool			Get_Shuttle() { return m_bShuttle; }
 	_vec3			Get_Desitination() { return m_vDestination; }

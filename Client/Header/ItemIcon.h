@@ -3,6 +3,7 @@
 
 USING(Engine)
 class CInventory;
+class CLetterBox;
 
 class CItemIcon :
 	public CGameObject
@@ -37,15 +38,20 @@ private:
 	void		Begin_OrthoProj();
 	void		End_OrthoProj();
 	void		Index();
+	void		DeadIndex();
 	void		FixOnCursor();
-
+	void		IconCollision();
+	void		IconTag();
 private:
 	CGameObject*	 m_pPlayer = nullptr;
 	CTransform*		 m_pTransformCom = nullptr;
 	CTexture*		 m_pTextureCom = nullptr;
 	CTexture*		 m_pCursorTextureCom = nullptr;
 	CShader*		 m_pShaderCom = nullptr;
-
+	CLetterBox*		m_pLetterBox5 = nullptr;
+	CLetterBox*		m_pLetterBox6 = nullptr;
+	CLetterBox*		m_pLetterBox7 = nullptr;
+	CLetterBox*		m_pLetterBox8 = nullptr;
 	CRcTex*			 m_pRcTexCom = nullptr;	
 
 	list<TCHAR*>	 m_listItemIcon;
@@ -58,6 +64,7 @@ private:
 	_bool			m_bInit = false;
 	_bool			m_bFix =  false;
 	_bool			m_bWeaponPart = false;
+	_bool			m_bIconCollision = false;
 	_vec3			m_vBlockPos;
 
 	_vec3			m_vIconPos;

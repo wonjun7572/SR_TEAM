@@ -17,6 +17,7 @@ public:
 
 private:
 	void	Key_Input();
+	void	ProjectionEffect();
 	HRESULT Add_Component();
 
 	CLetterBox* m_pLetterBox = nullptr;

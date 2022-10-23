@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "..\Header\ExitButton.h"
-
+#include "Logo.h"
 
 CExitButton::CExitButton(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
@@ -25,14 +25,17 @@ HRESULT CExitButton::Ready_Object()
 
 _int CExitButton::Update_Object(const _float & fTimeDelta)
 {
-	if (PointMouse())
+	if (dynamic_cast<CLogo*>(Get_Scene())->Get_bVideo() == true)
 	{
-		if (Mouse_Down(DIM_LB))
-			Mouse_check = true;
-	}
+		if (PointMouse())
+		{
+			if (Mouse_Down(DIM_LB))
+				Mouse_check = true;
+		}
 
-	Engine::CGameObject::Update_Object(fTimeDelta);
-	Add_RenderGroup(RENDER_UI, this);
+		Engine::CGameObject::Update_Object(fTimeDelta);
+		Add_RenderGroup(RENDER_UI, this);
+	}
 	return 0;
 }
 

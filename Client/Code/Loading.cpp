@@ -213,6 +213,8 @@ _uint CLoading::Loading_ForBoss(void)
 	return _uint();
 }
 
+
+
 unsigned int CLoading::Thread_Main(void * pArg)
 {
 	CLoading*		pLoading = (CLoading*)pArg;

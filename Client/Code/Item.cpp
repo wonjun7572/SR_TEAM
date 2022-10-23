@@ -2,6 +2,7 @@
 #include "..\Header\Item.h"
 
 #include "Export_Function.h"
+#include "ItemCubeEffect.h"
 
 CItem::CItem(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CGameObject(pGraphicDev)
@@ -24,6 +25,7 @@ HRESULT CItem::Ready_Object(const _vec3& vPos)
 
 _int CItem::Update_Object(const _float & fTimeDelta)
 {
+	
 	CGameObject::Update_Object(fTimeDelta);
 	Add_RenderGroup(RENDER_PRIORITY, this);
 	return 0;

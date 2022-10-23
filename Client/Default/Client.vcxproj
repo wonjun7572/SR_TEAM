@@ -210,8 +210,14 @@
     <ClInclude Include="..\Header\FlightBulletParticle.h" />
     <ClInclude Include="..\Header\FlightCamera.h" />
     <ClInclude Include="..\Header\FlightSpot.h" />
+    <ClInclude Include="..\Header\HyperionEffect.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="..\Header\HyperionStrike.h" />
     <ClInclude Include="..\Header\IceEffect.h" />
+    <ClInclude Include="..\Header\ItemCubeEffect.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="..\Header\Key.h" />
     <ClInclude Include="..\Header\KrakenBullet.h" />
     <ClInclude Include="..\Header\KrakenEffect.h" />
@@ -301,6 +307,9 @@
     <ClInclude Include="..\Header\Supporter_Shotgun.h" />
     <ClInclude Include="..\Header\Supporter_Uzi.h" />
     <ClInclude Include="..\Header\TargetCube.h" />
+    <ClInclude Include="..\Header\TargetPointEffect.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="..\Header\Terrain.h" />
     <ClInclude Include="..\Header\Terret.h" />
     <ClInclude Include="..\Header\TestCube.h" />
@@ -321,6 +330,7 @@
     <ClInclude Include="..\Header\VerticalLine.h" />
     <ClInclude Include="..\Header\Wall.h" />
     <ClInclude Include="..\Header\WallMapping.h" />
+    <ClInclude Include="..\Header\Warning_AnnihilateUI.h" />
     <ClInclude Include="..\Header\Weapon.h" />
     <ClInclude Include="..\Header\WeaponUI.h" />
     <ClInclude Include="..\Header\ShotParticle.h" />
@@ -391,8 +401,14 @@
     <ClCompile Include="..\Code\FlightBulletParticle.cpp" />
     <ClCompile Include="..\Code\FlightCamera.cpp" />
     <ClCompile Include="..\Code\FlightSpot.cpp" />
+    <ClCompile Include="..\Code\HyperionEffect.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\Code\HyperionStrike.cpp" />
     <ClCompile Include="..\Code\IceEffect.cpp" />
+    <ClCompile Include="..\Code\ItemCubeEffect.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\Code\Key.cpp" />
     <ClCompile Include="..\Code\KrakenBullet.cpp" />
     <ClCompile Include="..\Code\KrakenEffect.cpp" />
@@ -481,6 +497,9 @@
     <ClCompile Include="..\Code\Supporter_Shotgun.cpp" />
     <ClCompile Include="..\Code\Supporter_Uzi.cpp" />
     <ClCompile Include="..\Code\TargetCube.cpp" />
+    <ClCompile Include="..\Code\TargetPointEffect.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\Code\Terrain.cpp" />
     <ClCompile Include="..\Code\Terret.cpp" />
     <ClCompile Include="..\Code\TestCube.cpp" />
@@ -501,6 +520,7 @@
     <ClCompile Include="..\Code\VerticalLine.cpp" />
     <ClCompile Include="..\Code\Wall.cpp" />
     <ClCompile Include="..\Code\WallMapping.cpp" />
+    <ClCompile Include="..\Code\Warning_AnnihilateUI.cpp" />
     <ClCompile Include="..\Code\Weapon.cpp" />
     <ClCompile Include="..\Code\WeaponUI.cpp" />
     <ClCompile Include="..\Code\ShotParticle.cpp" />

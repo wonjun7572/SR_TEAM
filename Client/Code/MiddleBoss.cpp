@@ -86,7 +86,6 @@ _int CMiddleBoss::Update_Object(const _float & fTimeDelta)
 		Monster_DeleteMapping();
 		_float fMiddle_death = 1.5f;
 		PlaySoundGun(L"Middle_Death.wav", SOUND_EFFECT, fMiddle_death);
-
 		return -1;
 	}
 
@@ -125,10 +124,6 @@ _int CMiddleBoss::Update_Object(const _float & fTimeDelta)
 		Load_Animation(L"../../Data/Thor/THOR_BOMBING_9.dat", 19);
 		Load_Animation(L"../../Data/Thor/THOR_BOMBING_10.dat", 20);
 		Load_Animation(L"../../Data/Thor/THOR_BOMBING_11.dat", 21);
-
-		Load_Animation(L"../../Data/Thor/THOR_DEAD_1.dat", 22);
-		Load_Animation(L"../../Data/Thor/THOR_DEAD_2.dat", 23);
-		Load_Animation(L"../../Data/Thor/THOR_DEAD_3.dat", 24);
 	}
 
 	Update_Pattern(fTimeDelta);
@@ -172,28 +167,16 @@ void CMiddleBoss::LateUpdate_Object(void)
 
 	if (m_tAbility->fCurrentHp <= 0.f)
 	{
-		m_STATE = MIDDLEBOSS_END;
-
 		_vec3 vPos;
 		m_pTransCom->Get_Info(INFO_POS, &vPos);
 
-		if (m_DEAD == MIDDLEBOSS_DEAD_3)
-		{
-			m_pTransCom->Set_Pos(vPos.x, vPos.y - 0.1f, vPos.z);
-			m_pTransCom->Static_Update();
-		}
+		m_pTransCom->Set_Pos(vPos.x, vPos.y - 0.1f, vPos.z);
+		m_pTransCom->Static_Update();
 
 		m_pMonsterUI->Off_Switch();
 
-		if (vPos.y <= -20.f)
-		{
-			CGameObject* pGameObject = dynamic_cast<CFlight*>(Get_GameObject(STAGE_FLIGHTPLAYER, L"FLIGHTSHUTTLE"));
-
-			if (dynamic_cast<CFlight*>(pGameObject)->Get_Ending() == false)
-				dynamic_cast<CFlight*>(pGameObject)->Set_Ending(true);
-
+		if(vPos.y <= -20.f)
 			this->Kill_Obj();
-		}
 	}
 	else
 	{
@@ -230,7 +213,7 @@ void CMiddleBoss::LateUpdate_Object(void)
 				if (m_BOMBING >= MIDDLEBOSS_BOMBING_4 && m_BOMBING <= MIDDLEBOSS_BOMBING_9)
 					Run_Animation(10.f);
 				else
-					Run_Animation(50.f);
+					Run_Animation(100.f);
 			}
 			else if (m_PATTERN == MIDDLEBOSS_SKILL_LASER)
 			{
@@ -252,10 +235,12 @@ void CMiddleBoss::LateUpdate_Object(void)
 				}
 			}
 		}
-		else if (m_STATE == MIDDLEBOSS_END)
+		else if (m_STATE == MIDDLEBOSS_MOVE)
 		{
-			Dead_Animation_Run();
-			Run_Animation(50.f);
+
+			PlaySoundW(L"shambler_detect.wav", SOUND_EFFECT, 1.f);
+			Walk_Animation_Run();
+			Run_Animation(10.f);
 		}
 	}
 
@@ -1044,32 +1029,6 @@ void CMiddleBoss::Bombing_Animation_Run(void)
 	}
 }
 
-void CMiddleBoss::Dead_Animation_Run(void)
-{
-	list<pair<const _tchar*, CGameObject*>> ListBox = *(pMyLayer->Get_GamePairPtr());
-
-	if (m_AnimationTime >= 1.f)
-	{
-		for (auto& iter : ListBox)
-		{
-			CQuarternion* Qtan = dynamic_cast<CQuarternion*>(iter.second->Get_Component(L"Proto_QuaternionCom", ID_STATIC));
-			Qtan->Delete_WorldVector();
-		}
-
-		if (m_DEAD == MIDDLEBOSS_DEAD_1)
-			m_DEAD = MIDDLEBOSS_DEAD_2;
-		else if (m_DEAD == MIDDLEBOSS_DEAD_2)
-			m_DEAD = MIDDLEBOSS_DEAD_3;
-
-		m_AnimationTime = 0.f;
-	}
-	for (auto& iter : ListBox)
-	{
-		CQuarternion* Qtan = dynamic_cast<CQuarternion*>(iter.second->Get_Component(L"Proto_QuaternionCom", ID_STATIC));
-		Qtan->Change_Animation(22 + m_DEAD);
-	}
-}
-
 HRESULT CMiddleBoss::Create_Item()
 {
 	CGameObject*		pGameObject = nullptr;
@@ -1219,10 +1178,10 @@ CMiddleBoss * CMiddleBoss::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3 & v
 
 void CMiddleBoss::Free(void)
 {
-	//for (auto& iter : *(pMyLayer->Get_GamePairPtr()))
-	//{
-	//	iter.second->Kill_Obj();
-	//}
+	for (auto& iter : *(pMyLayer->Get_GamePairPtr()))
+	{
+		iter.second->Kill_Obj();
+	}
 
 	for (auto iter : m_TcharList)
 	{

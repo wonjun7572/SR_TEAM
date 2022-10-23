@@ -47,6 +47,8 @@ Engine::_int CLogo::Update_Scene(const _float& fTimeDelta)
 	if (MCIWndGetLength(m_hVideo) <= MCIWndGetPosition(m_hVideo)  && !m_bVideo)
 	{
 		MCIWndClose(m_hVideo);
+		_float fBGMSound = 0.5f;
+		PlayBGM(L"LogoBgm.mp3", fBGMSound);
 		m_bVideo = true;
 		return 0;
 	}
@@ -141,9 +143,9 @@ HRESULT CLogo::Ready_Layer_UI(const _tchar * pLayerTag)
 
 	CGameObject*      pGameObject = nullptr;
 
-	pGameObject = CLogoUI::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"LogoUI", pGameObject), E_FAIL);
+	//pGameObject = CLogoUI::Create(m_pGraphicDev);
+	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"LogoUI", pGameObject), E_FAIL);
 
 	//PlayButton
 	m_PlayButton = dynamic_cast<CPlayButton*> (pGameObject = CPlayButton::Create(m_pGraphicDev));

@@ -20,7 +20,7 @@ private:
 	void					Recall_BattleCruiser(void);
 	void					Bullet_Rain(void);
 	void					Move_Location(void);
-
+	void					Effect(void);
 private:
 	CTransform*				m_pTransCom = nullptr;
 	CSphereTex*				m_pSphereTex = nullptr;
