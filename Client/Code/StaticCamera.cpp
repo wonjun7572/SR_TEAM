@@ -530,8 +530,9 @@ void CStaticCamera::Look_Target(const _float& _fTimeDelta)
 				else if (m_fPlayerFrame > 0.9f)
 				{
 					m_pLetterBox->LetterDead();
-					m_bFirst = true;
 				}
+				// 일단 무조건 켜놓기
+				m_bFirst = true;
 
 				m_fFov = D3DXToRadian(60.f);
 				m_vEye += vTransLerp * m_fPlayerFrame;

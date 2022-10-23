@@ -20,11 +20,8 @@ private:
 	void				Quest1(const _float& fTimeDelta);
 	void				Quest2(const _float& fTiemDelta);
 	void				Quest3(const _float& fTiemDelta);
-<<<<<<< HEAD
 	void				Finish(const _float& fTimeDelta);
-=======
 	void				Projection_Effect(void);
->>>>>>> main
 
 private:
 	CRcTex*				m_pBufferCom = nullptr;
@@ -63,6 +60,7 @@ private:
 	_bool				m_bEffect1 = false;
 	_bool				m_bEffect2 = false;
 	_bool				m_bEffect3 = false;
+	_bool				m_bEffect4 = false;
 
 public:
 	static	CNpc*	Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3& vPos);
