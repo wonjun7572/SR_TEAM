@@ -97,6 +97,10 @@ void CExBullet::Render_Object(void)
 void CExBullet::Set_Pos(const _vec3 & vPos)
 {
 	m_pTransCom->Set_Pos(vPos.x, vPos.y, vPos.z);
+	m_pTransCom->Static_Update();
+
+	m_pHitboxTransCom->Set_Pos(vPos.x, vPos.y, vPos.z);
+	m_pHitboxTransCom->Static_Update();
 }
 
 void CExBullet::Collision_check(void)

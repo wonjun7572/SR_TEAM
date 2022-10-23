@@ -7,6 +7,7 @@
 #include "TransAxisBox.h"
 #include "KrakenEffect.h"
 #include "KrakenParticle.h"
+#include "Veneer.h"
 CKrakenLeg::CKrakenLeg(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
 {
@@ -1210,6 +1211,18 @@ void CKrakenLeg::Lurker_Pattern(void)
 			_float fRandFront = m_ShufflePos.front();
 			_float fRandBack = m_ShufflePos.back();
 			m_pTransCom->Set_Pos(vPlayerPos.x + fRandFront, vPos.y + 2.f, vPlayerPos.z + fRandBack);
+
+			if (m_AnimationTime >= 1)
+			{
+				_vec3 vPlayerPos;
+				m_pPlayerTransCom->Get_Info(INFO_POS, &vPlayerPos);
+				CLayer* pLayer = Get_Layer(STAGE_SKILL);
+				CGameObject* pGameObject = CVeneer::Create(m_pGraphicDev, vPlayerPos);
+				NULL_CHECK_RETURN(pGameObject, );
+				FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), );
+			}
+
+
 		}
 		else
 			m_pTransCom->Set_Pos(vPos.x, vPos.y + 2.f, vPos.z);

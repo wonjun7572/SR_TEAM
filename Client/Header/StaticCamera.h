@@ -78,6 +78,8 @@ private:
 	_bool			m_bEarthQuake = false;
 	_bool			m_bFirst = false;
 
+	_bool			m_bEnding = false;
+
 public:
 	static CStaticCamera*		Create(LPDIRECT3DDEVICE9 pGraphicDev,
 		const _vec3* pEye,

@@ -18,6 +18,7 @@
 
 #include "LaserSpot.h"
 #include "Zombie.h"
+#include "Alien.h"
 #include "TestCube.h"
 
 static _int m_iCnt = 0;
@@ -139,7 +140,6 @@ _int CMiddleBoss::Update_Object(const _float & fTimeDelta)
 		m_vMonterPos.push_back(_vec3(97.f, 0.6f, 18.f));
 		m_vMonstertype.push_back(0);
 		m_vMonstertype.push_back(1);
-		m_vMonstertype.push_back(2);
 	}
 
 	Update_Pattern(fTimeDelta);
@@ -172,14 +172,17 @@ _int CMiddleBoss::Update_Object(const _float & fTimeDelta)
 	m_pTransCom->Get_Info(INFO_POS, &vUIPos);
 	m_pTransUICom->Set_Pos(vUIPos.x, vUIPos.y + 8.f, vUIPos.z);
 
-	m_fCreateMonFrame += fTimeDelta;
-
-	if (m_fCreateMonFrame >= 5.f)
+	if (m_bPatternStart)
 	{
-		Create_Monster();
-		m_fCreateMonFrame = 0.f;
-	}
+		m_fCreateMonFrame += fTimeDelta;
 
+		if (m_fCreateMonFrame >= 5.f)
+		{
+			Create_Monster();
+			m_fCreateMonFrame = 0.f;
+		}
+	}
+	
 	return 0;
 }
 
@@ -1179,16 +1182,16 @@ HRESULT CMiddleBoss::Create_Monster()
 			FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
 			m_iMonsterCnt++;
 		}
-		/*else if (i == 1)
+		else if (i == 1)
 		{
-		_tchar* szName = new _tchar[128]{};
-		wstring wName = L"Eilien_boss_%d";
-		wsprintfW(szName, wName.c_str(), i);
-		NameList.push_back(szName);
-		pGameObject = CSlime::Create(m_pGraphicDev, vPos, szName);
-		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
-		}*/
+			_tchar* szName = new _tchar[128]{};
+			wstring wName = L"Alien_boss_%d";
+			wsprintfW(szName, wName.c_str(), i);
+			NameList.push_back(szName);
+			pGameObject = CAlien::Create(m_pGraphicDev, vPos, szName);
+			NULL_CHECK_RETURN(pGameObject, E_FAIL);
+			FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+		}
 
 		return S_OK;
 }
