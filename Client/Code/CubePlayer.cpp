@@ -69,7 +69,6 @@ _int CCubePlayer::Update_Object(const _float & fTimeDelta)
 
 	_vec3 vPos;
 	m_pTransform->Get_Info(INFO_POS, &vPos);
-	cout << vPos.x << " " << vPos.y << " " << vPos.z << "\n";
 
 	if (m_pComboUI != nullptr)
 	{

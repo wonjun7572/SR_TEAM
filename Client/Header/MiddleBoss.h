@@ -11,10 +11,10 @@ public:
 	virtual ~CMiddleBoss();
 
 public:
-	virtual   HRESULT Ready_Object(const _vec3& vPos, _tchar* Name);
-	virtual _int   Update_Object(const _float& fTimeDelta) override;
-	virtual void   LateUpdate_Object(void) override;
-	virtual void   Render_Object(void) override;
+	virtual HRESULT Ready_Object(const _vec3& vPos, _tchar* Name);
+	virtual _int      Update_Object(const _float& fTimeDelta) override;
+	virtual void      LateUpdate_Object(void) override;
+	virtual void      Render_Object(void) override;
 
 public:
 	void         Set_CollisionDmg() { m_tAbility->fCurrentHp -= 50.f; }
@@ -38,30 +38,28 @@ private:
 
 private:
 	void         Set_OnTerrain(void);
-	_bool         Collision_Wall(const _float& fTimeDelta);
+	_bool        Collision_Wall(const _float& fTimeDelta);
 
 private:
-	_uint         m_MissileCnt = 0;
-	_float         m_fMissileItv = 0.f;
-	_float         m_fLaserTime = 0.f;
-
-	_float         m_fTimeDelta = 0.f;
-	_bool         m_bFirst = true;
-	_float         m_AnimationTime = 0.f;
+	_uint			m_MissileCnt = 0;
+	_float          m_fMissileItv = 0.f;
+	_float          m_fLaserTime = 0.f;
+	_float          m_fTimeDelta = 0.f;
+	_bool           m_bFirst = true;
+	_float          m_AnimationTime = 0.f;
 	CLayer*         pMyLayer;
 	_tchar*         m_MonsterName;
 	list<_tchar*>   m_TcharList;
 
-
 private:
-	MIDDLEBOSSSTATEID         m_STATE;
-	MIDDLEBOSSWALKID         m_WALK;
-	MIDDLEBOSSIDLEID         m_IDLE;
-	MIDDLEBOSSNORMALATTACKID   m_NORMALATTACK;
+	MIDDLEBOSSSTATEID			m_STATE;
+	MIDDLEBOSSWALKID			m_WALK;
+	MIDDLEBOSSIDLEID			m_IDLE;
+	MIDDLEBOSSNORMALATTACKID    m_NORMALATTACK;
 	MIDDLEBOSSBOMBINGID         m_BOMBING;
-	MIDDLEBOSSCRASHID         m_CRASH;
-	MIDDLEBOSSSKILLID         m_PATTERN;
-	MIDDLEBOSSDEADID         m_DEAD;
+	MIDDLEBOSSCRASHID           m_CRASH;
+	MIDDLEBOSSSKILLID           m_PATTERN;
+	MIDDLEBOSSDEADID            m_DEAD;
 
 private:
 	HRESULT            Create_Item();
@@ -69,15 +67,15 @@ private:
 	HRESULT			   Create_Monster();
 
 protected:
-	CTransform*         m_pTransCom = nullptr;
-	CTransform*         m_pTransUICom = nullptr;
-	CTransform*         m_pHitBoxTransCom = nullptr;
-	CTransform*         m_pSphereTransCom = nullptr;
-	CTransform*         m_pMonsterMapping = nullptr;
-	CTransform*         m_pPlayerTransCom = nullptr;
-	CTransform*         m_pSearchRange_TransCom = nullptr;
-	CTransform*         m_pAttackRange_TransCom = nullptr;
-	CTransform*         m_pRunawayRange_TransCom = nullptr;
+	CTransform*        m_pTransCom = nullptr;
+	CTransform*        m_pTransUICom = nullptr;
+	CTransform*        m_pHitBoxTransCom = nullptr;
+	CTransform*        m_pSphereTransCom = nullptr;
+	CTransform*        m_pMonsterMapping = nullptr;
+	CTransform*        m_pPlayerTransCom = nullptr;
+	CTransform*        m_pSearchRange_TransCom = nullptr;
+	CTransform*        m_pAttackRange_TransCom = nullptr;
+	CTransform*        m_pRunawayRange_TransCom = nullptr;
 
 	CTexture*         m_pTextureCom = nullptr;
 	CCubeTex*         m_pBufferCom = nullptr;
@@ -94,31 +92,17 @@ protected:
 private:
 	_float            m_ReloadTimer = 0.f;
 
-<<<<<<< HEAD
-	_float            m_fBeforeHp;
-	_float            m_fFrame = 0.f;
-	_float            m_fTargetLength;
-	_float            m_fDetectRange;
-	_float            m_fAttackRange;
-	_float            m_fUISwitchTime = 0.f;
-	_float            m_fFireAngle = 0.f;
-	_float            m_fSpeed = 1.f;
-	_vec3             vUIPos;
-	_bool             m_MappingInit = false;
-=======
-	_bool				m_bPatternStart = false;
-	_float				m_fBeforeHp;
-	_float				m_fFrame = 0.f;
-	_float				m_fTargetLength;
-	_float				m_fDetectRange;
-	_float				m_fAttackRange;
-	_float				m_fUISwitchTime = 0.f;
-	_float				m_fFireAngle = 0.f;
-	_float				m_fSpeed = 1.f;
-	_vec3				vUIPos;
-	_bool				m_MappingInit = false;
-
->>>>>>> main
+	_bool			  m_bPatternStart = false;
+	_float			  m_fBeforeHp =- 0.f;
+	_float			  m_fFrame = 0.f;
+	_float			  m_fTargetLength = 0.f;
+	_float			  m_fDetectRange = 0.f;
+	_float			  m_fAttackRange = 0.f;
+	_float			  m_fUISwitchTime = 0.f;
+	_float			  m_fFireAngle = 0.f;
+	_float			  m_fSpeed = 1.f;
+	_vec3			  vUIPos = _vec3(0.f,0.f,0.f);
+	_bool			  m_MappingInit = false;
 
 	_int              m_iRandom = 0;
 	TCHAR*            m_szCntName = new TCHAR[64];
