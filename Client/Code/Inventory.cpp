@@ -4,7 +4,7 @@
 #include "ShotGun.h"
 #include "Sniper.h"
 #include "CubePlayer.h"
-
+#include "LetterBox.h"
 CInventory::CInventory(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
 {
@@ -20,7 +20,7 @@ HRESULT CInventory::Ready_Object(void)
 	m_iItemCnt = 0;
 	m_vecContents.resize(26);
 	m_vecEquipments.resize(5);
-	m_vecWeapon.resize(9);	
+	m_vecWeapon.resize(9);
 	m_vecParts.resize(12);
 	m_fInvPosX = 400.f;
 	m_fInvPosY = 50.f;
@@ -41,6 +41,7 @@ _int CInventory::Update_Object(const _float & fTimeDelta)
 	Key_Input();
 	Enhancement();
 	Syncronize();
+	ItemTag();
 	return 0;
 }
 
@@ -50,7 +51,24 @@ void CInventory::LateUpdate_Object(void)
 	{
 		m_bInit = true;
 		CItemIcon* pGameObject = CItemIcon::Create(m_pGraphicDev, 0);
-		
+
+		m_pLetterBox1 = CLetterBox::Create(m_pGraphicDev, L"Upgrade : Can Use DefensiveMatrix", sizeof(L"Upgrade : Can Use DefensiveMatrix"), 2);
+		m_pLetterBox2 = CLetterBox::Create(m_pGraphicDev, L"Weapon Item : Uzi", sizeof(L"Weapon Item : Uzi"), 2);
+		m_pLetterBox3 = CLetterBox::Create(m_pGraphicDev, L"Weapon Item : Shotgun", sizeof(L"Weapon Item : Shotgun"), 2);
+		m_pLetterBox4 = CLetterBox::Create(m_pGraphicDev, L"Weapon Item : Sniper", sizeof(L"Weapon Item : Sniper"), 2);
+		m_pLetterBox5 = CLetterBox::Create(m_pGraphicDev, L"Equipment Item : Speed+", sizeof(L"Equipment Item : Speed+"), 2);
+		m_pLetterBox6 = CLetterBox::Create(m_pGraphicDev, L"Equipment Item : Damage+", sizeof(L"Equipment Item : Damage+"), 2);
+		m_pLetterBox7 = CLetterBox::Create(m_pGraphicDev, L"Equipment Item : WeaponSkill+", sizeof(L"Equipment Item : WeaponSkill+"), 2);
+		m_pLetterBox8 = CLetterBox::Create(m_pGraphicDev, L"Upgrade : Can Use Static Field", sizeof(L"Upgrade : Can Use Static Field"), 2);
+
+		dynamic_cast<CLetterBox*>(m_pLetterBox1)->Off_Switch();
+		dynamic_cast<CLetterBox*>(m_pLetterBox2)->Off_Switch();
+		dynamic_cast<CLetterBox*>(m_pLetterBox3)->Off_Switch();
+		dynamic_cast<CLetterBox*>(m_pLetterBox4)->Off_Switch();
+		dynamic_cast<CLetterBox*>(m_pLetterBox5)->Off_Switch();
+		dynamic_cast<CLetterBox*>(m_pLetterBox6)->Off_Switch();
+		dynamic_cast<CLetterBox*>(m_pLetterBox7)->Off_Switch();
+		dynamic_cast<CLetterBox*>(m_pLetterBox8)->Off_Switch();
 	}
 }
 
@@ -147,7 +165,7 @@ void CInventory::Enhancement()
 				if (dynamic_cast<CItemIcon*>(iter)->Get_iTemIdx() == 8)
 				{
 					m_iEnforceCheck = 2;
-				}					
+				}
 			}
 			if (dynamic_cast<CItemIcon*>(m_vecEquipments[0])->Get_iTemIdx() == 3) //샷건일때
 			{
@@ -195,7 +213,7 @@ void CInventory::Enhancement()
 	m_iWeaponSpeedCnt = 0;
 	m_iWeaponDmgCnt = 0;
 
-	if (m_vecEquipments[1] ==nullptr || dynamic_cast<CItemIcon*>(m_vecEquipments[1])->Get_iTemIdx() < 7)
+	if (m_vecEquipments[1] == nullptr || dynamic_cast<CItemIcon*>(m_vecEquipments[1])->Get_iTemIdx() < 7)
 	{
 		if (m_vecEquipments[2] == nullptr || dynamic_cast<CItemIcon*>(m_vecEquipments[2])->Get_iTemIdx() < 7)
 		{
@@ -285,7 +303,7 @@ void CInventory::Equipment_Sorting()
 		dynamic_cast<CItemIcon*>(m_vecEquipments[4])->Set_block(800.f *WINCY / WINCX, 275.f * WINCY / WINCX, 0.1f);
 	}
 
-	
+
 }
 
 void CInventory::Weapon_Sorting()
@@ -294,39 +312,39 @@ void CInventory::Weapon_Sorting()
 
 	_float fDefaultX = 175;//175.f;
 	_float fDefaultY = -145.5f;//-125.5f;
-	_float fIntervalX = 50.f;		
-	
+	_float fIntervalX = 50.f;
+
 
 	//생성(1.우지 2.샷건 3. 스나)
 	if (m_bWeaponCreate)
 	{
 		m_bWeaponCreate = false;
 		if (m_iWeaponCnt < 9)
-		{	
-			m_pItemIcon = CItemIcon::Create(m_pGraphicDev, m_iItemIndex);		
+		{
+			m_pItemIcon = CItemIcon::Create(m_pGraphicDev, m_iItemIndex);
 			m_vecWeapon.push_back(m_pItemIcon);
-			m_vecWeapon[dynamic_cast<CItemIcon*>(m_pItemIcon)->Get_iTemIdx()-2] = m_pItemIcon;
+			m_vecWeapon[dynamic_cast<CItemIcon*>(m_pItemIcon)->Get_iTemIdx() - 2] = m_pItemIcon;
 			m_pItemIcon = nullptr;
-			
-			m_iWeaponCnt++;		
+
+			m_iWeaponCnt++;
 		}
 	}
-	//정렬	
+	//정렬   
 	for (_int i = 0; i < 9; ++i)
 	{
-		if(m_vecWeapon[i] != nullptr)
+		if (m_vecWeapon[i] != nullptr)
 			dynamic_cast<CItemIcon*>(m_vecWeapon[i])->Set_block(fDefaultX + (fIntervalX *i), fDefaultY, 0.f);
 	}
 
 	for (auto& iter : m_vecParts)
 	{
 		if (iter != nullptr)
-		dynamic_cast<CItemIcon*>(iter)->On_WeaponPart();
+			dynamic_cast<CItemIcon*>(iter)->On_WeaponPart();
 	}
 }
 
 void CInventory::Syncronize()
-{	
+{
 	_int iBlock = dynamic_cast<CCubePlayer*>(m_pPlayer)->GetWeaponState() - 2;
 
 	if (m_vecEquipments[0] == nullptr)
@@ -340,10 +358,10 @@ void CInventory::Syncronize()
 	}
 
 	if (dynamic_cast<CCubePlayer*>(m_pPlayer)->GetWeaponState() != m_iWeaponState)
-	{		
+	{
 
 		if (m_vecEquipments[0] != nullptr)
-		{			
+		{
 			for (_int i = 1; i < 5; i++)
 			{
 				if (m_vecEquipments[i] != nullptr)
@@ -358,9 +376,9 @@ void CInventory::Syncronize()
 		}
 		if (m_vecEquipments[0] == nullptr)
 		{
-			m_vecEquipments[0] = m_vecWeapon[dynamic_cast<CCubePlayer*>(m_pPlayer)->GetWeaponState()-2]; // m_vecWeapon 벡터위치 수정
-			m_vecWeapon[dynamic_cast<CCubePlayer*>(m_pPlayer)->GetWeaponState()-2] = nullptr; // 벡터위치 수정
-			
+			m_vecEquipments[0] = m_vecWeapon[dynamic_cast<CCubePlayer*>(m_pPlayer)->GetWeaponState() - 2]; // m_vecWeapon 벡터위치 수정
+			m_vecWeapon[dynamic_cast<CCubePlayer*>(m_pPlayer)->GetWeaponState() - 2] = nullptr; // 벡터위치 수정
+
 			for (_int i = 0; i < 4; ++i)
 			{
 				if (m_vecParts[4 * iBlock + i] != nullptr)
@@ -369,11 +387,71 @@ void CInventory::Syncronize()
 					m_vecParts[4 * iBlock + i] = nullptr;
 					dynamic_cast<CItemIcon*>(m_vecEquipments[i + 1])->Off_WeaponPart();
 				}
-			}			
+			}
 			m_iWeaponState = dynamic_cast<CCubePlayer*>(m_pPlayer)->GetWeaponState();
-		}		
+		}
 		m_iWeaponNumb = m_iWeaponState;
-	}	
+	}
+}
+
+void CInventory::ItemTag()
+{
+	if (m_pIconGrab)
+	{
+		dynamic_cast<CLetterBox*>(m_pLetterBox1)->Off_Switch();
+		dynamic_cast<CLetterBox*>(m_pLetterBox2)->Off_Switch();
+		dynamic_cast<CLetterBox*>(m_pLetterBox3)->Off_Switch();
+		dynamic_cast<CLetterBox*>(m_pLetterBox4)->Off_Switch();
+		dynamic_cast<CLetterBox*>(m_pLetterBox5)->Off_Switch();
+		dynamic_cast<CLetterBox*>(m_pLetterBox6)->Off_Switch();
+		dynamic_cast<CLetterBox*>(m_pLetterBox7)->Off_Switch();
+		dynamic_cast<CLetterBox*>(m_pLetterBox8)->Off_Switch();
+	}
+	if (m_bTagSwitch && !m_pIconGrab)
+	{
+		dynamic_cast<CLetterBox*>(m_pLetterBox1)->Off_Switch();
+		dynamic_cast<CLetterBox*>(m_pLetterBox2)->Off_Switch();
+		dynamic_cast<CLetterBox*>(m_pLetterBox3)->Off_Switch();
+		dynamic_cast<CLetterBox*>(m_pLetterBox4)->Off_Switch();
+		dynamic_cast<CLetterBox*>(m_pLetterBox5)->Off_Switch();
+		dynamic_cast<CLetterBox*>(m_pLetterBox6)->Off_Switch();
+		dynamic_cast<CLetterBox*>(m_pLetterBox7)->Off_Switch();
+		dynamic_cast<CLetterBox*>(m_pLetterBox8)->Off_Switch();
+
+		if (m_iTagIndex == 1)
+		{
+			dynamic_cast<CLetterBox*>(m_pLetterBox1)->On_Switch();
+		}
+		if (m_iTagIndex == 2)
+		{
+			dynamic_cast<CLetterBox*>(m_pLetterBox2)->On_Switch();
+		}
+		if (m_iTagIndex == 3)
+		{
+			dynamic_cast<CLetterBox*>(m_pLetterBox3)->On_Switch();
+		}
+		if (m_iTagIndex == 4)
+		{
+			dynamic_cast<CLetterBox*>(m_pLetterBox4)->On_Switch();
+		}
+		if (m_iTagIndex == 5)
+		{
+			dynamic_cast<CLetterBox*>(m_pLetterBox5)->On_Switch();
+		}
+		if (m_iTagIndex == 6)
+		{
+			dynamic_cast<CLetterBox*>(m_pLetterBox6)->On_Switch();
+		}
+		if (m_iTagIndex == 7)
+		{
+			dynamic_cast<CLetterBox*>(m_pLetterBox7)->On_Switch();
+		}
+		if (m_iTagIndex == 8)
+		{
+			dynamic_cast<CLetterBox*>(m_pLetterBox8)->On_Switch();
+		}
+		m_iTagIndex = 0;
+	}
 }
 
 void CInventory::Key_Input()
@@ -473,7 +551,7 @@ void CInventory::Mouse()
 	}
 	//좌클릭 기능 
 	//좌클릭 장비 장착
-	
+
 	for (auto& iter : m_vecWeapon)
 	{
 		if (iter != nullptr&& iter == m_vecWeapon[m_iWeaponNumb] && m_pIconGrab != nullptr && 2 <= m_pIconGrab->Get_iTemIdx() && m_pIconGrab->Get_iTemIdx() <= 4)
@@ -520,7 +598,7 @@ void CInventory::Mouse()
 						}
 					}
 				}
-			m_pIconGrab = nullptr;
+				m_pIconGrab = nullptr;
 			}
 		}
 	}
@@ -529,13 +607,13 @@ void CInventory::Mouse()
 		if (iter != nullptr&& iter == m_vecContents[m_iVectorNumb] && m_vecEquipments[0] != nullptr&& m_pIconGrab != nullptr && Mouse_Down(DIM_LB))
 		{
 			m_pIconGrab->Cursor_free();
-			
+
 			if (!(2 <= m_pIconGrab->Get_iTemIdx() && m_pIconGrab->Get_iTemIdx() <= 4))
 			{
 				if (1080 < pt.x && pt.x < 1125 && 160 < pt.y && pt.y < 225) // 0,0
 				{
 					if (m_vecEquipments[1] == nullptr)
-					{						
+					{
 						m_pIconGrab->Set_block(535.f * WINCY / WINCX, 455.f * WINCY / WINCX, 0.1f);
 						m_vecEquipments[1] = m_pIconGrab;
 						iter = nullptr;
@@ -586,7 +664,7 @@ void CInventory::Mouse()
 
 		}
 	}
-	
+
 	//파츠 장착해제 관련
 	if (1025 < pt.x && pt.x < 1075 && 215 < pt.y && pt.y < 280) // 맨왼쪽인벤토리
 	{
@@ -603,19 +681,19 @@ void CInventory::Mouse()
 						m_bNullSorting = true;
 						Sorting();
 						m_vecEquipments[i] = nullptr;
-						//m_bSorting = true;			
+						//m_bSorting = true;         
 					}
 				}
 			}
 		}
 		if (m_vecEquipments[0] != nullptr && Mouse_Down(DIM_LB))
 		{
-			
+
 			for (_int i = 1; i < 5; i++)
 			{
 				if (m_vecEquipments[i] != nullptr)
 				{
-					m_vecParts[(((dynamic_cast<CItemIcon*>(m_vecEquipments[0])->Get_iTemIdx())-2)*4)+(i-1)]  = m_vecEquipments[i];
+					m_vecParts[(((dynamic_cast<CItemIcon*>(m_vecEquipments[0])->Get_iTemIdx()) - 2) * 4) + (i - 1)] = m_vecEquipments[i];
 					m_vecEquipments[i] = nullptr;
 				}
 			}

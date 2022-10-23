@@ -15,21 +15,14 @@ CLetterBox::~CLetterBox()
 
 HRESULT CLetterBox::Ready_Object(_tchar* tDialogue, _int iSize, _int iIndex)
 {
+	m_iIndex = iIndex;
+
 	m_fFontAlpha = 1.f;
 	m_strLetterContents = tDialogue;
 	m_iTextAmount = iSize - 3;
-	m_iIndex = iIndex;
-	m_fFontSizeX = 25.f;
-	m_fFontSizeY = 40.f;
 
-	if (iIndex == 2)
-	{
-		m_fFontSizeX = 7.5f;
-		m_fFontSizeY = 15.f;
-	}
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
-	wsprintf(szCntName, L"LetterBox%d", iLetterBoxCnt);
-	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, szCntName, L"Roboto-Bold", _uint(m_fFontSizeX), m_fFontSizeY, FW_HEAVY), E_FAIL);
+
 	iLetterBoxCnt++;
 
 	return S_OK;
@@ -39,7 +32,25 @@ _int CLetterBox::Update_Object(const _float & fTimeDelta)
 {
 	CGameObject::Update_Object(fTimeDelta);
 	Add_RenderGroup(RENDER_UI, this);
+	if (!m_bInit)
+	{
+		m_bInit = true;
+		if (m_iIndex != 2)
+		{
+			m_fFontSizeX = 25.f;
+			m_fFontSizeY = 40.f;
+			wsprintf(szCntName, L"LetterBox%d", iLetterBoxCnt);
+			FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, szCntName, L"Roboto-Bold", _uint(m_fFontSizeX), m_fFontSizeY, FW_HEAVY), E_FAIL);
+		}
+		if (m_iIndex == 2)
+		{
+			m_fFontSizeX = 7.5f;
+			m_fFontSizeY = 15.f;
+			wsprintf(szCntName, L"LetterBox%d", iLetterBoxCnt);
+			FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, szCntName, L"Roboto-Bold", _uint(m_fFontSizeX), m_fFontSizeY, FW_HEAVY), E_FAIL);
+		}
 
+	}
 	if (m_bDead)
 	{
 		return -1;
@@ -68,7 +79,7 @@ void CLetterBox::Render_Object(void)
 		Index1();
 	}
 
-	if (m_iIndex == 2)					//Inventory : Item : TagInfo
+	if (m_iIndex == 2)               //Inventory : Item : TagInfo
 	{
 		if (m_bPowerSwitch)
 		{
@@ -103,7 +114,7 @@ HRESULT CLetterBox::Add_Component(void)
 	pComponent = m_TranformCom = dynamic_cast<CTransform*>(Clone_Proto(TRANSFORM_COMP));
 	NULL_CHECK_RETURN(m_TranformCom, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ TRANSFORM_COMP, pComponent });
-	
+
 	pComponent = m_pShaderCom = dynamic_cast<CShader*>(Clone_Proto(RCTEX_SHADER));
 	NULL_CHECK_RETURN(m_pShaderCom, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ RCTEX_SHADER, pComponent });
@@ -150,12 +161,12 @@ void CLetterBox::Begin_OrthoProj()
 	matView.m[0][0] = m_fBoxSizeX;// 이미지 가로
 	matView.m[1][1] = m_fBoxSizeY; // 이미지 세로
 	matView.m[2][2] = 1.f;
-	matView.m[3][0] = (-WINCX / 2.f + pt.x) * (WINCX / WINCY)+ m_fBoxSizeX/2 + 10.f;
-	matView.m[3][1] = (WINCY / 2.f - pt.y) * (WINCX / WINCY) - m_fBoxSizeY/2 - 50.f;
-	matView.m[3][2] = 0.001f;
+	matView.m[3][0] = (-WINCX / 2.f + pt.x) * (WINCX / WINCY) + m_fBoxSizeX / 2 + 10.f;
+	matView.m[3][1] = (WINCY / 2.f - pt.y) * (WINCX / WINCY) - m_fBoxSizeY / 2 - 50.f;
+	matView.m[3][2] = 0.001;
 
 	D3DXMatrixOrthoLH(&matOrtho, WINCX, WINCY, 0.f, 1.f);
-		
+
 	D3DXMatrixTranspose(&matWorld, &matWorld);
 	D3DXMatrixTranspose(&matView, &matView);
 	D3DXMatrixTranspose(&matOrtho, &matOrtho);
@@ -190,10 +201,8 @@ void CLetterBox::BoxText()
 	GetCursorPos(&pt);
 	ScreenToClient(g_hWnd, &pt);
 
-	Engine::Render_Font(szCntName, m_strLetterContents.c_str(), &(_vec2(pt.x+60.f , pt.y +150.f)), D3DXCOLOR(1.f, 1.f, 1.f, m_fFontAlpha));
+	Engine::Render_Font(szCntName, m_strLetterContents.c_str(), &(_vec2(pt.x + 60.f, pt.y + 150.f)), D3DXCOLOR(1.f, 1.f, 1.f, m_fFontAlpha));
 	//cout << m_fPosX << endl;
-	cout << (WINCX / 2.f) - (m_iTextAmount)*(m_fFontSizeX / 4.f) << endl;
-	cout << pt.x << endl;
 
 }
 

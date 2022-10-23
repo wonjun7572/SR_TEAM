@@ -21,6 +21,9 @@
 #include "Alien.h"
 #include "TestCube.h"
 
+#include "MBLaser.h"
+#include "TriggerParticle.h"
+
 static _int m_iCnt = 0;
 
 CMiddleBoss::CMiddleBoss(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -251,6 +254,47 @@ void CMiddleBoss::LateUpdate_Object(void)
 					CGameObject* pGameObject = Get_GameObject(STAGE_GAMELOGIC, L"LaserSpot");
 					//dynamic_cast<CLaserSpot*>(pGameObject)->Attack_Permit(true);
 				}
+				_vec3 vCorePos;
+				_vec3 vSpotPos;
+				CTransform* pSpotTrans = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_GAMELOGIC, L"LaserSpot", TRANSFORM_COMP, ID_DYNAMIC));
+				if (pMyLayer != nullptr)
+				{
+					for (auto& iter : *(pMyLayer->Get_GamePairPtr()))
+					{
+						if (0 == _tcscmp(iter.first, L"CORE"))//코어위치
+						{
+							CTransAxisBox* pCoreBox = dynamic_cast<CTransAxisBox*>(iter.second);
+							_matrix matFinal;
+							pCoreBox->Get_Final(&matFinal);
+
+							vCorePos = { matFinal.m[3][0], matFinal.m[3][1], matFinal.m[3][2] };
+						}
+					}
+					pSpotTrans->Get_Info(INFO_POS, &vSpotPos); //점위치
+
+					CMBLaser* m_pMBLaser = nullptr;
+					if (!m_pMBLaser)
+						m_pMBLaser = dynamic_cast<CMBLaser*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"MBLaser"));
+					dynamic_cast<CMBLaser*>(m_pMBLaser)->Set_PclePos(vCorePos);
+					dynamic_cast<CMBLaser*>(m_pMBLaser)->Set_PcleDir(vSpotPos - vCorePos);
+
+					for (_int i = 0; i < 50; ++i)
+					{
+						m_pMBLaser->addParticle();
+					}
+				}
+				_vec3 vDir = { 0.f,1.0f,0.f };
+				CTriggerParticle* pTriggerParticle = nullptr;
+				if (!pTriggerParticle)
+					pTriggerParticle = dynamic_cast<CTriggerParticle*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"TriggerParticle"));
+
+				dynamic_cast<CTriggerParticle*>(pTriggerParticle)->Set_PclePos(vSpotPos);
+				dynamic_cast<CTriggerParticle*>(pTriggerParticle)->Set_PcleDir(vDir);
+				for (_int i = 0; i < 15; ++i)
+				{
+					pTriggerParticle->addParticle();
+				}			
+
 				// 여기에 레이저 추가
 
 				if (m_fLaserTime >= 10.f)

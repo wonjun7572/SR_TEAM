@@ -218,7 +218,7 @@ void CStaticCamera::Look_Target(const _float& _fTimeDelta)
 		{
 			m_fFov = D3DXToRadian(60.f);
 			m_vEye += vTransLerp + (vRight * m_fShuttleFrame * 10.f) + (vUp * m_fShuttleFrame * 5.f);
-			m_vAt = vShuttlePos;
+			m_vAt = vShuttlePos;//vTransLerp + (vRight* m_fShuttleFrame * 2.f);
 		}
 		else
 		{
@@ -264,14 +264,14 @@ void CStaticCamera::Look_Target(const _float& _fTimeDelta)
 		{
 			m_fFov = D3DXToRadian(60.f);
 			m_vEye += vTransLerp + (vRight * m_fShuttleFrame * 10.f) + (vUp * m_fShuttleFrame * 5.f);
-			m_vAt = vShuttlePos;
+			m_vAt = vShuttlePos;//vTransLerp + (vRight* m_fShuttleFrame * 2.f);
 		}
 		else
 		{
 			m_bEnding = true;
 			m_fFov = D3DXToRadian(60.f);
-			m_vEye += vShuttlePos + (-vLook * 10.f) + (vUp * 5.f);
-			m_vAt = vShuttlePos + (-vLook * 2.f);
+			m_vEye += vShuttlePos + (vRight * 10.f) + (vUp * 5.f);
+			m_vAt = vShuttlePos + (vRight * 2.f);
 		}
 	}
 	else if (m_pSupporterUziTransform != nullptr && m_pSupUzi != nullptr
@@ -350,7 +350,7 @@ void CStaticCamera::Look_Target(const _float& _fTimeDelta)
 	{
 		_vec3 vLook;
 		m_pTransform_Target->Get_Info(INFO_LOOK, &vLook);
-		
+
 		_vec3 vRight;
 		m_pTransform_Target->Get_Info(INFO_RIGHT, &vRight);
 
@@ -657,7 +657,7 @@ void CStaticCamera::Look_Target(const _float& _fTimeDelta)
 
 void CStaticCamera::Camera_Shaking(const _float& _fTimeDelta)
 {
-	
+
 	if (m_bPlayerHit)
 	{
 		m_fFrame += 0.1f * _fTimeDelta;

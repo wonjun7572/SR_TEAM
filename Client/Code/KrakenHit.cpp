@@ -5,7 +5,7 @@
 CKrakenHit::CKrakenHit(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CPSystem(pGraphicDev)
 {
-	m_fSize = .1f;
+	m_fSize = .3f;
 	m_vbSize = 2048;
 	m_vbOffset = 0;
 	m_vbBatchSize = 512;

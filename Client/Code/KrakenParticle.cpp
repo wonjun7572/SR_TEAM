@@ -5,7 +5,7 @@
 CKrakenParticle::CKrakenParticle(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CPSystem(pGraphicDev)
 {
-	m_fSize = 0.1f;
+	m_fSize = 0.3f;
 	m_vbSize = 2048;
 	m_vbOffset = 0;
 	m_vbBatchSize = 512;
@@ -30,7 +30,7 @@ _int CKrakenParticle::Update_Object(const _float & fTimeDelta)
 	for (list<ATTRIBUTE>::iterator iter = m_particles.begin(); iter != m_particles.end(); iter++)
 	{
 		iter->fAge += fTimeDelta;
-		iter->vPos += (iter->vVelocity) * fTimeDelta * _float(rand() % 50) * 1.7f;
+		iter->vPos += (iter->vVelocity) * fTimeDelta * _float(rand() % 50) * 2.5f;
 		iter->vPos.y += 0.0f* (m_fGravity*iter->fAge)*(m_fGravity* iter->fAge) * fTimeDelta;
 
 		if (iter->fAge > iter->fLifeTime)
