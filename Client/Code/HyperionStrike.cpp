@@ -2,6 +2,8 @@
 #include "..\Header\HyperionStrike.h"
 #include "PoolMgr.h"
 #include "BattleCursier.h"
+#include "HyperionEffect.h"
+
 CHyperionStrike::CHyperionStrike(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
 {
@@ -50,7 +52,7 @@ _int CHyperionStrike::Update_Object(const _float & fTimeDelta)
 	Recall_BattleCruiser();
 	Bullet_Rain();
 	Move_Location();
-	
+	Effect();
 
 	if (m_fAge > m_fDuration)
 	{			
@@ -120,7 +122,7 @@ void CHyperionStrike::Recall_BattleCruiser(void)
 	CGameObject* pGameObject = nullptr;
 	m_vBattlePos = m_vPos;
 	//m_vBattlePos.y = 8.f;
-	m_vBattlePos.y = 12.f;
+	m_vBattlePos.y = 15.f;
 
 	for (auto& iter : Engine::Get_Layer(STAGE_SKILLCRUISER)->Get_GameList())
 	{
@@ -159,6 +161,37 @@ void CHyperionStrike::Move_Location(void)
 	if (!m_bMove)
 	{		
 		m_pTransCom->Move_Pos(&m_vDirection);
+	}
+}
+
+void CHyperionStrike::Effect(void)
+{	
+	CHyperionEffect* pHyperionEffect = nullptr;
+
+	if (!pHyperionEffect)
+		pHyperionEffect = dynamic_cast<CHyperionEffect*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"HyperionEffect"));
+
+	_vec3 vPos;														//대쉬이펙트하려던것
+	_vec3 vDir;
+	_vec3 min = { -1.0f ,-1.0f ,-1.0f };
+	_vec3 max = { .0f ,1.0f ,.0f };
+
+	m_pTransCom->Get_Info(INFO_POS, &vPos);
+	m_pTransCom->Get_Info(INFO_POS, &vPos);	
+	m_vBattlePos.y -= 12.f;
+	for (_int i = -2; i < 2; i++)
+	{
+		for (_int j = -2; j < 2; j++)
+		{
+			for (_int k = -2; k < 2; k++)
+			{
+				D3DXVec3Normalize(&min, &_vec3(i, j, k));						
+				dynamic_cast<CHyperionEffect*>(pHyperionEffect)->Set_PclePos(vPos + _vec3(i, j, k)*5.f);
+				dynamic_cast<CHyperionEffect*>(pHyperionEffect)->Set_PcleDir(-(vPos + _vec3(i, j, k)*1.f- m_vBattlePos));
+				//dynamic_cast<CHyperionEffect*>(pHyperionEffect)->Set_PcleMoveDir(max*0.01);
+				pHyperionEffect->addParticle();
+			}
+		}
 	}
 }
 

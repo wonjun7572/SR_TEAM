@@ -21,6 +21,7 @@ public:
 
 	_uint		Loading_ForStage(void);
 	_uint		Loading_ForBoss(void);
+private:
 
 public:
 	static unsigned int	CALLBACK Thread_Main(void* pArg);

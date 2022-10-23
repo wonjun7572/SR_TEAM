@@ -3,7 +3,7 @@
 #include "Shop.h"
 #include "CubePlayer.h"
 #include "..\Header\ItemIcon.h"
-
+#include "LetterBox.h"
 static _int iIconCnt = 0;
 
 CItemIcon::CItemIcon(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -30,26 +30,7 @@ _int CItemIcon::Update_Object(const _float & fTimeDelta)
 {
 	if (m_bDead)
 	{
-		if (m_iNumber == 8)			
-		{
-			CGameObject* pPlayer = nullptr;
-			if (!pPlayer)
-				pPlayer = Engine::Get_GameObject(STAGE_CHARACTER, L"PLAYER");
-			dynamic_cast<CCubePlayer*>(pPlayer)->On_StaticField();
-
-			_float fSound = 1.f;
-			Engine::PlaySoundGun(L"Upgrade.wav", SOUND_EFFECT, fSound);
-		}
-		if (m_iNumber == 1)			
-		{
-			CGameObject* pPlayer = nullptr;
-			if (!pPlayer)
-				pPlayer = Engine::Get_GameObject(STAGE_CHARACTER, L"PLAYER");
-			dynamic_cast<CCubePlayer*>(pPlayer)->On_Shield();
-
-			_float fSound = 1.f;
-			Engine::PlaySoundGun(L"Upgrade.wav", SOUND_EFFECT, fSound);
-		}
+		DeadIndex();		
 		return -1;
 	}
 	CGameObject::Update_Object(fTimeDelta);
@@ -57,12 +38,26 @@ _int CItemIcon::Update_Object(const _float & fTimeDelta)
 
 	Index();
 	FixOnCursor();
+	IconCollision();
+	IconTag();
 	return 0;
 }
 
 void CItemIcon::LateUpdate_Object(void)
 {
-
+	if(!m_bInit)
+	{
+		m_bInit = true;
+	
+		m_pLetterBox5 = CLetterBox::Create(m_pGraphicDev, L"Equipment Item : Speed+", sizeof(L"Equipment Item : Speed+"), 2);
+		m_pLetterBox6 = CLetterBox::Create(m_pGraphicDev, L"Equipment Item : Damage+", sizeof(L"Equipment Item : Damage+"), 2);
+		m_pLetterBox7 = CLetterBox::Create(m_pGraphicDev, L"Equipment Item : WeaponSkill+", sizeof(L"Equipment Item : WeaponSkill+"), 2);
+		m_pLetterBox8 = CLetterBox::Create(m_pGraphicDev, L"Upgrade : Can Use Static Field", sizeof(L"Upgrade : Can Use Static Field"), 2);
+		dynamic_cast<CLetterBox*>(m_pLetterBox5)->Off_Switch();
+		dynamic_cast<CLetterBox*>(m_pLetterBox6)->Off_Switch();
+		dynamic_cast<CLetterBox*>(m_pLetterBox7)->Off_Switch();
+		dynamic_cast<CLetterBox*>(m_pLetterBox8)->Off_Switch();
+	}	
 }
 
 void CItemIcon::Render_Object(void)
@@ -181,30 +176,54 @@ void CItemIcon::Index()
 		m_fImgX = 20.f;
 		m_fImgY = 60.f;
 	}
-	if (m_iNumber == 5)			//두번째 버튼
+	if (m_iNumber == 5)			// 스피드
 	{
 		m_iTexIndex = m_iNumber;
 		m_fImgX = 20.f;
 		m_fImgY = 60.f;
 
 	}
-	if(m_iNumber == 6)			//세번째 버튼
+	if(m_iNumber == 6)			// 데미지
 	{
 		m_iTexIndex = m_iNumber;
 		m_fImgX = 20.f;
 		m_fImgY = 60.f;
 	}
-	if(m_iNumber == 7)			//네번쨰 버튼 
+	if(m_iNumber == 7)			// 장착스킬
 	{
 		m_iTexIndex = m_iNumber;
 		m_fImgX = 20.f;
 		m_fImgY = 60.f;
 	}
-	if (m_iNumber == 8)			//네번쨰 버튼 
+	if (m_iNumber == 8)			// 먹는스킬
 	{
 		m_iTexIndex = m_iNumber;
 		m_fImgX = 20.f;
 		m_fImgY = 60.f;
+	}
+}
+
+void CItemIcon::DeadIndex()
+{
+	if (m_iNumber == 8)
+	{
+		CGameObject* pPlayer = nullptr;
+		if (!pPlayer)
+			pPlayer = Engine::Get_GameObject(STAGE_CHARACTER, L"PLAYER");
+		dynamic_cast<CCubePlayer*>(pPlayer)->On_StaticField();
+
+		_float fSound = 1.f;
+		Engine::PlaySoundGun(L"Upgrade.wav", SOUND_EFFECT, fSound);
+	}
+	if (m_iNumber == 1)
+	{
+		CGameObject* pPlayer = nullptr;
+		if (!pPlayer)
+			pPlayer = Engine::Get_GameObject(STAGE_CHARACTER, L"PLAYER");
+		dynamic_cast<CCubePlayer*>(pPlayer)->On_Shield();
+
+		_float fSound = 1.f;
+		Engine::PlaySoundGun(L"Upgrade.wav", SOUND_EFFECT, fSound);
 	}
 }
 
@@ -213,6 +232,7 @@ void CItemIcon::FixOnCursor()
 	POINT pt;
 	GetCursorPos(&pt);
 	ScreenToClient(g_hWnd, &pt);
+
 	if (m_bFix)
 	{
 		m_vBlockPos.x = -WINCX / 2.f + pt.x;//(double)( 1.75*(-450 +(pt.x*WINCY/WINCX)));
@@ -223,6 +243,83 @@ void CItemIcon::FixOnCursor()
 		m_vBlockPos.x = 15.f - WINCX / 2 + pt.x;//(double)( 1.75*(-450 +(pt.x*WINCY/WINCX)));
 		m_vBlockPos.y = -25.f + WINCY / 2 - pt.y;// (double)(1.75 * (250 - (pt.y*WINCY / WINCX)));
 	}	
+}
+
+void CItemIcon::IconCollision()
+{
+	if (m_iNumber != 0)				//커서
+	{
+
+		POINT pt;
+		POINT IconPointer;
+		GetCursorPos(&pt);
+		ScreenToClient(g_hWnd, &pt);
+		IconPointer.x = m_vBlockPos.x + WINCX / 2 - m_fImgX / 2;
+		IconPointer.y = WINCY - (m_vBlockPos.y + WINCY / 2 + m_fImgY / 2);
+		
+		m_bIconCollision = false;
+		if (IconPointer.x - m_fImgX < pt.x && pt.x < IconPointer.x + m_fImgX )
+		{
+			if (IconPointer.y - m_fImgY  < pt.y && pt.y < IconPointer.y + m_fImgY )
+			{
+				m_bIconCollision = true;			
+			}		
+		}
+	}
+}
+
+void CItemIcon::IconTag()
+{
+	POINT pt;	
+	GetCursorPos(&pt);
+	ScreenToClient(g_hWnd, &pt);
+
+	if (m_bIconCollision)
+	{
+		if (m_iNumber == 5)
+		{
+			dynamic_cast<CLetterBox*>(m_pLetterBox5)->On_Switch();
+		}
+		if (m_iNumber == 6)
+		{
+			dynamic_cast<CLetterBox*>(m_pLetterBox6)->On_Switch();
+		}
+
+		if (m_iNumber == 7)
+		{
+			dynamic_cast<CLetterBox*>(m_pLetterBox7)->On_Switch();
+		}
+
+		if (m_iNumber == 8)
+		{
+			dynamic_cast<CLetterBox*>(m_pLetterBox8)->On_Switch();
+		}
+	}
+	if (m_bInit)
+	{
+		if (!m_bIconCollision)
+		{
+			if (m_iNumber == 5)
+			{
+				dynamic_cast<CLetterBox*>(m_pLetterBox5)->SetPosition(pt.x, pt.y);
+				dynamic_cast<CLetterBox*>(m_pLetterBox5)->Off_Switch();
+			}
+			if (m_iNumber == 6)
+			{
+				dynamic_cast<CLetterBox*>(m_pLetterBox6)->Off_Switch();
+			}
+
+			if (m_iNumber == 7)
+			{
+				dynamic_cast<CLetterBox*>(m_pLetterBox7)->Off_Switch();
+			}
+
+			if (m_iNumber == 8)
+			{
+				dynamic_cast<CLetterBox*>(m_pLetterBox8)->Off_Switch();
+			}
+		}
+	}
 }
 
 CItemIcon * CItemIcon::Create(LPDIRECT3DDEVICE9 pGraphicDev, _int iIndex)
