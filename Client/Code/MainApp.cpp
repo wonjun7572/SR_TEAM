@@ -156,7 +156,7 @@ HRESULT CMainApp::SetUp_DefaultSetting(LPDIRECT3DDEVICE9 * ppGraphicDev)
 		freopen_s(nfp + 2, "CONOUT$", "wb", stderr);
 		std::ios::sync_with_stdio();
 	}
-#endif // _DEBUG
+#endif  _DEBUG
 
 	return S_OK;
 }

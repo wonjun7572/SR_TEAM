@@ -7,7 +7,7 @@
 #include "ObtainBullet.h"
 #include "PoolMgr.h"
 #include "ComboUI.h"
-
+#include "DeadParticle.h"
 #include "TransAxisBox.h"
 
 USING(Engine)
@@ -88,7 +88,7 @@ _int CFireMan::Update_Object(const _float & fTimeDelta)
 		m_pComboUI->KillCntPlus();
 		Create_Item();
 		Monster_DeleteMapping();
-
+		Dead_Effect();
 		return -1;
 	}
 
@@ -381,6 +381,24 @@ void CFireMan::Sound()
 			Engine::PlaySoundGun(L"FireMan_death_02.wav", SOUND_EFFECT, m_fDeadSound);
 		if (i == 3)								  						
 			Engine::PlaySoundGun(L"FireMan_death_03.wav", SOUND_EFFECT, m_fDeadSound);
+	}
+}
+
+void CFireMan::Dead_Effect()
+{
+	_vec3 vPos;
+	if (!m_pDeadParticle)
+		m_pDeadParticle = dynamic_cast<CDeadParticle*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"DeadParticle"));
+
+	m_pTransCom->Get_Info(INFO_POS, &vPos);
+
+	if (m_pDeadParticle != nullptr)
+	{
+		m_pDeadParticle->Set_PclePos(vPos);
+		for (_int i = 0; i < 30; ++i)
+		{
+			m_pDeadParticle->addParticle();
+		}
 	}
 }
 

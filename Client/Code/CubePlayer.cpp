@@ -70,6 +70,9 @@ _int CCubePlayer::Update_Object(const _float & fTimeDelta)
 	_vec3 vPos;
 	m_pTransform->Get_Info(INFO_POS, &vPos);
 	
+
+	cout << vPos.x << "" << "\n" <<  vPos.z << "" << endl;
+ 
 	if (m_pComboUI != nullptr)
 	{
 		if (m_pComboUI->Get_ComboCnt() == 0.f)

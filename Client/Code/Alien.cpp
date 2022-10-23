@@ -6,7 +6,8 @@
 #include "ObtainBullet.h"
 #include "TransAxisBox.h"
 #include "PoolMgr.h"
-
+#include "CubePlayer.h"
+#include "DeadParticle.h"
 CAlien::CAlien(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CMonster(pGraphicDev)
 {
@@ -28,6 +29,7 @@ HRESULT CAlien::Ready_Object(const _vec3 & vPos, _tchar * Name)
 
 	m_MonsterName = Name;
 
+	m_BeforeHp = m_tAbility->fMaxHp;
 
 	m_STATE = ALIEN_IDLE;
 	m_BeforeState = ALIEN_IDLE;
@@ -58,13 +60,13 @@ HRESULT CAlien::Ready_Object(const _vec3 & vPos, _tchar * Name)
 
 	//탐지범위 
 
-	m_pSearchRange_TransCom->Set_Scale(&_vec3(5.f, 5.f, 5.f));
+	m_pSearchRange_TransCom->Set_Scale(&_vec3(15.f, 15.f, 15.f));
 	m_pSearchRange_TransCom->Set_Pos(vAnimationPos.x, vAnimationPos.y, vAnimationPos.z);
 	m_pSearchRange_TransCom->Static_Update();
 
 
 
-	m_pAttackRange_TransCom->Set_Scale(&_vec3(3.f, 3.f, 3.f));
+	m_pAttackRange_TransCom->Set_Scale(&_vec3(1.f, 1.f, 1.f));
 	m_pAttackRange_TransCom->Set_Pos(vAnimationPos.x, vAnimationPos.y, vAnimationPos.z);
 	m_pAttackRange_TransCom->Static_Update();
 
@@ -85,7 +87,7 @@ _int CAlien::Update_Object(const _float & fTimeDelta)
 		m_pComboUI->KillCntPlus();
 		Create_Item();
 		Monster_DeleteMapping();
-
+		Dead_Effect();
 		return -1;
 	}
 
@@ -150,56 +152,50 @@ _int CAlien::Update_Object(const _float & fTimeDelta)
 
 	m_fFrame += fTimeDelta;
 
-		if (m_pCollision->Sphere_Collision(this->m_pRunawayRange_TransCom, m_pPlayerTransCom, vPlayerScale.x, vRunScale.x))
+	if (!Collision_Wall(fTimeDelta))
+	{
+		if (m_pCollision->Sphere_Collision(this->m_pAttackRange_TransCom, m_pPlayerTransCom, vPlayerScale.x, vAttackScale.x))
 		{
-
-			vDir *= -1.f;
-			m_pCollision->Wall_Collision_Check(this->m_pTransCom, this->m_pHitBox, &vDir);
+			// 공격충돌
 			if (m_iSphereSkillTag != SKILL_STATICFIELD)
-				m_pTransCom->Chase_Target_By_Direction(&vDir, 1.f, fTimeDelta);
-			m_STATE = ALIEN_WALK;
-		}
-		else if (m_pCollision->Sphere_Collision(this->m_pAttackRange_TransCom, m_pPlayerTransCom, vPlayerScale.x, vAttackScale.x))
-		{
-
-			m_pCollision->Wall_Collision_Check(this->m_pTransCom, this->m_pHitBox, &vDir);
-			if (m_iSphereSkillTag != SKILL_STATICFIELD)
-				m_pTransCom->Chase_Target_By_Direction(&vDir, 3.f, fTimeDelta);
+				m_pTransCom->Chase_Target(&vPlayerPos, 0.f, fTimeDelta);
 			m_STATE = ALIEN_ATTACK;
+
 			if (m_AnimationTime >= 1.f)
 			{
-
+				CLayer* pLayer = Engine::Get_Layer(STAGE_CHARACTER);
+				CCubePlayer* pPlayer = dynamic_cast<CCubePlayer*>(pLayer->Get_GameObject(L"PLAYER"));
+				pPlayer->KnuckDown(10.f, 10.f);
 			}
 
 		}
-		else if (m_pCollision->Sphere_Collision(this->m_pSearchRange_TransCom, m_pPlayerTransCom, vPlayerScale.x, vSearchScale.x))
+		else if (m_pCollision->Sphere_Collision(this->m_pSearchRange_TransCom, m_pPlayerTransCom, vPlayerScale.x, vSearchScale.x)/* && (m_STATE != FIREMAN_ATTACK)*/)
 		{
-			m_pCollision->Wall_Collision_Check(this->m_pTransCom, this->m_pHitBox, &vDir);
+			// 탐지충돌
 			if (m_iSphereSkillTag != SKILL_STATICFIELD)
-				m_pTransCom->Chase_Target_By_Direction(&vDir, 5.f, fTimeDelta);
-			m_STATE = ALIEN_ATTACK;
+				m_pTransCom->Chase_Target(&vPlayerPos, 5.f, fTimeDelta);
+			m_STATE = ALIEN_WALK;
 		}
-		else if (m_STATE != ALIEN_ATTACK)
+		else if (m_STATE != FIREMAN_ATTACK)
 		{
 			m_STATE = ALIEN_IDLE;
 		}
-	
-
-	
-
-	Look_Direction();
-
-	_vec3 vMonsterPos;
-	m_pTransCom->Get_Info(INFO_POS, &vMonsterPos);
-	m_pHitBoxTransCom->Set_Pos(vMonsterPos.x, vMonsterPos.y, vMonsterPos.z);
-	m_pSphereTransCom->Set_Pos(vMonsterPos.x, vMonsterPos.y, vMonsterPos.z);
-
-	m_pSearchRange_TransCom->Set_Pos(vMonsterPos.x, vMonsterPos.y, vMonsterPos.z);
-	m_pAttackRange_TransCom->Set_Pos(vMonsterPos.x, vMonsterPos.y, vMonsterPos.z);
-	m_pRunawayRange_TransCom->Set_Pos(vMonsterPos.x, vMonsterPos.y, vMonsterPos.z);
 
 
 
+		Look_Direction();
+
+		_vec3 vMonsterPos;
+		m_pTransCom->Get_Info(INFO_POS, &vMonsterPos);
+		m_pHitBoxTransCom->Set_Pos(vMonsterPos.x, vMonsterPos.y, vMonsterPos.z);
+		m_pSphereTransCom->Set_Pos(vMonsterPos.x, vMonsterPos.y, vMonsterPos.z);
+
+		m_pSearchRange_TransCom->Set_Pos(vMonsterPos.x, vMonsterPos.y, vMonsterPos.z);
+		m_pAttackRange_TransCom->Set_Pos(vMonsterPos.x, vMonsterPos.y, vMonsterPos.z);
+		m_pRunawayRange_TransCom->Set_Pos(vMonsterPos.x, vMonsterPos.y, vMonsterPos.z);
+
+
+	}
 	return 0;
 }
 
@@ -720,6 +716,24 @@ void CAlien::Look_Direction(void)
 	}
 }
 
+void CAlien::Dead_Effect(void)
+{
+	_vec3 vPos;
+	if (!m_pDeadParticle)
+		m_pDeadParticle = dynamic_cast<CDeadParticle*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"DeadParticle"));
+
+	m_pTransCom->Get_Info(INFO_POS, &vPos);
+
+	if (m_pDeadParticle != nullptr)
+	{
+		m_pDeadParticle->Set_PclePos(vPos);
+		for (_int i = 0; i < 30; ++i)
+		{
+			m_pDeadParticle->addParticle();
+		}
+	}
+}
+
 CAlien * CAlien::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3 & vPos, _tchar * Name)
 {
 	CAlien* pInstance = new CAlien(pGraphicDev);
@@ -736,10 +750,10 @@ CAlien * CAlien::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3 & vPos, _tcha
 
 void CAlien::Free(void)
 {
-	//for (auto& iter : *(pMyLayer->Get_GamePairPtr()))
-	//{
-	//	iter.second->Kill_Obj();
-	//}
+	for (auto& iter : *(pMyLayer->Get_GamePairPtr()))
+	{
+		iter.second->Kill_Obj();
+	}
 
 	for (auto iter : m_TcharList)
 	{

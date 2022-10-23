@@ -101,8 +101,10 @@ void CKrakenEffect::resetParticle(ATTRIBUTE * attribute)
 	m_fGravity = 0.f;
 	_vec3 min = _vec3(-1.0f, -1.0f, -1.0f);
 	_vec3 max = _vec3(1.0f, 1.f, 1.0f);
+
 	_vec3 vDirection = { 0.f, 1.f, 0.f };
 	_float fRand = (rand() % 5)*0.1f;
+
 	GetRandomVector(&attribute->vVelocity, &min, &max);
 	D3DXVec3Normalize(&attribute->vVelocity, &attribute->vVelocity);
 	D3DXVec3Normalize(&m_vDir, &m_vDir);
