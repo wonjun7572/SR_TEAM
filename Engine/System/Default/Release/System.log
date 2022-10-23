@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿빌드 시작: 2022-10-23 오전 2:24:06
      1>2 노드의 "D:\GitHub\SR_TEAM\Engine\System\Default\System.vcxproj" 프로젝트(Build 대상)입니다.
      1>Link:
@@ -108,3 +109,6 @@
 빌드했습니다.
 
 경과 시간: 00:00:01.22
+=======
+﻿
+>>>>>>> main

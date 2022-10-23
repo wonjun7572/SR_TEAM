@@ -7,11 +7,15 @@
 #include "TransAxisBox.h"
 #include "KrakenLeg.h"
 #include "PoolMgr.h"
+<<<<<<< HEAD
 #include "Meteor.h"
 
 #include "BattleCursier.h"
 #include "Flight.h"
 
+=======
+#include "Warning_AnnihilateUI.h"
+>>>>>>> main
 CKrakenBoss::CKrakenBoss(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CGameObject(pGraphicDev)
 {
@@ -294,8 +298,8 @@ _int CKrakenBoss::Update_Pattern(_float fTimeDelta)
 			dynamic_cast<CKrakenLeg*>(iter)->Set_Dead();
 		}
 	}
-	else if ((Hp <= 0.9f && Hp >= 0.6f && m_bAnihilate_First)
-		|| (Hp <= 0.6f && Hp >= 0.3f && m_bAnihilate_Second)
+	else if ((Hp <= 0.9f && Hp >= 0.6f && m_bAnihilate_First)						//다리레이어 이터레이터 돌리는부분
+		|| (Hp <= 0.6f && Hp >= 0.3f && m_bAnihilate_Second)						//함수가 true면 워닝뜨게// 워닝끄는부분?
 		|| (Hp <= 0.3f && Hp >= 0.f && m_bAnihilate_Third))
 	{
 		CLayer* pLayer = Engine::Get_Layer(STAGE_TENTACLE);
@@ -303,8 +307,11 @@ _int CKrakenBoss::Update_Pattern(_float fTimeDelta)
 		int iReady = 0;
 		for (auto& iter : *(pLayer->Get_GameListPtr()))
 		{
+			//워닝시작,
+			dynamic_cast<CWarning_AnnihilateUI*>(Engine::Get_GameObject(STAGE_UI, WARNING_TEX))->OnSwitch();
 			if (dynamic_cast<CKrakenLeg*>(iter)->Get_State() == KRAKEN_IDLE)
 				iReady++;
+
 			else
 				break;
 		}
@@ -313,7 +320,9 @@ _int CKrakenBoss::Update_Pattern(_float fTimeDelta)
 		{
 			for (auto& iter : *(pLayer->Get_GameListPtr()))
 			{
-				dynamic_cast<CKrakenLeg*>(iter)->Start_Annihilate();
+				dynamic_cast<CKrakenLeg*>(iter)->Start_Annihilate();					//패턴시작부분 워닝끄는부분
+				dynamic_cast<CWarning_AnnihilateUI*>(Engine::Get_GameObject(STAGE_UI, WARNING_TEX))->OffSwitch();
+
 			}
 
 			if (m_bAnihilate_First)
