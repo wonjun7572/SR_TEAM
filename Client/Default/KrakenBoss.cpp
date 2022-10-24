@@ -29,7 +29,7 @@ CKrakenBoss::~CKrakenBoss()
 HRESULT CKrakenBoss::Ready_Object(const _vec3 & vPos, _tchar * Name)
 {
 	m_tAbility = new KRAKENABILITY;
-	m_tAbility->fMaxHp = 5000.f;
+	m_tAbility->fMaxHp = 100.f;
 	m_tAbility->fCurrentHp = m_tAbility->fMaxHp;
 	m_tAbility->fDamage = 20.f;
 	m_tAbility->strObjTag = L"Kraken";
@@ -51,7 +51,6 @@ HRESULT CKrakenBoss::Ready_Object(const _vec3 & vPos, _tchar * Name)
 	m_pTransCom->Set_Pos(vPos.x, vPos.y, vPos.z);
 	m_pTransCom->Static_Update();
 
-
 	m_pTransUICom->Set_Scale(1.f, 1.f, 1.5f);
 
 	_vec3 vAnimationPos;
@@ -66,6 +65,7 @@ HRESULT CKrakenBoss::Ready_Object(const _vec3 & vPos, _tchar * Name)
 	m_pSphereTransCom->Set_Pos(vAnimationPos.x, 0.f, vAnimationPos.z);
 	m_pSphereTransCom->Static_Update();
 
+	PlaySoundW(L"ZLuPss01.wav", SOUND_EFFECT, 1.f);
 	return S_OK;
 }
 
@@ -74,8 +74,6 @@ _int CKrakenBoss::Update_Object(const _float & fTimeDelta)
 	if (m_bDead)
 	{
 		m_pComboUI->KillCntPlus();
-
-		
 		return -1;
 	}
 
@@ -166,17 +164,20 @@ void CKrakenBoss::LateUpdate_Object(void)
 		m_pTransCom->Set_Pos(vPos.x, vPos.y - 0.1f, vPos.z);
 		m_pTransCom->Static_Update();
 
-		if (m_bDeadScene)
+		if (vPos.y <= -50.f)
 		{
-			Dead_Event();
+			this->Kill_Obj();
+			if (m_bDeadScene)
+			{
+				Dead_Event();
 
-			CGameObject* pGameObject = dynamic_cast<CFlight*>(Get_GameObject(STAGE_FLIGHTPLAYER, L"FLIGHTSHUTTLE"));
-			if (dynamic_cast<CFlight*>(pGameObject)->Get_Ending() == false)
-				dynamic_cast<CFlight*>(pGameObject)->Set_Ending(true);
+				CGameObject* pGameObject = dynamic_cast<CFlight*>(Get_GameObject(STAGE_FLIGHTPLAYER, L"FLIGHTSHUTTLE"));
+				if (dynamic_cast<CFlight*>(pGameObject)->Get_Ending() == false)
+					dynamic_cast<CFlight*>(pGameObject)->Set_Ending(true);
 
-			m_bDeadScene = false;
+				m_bDeadScene = false;
+			}
 		}
-		//this->Kill_Obj();
 	}
 
 	//애니메이션 관련해서 run animation 이랑 각자 상황에 맞는 애니메이션 넣어주면됨.
@@ -361,7 +362,14 @@ _int CKrakenBoss::Update_Pattern(_float fTimeDelta)
 	}
 	else if (m_STATE == KRAKEN_IDLE)
 	{
-		m_ReloadTimer += fTimeDelta;
+		CLayer* pLayer = Engine::Get_Layer(STAGE_TENTACLE);
+		for (auto& iter : *(pLayer->Get_GameListPtr()))
+		{
+			if (dynamic_cast<CKrakenLeg*>(iter)->Get_State() == KRAKEN_APPEAR)
+				break;
+			else
+				m_ReloadTimer += fTimeDelta;
+		}
 
 		if (m_ReloadTimer >= 2.f)
 		{

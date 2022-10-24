@@ -109,8 +109,9 @@ HRESULT CFinalStage::Ready_Scene(void)
 
 	CGameObject*		pGameObject = nullptr;
 
-	//_float fBGMSound = 1.f;
-	//PlayBGM(L"Track_01.mp3", fBGMSound);
+	CSoundMgr::GetInstance()->StopAll();
+
+	PlayBGM(L"Track_04.mp3", 0.8f);
 
 	Set_SceneId(FINAL_SCENE);
 
@@ -317,14 +318,18 @@ HRESULT CFinalStage::Ready_Layer_Environment(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"CartridgeParticle", pGameObject), E_FAIL);
 
-	/*pGameObject = CNpc::Create(m_pGraphicDev, _vec3(14.f, 0.5f, 10.f));
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"NPC", pGameObject), E_FAIL);*/
-
-
 	pGameObject = CDeadParticle::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"DeadParticle", pGameObject), E_FAIL);
+
+	pGameObject = CExBulletEffect::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"ExBulletEffect", pGameObject), E_FAIL);
+
+	pGameObject = CMBLaser::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"MBLaser", pGameObject), E_FAIL);
+
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
 	return S_OK;
@@ -337,13 +342,6 @@ HRESULT CFinalStage::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 
 	CGameObject*		pGameObject = nullptr;
 
-	pGameObject = CExBulletEffect::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"ExBulletEffect", pGameObject), E_FAIL);
-
-	pGameObject = CMBLaser::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"MBLaser", pGameObject), E_FAIL);
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 

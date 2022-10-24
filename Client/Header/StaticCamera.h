@@ -78,6 +78,7 @@ private:
 	_bool			m_bEarthQuake = false;
 	_bool			m_bFirst = false;
 
+	_float			m_fPlayerFrame2 = 0.f;
 	_bool			m_bEnding = false;
 
 public:

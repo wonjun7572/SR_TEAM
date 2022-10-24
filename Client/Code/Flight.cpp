@@ -140,18 +140,12 @@ _int CFlight::Update_Object(const _float & fTimeDelta)
 		CTransform* m_pPlayerTransCom = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_CHARACTER, L"PLAYER", TRANSFORM_COMP, ID_DYNAMIC));
 
 		_vec3 vPlayerPos;
-		m_pPlayerTransCom->Get_Info(INFO_POS, &vPos);
+		m_pPlayerTransCom->Get_Info(INFO_POS, &vPlayerPos);
 
 		_vec3 vFlightPos;
 		m_pTransform->Get_Info(INFO_POS, &vFlightPos);
 
 		_vec3 vDistance = vPlayerPos - vFlightPos;
-
-		//if (vFlightPos.y <= 1.f && m_bLeaveMap == false)
-		//{
-		//	m_vLeave.y *= -1.f;
-		//	m_bLeaveMap = true;
-		//}
 
 		if (m_bLeaveMap)
 		{
@@ -168,46 +162,49 @@ _int CFlight::Update_Object(const _float & fTimeDelta)
 		}
 		else
 		{
-			_vec3 vDesination;
-			vDesination.x = vPos.x;
-			vDesination.y = 30.f;
-			vDesination.z = vPos.z;
-			
-			_vec3 vDestination2;
-			vDestination2 = vPos;
+			if (!m_bDest)
+			{
+				m_vEndingDest.x = vPlayerPos.x;
+				m_vEndingDest.y = 30.f;
+				m_vEndingDest.z = vPlayerPos.z;
 
-			if (fabs(vFlightPos.x - vDesination.x) < 1.f && fabs(vFlightPos.z - vDesination.z) < 1.f && !m_bRide)
+				m_vEndingDest2 = vPlayerPos;
+				m_bDest = true;
+			}
+			
+			if (fabs(vFlightPos.x - m_vEndingDest.x) < 1.f && fabs(vFlightPos.z - m_vEndingDest.z) < 1.f && !m_bRide)
 			{
 				m_fEndingFrame += fTimeDelta * 0.2f;
 				
 				_vec3 vTransLerp;
-				D3DXVec3Lerp(&vTransLerp,&vDesination,&vDestination2, m_fEndingFrame);
+				D3DXVec3Lerp(&vTransLerp,&m_vEndingDest,&m_vEndingDest2, m_fEndingFrame);
 				m_pTransform->Set_Pos(vTransLerp.x,vTransLerp.y,vTransLerp.z);
+				m_pTransform->Static_Update();
 
 				if(vFlightPos.y <= 1.f)
 					m_bRide = true;
 			}
-			else if(fabs(vFlightPos.x - vDesination.x) < 1.f && fabs(vFlightPos.z - vDesination.z) < 1.f && m_bRide)
+			else if(fabs(vFlightPos.x - m_vEndingDest.x) < 1.f && fabs(vFlightPos.z - m_vEndingDest.z) < 1.f && m_bRide)
 			{
 				m_fEndingFrame -= fTimeDelta * 0.2f;
 				_vec3 vTransLerp;
-				D3DXVec3Lerp(&vTransLerp, &vDesination, &vDestination2, m_fEndingFrame);
+				D3DXVec3Lerp(&vTransLerp, &m_vEndingDest, &m_vEndingDest2, m_fEndingFrame);
 				m_pTransform->Set_Pos(vTransLerp.x, vTransLerp.y, vTransLerp.z);
+				m_pTransform->Static_Update();
 
 				if(vFlightPos.y >= 29.f)
 					m_bLeaveMap = true;
 			}
 			else 
 			{
-				m_pTransform->Chase_Target(&vDesination, 5.f, fTimeDelta);
+				m_fEndingFrame = 0.f;
+				m_pTransform->Chase_Target(&m_vEndingDest, 5.f, fTimeDelta);
 
 				_matrix matWorld;
 				m_pTransform->Get_WorldMatrix(&matWorld);
 				m_vLeave = { matWorld.m[2][0], matWorld.m[2][1],matWorld.m[2][2] };
 				Look_Direction_Only_Y();
 			}
-
-			m_vEndingPos = vPos;
 		}
 	}
 
@@ -218,7 +215,7 @@ _int CFlight::Update_Object(const _float & fTimeDelta)
 		Look_Direction();
 		m_pTransform->Quaternion_Transform();
 	}
-	else
+	else 
 	{
 		if (D3DXVec3Length(&vAfterDir) != 0.f)
 		{
@@ -226,13 +223,16 @@ _int CFlight::Update_Object(const _float & fTimeDelta)
 			m_pTransform->Move_Pos(&(vAfterDir * 5.f * fTimeDelta));
 			m_pTransform->Static_Update();
 		}
-		else
+		else 
 		{
-			_vec3 vLook;
-			m_pTransform->Get_Info(INFO_LOOK, &vLook);
-			D3DXVec3Normalize(&vLook, &vLook);
-			m_pTransform->Move_Pos(&(vLook * 5.f * fTimeDelta));
-			m_pTransform->Static_Update();
+			if (m_bEnding == false)
+			{
+				_vec3 vLook;
+				m_pTransform->Get_Info(INFO_LOOK, &vLook);
+				D3DXVec3Normalize(&vLook, &vLook);
+				m_pTransform->Move_Pos(&(vLook * 5.f * fTimeDelta));
+				m_pTransform->Static_Update();
+			}
 		}
 	}
 	CGameObject::Update_Object(fTimeDelta);
@@ -393,6 +393,8 @@ void CFlight::Random(void)
 
 		Set_Speed(_float(m_ShuffleSpeed.front()));
 	}
+
+	vAfterDir = _vec3(0.f, 0.f, 0.f);
 }
 
 HRESULT CFlight::Build(void)
