@@ -41,7 +41,7 @@ _int CTestCube::Update_Object(const _float& fTimeDelta)
 	{	
 		m_pStaticCam->CameraShaking();
 		_float fGunSound = 1.f;
-		Engine::PlaySoundW(L"EXPLOLRG.WAV", SOUND_REFLECT, fGunSound);
+		Engine::PlaySoundW(L"EXPLOLRG.WAV", SOUND_DOOR, fGunSound);
 		return -1;
 	}
 	_vec3 vPos;
@@ -225,7 +225,7 @@ HRESULT CTestCube::Interact(void)
 			if (vPos.y < 15)
 			{
 				_float fGunSound = .5f;
-				Engine::PlaySoundW(L"portal_2.wav", SOUND_EFFECT, fGunSound);
+				Engine::PlaySoundW(L"portal_2.wav", SOUND_DOOR, fGunSound);
 				m_bDoorOpen = true;
 				CGameObject* pGameObject = Get_GameObject(STAGE_CHARACTER, L"PLAYER");
 				dynamic_cast<CCubePlayer*>(pGameObject)->Set_DoorOpen(true);
@@ -292,7 +292,7 @@ HRESULT CTestCube::Interact(void)
 			if (vPos.y <= 6.)
 			{
 				_float fGunSound = 1.f;
-				Engine::PlaySoundW(L"EXPLOLRG.WAV", SOUND_REFLECT, fGunSound);
+				Engine::PlaySoundW(L"EXPLOLRG.WAV", SOUND_DOOR, fGunSound);
 			}
 			vPos.y -= 1.f;
 			m_pTransCom->Set_Pos(vPos.x, vPos.y, vPos.z);

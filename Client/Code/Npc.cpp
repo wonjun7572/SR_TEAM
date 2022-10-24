@@ -448,14 +448,7 @@ void CNpc::Finish(const _float & fTimeDelta)
 void CNpc::Projection_Effect(void)
 {
 	if (m_bQuest1)
-	{
-		if (!m_bSound2)
-		{
-			m_bSound2 = true;
-			_float fSound = 1.f;
-			Engine::PlaySoundGun(L"NPC.wav", SOUND_EFFECT, fSound);
-		}
-		
+	{		
 		CProjectionEffect* m_pProjectionEffect = nullptr;
 		if (!m_pProjectionEffect)
 		m_pProjectionEffect = dynamic_cast<CProjectionEffect*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"ProjectionEffect"));

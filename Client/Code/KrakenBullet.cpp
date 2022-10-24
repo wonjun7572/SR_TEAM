@@ -194,6 +194,26 @@ void CKrakenBullet::Collision_Check(void)
 		m_bDamage = true;
 	}
 
+
+	for (auto& iter : Get_Layer(STAGE_SKILL)->Get_GameList())
+	{
+		if (iter->GetSphereSkillTag() == SKILL_SHIELD)
+		{
+			CTransform* pTransform = dynamic_cast<CTransform*>(iter->Get_Component(TRANSFORM_COMP, ID_DYNAMIC));
+			CHitBox* pHitbox = dynamic_cast<CHitBox*>(iter->Get_Component(HITBOX_COMP, ID_STATIC));
+			_vec3 vScale;
+			m_pKrakenBullet->Get_Scale(&vScale);
+			_vec3 vShieldScale;
+			pTransform->Get_Scale(&vShieldScale);
+
+			if (m_pCollision->Sphere_Collision(this->m_pKrakenBullet, pTransform, vScale.x, vShieldScale.x))
+			{
+				this->m_fTimeDelta = 10;
+				break;
+			}
+		}
+	}
+
 }
 
 void CKrakenBullet::Kraken_BulletParticle(void)
