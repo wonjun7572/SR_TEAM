@@ -46,7 +46,6 @@ _int CToolScene::Update_Scene(const _float & fTimeDelta)
 	CImGuiMgr::GetInstance()->WindowLayOut();
 	CImGuiMgr::GetInstance()->CreateWall(m_pGraphicDev, this, m_pCam);
 	CImGuiMgr::GetInstance()->CreateObject(m_pGraphicDev, this, m_pCam);
-
 	CImGuiMgr::GetInstance()->SwitchCamera(m_pGraphicDev, this, m_pCamLayer, m_pCam);
 	
 	return Engine::CScene::Update_Scene(fTimeDelta);

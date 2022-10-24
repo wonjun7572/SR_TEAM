@@ -23,10 +23,7 @@
 
 #include "MBLaser.h"
 #include "TriggerParticle.h"
-#include "MFieldEffect.h"
-#include "MHitEffect.h"
-#include "MBLaserReady.h"
-#include "MBBomb.h"
+
 static _int m_iCnt = 0;
 
 CMiddleBoss::CMiddleBoss(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -91,9 +88,9 @@ _int CMiddleBoss::Update_Object(const _float & fTimeDelta)
 {
 	if (m_bDead)
 	{
-		Create_Item();
 		m_pComboUI->KillCntPlus();
-	
+		_float fMiddle_death = 1.5f;
+		PlaySoundGun(L"Middle_Death.wav", SOUND_EFFECT, fMiddle_death);
 		
 		return -1;
 	}
@@ -206,8 +203,11 @@ void CMiddleBoss::LateUpdate_Object(void)
 		m_pTransCom->Set_Pos(vPos.x, vPos.y - 0.1f, vPos.z);
 		m_pTransCom->Static_Update();
 
+		CGameObject* pGameObject = Get_GameObject(STAGE_GAMELOGIC, L"LaserSpot");
+		dynamic_cast<CLaserSpot*>(pGameObject)->Attack_Permit(false);
+
 		m_pMonsterUI->Off_Switch();
-		Dead_Effect();
+		dynamic_cast<CStaticCamera*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"StaticCamera"))->CameraShaking();
 		if(vPos.y <= -20.f)
 			this->Kill_Obj();
 	}
@@ -242,7 +242,6 @@ void CMiddleBoss::LateUpdate_Object(void)
 			}
 			else if (m_PATTERN == MIDDLEBOSS_SKILL_BOMBING)
 			{
-				BombState_Effect();
 				Bombing_Animation_Run();
 				if (m_BOMBING >= MIDDLEBOSS_BOMBING_4 && m_BOMBING <= MIDDLEBOSS_BOMBING_9)
 					Run_Animation(10.f);
@@ -253,25 +252,16 @@ void CMiddleBoss::LateUpdate_Object(void)
 			{
 				m_fLaserTime += m_fTimeDelta;
 
-				if (m_fLaserTime <= .35f)
-				{
-					_float fSound = 1.f;
-					PlaySoundW(L"MBLaserReady.wav", SOUND_MB, fSound);
-				}
-				if (m_fLaserTime <= 1.5f)
-					LaserReady_Effect();
-
 				if (m_fLaserTime >= 1.f)
 				{
 					CGameObject* pGameObject = Get_GameObject(STAGE_GAMELOGIC, L"LaserSpot");
-					//dynamic_cast<CLaserSpot*>(pGameObject)->Attack_Permit(true);
-					
+					dynamic_cast<CLaserSpot*>(pGameObject)->Attack_Permit(true);
 				}
+				_vec3 vCorePos;
 				_vec3 vSpotPos;
 				CTransform* pSpotTrans = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_GAMELOGIC, L"LaserSpot", TRANSFORM_COMP, ID_DYNAMIC));
 				if (pMyLayer != nullptr)
 				{
-
 					for (auto& iter : *(pMyLayer->Get_GamePairPtr()))
 					{
 						if (0 == _tcscmp(iter.first, L"CORE"))//코어위치
@@ -280,23 +270,19 @@ void CMiddleBoss::LateUpdate_Object(void)
 							_matrix matFinal;
 							pCoreBox->Get_Final(&matFinal);
 
-							m_vCorePos = { matFinal.m[3][0], matFinal.m[3][1], matFinal.m[3][2] };
+							vCorePos = { matFinal.m[3][0], matFinal.m[3][1], matFinal.m[3][2] };
 						}
 					}
-					if (m_fLaserTime >= 3.f)
-					{
-						pSpotTrans->Get_Info(INFO_POS, &vSpotPos); //점위치
-						_float fSound = .15f;
-						PlaySoundGun(L"MBLaser4.wav", SOUND_MB, fSound);
-					}
+					pSpotTrans->Get_Info(INFO_POS, &vSpotPos); //점위치
+
 					CMBLaser* m_pMBLaser = nullptr;
 					if (!m_pMBLaser)
 						m_pMBLaser = dynamic_cast<CMBLaser*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"MBLaser"));
-					dynamic_cast<CMBLaser*>(m_pMBLaser)->Set_PclePos(m_vCorePos);
-					dynamic_cast<CMBLaser*>(m_pMBLaser)->Set_PcleDir(vSpotPos - m_vCorePos);
-				
+					dynamic_cast<CMBLaser*>(m_pMBLaser)->Set_PclePos(vCorePos);
+					dynamic_cast<CMBLaser*>(m_pMBLaser)->Set_PcleDir(vSpotPos - vCorePos);
+
 					for (_int i = 0; i < 50; ++i)
-					{						
+					{
 						m_pMBLaser->addParticle();
 					}
 				}
@@ -319,7 +305,7 @@ void CMiddleBoss::LateUpdate_Object(void)
 					m_STATE = MIDDLEBOSS_IDLE;
 					m_fLaserTime = 0.f;
 					CGameObject* pGameObject = Get_GameObject(STAGE_GAMELOGIC, L"LaserSpot");
-					//dynamic_cast<CLaserSpot*>(pGameObject)->Attack_Permit(false);
+					dynamic_cast<CLaserSpot*>(pGameObject)->Attack_Permit(false);
 				}
 			}
 		}
@@ -351,8 +337,6 @@ void CMiddleBoss::Render_Object(void)
 	m_pBufferUICom->Resize_Buffer(m_tAbility->fCurrentHp / m_tAbility->fMaxHp);
 	m_pBufferUICom->Render_Buffer();
 }
-
-
 
 _int CMiddleBoss::Update_Pattern(_float fTimeDelta)
 {
@@ -440,12 +424,9 @@ _int CMiddleBoss::Update_Pattern(_float fTimeDelta)
 
 			// 문이 열리고 나면 조건으로 바꾸기
 
-			if (m_bPatternStart == true)
-			{
-				m_ReloadTimer += fTimeDelta;
-			}
+			m_ReloadTimer += fTimeDelta;
 
-			if ((m_bPatternStart == false))
+			if ((m_bPatternStart == false) && (m_ReloadTimer >= 3.f))
 			{
 				CLayer* pLayer = Engine::Get_Layer(STAGE_WALL);
 
@@ -461,8 +442,6 @@ _int CMiddleBoss::Update_Pattern(_float fTimeDelta)
 							if (dynamic_cast<CTestCube*>(iter.second)->Boss_Start())
 							{
 								m_bPatternStart = true;
-								_float fSound = 1.f;
-								PlaySoundW(L"MBPower.wav", SOUND_MB, fSound);
 							}
 						}
 					}
@@ -613,8 +592,6 @@ void CMiddleBoss::Hit_Check(_float _deltaTime)
 			if (pWeapon->Get_Shoot() == true)
 			{
 				m_tAbility->fCurrentHp -= pWeapon->Get_Ability()->fBulletAttack;
-
-				Hit_Effect();
 
 				m_pComboUI->On_Switch();
 				m_pComboUI->ComboCntPlus();
@@ -1171,185 +1148,6 @@ void CMiddleBoss::Dead_Animation_Run(void)
 	}
 }
 
-void CMiddleBoss::Hit_Effect(void)
-{
-	_float fSound = 1.f;
-	PlaySoundW(L"MBDestroy.wav", SOUND_MB, fSound);
-	if (pMyLayer != nullptr)
-	{
-
-		for (auto& iter : *(pMyLayer->Get_GamePairPtr()))
-		{
-			if (0 == _tcscmp(iter.first, L"CORE"))//코어위치
-			{
-				CTransAxisBox* pCoreBox = dynamic_cast<CTransAxisBox*>(iter.second);
-				_matrix matFinal;
-				pCoreBox->Get_Final(&matFinal);
-
-				m_vCorePos = { matFinal.m[3][0], matFinal.m[3][1], matFinal.m[3][2] };
-			}
-		}
-	}
-	CMHitEffect* pMHitEffect = nullptr;
-	if (!pMHitEffect)
-		pMHitEffect = dynamic_cast<CMHitEffect*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"MHitEffect"));
-
-	//_vec3 vPos;														//보스죽는이팩트
-	_vec3 vDir;
-	_vec3 min = { -1.0f ,-1.0f ,-1.0f };
-	for (_int i = -5; i < 5; i++)
-	{
-		for (_int j = -5; j < 5; j++)
-		{
-			for (_int k = -5; k < 5; k++)
-			{
-				D3DXVec3Normalize(&min, &_vec3(i, j, k));
-
-				dynamic_cast<CMHitEffect*>(pMHitEffect)->Set_PclePos(m_vCorePos + _vec3(i, j, k)*.1f);
-
-				dynamic_cast<CMHitEffect*>(pMHitEffect)->Set_PcleDir(min*0.25f);
-
-				pMHitEffect->addParticle();
-			}
-		}
-	}
-}
-
-void CMiddleBoss::LaserReady_Effect(void)
-{
-	CMBLaserReady* pMBLaserReady = nullptr;
-	if (!pMBLaserReady)
-		pMBLaserReady = dynamic_cast<CMBLaserReady*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"MBLaserReady"));
-
-	//_vec3 vPos;														//보스죽는이팩트
-	_vec3 vDir;
-	_vec3 min = { -1.0f ,-1.0f ,-1.0f };
-	for (_int i = -5; i < 5; i++)
-	{
-		for (_int j = -5; j < 5; j++)
-		{
-			for (_int k = -5; k < 5; k++)
-			{
-				//D3DXVec3Normalize(&min, &_vec3(i, j, k));
-
-				dynamic_cast<CMBLaserReady*>(pMBLaserReady)->Set_PclePos(m_vCorePos + _vec3(i, j, k)*1.f);
-
-				dynamic_cast<CMBLaserReady*>(pMBLaserReady)->Set_PcleDir(-_vec3(i, j, k)*1.f);
-
-				pMBLaserReady->addParticle();
-			}
-		}
-	}
-}
-
-void CMiddleBoss::BombState_Effect(void)
-{
-	CMBBomb* pMBBomb = nullptr;
-	if (!pMBBomb)
-		pMBBomb = dynamic_cast<CMBBomb*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"MBBomb"));
-
-	//_vec3 vPos;														//보스죽는이팩트
-	_vec3 vDir;
-	_vec3 min = { -1.0f ,-1.0f ,-1.0f };
-	for (_int i = -5; i < 6; i++)
-	{
-		for (_int j = -5; j < 6; j++)
-		{
-			for (_int k = -5; k < 6; k++)
-			{
-				D3DXVec3Normalize(&min, &_vec3(i, j, k));				
-				dynamic_cast<CMBBomb*>(pMBBomb)->Set_PclePos(m_vCorePos + _vec3(i, j-1.f, k)*.45f);
-
-				dynamic_cast<CMBBomb*>(pMBBomb)->Set_PcleDir((-min)* .5f);
-
-				pMBBomb->addParticle();
-			}
-		}
-	}
-}
-
-void CMiddleBoss::Dead_Effect(void)
-{
-	_float fSound = 1.f;
-	PlaySoundW(L"MBDead.wav", SOUND_MB, fSound);
-	CStaticCamera*		pStaticCam = nullptr;
-
-	if (pStaticCam == nullptr)
-		pStaticCam = dynamic_cast<CStaticCamera*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"StaticCamera"));
-	pStaticCam->CameraShaking();
-	if (pMyLayer != nullptr)
-	{
-
-		for (auto& iter : *(pMyLayer->Get_GamePairPtr()))
-		{
-			if (0 == _tcscmp(iter.first, L"CORE"))//코어위치
-			{
-				CTransAxisBox* pCoreBox = dynamic_cast<CTransAxisBox*>(iter.second);
-				_matrix matFinal;
-				pCoreBox->Get_Final(&matFinal);
-
-				m_vCorePos = { matFinal.m[3][0], matFinal.m[3][1], matFinal.m[3][2] };
-			}
-		}
-	}
-	CMFieldEffect* pMFieldEffect = nullptr;
-	if (!pMFieldEffect)
-		pMFieldEffect = dynamic_cast<CMFieldEffect*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"MFieldEffect"));
-
-	//_vec3 vPos;														//보스죽는이팩트
-	_vec3 vDir;
-	_vec3 min = { -1.0f ,-1.0f ,-1.0f };
-	for (_int i = -3; i < 3; i++)
-	{
-		for (_int j = -3; j < 3; j++)
-		{
-			for (_int k = -3; k < 3; k++)
-			{
-				D3DXVec3Normalize(&min, &_vec3(i, j, k));
-
-				dynamic_cast<CMFieldEffect*>(pMFieldEffect)->Set_PclePos(m_vCorePos + _vec3(i, j, k)*2.5f);
-
-				dynamic_cast<CMFieldEffect*>(pMFieldEffect)->Set_PcleDir(-_vec3(i, j, k));
-
-				pMFieldEffect->addParticle();
-			}
-		}
-	}
-}
-
-HRESULT CMiddleBoss::Create_Item()
-{
-	CGameObject*		pGameObject = nullptr;
-	_vec3 vItemPos;
-	m_pTransCom->Get_Info(INFO_POS, &vItemPos);
-
-	srand((unsigned int)time(NULL));
-	_int iRand = rand() % 3;
-
-	switch (iRand)
-	{
-	case 0:
-		pGameObject = CHealthPotion::Create(m_pGraphicDev, vItemPos);
-		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		Get_Layer(STAGE_ITEM)->Add_GameList(pGameObject);
-		break;
-
-	case 1:
-		pGameObject = CObtainBullet::Create(m_pGraphicDev, vItemPos);
-		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		Get_Layer(STAGE_ITEM)->Add_GameList(pGameObject);
-		break;
-
-	case 2:
-		pGameObject = CObtainDefense::Create(m_pGraphicDev, vItemPos);
-		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		Get_Layer(STAGE_ITEM)->Add_GameList(pGameObject);
-		break;
-	}
-
-	return S_OK;
-}
-
 HRESULT CMiddleBoss::Monster_Mapping(void)
 {
 	_vec3		vPos;
@@ -1400,13 +1198,13 @@ HRESULT CMiddleBoss::Create_Monster()
 		{
 			_tchar* szName = new _tchar[128]{};
 			wstring wName = L"Alien_boss_%d";
-			wsprintfW(szName, wName.c_str(), i);
+			wsprintfW(szName, wName.c_str(), m_iMonsterCnt);
 			NameList.push_back(szName);
 			pGameObject = CAlien::Create(m_pGraphicDev, vPos, szName);
 			NULL_CHECK_RETURN(pGameObject, E_FAIL);
 			FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+			m_iMonsterCnt++;
 		}
-
 		return S_OK;
 }
 
@@ -1492,10 +1290,13 @@ CMiddleBoss * CMiddleBoss::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3 & v
 
 void CMiddleBoss::Free(void)
 {
-	for (auto& iter : *(pMyLayer->Get_GamePairPtr()))
+	/*if (pMyLayer != nullptr)
 	{
-		iter.second->Kill_Obj();
-	}
+		for (auto& iter : *(pMyLayer->Get_GamePairPtr()))
+		{
+			iter.second->Kill_Obj();
+		}
+	}*/
 
 	for (auto iter : m_TcharList)
 	{

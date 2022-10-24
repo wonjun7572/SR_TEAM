@@ -58,8 +58,6 @@ void CLaserSpot::LateUpdate_Object(void)
 
 void CLaserSpot::Render_Object(void)
 {
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransCom->Get_WorldMatrixPointer());
-	m_pCubeCol->Render_Buffer();
 }
 
 HRESULT CLaserSpot::Add_Component(void)

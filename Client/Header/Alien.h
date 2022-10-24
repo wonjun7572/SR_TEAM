@@ -22,14 +22,14 @@ private:
 	_float				m_fTimeDelta = 0.f;
 	_float				m_fFrame = 0.f;
 private:
-	ALIENSTATEID	m_STATE;
-	ALIENSTATEID	m_BeforeState;
-	ALIENWALKID		m_WALK;
-	ALIENIDLEID     m_IDLE;
-	ALIENATTACKID   m_ATTACK;
-	ALIENSHOTTINGID m_SHOT;
-	_tchar*			m_MonsterName;
-	CLayer*			pMyLayer = nullptr;
+	ALIENSTATEID		m_STATE;
+	ALIENSTATEID		m_BeforeState;
+	ALIENWALKID			m_WALK;
+	ALIENIDLEID			m_IDLE;
+	ALIENATTACKID		m_ATTACK;
+	ALIENSHOTTINGID		m_SHOT;
+	_tchar*				m_MonsterName;
+	CLayer*				pMyLayer = nullptr;
 	_float				m_AnimationTime = 0.f;
 	_bool				m_bFirst = true;
 
@@ -44,7 +44,7 @@ private:
 	void				Run_Animation(const _float& AnimationSpeed);
 
 	
-	CDeadParticle*	    m_pDeadParticle;
+	CDeadParticle*	    m_pDeadParticle = nullptr;
 	CCubeCol*			m_pAnimationBox = nullptr;
 	list<_tchar*>		m_TcharList;
 

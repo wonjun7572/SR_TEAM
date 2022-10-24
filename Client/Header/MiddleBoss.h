@@ -51,7 +51,7 @@ private:
 	_float          m_fTimeDelta = 0.f;
 	_bool           m_bFirst = true;
 	_float          m_AnimationTime = 0.f;
-	CLayer*         pMyLayer;
+	CLayer*         pMyLayer = nullptr;
 	_tchar*         m_MonsterName;
 	list<_tchar*>   m_TcharList;
 
@@ -66,7 +66,6 @@ private:
 	MIDDLEBOSSDEADID            m_DEAD;
 
 private:
-	HRESULT            Create_Item();
 	HRESULT            Monster_Mapping(void);
 	HRESULT			   Create_Monster();
 

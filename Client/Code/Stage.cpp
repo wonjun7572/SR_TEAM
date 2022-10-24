@@ -99,8 +99,7 @@ HRESULT CStage::Ready_Scene(void)
 
 	CSoundMgr::GetInstance()->StopAll();
 
-	_float fBGMSound = 0.5f;
-	PlayBGM(L"Track_02.mp3", fBGMSound);
+	PlayBGM(L"Track_03.mp3", 1.f);
 
 	Set_SceneId(STAGE_SCENE);
 
@@ -332,9 +331,6 @@ HRESULT CStage::Ready_Layer_Environment(const _tchar * pLayerTag)
 	pGameObject = CMBLaser::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"MBLaser", pGameObject), E_FAIL);
-	
-
-
 
 	pGameObject = CDeadParticle::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
@@ -579,111 +575,109 @@ HRESULT CStage::Ready_Layer_Monster(const _tchar * pLayerTag)
 
 	CGameObject*      pGameObject = nullptr;
 
-	pGameObject = CSlime::Create(m_pGraphicDev, _vec3(35.301f, 0.6f, 26.3919f), L"Slime1");
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+	//pGameObject = CSlime::Create(m_pGraphicDev, _vec3(35.301f, 0.6f, 26.3919f), L"Slime1");
+	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
 
-	pGameObject = CSlime::Create(m_pGraphicDev, _vec3(35.0865f, 0.6f, 15.7369f), L"Slime2");
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+	//pGameObject = CSlime::Create(m_pGraphicDev, _vec3(35.0865f, 0.6f, 15.7369f), L"Slime2");
+	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
 
-	if (!vecFireMan.empty())
-	{
-		for (size_t i = 0; i < vecFireMan.size(); i++)
-		{
-			_tchar* szName = new _tchar[128]{};
-			wstring wName = L"Fireman_%d";
-			wsprintfW(szName, wName.c_str(), i);
-			NameList.push_back(szName);
-			vecFireMan[i].y += 0.5f;
-			pGameObject = CFireMan::Create(m_pGraphicDev, vecFireMan[i], szName);
-			NULL_CHECK_RETURN(pGameObject, E_FAIL);
-			FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
-		}
-	}
+	//if (!vecFireMan.empty())
+	//{
+	//	for (size_t i = 0; i < vecFireMan.size(); i++)
+	//	{
+	//		_tchar* szName = new _tchar[128]{};
+	//		wstring wName = L"Fireman_%d";
+	//		wsprintfW(szName, wName.c_str(), i);
+	//		NameList.push_back(szName);
+	//		vecFireMan[i].y += 0.5f;
+	//		pGameObject = CFireMan::Create(m_pGraphicDev, vecFireMan[i], szName);
+	//		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+	//	}
+	//}
+	//
+	//if (!vecIllusioner.empty())
+	//{
+	//	for (size_t i = 0; i < vecIllusioner.size(); i++)
+	//	{
+	//		_tchar* szName = new _tchar[128]{};
+	//		wstring wName = L"Illusioner_%d";
+	//		wsprintfW(szName, wName.c_str(), i);
+	//		NameList.push_back(szName);
+	//		vecIllusioner[i].y += 0.5f;
+	//		pGameObject = CIllusioner::Create(m_pGraphicDev, vecIllusioner[i], szName);
+	//		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+	//	}
+	//}
+	//
+	//if (!vecZombie.empty())
+	//{
+	//	for (size_t i = 0; i < vecZombie.size(); i++)
+	//	{
+	//		_tchar* szName = new _tchar[128]{};
+	//		wstring wName = L"Zombie_%d";
+	//		wsprintfW(szName, wName.c_str(), i);
+	//		NameList.push_back(szName);
+	//		vecZombie[i].y += 0.5f;
+	//		pGameObject = CZombie::Create(m_pGraphicDev, vecZombie[i], szName);
+	//		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+	//	}
+	//}
+	//pGameObject = CAlien::Create(m_pGraphicDev, _vec3(17.21f, 0.6f, 56.95f), L"Alien1");
+	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+	//
+	//pGameObject = CAlien::Create(m_pGraphicDev, _vec3(3.f, 0.6f, 126.f), L"Alien2");
+	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+	//
+	//pGameObject = CAlien::Create(m_pGraphicDev, _vec3(57.f, 0.6f, 109.f), L"Alien3");
+	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+	//
+	//pGameObject = CAlien::Create(m_pGraphicDev, _vec3(65.f, 0.6f, 41.f), L"Alien4");
+	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+
+	//pGameObject = CAlien::Create(m_pGraphicDev, _vec3(122.239f, 0.6f, 124.067f), L"Alien5");
+	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+
+	//pGameObject = CAlien::Create(m_pGraphicDev, _vec3(115.978f, 0.6f, 117.822f), L"Alien6");
+	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+
+	//pGameObject = CAlien::Create(m_pGraphicDev, _vec3(110.712f, 0.6f, 113.276f), L"Alien7");
+	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+
+	//pGameObject = CAlien::Create(m_pGraphicDev, _vec3(103.734f, 0.6f, 107.852f), L"Alien8");
+	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
 	
-	if (!vecIllusioner.empty())
-	{
-		for (size_t i = 0; i < vecIllusioner.size(); i++)
-		{
-			_tchar* szName = new _tchar[128]{};
-			wstring wName = L"Illusioner_%d";
-			wsprintfW(szName, wName.c_str(), i);
-			NameList.push_back(szName);
-			vecIllusioner[i].y += 0.5f;
-			pGameObject = CIllusioner::Create(m_pGraphicDev, vecIllusioner[i], szName);
-			NULL_CHECK_RETURN(pGameObject, E_FAIL);
-			FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
-		}
-	}
-	
-	if (!vecZombie.empty())
-	{
-		for (size_t i = 0; i < vecZombie.size(); i++)
-		{
-			_tchar* szName = new _tchar[128]{};
-			wstring wName = L"Zombie_%d";
-			wsprintfW(szName, wName.c_str(), i);
-			NameList.push_back(szName);
-			vecZombie[i].y += 0.5f;
-			pGameObject = CZombie::Create(m_pGraphicDev, vecZombie[i], szName);
-			NULL_CHECK_RETURN(pGameObject, E_FAIL);
-			FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
-		}
-	}
-	pGameObject = CAlien::Create(m_pGraphicDev, _vec3(17.21f, 0.6f, 56.95f), L"Alien1");
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
-	
-	pGameObject = CAlien::Create(m_pGraphicDev, _vec3(3.f, 0.6f, 126.f), L"Alien2");
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
-	
-	pGameObject = CAlien::Create(m_pGraphicDev, _vec3(57.f, 0.6f, 109.f), L"Alien3");
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
-	
-	pGameObject = CAlien::Create(m_pGraphicDev, _vec3(65.f, 0.6f, 41.f), L"Alien4");
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+	//pGameObject = CAlien::Create(m_pGraphicDev, _vec3(97.4515f, 0.6f, 102.725f), L"Alien9");
+	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
 
-	pGameObject = CAlien::Create(m_pGraphicDev, _vec3(122.239f, 0.6f, 124.067f), L"Alien5");
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+	//pGameObject = CZombie::Create(m_pGraphicDev, _vec3(109.979f, 0.6f, 100.235f), L"Zombie10");
+	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
 
-	pGameObject = CAlien::Create(m_pGraphicDev, _vec3(115.978f, 0.6f, 117.822f), L"Alien6");
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+	//pGameObject = CZombie::Create(m_pGraphicDev, _vec3(118.228f, 0.6f, 107.737f), L"Zombie11");
+	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
 
-	pGameObject = CAlien::Create(m_pGraphicDev, _vec3(110.712f, 0.6f, 113.276f), L"Alien7");
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+	//pGameObject = CIllusioner::Create(m_pGraphicDev, _vec3(110.44f, 0.6f, 116.f), L"Illusioner10");
+	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
 
-	pGameObject = CAlien::Create(m_pGraphicDev, _vec3(103.734f, 0.6f, 107.852f), L"Alien8");
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
-
-	pGameObject = CAlien::Create(m_pGraphicDev, _vec3(97.4515f, 0.6f, 102.725f), L"Alien9");
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
-
-
-	pGameObject = CZombie::Create(m_pGraphicDev, _vec3(109.979f, 0.6f, 100.235f), L"Zombie10");
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
-
-	pGameObject = CZombie::Create(m_pGraphicDev, _vec3(118.228f, 0.6f, 107.737f), L"Zombie11");
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
-
-
-	pGameObject = CIllusioner::Create(m_pGraphicDev, _vec3(110.44f, 0.6f, 116.f), L"Illusioner10");
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
-
-	pGameObject = CIllusioner::Create(m_pGraphicDev, _vec3(95.f, 0.6f, 106.f), L"Illusioner11");
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+	//pGameObject = CIllusioner::Create(m_pGraphicDev, _vec3(95.f, 0.6f, 106.f), L"Illusioner11");
+	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
@@ -746,7 +740,7 @@ HRESULT CStage::Ready_Layer_KEY(const _tchar * pLayerTag)
 	CGameObject*      pGameObject = nullptr;
 
 	// 3개의 키를 찾고 미들보스 방으로 진입.
-	pGameObject = CKey::Create(m_pGraphicDev, _vec3(2.73f, 0.6f, 125.133f), COLOR_BLUE);
+	pGameObject = CKey::Create(m_pGraphicDev, _vec3(79.5199f, 0.6f, 106.038f), COLOR_BLUE);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
 
@@ -1009,7 +1003,7 @@ HRESULT CStage::Ready_Layer_Creature(const _tchar * pLayerTag)
 
 	CGameObject*      pGameObject = nullptr;
 
-	for (int i = 0; i < 10; ++i)
+	/*for (int i = 0; i < 10; ++i)
 	{
 		_tchar* szName = new _tchar[256]{};
 		wstring wName = L"BATTLECRUISER_%d";
@@ -1035,7 +1029,7 @@ HRESULT CStage::Ready_Layer_Creature(const _tchar * pLayerTag)
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		dynamic_cast<CFlight*>(pGameObject)->Random();
 		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
-	}
+	}*/
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
@@ -1073,7 +1067,7 @@ HRESULT CStage::Ready_Layer_Trap(const _tchar * pLayerTag)
 
 	CGameObject*      pGameObject = nullptr;
 
-	if (!vecThrone.empty())
+	/*if (!vecThrone.empty())
 	{
 		for (size_t i = 0; i < vecThrone.size(); i++)
 		{
@@ -1127,7 +1121,7 @@ HRESULT CStage::Ready_Layer_Trap(const _tchar * pLayerTag)
 
 	pGameObject = CTerret::Create(m_pGraphicDev, _vec3(3.617f, 0.6f, 87.122f), L"Terret6");
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);*/
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 

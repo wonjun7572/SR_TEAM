@@ -143,16 +143,15 @@ void CFlightBomb::Effect()
 
 	m_pTransCom->Get_Info(INFO_POS, &vPos);
 	vPos.y = 0.5f;
-	for (_int i = -5; i < 5; i++)
+	for (_float i = -5.f; i < 5.f; i++)
 	{
-		for (_int j = -5; j < 5; j++)
+		for (_float j = -5.f; j < 5.f; j++)
 		{
-			for (_int k = -5; k < 5; k++)
+			for (_float k = -5.f; k < 5.f; k++)
 			{
 				D3DXVec3Normalize(&min, &_vec3(i, j, k));
 
 				dynamic_cast<CTargetPointEffect*>(m_pTargetPointEffect)->Set_PclePos(vPos + min*4.f);
-
 				dynamic_cast<CTargetPointEffect*>(m_pTargetPointEffect)->Set_PcleDir(min);
 				dynamic_cast<CTargetPointEffect*>(m_pTargetPointEffect)->Set_PcleMoveDir(max);
 

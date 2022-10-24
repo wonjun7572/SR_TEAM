@@ -71,7 +71,7 @@ public:
 	virtual _int	Update_Object(const _float& fTimeDelta) override;
 	virtual void	LateUpdate_Object(void) override;
 	virtual void	Render_Object(void) override;
-	virtual HRESULT		Set_Material()override;
+	virtual HRESULT	Set_Material()override;
 
 	void			Key_Skill();
 
