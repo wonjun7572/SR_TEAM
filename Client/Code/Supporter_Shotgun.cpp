@@ -106,6 +106,11 @@ _int CSupporter_Shotgun::Update_Object(const _float & fTimeDelta)
 	if (vPosition.y > 0.6f)
 	{
 		m_STATE = SHOTGUNSUPPORT_DROP;
+		if (vPosition.y < 0.7f)
+		{
+			_float fSound = 1.f;
+			Engine::PlaySoundGun(L"SupporterDrop.wav", SOUND_GET, fSound);
+		}
 	}
 	else if (m_bGetOrder)
 	{

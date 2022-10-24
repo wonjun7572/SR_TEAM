@@ -16,7 +16,9 @@ public:
 public:
 	void         Set_Pos(const _vec3& vPos);
 	void         Set_Dir(const _vec3& vDir) { m_vDirection = vDir; }
-	void         Restore(void) { m_bDead = false; }
+	void         Restore(void) { m_bDead = false, m_fTimeDelta = 0.f;	_float fSound = 1.f;
+	Engine::PlaySoundGun(L"exbullet.wav", SOUND_EFFECT, fSound);
+	}
 private:
 	void         Collision_check(void);
 	void         Effect(void);

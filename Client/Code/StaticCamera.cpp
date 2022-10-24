@@ -668,6 +668,9 @@ void CStaticCamera::Camera_Shaking(const _float& _fTimeDelta)
 		{
 			m_fFrame = 0.f;
 			m_bPlayerHit = false;
+			_float fSound = 1.f;
+			PlaySoundGun(L"Player_Hit.mp3", SOUND_MB, fSound);
+			
 		}
 	}
 

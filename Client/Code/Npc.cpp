@@ -56,6 +56,7 @@ _int CNpc::Update_Object(const _float & fTimeDelta)
 	}
 
 	Projection_Effect();
+	Projection_Sound();
 	return 0;
 }
 
@@ -82,6 +83,7 @@ void CNpc::Render_Object(void)
 	{
 		_uint iTexindex = _uint(m_fTexFrame);
 		m_pQuest1TexCom->Set_Texture(m_pShaderCom, "g_DefaultTexture", iTexindex);
+
 	}
 	else if (m_bQuest2)
 	{
@@ -152,6 +154,7 @@ void CNpc::Quest1(const _float& fTimeDelta)
 	pPlayer->Get_Info(INFO_POS, &vPlayerPos);
 	if (!m_bInit)
 	{
+		
 		m_vPlayerPos = vPlayerPos;
 		D3DXVec3Normalize(&vPlayerLook, &vPlayerLook);
 		m_vPlayerPos.x += vPlayerLook.x * 10.f;
@@ -164,8 +167,9 @@ void CNpc::Quest1(const _float& fTimeDelta)
 	if (m_fTransFrame0 <= 1.f)
 	{
 		m_bEffect1 = true;
-
+	
 		m_bQuest1 = true;															//켜주는곳
+
 		m_fTransFrame0 += fTimeDelta * 0.2f;
 		_vec3 vTransLerp;
 		D3DXVec3Lerp(&vTransLerp, &vPlayerPos, &m_vPlayerPos, m_fTransFrame0);
@@ -203,6 +207,8 @@ void CNpc::Quest1(const _float& fTimeDelta)
 		}
 		else
 		{																				//꺼주는곳
+			m_bSound1 = true;
+
 			m_bQuest1 = false;
 			m_bInit = false;
 			m_bQuestText1 = true;
@@ -224,6 +230,7 @@ void CNpc::Quest2(const _float & fTimeDelta)
 	pPlayer->Get_Info(INFO_POS, &vPlayerPos);
 	if (!m_bInit)
 	{
+		
 		m_vPlayerPos = vPlayerPos;
 		D3DXVec3Normalize(&vPlayerLook, &vPlayerLook);
 		m_vPlayerPos.x += vPlayerLook.x * 1.f;
@@ -275,6 +282,8 @@ void CNpc::Quest2(const _float & fTimeDelta)
 		}
 		else
 		{
+			m_bSound1 = true;
+
 			m_bEffect2 = false;
 			m_bQuest2 = false;
 			m_bInit = false;
@@ -296,6 +305,7 @@ void CNpc::Quest3(const _float & fTimeDelta)
 	pPlayer->Get_Info(INFO_POS, &vPlayerPos);
 	if (!m_bInit)
 	{
+
 		m_vPlayerPos = vPlayerPos;
 		D3DXVec3Normalize(&vPlayerLook, &vPlayerLook);
 		m_vPlayerPos.x += vPlayerLook.x * 1.f;
@@ -346,6 +356,8 @@ void CNpc::Quest3(const _float & fTimeDelta)
 		}
 		else
 		{
+			m_bSound1 = true;
+
 			m_bEffect3 = false;
 			m_bQuest3 = false;
 			m_bInit = false;
@@ -416,6 +428,7 @@ void CNpc::Finish(const _float & fTimeDelta)
 		}
 		else
 		{
+			m_bSound1 = true;
 			m_bEffect4 = false;
 			m_bQuest4 = false;
 			m_bInit = false;
@@ -436,6 +449,13 @@ void CNpc::Projection_Effect(void)
 {
 	if (m_bQuest1)
 	{
+		if (!m_bSound2)
+		{
+			m_bSound2 = true;
+			_float fSound = 1.f;
+			Engine::PlaySoundGun(L"NPC.wav", SOUND_EFFECT, fSound);
+		}
+		
 		CProjectionEffect* m_pProjectionEffect = nullptr;
 		if (!m_pProjectionEffect)
 		m_pProjectionEffect = dynamic_cast<CProjectionEffect*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"ProjectionEffect"));
@@ -454,7 +474,7 @@ void CNpc::Projection_Effect(void)
 		{
 			for (_int j = -7; j < 7; j++)
 			{
-				for (_int k = -7; k < 7; k++)
+				for (_int k = -7; k < 0; k++)
 				{
 					//D3DXVec3Normalize(&min, &_vec3(i, j, k));
 		
@@ -524,6 +544,12 @@ void CNpc::Projection_Effect(void)
 	}
 	if (m_bEffect4)
 	{
+		if (!m_bSound3)
+		{
+			m_bSound3 = true;
+			_float fSound = 1.f;
+			Engine::PlaySoundGun(L"NPC.wav", SOUND_REFLECT, fSound);
+		}
 		CTargetPointEffect* m_pTargetPointEffect = nullptr;
 		if (!m_pTargetPointEffect)
 			m_pTargetPointEffect = dynamic_cast<CTargetPointEffect*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"TargetPointEffect"));
@@ -550,6 +576,19 @@ void CNpc::Projection_Effect(void)
 			}
 		}
 	}
+}
+
+void CNpc::Projection_Sound(void)
+{
+	if(m_bSound1)
+	{
+		_float fSound = 1.f;
+		Engine::PlaySoundGun(L"Mission.wav", SOUND_EFFECT, fSound);
+		m_bSound1 = false;
+	}
+	
+
+
 }
 
 CNpc * CNpc::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3& vPos)

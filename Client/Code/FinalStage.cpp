@@ -340,7 +340,13 @@ HRESULT CFinalStage::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 	CGameObject*		pGameObject = nullptr;
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
+	pGameObject = CExBulletEffect::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"ExBulletEffect", pGameObject), E_FAIL);
 
+	pGameObject = CMBLaser::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"MBLaser", pGameObject), E_FAIL);
 	return S_OK;
 }
 

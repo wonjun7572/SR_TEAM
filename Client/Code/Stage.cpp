@@ -189,6 +189,22 @@ HRESULT CStage::Ready_Layer_Environment(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"ShotParticle", pGameObject), E_FAIL);
 
+	pGameObject = CMFieldEffect::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"MFieldEffect", pGameObject), E_FAIL);
+
+	pGameObject = CMHitEffect::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"MHitEffect", pGameObject), E_FAIL);
+
+	pGameObject = CMBBomb::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"MBBomb", pGameObject), E_FAIL);
+
+	pGameObject = CMBLaserReady::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"MBLaserReady", pGameObject), E_FAIL);
+
 	pGameObject = CItemCubeEffect::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"ItemCubeEffect", pGameObject), E_FAIL)

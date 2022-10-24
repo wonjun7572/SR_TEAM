@@ -418,6 +418,21 @@
     <Filter Include="02. GameObject\01. For_Stage\09. UI\NPC">
       <UniqueIdentifier>{af8ade08-4a17-4a0b-abff-8fd1498828e8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\MiddleBoss\ExBulletEffect">
+      <UniqueIdentifier>{e58c01fb-f4ac-42ef-bd7e-0997f0ada0c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\MiddleBoss\MBLaser">
+      <UniqueIdentifier>{fa0b8f0d-1fd8-49df-ace3-b2121f275ca6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\MiddleBoss\MHitEffect">
+      <UniqueIdentifier>{56dad455-f1e6-47da-a1c0-345c4bb44801}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\MiddleBoss\MBLaserReady">
+      <UniqueIdentifier>{406841bb-05a0-4693-9a1d-46b255790dc7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\MiddleBoss\MBBomb">
+      <UniqueIdentifier>{a9380f2e-ae85-43a6-9709-11713961f3f9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -957,11 +972,20 @@
     <ClInclude Include="..\Header\KrakenHit.h">
       <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\KrakenEffect</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\MBLaser.h">
-      <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\MiddleBoss</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\ExBulletEffect.h">
-      <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\MiddleBoss</Filter>
+      <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\MiddleBoss\ExBulletEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\MBLaser.h">
+      <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\MiddleBoss\MBLaser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\MHitEffect.h">
+      <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\MiddleBoss\MHitEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\MBLaserReady.h">
+      <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\MiddleBoss\MBLaserReady</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\MBBomb.h">
+      <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\MiddleBoss\MBBomb</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1478,11 +1502,20 @@
     <ClCompile Include="..\Code\KrakenHit.cpp">
       <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\KrakenEffect</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\MBLaser.cpp">
-      <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\MiddleBoss</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\ExBulletEffect.cpp">
-      <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\MiddleBoss</Filter>
+      <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\MiddleBoss\ExBulletEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\MBLaser.cpp">
+      <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\MiddleBoss\MBLaser</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\MHitEffect.cpp">
+      <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\MiddleBoss\MHitEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\MBLaserReady.cpp">
+      <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\MiddleBoss\MBLaserReady</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\MBBomb.cpp">
+      <Filter>02. GameObject\01. For_Stage\98. Particle\05. CubeParticle\MiddleBoss\MBBomb</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

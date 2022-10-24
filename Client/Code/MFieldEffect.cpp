@@ -6,7 +6,7 @@
 CMFieldEffect::CMFieldEffect(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CPSystem(pGraphicDev)
 {
-	m_fSize = .025f;
+	m_fSize = .25f;
 	m_vbSize = 2048;
 	m_vbOffset = 0;
 	m_vbBatchSize = 512;
@@ -30,9 +30,12 @@ _int CMFieldEffect::Update_Object(const _float & fTimeDelta)
 	for (list<ATTRIBUTE>::iterator iter = m_particles.begin(); iter != m_particles.end(); iter++)
 	{
 		iter->fAge += fTimeDelta;
-		iter->vPos += (iter->vVelocity) * fTimeDelta*15.;
-		iter->vPos += m_vMoveDir*fTimeDelta * 150;
-
+		if (iter->vPos.y > 0.25)
+		{
+			iter->vPos += (iter->vVelocity) * fTimeDelta*25.f;
+			iter->vPos += m_vMoveDir*fTimeDelta * 150;
+			iter->vPos.y -= 5 * fTimeDelta*(iter->fAge)*(iter->fAge);
+		}
 		if (iter->fAge > iter->fLifeTime)
 		{
 			iter->bAlive = false;
@@ -67,9 +70,9 @@ HRESULT CMFieldEffect::Add_Component(void)
 {
 	CComponent* pComponent = nullptr;
 
-	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Clone_Proto(L"LightGreen_Tex"));
+	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Clone_Proto(L"Red_Tex"));
 	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"LightGreen_Tex", pComponent });
+	m_mapComponent[ID_STATIC].insert({ L"Red_Tex", pComponent });
 
 	/*pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Clone_Proto(L"STATICPARTICLE_TEX"));
 	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
@@ -100,14 +103,18 @@ void CMFieldEffect::resetParticle(ATTRIBUTE * attribute)
 	attribute->bAlive = true;
 	CTransform* pTransform = nullptr;
 
-	/*_vec3 min = _vec3(-1.0f, -1.0f, -1.0f);
+	_vec3 min = _vec3(-1.0f, -1.0f, -1.0f);
 	_vec3 max = _vec3(1.0f, 1.0f, 1.0f);
-	GetRandomVector(&attribute->vVelocity, &min, &max);
-	D3DXVec3Normalize(&attribute->vVelocity, &attribute->vVelocity);*/
-	attribute->vPos = m_vMFieldEffectPos;
-	attribute->vVelocity = m_vDir * 1.f;
-	attribute->dwColor = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+	_vec3 vRand = _vec3(1.0f, 1.0f, 1.0f);
+	_float fRand = (rand() % 3) * 0.3f;
+	GetRandomVector(&vRand, &min, &max);
+	
+	attribute->vPos = m_vMFieldEffectPos + (vRand*2.f);
+	attribute->vVelocity = (m_vDir-vRand) * 1.f;
+	//attribute->dwColor = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+
+	attribute->dwColor = D3DXCOLOR(fRand, fRand, fRand, 1.f);
 	attribute->fAge = 0.0f;
-	attribute->fLifeTime = .5f;
+	attribute->fLifeTime = 10.f;
 }
 

@@ -218,6 +218,7 @@ void CCubePlayer::Key_Skill()
 
 			if (Key_Pressing(DIK_W))
 			{
+				
 				CGameObject* pGameObject = CHyperionStrike::Create(m_pGraphicDev, vPos, DIR_PX);
 				NULL_CHECK_RETURN(pGameObject, );
 				FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), );
@@ -292,6 +293,7 @@ void CCubePlayer::CoolTimer(void)
 
 void CCubePlayer::KnuckDown(const _float & fDamage, const _float& fDistance)
 {
+
 	if (m_fGlobal_Cooltime >= 1.f)
 	{
 		m_tAbility->fHp -= fDamage;
@@ -585,6 +587,10 @@ void CCubePlayer::Animation(void)
 
 void CCubePlayer::Move()
 {
+
+	_float fSound = .5f;
+	if (Get_DIKeyState(DIK_W))
+		PlaySoundW(L"Walk.mp3", SOUND_REFLECT, fSound);
 	_vec3 vPos;
 	m_pBodyWorld->Get_Info(INFO_POS, &vPos);
 
@@ -639,7 +645,7 @@ D3DXVec3Normalize(&vDir, &vDir);
 	{
 		m_pBodyWorld->Get_Info(INFO_LOOK, &vDir);
 		D3DXVec3Normalize(&vDir, &vDir);
-
+		
 	}
 	else if (Get_DIKeyState(DIK_S))
 	{
@@ -663,7 +669,7 @@ D3DXVec3Normalize(&vDir, &vDir);
 	{
 		if (Key_Down(DIK_G))
 		{
-			_float fGunSound = 1.f;
+			_float fGunSound = .5f;
 			Engine::PlaySoundGun(L"Grenade.wav", SOUND_EFFECT, fGunSound);
 			m_pProjectileParicle->addParticle();
 		}
@@ -700,22 +706,9 @@ D3DXVec3Normalize(&vDir, &vDir);
 	}
 	if (Key_Pressing(DIK_C))
 	{
-
-		_vec3 vPlayerPos;
-		m_pPlayerTransCom->Get_Info(INFO_POS, &vPlayerPos);
-
-		if (!m_pKrakenEffectParticle)
-			m_pKrakenEffectParticle = dynamic_cast<CKrakenEffect*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"KraKenEffect"));
-		if (m_pKrakenEffectParticle != nullptr)
-		{
-			m_pKrakenEffectParticle->Set_PclePos(vPos);
-			for (_int i = 0; i < 150; ++i)
-			{
-				m_pKrakenEffectParticle->addParticle();
-			}
-		}
-		if (!m_pKrakenSmoke)
-			m_pKrakenSmoke = dynamic_cast<CKrakenParticle*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"KrakenParticle"));
+		
+		/*if (!m_pKrakenSmoke)
+			m_pKrakenSmoke = dynamic_cast<CMFieldEffect*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"KrakenParticle"));
 		if (m_pKrakenSmoke != nullptr)
 		{
 			m_pKrakenSmoke->Set_PclePos(vPos);
@@ -724,7 +717,7 @@ D3DXVec3Normalize(&vDir, &vDir);
 				m_pKrakenSmoke->addParticle();
 			}
 
-		}
+		}*/
 
 
 		/*if (!m_pKrakenHit)
@@ -738,33 +731,7 @@ D3DXVec3Normalize(&vDir, &vDir);
 			}
 		}*/
 
-
-
-		//	//_vec3 vPos;														//보스죽는이팩트
-		//_vec3 vPos;														//대쉬이펙트하려던것
-		//_vec3 vDir;
-		//m_pTransform->Get_Info(INFO_POS, &vPos);
-		//_vec3 min = { -1.0f ,-1.0f ,-1.0f };
-		//m_pTransform->Get_Info(INFO_POS, &vPos);
-		//vPos.x -= 5.f;
-		//vPos.y += 5.f;
-		//vPos.z -= 5.f;
-		//for (_int i = -5; i < 5; i++)
-		//{
-		//	for (_int j = -5; j < 5; j++)
-		//	{
-		//		for (_int k = -5; k < 5; k++)
-		//		{
-		//			D3DXVec3Normalize(&min, &_vec3(i, j, k));						
-
-		//			dynamic_cast<CRoundEffect*>(m_pRoundEffect)->Set_PclePos(vPos + _vec3(i, j, k)*0.1f);
-
-		//			dynamic_cast<CRoundEffect*>(m_pRoundEffect)->Set_PcleDir(min);
-
-		//			m_pRoundEffect->addParticle();
-		//		}
-		//	}
-		//}
+		
 
 
 		//_vec3 vPos;														//대쉬이펙트하려던것

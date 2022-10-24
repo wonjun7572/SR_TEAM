@@ -131,11 +131,17 @@ _int CSupporter_Uzi::Update_Object(const _float & fTimeDelta)
 	else if(vPosition.y < 2.f)
 	{
 		m_bSetCam = false;
+		
 	}
 
 	if (vPosition.y > 0.6f)
 	{
 		m_STATE = UZISUPPORTER_DROP;
+		if (vPosition.y < 0.7f)
+		{
+			_float fSound = 1.f;
+			Engine::PlaySoundGun(L"SupporterDrop.wav", SOUND_GET, fSound);
+		}
 	}
 	else if (m_bGetOrder)
 	{

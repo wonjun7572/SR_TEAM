@@ -15,7 +15,8 @@ CExBullet::~CExBullet()
 HRESULT CExBullet::Ready_Object(const _vec3 * pPos, const _vec3 * pDir, _float _fSpeed)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
-
+	_float fSound = 1.f;
+	Engine::PlaySoundGun(L"exbullet.wav", SOUND_EFFECT, fSound);
 	m_pTransCom->Set_Scale(0.1f, 0.1f, 1.f);
 	m_pTransCom->m_vInfo[INFO_POS] = *pPos;
 	m_pTransCom->Static_Update();
@@ -75,12 +76,16 @@ _int CExBullet::Update_Object(const _float & fTimeDelta)
 void CExBullet::LateUpdate_Object(void)
 {
 	Collision_check();
-
+	if (m_fTimeDelta >= 5.f)
+	{
+		this->Kill_Obj();
+	}
 	CGameObject::LateUpdate_Object();
 }
 
 void CExBullet::Render_Object(void)
 {
+	
 	m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
 	m_pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_DESTALPHA);
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransCom->Get_WorldMatrixPointer());
@@ -179,14 +184,14 @@ void CExBullet::Effect(void)
 
 	m_pTransCom->Get_Info(INFO_POS, &vPos);
 	m_pTransCom->Get_Info(INFO_POS, &vPos);
-	for (_int i = -2; i < 2; i++)
+	for (_int i = -3; i < 3; i++)
 	{
-		for (_int j = -2; j < 2; j++)
+		for (_int j = -3; j < 3; j++)
 		{
-			for (_int k = -2; k < 2; k++)
+			for (_int k = -3; k < 3; k++)
 			{
 				D3DXVec3Normalize(&min, &_vec3(i, j, k));
-				dynamic_cast<CExBulletEffect*>(pExBulletEffect)->Set_PclePos(vPos + _vec3(i, j, k)*.25f);
+				dynamic_cast<CExBulletEffect*>(pExBulletEffect)->Set_PclePos(vPos + min*0.125);
 				dynamic_cast<CExBulletEffect*>(pExBulletEffect)->Set_PcleDir(-(vPos + _vec3(i, j, k)*1.f - vPos));
 				//dynamic_cast<CHyperionEffect*>(pHyperionEffect)->Set_PcleMoveDir(max*0.01);
 				pExBulletEffect->addParticle();
