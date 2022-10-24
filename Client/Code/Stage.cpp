@@ -99,8 +99,7 @@ HRESULT CStage::Ready_Scene(void)
 
 	CSoundMgr::GetInstance()->StopAll();
 
-	_float fBGMSound = 0.5f;
-	PlayBGM(L"Track_02.mp3", fBGMSound);
+	PlayBGM(L"Track_03.mp3", 1.f);
 
 	Set_SceneId(STAGE_SCENE);
 

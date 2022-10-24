@@ -68,10 +68,10 @@ public:
 	void			Set_Ending(_bool bEnd) { m_bEnding = bEnd; }
 	_bool			m_bEnding = false;/////////////////
 
-	_vec3			m_vEndingPos = _vec3(0.f, 0.f, 0.f);
-
 	_bool			m_bLeaveMap = false;
 
+	
+	_bool			m_bDest = false;
 	_float			m_fEndingFrame = 0.f;
 	_bool			m_bRide = false;
 
@@ -91,6 +91,9 @@ private:
 	_float			m_fTurn = 0.f;
 
 	_vec3			m_vDestination = _vec3(0.f, 0.f, 0.f);
+
+	_vec3           m_vEndingDest = _vec3(0.f, 0.f, 0.f);
+	_vec3           m_vEndingDest2 = _vec3(0.f, 0.f, 0.f);
 
 	_vec3			vAfterDir = _vec3(0, 0, 0);
 

@@ -62,6 +62,9 @@ HRESULT CKrakenLeg::Ready_Object(const _vec3 & vPos, _tchar * Name)
 	m_pSphereTransCom->Set_Pos(vAnimationPos.x, vAnimationPos.y, vAnimationPos.z);
 	m_pSphereTransCom->Static_Update();
 
+
+	Engine::PlaySoundW(L"earth_Change1.mp3", SOUND_EARTH, 1.f);
+
 	return S_OK;
 }
 
@@ -255,7 +258,7 @@ void CKrakenLeg::LateUpdate_Object(void)
 			{
 				SHAKE_Animation_Run();
 				Run_Animation(15.f);
-				m_pTransCom->Set_Pos(vPos.x, vPos.y + 0.1f, vPos.z);
+				m_pTransCom->Set_Pos(vPos.x, vPos.y + 0.05f, vPos.z);
 				m_pTransCom->Static_Update();
 				Kraken_ReviveParticle();
 			}
@@ -397,7 +400,7 @@ _int CKrakenLeg::Update_Pattern(_float fTimeDelta)
 			if (m_SMASH == KRAKENSMASH_6)
 			{	
 				AttackHit(10.f, 30.f);
-
+				Engine::PlaySoundW(L"ZBgHit00.wav", SOUND_KRAKEN1, 1.f);
 				Kraken_EffectParticle();
 			}
 		}
@@ -411,6 +414,7 @@ _int CKrakenLeg::Update_Pattern(_float fTimeDelta)
 			if (m_LEGSWING >= LEGSWING_6 && m_LEGSWING <= LEGSWING_17)
 			{
 				AttackHit(10.f, 40.f);
+				Engine::PlaySoundW(L"UNrWht00.wav", SOUND_KRAKEN2, 1.f);
 				Kraken_ReviveParticle();
 			}
 		}
@@ -423,6 +427,7 @@ _int CKrakenLeg::Update_Pattern(_float fTimeDelta)
 			if (m_LURKER == KRAKENLURKER_2)
 			{
 				AttackHit(10.f, 30.f);
+				Engine::PlaySoundW(L"ZLrkFir2.wav", SOUND_KRAKEN3, 1.f);
 				Kraken_LukerParticle();
 
 			}

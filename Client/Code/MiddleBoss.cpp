@@ -39,7 +39,7 @@ CMiddleBoss::~CMiddleBoss()
 HRESULT CMiddleBoss::Ready_Object(const _vec3 & vPos, _tchar * Name)
 {
 	m_tAbility = new MIDDLEBOSSABILITY;
-	m_tAbility->fMaxHp = 5000.f;
+	m_tAbility->fMaxHp = 100.f;
 	m_tAbility->fCurrentHp = m_tAbility->fMaxHp;
 	m_tAbility->fDamage = 5.f;
 	m_tAbility->strObjTag = L"MiddleBoss";
@@ -91,6 +91,7 @@ _int CMiddleBoss::Update_Object(const _float & fTimeDelta)
 		m_pComboUI->KillCntPlus();
 		_float fMiddle_death = 1.5f;
 		PlaySoundGun(L"Middle_Death.wav", SOUND_EFFECT, fMiddle_death);
+		
 		return -1;
 	}
 
@@ -201,6 +202,9 @@ void CMiddleBoss::LateUpdate_Object(void)
 
 		m_pTransCom->Set_Pos(vPos.x, vPos.y - 0.1f, vPos.z);
 		m_pTransCom->Static_Update();
+
+		CGameObject* pGameObject = Get_GameObject(STAGE_GAMELOGIC, L"LaserSpot");
+		dynamic_cast<CLaserSpot*>(pGameObject)->Attack_Permit(false);
 
 		m_pMonsterUI->Off_Switch();
 		dynamic_cast<CStaticCamera*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"StaticCamera"))->CameraShaking();
@@ -1286,13 +1290,13 @@ CMiddleBoss * CMiddleBoss::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3 & v
 
 void CMiddleBoss::Free(void)
 {
-	if (pMyLayer != nullptr)
+	/*if (pMyLayer != nullptr)
 	{
 		for (auto& iter : *(pMyLayer->Get_GamePairPtr()))
 		{
 			iter.second->Kill_Obj();
 		}
-	}
+	}*/
 
 	for (auto iter : m_TcharList)
 	{
