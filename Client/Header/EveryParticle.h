@@ -33,8 +33,10 @@
 #include "DeadParticle.h"
 #include "MBLaser.h"
 #include "ExBulletEffect.h"
-
-
+#include "MFieldEffect.h"
+#include "MHitEffect.h"
+#include "MBLaserReady.h"
+#include "MBBomb.h"
 /*	
 CFlameEffect* m_pFlameEffectParticle = nullptr;
 CIceEffect* m_pIceEffectParticle = nullptr;

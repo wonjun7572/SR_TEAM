@@ -40,6 +40,8 @@ _int CTestCube::Update_Object(const _float& fTimeDelta)
 	if (m_bDead)
 	{	
 		m_pStaticCam->CameraShaking();
+		_float fGunSound = 1.f;
+		Engine::PlaySoundW(L"EXPLOLRG.WAV", SOUND_DOOR, fGunSound);
 		return -1;
 	}
 	_vec3 vPos;
@@ -222,8 +224,8 @@ HRESULT CTestCube::Interact(void)
 		if (m_iTexIndex == 37 || m_iTexIndex == 99) //초록색문
 			if (vPos.y < 15)
 			{
-				_float fGunSound = 1.f;
-				Engine::PlaySoundGun(L"portal_2.wav", SOUND_EFFECT, fGunSound);
+				_float fGunSound = .5f;
+				Engine::PlaySoundW(L"portal_2.wav", SOUND_DOOR, fGunSound);
 				m_bDoorOpen = true;
 				CGameObject* pGameObject = Get_GameObject(STAGE_CHARACTER, L"PLAYER");
 				dynamic_cast<CCubePlayer*>(pGameObject)->Set_DoorOpen(true);
@@ -236,6 +238,7 @@ HRESULT CTestCube::Interact(void)
 		{
 			if (vPos.y <= 5)
 			{
+			
 				m_bDead = true;
 				m_bDoorUp = true;
 				m_bCameraShaking = true;
@@ -243,8 +246,6 @@ HRESULT CTestCube::Interact(void)
 				{
 					m_pBrownCloudEffect->addParticle();
 				};
-				_float fGunSound = 1.f;
-				Engine::PlaySoundGun(L"EXPLOLRG.wav", SOUND_EFFECT, fGunSound);
 			}
 		}
 	}
@@ -274,7 +275,7 @@ HRESULT CTestCube::Interact(void)
 	{ 
 		if (vPos.y > -15)
 		{
-			vPos.y -= 0.1f;
+			vPos.y -= 0.1f;			
 			m_pTransCom->Set_Pos(vPos.x, vPos.y, vPos.z);
 		}
 	}
@@ -288,15 +289,20 @@ HRESULT CTestCube::Interact(void)
 		m_pBrownCloudEffect->Set_PclePos(vPos);
 		if (vPos.y > 5)
 		{
+			if (vPos.y <= 6.)
+			{
+				_float fGunSound = 1.f;
+				Engine::PlaySoundW(L"EXPLOLRG.WAV", SOUND_DOOR, fGunSound);
+			}
 			vPos.y -= 1.f;
 			m_pTransCom->Set_Pos(vPos.x, vPos.y, vPos.z);
 			m_fTimer = 0.f;
 		}
 		if (vPos.y <= 5)
 		{
-		
+			
 			m_bDoorFall = false;	
-
+			
 			if (m_bCameraShaking)
 			{
 				m_pStaticCam->CameraShaking();

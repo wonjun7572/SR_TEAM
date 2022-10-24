@@ -3,8 +3,6 @@
 #include "PoolMgr.h"
 #include "Explosion.h"
 #include "ExBulletEffect.h"
-#include "StaticCamera.h"
-
 CExBullet::CExBullet(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
 {
@@ -17,7 +15,8 @@ CExBullet::~CExBullet()
 HRESULT CExBullet::Ready_Object(const _vec3 * pPos, const _vec3 * pDir, _float _fSpeed)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
-
+	_float fSound = 1.f;
+	Engine::PlaySoundGun(L"exbullet.wav", SOUND_EFFECT, fSound);
 	m_pTransCom->Set_Scale(0.1f, 0.1f, 1.f);
 	m_pTransCom->m_vInfo[INFO_POS] = *pPos;
 	m_pTransCom->Static_Update();
@@ -49,11 +48,10 @@ _int CExBullet::Update_Object(const _float & fTimeDelta)
 
 		// À§Ä¡ ¹Ù²ãÁà¾ßÇÔ
 		CGameObject* pGameObject = CExplosion::Create(m_pGraphicDev, _vec3(vPos.x, vPos.y, vPos.z), szName);
-		dynamic_cast<CStaticCamera*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"StaticCamera"))->CameraShaking();
-
 		NULL_CHECK_RETURN(pGameObject, -1);
 		CLayer* pLayer = Get_Layer(STAGE_SKILL);
 		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), -1);
+
 		CPoolMgr::GetInstance()->Collect_ExBullet(this);
 		return -1;
 	}
@@ -78,17 +76,26 @@ _int CExBullet::Update_Object(const _float & fTimeDelta)
 void CExBullet::LateUpdate_Object(void)
 {
 	Collision_check();
-
+	if (m_fTimeDelta >= 5.f)
+	{
+		this->Kill_Obj();
+	}
 	CGameObject::LateUpdate_Object();
 }
 
 void CExBullet::Render_Object(void)
 {
+	
 	m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
 	m_pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_DESTALPHA);
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransCom->Get_WorldMatrixPointer());
 	m_pTexture->Set_Texture();
 	m_pCube->Render_Buffer();
+
+	//m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+	//m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pHitboxTransCom->Get_WorldMatrixPointer());
+	//m_pHitbox->Render_Buffer();
+	//m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 	m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
 }
 
@@ -177,14 +184,14 @@ void CExBullet::Effect(void)
 
 	m_pTransCom->Get_Info(INFO_POS, &vPos);
 	m_pTransCom->Get_Info(INFO_POS, &vPos);
-	for (_float i = -2.f; i < 2.f; i++)
+	for (_int i = -3; i < 3; i++)
 	{
-		for (_float j = -2.f; j < 2.f; j++)
+		for (_int j = -3; j < 3; j++)
 		{
-			for (_float k = -2.f; k < 2.f; k++)
+			for (_int k = -3; k < 3; k++)
 			{
 				D3DXVec3Normalize(&min, &_vec3(i, j, k));
-				dynamic_cast<CExBulletEffect*>(pExBulletEffect)->Set_PclePos(vPos + _vec3(i, j, k)*.25f);
+				dynamic_cast<CExBulletEffect*>(pExBulletEffect)->Set_PclePos(vPos + min*0.125);
 				dynamic_cast<CExBulletEffect*>(pExBulletEffect)->Set_PcleDir(-(vPos + _vec3(i, j, k)*1.f - vPos));
 				//dynamic_cast<CHyperionEffect*>(pHyperionEffect)->Set_PcleMoveDir(max*0.01);
 				pExBulletEffect->addParticle();
@@ -200,7 +207,8 @@ HRESULT CExBullet::Add_Component(void)
 	pComponent = m_pTransCom = dynamic_cast<CTransform*>(Clone_Proto(TRANSFORM_COMP));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ TRANSFORM_COMP, pComponent });
-	
+
+
 	pComponent = m_pCube = dynamic_cast<CCubeTex*>(Engine::Clone_Proto(CUBETEX_COMP));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ CUBETEX_COMP, pComponent });
@@ -216,7 +224,11 @@ HRESULT CExBullet::Add_Component(void)
 	pComponent = m_pCollision = dynamic_cast<CCollision*>(Engine::Clone_Proto(COLLISION_COMP));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ COLLISION_COMP, pComponent });
-	
+
+
+
+
+
 	pComponent = m_pTexture = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Orange_Tex"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Orange_Tex", pComponent });

@@ -214,6 +214,8 @@ _int CFlight::Update_Object(const _float & fTimeDelta)
 		Move(fTimeDelta);
 		Look_Direction();
 		m_pTransform->Quaternion_Transform();
+		_float fSound = 1.f;
+		PlaySoundW(L"flight.wav", SOUND_EFFECT, fSound);
 	}
 	else 
 	{
@@ -551,8 +553,7 @@ void CFlight::Key_Input(const _float& fTimeDelta)
 		{
 			Fire_Bullet();
 
-			_float fGunSound = 1.f;
-			Engine::PlaySoundGun(L"RifleShot.mp3", SOUND_EFFECT, fGunSound);
+			
 			Set_Shoot(true);
 			m_fBulletTime = 0.f;
 		}

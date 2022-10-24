@@ -231,8 +231,13 @@
     <ClInclude Include="..\Header\LaserPoint.h" />
     <ClInclude Include="..\Header\LaserSpot.h" />
     <ClInclude Include="..\Header\LoadingBar.h" />
+    <ClInclude Include="..\Header\MBBomb.h" />
     <ClInclude Include="..\Header\MBLaser.h" />
+    <ClInclude Include="..\Header\MBLaserReady.h" />
     <ClInclude Include="..\Header\MFieldEffect.h" />
+    <ClInclude Include="..\Header\MHitEffect.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="..\Header\MiddleBoss.h" />
     <ClInclude Include="..\Header\Mob.h" />
     <ClInclude Include="..\Header\Npc.h" />
@@ -424,8 +429,13 @@
     <ClCompile Include="..\Code\LaserPoint.cpp" />
     <ClCompile Include="..\Code\LaserSpot.cpp" />
     <ClCompile Include="..\Code\LoadingBar.cpp" />
+    <ClCompile Include="..\Code\MBBomb.cpp" />
     <ClCompile Include="..\Code\MBLaser.cpp" />
+    <ClCompile Include="..\Code\MBLaserReady.cpp" />
     <ClCompile Include="..\Code\MFieldEffect.cpp" />
+    <ClCompile Include="..\Code\MHitEffect.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\Code\MiddleBoss.cpp" />
     <ClCompile Include="..\Code\Mob.cpp" />
     <ClCompile Include="..\Code\Npc.cpp" />

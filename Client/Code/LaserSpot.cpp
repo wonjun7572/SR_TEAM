@@ -49,7 +49,9 @@ void CLaserSpot::LateUpdate_Object(void)
 	CHitBox* pPlayerHitbox = dynamic_cast<CHitBox*>(Engine::Get_Component(STAGE_CHARACTER, L"PLAYER", HITBOX_COMP, ID_STATIC));
 
 	if (m_pCollision->Collision_Square(pPlayerTransform, pPlayerHitbox, m_pTransCom, m_pHitBox) && m_bAttack)
-		pPlayer->KnuckDown(10.f, 15.f);
+	{
+		pPlayer->KnuckDown(10.f, 15.f);		
+	}
 
 	CGameObject::LateUpdate_Object();
 }

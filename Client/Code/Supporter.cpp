@@ -19,8 +19,8 @@ HRESULT CSupporter::Ready_Object(const _vec3 & vPos, wstring _strObjTag)
 
 _int CSupporter::Update_Object(const _float & fTimeDelta)
 {
-	if(m_DROP != SPDROP_1)
-		Set_On_Terrain();
+	if (m_DROP != SPDROP_1)	
+		Set_On_Terrain();	
 
 	Engine::CGameObject::Update_Object(fTimeDelta);
 	Add_RenderGroup(RENDER_NONALPHA, this);

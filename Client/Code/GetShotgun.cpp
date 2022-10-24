@@ -33,6 +33,8 @@ _int CGetShotgun::Update_Object(const _float & fTimeDelta)
 	{
 		dynamic_cast<CCubePlayer*>(Engine::Get_GameObject(STAGE_CHARACTER, L"PLAYER"))->Capture_Shotgun();
 		dynamic_cast<CInventory*>(Engine::Get_GameObject(STAGE_UI, L"InventoryUI"))->WeaponCreate(3);
+		_float fSound = 1.f;
+		PlaySoundW(L"SupporterDrop0.wav", SOUND_GET, fSound);
 		return -1;
 	}
 	

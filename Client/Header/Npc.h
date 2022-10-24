@@ -22,6 +22,7 @@ private:
 	void				Quest3(const _float& fTiemDelta);
 	void				Finish(const _float& fTimeDelta);
 	void				Projection_Effect(void);
+	void				Projection_Sound(void);
 
 private:
 	CRcTex*				m_pBufferCom = nullptr;
@@ -62,6 +63,11 @@ private:
 	_bool				m_bEffect2 = false;
 	_bool				m_bEffect3 = false;
 	_bool				m_bEffect4 = false;
+
+	_bool				m_bSound1 = false;
+	_bool				m_bSound2 = false;
+	_bool				m_bSound3 = false;
+
 
 public:
 	static	CNpc*	Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3& vPos);

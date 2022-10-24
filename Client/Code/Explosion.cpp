@@ -18,7 +18,8 @@ CExplosion::~CExplosion()
 HRESULT CExplosion::Ready_Object(const _vec3 & vPos, _tchar * Name)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
-
+	_float fSound = 1.f;
+	Engine::PlaySoundGun(L"exexplosion.wav", SOUND_EFFECT, fSound);
 	m_AnimationName = Name;
 
 	m_ANIMATION = EXPLOSION_1;

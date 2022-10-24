@@ -35,6 +35,10 @@ private:
 	void         NormalAttack_Animation_Run(void);
 	void         Bombing_Animation_Run(void);
 	void         Dead_Animation_Run(void);
+	void		 Hit_Effect(void);
+	void		 LaserReady_Effect(void);
+	void		 BombState_Effect(void);
+	void		 Dead_Effect(void);
 
 private:
 	void         Set_OnTerrain(void);
@@ -116,6 +120,8 @@ private:
 	list<_tchar* >    NameList;
 
 	_float			 m_fCreateMonFrame = 0.f;
+	_vec3			 m_vCorePos;
+
 
 private:
 	HRESULT            Add_Component(void);

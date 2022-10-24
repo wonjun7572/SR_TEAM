@@ -17,7 +17,8 @@ HRESULT CFlightBomb::Ready_Object(const _vec3 & vPos, _tchar* Name)
 {
 
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
-
+	_float fSound = .4f;
+	Engine::PlaySoundGun(L"FlightBomb.wav", SOUND_EFFECT, fSound);
 	m_vPosition = vPos;
 
 	m_MissileName = Name;

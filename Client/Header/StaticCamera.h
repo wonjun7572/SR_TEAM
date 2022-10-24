@@ -80,7 +80,7 @@ private:
 
 	_float			m_fPlayerFrame2 = 0.f;
 	_bool			m_bEnding = false;
-
+	_bool			m_bFirstSound = false;
 public:
 	static CStaticCamera*		Create(LPDIRECT3DDEVICE9 pGraphicDev,
 		const _vec3* pEye,

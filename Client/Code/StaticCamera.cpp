@@ -572,7 +572,10 @@ void CStaticCamera::Look_Target(const _float& _fTimeDelta)
 					m_pLetterBox->ChangeLetterContents(L"Is it a dream or a reality?", sizeof(L"Is it a dream or a reality?"));
 				}
 				else if (0.89f > m_fPlayerFrame && m_fPlayerFrame > 0.6f)
+				{
 					m_pLetterBox->ChangeLetterContents(L"Oh my god!!!", sizeof(L"Oh my god!!!"));
+					
+				}
 				else if (m_fPlayerFrame > 0.9f)
 				{
 					m_pLetterBox->LetterDead();
@@ -585,6 +588,12 @@ void CStaticCamera::Look_Target(const _float& _fTimeDelta)
 			}
 			else
 			{
+				if (!m_bFirstSound)
+				{
+					Engine::PlaySoundW(L"NPC.wav", SOUND_EFFECT, 1.f);
+					m_bFirstSound = true;
+				}
+
 				m_fFov = D3DXToRadian(60.f);
 				m_vEye += vPos;
 				m_vAt = vPos;
@@ -665,6 +674,9 @@ void CStaticCamera::Camera_Shaking(const _float& _fTimeDelta)
 		{
 			m_fFrame = 0.f;
 			m_bPlayerHit = false;
+			_float fSound = 1.f;
+			PlaySoundGun(L"Player_Hit.mp3", SOUND_MB, fSound);
+			
 		}
 	}
 

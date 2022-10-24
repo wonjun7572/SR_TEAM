@@ -427,7 +427,7 @@ _int CKrakenLeg::Update_Pattern(_float fTimeDelta)
 			if (m_LURKER == KRAKENLURKER_2)
 			{
 				AttackHit(10.f, 30.f);
-				Engine::PlaySoundW(L"ZLrkFir2.wav", SOUND_KRAKEN3, 1.f);
+				Engine::PlaySoundW(L"ZLrkFir2.wav", SOUND_KRAKEN3, 0.5f);
 				Kraken_LukerParticle();
 
 			}

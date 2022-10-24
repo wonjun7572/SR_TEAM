@@ -53,7 +53,9 @@ _int CItemBox::Update_Object(const _float & fTimeDelta)
 		{
 			m_pTransCom->Set_Scale(0.f, 0.f, 0.f);
 			m_STATE = ITEMBOX_UP;
-			m_bQuestOpen = true;
+			m_bQuestOpen = true;			
+			_float fSound = 1.f;
+			Engine::PlaySoundGun(L"MissionOn.wav", SOUND_EFFECT, fSound);
 		}
 	}
 
