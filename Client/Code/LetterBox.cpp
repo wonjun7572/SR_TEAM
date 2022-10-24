@@ -40,14 +40,14 @@ _int CLetterBox::Update_Object(const _float & fTimeDelta)
 			m_fFontSizeX = 25.f;
 			m_fFontSizeY = 40.f;
 			wsprintf(szCntName, L"LetterBox%d", iLetterBoxCnt);
-			FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, szCntName, L"Roboto-Bold", _uint(m_fFontSizeX), m_fFontSizeY, FW_HEAVY), E_FAIL);
+			FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, szCntName, L"Roboto-Bold", _uint(m_fFontSizeX), _uint(m_fFontSizeY), FW_HEAVY), E_FAIL);
 		}
 		if (m_iIndex == 2)
 		{
 			m_fFontSizeX = 7.5f;
 			m_fFontSizeY = 15.f;
 			wsprintf(szCntName, L"LetterBox%d", iLetterBoxCnt);
-			FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, szCntName, L"Roboto-Bold", _uint(m_fFontSizeX), m_fFontSizeY, FW_HEAVY), E_FAIL);
+			FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, szCntName, L"Roboto-Bold", _uint(m_fFontSizeX), _uint(m_fFontSizeY), FW_HEAVY), E_FAIL);
 		}
 
 	}
@@ -163,7 +163,7 @@ void CLetterBox::Begin_OrthoProj()
 	matView.m[2][2] = 1.f;
 	matView.m[3][0] = (-WINCX / 2.f + pt.x) * (WINCX / WINCY) + m_fBoxSizeX / 2 + 10.f;
 	matView.m[3][1] = (WINCY / 2.f - pt.y) * (WINCX / WINCY) - m_fBoxSizeY / 2 - 50.f;
-	matView.m[3][2] = 0.001;
+	matView.m[3][2] = 0.001f;
 
 	D3DXMatrixOrthoLH(&matOrtho, WINCX, WINCY, 0.f, 1.f);
 

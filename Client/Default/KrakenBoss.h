@@ -89,7 +89,7 @@ private:
 	list<_tchar*>		m_TcharList;
 
 	vector<KRAKENSKILLID>	m_vPattern;
-
+	HRESULT			   Create_Monster();
 private:
 	_float				m_ReloadTimer = 0.f;
 	_float				m_AnimationTime = 0.f;
@@ -101,9 +101,13 @@ private:
 	_bool				m_bAnihilate_Third = true;
 	_float				m_BeforeHp = 5000.f;
 	_float				m_fInterval;
-	_float				 m_fFireAngle = 0.f;
+	_float				m_fFireAngle = 0.f;
 	_bool				m_bDeadScene = true;
+	_bool				m_bCameraShaking = false;
 
+	_float				m_fMonCreFrame = 0.f;
+	vector<_int>	    m_vMonstertype;
+	_int				m_iMonsterCnt = 0;
 public:
 	static CKrakenBoss*	Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3& vPos, _tchar* Name);
 	virtual void	Free(void);

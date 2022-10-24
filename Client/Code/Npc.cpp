@@ -450,11 +450,11 @@ void CNpc::Projection_Effect(void)
 		vRootPos = vPos;
 		vRootPos.y = 10.f;
 		vRootPos.z = 55.f;
-		for (_int i = -7; i < 7; i++)
+		for (_float i = -7.f; i < 7.f; i++)
 		{
-			for (_int j = -7; j < 7; j++)
+			for (_float j = -7.f; j < 7.f; j++)
 			{
-				for (_int k = -7; k < 7; k++)
+				for (_float k = -7.f; k < 7.f; k++)
 				{
 					//D3DXVec3Normalize(&min, &_vec3(i, j, k));
 		
@@ -479,11 +479,11 @@ void CNpc::Projection_Effect(void)
 		
 		m_pTransCom->Get_Info(INFO_POS, &vPos);
 		vPos.z -= 2.f;
-		for (_int i = -5; i < 5; i++)
+		for (_float i = -5.f; i < 5.f; i++)
 		{
-			for (_int j = -5; j < 5; j++)
+			for (_float j = -5.f; j < 5.f; j++)
 			{
-				for (_int k = -5; k < 5; k++)
+				for (_float k = -5.f; k < 5.f; k++)
 				{
 					//D3DXVec3Normalize(&min, &_vec3(i, j, k));								
 					dynamic_cast<CTargetPointEffect*>(m_pTargetPointEffect)->Set_PclePos(vPos + _vec3(i, j, k)*0.1f);		
@@ -507,11 +507,11 @@ void CNpc::Projection_Effect(void)
 
 		m_pTransCom->Get_Info(INFO_POS, &vPos);
 		vPos.z -= 2.f;
-		for (_int i = -5; i < 5; i++)
+		for (_float i = -5.f; i < 5.f; i++)
 		{
-			for (_int j = -5; j < 5; j++)
+			for (_float j = -5.f; j < 5.f; j++)
 			{
-				for (_int k = -5; k < 5; k++)
+				for (_float k = -5.f; k < 5.f; k++)
 				{
 					//D3DXVec3Normalize(&min, &_vec3(i, j, k));								
 					dynamic_cast<CTargetPointEffect*>(m_pTargetPointEffect)->Set_PclePos(vPos + _vec3(i, j, k)*0.1f);
@@ -535,11 +535,11 @@ void CNpc::Projection_Effect(void)
 
 		m_pTransCom->Get_Info(INFO_POS, &vPos);
 		vPos.z -= 2.f;
-		for (_int i = -5; i < 5; i++)
+		for (_float i = -5.f; i < 5.f; i++)
 		{
-			for (_int j = -5; j < 5; j++)
+			for (_float j = -5.f; j < 5.f; j++)
 			{
-				for (_int k = -5; k < 5; k++)
+				for (_float k = -5.f; k < 5.f; k++)
 				{
 					//D3DXVec3Normalize(&min, &_vec3(i, j, k));								
 					dynamic_cast<CTargetPointEffect*>(m_pTargetPointEffect)->Set_PclePos(vPos + _vec3(i, j, k)*0.1f);

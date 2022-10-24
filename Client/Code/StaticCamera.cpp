@@ -17,7 +17,6 @@ CStaticCamera::CStaticCamera(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 }
 
-
 CStaticCamera::~CStaticCamera()
 {
 }
@@ -118,8 +117,7 @@ Engine::_int CStaticCamera::Update_Object(const _float& fTimeDelta)
 	//m_fFlightFrame += fTimeDelta * 0.5f;
 	//m_fBombFrame += fTimeDelta * 0.5f;
 	//m_fShuttleFrame += fTimeDelta * 0.15f;
-	m_fPlayerFrame += fTimeDelta;// *0.05f;
-	m_fFrame += fTimeDelta;
+	m_fPlayerFrame += fTimeDelta * 0.05f;
 	m_fFlightFrame += fTimeDelta;
 	m_fBombFrame += fTimeDelta;
 	m_fShuttleFrame += fTimeDelta;
@@ -577,9 +575,8 @@ void CStaticCamera::Look_Target(const _float& _fTimeDelta)
 				else if (m_fPlayerFrame > 0.9f)
 				{
 					m_pLetterBox->LetterDead();
+					m_bFirst = true;
 				}
-				// 일단 무조건 켜놓기
-				m_bFirst = true;
 
 				m_fFov = D3DXToRadian(60.f);
 				m_vEye += vTransLerp * m_fPlayerFrame;
@@ -657,7 +654,6 @@ void CStaticCamera::Look_Target(const _float& _fTimeDelta)
 
 void CStaticCamera::Camera_Shaking(const _float& _fTimeDelta)
 {
-
 	if (m_bPlayerHit)
 	{
 		m_fFrame += 0.1f * _fTimeDelta;

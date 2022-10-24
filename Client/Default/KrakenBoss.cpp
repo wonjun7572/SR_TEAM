@@ -8,11 +8,13 @@
 #include "KrakenLeg.h"
 #include "PoolMgr.h"
 #include "Meteor.h"
-
+#include "StaticCamera.h"
 #include "BattleCursier.h"
 #include "Flight.h"
-
 #include "Warning_AnnihilateUI.h"
+#include "Zombie.h"
+#include "FireMan.h"
+#include "Alien.h"
 
 CKrakenBoss::CKrakenBoss(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CGameObject(pGraphicDev)
@@ -27,7 +29,7 @@ CKrakenBoss::~CKrakenBoss()
 HRESULT CKrakenBoss::Ready_Object(const _vec3 & vPos, _tchar * Name)
 {
 	m_tAbility = new KRAKENABILITY;
-	m_tAbility->fMaxHp = 10.f;
+	m_tAbility->fMaxHp = 5000.f;
 	m_tAbility->fCurrentHp = m_tAbility->fMaxHp;
 	m_tAbility->fDamage = 20.f;
 	m_tAbility->strObjTag = L"Kraken";
@@ -96,6 +98,10 @@ _int CKrakenBoss::Update_Object(const _float & fTimeDelta)
 
 		Load_Animation(L"../../Data/KraKen/KRAKEN_IDLE_1.dat", 0);
 		Load_Animation(L"../../Data/KraKen/KRAKEN_IDLE_2.dat", 1);
+
+		m_vMonstertype.push_back(0);
+		m_vMonstertype.push_back(1);
+		m_vMonstertype.push_back(2);
 	}
 
 	Update_Pattern(fTimeDelta);
@@ -111,6 +117,17 @@ _int CKrakenBoss::Update_Object(const _float & fTimeDelta)
 	m_pSphereTransCom->Set_Pos(vMonsterPos.x, 0.f, vMonsterPos.z);
 	m_pTransCom->Get_Info(INFO_POS, &vUIPos);
 	m_pTransUICom->Set_Pos(vUIPos.x, vUIPos.y + 2.4f, vUIPos.z);
+
+	//if (m_bPatternStart)
+	{
+		m_fMonCreFrame += fTimeDelta;
+
+		if (m_fMonCreFrame >= 5.f)
+		{
+			Create_Monster();
+			m_fMonCreFrame = 0.f;
+		}
+	}
 
 	return 0;
 }
@@ -139,12 +156,10 @@ void CKrakenBoss::Render_Object(void)
 
 void CKrakenBoss::LateUpdate_Object(void)
 {
-	//Set_OnTerrain();
-
 	if (m_tAbility->fCurrentHp <= 0.f)
 	{
 		m_pMonsterUI->Off_Switch();
-
+		
 		_vec3 vPos;
 		m_pTransCom->Get_Info(INFO_POS, &vPos);
 
@@ -424,7 +439,6 @@ HRESULT CKrakenBoss::Add_Component(void)
 	NULL_CHECK_RETURN(m_pTransCom, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ TRANSFORM_COMP, pComponent });
 
-
 	pComponent = m_pHitBox = dynamic_cast<CHitBox*>(Engine::Clone_Proto(HITBOX_COMP));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ HITBOX_COMP, pComponent });
@@ -437,7 +451,6 @@ HRESULT CKrakenBoss::Add_Component(void)
 	NULL_CHECK_RETURN(m_pTransCom, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"HitBox_Transform", pComponent });
 
-
 	pComponent = m_pTransUICom = dynamic_cast<CTransform*>(Clone_Proto(TRANSFORM_COMP));
 	NULL_CHECK_RETURN(m_pTransUICom, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_TransformUICom", pComponent });
@@ -449,7 +462,6 @@ HRESULT CKrakenBoss::Add_Component(void)
 	pComponent = m_pTextureUICom = dynamic_cast<CTexture*>(Clone_Proto(L"Monster_General_HP"));
 	NULL_CHECK_RETURN(m_pTextureUICom, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Monster_General_HP", pComponent });
-
 
 	pComponent = m_pSphereBufferCom = dynamic_cast<CSphereTex*>(Clone_Proto(SPHERETEX_COMP));
 	NULL_CHECK_RETURN(m_pSphereBufferCom, E_FAIL);
@@ -464,6 +476,53 @@ HRESULT CKrakenBoss::Add_Component(void)
 	m_mapComponent[ID_STATIC].insert({ CUBECOL_COMP, pComponent });
 
 
+	return S_OK;
+}
+
+HRESULT CKrakenBoss::Create_Monster()
+{
+	_vec3 vPos;
+	m_pTransCom->Get_Info(INFO_POS, &vPos);
+
+	random_shuffle(m_vMonstertype.begin(), m_vMonstertype.end());
+	_int i = m_vMonstertype.front();
+
+	CGameObject* pGameObject = nullptr;
+	CLayer* pLayer = Get_Layer(STAGE_MONSTER);
+
+	if (i == 0)
+	{
+		_tchar* szName = new _tchar[128]{};
+		wstring wName = L"ZomBie_boss_%d";
+		wsprintfW(szName, wName.c_str(), m_iMonsterCnt);
+		m_TcharList.push_back(szName);
+		pGameObject = CZombie::Create(m_pGraphicDev, vPos, szName);
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+		m_iMonsterCnt++;
+	}
+	else if (i == 1)
+	{
+		_tchar* szName = new _tchar[128]{};
+		wstring wName = L"Alien_boss_%d";
+		wsprintfW(szName, wName.c_str(), m_iMonsterCnt);
+		m_TcharList.push_back(szName);
+		pGameObject = CAlien::Create(m_pGraphicDev, vPos, szName);
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+		m_iMonsterCnt++;
+	}
+	else if (i == 2)
+	{
+		_tchar* szName = new _tchar[128]{};
+		wstring wName = L"FireMan_boss_%d";
+		wsprintfW(szName, wName.c_str(), m_iMonsterCnt);
+		m_TcharList.push_back(szName);
+		pGameObject = CFireMan::Create(m_pGraphicDev, vPos, szName);
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+		m_iMonsterCnt++;
+	}
 	return S_OK;
 }
 
@@ -487,7 +546,6 @@ void CKrakenBoss::Free(void)
 	{
 		Safe_Delete_Array(iter);
 	}
-
 
 	CGameObject::Free();
 	Safe_Delete<KRAKENABILITY*>(m_tAbility);
@@ -580,9 +638,6 @@ void CKrakenBoss::Dead_Event(void)
 		NULL_CHECK_RETURN(pGameObject, );
 		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), );
 
-
-
-
 		pGameObject = CBattleCursier::Create(m_pGraphicDev, _vec3(20, 30, 0), _vec3(0, 0, 1), L"BATTLE8");
 		NULL_CHECK_RETURN(pGameObject, );
 		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), );
@@ -666,9 +721,13 @@ void CKrakenBoss::Dead_Event(void)
 		NULL_CHECK_RETURN(pGameObject, );
 		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), );
 	}
-
 	CGameObject* pShuttle = dynamic_cast<CFlight*>(Get_GameObject(STAGE_FLIGHTPLAYER, L"FLIGHTSHUTTLE"));
 	dynamic_cast<CFlight*>(pShuttle)->Replace(_vec3(65, 15, -49), _vec3(0, 0, 0), _vec3(0, 0, 1));
+	if (!m_bCameraShaking)
+	{
+		dynamic_cast<CStaticCamera*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"StaticCamera"))->CameraShaking();
+		m_bCameraShaking = true;
+	}
 }
 
 HRESULT CKrakenBoss::Build(void)

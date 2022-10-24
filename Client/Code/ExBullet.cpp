@@ -3,6 +3,8 @@
 #include "PoolMgr.h"
 #include "Explosion.h"
 #include "ExBulletEffect.h"
+#include "StaticCamera.h"
+
 CExBullet::CExBullet(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
 {
@@ -47,10 +49,11 @@ _int CExBullet::Update_Object(const _float & fTimeDelta)
 
 		// À§Ä¡ ¹Ù²ãÁà¾ßÇÔ
 		CGameObject* pGameObject = CExplosion::Create(m_pGraphicDev, _vec3(vPos.x, vPos.y, vPos.z), szName);
+		dynamic_cast<CStaticCamera*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"StaticCamera"))->CameraShaking();
+
 		NULL_CHECK_RETURN(pGameObject, -1);
 		CLayer* pLayer = Get_Layer(STAGE_SKILL);
 		FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), -1);
-
 		CPoolMgr::GetInstance()->Collect_ExBullet(this);
 		return -1;
 	}
@@ -86,11 +89,6 @@ void CExBullet::Render_Object(void)
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransCom->Get_WorldMatrixPointer());
 	m_pTexture->Set_Texture();
 	m_pCube->Render_Buffer();
-
-	//m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
-	//m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pHitboxTransCom->Get_WorldMatrixPointer());
-	//m_pHitbox->Render_Buffer();
-	//m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 	m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
 }
 
@@ -179,11 +177,11 @@ void CExBullet::Effect(void)
 
 	m_pTransCom->Get_Info(INFO_POS, &vPos);
 	m_pTransCom->Get_Info(INFO_POS, &vPos);
-	for (_int i = -2; i < 2; i++)
+	for (_float i = -2.f; i < 2.f; i++)
 	{
-		for (_int j = -2; j < 2; j++)
+		for (_float j = -2.f; j < 2.f; j++)
 		{
-			for (_int k = -2; k < 2; k++)
+			for (_float k = -2.f; k < 2.f; k++)
 			{
 				D3DXVec3Normalize(&min, &_vec3(i, j, k));
 				dynamic_cast<CExBulletEffect*>(pExBulletEffect)->Set_PclePos(vPos + _vec3(i, j, k)*.25f);
@@ -202,8 +200,7 @@ HRESULT CExBullet::Add_Component(void)
 	pComponent = m_pTransCom = dynamic_cast<CTransform*>(Clone_Proto(TRANSFORM_COMP));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ TRANSFORM_COMP, pComponent });
-
-
+	
 	pComponent = m_pCube = dynamic_cast<CCubeTex*>(Engine::Clone_Proto(CUBETEX_COMP));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ CUBETEX_COMP, pComponent });
@@ -219,11 +216,7 @@ HRESULT CExBullet::Add_Component(void)
 	pComponent = m_pCollision = dynamic_cast<CCollision*>(Engine::Clone_Proto(COLLISION_COMP));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ COLLISION_COMP, pComponent });
-
-
-
-
-
+	
 	pComponent = m_pTexture = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Orange_Tex"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Orange_Tex", pComponent });

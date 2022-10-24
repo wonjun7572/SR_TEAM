@@ -39,7 +39,7 @@ CMiddleBoss::~CMiddleBoss()
 HRESULT CMiddleBoss::Ready_Object(const _vec3 & vPos, _tchar * Name)
 {
 	m_tAbility = new MIDDLEBOSSABILITY;
-	m_tAbility->fMaxHp = 100.f;
+	m_tAbility->fMaxHp = 5000.f;
 	m_tAbility->fCurrentHp = m_tAbility->fMaxHp;
 	m_tAbility->fDamage = 5.f;
 	m_tAbility->strObjTag = L"MiddleBoss";
@@ -88,7 +88,6 @@ _int CMiddleBoss::Update_Object(const _float & fTimeDelta)
 {
 	if (m_bDead)
 	{
-		Create_Item();
 		m_pComboUI->KillCntPlus();
 		_float fMiddle_death = 1.5f;
 		PlaySoundGun(L"Middle_Death.wav", SOUND_EFFECT, fMiddle_death);
@@ -204,7 +203,7 @@ void CMiddleBoss::LateUpdate_Object(void)
 		m_pTransCom->Static_Update();
 
 		m_pMonsterUI->Off_Switch();
-
+		dynamic_cast<CStaticCamera*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"StaticCamera"))->CameraShaking();
 		if(vPos.y <= -20.f)
 			this->Kill_Obj();
 	}
@@ -252,7 +251,7 @@ void CMiddleBoss::LateUpdate_Object(void)
 				if (m_fLaserTime >= 1.f)
 				{
 					CGameObject* pGameObject = Get_GameObject(STAGE_GAMELOGIC, L"LaserSpot");
-					//dynamic_cast<CLaserSpot*>(pGameObject)->Attack_Permit(true);
+					dynamic_cast<CLaserSpot*>(pGameObject)->Attack_Permit(true);
 				}
 				_vec3 vCorePos;
 				_vec3 vSpotPos;
@@ -302,7 +301,7 @@ void CMiddleBoss::LateUpdate_Object(void)
 					m_STATE = MIDDLEBOSS_IDLE;
 					m_fLaserTime = 0.f;
 					CGameObject* pGameObject = Get_GameObject(STAGE_GAMELOGIC, L"LaserSpot");
-					//dynamic_cast<CLaserSpot*>(pGameObject)->Attack_Permit(false);
+					dynamic_cast<CLaserSpot*>(pGameObject)->Attack_Permit(false);
 				}
 			}
 		}
@@ -334,8 +333,6 @@ void CMiddleBoss::Render_Object(void)
 	m_pBufferUICom->Resize_Buffer(m_tAbility->fCurrentHp / m_tAbility->fMaxHp);
 	m_pBufferUICom->Render_Buffer();
 }
-
-
 
 _int CMiddleBoss::Update_Pattern(_float fTimeDelta)
 {
@@ -1147,39 +1144,6 @@ void CMiddleBoss::Dead_Animation_Run(void)
 	}
 }
 
-HRESULT CMiddleBoss::Create_Item()
-{
-	CGameObject*		pGameObject = nullptr;
-	_vec3 vItemPos;
-	m_pTransCom->Get_Info(INFO_POS, &vItemPos);
-
-	srand((unsigned int)time(NULL));
-	_int iRand = rand() % 3;
-
-	switch (iRand)
-	{
-	case 0:
-		pGameObject = CHealthPotion::Create(m_pGraphicDev, vItemPos);
-		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		Get_Layer(STAGE_ITEM)->Add_GameList(pGameObject);
-		break;
-
-	case 1:
-		pGameObject = CObtainBullet::Create(m_pGraphicDev, vItemPos);
-		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		Get_Layer(STAGE_ITEM)->Add_GameList(pGameObject);
-		break;
-
-	case 2:
-		pGameObject = CObtainDefense::Create(m_pGraphicDev, vItemPos);
-		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		Get_Layer(STAGE_ITEM)->Add_GameList(pGameObject);
-		break;
-	}
-
-	return S_OK;
-}
-
 HRESULT CMiddleBoss::Monster_Mapping(void)
 {
 	_vec3		vPos;
@@ -1230,13 +1194,13 @@ HRESULT CMiddleBoss::Create_Monster()
 		{
 			_tchar* szName = new _tchar[128]{};
 			wstring wName = L"Alien_boss_%d";
-			wsprintfW(szName, wName.c_str(), i);
+			wsprintfW(szName, wName.c_str(), m_iMonsterCnt);
 			NameList.push_back(szName);
 			pGameObject = CAlien::Create(m_pGraphicDev, vPos, szName);
 			NULL_CHECK_RETURN(pGameObject, E_FAIL);
 			FAILED_CHECK_RETURN(pLayer->Add_GameList(pGameObject), E_FAIL);
+			m_iMonsterCnt++;
 		}
-
 		return S_OK;
 }
 
@@ -1322,9 +1286,12 @@ CMiddleBoss * CMiddleBoss::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3 & v
 
 void CMiddleBoss::Free(void)
 {
-	for (auto& iter : *(pMyLayer->Get_GamePairPtr()))
+	if (pMyLayer != nullptr)
 	{
-		iter.second->Kill_Obj();
+		for (auto& iter : *(pMyLayer->Get_GamePairPtr()))
+		{
+			iter.second->Kill_Obj();
+		}
 	}
 
 	for (auto iter : m_TcharList)

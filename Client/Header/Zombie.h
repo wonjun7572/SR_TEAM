@@ -45,7 +45,7 @@ private:	//	애니메이션 관련
 	
 	list<_tchar*>		m_TcharList;
 
-	CDeadParticle*		m_pDeadParticle;
+	CDeadParticle*		m_pDeadParticle = nullptr;
 
 
 public:

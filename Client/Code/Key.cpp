@@ -30,7 +30,6 @@ _int CKey::Update_Object(const _float & fTimeDelta)
 {
 	if (m_bDead)
 	{
-		MSG_BOX("Ãæµ¹");
 		return -1;
 	}
 
@@ -118,11 +117,11 @@ void CKey::Effect()
 	m_pTransCom->Get_Info(INFO_POS, &vPos);
 	m_pTransCom->Get_Info(INFO_POS, &vPos);
 
-	for (_int i = 1; i < 4; i++)
+	for (_float i = 1.f; i < 4.f; i++)
 	{
-		for (_int j = -3; j < 3; j++)
+		for (_float j = -3.f; j < 3.f; j++)
 		{
-			for (_int k = 0; k < 1; k++)
+			for (_float k = 0.f; k < 1.f; k++)
 			{
 				dynamic_cast<CItemCubeEffect*>(pItemCubeEffect)->Set_PclePos(vPos + _vec3(i, j, k)*0.05f);
 				dynamic_cast<CItemCubeEffect*>(pItemCubeEffect)->Set_PcleDir(min);
