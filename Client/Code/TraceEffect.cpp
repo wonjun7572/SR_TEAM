@@ -30,7 +30,7 @@ _int CTraceEffect::Update_Object(const _float & fTimeDelta)
 	for (list<ATTRIBUTE>::iterator iter = m_particles.begin(); iter != m_particles.end(); iter++)
 	{
 		iter->fAge += fTimeDelta;
-		iter->vPos -= (iter->vVelocity) * fTimeDelta * (-1 + rand() % 3) * 2.f;
+		iter->vPos -= (iter->vVelocity) * fTimeDelta * _float(-1 + rand() % 3) * 2.f;
 		//iter->vPos.y -= 0.01f* (m_fGravity*iter->fAge)*(m_fGravity* iter->fAge) * fTimeDelta;
 
 		if (iter->fAge > iter->fLifeTime)
@@ -103,7 +103,7 @@ void CTraceEffect::resetParticle(ATTRIBUTE * attribute)
 	GetRandomVector(&m_vDir, &min, &max);
 
 	//D3DXVec3Normalize(&m_vDir, &m_vDir);
-	attribute->vPos = m_vCubePatriclePos + m_vDir*0.01;
+	attribute->vPos = m_vCubePatriclePos + m_vDir * 0.01f;
 	attribute->vVelocity = m_vDir*GetRandomFloat(-1.f, 1.f)*2.5;
 	attribute->dwColor = D3DXCOLOR(0.7f + fRand, .0f + fRand, .0f + fRand, 1.f);
 

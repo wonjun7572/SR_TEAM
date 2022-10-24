@@ -38,17 +38,12 @@ HRESULT CAlien::Ready_Object(const _vec3 & vPos, _tchar * Name)
 	m_IDLE = ALIENIDLE_1;
 
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
-
-
+	
 	m_pTransCom->Set_Scale(0.3f, 0.3f, 0.3f);
 	m_pTransCom->Set_Pos(vPos.x, vPos.y, vPos.z);
 	m_pTransCom->Static_Update();
-
-
 	m_pTransUICom->Set_Scale(1.0f, 0.1f, 0.f);
-
-
-
+	
 	_vec3 vAnimationPos;
 	m_pHitBoxTransCom->Set_Scale(&_vec3(0.3f, 0.3f, 0.3f));
 	m_pHitBoxTransCom->Set_Pos(vAnimationPos.x, vAnimationPos.y, vAnimationPos.z);
@@ -63,20 +58,15 @@ HRESULT CAlien::Ready_Object(const _vec3 & vPos, _tchar * Name)
 	m_pSearchRange_TransCom->Set_Scale(&_vec3(15.f, 15.f, 15.f));
 	m_pSearchRange_TransCom->Set_Pos(vAnimationPos.x, vAnimationPos.y, vAnimationPos.z);
 	m_pSearchRange_TransCom->Static_Update();
-
-
-
+	
 	m_pAttackRange_TransCom->Set_Scale(&_vec3(1.f, 1.f, 1.f));
 	m_pAttackRange_TransCom->Set_Pos(vAnimationPos.x, vAnimationPos.y, vAnimationPos.z);
 	m_pAttackRange_TransCom->Static_Update();
-
-
+	
 	m_pRunawayRange_TransCom->Set_Scale(&_vec3(1.f, 1.f, 1.f));
 	m_pRunawayRange_TransCom->Set_Pos(vAnimationPos.x, vAnimationPos.y, vAnimationPos.z);
 	m_pRunawayRange_TransCom->Static_Update();
-
 	
-
 	return S_OK;
 }
 
@@ -90,8 +80,7 @@ _int CAlien::Update_Object(const _float & fTimeDelta)
 		Dead_Effect();
 		return -1;
 	}
-
-	
+		
 	if (m_bFirst)
 	{
 		m_bFirst = false;
@@ -718,10 +707,10 @@ void CAlien::Look_Direction(void)
 
 void CAlien::Dead_Effect(void)
 {
-	_vec3 vPos;
-	if (!m_pDeadParticle)
+	if (m_pDeadParticle == nullptr)
 		m_pDeadParticle = dynamic_cast<CDeadParticle*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"DeadParticle"));
 
+	_vec3 vPos;
 	m_pTransCom->Get_Info(INFO_POS, &vPos);
 
 	if (m_pDeadParticle != nullptr)

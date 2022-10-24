@@ -179,11 +179,11 @@ void CHyperionStrike::Effect(void)
 	m_pTransCom->Get_Info(INFO_POS, &vPos);
 	m_pTransCom->Get_Info(INFO_POS, &vPos);	
 	m_vBattlePos.y -= 12.f;
-	for (_int i = -2; i < 2; i++)
+	for (_float i = -2.f; i < 2.f; i++)
 	{
-		for (_int j = -2; j < 2; j++)
+		for (_float j = -2.f; j < 2.f; j++)
 		{
-			for (_int k = -2; k < 2; k++)
+			for (_float k = -2.f; k < 2.f; k++)
 			{
 				D3DXVec3Normalize(&min, &_vec3(i, j, k));						
 				dynamic_cast<CHyperionEffect*>(pHyperionEffect)->Set_PclePos(vPos + _vec3(i, j, k)*5.f);

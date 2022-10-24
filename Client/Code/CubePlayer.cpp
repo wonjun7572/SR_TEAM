@@ -296,6 +296,7 @@ void CCubePlayer::KnuckDown(const _float & fDamage, const _float& fDistance)
 	{
 		m_tAbility->fHp -= fDamage;
 		m_iKnuckStack = _int(fDistance);
+		dynamic_cast<CStaticCamera*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"StaticCamera"))->HitPlayer();
 		m_fGlobal_Cooltime = 0;
 	}
 }

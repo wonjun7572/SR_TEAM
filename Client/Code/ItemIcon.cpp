@@ -248,8 +248,8 @@ void CItemIcon::IconCollision()
 		POINT IconPointer;
 		GetCursorPos(&pt);
 		ScreenToClient(g_hWnd, &pt);
-		IconPointer.x = m_vBlockPos.x + WINCX / 2 - m_fImgX / 2;
-		IconPointer.y = WINCY - (m_vBlockPos.y + WINCY / 2 + m_fImgY / 2);
+		IconPointer.x = _long(m_vBlockPos.x + WINCX / 2 - m_fImgX / 2);
+		IconPointer.y = _long(WINCY - (m_vBlockPos.y + WINCY / 2 + m_fImgY / 2));
 		m_bIconCollision = false;
 
 		if (IconPointer.x - m_fImgX < pt.x && pt.x < IconPointer.x + m_fImgX)

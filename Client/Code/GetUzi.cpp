@@ -103,11 +103,11 @@ void CGetUzi::Effect()
 	m_pTransCom->Get_Info(INFO_POS, &vPos);
 	m_pTransCom->Get_Info(INFO_POS, &vPos);
 
-	for (_int i = -1; i < 1; i++)
+	for (_float i = -1.f; i < 1.f; i++)
 	{
-		for (_int j = -1; j < 1; j++)
+		for (_float j = -1.f; j < 1.f; j++)
 		{
-			for (_int k = -1; k < 1; k++)
+			for (_float k = -1.f; k < 1.f; k++)
 			{
 				dynamic_cast<CItemCubeEffect*>(pItemCubeEffect)->Set_PclePos(vPos + _vec3(i, j, k)*0.0125f);
 				dynamic_cast<CItemCubeEffect*>(pItemCubeEffect)->Set_PcleDir(min);

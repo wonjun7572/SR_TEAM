@@ -327,8 +327,6 @@ HRESULT CFinalStage::Ready_Layer_Environment(const _tchar * pLayerTag)
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"DeadParticle", pGameObject), E_FAIL);
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
-	m_mapLayer.insert({ pLayerTag, pLayer });
-
 	return S_OK;
 }
 
@@ -338,6 +336,14 @@ HRESULT CFinalStage::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pLayer, E_FAIL);
 
 	CGameObject*		pGameObject = nullptr;
+
+	pGameObject = CExBulletEffect::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"ExBulletEffect", pGameObject), E_FAIL);
+
+	pGameObject = CMBLaser::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"MBLaser", pGameObject), E_FAIL);
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 

@@ -48,16 +48,16 @@ private:	//	애니메이션 관련
 
 	_bool				m_bCreate = false;
 
-	ILLUSIONSTATEID		m_STATE;
-	ILLUSIONWALKID		m_WALK;
-	ILLUSIONIDLEID		m_IDLE;
-	ILLUSIONATTACKID	m_ATTACK;
-	CGameObject*			m_pEffect = nullptr;
-	CLayer*				pMyLayer;
-	_tchar*				m_MonsterName;
-	_bool				m_bRun = false;
+	ILLUSIONSTATEID			m_STATE;
+	ILLUSIONWALKID			m_WALK;
+	ILLUSIONIDLEID			m_IDLE;
+	ILLUSIONATTACKID		m_ATTACK;
+	CGameObject*				m_pEffect = nullptr;
+	CLayer*					pMyLayer;
+	_tchar*					m_MonsterName;
+	_bool					m_bRun = false;
 	CGameObject*			m_pPlayerEffect = nullptr;
-	CDeadParticle*			m_pDeadParticle;
+	CDeadParticle*			m_pDeadParticle = nullptr;
 
 	_float			m_fPosX = 0.f;
 	_float			m_fPosY = 0.f;

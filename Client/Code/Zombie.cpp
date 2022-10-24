@@ -531,10 +531,10 @@ void CZombie::Dead_Effect(void)
 	//	}
 	//}
 
-	_vec3 vPos;
-	if (!m_pDeadParticle)
+	if (m_pDeadParticle == nullptr)
 		m_pDeadParticle = dynamic_cast<CDeadParticle*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"DeadParticle"));
 	
+	_vec3 vPos;
 	m_pTransCom->Get_Info(INFO_POS, &vPos);
 	
 	if (m_pDeadParticle != nullptr)
@@ -545,9 +545,6 @@ void CZombie::Dead_Effect(void)
 			m_pDeadParticle->addParticle();
 		}
 	}
-
-
-
 }
 
 HRESULT CZombie::Build(void)

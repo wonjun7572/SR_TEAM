@@ -57,7 +57,7 @@ private:	//	애니메이션 관련
 
 	CLayer*				pMyLayer;
 	_tchar*				m_MonsterName;
-	CDeadParticle*		m_pDeadParticle;
+	CDeadParticle*		m_pDeadParticle = nullptr;
 	list<_tchar*>		m_TcharList;
 
 public:
