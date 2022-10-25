@@ -25,6 +25,7 @@
 
 #include "Stage.h"
 #include "FinalStage.h"
+#include "TestCube.h"
 
 CCubePlayer::CCubePlayer(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
@@ -43,7 +44,7 @@ HRESULT CCubePlayer::Ready_Object(void)
 	m_tAbility->fMaxHp = 100;
 	m_tAbility->fHp = m_tAbility->fMaxHp;
 	m_tAbility->fMaxDefence = 100;
-	m_tAbility->fDefence = 50;
+	m_tAbility->fDefence = 100;
 	m_tAbility->iGunTexture = 5;
 
 	m_pTransform->Set_Scale(0.4f, 0.5f, 0.4f);
@@ -79,7 +80,7 @@ _int CCubePlayer::Update_Object(const _float & fTimeDelta)
 				m_fCombo = 1.f;
 			m_fGreen = m_fCombo;
 			m_fBlue = m_fCombo;
-			m_fRange = 40.f;
+			m_fRange = 30.f;
 		}
 		else
 		{
@@ -92,7 +93,7 @@ _int CCubePlayer::Update_Object(const _float & fTimeDelta)
 			if (m_fBlue > 0.6f)
 				m_fBlue = 0.6f;
 
-			m_fRange = 40.f;
+			m_fRange = 30.f;
 			m_fCombo = (1.f - m_pComboUI->Get_ComboCnt() * 0.05f);
 		}
 	}
@@ -705,77 +706,6 @@ D3DXVec3Normalize(&vDir, &vDir);
 				m_pShield->Off_Move();
 		}
 	}
-	if (Key_Pressing(DIK_C))
-	{
-		
-		/*if (!m_pKrakenSmoke)
-			m_pKrakenSmoke = dynamic_cast<CMFieldEffect*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"KrakenParticle"));
-		if (m_pKrakenSmoke != nullptr)
-		{
-			m_pKrakenSmoke->Set_PclePos(vPos);
-			for (int i = 0; i < 150; ++i)
-			{
-				m_pKrakenSmoke->addParticle();
-			}
-
-		}*/
-
-
-		/*if (!m_pKrakenHit)
-			m_pKrakenHit = dynamic_cast<CKrakenHit*>(Engine::Get_GameObject(STAGE_ENVIRONMENT, L"KrakenHit"));
-		if (m_pKrakenHit != nullptr)
-		{
-			m_pKrakenHit->Set_PclePos(vPos);
-			for (int i = 0; i < 150; ++i)
-			{
-				m_pKrakenHit->addParticle();
-			}
-		}*/
-
-		
-
-
-		//_vec3 vPos;														//대쉬이펙트하려던것
-		//	_vec3 vDir;
-		//	m_pTransform->Get_Info(INFO_POS, &vPos);
-		//	_vec3 min = { -1.0f ,-1.0f ,-1.0f };
-		//	m_pTransform->Get_Info(INFO_POS, &vPos);
-		//	vPos.x -= 5.f;
-		//	vPos.y += 5.f;
-		//	vPos.z -= 5.f;
-		//	for (_int i = -5; i < 5; i++)
-		//	{
-		//		for (_int j = -5; j < 5; j++)
-		//		{
-		//			for (_int k = -5; k < 5; k++)
-		//			{
-		//				D3DXVec3Normalize(&min, &_vec3(i, j, k));						
-
-		//				dynamic_cast<CRoundEffect*>(m_pRoundEffect)->Set_PclePos(vPos + _vec3(i, j, k)*0.1);
-
-		//				dynamic_cast<CRoundEffect*>(m_pRoundEffect)->Set_PcleDir(-min);
-
-		//				m_pRoundEffect->addParticle();
-		//			}
-		//		}
-		//	}
-	/*		dynamic_cast<CSniper*>(Engine::Get_GameObject(STAGE_GUN, L"SNIPER"));
-		CTransform* pTransform = nullptr;
-		pTransform = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_GUN, L"Sniper_Part_2", TRANSFORM_COMP, ID_DYNAMIC));
-		NULL_CHECK_RETURN(pTransform, );
-		pTransform->Get_Info(INFO_POS, &vPos);
-		_vec3 vPos1;
-		_vec3 vDir1;
-		m_pBodyWorld->Get_Info(INFO_POS, &vPos);
-		m_pHeadWorld->Get_Info(INFO_LOOK, &vDir);
-		dynamic_cast<CTraceEffect*>(m_pTraceEffect)->Set_PclePos(vPos1);
-		dynamic_cast<CTraceEffect*>(m_pTraceEffect)->Set_PcleDir(vDir1);
-		for (_int i = 0; i < 150; ++i)
-		{
-			m_pTraceEffect->addParticle();
-		}*/
-	}
-
 
 	if (Key_Down(DIK_T))
 	{
@@ -812,47 +742,6 @@ D3DXVec3Normalize(&vDir, &vDir);
 	m_pCollision->Wall_Collision_Check(this->m_pTransform, this->m_pHitBox, &vDir);
 
 	m_pBodyWorld->Move_Pos(&(vDir * m_fSpeed * m_fTimeDelta));
-
-	//_int iCollision = m_pCollision->Wall_Collision(&vNormal);
-
-	//if (-1 != iCollision)
-	//{
-	//	float fDot = D3DXVec3Dot(&vNormal, &vDir);
-	//	float fDiagonal = acosf(fDot);
-
-	//	if (iCollision == WALL_RIGHT || iCollision == WALL_LEFT || iCollision == WALL_BACK)
-	//	{
-	//		if (D3DXToDegree(fDiagonal) > 90.f)
-	//		{
-	//			_vec3 vSliding = vDir;
-	//			m_pCollision->Wall_Collision_By_DotSliding(&vSliding);
-
-	//			m_pBodyWorld->Move_Pos(&(vSliding * m_fSpeed * m_fTimeDelta));
-	//		}
-	//		else
-	//		{
-	//			m_pBodyWorld->Move_Pos(&(vDir * m_fSpeed * m_fTimeDelta));
-	//		}
-	//	}
-	//	if (iCollision == WALL_FRONT)
-	//	{
-	//		if (D3DXToDegree(fDiagonal) < 90.f)
-	//		{
-	//			_vec3 vSliding = vDir;
-	//			m_pCollision->Wall_Collision_By_DotSliding(&vSliding);
-
-	//			m_pBodyWorld->Move_Pos(&(vSliding * m_fSpeed * m_fTimeDelta));
-	//		}
-	//		else
-	//		{
-	//			m_pBodyWorld->Move_Pos(&(vDir * m_fSpeed * m_fTimeDelta));
-	//		}
-	//	}
-	//}
-	//else	//	충돌하지 않았으며 충돌한 방향과 반대 방향으로 진행하는 이동 처리
-	//{
-	//	m_pBodyWorld->Move_Pos(&(vDir * m_fSpeed * m_fTimeDelta));
-	//}
 
 	m_vDirection = vDir;
 }
@@ -1342,7 +1231,7 @@ HRESULT CCubePlayer::Lighting()
 	d3dLight.Position.z = vPos.z;
 
 	// Don't attenuate.
-	d3dLight.Attenuation0 = 0.5f;
+	d3dLight.Attenuation0 = 0.6f;
 	d3dLight.Range = m_fRange;
 
 	// Set the property information for the first light.

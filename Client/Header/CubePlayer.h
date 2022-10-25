@@ -53,17 +53,16 @@ public:
 	ABILITY*      Get_Ability() { return m_tAbility; }
 	void          Set_Damaged(_float iDamage)
 	{
-		if (m_tAbility->fDefence > 0.f)
-		{
-			m_tAbility->fDefence -= iDamage;
+		if (m_tAbility->fDefence <= 0.f)
 			m_tAbility->fDefence = 0.f;
-		}
+		
+		if (m_tAbility->fHp <= 0.f)
+			m_tAbility->fHp = 0.f;
+
+		if (m_tAbility->fDefence > 0.f)
+			m_tAbility->fDefence -= iDamage;
 		else
-		{
 			m_tAbility->fHp -= iDamage;
-			if (m_tAbility->fHp <= 0.f)
-				m_tAbility->fHp = 0.f;
-		}
 	}
 
 public:

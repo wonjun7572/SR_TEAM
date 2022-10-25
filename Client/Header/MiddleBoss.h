@@ -122,7 +122,6 @@ private:
 	_float			 m_fCreateMonFrame = 0.f;
 	_vec3			 m_vCorePos;
 
-
 private:
 	HRESULT            Add_Component(void);
 	MIDDLEBOSSABILITY*      m_tAbility;

@@ -81,7 +81,7 @@ _int CSupporter_Shotgun::Update_Object(const _float & fTimeDelta)
 	_vec3 vPosition;
 	m_pTransform->Get_Info(INFO_POS, &vPosition);
 
-	if (vPosition.y > 0.6f)
+	if (vPosition.y > 1.f)
 	{
 		m_pTransform->Move_Pos(&(_vec3(0.f, -1.f, 0.f) * 10.f * fTimeDelta));
 
@@ -98,15 +98,15 @@ _int CSupporter_Shotgun::Update_Object(const _float & fTimeDelta)
 			pVerticalLine->addParticle();
 		}
 	}
-	else if (vPosition.y < 0.6f)
+	else if (vPosition.y < 2.f)
 	{
 		m_bSetCam = false;
 	}
 
-	if (vPosition.y > 0.6f)
+	if (vPosition.y > 1.f)
 	{
 		m_STATE = SHOTGUNSUPPORT_DROP;
-		if (vPosition.y < 0.7f)
+		if (vPosition.y < 1.f)
 		{
 			_float fSound = 1.f;
 			Engine::PlaySoundGun(L"SupporterDrop.wav", SOUND_GET, fSound);
@@ -116,10 +116,10 @@ _int CSupporter_Shotgun::Update_Object(const _float & fTimeDelta)
 	{
 		if (!m_bOrdering)
 		{
-			CTerrainTex*	pTerrainBufferCom = dynamic_cast<CTerrainTex*>(Engine::Get_Component(STAGE_ENVIRONMENT, L"Terrain", L"Proto_TerrainTexCom", ID_STATIC));
+			CTerrainTex*   pTerrainBufferCom = dynamic_cast<CTerrainTex*>(Engine::Get_Component(STAGE_ENVIRONMENT, L"Terrain", L"Proto_TerrainTexCom", ID_STATIC));
 			NULL_CHECK_RETURN(pTerrainBufferCom, 0);
 
-			CTransform*		pTerrainTransformCom = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_ENVIRONMENT, L"Terrain", TRANSFORM_COMP, ID_DYNAMIC));
+			CTransform*      pTerrainTransformCom = dynamic_cast<CTransform*>(Engine::Get_Component(STAGE_ENVIRONMENT, L"Terrain", TRANSFORM_COMP, ID_DYNAMIC));
 			NULL_CHECK_RETURN(pTerrainTransformCom, 0);
 
 			_vec3 vPos;
@@ -131,15 +131,21 @@ _int CSupporter_Shotgun::Update_Object(const _float & fTimeDelta)
 			m_bOrdering = true;
 		}
 
-		if (m_STATE != SHOTGUNSUPPORT_ATTACK)
-			m_pTransform->Chase_Target(&m_vOrderPos, 5.f, fTimeDelta);
-
 		_vec3 vPosition;
 		m_pTransform->Get_Info(INFO_POS, &vPosition);
 
-		if (fabs(m_vOrderPos.x - vPosition.x) < 1.f &&
+		_vec3 vOrderDir = m_vOrderPos - vPosition;
+
+		if (m_STATE != SHOTGUNSUPPORT_ATTACK)
+		{
+			vOrderDir = m_vOrderPos - vPosition;
+			m_pCollision->Wall_Collision_Check(this->m_pTransform, this->m_pHitBox, &vOrderDir);
+			m_pTransform->Chase_Target_By_Direction(&vOrderDir, 5.f, fTimeDelta);
+		}
+
+		if ((fabs(m_vOrderPos.x - vPosition.x) < 1.f &&
 			fabs(m_vOrderPos.y - vPosition.y) < 1.f &&
-			fabs(m_vOrderPos.z - vPosition.z) < 1.f)
+			fabs(m_vOrderPos.z - vPosition.z) < 1.f) || vOrderDir.x == 0 || vOrderDir.z == 0)
 		{
 			m_bGetOrder = false;
 			m_bOrdering = false;
@@ -148,7 +154,10 @@ _int CSupporter_Shotgun::Update_Object(const _float & fTimeDelta)
 	}
 	else if (!m_pCollision->Sphere_Collision(this->m_pSphereTransCom, m_pPlayerTransCom, vPlayerScale.x, vScale.x) && (m_STATE != SHOTGUNSUPPORT_ATTACK))
 	{
-		m_pTransform->Chase_Target(&vPlayerPos, 5.f, fTimeDelta);
+		_vec3 vDir = vPlayerPos - vPosition;
+
+		m_pCollision->Wall_Collision_Check(this->m_pTransform, this->m_pHitBox, &vDir);
+		m_pTransform->Chase_Target_By_Direction(&vDir, 5.f, fTimeDelta);
 		m_STATE = SHOTGUNSUPPORT_WALK;
 	}
 	else // 아무 상태도 아니면 가만히있기
@@ -160,10 +169,13 @@ _int CSupporter_Shotgun::Update_Object(const _float & fTimeDelta)
 
 	if (vPosition.y < 1.f)
 	{
-		Find_Target();	//	맨 아래에 둘 것, 주변 적 탐색하여 공격하는 기능임
-						//	Look_Direction 지금 yaw만 적용시킨 상태
+		Find_Target();   //   맨 아래에 둘 것, 주변 적 탐색하여 공격하는 기능임
+						 //   Look_Direction 지금 yaw만 적용시킨 상태
 
 		Look_Direction();
+
+		if (m_STATE != SHOTGUNSUPPORT_DROP)
+			Set_On_Terrain();
 	}
 
 	CSupporter::Update_Object(fTimeDelta);

@@ -1,9 +1,218 @@
-﻿  KrakenLeg.cpp
+﻿C:\Users\sam51\Desktop\SR_TEAM\Client\Bin\ShaderFiles\Shader_Cube.hlsl(102,19-51): warning X3206: implicit truncation of vector type
+FXC : warning X4717: Effects deprecated for D3DCompiler_47
+  
+  compilation object save succeeded; see C:\Users\sam51\Desktop\SR_TEAM\Client\Bin\Shader_Cube.cso
+FXC : warning X4717: Effects deprecated for D3DCompiler_47
+  
+  compilation object save succeeded; see C:\Users\sam51\Desktop\SR_TEAM\Client\Bin\Shader_Rect.cso
+  stdafx.cpp
+  Alien.cpp
+  AnimationPlayer.cpp
+  CartridgeParticle.cpp
+  CubeParticle.cpp
+  DashCube.cpp
+  DeadParticle.cpp
+  DefensiveEffect.cpp
+  DeffensiveMatrix.cpp
+  BaseMapping.cpp
+  BattleCursier.cpp
+  BrownCloudEffect.cpp
+  BubbleEffect.cpp
+  Bullet.cpp
+  BulletParicle.cpp
+  BulletUI.cpp
+  CloudEffect.cpp
+  ComboUI.cpp
+  CrossHeader.cpp
+  CubeArm.cpp
+  CubeBody.cpp
+  컴파일하고 있습니다...
+  CubeFoot.cpp
+  CubeHand.cpp
+  CubeHead.cpp
+  CubeLeg.cpp
+  CubePlayer.cpp
+  CubeShop.cpp
+  DynamicCamera.cpp
+  ExBullet.cpp
+..\Code\ExBullet.cpp(193): warning C4244: '인수': 'Engine::_int'에서 'FLOAT'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+..\Code\ExBullet.cpp(195): warning C4244: '인수': 'Engine::_int'에서 'FLOAT'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  ExBulletEffect.cpp
+  Explosion.cpp
+  FinalStage.cpp
+  FlameEffect.cpp
+  Flight.cpp
+  FlightBomb.cpp
+  FlightBulletParticle.cpp
+  FlightCamera.cpp
+  FlightSpot.cpp
+  HyperionStrike.cpp
+  IceEffect.cpp
+  Key.cpp
+  컴파일하고 있습니다...
+  KrakenBullet.cpp
+  KrakenEffect.cpp
+  KrakenHit.cpp
+  KrakenParticle.cpp
+  Laser.cpp
+  LaserEffect.cpp
+  LaserPoint.cpp
+  LaserSpot.cpp
+  LoadingBar.cpp
+  MBBomb.cpp
+..\Code\MBBomb.cpp(110): warning C4305: '인수': 'double'에서 'FLOAT'(으)로 잘립니다.
+  MBLaser.cpp
+  MBLaserReady.cpp
+  MFieldEffect.cpp
+  MiddleBoss.cpp
+..\Code\MiddleBoss.cpp(1338): warning C4244: '인수': 'Engine::_int'에서 'FLOAT'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+..\Code\MiddleBoss.cpp(1339): warning C4244: '인수': 'Engine::_int'에서 'FLOAT'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+..\Code\MiddleBoss.cpp(1361): warning C4244: '인수': 'Engine::_int'에서 'FLOAT'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+..\Code\MiddleBoss.cpp(1362): warning C4244: '인수': 'Engine::_int'에서 'FLOAT'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+..\Code\MiddleBoss.cpp(1382): warning C4244: '인수': 'Engine::_int'에서 'FLOAT'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+..\Code\MiddleBoss.cpp(1383): warning C4244: '인수': 'Engine::_int'에서 'FLOAT'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+..\Code\MiddleBoss.cpp(1423): warning C4244: '인수': 'Engine::_int'에서 'FLOAT'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+..\Code\MiddleBoss.cpp(1424): warning C4244: '인수': 'Engine::_int'에서 'FLOAT'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+..\Code\MiddleBoss.cpp(1425): warning C4244: '인수': 'Engine::_int'에서 'FLOAT'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  Mob.cpp
+  Npc.cpp
+..\Code\Npc.cpp(474): warning C4244: '인수': 'Engine::_int'에서 'FLOAT'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+..\Code\Npc.cpp(475): warning C4244: '인수': 'Engine::_int'에서 'FLOAT'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+..\Code\Npc.cpp(502): warning C4244: '인수': 'Engine::_int'에서 'FLOAT'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+..\Code\Npc.cpp(503): warning C4244: '인수': 'Engine::_int'에서 'FLOAT'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+..\Code\Npc.cpp(530): warning C4244: '인수': 'Engine::_int'에서 'FLOAT'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+..\Code\Npc.cpp(531): warning C4244: '인수': 'Engine::_int'에서 'FLOAT'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+..\Code\Npc.cpp(564): warning C4244: '인수': 'Engine::_int'에서 'FLOAT'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+..\Code\Npc.cpp(565): warning C4244: '인수': 'Engine::_int'에서 'FLOAT'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  ObjectCube.cpp
+  Ping.cpp
+  ProjectionEffect.cpp
+  Quest.cpp
+  컴파일하고 있습니다...
+  RcEffect.cpp
+  RoundEffect.cpp
+  Shield.cpp
+  SoundWave.cpp
+  SparkEffect.cpp
+  ExitButton.cpp
+  FireMan.cpp
+  GetShotgun.cpp
+  GetSniper.cpp
+  GetUzi.cpp
+  GunUI.cpp
+  HealthPotion.cpp
+  HitBarUI.cpp
+  Illusioner.cpp
+  ImguiMgr.cpp
+  Inventory.cpp
+  Item.cpp
+  ItemBox.cpp
+  ItemIcon.cpp
+  ItemParticle.cpp
+  컴파일하고 있습니다...
+  LetterBox.cpp
+  Loading.cpp
+  Logo.cpp
+  LogoBilboard.cpp
+  LogoCamera.cpp
+  LogoUI.cpp
+  Magma.cpp
+  MainApp.cpp
+  MaxPlusHp.cpp
+  Meteor.cpp
+  Monster.cpp
+  MonsterMapping.cpp
+  MonsterParticle.cpp
+  MonsterUI.cpp
+  ObtainBullet.cpp
+  ObtainDefense.cpp
+  OptionButton.cpp
+  PlayButton.cpp
+  PlayerHpUI.cpp
+  PlayerMapping.cpp
+  컴파일하고 있습니다...
+  PlayerUI.cpp
+  PoolMgr.cpp
+  ProjectileParticle.cpp
+  Shop.cpp
+  Shotgun.cpp
+  ShotgunPart1.cpp
+  ShotgunPart2.cpp
+  ShotgunPart3.cpp
+  ShotgunPart4.cpp
+  Skeleton.cpp
+  SkyBox.cpp
+  Slime.cpp
+  Sniper.cpp
+  SniperPart1.cpp
+  SniperPart2.cpp
+  SniperPart3.cpp
+  SniperPart4.cpp
+  SpBullet.cpp
+  Stage.cpp
+  StaticCamera.cpp
+  컴파일하고 있습니다...
+  RainbowCloudEffect.cpp
+  StaticField.cpp
+  Supporter.cpp
+  Supporter_Shotgun.cpp
+  Supporter_Uzi.cpp
+  TargetCube.cpp
+  Terrain.cpp
+  Terret.cpp
+  TestCube.cpp
+  Thorn.cpp
+  ToolScene.cpp
+  TraceEffect.cpp
+  TransAxisBox.cpp
+  Trap.cpp
+  TriggerFront.cpp
+  TriggerParticle.cpp
+  Uzi.cpp
+  UziPart1.cpp
+  UziPart2.cpp
+  UziPart3.cpp
+  컴파일하고 있습니다...
+  UziPart4.cpp
+  UziPart5.cpp
+  Veneer.cpp
+  VerticalLine.cpp
+  Wall.cpp
+  WallMapping.cpp
+  Warning_AnnihilateUI.cpp
+  Weapon.cpp
+  WeaponUI.cpp
+  ShotParticle.cpp
+  Zombie.cpp
+  KrakenLeg.cpp
+  Client.cpp
+  PlayerDefenseUI.cpp
+  PlayerFaceUI.cpp
+  KrakenBoss.cpp
+  Supporter_Sniper.cpp
+  HyperionEffect.cpp
+  ItemCubeEffect.cpp
+  MHitEffect.cpp
+  TargetPointEffect.cpp
+  GraphEditor.cpp
+  ImCurveEdit.cpp
+  ImGradient.cpp
+  imgui.cpp
+  ImGuiFileBrowser.cpp
+  ImGuiFileDialog.cpp
+  ImGuizmo.cpp
+  imgui_demo.cpp
+  imgui_draw.cpp
+  imgui_impl_dx9.cpp
+  imgui_impl_win32.cpp
+  imgui_tables.cpp
+  imgui_widgets.cpp
+  ImSequencer.cpp
      ../Bin\Client.lib 라이브러리 및 ../Bin\Client.exp 개체를 생성하고 있습니다.
   코드를 생성하고 있습니다.
-  1 of 8850 functions ( 0.0%) were compiled, the rest were copied from previous compilation.
+  2 of 8853 functions ( 0.0%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    205 functions had inline decision re-evaluated but remain unchanged
+    287 functions had inline decision re-evaluated but remain unchanged
   코드를 생성했습니다.
-  Client.vcxproj -> C:\Users\DecoyZ\Desktop\SR_TEAM\Client\Default\../Bin\Client.exe
+  Client.vcxproj -> C:\Users\sam51\Desktop\SR_TEAM\Client\Default\../Bin\Client.exe
   Client.vcxproj -> ../Bin\Client.pdb (Full PDB)
