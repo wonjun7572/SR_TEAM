@@ -1208,29 +1208,29 @@ HRESULT CStage::Ready_Light(void)
 	FAILED_CHECK_RETURN(Engine::Ready_Light(m_pGraphicDev, &Light3, 1), E_FAIL);
 
 	// 라이트 아이디어좀..................
-	//D3DLIGHT9   Light2;
-	//ZeroMemory(&Light2, sizeof(D3DLIGHT9));
+	D3DLIGHT9   Light2;
+	ZeroMemory(&Light2, sizeof(D3DLIGHT9));
 
-	//Light2.Type = D3DLIGHT_POINT;
-	//Light2.Position = _vec3(119.3f, 2.f, 64.9f);
-	//Light2.Range = 10.f;
-	//Light2.Diffuse.r = 1.f;
-	//Light2.Diffuse.g = 0.f;
-	//Light2.Diffuse.b = 0.f;
-	//Light2.Ambient.r = 1.f;
-	//Light2.Ambient.g = 0.f;
-	//Light2.Ambient.b = 0.f;
-	//Light2.Specular.r = 1.0f;
-	//Light2.Specular.g = 1.0f;
-	//Light2.Specular.b = 1.0f;
-	//Light2.Attenuation0 = 0.1f;
-	//////Light.Falloff =
-	//////Light.Attenuation0 =
-	//////Light.Attenuation1 =
-	//////Light.Attenuation2 =
-	//////Light.Theta
-	//////Light.Phi =   
-	//FAILED_CHECK_RETURN(Engine::Ready_Light(m_pGraphicDev, &Light2, 2), E_FAIL);
+	Light2.Type = D3DLIGHT_POINT;
+	Light2.Position = _vec3(119.3f, 2.f, 64.9f);
+	Light2.Range = 10.f;
+	Light2.Diffuse.r = 0.f;
+	Light2.Diffuse.g = 0.f;
+	Light2.Diffuse.b = 1.f;
+	Light2.Ambient.r = 0.f;
+	Light2.Ambient.g = 0.f;
+	Light2.Ambient.b = 1.f;
+	Light2.Specular.r = 1.0f;
+	Light2.Specular.g = 1.0f;
+	Light2.Specular.b = 1.0f;
+	Light2.Attenuation0 = 0.1f;
+	////Light.Falloff =
+	////Light.Attenuation0 =
+	////Light.Attenuation1 =
+	////Light.Attenuation2 =
+	////Light.Theta
+	////Light.Phi =   
+	FAILED_CHECK_RETURN(Engine::Ready_Light(m_pGraphicDev, &Light2, 2), E_FAIL);
 
 	return S_OK;
 }

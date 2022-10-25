@@ -459,6 +459,9 @@ void CKrakenLeg::Hit_Check(_float _deltaTime)
 			{
 				m_tAbility->fCurrentHp -= pWeapon->Get_Ability()->fBulletAttack;
 
+				m_pComboUI->On_Switch();
+				m_pComboUI->ComboCntPlus();
+
 				pWeapon->Set_Shoot(false);
 			}
 		}
@@ -470,9 +473,6 @@ void CKrakenLeg::Hit_Check(_float _deltaTime)
 			m_pMonsterUI->Set_Hp(m_tAbility->fCurrentHp);
 			m_pMonsterUI->Set_MaxHp(m_tAbility->fMaxHp);
 			m_pMonsterUI->On_Switch();
-
-			m_pComboUI->On_Switch();
-			m_pComboUI->ComboCntPlus();
 		}
 		else
 		{

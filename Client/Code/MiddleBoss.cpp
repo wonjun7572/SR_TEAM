@@ -148,6 +148,7 @@ _int CMiddleBoss::Update_Object(const _float & fTimeDelta)
 		m_vMonterPos.push_back(_vec3(97.f, 0.6f, 18.f));
 		m_vMonstertype.push_back(0);
 		m_vMonstertype.push_back(1);
+		m_pGraphicDev->LightEnable(2, false);
 	}
 
 	Update_Pattern(fTimeDelta);
@@ -186,6 +187,7 @@ _int CMiddleBoss::Update_Object(const _float & fTimeDelta)
 
 		if (m_fCreateMonFrame >= 5.f)
 		{
+			m_pGraphicDev->LightEnable(2, true);
 			Create_Monster();
 			m_fCreateMonFrame = 0.f;
 		}
@@ -1191,6 +1193,24 @@ HRESULT CMiddleBoss::Create_Monster()
 
 		random_shuffle(m_vMonstertype.begin(), m_vMonstertype.end());
 		_int i = m_vMonstertype.front();
+		
+		D3DLIGHT9 d3dLight;
+		ZeroMemory(&d3dLight, sizeof(d3dLight));
+
+		d3dLight.Type = D3DLIGHT_POINT;
+		d3dLight.Range = 10.f;
+		d3dLight.Diffuse.r = 0.f;
+		d3dLight.Diffuse.g = 0.f;
+		d3dLight.Diffuse.b = 1.f;
+		d3dLight.Ambient.r = 0.f;
+		d3dLight.Ambient.g = 0.f;
+		d3dLight.Ambient.b = 1.f;
+		d3dLight.Specular.r = 1.0f;
+		d3dLight.Specular.g = 1.0f;
+		d3dLight.Specular.b = 1.0f;
+		d3dLight.Attenuation0 = 0.1f;
+		d3dLight.Position = vPos;
+		FAILED_CHECK_RETURN(m_pGraphicDev->SetLight(2, &d3dLight), E_FAIL);
 
 		CGameObject* pGameObject = nullptr;
 		CLayer* pLayer = Get_Layer(STAGE_MONSTER);

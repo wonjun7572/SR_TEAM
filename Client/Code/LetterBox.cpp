@@ -32,25 +32,7 @@ _int CLetterBox::Update_Object(const _float & fTimeDelta)
 {
 	CGameObject::Update_Object(fTimeDelta);
 	Add_RenderGroup(RENDER_UI, this);
-	if (!m_bInit)
-	{
-		m_bInit = true;
-		if (m_iIndex != 2)
-		{
-			m_fFontSizeX = 25.f;
-			m_fFontSizeY = 40.f;
-			wsprintf(szCntName, L"LetterBox%d", iLetterBoxCnt);
-			FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, szCntName, L"Roboto-Bold", _uint(m_fFontSizeX), _uint(m_fFontSizeY), FW_HEAVY), E_FAIL);
-		}
-		if (m_iIndex == 2)
-		{
-			m_fFontSizeX = 7.5f;
-			m_fFontSizeY = 15.f;
-			wsprintf(szCntName, L"LetterBox%d", iLetterBoxCnt);
-			FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, szCntName, L"Roboto-Bold", _uint(m_fFontSizeX), _uint(m_fFontSizeY), FW_HEAVY), E_FAIL);
-		}
 
-	}
 	if (m_bDead)
 	{
 		return -1;
@@ -61,7 +43,25 @@ _int CLetterBox::Update_Object(const _float & fTimeDelta)
 
 void CLetterBox::LateUpdate_Object(void)
 {
+	if (!m_bInit)
+	{
+		m_bInit = true;
+		if (m_iIndex != 2)
+		{
+			m_fFontSizeX = 25.f;
+			m_fFontSizeY = 40.f;
+			wsprintf(szCntName, L"LetterBox%d", iLetterBoxCnt);
+			FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, szCntName, L"Roboto-Bold", _uint(m_fFontSizeX), _uint(m_fFontSizeY), FW_HEAVY), );
+		}
+		if (m_iIndex == 2)
+		{
+			m_fFontSizeX = 7.5f;
+			m_fFontSizeY = 15.f;
+			wsprintf(szCntName, L"LetterBox%d", iLetterBoxCnt);
+			FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, szCntName, L"Roboto-Bold", _uint(m_fFontSizeX), _uint(m_fFontSizeY), FW_HEAVY), );
+		}
 
+	}
 	CGameObject::LateUpdate_Object();
 }
 
@@ -202,8 +202,6 @@ void CLetterBox::BoxText()
 	ScreenToClient(g_hWnd, &pt);
 
 	Engine::Render_Font(szCntName, m_strLetterContents.c_str(), &(_vec2(pt.x + 60.f, pt.y + 150.f)), D3DXCOLOR(1.f, 1.f, 1.f, m_fFontAlpha));
-	//cout << m_fPosX << endl;
-
 }
 
 void CLetterBox::Index1()
